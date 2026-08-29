@@ -1,0 +1,383 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((p) => ({
+		slug: p.id,
+		...p.data
+	}));
+---
+
+<BaseLayout title="Work & Case Studies | Marcel David Baroi">
+	<section class="work-hero">
+		<div class="hero-label-group">
+			<span class="section-tag font-dot">01 // DIRECTORY</span>
+			<h1 class="work-title font-dot">Selected Work</h1>
+			<p class="work-subtitle font-dot">Enterprise SaaS & Architecture Systems</p>
+		</div>
+		<p class="work-lead font-mono">
+			A complete catalog of production platforms, multi-tenant frameworks, mobile systems, and full-stack software architectures accumulated through 2026.
+		</p>
+	</section>
+
+	<section class="work-grid-section">
+		<div class="projects-grid">
+			{projects.map((project) => (
+				<a href={`/work/${project.slug}`} class="project-showcase-card">
+					<!-- Top Info Header: Title, Description, Keyword Chip -->
+					<div class="card-header-info">
+						<h3 class="project-title font-mono">{project.title}</h3>
+						<p class="project-description font-mono">{project.description}</p>
+						<div class="chip-container">
+							<span class="keyword-chip font-mono">{project.chip}</span>
+						</div>
+					</div>
+
+					<!-- Bottom Image Slot: Desktop (16:10) or Mobile (9:19.5 Phone) Screenshots -->
+					<div class={`card-image-slot slot-${project.platformType || 'desktop'}`}>
+						<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'}`}>
+							{[1, 2, 3, 4].map((idx) => {
+								const img = project.images && project.images[idx - 1] && !project.images[idx - 1].includes('thumb-') ? project.images[idx - 1] : null;
+								const isMobile = project.platformType === 'mobile';
+								return (
+									<div class={`thumb-card thumb-${idx} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
+										{isMobile && (
+											<div class="mobile-phone-notch">
+												<span class="notch-pill"></span>
+											</div>
+										)}
+										{img ? (
+											<img src={img} alt={`${project.title} Preview ${idx}`} class="thumb-img" loading="lazy" />
+										) : (
+											<div class="thumb-placeholder">
+												<svg 
+													xmlns="http://www.w3.org/2000/svg" 
+													width="32" 
+													height="32" 
+													viewBox="0 0 24 24" 
+													fill="none" 
+													stroke="currentColor" 
+													stroke-width="1.5" 
+													stroke-linecap="round" 
+													stroke-linejoin="round"
+													class="placeholder-icon"
+												>
+													{isMobile ? (
+														<>
+															<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+															<line x1="12" x2="12.01" y1="18" y2="18"></line>
+														</>
+													) : (
+														<>
+															<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+															<circle cx="8.5" cy="8.5" r="1.5"></circle>
+															<polyline points="21 15 16 10 5 21"></polyline>
+														</>
+													)}
+												</svg>
+												<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx}` : `PREVIEW 0${idx}`}</span>
+											</div>
+										)}
+									</div>
+								);
+							})}
+						</div>
+					</div>
+				</a>
+			))}
+		</div>
+	</section>
+</BaseLayout>
+
+<style>
+	.work-hero {
+		width: 100%;
+		padding: 3.5rem 0 2rem;
+		text-align: left;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.hero-label-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.section-tag {
+		font-size: 0.9375rem;
+		letter-spacing: 0.12em;
+		color: var(--accent);
+		text-transform: uppercase;
+		font-weight: 700;
+		-webkit-text-stroke: 0.25px currentColor;
+	}
+
+	.work-title {
+		font-size: clamp(2.5rem, 6vw, 4.5rem);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-main);
+		line-height: 1.05;
+		-webkit-text-stroke: 0.45px currentColor;
+		text-rendering: optimizeLegibility;
+	}
+
+	.work-subtitle {
+		font-size: clamp(1.25rem, 2.5vw, 1.85rem);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		font-weight: 700;
+		-webkit-text-stroke: 0.35px currentColor;
+	}
+
+	.work-lead {
+		font-size: clamp(1rem, 1.6vw, 1.15rem);
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 800px;
+	}
+
+	.work-grid-section {
+		width: 100%;
+		margin-top: 2rem;
+	}
+
+	.projects-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.projects-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.project-showcase-card,
+	.project-showcase-card:hover,
+	.project-showcase-card:focus,
+	.project-showcase-card:active {
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 32px;
+		overflow: hidden;
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+		min-height: 600px;
+		position: relative;
+		text-decoration: none !important;
+		color: inherit;
+		cursor: pointer;
+		transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+	}
+
+	.project-showcase-card * {
+		text-decoration: none !important;
+	}
+
+	.project-showcase-card:hover {
+		transform: translateY(-4px);
+		border-color: rgba(95, 80, 56, 0.28);
+		box-shadow: 0 20px 45px rgba(95, 80, 56, 0.1);
+	}
+
+	.card-header-info {
+		padding: 2.25rem 2.25rem 1rem 2.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		z-index: 2;
+	}
+
+	.project-title {
+		font-size: 1.85rem;
+		font-weight: 800;
+		color: var(--text-main);
+		letter-spacing: -0.03em;
+		line-height: 1.15;
+		text-align: left;
+	}
+
+	.project-description {
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+		max-width: 90%;
+		text-align: left;
+	}
+
+	.chip-container {
+		margin-top: 0.65rem;
+		text-align: left;
+	}
+
+	.keyword-chip {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.4rem 1.15rem;
+		border-radius: 9999px;
+		border: 1px solid rgba(95, 80, 56, 0.7);
+		background: transparent;
+		color: var(--text-main);
+		font-size: 0.8125rem;
+		font-weight: 500;
+		transition: all 0.2s ease;
+	}
+
+	.project-showcase-card:hover .keyword-chip {
+		background: var(--btn-primary);
+		color: #fffdfa;
+		border-color: var(--btn-primary);
+	}
+
+	/* Card Image / Media Slot: Desktop & Mobile Screen Support */
+	.card-image-slot {
+		position: relative;
+		min-height: 380px;
+		width: 100%;
+		overflow: hidden;
+		display: flex;
+		align-items: flex-end;
+		justify-content: flex-end;
+	}
+
+	/* Desktop Screenshot Mosaic: 16:10 Widescreen */
+	.mosaic-desktop {
+		position: absolute;
+		right: -60px;
+		bottom: -60px;
+		width: 620px;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 16px;
+		transform: rotate(-20deg) skew(-2deg);
+		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.project-showcase-card:hover .mosaic-desktop {
+		transform: rotate(-16deg) skew(-1deg) translateY(-10px);
+	}
+
+	/* Mobile Screenshot Mosaic: 9:19.5 Slim Smartphone Grid */
+	.mosaic-mobile {
+		position: absolute;
+		right: -25px;
+		bottom: -50px;
+		width: 480px;
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 18px;
+		transform: rotate(-14deg) skew(-1deg);
+		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	.project-showcase-card:hover .mosaic-mobile {
+		transform: rotate(-10deg) skew(0deg) translateY(-12px);
+	}
+
+	.thumb-card {
+		background: linear-gradient(145deg, #ffffff 0%, #f7f4ee 100%);
+		border: 1px solid rgba(95, 80, 56, 0.16);
+		overflow: hidden;
+		box-shadow: 0 14px 32px rgba(95, 80, 56, 0.12);
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: all 0.25s ease;
+		position: relative;
+	}
+
+	/* Desktop Window Card */
+	.thumb-desktop-window {
+		border-radius: 12px;
+		aspect-ratio: 16 / 10;
+	}
+
+	/* Mobile Smartphone Frame Card */
+	.thumb-mobile-device {
+		border-radius: 24px;
+		aspect-ratio: 9 / 19;
+		border: 2px solid rgba(95, 80, 56, 0.22);
+		box-shadow: 0 16px 36px rgba(95, 80, 56, 0.15);
+		background: #ffffff;
+	}
+
+	.mobile-phone-notch {
+		position: absolute;
+		top: 6px;
+		left: 50%;
+		transform: translateX(-50%);
+		z-index: 10;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.notch-pill {
+		width: 32px;
+		height: 4px;
+		background: rgba(95, 80, 56, 0.35);
+		border-radius: 9999px;
+	}
+
+	.thumb-img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+		display: block;
+		transition: transform 0.3s ease;
+	}
+
+	.thumb-mobile-device .thumb-img {
+		object-position: top left;
+	}
+
+	.project-showcase-card:hover .thumb-img {
+		transform: scale(1.04);
+	}
+
+	.thumb-placeholder {
+		width: 100%;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.6rem;
+		color: rgba(95, 80, 56, 0.45);
+		transition: color 0.2s ease, transform 0.2s ease;
+	}
+
+	.project-showcase-card:hover .thumb-placeholder {
+		color: var(--accent);
+	}
+
+	.placeholder-icon {
+		opacity: 0.7;
+		transition: transform 0.25s ease, opacity 0.25s ease;
+	}
+
+	.project-showcase-card:hover .placeholder-icon {
+		opacity: 1;
+		transform: scale(1.1);
+	}
+
+	.placeholder-idx {
+		font-size: 0.6875rem;
+		letter-spacing: 0.08em;
+		color: var(--text-muted);
+		font-weight: 500;
+	}
+</style>

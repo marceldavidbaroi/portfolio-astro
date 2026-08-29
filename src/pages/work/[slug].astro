@@ -1,0 +1,1503 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+	const projects = await getCollection('projects');
+	return projects.map((project, index) => {
+		const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+		const currentIndex = sorted.findIndex((p) => p.id === project.id);
+		const prevProject = currentIndex > 0 ? sorted[currentIndex - 1] : null;
+		const nextProject = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
+
+		return {
+			params: { slug: project.id },
+			props: { project, prevProject, nextProject }
+		};
+	});
+}
+
+const { project, prevProject, nextProject } = Astro.props;
+const { data } = project;
+const { Content, headings } = await render(project);
+
+// Construct comprehensive table of contents
+const tocItems: { id: string; text: string; depth: number }[] = [];
+
+if (data.executiveOverview || (data.impactMetrics && data.impactMetrics.length > 0)) {
+	tocItems.push({ id: 'executive-overview', text: 'Executive Overview', depth: 2 });
+}
+if (data.techStack && Object.keys(data.techStack).length > 0) {
+	tocItems.push({ id: 'tech-stack', text: 'Technology Stack', depth: 2 });
+}
+if (data.problemStatement || (data.keyDecisions && data.keyDecisions.length > 0)) {
+	tocItems.push({ id: 'engineering-decisions', text: 'Engineering Decisions', depth: 2 });
+}
+if (data.securityReliability?.length > 0 || data.futureRoadmap?.length > 0) {
+	tocItems.push({ id: 'security-roadmap', text: 'Security & Roadmap', depth: 2 });
+}
+
+// Add all markdown headings (depth 2)
+headings.forEach((h) => {
+	if (h.depth === 2) {
+		const isDuplicate = tocItems.some(
+			(item) => item.id === h.slug || item.text.toLowerCase() === h.text.toLowerCase()
+		);
+		if (!isDuplicate) {
+			tocItems.push({ id: h.slug, text: h.text, depth: 2 });
+		}
+	}
+});
+---
+
+<BaseLayout 
+	title={`${data.title} | Case Study`} 
+	description={data.subtitle || data.description}
+	isWide={true}
+>
+	<div class="case-layout-grid">
+		<!-- Main Article Content Area -->
+		<article class="case-study-page case-detail-container font-mono" data-platform={data.platformType || 'desktop'}>
+			<!-- Top Breadcrumb & Tag -->
+			<div class="breadcrumb-bar">
+				<a href="/work" class="back-link">
+					<span class="arrow">‹</span> Back to Selected Work
+				</a>
+				<span class="case-tag font-dot">CASE STUDY // {data.id}</span>
+			</div>
+
+		<!-- Main Case Study Header -->
+		<header class="case-header">
+			<div class="header-badge-row">
+				<span class="chip-accent font-dot">{data.chip}</span>
+				{data.status && <span class="status-pill">{data.status}</span>}
+			</div>
+
+			<h1 class="case-title font-dot">{data.title}</h1>
+			
+			{data.subtitle && (
+				<p class="case-subtitle">{data.subtitle}</p>
+			)}
+
+			<!-- Action Buttons / Links -->
+			{(data.links?.liveDemo || data.links?.parentPlatform || data.links?.github || data.links?.githubFrontend || data.links?.githubBackend || data.links?.docs) && (
+				<div class="project-actions">
+					{data.links?.liveDemo && (
+						<a href={data.links.liveDemo} target="_blank" rel="noopener noreferrer" class="btn btn-accent">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="10"></circle>
+								<line x1="2" x2="22" y1="12" y2="12"></line>
+								<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
+							</svg>
+							Live Demo
+						</a>
+					)}
+					{data.links?.parentPlatform && (
+						<a href={data.links.parentPlatform} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+								<path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+							</svg>
+							Parent Platform
+						</a>
+					)}
+					{data.links?.github && (
+						<a href={data.links.github} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
+								<path d="M9 18c-4.51 2-5-2-7-2"></path>
+							</svg>
+							Repository
+						</a>
+					)}
+					{data.links?.githubFrontend && (
+						<a href={data.links.githubFrontend} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+							Frontend Repo
+						</a>
+					)}
+					{data.links?.githubBackend && (
+						<a href={data.links.githubBackend} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+							Backend Repo
+						</a>
+					)}
+					{data.links?.docs && (
+						<a href={data.links.docs} target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+							Documentation
+						</a>
+					)}
+				</div>
+			)}
+		</header>
+
+		<!-- 1. Hero Image / Application Mockup Showcase (Desktop Browser or Multi-Device Mobile Gallery) -->
+		<section class="case-section">
+			{data.platformType === 'mobile' ? (
+				<div class="hero-mobile-gallery-wrapper">
+					<div class="hero-mobile-devices-row">
+						{(data.images && data.images.length > 0 ? data.images.slice(0, 3) : [data.visualAssets?.heroMockup]).map((screenImg, sIdx) => (
+							<div class={`hero-mobile-phone-device device-pos-${sIdx}`}>
+								<div class="mobile-speaker-notch">
+									<span class="notch-camera-dot"></span>
+									<span class="notch-speaker-bar"></span>
+								</div>
+								<div class="mobile-mockup-screen">
+									{screenImg && !screenImg.includes('dummy') && !screenImg.includes('thumb-') ? (
+										<img 
+											src={screenImg} 
+											alt={`${data.title} Mobile Screen ${sIdx + 1}`} 
+											class="mobile-hero-img" 
+											loading="eager"
+										/>
+									) : (
+										<div class="mockup-icon-placeholder">
+											<svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="main-display-icon">
+												<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+												<line x1="12" x2="12.01" y1="18" y2="18"></line>
+											</svg>
+											<span class="display-label font-dot">SCREEN 0{sIdx + 1}</span>
+										</div>
+									)}
+								</div>
+								<div class="mobile-home-indicator"></div>
+							</div>
+						))}
+					</div>
+				</div>
+			) : (
+				<div class="hero-mockup-frame">
+					<div class="browser-header">
+						<div class="window-dots">
+							<span></span><span></span><span></span>
+						</div>
+						<span class="browser-url">app.{data.id.toLowerCase()}.internal/dashboard</span>
+					</div>
+					<div class="mockup-display-area">
+						{data.visualAssets?.heroMockup && !data.visualAssets.heroMockup.includes('dummy') ? (
+							<img 
+								src={data.visualAssets.heroMockup} 
+								alt={`${data.title} Interface Screenshot`} 
+								class="hero-mockup-img" 
+								loading="eager"
+							/>
+						) : (
+							<div class="mockup-icon-placeholder">
+								<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round" class="main-display-icon">
+									<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+									<circle cx="8.5" cy="8.5" r="1.5"></circle>
+									<polyline points="21 15 16 10 5 21"></polyline>
+								</svg>
+								<span class="display-label font-dot">[ APPLICATION HERO MOCKUP // {data.title.toUpperCase()} ]</span>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+		</section>
+
+		<!-- 2. Metadata Quick Overview Table / Grid -->
+		<section class="case-section">
+			<div class="metadata-grid">
+				{data.role && (
+					<div class="meta-box card">
+						<span class="meta-label">Role & Responsibilities</span>
+						<p class="meta-value">{data.role}</p>
+					</div>
+				)}
+				{data.timeline && (
+					<div class="meta-box card">
+						<span class="meta-label">Timeline & Lifecycle</span>
+						<p class="meta-value">{data.timeline}</p>
+					</div>
+				)}
+			</div>
+		</section>
+
+		<!-- 3. Executive Overview (Google XYZ Pattern) & KPI Metric Badges -->
+		{data.executiveOverview && (
+			<section class="case-section" id="executive-overview">
+				<div class="xyz-overview-card card">
+					<span class="section-tag font-dot">01 // IMPACT FORMULA</span>
+					<h2 class="section-heading font-dot">Executive Overview</h2>
+					<blockquote class="xyz-quote">
+						"{data.executiveOverview}"
+					</blockquote>
+
+					{data.impactMetrics && data.impactMetrics.length > 0 && (
+						<div class="metrics-row">
+							{data.impactMetrics.map((metric) => (
+								<div class="metric-card">
+									<span class="metric-val font-dot">{metric.value}</span>
+									<span class="metric-lbl font-mono">{metric.label}</span>
+									{metric.detail && <span class="metric-sub">{metric.detail}</span>}
+								</div>
+							))}
+						</div>
+					)}
+				</div>
+			</section>
+		)}
+
+		<!-- 4. Categorized Tech Stack Matrix -->
+		{data.techStack && (
+			<section class="case-section" id="tech-stack">
+				<span class="section-tag font-dot">02 // ARCHITECTURE</span>
+				<h2 class="section-heading font-dot">Technology Stack</h2>
+				
+				<div class="tech-stack-grid">
+					{data.techStack.frontend && data.techStack.frontend.length > 0 && (
+						<div class="tech-group card">
+							<span class="tech-group-title">Frontend Ecosystem</span>
+							<div class="tech-tags-wrap">
+								{data.techStack.frontend.map((item) => (
+									<span class="tech-badge">{item}</span>
+								))}
+							</div>
+						</div>
+					)}
+					{data.techStack.mobile_hardware && data.techStack.mobile_hardware.length > 0 && (
+						<div class="tech-group card">
+							<span class="tech-group-title">Mobile Hardware & ML Kit</span>
+							<div class="tech-tags-wrap">
+								{data.techStack.mobile_hardware.map((item) => (
+									<span class="tech-badge">{item}</span>
+								))}
+							</div>
+						</div>
+					)}
+					{data.techStack.backend && data.techStack.backend.length > 0 && (
+						<div class="tech-group card">
+							<span class="tech-group-title">Backend & APIs</span>
+							<div class="tech-tags-wrap">
+								{data.techStack.backend.map((item) => (
+									<span class="tech-badge">{item}</span>
+								))}
+							</div>
+						</div>
+					)}
+					{data.techStack.database && data.techStack.database.length > 0 && (
+						<div class="tech-group card">
+							<span class="tech-group-title">Database & Storage</span>
+							<div class="tech-tags-wrap">
+								{data.techStack.database.map((item) => (
+									<span class="tech-badge">{item}</span>
+								))}
+							</div>
+						</div>
+					)}
+					{data.techStack.devops && data.techStack.devops.length > 0 && (
+						<div class="tech-group card">
+							<span class="tech-group-title">DevOps & Tooling</span>
+							<div class="tech-tags-wrap">
+								{data.techStack.devops.map((item) => (
+									<span class="tech-badge">{item}</span>
+								))}
+							</div>
+						</div>
+					)}
+				</div>
+			</section>
+		)}
+
+		<!-- 5. Problem Statement & Key Technical Decisions -->
+		{(data.problemStatement || (data.keyDecisions && data.keyDecisions.length > 0)) && (
+			<section class="case-section" id="engineering-decisions">
+				<span class="section-tag font-dot">03 // ENGINEERING DECISIONS</span>
+				<h2 class="section-heading font-dot">Technical Challenges & Solutions</h2>
+
+				{data.problemStatement && (
+					<div class="problem-box card">
+						<span class="problem-title">Problem Statement & User Friction</span>
+						<p class="problem-body">{data.problemStatement}</p>
+					</div>
+				)}
+
+				{data.keyDecisions && data.keyDecisions.length > 0 && (
+					<div class="decisions-list">
+						{data.keyDecisions.map((item, idx) => (
+							<div class="decision-card card">
+								<div class="decision-header">
+									<span class="decision-index font-dot">0{idx + 1}</span>
+									<h3 class="decision-challenge font-mono">{item.challenge}</h3>
+								</div>
+								<div class="decision-body">
+									<div class="decision-row">
+										<span class="decision-lbl">Action / Decision:</span>
+										<p class="decision-desc">{item.decision}</p>
+									</div>
+									{item.outcome && (
+										<div class="decision-row outcome-row">
+											<span class="decision-lbl">Measured Outcome:</span>
+											<p class="decision-desc">{item.outcome}</p>
+										</div>
+									)}
+								</div>
+							</div>
+						))}
+					</div>
+				)}
+			</section>
+		)}
+
+		<!-- 7. Security, Reliability & Future Roadmap -->
+		{(data.securityReliability?.length > 0 || data.futureRoadmap?.length > 0) && (
+			<section class="case-section" id="security-roadmap">
+				<div class="security-roadmap-grid">
+					{data.securityReliability?.length > 0 && (
+						<div class="card font-mono">
+							<span class="section-tag font-dot">SECURITY</span>
+							<h3 class="box-heading">Security & Reliability</h3>
+							<ul class="check-list">
+								{data.securityReliability.map((item) => (
+									<li>
+										<span class="check-icon">✓</span>
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
+					{data.futureRoadmap?.length > 0 && (
+						<div class="card font-mono">
+							<span class="section-tag font-dot">ROADMAP</span>
+							<h3 class="box-heading">Future Iterations</h3>
+							<ul class="check-list">
+								{data.futureRoadmap.map((item) => (
+									<li>
+										<span class="bullet-accent font-dot">›</span>
+										<span>{item}</span>
+									</li>
+								))}
+							</ul>
+						</div>
+					)}
+				</div>
+			</section>
+		)}
+
+		<!-- 8. Markdown Deep-Dive Content -->
+		<section class="case-section markdown-body-wrapper">
+			<div class="markdown-article">
+				<Content />
+			</div>
+		</section>
+
+		<!-- Bottom Pagination / Project Navigation -->
+		<footer class="case-footer-nav">
+			{prevProject ? (
+				<a href={`/work/${prevProject.id}`} class="nav-prev card">
+					<span class="nav-dir">‹ PREVIOUS PROJECT</span>
+					<span class="nav-name">{prevProject.data.title}</span>
+				</a>
+			) : <div />}
+
+			{nextProject ? (
+				<a href={`/work/${nextProject.id}`} class="nav-next card">
+					<span class="nav-dir">NEXT PROJECT ›</span>
+					<span class="nav-name">{nextProject.data.title}</span>
+				</a>
+			) : <div />}
+		</footer>
+	</article>
+
+	<!-- Right Side Sticky Table of Contents Navigation -->
+	{tocItems.length > 0 && (
+		<aside class="case-toc-sidebar" aria-label="Table of Contents">
+			<div class="toc-sticky-box">
+				<div class="toc-header">
+					<span class="toc-pulse-dot"></span>
+					<span class="toc-title font-dot">ON THIS PAGE</span>
+				</div>
+				<nav class="toc-nav">
+					<ul class="toc-list font-mono">
+						{tocItems.map((item) => (
+							<li class="toc-item">
+								<a href={`#${item.id}`} class="toc-link" data-target={item.id}>
+									<span class="toc-indicator">›</span>
+									<span class="toc-text">{item.text}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</nav>
+				<div class="toc-footer">
+					<a href="#site-header" class="toc-top-btn font-mono">
+						<span>Back to top</span>
+						<span class="font-dot">↑</span>
+					</a>
+				</div>
+			</div>
+		</aside>
+	)}
+	</div>
+</BaseLayout>
+
+<style>
+	.case-layout-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 240px;
+		gap: 3rem;
+		width: 100%;
+		align-items: start;
+		position: relative;
+	}
+
+	@media (max-width: 1120px) {
+		.case-layout-grid {
+			grid-template-columns: minmax(0, 1fr);
+			gap: 0;
+		}
+		.case-toc-sidebar {
+			display: none !important;
+		}
+	}
+
+	/* Sticky Right-Side Table of Contents */
+	.case-toc-sidebar {
+		position: sticky;
+		top: 6rem;
+		max-height: calc(100vh - 8rem);
+		display: flex;
+		flex-direction: column;
+		z-index: 20;
+		padding-top: 2rem;
+	}
+
+	.toc-sticky-box {
+		padding: 1.25rem 1rem;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		box-shadow: 0 4px 20px rgba(95, 80, 56, 0.04);
+	}
+
+	.toc-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding-bottom: 0.6rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.toc-pulse-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 6px var(--accent);
+		display: inline-block;
+	}
+
+	.toc-title {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--text-main);
+	}
+
+	.toc-nav {
+		overflow-y: auto;
+		max-height: calc(100vh - 15rem);
+		padding-right: 0.25rem;
+	}
+
+	.toc-nav::-webkit-scrollbar {
+		width: 3px;
+	}
+
+	.toc-nav::-webkit-scrollbar-thumb {
+		background: rgba(95, 80, 56, 0.2);
+		border-radius: 3px;
+	}
+
+	.toc-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.toc-item {
+		font-size: 0.8125rem;
+	}
+
+	.toc-link {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.35rem;
+		color: var(--text-muted);
+		text-decoration: none !important;
+		padding: 0.35rem 0.5rem;
+		border-radius: 6px;
+		transition: all 0.15s ease;
+		line-height: 1.35;
+	}
+
+	.toc-indicator {
+		color: transparent;
+		transition: color 0.15s ease, transform 0.15s ease;
+		font-weight: bold;
+		flex-shrink: 0;
+	}
+
+	.toc-link:hover {
+		color: var(--accent);
+		background: rgba(95, 80, 56, 0.06);
+	}
+
+	.toc-link:hover .toc-indicator {
+		color: var(--accent);
+		transform: translateX(2px);
+	}
+
+	.toc-link.active {
+		color: var(--accent);
+		font-weight: 700;
+		background: rgba(180, 33, 53, 0.08);
+	}
+
+	.toc-link.active .toc-indicator {
+		color: var(--accent);
+	}
+
+	.toc-footer {
+		padding-top: 0.6rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.toc-top-btn {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		text-decoration: none !important;
+		padding: 0.25rem 0.5rem;
+		border-radius: 6px;
+		transition: all 0.2s ease;
+	}
+
+	.toc-top-btn:hover {
+		color: var(--accent);
+		background: rgba(95, 80, 56, 0.06);
+	}
+
+	.case-study-page {
+		width: 100%;
+		max-width: 960px;
+		padding: 2rem 0 6rem;
+		text-align: left;
+	}
+
+	.breadcrumb-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding-bottom: 1.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		margin-bottom: 2rem;
+		flex-wrap: wrap;
+		gap: 1rem;
+	}
+
+	.back-link {
+		color: var(--text-muted);
+		text-decoration: none;
+		font-size: 0.875rem;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		transition: color 0.2s ease;
+	}
+
+	.back-link:hover {
+		color: var(--accent);
+	}
+
+	.case-tag {
+		font-size: 0.8125rem;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+	}
+
+	.case-header {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-bottom: 3rem;
+	}
+
+	.header-badge-row {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.chip-accent {
+		background: var(--accent);
+		color: #ffffff;
+		font-size: 0.8125rem;
+		padding: 0.3rem 0.85rem;
+		border-radius: 9999px;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.status-pill {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: rgba(95, 80, 56, 0.08);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		padding: 0.25rem 0.65rem;
+		border-radius: 9999px;
+		color: var(--btn-primary);
+	}
+
+	.case-title {
+		font-size: clamp(2.2rem, 5vw, 3.75rem);
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.1;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		-webkit-text-stroke: 0.45px currentColor;
+		text-rendering: optimizeLegibility;
+	}
+
+	.case-subtitle {
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 850px;
+	}
+
+	.project-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		margin-top: 0.5rem;
+	}
+
+	.btn-secondary {
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		color: var(--text-main);
+	}
+
+	.btn-secondary:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.case-section {
+		width: 100%;
+		margin-top: 3.5rem;
+	}
+
+	.section-tag {
+		font-size: 0.875rem;
+		letter-spacing: 0.12em;
+		color: var(--accent);
+		text-transform: uppercase;
+		display: block;
+		margin-bottom: 0.35rem;
+		font-weight: 700;
+		-webkit-text-stroke: 0.25px currentColor;
+	}
+
+	.section-heading {
+		font-size: clamp(1.75rem, 3.5vw, 2.35rem);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--text-main);
+		margin-bottom: 1.5rem;
+		-webkit-text-stroke: 0.35px currentColor;
+	}
+
+	/* Hero Multi-Device Side-by-Side Mobile Gallery */
+	.hero-mobile-gallery-wrapper {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding: 1.5rem 0;
+		overflow-x: auto;
+	}
+
+	.hero-mobile-devices-row {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+		max-width: 860px;
+		width: 100%;
+	}
+
+	@media (max-width: 768px) {
+		.hero-mobile-devices-row {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 1rem;
+		}
+		.hero-mobile-phone-device:nth-child(3) {
+			display: none;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.hero-mobile-devices-row {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.hero-mobile-phone-device {
+		background: #ffffff;
+		border: 3px solid rgba(95, 80, 56, 0.28);
+		border-radius: 32px;
+		overflow: hidden;
+		box-shadow: 0 16px 40px rgba(95, 80, 56, 0.12);
+		position: relative;
+		display: flex;
+		flex-direction: column;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.hero-mobile-phone-device:hover {
+		transform: translateY(-6px);
+		box-shadow: 0 20px 48px rgba(95, 80, 56, 0.18);
+	}
+
+	.mobile-speaker-notch {
+		background: #ffffff;
+		padding: 0.5rem 0.75rem 0.35rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.08);
+	}
+
+	.notch-camera-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: rgba(95, 80, 56, 0.35);
+	}
+
+	.notch-speaker-bar {
+		width: 36px;
+		height: 3px;
+		border-radius: 9999px;
+		background: rgba(95, 80, 56, 0.25);
+	}
+
+	.mobile-mockup-screen {
+		background: #ffffff;
+		width: 100%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.mobile-hero-img {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: cover;
+	}
+
+	.mobile-home-indicator {
+		width: 80px;
+		height: 3px;
+		background: rgba(95, 80, 56, 0.25);
+		border-radius: 9999px;
+		margin: 0.45rem auto;
+	}
+
+	.hero-mockup-frame {
+		width: 100%;
+		background: #ffffff;
+		border: 1px solid rgba(95, 80, 56, 0.18);
+		border-radius: 24px;
+		overflow: hidden;
+		box-shadow: 0 20px 50px rgba(95, 80, 56, 0.1);
+	}
+
+	.browser-header {
+		background: #f7f4ee;
+		padding: 0.85rem 1.25rem;
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.window-dots {
+		display: flex;
+		gap: 6px;
+	}
+
+	.window-dots span {
+		width: 10px;
+		height: 10px;
+		border-radius: 50%;
+		background: rgba(95, 80, 56, 0.2);
+	}
+
+	.window-dots span:nth-child(1) { background: #ef4444; }
+	.window-dots span:nth-child(2) { background: #f59e0b; }
+	.window-dots span:nth-child(3) { background: #10b981; }
+
+	.browser-url {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		background: #ffffff;
+		padding: 0.25rem 0.75rem;
+		border-radius: 6px;
+		border: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.mockup-display-area {
+		min-height: 420px;
+		background: linear-gradient(145deg, #ffffff 0%, #f7f4ee 100%);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+	}
+
+	.hero-mockup-img {
+		width: 100%;
+		height: auto;
+		display: block;
+		object-fit: cover;
+	}
+
+	.mockup-icon-placeholder {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1.25rem;
+		color: var(--accent);
+		text-align: center;
+	}
+
+	.main-display-icon {
+		opacity: 0.85;
+	}
+
+	.display-label {
+		font-size: 0.9375rem;
+		letter-spacing: 0.08em;
+		color: var(--text-main);
+	}
+
+	/* Metadata Grid */
+	.metadata-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.metadata-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.meta-box {
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.meta-label {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.meta-value {
+		font-size: 0.9375rem;
+		line-height: 1.5;
+		color: var(--text-main);
+	}
+
+	/* XYZ Overview Card */
+	.xyz-overview-card {
+		padding: 2.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.xyz-quote {
+		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
+		line-height: 1.7;
+		color: var(--text-main);
+		font-style: italic;
+		border-left: 3px solid var(--accent);
+		padding-left: 1.25rem;
+	}
+
+	.metrics-row {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+		margin-top: 1rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	@media (max-width: 860px) {
+		.metrics-row {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 480px) {
+		.metrics-row {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.metric-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.metric-val {
+		font-size: 1.85rem;
+		color: var(--accent);
+	}
+
+	.metric-lbl {
+		font-size: 0.8125rem;
+		font-weight: 600;
+		color: var(--text-main);
+	}
+
+	.metric-sub {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	/* Tech Stack */
+	.tech-stack-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.tech-stack-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.tech-group {
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.tech-group-title {
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.tech-tags-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.tech-badge {
+		font-size: 0.8125rem;
+		padding: 0.3rem 0.65rem;
+		background: rgba(95, 80, 56, 0.08);
+		border-radius: 6px;
+		color: var(--text-main);
+	}
+
+	/* Decisions */
+	.problem-box {
+		padding: 1.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.problem-title {
+		font-size: 0.875rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	.problem-body {
+		font-size: 0.9375rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.decisions-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.decision-card {
+		padding: 1.75rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.decision-header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.decision-index {
+		font-size: 1.35rem;
+		color: var(--accent);
+	}
+
+	.decision-challenge {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.decision-body {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.decision-row {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.decision-lbl {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+		font-weight: 600;
+	}
+
+	.decision-desc {
+		font-size: 0.9375rem;
+		line-height: 1.55;
+		color: var(--text-main);
+	}
+
+	.outcome-row {
+		padding-top: 0.6rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.08);
+	}
+
+
+
+	/* Security & Roadmap */
+	.security-roadmap-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.security-roadmap-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.box-heading {
+		font-size: 1.2rem;
+		color: var(--text-main);
+		margin-bottom: 1rem;
+	}
+
+	.check-list {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.check-list li {
+		display: flex;
+		align-items: baseline;
+		gap: 0.6rem;
+		font-size: 0.875rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	.check-icon {
+		color: #10b981;
+		font-weight: 700;
+	}
+
+	.bullet-accent {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	/* Markdown Article Typography */
+	.markdown-body-wrapper {
+		padding-top: 2rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.markdown-article {
+		font-size: 1rem;
+		line-height: 1.7;
+		color: var(--text-main);
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+	}
+
+	.markdown-article h2 {
+		font-family: var(--font-dot);
+		font-size: 1.75rem;
+		color: var(--text-main);
+		margin-top: 1.5rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.markdown-article h3 {
+		font-size: 1.25rem;
+		color: var(--accent);
+		margin-top: 1rem;
+	}
+
+	.markdown-article p {
+		color: var(--text-muted);
+	}
+
+	.markdown-article ul, .markdown-article ol {
+		padding-left: 1.5rem;
+		color: var(--text-muted);
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.markdown-article img {
+		max-width: 100%;
+		height: auto;
+		border-radius: 16px;
+		border: 1px solid var(--card-border);
+		box-shadow: 0 10px 30px rgba(95, 80, 56, 0.08);
+		margin: 2rem auto;
+		display: block;
+	}
+
+	/* When in a mobile case study, scale vertical mobile screenshots to compact side-by-side layout */
+	.case-detail-container[data-platform="mobile"] .markdown-article img {
+		max-width: 280px;
+		width: 100%;
+		border-radius: 24px;
+		border: 2.5px solid rgba(95, 80, 56, 0.2);
+		box-shadow: 0 14px 35px rgba(95, 80, 56, 0.1);
+		margin: 1.25rem auto;
+		transition: transform 0.2s ease;
+	}
+
+	.case-detail-container[data-platform="mobile"] .markdown-article img:hover {
+		transform: scale(1.02);
+	}
+
+	.markdown-article pre,
+	.markdown-article pre.astro-code {
+		background: #f4f0e7 !important;
+		border: 1px solid rgba(95, 80, 56, 0.16) !important;
+		border-radius: 16px !important;
+		padding: 1.5rem !important;
+		color: #2b251e !important;
+		margin: 1.5rem 0 !important;
+	}
+
+	.markdown-article table {
+		width: 100%;
+		border-collapse: collapse;
+		margin: 2rem 0;
+		border-radius: 14px;
+		overflow: hidden;
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		font-size: 0.875rem;
+	}
+
+	.markdown-article th,
+	.markdown-article td {
+		padding: 0.85rem 1.15rem;
+		text-align: left;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.markdown-article th {
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.markdown-article blockquote {
+		border-left: 3px solid var(--accent);
+		padding: 0.85rem 1.25rem;
+		margin: 1.5rem 0;
+		background: rgba(95, 80, 56, 0.04);
+		border-radius: 0 12px 12px 0;
+		color: var(--text-main);
+		font-style: italic;
+	}
+
+	/* Footer Pagination */
+	.case-footer-nav {
+		margin-top: 5rem;
+		padding-top: 2rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 640px) {
+		.case-footer-nav {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.nav-prev, .nav-next {
+		padding: 1.5rem;
+		text-decoration: none !important;
+		color: inherit;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.nav-prev:hover, .nav-next:hover {
+		text-decoration: none !important;
+	}
+
+	.nav-next {
+		text-align: right;
+	}
+
+	.nav-dir {
+		font-size: 0.75rem;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		font-weight: 600;
+	}
+
+	.nav-name {
+		font-size: 1.05rem;
+		font-weight: 600;
+		color: var(--text-main);
+	}
+
+	/* Mermaid Diagram Interactive Container */
+	.mermaid-diagram-card {
+		background: #ffffff;
+		border: 1px solid var(--card-border);
+		border-radius: 20px;
+		padding: 2.5rem 1.5rem;
+		margin: 2.5rem 0;
+		overflow-x: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		box-shadow: 0 4px 20px rgba(95, 80, 56, 0.05);
+	}
+
+	.mermaid {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	.mermaid svg {
+		max-width: 100% !important;
+		height: auto !important;
+	}
+</style>
+
+<script>
+	async function initMermaid() {
+		try {
+			// Find all pre elements that contain mermaid syntax or language-mermaid
+			const codeBlocks = Array.from(document.querySelectorAll('pre, pre code'));
+			const targets: { pre: HTMLElement; code: string }[] = [];
+
+			for (const el of codeBlocks) {
+				const text = el.textContent?.trim() || '';
+				const isMermaid = 
+					el.classList.contains('language-mermaid') || 
+					el.parentElement?.classList.contains('language-mermaid') ||
+					el.getAttribute('data-language') === 'mermaid' ||
+					text.startsWith('flowchart') || 
+					text.startsWith('sequenceDiagram') || 
+					text.startsWith('mindmap') || 
+					text.startsWith('timeline') || 
+					text.startsWith('graph');
+
+				if (isMermaid) {
+					const pre = (el.tagName.toLowerCase() === 'pre' ? el : el.closest('pre')) as HTMLElement | null;
+					if (pre && !pre.dataset.processed) {
+						pre.dataset.processed = 'true';
+						targets.push({ pre, code: text });
+					}
+				}
+			}
+
+			if (targets.length === 0) return;
+
+			// Dynamically import Mermaid ESM from CDN
+			// @ts-ignore
+			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+
+			mermaid.initialize({
+				startOnLoad: false,
+				theme: 'base',
+				themeVariables: {
+					primaryColor: '#f4f0e7',
+					primaryTextColor: '#2b251e',
+					primaryBorderColor: '#5f5038',
+					lineColor: '#5f5038',
+					secondaryColor: '#ffffff',
+					tertiaryColor: '#ede7da',
+					noteBkgColor: '#f4f0e7',
+					noteTextColor: '#2b251e',
+					noteBorderColor: '#5f5038',
+					actorBkg: '#f4f0e7',
+					actorBorder: '#5f5038',
+					actorTextColor: '#2b251e',
+					signalColor: '#5f5038',
+					signalTextColor: '#2b251e',
+					labelBoxBkgColor: '#f4f0e7',
+					labelBoxBorderColor: '#5f5038',
+					labelTextColor: '#2b251e',
+					loopTextColor: '#2b251e',
+					activationBorderColor: '#b42135',
+					activationBkgColor: '#f4f0e7',
+					fontFamily: 'NType 82 Mono, monospace',
+					fontSize: '13px'
+				},
+				securityLevel: 'loose'
+			});
+
+			for (let i = 0; i < targets.length; i++) {
+				const { pre, code } = targets[i];
+				const wrapper = document.createElement('div');
+				wrapper.className = 'mermaid-diagram-card';
+				
+				const diagramDiv = document.createElement('div');
+				diagramDiv.className = 'mermaid';
+				diagramDiv.textContent = code;
+				
+				wrapper.appendChild(diagramDiv);
+				pre.replaceWith(wrapper);
+			}
+
+			await mermaid.run();
+		} catch (err) {
+			console.error('Mermaid render error:', err);
+		}
+	}
+
+	// Initialize TOC ScrollSpy
+	function initTocScrollSpy() {
+			const tocLinks = document.querySelectorAll<HTMLAnchorElement>('.toc-link');
+			if (tocLinks.length === 0) return;
+
+			const targetIds = Array.from(tocLinks)
+				.map((link) => link.getAttribute('data-target'))
+				.filter((id): id is string => Boolean(id));
+
+			const targetElements = targetIds
+				.map((id) => document.getElementById(id))
+				.filter((el): el is HTMLElement => el !== null);
+
+			if (targetElements.length === 0) return;
+
+			let activeId = targetIds[0] || '';
+
+			const observerOptions = {
+				root: null,
+				rootMargin: '-80px 0px -70% 0px',
+				threshold: 0,
+			};
+
+			const observer = new IntersectionObserver((entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						activeId = entry.target.id;
+						updateActiveToc();
+					}
+				});
+			}, observerOptions);
+
+			targetElements.forEach((el) => observer.observe(el));
+
+			function updateActiveToc() {
+				tocLinks.forEach((link) => {
+					if (link.getAttribute('data-target') === activeId) {
+						link.classList.add('active');
+					} else {
+						link.classList.remove('active');
+					}
+				});
+			}
+
+			// Smooth scroll click handler
+			tocLinks.forEach((link) => {
+				link.addEventListener('click', (e) => {
+					const targetId = link.getAttribute('data-target');
+					if (targetId) {
+						const targetEl = document.getElementById(targetId);
+						if (targetEl) {
+							e.preventDefault();
+							targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+							history.pushState(null, '', `#${targetId}`);
+							activeId = targetId;
+							updateActiveToc();
+						}
+					}
+				});
+			});
+
+			updateActiveToc();
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', () => {
+				initMermaid();
+				initTocScrollSpy();
+			});
+		} else {
+			initMermaid();
+			initTocScrollSpy();
+		}
+	</script>
