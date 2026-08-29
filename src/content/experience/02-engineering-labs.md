@@ -1,14 +1,16 @@
 ---
-role: "Full-Stack Solutions & System Architecture"
-company: "Personal & Client Engineering Labs"
+role: "Independent Software Developer / Freelance Engineer"
+company: "Client Solutions & Open-Source Engineering"
 companyUrl: "https://github.com/marceldavidbaroi"
 location: "Dhaka, Bangladesh (Remote)"
-employmentType: "Independent Contractor / Lab"
+employmentType: "Freelance & Contract"
 period: "2022 — 2024"
-badge: "Systems & SaaS"
+badge: "Contract & SaaS"
 order: 2
 
-summary: "Engineered scalable full-stack web applications, microservices, and dropshipping inventory managers using NestJS, Next.js, TypeORM, PostgreSQL, and Express."
+summary: "Engineered custom full-stack web applications, microservices, and database architectures for diverse clients and independent products prior to joining Proficient Information Systems."
+
+
 
 executiveImpact: "Architected scalable backend APIs and responsive modern web interfaces that achieved 95+ Lighthouse scores and sub-80ms query speeds [X & Y] by designing layered NestJS REST microservices, indexed PostgreSQL schemas, and type-safe Next.js SSR frontends [Z]."
 

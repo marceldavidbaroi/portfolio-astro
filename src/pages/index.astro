@@ -19,26 +19,11 @@ const experience = experienceEntries
 		...entry.data
 	}));
 
-const education = [
-	{
-		degree: 'Bachelor of Science in Computer Science & Engineering',
-		institution: 'Daffodil International University (DIU)',
-		period: '2020 — 2024',
-		badge: 'Graduated 2024',
-		gpa: 'CGPA 3.91 / 4.00',
-		summary: 'Comprehensive curriculum emphasizing Distributed Systems, Relational Database Architecture, Data Structures & Algorithms, Object-Oriented Software Design, and Scalable Web Platforms.',
-		courses: ['Distributed Systems', 'Relational Databases', 'Data Structures & Algorithms', 'Web Engineering', 'Software Architecture']
-	},
-	{
-		degree: 'Higher Secondary Certificate (HSC) — Science',
-		institution: 'Notre Dame College, Dhaka',
-		period: '2017 — 2019',
-		badge: 'Graduated 2019',
-		gpa: 'GPA 4.67 / 5.00',
-		summary: 'Rigorous foundational studies in Higher Mathematics, Physics, Chemistry, and Analytical Problem Solving.',
-		courses: ['Higher Mathematics', 'Physics', 'Chemistry', 'Analytical Logic']
-	}
-];
+import { bscCseProgram, hscScienceProgram, getAcademicStatistics } from '../data/education';
+import { finalYearThesisResearch } from '../data/research';
+
+const stats = getAcademicStatistics();
+const thesis = finalYearThesisResearch;
 ---
 
 <BaseLayout title="Marcel David Baroi | Full-Stack Software Engineer">
@@ -80,55 +65,65 @@ const education = [
 					</div>
 
 					<!-- Bottom Image Slot: Desktop (16:10) or Mobile (9:19.5 Phone) Screenshots -->
-					<div class={`card-image-slot slot-${project.platformType || 'desktop'}`}>
-						<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'}`}>
-							{[1, 2, 3, 4].map((idx) => {
-								const img = project.images && project.images[idx - 1] && !project.images[idx - 1].includes('thumb-') ? project.images[idx - 1] : null;
-								const isMobile = project.platformType === 'mobile';
-								return (
-									<div class={`thumb-card thumb-${idx} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
-										{isMobile && (
-											<div class="mobile-phone-notch">
-												<span class="notch-pill"></span>
+					{(() => {
+						const validImages = (project.images || []).filter((img) => img && !img.includes('thumb-'));
+						const thumbsToRender = validImages.length > 0 ? validImages.slice(0, 4) : [null, null, null, null];
+						const count = thumbsToRender.length;
+						const isBlankMode = validImages.length === 0;
+
+						return (
+							<div class={`card-image-slot slot-${project.platformType || 'desktop'} count-${count}`}>
+								<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'} mosaic-count-${count}`}>
+									{thumbsToRender.map((img, idx) => {
+										const isMobile = img 
+											? (!img.includes('web-') && !img.includes('dashboard') && !img.includes('chart-of-accounts') && !img.includes('balance-sheet') && !img.includes('reports') && (img.includes('collections.png') || img.includes('scanner') || img.includes('register.png') || img.includes('inventory.png') || img.includes('mobile') || project.platformType === 'mobile'))
+											: project.platformType === 'mobile';
+										return (
+											<div class={`thumb-card thumb-${idx + 1} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
+												{isMobile && (
+													<div class="mobile-phone-notch">
+														<span class="notch-pill"></span>
+													</div>
+												)}
+												{img ? (
+													<img src={img} alt={`${project.title} Preview ${idx + 1}`} class="thumb-img" loading="lazy" />
+												) : (
+													<div class="thumb-placeholder">
+														<svg 
+															xmlns="http://www.w3.org/2000/svg" 
+															width="32" 
+															height="32" 
+															viewBox="0 0 24 24" 
+															fill="none" 
+															stroke="currentColor" 
+															stroke-width="1.5" 
+															stroke-linecap="round" 
+															stroke-linejoin="round"
+															class="placeholder-icon"
+														>
+															{isMobile ? (
+																<>
+																	<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+																	<line x1="12" x2="12.01" y1="18" y2="18"></line>
+																</>
+															) : (
+																<>
+																	<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+																	<circle cx="8.5" cy="8.5" r="1.5"></circle>
+																	<polyline points="21 15 16 10 5 21"></polyline>
+																</>
+															)}
+														</svg>
+														<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx + 1}` : `PREVIEW 0${idx + 1}`}</span>
+													</div>
+												)}
 											</div>
-										)}
-										{img ? (
-											<img src={img} alt={`${project.title} Preview ${idx}`} class="thumb-img" loading="lazy" />
-										) : (
-											<div class="thumb-placeholder">
-												<svg 
-													xmlns="http://www.w3.org/2000/svg" 
-													width="32" 
-													height="32" 
-													viewBox="0 0 24 24" 
-													fill="none" 
-													stroke="currentColor" 
-													stroke-width="1.5" 
-													stroke-linecap="round" 
-													stroke-linejoin="round"
-													class="placeholder-icon"
-												>
-													{isMobile ? (
-														<>
-															<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-															<line x1="12" x2="12.01" y1="18" y2="18"></line>
-														</>
-													) : (
-														<>
-															<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-															<circle cx="8.5" cy="8.5" r="1.5"></circle>
-															<polyline points="21 15 16 10 5 21"></polyline>
-														</>
-													)}
-												</svg>
-												<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx}` : `PREVIEW 0${idx}`}</span>
-											</div>
-										)}
-									</div>
-								);
-							})}
-						</div>
-					</div>
+										);
+									})}
+								</div>
+							</div>
+						);
+					})()}
 				</a>
 			))}
 		</div>
@@ -217,30 +212,239 @@ const education = [
 		</div>
 
 		<div class="education-grid">
-			{education.map((item) => (
-				<div class="education-card card font-mono">
-					<div class="edu-top-row">
-						<span class="edu-badge">{item.badge}</span>
-						<span class="edu-gpa font-dot">{item.gpa}</span>
+			<!-- B.Sc. CSE -->
+			<div class="education-card card font-mono">
+				<div class="edu-top-row">
+					<div class="edu-badge-wrap">
+						<span class="edu-badge">{bscCseProgram.badge}</span>
+						<span class="edu-credits-tag font-mono">{bscCseProgram.totalCredits} Credits • 11 Semesters</span>
 					</div>
-					<h3 class="edu-degree">{item.degree}</h3>
-					<div class="edu-inst-row">
-						<span class="edu-inst">{item.institution}</span>
-						<span class="edu-divider">•</span>
-						<span class="edu-period">{item.period}</span>
-					</div>
-					<p class="edu-summary">{item.summary}</p>
-					
-					<div class="edu-courses">
-						<span class="edu-course-label">Focus Areas:</span>
-						<div class="edu-course-tags">
-							{item.courses.map((course) => (
-								<span class="edu-tag">{course}</span>
-							))}
+					<span class="edu-gpa font-dot">CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</span>
+				</div>
+				<div class="edu-card-main">
+					{bscCseProgram.logo && (
+						<div class="edu-card-logo-box">
+							<img
+								src={bscCseProgram.logo}
+								alt={`${bscCseProgram.institution} Crest`}
+								class="edu-card-logo"
+								width="52"
+								height="52"
+								loading="lazy"
+							/>
+						</div>
+					)}
+					<div class="edu-card-text">
+						<h3 class="edu-degree">{bscCseProgram.degree}</h3>
+						<div class="edu-inst-row">
+							<a
+								href={bscCseProgram.institutionUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inst-web-link"
+								title={`Visit ${bscCseProgram.institution} Website`}
+							>
+								<span>{bscCseProgram.institution}</span>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15 3 21 3 21 9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+							</a>
+							<span class="edu-divider">•</span>
+							<span class="edu-period">{bscCseProgram.period}</span>
 						</div>
 					</div>
 				</div>
-			))}
+				<p class="edu-summary">{bscCseProgram.summary}</p>
+				
+				<div class="edu-courses">
+					<span class="edu-course-label font-dot">Core Specializations:</span>
+					<div class="edu-course-tags">
+						{bscCseProgram.keyFocusAreas.slice(0, 4).map((area) => (
+							<span class="edu-tag">{area}</span>
+						))}
+					</div>
+				</div>
+
+				<div class="edu-footer-link">
+					<a href="/education/bsc-cse" class="transcript-link font-dot">
+						<span>View B.Sc. in CSE Full Details & Transcript</span>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
+			</div>
+
+			<!-- HSC Science -->
+			<div class="education-card card font-mono">
+				<div class="edu-top-row">
+					<div class="edu-badge-wrap">
+						<span class="edu-badge">{hscScienceProgram.badge}</span>
+						<span class="edu-credits-tag font-mono">{hscScienceProgram.field}</span>
+					</div>
+					<span class="edu-gpa font-dot">GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}</span>
+				</div>
+
+				<div class="edu-card-main">
+					{hscScienceProgram.logo && (
+						<div class="edu-card-logo-box ndc-card-logo-box">
+							<img
+								src={hscScienceProgram.logo}
+								alt={`${hscScienceProgram.institution} Logo`}
+								class="edu-card-logo"
+								width="90"
+								height="40"
+								loading="lazy"
+							/>
+						</div>
+					)}
+					<div class="edu-card-text">
+						<h3 class="edu-degree">{hscScienceProgram.degree}</h3>
+						<div class="edu-inst-row">
+							<a
+								href={hscScienceProgram.institutionUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inst-web-link"
+								title={`Visit ${hscScienceProgram.institution} Website`}
+							>
+								<span>{hscScienceProgram.institution}</span>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15 3 21 3 21 9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+							</a>
+							<span class="edu-divider">•</span>
+							<span class="edu-period">{hscScienceProgram.period}</span>
+						</div>
+					</div>
+				</div>
+				<p class="edu-summary">{hscScienceProgram.summary}</p>
+				
+				<div class="edu-courses">
+					<span class="edu-course-label font-dot">Science Curriculum:</span>
+					<div class="edu-course-tags">
+						{hscScienceProgram.keyCourses.map((c) => (
+							<span class="edu-tag">{c}</span>
+						))}
+					</div>
+				</div>
+
+				{hscScienceProgram.coCurricular && (
+					<div class="edu-courses">
+						<span class="edu-course-label font-dot">Co-Curricular Clubs:</span>
+						<div class="edu-course-tags">
+							{hscScienceProgram.coCurricular.map((club) => (
+								<span class="edu-tag club-tag">{club}</span>
+							))}
+						</div>
+					</div>
+				)}
+
+				<div class="edu-footer-link">
+					<a href="/education/hsc-science" class="transcript-link font-dot">
+						<span>View Notre Dame College HSC Details & Curriculum</span>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Academic Research & Thesis Section -->
+	<section id="research" class="section">
+		<div class="section-header">
+			<div class="section-label-group">
+				<span class="section-tag font-dot">04 // RESEARCH & PUBLICATIONS</span>
+				<h2 class="section-title font-dot">Final Year Thesis Research</h2>
+			</div>
+			<p class="section-desc font-mono">
+				Empirical computer vision and optical character recognition (OCR) research defended at Daffodil International University.
+			</p>
+		</div>
+
+		<div class="research-spotlight-card card font-mono">
+			<div class="research-top-row">
+				<div class="research-badge-wrap">
+					<span class="research-badge">{thesis.badge}</span>
+					<span class="research-inst-tag font-mono">{thesis.institution} • Project #{thesis.projectNumber}</span>
+				</div>
+				<span class="research-acc font-dot">DenseNet Peak: 97.93% Vowel / 95.99% Consonant</span>
+			</div>
+
+			<h3 class="research-title font-dot">
+				<a href="/research/01-bangla-hwcr-ekush" class="research-title-link">
+					{thesis.title}
+				</a>
+			</h3>
+
+			<p class="research-abstract">
+				{thesis.abstract}
+			</p>
+
+			<div class="research-metrics-grid">
+				<div class="r-metric-box">
+					<span class="r-metric-val font-dot">97.93%</span>
+					<span class="r-metric-lbl">Vowel Accuracy (F1: 0.98)</span>
+				</div>
+				<div class="r-metric-box">
+					<span class="r-metric-val font-dot">95.99%</span>
+					<span class="r-metric-lbl">Consonant Accuracy (F1: 0.96)</span>
+				</div>
+				<div class="r-metric-box">
+					<span class="r-metric-val font-dot">80,000</span>
+					<span class="r-metric-lbl">Ekush Dataset Images</span>
+				</div>
+				<div class="r-metric-box">
+					<span class="r-metric-val font-dot">16 Models</span>
+					<span class="r-metric-lbl">Empirical Benchmarks</span>
+				</div>
+			</div>
+
+			<div class="research-footer-row">
+				<a href="/research/01-bangla-hwcr-ekush" class="research-cta-primary font-dot">
+					<span>View Full Thesis Research & 16-Model Benchmarks</span>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+						<polyline points="12 5 19 12 12 19"></polyline>
+					</svg>
+				</a>
+
+				<a
+					href={thesis.officialRepositoryUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="research-cta-secondary font-mono"
+				>
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+						<polyline points="15 3 21 3 21 9"></polyline>
+						<line x1="10" y1="14" x2="21" y2="3"></line>
+					</svg>
+					<span>DIU Repository Listing</span>
+				</a>
+
+				<a
+					href={thesis.pdfDownloadUrl}
+					target="_blank"
+					download="Bangla-HWCR-Ekush-Thesis-MarcelDavidBaroi.pdf"
+					class="research-cta-secondary font-mono"
+				>
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					<span>Download PDF (5.4 MB)</span>
+				</a>
+			</div>
 		</div>
 	</section>
 </BaseLayout>
@@ -522,8 +726,28 @@ const education = [
 		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
+	.mosaic-desktop.mosaic-count-1 {
+		width: 440px;
+		grid-template-columns: 1fr;
+		right: -20px;
+		bottom: -30px;
+		transform: rotate(-14deg) skew(-1deg);
+	}
+
+	.mosaic-desktop.mosaic-count-2 {
+		width: 520px;
+		grid-template-columns: repeat(2, 1fr);
+		right: -30px;
+		bottom: -40px;
+		transform: rotate(-16deg) skew(-1deg);
+	}
+
 	.project-showcase-card:hover .mosaic-desktop {
 		transform: rotate(-16deg) skew(-1deg) translateY(-10px);
+	}
+
+	.project-showcase-card:hover .mosaic-desktop.mosaic-count-1 {
+		transform: rotate(-10deg) skew(0deg) translateY(-10px);
 	}
 
 	/* Mobile Screenshot Mosaic: 9:19.5 Slim Smartphone Grid */
@@ -539,8 +763,28 @@ const education = [
 		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
+	.mosaic-mobile.mosaic-count-1 {
+		width: 220px;
+		grid-template-columns: 1fr;
+		right: 30px;
+		bottom: -30px;
+		transform: rotate(-8deg) skew(0deg);
+	}
+
+	.mosaic-mobile.mosaic-count-2 {
+		width: 340px;
+		grid-template-columns: repeat(2, 1fr);
+		right: 0px;
+		bottom: -35px;
+		transform: rotate(-10deg) skew(0deg);
+	}
+
 	.project-showcase-card:hover .mosaic-mobile {
 		transform: rotate(-10deg) skew(0deg) translateY(-12px);
+	}
+
+	.project-showcase-card:hover .mosaic-mobile.mosaic-count-1 {
+		transform: rotate(-4deg) skew(0deg) translateY(-12px);
 	}
 
 	.thumb-card {
@@ -859,6 +1103,46 @@ const education = [
 		color: var(--accent);
 	}
 
+	.edu-card-main {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		margin: 0.25rem 0;
+	}
+
+	.edu-card-logo-box {
+		width: 52px;
+		height: 52px;
+		flex-shrink: 0;
+		padding: 4px;
+		background: #fffdfa;
+		border-radius: 12px;
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.04);
+	}
+
+	.ndc-card-logo-box {
+		width: 88px;
+		height: 48px;
+		padding: 3px 6px;
+	}
+
+	.edu-card-logo {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+
+	.edu-card-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
 	.edu-degree {
 		font-size: clamp(1.25rem, 2.2vw, 1.5rem);
 		font-weight: 700;
@@ -874,10 +1158,25 @@ const education = [
 		flex-wrap: wrap;
 	}
 
+	.inst-web-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		color: var(--accent);
+		font-weight: 600;
+		transition: color 0.15s ease;
+	}
+
+	.inst-web-link:hover {
+		color: var(--accent-hover);
+		text-decoration: underline;
+	}
+
 	.edu-inst {
 		color: var(--accent);
 		font-weight: 600;
 	}
+
 
 	.edu-divider {
 		color: var(--text-muted);
@@ -912,6 +1211,21 @@ const education = [
 		font-weight: 600;
 	}
 
+	.edu-badge-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.edu-credits-tag {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.06);
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+	}
+
 	.edu-course-tags {
 		display: flex;
 		flex-wrap: wrap;
@@ -925,4 +1239,182 @@ const education = [
 		border-radius: 4px;
 		color: var(--text-main);
 	}
+
+	.edu-tag.club-tag {
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.15);
+		font-weight: 600;
+	}
+
+
+	.edu-footer-link {
+		margin-top: 0.5rem;
+		padding-top: 0.75rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.12);
+	}
+
+	.transcript-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--accent);
+		transition: all 0.15s ease;
+	}
+
+	.transcript-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(3px);
+	}
+
+	/* Research Spotlight Card */
+	.research-spotlight-card {
+		padding: 2.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+		border-radius: 16px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+	}
+
+	.research-top-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.research-badge-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.research-badge {
+		font-size: 0.75rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: rgba(180, 33, 53, 0.1);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+		padding: 0.2rem 0.65rem;
+		border-radius: 9999px;
+		font-weight: 700;
+	}
+
+	.research-inst-tag {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.research-acc {
+		font-size: 0.88rem;
+		font-weight: 700;
+		color: #2e7d32;
+	}
+
+	.research-title {
+		font-size: clamp(1.25rem, 2.4vw, 1.65rem);
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+	}
+
+	.research-title-link {
+		color: var(--text-main);
+		transition: color 0.15s ease;
+	}
+
+	.research-title-link:hover {
+		color: var(--accent);
+	}
+
+	.research-abstract {
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.research-metrics-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+		padding: 1.15rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	@media (max-width: 768px) {
+		.research-metrics-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.r-metric-box {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.r-metric-val {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.r-metric-lbl {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.research-footer-row {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+		flex-wrap: wrap;
+		margin-top: 0.25rem;
+	}
+
+	.research-cta-primary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.65rem 1.25rem;
+		background: var(--btn-primary);
+		color: #fffdfa;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 700;
+		transition: all 0.15s ease;
+	}
+
+	.research-cta-primary:hover {
+		background: var(--accent-hover);
+		transform: translateY(-1px);
+	}
+
+	.research-cta-secondary {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.65rem 1rem;
+		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-main);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		border-radius: 8px;
+		font-size: 0.82rem;
+		font-weight: 600;
+		transition: all 0.15s ease;
+	}
+
+	.research-cta-secondary:hover {
+		background: rgba(95, 80, 56, 0.12);
+		color: var(--accent);
+	}
+
 </style>

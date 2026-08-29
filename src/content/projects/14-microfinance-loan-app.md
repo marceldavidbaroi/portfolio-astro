@@ -31,6 +31,8 @@ techStack:
 
 images:
   - "/images/projects/microfinance/collections.png"
+  - "/images/projects/microfinance/web-collections.png"
+  - "/images/projects/microfinance/web-members.png"
 
 visualAssets:
   heroMockup: "/images/projects/microfinance/collections.png"
@@ -164,59 +166,16 @@ sequenceDiagram
 
 ---
 
-## Visual Workflows & Mobile UI Wireframes
+## Visual Workflows & Production Interfaces
 
-### 1. Field Agent Mobile Collection Dashboard & Route List
+### 1. Field Mobile Android App — Route Collection List
+![Field Agent Collection Route List [mobile]](/images/projects/microfinance/collections.png#mobile)
 
-```
-+-------------------------------------------------------------+
-| [=] Microfinance Agent               [Sync: OK] (Agent: 042)|
-+-------------------------------------------------------------+
-|  TODAY'S TARGET: ৳ 45,000      |  COLLECTED: ৳ 32,500 (72%) |
-|  BORROWERS: 24 Total           |  COLLECTED: 18 / 24 Paid   |
-+-------------------------------------------------------------+
-| [ All (24) ]   [ Due Today (6) ]   [ Overdue (0) ]   [ Paid (18)]
-+-------------------------------------------------------------+
-|                                                             |
-|  [CARD: BORROWER #1042]                           [DUE NOW] |
-|  Borrower: Fatima Begum            Loan A/C: #LN-8832       |
-|  Address: House 14, Ward 3, Sector 2                        |
-|  Installment Due: ৳ 1,250          Remaining Balance: ৳ 8,750|
-|  [ CALL BORROWER ]               [ COLLECT PAYMENT (৳ 1,250) ]|
-|-------------------------------------------------------------|
-|                                                             |
-|  [CARD: BORROWER #1043]                           [DUE NOW] |
-|  Borrower: Abdul Karim             Loan A/C: #LN-8839       |
-|  Address: Road 4, Bazar Point                               |
-|  Installment Due: ৳ 2,000          Remaining Balance: ৳ 14,000|
-|  [ CALL BORROWER ]               [ COLLECT PAYMENT (৳ 2,000) ]|
-|-------------------------------------------------------------|
-|                                                             |
-|  [CARD: BORROWER #1039]                              [PAID] |
-|  Borrower: Ruma Akter              Receipt: #RC-90412       |
-|  Amount Paid: ৳ 1,500 (Cash)       Time: 10:42 AM           |
-+-------------------------------------------------------------+
-|  [ Route List ]     [ Quick Collect ]     [ Day Summary ]   |
-+-------------------------------------------------------------+
-```
+### 2. Web Management Portal — Branch Collections Ledger
+![Web Portal Branch Collection Ledger [desktop]](/images/projects/microfinance/web-collections.png#desktop)
 
-### 2. Quick Payment Modal & Branch Settlement View
-
-```
-+-------------------------------------------------------------+
-|  COLLECT LOAN PAYMENT - Fatima Begum                        |
-+-------------------------------------------------------------+
-|  Loan Account    : #LN-8832 (Micro-Enterprise Loan)         |
-|  Installment No. : 12 of 24                                 |
-|  Scheduled Due   : ৳ 1,250                                  |
-|                                                             |
-|  Amount Received : [ 1,250                                ] |
-|  Payment Method  : (*) Cash   ( ) Mobile Money (bKash/Nagad)|
-|  Collection Note : [ Routine weekly installment           ] |
-|                                                             |
-|  [ CANCEL ]                    [ CONFIRM & ISSUE RECEIPT ]  |
-+-------------------------------------------------------------+
-```
+### 3. Web Management Portal — Member Accounts & Loan Approvals
+![Web Portal Member Loan Accounts [desktop]](/images/projects/microfinance/web-members.png#desktop)
 
 ---
 

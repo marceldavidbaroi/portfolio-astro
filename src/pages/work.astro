@@ -37,55 +37,65 @@ const projects = allProjects
 					</div>
 
 					<!-- Bottom Image Slot: Desktop (16:10) or Mobile (9:19.5 Phone) Screenshots -->
-					<div class={`card-image-slot slot-${project.platformType || 'desktop'}`}>
-						<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'}`}>
-							{[1, 2, 3, 4].map((idx) => {
-								const img = project.images && project.images[idx - 1] && !project.images[idx - 1].includes('thumb-') ? project.images[idx - 1] : null;
-								const isMobile = project.platformType === 'mobile';
-								return (
-									<div class={`thumb-card thumb-${idx} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
-										{isMobile && (
-											<div class="mobile-phone-notch">
-												<span class="notch-pill"></span>
+					{(() => {
+						const validImages = (project.images || []).filter((img) => img && !img.includes('thumb-'));
+						const thumbsToRender = validImages.length > 0 ? validImages.slice(0, 4) : [null, null, null, null];
+						const count = thumbsToRender.length;
+						const isBlankMode = validImages.length === 0;
+
+						return (
+							<div class={`card-image-slot slot-${project.platformType || 'desktop'} count-${count}`}>
+								<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'} mosaic-count-${count}`}>
+									{thumbsToRender.map((img, idx) => {
+										const isMobile = img 
+											? (!img.includes('web-') && !img.includes('dashboard') && !img.includes('chart-of-accounts') && !img.includes('balance-sheet') && !img.includes('reports') && (img.includes('collections.png') || img.includes('scanner') || img.includes('register.png') || img.includes('inventory.png') || img.includes('mobile') || project.platformType === 'mobile'))
+											: project.platformType === 'mobile';
+										return (
+											<div class={`thumb-card thumb-${idx + 1} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
+												{isMobile && (
+													<div class="mobile-phone-notch">
+														<span class="notch-pill"></span>
+													</div>
+												)}
+												{img ? (
+													<img src={img} alt={`${project.title} Preview ${idx + 1}`} class="thumb-img" loading="lazy" />
+												) : (
+													<div class="thumb-placeholder">
+														<svg 
+															xmlns="http://www.w3.org/2000/svg" 
+															width="32" 
+															height="32" 
+															viewBox="0 0 24 24" 
+															fill="none" 
+															stroke="currentColor" 
+															stroke-width="1.5" 
+															stroke-linecap="round" 
+															stroke-linejoin="round"
+															class="placeholder-icon"
+														>
+															{isMobile ? (
+																<>
+																	<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
+																	<line x1="12" x2="12.01" y1="18" y2="18"></line>
+																</>
+															) : (
+																<>
+																	<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+																	<circle cx="8.5" cy="8.5" r="1.5"></circle>
+																	<polyline points="21 15 16 10 5 21"></polyline>
+																</>
+															)}
+														</svg>
+														<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx + 1}` : `PREVIEW 0${idx + 1}`}</span>
+													</div>
+												)}
 											</div>
-										)}
-										{img ? (
-											<img src={img} alt={`${project.title} Preview ${idx}`} class="thumb-img" loading="lazy" />
-										) : (
-											<div class="thumb-placeholder">
-												<svg 
-													xmlns="http://www.w3.org/2000/svg" 
-													width="32" 
-													height="32" 
-													viewBox="0 0 24 24" 
-													fill="none" 
-													stroke="currentColor" 
-													stroke-width="1.5" 
-													stroke-linecap="round" 
-													stroke-linejoin="round"
-													class="placeholder-icon"
-												>
-													{isMobile ? (
-														<>
-															<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-															<line x1="12" x2="12.01" y1="18" y2="18"></line>
-														</>
-													) : (
-														<>
-															<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-															<circle cx="8.5" cy="8.5" r="1.5"></circle>
-															<polyline points="21 15 16 10 5 21"></polyline>
-														</>
-													)}
-												</svg>
-												<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx}` : `PREVIEW 0${idx}`}</span>
-											</div>
-										)}
-									</div>
-								);
-							})}
-						</div>
-					</div>
+										);
+									})}
+								</div>
+							</div>
+						);
+					})()}
 				</a>
 			))}
 		</div>
@@ -264,8 +274,28 @@ const projects = allProjects
 		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
+	.mosaic-desktop.mosaic-count-1 {
+		width: 440px;
+		grid-template-columns: 1fr;
+		right: -20px;
+		bottom: -30px;
+		transform: rotate(-14deg) skew(-1deg);
+	}
+
+	.mosaic-desktop.mosaic-count-2 {
+		width: 520px;
+		grid-template-columns: repeat(2, 1fr);
+		right: -30px;
+		bottom: -40px;
+		transform: rotate(-16deg) skew(-1deg);
+	}
+
 	.project-showcase-card:hover .mosaic-desktop {
 		transform: rotate(-16deg) skew(-1deg) translateY(-10px);
+	}
+
+	.project-showcase-card:hover .mosaic-desktop.mosaic-count-1 {
+		transform: rotate(-10deg) skew(0deg) translateY(-10px);
 	}
 
 	/* Mobile Screenshot Mosaic: 9:19.5 Slim Smartphone Grid */
@@ -281,8 +311,28 @@ const projects = allProjects
 		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
+	.mosaic-mobile.mosaic-count-1 {
+		width: 220px;
+		grid-template-columns: 1fr;
+		right: 30px;
+		bottom: -30px;
+		transform: rotate(-8deg) skew(0deg);
+	}
+
+	.mosaic-mobile.mosaic-count-2 {
+		width: 340px;
+		grid-template-columns: repeat(2, 1fr);
+		right: 0px;
+		bottom: -35px;
+		transform: rotate(-10deg) skew(0deg);
+	}
+
 	.project-showcase-card:hover .mosaic-mobile {
 		transform: rotate(-10deg) skew(0deg) translateY(-12px);
+	}
+
+	.project-showcase-card:hover .mosaic-mobile.mosaic-count-1 {
+		transform: rotate(-4deg) skew(0deg) translateY(-12px);
 	}
 
 	.thumb-card {

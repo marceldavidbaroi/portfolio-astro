@@ -1,0 +1,1048 @@
+---
+import {
+	bscCseProgram,
+	hscScienceProgram,
+	ugcGradingSystem,
+	courseCategoryLabels,
+	getAcademicStatistics,
+	type CourseCategory
+} from '../data/education';
+
+const stats = getAcademicStatistics();
+const categories = Object.keys(courseCategoryLabels) as CourseCategory[];
+---
+
+<div class="transcript-wrapper font-mono">
+	<!-- Top Academic Statistics Bar -->
+	<div class="academic-stats-grid">
+		<div class="stat-box card">
+			<span class="stat-label font-dot">CUMULATIVE CGPA</span>
+			<div class="stat-val-group">
+				<span class="stat-num font-dot">3.91</span>
+				<span class="stat-scale font-mono">/ 4.00</span>
+			</div>
+			<span class="stat-badge success">Outstanding Honors</span>
+		</div>
+
+		<div class="stat-box card">
+			<span class="stat-label font-dot">TOTAL CREDITS</span>
+			<div class="stat-val-group">
+				<span class="stat-num font-dot">142.0</span>
+				<span class="stat-scale font-mono">Credits</span>
+			</div>
+			<span class="stat-badge">11 Semesters</span>
+		</div>
+
+		<div class="stat-box card">
+			<span class="stat-label font-dot">COURSE MASTERY</span>
+			<div class="stat-val-group">
+				<span class="stat-num font-dot">88.6%</span>
+				<span class="stat-scale font-mono">A+ / A</span>
+			</div>
+			<span class="stat-badge highlight">62 / 70 Courses</span>
+		</div>
+
+		<div class="stat-box card">
+			<span class="stat-label font-dot">SOFTWARE PROJECTS</span>
+			<div class="stat-val-group">
+				<span class="stat-num font-dot">6 / 6</span>
+				<span class="stat-scale font-mono">Projects</span>
+			</div>
+			<span class="stat-badge success">100% Grade A+</span>
+		</div>
+	</div>
+
+	<!-- Interactive Controls Toolbar -->
+	<div class="transcript-toolbar card">
+		<div class="toolbar-left">
+			<div class="view-switchers" role="tablist">
+				<button class="view-tab active" data-view="semesters" id="btn-view-semesters">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+						<line x1="16" y1="2" x2="16" y2="6"></line>
+						<line x1="8" y1="2" x2="8" y2="6"></line>
+						<line x1="3" y1="10" x2="21" y2="10"></line>
+					</svg>
+					Semester View
+				</button>
+				<button class="view-tab" data-view="categories" id="btn-view-categories">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+						<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+					</svg>
+					Discipline Clusters
+				</button>
+				<button class="view-tab" data-view="ugc-scale" id="btn-view-ugc">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<circle cx="12" cy="12" r="10"></circle>
+						<line x1="12" y1="16" x2="12" y2="12"></line>
+						<line x1="12" y1="8" x2="12.01" y2="8"></line>
+					</svg>
+					UGC Grading Scale
+				</button>
+			</div>
+		</div>
+
+		<div class="toolbar-right">
+			<div class="search-wrapper">
+				<svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="11" cy="11" r="8"></circle>
+					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				</svg>
+				<input
+					type="text"
+					id="course-search-input"
+					placeholder="Search course code or title..."
+					class="course-search-input font-mono"
+				/>
+				<button id="clear-search-btn" class="clear-search hidden" aria-label="Clear search">✕</button>
+			</div>
+			<button id="toggle-expand-all" class="toolbar-btn font-mono">
+				<span id="expand-btn-text">Expand All</span>
+			</button>
+		</div>
+	</div>
+
+	<!-- VIEW 1: Semester Accordion View (Default) -->
+	<div id="semesters-view" class="view-panel active">
+		<div class="semesters-list">
+			{bscCseProgram.semesters.map((sem, semIdx) => (
+				<details class="semester-accordion card" open={semIdx < 2} data-semester={sem.semesterNumber}>
+					<summary class="semester-summary">
+						<div class="sem-summary-left">
+							<span class="sem-chevron">
+								<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<polyline points="6 9 12 15 18 9"></polyline>
+								</svg>
+							</span>
+							<span class="sem-title font-dot">{sem.semesterTitle}</span>
+							<span class="sem-course-count font-mono">({sem.courses.length} courses)</span>
+						</div>
+						<div class="sem-summary-right">
+							<span class="sem-credits-badge font-mono">{sem.totalCredit.toFixed(1)} Credits</span>
+							<span class:list={['sem-sgpa-badge font-dot', { perfect: sem.sgpa === 4.0 }]}>
+								SGPA {sem.sgpa.toFixed(2)}
+							</span>
+						</div>
+					</summary>
+
+					<div class="semester-content">
+						<div class="courses-table-container">
+							<table class="courses-table font-mono">
+								<thead>
+									<tr>
+										<th class="th-code">Code</th>
+										<th class="th-title">Course Title</th>
+										<th class="th-category">Domain</th>
+										<th class="th-type">Type</th>
+										<th class="th-credit">Credit</th>
+										<th class="th-grade">Grade</th>
+										<th class="th-points">Point</th>
+									</tr>
+								</thead>
+								<tbody>
+									{sem.courses.map((course) => (
+										<tr class="course-row" data-code={course.code.toLowerCase()} data-title={course.title.toLowerCase()} data-cat={course.category}>
+											<td class="td-code">
+												<span class="code-pill font-mono">{course.code}</span>
+											</td>
+											<td class="td-title">
+												<span class="course-name">{course.title}</span>
+												{course.type === 'project' && (
+													<span class="project-tag">Capstone / Project</span>
+												)}
+											</td>
+											<td class="td-category">
+												<span class:list={['cat-tag', course.category]}>
+													{course.categoryLabel}
+												</span>
+											</td>
+											<td class="td-type">
+												<span class:list={['type-tag', course.type]}>
+													{course.type.toUpperCase()}
+												</span>
+											</td>
+											<td class="td-credit font-mono">{course.credit.toFixed(2)}</td>
+											<td class="td-grade">
+												<span class:list={['grade-pill font-dot', { 'a-plus': course.grade === 'A+', 'a-regular': course.grade === 'A', 'other-grade': course.grade !== 'A+' && course.grade !== 'A' }]}>
+													{course.grade}
+												</span>
+											</td>
+											<td class="td-points font-mono">{course.gradePoint.toFixed(2)}</td>
+										</tr>
+									))}
+								</tbody>
+								<tfoot>
+									<tr class="tfoot-row">
+										<td colspan="4" class="tfoot-label font-dot">Semester Total & SGPA</td>
+										<td class="tfoot-credit font-mono">{sem.totalCredit.toFixed(2)}</td>
+										<td colspan="2" class="tfoot-sgpa font-dot">SGPA: {sem.sgpa.toFixed(2)} / 4.00</td>
+									</tr>
+								</tfoot>
+							</table>
+						</div>
+					</div>
+				</details>
+			))}
+		</div>
+	</div>
+
+	<!-- VIEW 2: Subject Clusters & Category Breakdown -->
+	<div id="categories-view" class="view-panel hidden">
+		<div class="categories-grid">
+			{stats.categoryBreakdown.map((cat) => {
+				const catCourses = bscCseProgram.semesters.flatMap((s) =>
+					s.courses.filter((c) => c.category === cat.category).map((c) => ({ ...c, semNum: s.semesterNumber }))
+				);
+				return (
+					<div class="category-card card font-mono">
+						<div class="category-header">
+							<div class="cat-title-group">
+								<span class="cat-indicator"></span>
+								<h3 class="cat-name font-dot">{cat.label}</h3>
+							</div>
+							<div class="cat-metrics">
+								<span class="cat-credit-badge">{cat.totalCredits.toFixed(1)} Credits</span>
+								<span class="cat-gpa-badge font-dot">Avg {cat.averageGradePoint.toFixed(2)}</span>
+							</div>
+						</div>
+						<p class="cat-description">{cat.description}</p>
+						<div class="cat-course-list">
+							{catCourses.map((c) => (
+								<div class="cat-course-item">
+									<div class="cat-course-left">
+										<span class="cat-code font-mono">{c.code}</span>
+										<span class="cat-title">{c.title}</span>
+									</div>
+									<div class="cat-course-right">
+										<span class="cat-sem-tag">Sem {c.semNum}</span>
+										<span class:list={['grade-pill small font-dot', { 'a-plus': c.grade === 'A+', 'a-regular': c.grade === 'A' }]}>
+											{c.grade}
+										</span>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+				);
+			})}
+		</div>
+	</div>
+
+	<!-- VIEW 3: UGC Grading Scale Reference -->
+	<div id="ugc-scale-view" class="view-panel hidden">
+		<div class="ugc-card card font-mono">
+			<div class="ugc-header">
+				<h3 class="ugc-title font-dot">University Grants Commission (UGC) Uniform Grading System</h3>
+				<p class="ugc-sub">
+					Standardized 4.00 Grade Point Average (GPA) grading system implemented across higher academic institutions in Bangladesh.
+				</p>
+			</div>
+
+			<div class="ugc-table-container">
+				<table class="ugc-table font-mono">
+					<thead>
+						<tr>
+							<th>Numerical Marks (%)</th>
+							<th>Letter Grade</th>
+							<th>Grade Point (GP)</th>
+							<th>Qualitative Remarks</th>
+						</tr>
+					</thead>
+					<tbody>
+						{ugcGradingSystem.map((scale) => (
+							<tr class:list={[{ 'highlight-scale': scale.grade === 'A+' || scale.grade === 'A' }]}>
+								<td class="ugc-marks font-mono">{scale.marksRange}</td>
+								<td class="ugc-grade">
+									<span class:list={['grade-pill font-dot', { 'a-plus': scale.grade === 'A+', 'a-regular': scale.grade === 'A' }]}>
+										{scale.grade}
+									</span>
+								</td>
+								<td class="ugc-gp font-mono">{scale.gradePoint.toFixed(2)}</td>
+								<td class="ugc-remarks">{scale.remarks}</td>
+							</tr>
+						))}
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+	<!-- Search Results Feedback (Hidden by default) -->
+	<div id="search-no-results" class="no-results-box card font-mono hidden">
+		<p>No matching courses found for query. Try searching by course code (e.g. <code>CSE311</code>) or title.</p>
+	</div>
+</div>
+
+<script>
+	function initTranscript() {
+		// View Switching
+		const tabs = document.querySelectorAll<HTMLButtonElement>('.view-tab');
+		const panels = {
+			semesters: document.getElementById('semesters-view'),
+			categories: document.getElementById('categories-view'),
+			'ugc-scale': document.getElementById('ugc-scale-view')
+		};
+
+		tabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				const targetView = tab.getAttribute('data-view');
+				if (!targetView) return;
+
+				tabs.forEach((t) => t.classList.remove('active'));
+				tab.classList.add('active');
+
+				Object.entries(panels).forEach(([key, panel]) => {
+					if (panel) {
+						if (key === targetView) {
+							panel.classList.remove('hidden');
+							panel.classList.add('active');
+						} else {
+							panel.classList.add('hidden');
+							panel.classList.remove('active');
+						}
+					}
+				});
+			});
+		});
+
+		// Expand / Collapse All
+		const toggleBtn = document.getElementById('toggle-expand-all');
+		const btnText = document.getElementById('expand-btn-text');
+		const accordions = document.querySelectorAll<HTMLDetailsElement>('.semester-accordion');
+		let allExpanded = false;
+
+		toggleBtn?.addEventListener('click', () => {
+			allExpanded = !allExpanded;
+			accordions.forEach((acc) => {
+				acc.open = allExpanded;
+			});
+			if (btnText) {
+				btnText.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+			}
+		});
+
+		// Live Course Search Filtering
+		const searchInput = document.getElementById('course-search-input') as HTMLInputElement | null;
+		const clearBtn = document.getElementById('clear-search-btn');
+		const noResults = document.getElementById('search-no-results');
+
+		const filterCourses = (term: string) => {
+			const cleanTerm = term.trim().toLowerCase();
+			let visibleCount = 0;
+
+			if (clearBtn) {
+				if (cleanTerm.length > 0) {
+					clearBtn.classList.remove('hidden');
+				} else {
+					clearBtn.classList.add('hidden');
+				}
+			}
+
+			// If user searches, switch to semester view automatically
+			if (cleanTerm.length > 0 && panels.semesters?.classList.contains('hidden')) {
+				document.getElementById('btn-view-semesters')?.click();
+			}
+
+			accordions.forEach((acc) => {
+				const rows = acc.querySelectorAll<HTMLTableRowElement>('.course-row');
+				let semHasMatch = false;
+
+				rows.forEach((row) => {
+					const code = row.getAttribute('data-code') || '';
+					const title = row.getAttribute('data-title') || '';
+					const matches = cleanTerm === '' || code.includes(cleanTerm) || title.includes(cleanTerm);
+
+					if (matches) {
+						row.style.display = '';
+						semHasMatch = true;
+						visibleCount++;
+					} else {
+						row.style.display = 'none';
+					}
+				});
+
+				if (cleanTerm !== '') {
+					if (semHasMatch) {
+						acc.style.display = '';
+						acc.open = true;
+					} else {
+						acc.style.display = 'none';
+					}
+				} else {
+					acc.style.display = '';
+				}
+			});
+
+			if (noResults) {
+				if (cleanTerm !== '' && visibleCount === 0) {
+					noResults.classList.remove('hidden');
+				} else {
+					noResults.classList.add('hidden');
+				}
+			}
+		};
+
+		searchInput?.addEventListener('input', (e) => {
+			filterCourses((e.target as HTMLInputElement).value);
+		});
+
+		clearBtn?.addEventListener('click', () => {
+			if (searchInput) {
+				searchInput.value = '';
+				filterCourses('');
+				searchInput.focus();
+			}
+		});
+	}
+
+	// Initialize on page load and on Astro navigation
+	initTranscript();
+	document.addEventListener('astro:page-load', initTranscript);
+</script>
+
+<style>
+	.transcript-wrapper {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		margin-top: 1rem;
+	}
+
+	/* Stats Bar */
+	.academic-stats-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+	}
+
+	@media (max-width: 900px) {
+		.academic-stats-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.academic-stats-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.stat-box {
+		padding: 1.25rem 1.25rem;
+		border-radius: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		border: 1px solid var(--card-border);
+		background-color: var(--card-bg);
+		transition: transform 0.2s ease, border-color 0.2s ease;
+	}
+
+	.stat-box:hover {
+		transform: translateY(-2px);
+		border-color: rgba(95, 80, 56, 0.28);
+	}
+
+	.stat-label {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+	}
+
+	.stat-val-group {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+	}
+
+	.stat-num {
+		font-size: 1.85rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1;
+	}
+
+	.stat-scale {
+		font-size: 0.85rem;
+		color: var(--text-muted);
+	}
+
+	.stat-badge {
+		font-size: 0.75rem;
+		padding: 0.2rem 0.55rem;
+		border-radius: 6px;
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+		align-self: flex-start;
+		font-weight: 500;
+	}
+
+	.stat-badge.success {
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+		border: 1px solid rgba(46, 125, 50, 0.25);
+	}
+
+	.stat-badge.highlight {
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+	}
+
+	/* Toolbar */
+	.transcript-toolbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.85rem 1.25rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+	}
+
+	.view-switchers {
+		display: flex;
+		gap: 0.35rem;
+		background: rgba(95, 80, 56, 0.06);
+		padding: 0.25rem;
+		border-radius: 8px;
+	}
+
+	.view-tab {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		padding: 0.45rem 0.85rem;
+		border-radius: 6px;
+		border: none;
+		background: transparent;
+		color: var(--text-muted);
+		font-family: var(--font-mono);
+		font-size: 0.82rem;
+		font-weight: 500;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.view-tab:hover {
+		color: var(--text-main);
+		background: rgba(95, 80, 56, 0.08);
+	}
+
+	.view-tab.active {
+		background: var(--btn-primary);
+		color: #fffdfa;
+	}
+
+	.toolbar-right {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.search-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
+
+	.search-icon {
+		position: absolute;
+		left: 0.75rem;
+		color: var(--text-muted);
+		pointer-events: none;
+	}
+
+	.course-search-input {
+		padding: 0.45rem 1.75rem 0.45rem 2.2rem;
+		border-radius: 6px;
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		background: #fffdfa;
+		color: var(--text-main);
+		font-size: 0.82rem;
+		width: 240px;
+		outline: none;
+		transition: border-color 0.15s ease;
+	}
+
+	.course-search-input:focus {
+		border-color: var(--accent);
+	}
+
+	.clear-search {
+		position: absolute;
+		right: 0.5rem;
+		background: transparent;
+		border: none;
+		color: var(--text-muted);
+		cursor: pointer;
+		font-size: 0.85rem;
+		padding: 0.2rem;
+	}
+
+	.toolbar-btn {
+		padding: 0.45rem 0.85rem;
+		border-radius: 6px;
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		background: #fffdfa;
+		color: var(--text-main);
+		font-size: 0.82rem;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.toolbar-btn:hover {
+		background: rgba(95, 80, 56, 0.08);
+		border-color: var(--text-muted);
+	}
+
+	/* Accordion Styles */
+	.semesters-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.semester-accordion {
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		overflow: hidden;
+		transition: border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.semester-accordion[open] {
+		border-color: rgba(95, 80, 56, 0.25);
+		box-shadow: 0 4px 16px rgba(95, 80, 56, 0.04);
+	}
+
+	.semester-summary {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 1rem 1.25rem;
+		cursor: pointer;
+		user-select: none;
+		list-style: none;
+		background: rgba(95, 80, 56, 0.03);
+		transition: background-color 0.15s ease;
+	}
+
+	.semester-summary::-webkit-details-marker {
+		display: none;
+	}
+
+	.semester-summary:hover {
+		background: rgba(95, 80, 56, 0.06);
+	}
+
+	.sem-summary-left {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+	}
+
+	.sem-chevron {
+		display: inline-flex;
+		transition: transform 0.2s ease;
+		color: var(--text-muted);
+	}
+
+	.semester-accordion[open] .sem-chevron {
+		transform: rotate(180deg);
+	}
+
+	.sem-title {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.sem-course-count {
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.sem-summary-right {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+	}
+
+	.sem-credits-badge {
+		font-size: 0.78rem;
+		padding: 0.2rem 0.55rem;
+		border-radius: 4px;
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+	}
+
+	.sem-sgpa-badge {
+		font-size: 0.85rem;
+		font-weight: 700;
+		padding: 0.25rem 0.65rem;
+		border-radius: 6px;
+		background: rgba(95, 80, 56, 0.12);
+		color: var(--text-main);
+		border: 1px solid rgba(95, 80, 56, 0.2);
+	}
+
+	.sem-sgpa-badge.perfect {
+		background: rgba(46, 125, 50, 0.15);
+		color: #2e7d32;
+		border-color: rgba(46, 125, 50, 0.3);
+	}
+
+	/* Table Inside Accordion */
+	.courses-table-container {
+		overflow-x: auto;
+		padding: 0.5rem 1.25rem 1.25rem;
+	}
+
+	.courses-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.82rem;
+		text-align: left;
+	}
+
+	.courses-table th {
+		padding: 0.65rem 0.75rem;
+		color: var(--text-muted);
+		font-weight: 600;
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.courses-table td {
+		padding: 0.65rem 0.75rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.06);
+		vertical-align: middle;
+	}
+
+	.course-row:hover td {
+		background: rgba(95, 80, 56, 0.03);
+	}
+
+	.code-pill {
+		display: inline-block;
+		font-weight: 700;
+		color: var(--btn-primary);
+		background: rgba(95, 80, 56, 0.08);
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		font-size: 0.78rem;
+		letter-spacing: 0.02em;
+	}
+
+	.course-name {
+		font-weight: 500;
+		color: var(--text-main);
+	}
+
+	.project-tag {
+		display: inline-block;
+		font-size: 0.68rem;
+		margin-left: 0.5rem;
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+		background: rgba(180, 33, 53, 0.1);
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.cat-tag {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		white-space: nowrap;
+	}
+
+	.type-tag {
+		font-size: 0.68rem;
+		padding: 0.15rem 0.4rem;
+		border-radius: 4px;
+		font-weight: 600;
+		letter-spacing: 0.03em;
+	}
+
+	.type-tag.theory {
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+	}
+
+	.type-tag.lab {
+		background: rgba(2, 136, 209, 0.12);
+		color: #0277bd;
+	}
+
+	.type-tag.project {
+		background: rgba(180, 33, 53, 0.12);
+		color: var(--accent);
+	}
+
+	.grade-pill {
+		display: inline-block;
+		font-weight: 700;
+		font-size: 0.85rem;
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+	}
+
+	.grade-pill.a-plus {
+		color: #2e7d32;
+		background: rgba(46, 125, 50, 0.12);
+	}
+
+	.grade-pill.a-regular {
+		color: #1565c0;
+		background: rgba(21, 101, 192, 0.1);
+	}
+
+	.grade-pill.other-grade {
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.08);
+	}
+
+	.grade-pill.small {
+		font-size: 0.75rem;
+		padding: 0.1rem 0.35rem;
+	}
+
+	.tfoot-row td {
+		border-top: 1px solid rgba(95, 80, 56, 0.16);
+		border-bottom: none;
+		padding-top: 0.85rem;
+		font-weight: 700;
+	}
+
+	.tfoot-label {
+		color: var(--text-muted);
+		text-align: right;
+	}
+
+	.tfoot-credit {
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.tfoot-sgpa {
+		color: var(--text-main);
+		font-weight: 700;
+		font-size: 0.9rem;
+	}
+
+	/* Categories View */
+	.categories-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 800px) {
+		.categories-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.category-card {
+		padding: 1.25rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.category-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	.cat-title-group {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.cat-indicator {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: var(--accent);
+	}
+
+	.cat-name {
+		font-size: 0.98rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.cat-metrics {
+		display: flex;
+		gap: 0.4rem;
+	}
+
+	.cat-credit-badge {
+		font-size: 0.72rem;
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+	}
+
+	.cat-gpa-badge {
+		font-size: 0.72rem;
+		font-weight: 700;
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+	}
+
+	.cat-description {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		line-height: 1.45;
+	}
+
+	.cat-course-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+		margin-top: 0.25rem;
+	}
+
+	.cat-course-item {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.35rem 0.5rem;
+		border-radius: 6px;
+		background: rgba(95, 80, 56, 0.03);
+		font-size: 0.78rem;
+	}
+
+	.cat-course-left {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.cat-code {
+		font-weight: 700;
+		color: var(--btn-primary);
+		font-size: 0.75rem;
+	}
+
+	.cat-title {
+		color: var(--text-main);
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	.cat-course-right {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		flex-shrink: 0;
+	}
+
+	.cat-sem-tag {
+		font-size: 0.68rem;
+		color: var(--text-muted);
+	}
+
+	/* UGC Scale View */
+	.ugc-card {
+		padding: 1.5rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+	}
+
+	.ugc-header {
+		margin-bottom: 1.25rem;
+	}
+
+	.ugc-title {
+		font-size: 1.1rem;
+		font-weight: 700;
+		color: var(--text-main);
+		margin-bottom: 0.35rem;
+	}
+
+	.ugc-sub {
+		font-size: 0.82rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	.ugc-table-container {
+		overflow-x: auto;
+	}
+
+	.ugc-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+	}
+
+	.ugc-table th {
+		padding: 0.75rem 1rem;
+		text-align: left;
+		font-size: 0.75rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.15);
+	}
+
+	.ugc-table td {
+		padding: 0.75rem 1rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.08);
+	}
+
+	.highlight-scale td {
+		background: rgba(46, 125, 50, 0.04);
+	}
+
+	.ugc-marks {
+		font-weight: 600;
+	}
+
+	.ugc-gp {
+		font-weight: 700;
+	}
+
+	.ugc-remarks {
+		color: var(--text-main);
+		font-weight: 500;
+	}
+
+	.hidden {
+		display: none !important;
+	}
+
+	.no-results-box {
+		padding: 1.5rem;
+		text-align: center;
+		color: var(--text-muted);
+		background: var(--card-bg);
+		border-radius: 12px;
+		border: 1px dashed var(--card-border);
+	}
+</style>

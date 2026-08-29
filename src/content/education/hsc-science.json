@@ -1,0 +1,30 @@
+{
+	"id": "hsc-science",
+	"degree": "Higher Secondary Certificate (HSC) — Science",
+	"shortDegree": "HSC Science",
+	"field": "Science Group",
+	"institution": "Notre Dame College, Dhaka",
+	"institutionShort": "Notre Dame College",
+	"institutionUrl": "https://ndc.edu.bd/",
+	"logo": "/images/education/ndc-logo.png",
+	"location": "Dhaka, Bangladesh",
+	"period": "2017 — 2019",
+	"badge": "Graduated 2019",
+	"status": "Completed",
+	"gpa": 4.67,
+	"maxGpa": 5.0,
+	"summary": "Completed Higher Secondary Certificate in Science from Notre Dame College, Dhaka with GPA 4.67 / 5.00 under the Dhaka Education Board, covering the standard science curriculum and actively participating in club activities.",
+	"keyCourses": [
+		"Physics",
+		"Chemistry",
+		"Higher Mathematics",
+		"Biology",
+		"Information & Communication Technology (ICT)",
+		"English",
+		"Bangla"
+	],
+	"coCurricular": [
+		"Notre Dame Math Club (NDMC)",
+		"Notre Dame Cultural Club (NDCC)"
+	]
+}

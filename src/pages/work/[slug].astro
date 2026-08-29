@@ -53,9 +53,12 @@ headings.forEach((h) => {
 const realImages = (data.images || []).filter(
 	(img: string) => img && !img.includes('dummy') && !img.includes('thumb-')
 );
+const realMobileImages = realImages.filter(
+	(img: string) => !img.includes('web-') && !img.includes('dashboard') && !img.includes('chart-of-accounts')
+);
 const hasRealHeroMockup = Boolean(data.visualAssets?.heroMockup) && !data.visualAssets?.heroMockup?.includes('dummy');
 const hasRealHeroImage = data.platformType === 'mobile' 
-	? realImages.length > 0 
+	? realMobileImages.length > 0 
 	: hasRealHeroMockup;
 
 // Helper to validate whether a link is a real project target (not generic GitHub profile or placeholder)
@@ -163,7 +166,7 @@ const hasActionButtons = Boolean(
 				{data.platformType === 'mobile' ? (
 					<div class="hero-mobile-gallery-wrapper">
 						<div class="hero-mobile-devices-row">
-							{realImages.slice(0, 3).map((screenImg: string, sIdx: number) => (
+							{realMobileImages.slice(0, 3).map((screenImg: string, sIdx: number) => (
 								<div class={`hero-mobile-phone-device device-pos-${sIdx}`}>
 									<div class="mobile-speaker-notch">
 										<span class="notch-camera-dot"></span>
@@ -600,7 +603,8 @@ const hasActionButtons = Boolean(
 
 	.case-study-page {
 		width: 100%;
-		max-width: 960px;
+		max-width: 100%;
+		min-width: 0;
 		padding: 2rem 0 6rem;
 		text-align: left;
 	}
@@ -748,27 +752,20 @@ const hasActionButtons = Boolean(
 	}
 
 	.hero-mobile-devices-row {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
-		max-width: 860px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 1.75rem;
+		max-width: 900px;
 		width: 100%;
+		margin: 0 auto;
 	}
 
-	@media (max-width: 768px) {
-		.hero-mobile-devices-row {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 1rem;
-		}
-		.hero-mobile-phone-device:nth-child(3) {
-			display: none;
-		}
-	}
-
-	@media (max-width: 480px) {
-		.hero-mobile-devices-row {
-			grid-template-columns: 1fr;
-		}
+	.hero-mobile-phone-device {
+		flex: 0 1 270px;
+		max-width: 280px;
+		width: 100%;
 	}
 
 	.hero-mobile-phone-device {
@@ -1223,29 +1220,149 @@ const hasActionButtons = Boolean(
 		gap: 0.4rem;
 	}
 
+	.markdown-body-wrapper {
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+	}
+
+	.markdown-article {
+		width: 100%;
+		max-width: 100%;
+		overflow-x: hidden;
+	}
+
 	.markdown-article img {
 		max-width: 100%;
-		height: auto;
-		border-radius: 16px;
-		border: 1px solid var(--card-border);
-		box-shadow: 0 10px 30px rgba(95, 80, 56, 0.08);
-		margin: 2rem auto;
-		display: block;
-	}
-
-	/* When in a mobile case study, scale vertical mobile screenshots to compact side-by-side layout */
-	.case-detail-container[data-platform="mobile"] .markdown-article img {
-		max-width: 280px;
 		width: 100%;
-		border-radius: 24px;
-		border: 2.5px solid rgba(95, 80, 56, 0.2);
-		box-shadow: 0 14px 35px rgba(95, 80, 56, 0.1);
-		margin: 1.25rem auto;
-		transition: transform 0.2s ease;
+		height: auto;
+		border-radius: 12px;
+		border: 1px solid var(--card-border);
+		box-shadow: 0 6px 20px rgba(95, 80, 56, 0.08);
+		margin: 1.5rem 0;
+		display: block;
+		object-fit: contain;
 	}
 
-	.case-detail-container[data-platform="mobile"] .markdown-article img:hover {
-		transform: scale(1.02);
+	/* Markdown Mobile Phone Mockup Frame (Compact & Realistic) */
+	.md-mockup-mobile-wrapper {
+		display: flex;
+		justify-content: center;
+		margin: 2.25rem auto;
+		width: 100%;
+	}
+
+	.md-mobile-phone-device {
+		max-width: 250px;
+		width: 100%;
+		background: #ffffff;
+		border: 4px solid rgba(95, 80, 56, 0.35);
+		border-radius: 34px;
+		overflow: hidden;
+		box-shadow: 0 16px 40px rgba(95, 80, 56, 0.14);
+		display: flex;
+		flex-direction: column;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.md-mobile-phone-device:hover {
+		transform: translateY(-4px);
+		box-shadow: 0 20px 48px rgba(95, 80, 56, 0.2);
+	}
+
+	.md-mobile-phone-device .mobile-mockup-screen {
+		background: #ffffff;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.md-mobile-phone-device img {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+		display: block !important;
+		border: none !important;
+		box-shadow: none !important;
+		border-radius: 0 !important;
+		margin: 0 !important;
+		object-fit: contain !important;
+	}
+
+	/* Markdown Tablet Mockup Frame (Compact Web View with Realistic Tablet Border) */
+	.md-mockup-tablet-wrapper {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+		margin: 2.25rem auto;
+	}
+
+	.md-tablet-device {
+		max-width: 620px;
+		width: 100%;
+		background: #ffffff;
+		border: 7px solid rgba(95, 80, 56, 0.32);
+		border-radius: 28px;
+		overflow: hidden;
+		box-shadow: 0 16px 45px rgba(95, 80, 56, 0.14);
+		display: flex;
+		flex-direction: column;
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.md-tablet-device:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 22px 50px rgba(95, 80, 56, 0.18);
+	}
+
+	.tablet-top-bezel {
+		height: 14px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #fbf9f5;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.tablet-camera-dot {
+		width: 5px;
+		height: 5px;
+		border-radius: 50%;
+		background: rgba(95, 80, 56, 0.4);
+	}
+
+	.tablet-browser-bar {
+		display: flex;
+		align-items: center;
+		padding: 0.35rem 0.75rem;
+		background: #f4f0e7;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		gap: 0.65rem;
+	}
+
+	.tablet-screen-area {
+		background: #ffffff;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.tablet-home-indicator {
+		width: 120px;
+		height: 4px;
+		background: rgba(95, 80, 56, 0.3);
+		border-radius: 9999px;
+		margin: 0.5rem auto 0.45rem;
+	}
+
+	.md-tablet-device img {
+		width: 100% !important;
+		max-width: 100% !important;
+		height: auto !important;
+		display: block !important;
+		border: none !important;
+		box-shadow: none !important;
+		border-radius: 0 !important;
+		margin: 0 !important;
+		object-fit: contain !important;
 	}
 
 	.markdown-article pre,
@@ -1528,13 +1645,105 @@ const hasActionButtons = Boolean(
 			updateActiveToc();
 		}
 
+		// Dynamically wrap EVERY markdown screenshot into an authentic device mockup based on size/aspect ratio
+		function initScreenshotFrames() {
+			const articleImgs = document.querySelectorAll<HTMLImageElement>('.markdown-article img');
+
+			function applyDeviceFrame(img: HTMLImageElement) {
+				// Avoid double wrapping
+				if (img.closest('.md-mobile-phone-device') || img.closest('.md-desktop-browser-box')) return;
+
+				const src = (img.getAttribute('src') || '').toLowerCase();
+				const alt = (img.getAttribute('alt') || '').toLowerCase();
+
+				// Size-based aspect ratio detection: height > width = mobile phone, otherwise tablet / desktop frame
+				const w = img.naturalWidth || 1;
+				const h = img.naturalHeight || 1;
+				const isVerticalPortrait = h > (w * 1.12);
+
+				const isExplicitMobile = src.includes('#mobile') || alt.includes('[mobile]') || alt.includes('mobile');
+				const isExplicitDesktop = src.includes('#desktop') || alt.includes('[desktop]') || alt.includes('desktop') || alt.includes('web');
+
+				// Decision: explicit tag takes precedence, otherwise automated aspect ratio detection
+				const isMobileDevice = isExplicitMobile ? true : (isExplicitDesktop ? false : isVerticalPortrait);
+
+				// Clean visual metadata tag from alt attribute
+				const cleanAlt = (img.getAttribute('alt') || '').replace(/\[(mobile|desktop|tablet)\]/gi, '').trim();
+				img.setAttribute('alt', cleanAlt);
+
+				if (isMobileDevice) {
+					const wrapper = document.createElement('div');
+					wrapper.className = 'md-mockup-mobile-wrapper';
+
+					const device = document.createElement('div');
+					device.className = 'md-mobile-phone-device';
+
+					const notch = document.createElement('div');
+					notch.className = 'mobile-speaker-notch';
+					notch.innerHTML = '<span class="notch-camera-dot"></span><span class="notch-speaker-bar"></span>';
+
+					const screen = document.createElement('div');
+					screen.className = 'mobile-mockup-screen';
+
+					const homeIndicator = document.createElement('div');
+					homeIndicator.className = 'mobile-home-indicator';
+
+					img.parentNode?.insertBefore(wrapper, img);
+					screen.appendChild(img);
+					device.appendChild(notch);
+					device.appendChild(screen);
+					device.appendChild(homeIndicator);
+					wrapper.appendChild(device);
+				} else {
+					// Render compact realistic Tablet frame for web / landscape images
+					const wrapper = document.createElement('div');
+					wrapper.className = 'md-mockup-tablet-wrapper';
+
+					const tablet = document.createElement('div');
+					tablet.className = 'md-tablet-device';
+
+					const topBezel = document.createElement('div');
+					topBezel.className = 'tablet-top-bezel';
+					topBezel.innerHTML = '<span class="tablet-camera-dot"></span>';
+
+					const browserBar = document.createElement('div');
+					browserBar.className = 'tablet-browser-bar';
+					browserBar.innerHTML = '<div class="window-dots"><span></span><span></span><span></span></div><span class="browser-url">app.portal.internal/dashboard</span>';
+
+					const screenArea = document.createElement('div');
+					screenArea.className = 'tablet-screen-area';
+
+					const homeIndicator = document.createElement('div');
+					homeIndicator.className = 'tablet-home-indicator';
+
+					img.parentNode?.insertBefore(wrapper, img);
+					screenArea.appendChild(img);
+					tablet.appendChild(topBezel);
+					tablet.appendChild(browserBar);
+					tablet.appendChild(screenArea);
+					tablet.appendChild(homeIndicator);
+					wrapper.appendChild(tablet);
+				}
+			}
+
+			articleImgs.forEach((img) => {
+				if (img.complete && img.naturalWidth > 0) {
+					applyDeviceFrame(img);
+				} else {
+					img.addEventListener('load', () => applyDeviceFrame(img), { once: true });
+				}
+			});
+		}
+
 		if (document.readyState === 'loading') {
 			document.addEventListener('DOMContentLoaded', () => {
 				initMermaid();
 				initTocScrollSpy();
+				initScreenshotFrames();
 			});
 		} else {
 			initMermaid();
 			initTocScrollSpy();
+			initScreenshotFrames();
 		}
 	</script>

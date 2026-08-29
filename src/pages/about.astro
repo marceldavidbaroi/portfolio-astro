@@ -1,5 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { bscCseProgram, hscScienceProgram } from '../data/education';
+import { finalYearThesisResearch } from '../data/research';
+
+const thesis = finalYearThesisResearch;
 
 const metrics = [
 	{ value: '3.91', label: 'B.Sc. in CSE CGPA', sub: 'Daffodil International University' },
@@ -199,41 +203,216 @@ const certifications = [
 		</div>
 	</section>
 
-	<!-- 5. Formal Education -->
-	<section class="about-section">
+	<!-- 5. Formal Education & Research -->
+	<section class="about-section" id="academic-curriculum">
 		<div class="section-header">
 			<span class="section-tag font-dot">03 // PEDIGREE</span>
-			<h2 class="section-title font-dot">Academic Background</h2>
+			<h2 class="section-title font-dot">Academic Education & Research</h2>
 			<p class="section-desc font-mono">
-				Formal engineering education and foundational academic excellence.
+				Undergraduate computer science degree, higher secondary science foundation, and final year thesis research.
 			</p>
 		</div>
 
 		<div class="edu-grid">
-			<!-- DIU -->
+			<!-- DIU B.Sc. in CSE -->
 			<div class="edu-card card font-mono">
 				<div class="edu-top">
-					<span class="edu-badge">Graduated 2024</span>
-					<span class="edu-gpa font-dot">CGPA 3.91 / 4.00</span>
+					<div class="edu-badge-group">
+						<span class="edu-badge">{bscCseProgram.badge}</span>
+						<span class="edu-duration-badge font-mono">{bscCseProgram.duration}</span>
+					</div>
+					<span class="edu-gpa font-dot">CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</span>
 				</div>
-				<h3 class="edu-degree">Bachelor of Science in Computer Science & Engineering</h3>
-				<p class="edu-institution">Daffodil International University (DIU) • Dhaka, Bangladesh</p>
+
+				<div class="edu-card-main">
+					{bscCseProgram.logo && (
+						<div class="edu-card-logo-box">
+							<img
+								src={bscCseProgram.logo}
+								alt={`${bscCseProgram.institution} Crest`}
+								class="edu-card-logo"
+								width="56"
+								height="56"
+								loading="lazy"
+							/>
+						</div>
+					)}
+					<div class="edu-card-text">
+						<h3 class="edu-degree">{bscCseProgram.degree}</h3>
+						<p class="edu-institution">
+							<a
+								href={bscCseProgram.institutionUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inst-web-link"
+								title={`Visit ${bscCseProgram.institution} Website`}
+							>
+								<span>{bscCseProgram.institution}</span>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15 3 21 3 21 9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+							</a>
+							<span class="inst-divider">•</span>
+							<span>{bscCseProgram.location}</span>
+						</p>
+					</div>
+				</div>
+
 				<p class="edu-summary">
-					Comprehensive coursework in Distributed Systems, Relational Database Architecture, Data Structures & Algorithms, Object-Oriented Software Design, and Web Engineering.
+					{bscCseProgram.summary}
 				</p>
+				<div class="edu-focus-areas">
+					<span class="focus-title font-dot">Key Academic Focus:</span>
+					<ul class="focus-list">
+						{bscCseProgram.keyFocusAreas.map((area) => (
+							<li class="focus-item">{area}</li>
+						))}
+					</ul>
+				</div>
+				<div class="edu-card-footer">
+					<a href="/education/bsc-cse" class="edu-details-link font-dot">
+						<span>View B.Sc. in CSE Full Details & Transcript</span>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
 			</div>
 
-			<!-- NDC -->
+			<!-- NDC HSC -->
 			<div class="edu-card card font-mono">
 				<div class="edu-top">
-					<span class="edu-badge">Graduated 2019</span>
-					<span class="edu-gpa font-dot">GPA 4.67 / 5.00</span>
+					<div class="edu-badge-group">
+						<span class="edu-badge">{hscScienceProgram.badge}</span>
+						<span class="edu-duration-badge font-mono">{hscScienceProgram.period}</span>
+					</div>
+					<span class="edu-gpa font-dot">GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}</span>
 				</div>
-				<h3 class="edu-degree">Higher Secondary Certificate (HSC) — Science</h3>
-				<p class="edu-institution">Notre Dame College, Dhaka</p>
+
+				<div class="edu-card-main">
+					{hscScienceProgram.logo && (
+						<div class="edu-card-logo-box ndc-card-logo-box">
+							<img
+								src={hscScienceProgram.logo}
+								alt={`${hscScienceProgram.institution} Logo`}
+								class="edu-card-logo"
+								width="90"
+								height="40"
+								loading="lazy"
+							/>
+						</div>
+					)}
+					<div class="edu-card-text">
+						<h3 class="edu-degree">{hscScienceProgram.degree}</h3>
+						<p class="edu-institution">
+							<a
+								href={hscScienceProgram.institutionUrl}
+								target="_blank"
+								rel="noopener noreferrer"
+								class="inst-web-link"
+								title={`Visit ${hscScienceProgram.institution} Website`}
+							>
+								<span>{hscScienceProgram.institution}</span>
+								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+									<polyline points="15 3 21 3 21 9"></polyline>
+									<line x1="10" y1="14" x2="21" y2="3"></line>
+								</svg>
+							</a>
+							<span class="inst-divider">•</span>
+							<span>{hscScienceProgram.location}</span>
+						</p>
+					</div>
+				</div>
+
 				<p class="edu-summary">
-					Rigorous foundation in Physics, Advanced Mathematics, Chemistry, and Analytical Problem Solving.
+					{hscScienceProgram.summary}
 				</p>
+				<div class="edu-focus-areas">
+					<span class="focus-title font-dot">Science Curriculum:</span>
+					<ul class="focus-list">
+						{hscScienceProgram.keyCourses.map((c) => (
+							<li class="focus-item">{c}</li>
+						))}
+					</ul>
+				</div>
+				{hscScienceProgram.coCurricular && (
+					<div class="edu-focus-areas">
+						<span class="focus-title font-dot">Co-Curricular Clubs:</span>
+						<ul class="focus-list">
+							{hscScienceProgram.coCurricular.map((club) => (
+								<li class="focus-item club-highlight">{club}</li>
+							))}
+						</ul>
+					</div>
+				)}
+				<div class="edu-card-footer">
+					<a href="/education/hsc-science" class="edu-details-link font-dot">
+						<span>View Notre Dame College HSC Details & Curriculum</span>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
+			</div>
+
+			<!-- Final Year Thesis Research -->
+			<div class="edu-card card font-mono thesis-about-card">
+				<div class="edu-top">
+					<div class="edu-badge-group">
+						<span class="edu-badge font-dot">{thesis.badge}</span>
+						<span class="edu-duration-badge font-mono">{thesis.institution} • #{thesis.projectNumber}</span>
+					</div>
+					<span class="edu-gpa font-dot">DenseNet: 97.93% / 95.99%</span>
+				</div>
+
+				<div class="edu-card-main">
+					<div class="edu-card-text">
+						<h3 class="edu-degree">{thesis.title}</h3>
+						<p class="edu-institution">
+							<span>Author: {thesis.author} ({thesis.authorRole})</span>
+							<span class="inst-divider">•</span>
+							<span>Ekush Dataset Benchmark (80,000 Images)</span>
+						</p>
+					</div>
+				</div>
+
+				<p class="edu-summary">
+					{thesis.abstract}
+				</p>
+
+				<div class="thesis-metrics-strip font-mono">
+					<div class="t-strip-item">
+						<span class="t-strip-val font-dot">97.93%</span>
+						<span class="t-strip-lbl">Vowel Acc (F1: 0.98)</span>
+					</div>
+					<div class="t-strip-item">
+						<span class="t-strip-val font-dot">95.99%</span>
+						<span class="t-strip-lbl">Consonant Acc (F1: 0.96)</span>
+					</div>
+					<div class="t-strip-item">
+						<span class="t-strip-val font-dot">16 Models</span>
+						<span class="t-strip-lbl">Comparative Benchmarks</span>
+					</div>
+					<div class="t-strip-item">
+						<span class="t-strip-val font-dot">Solo Thesis</span>
+						<span class="t-strip-lbl">Individual Research</span>
+					</div>
+				</div>
+
+				<div class="edu-card-footer">
+					<a href="/research/01-bangla-hwcr-ekush" class="edu-details-link font-dot">
+						<span>Read Full Research Paper & 16-Model Benchmarks</span>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+							<line x1="5" y1="12" x2="19" y2="12"></line>
+							<polyline points="12 5 19 12 12 19"></polyline>
+						</svg>
+					</a>
+				</div>
 			</div>
 		</div>
 	</section>
@@ -563,6 +742,13 @@ const certifications = [
 		flex-wrap: wrap;
 	}
 
+	.edu-badge-group {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
 	.edu-badge {
 		font-size: 0.75rem;
 		text-transform: uppercase;
@@ -574,9 +760,57 @@ const certifications = [
 		border: 1px solid rgba(95, 80, 56, 0.15);
 	}
 
+	.edu-duration-badge {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.05);
+		padding: 0.25rem 0.55rem;
+		border-radius: 6px;
+	}
+
 	.edu-gpa {
 		font-size: 1.25rem;
 		color: var(--accent);
+	}
+
+	.edu-card-main {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		margin: 0.25rem 0;
+	}
+
+	.edu-card-logo-box {
+		width: 58px;
+		height: 58px;
+		flex-shrink: 0;
+		padding: 4px;
+		background: #fffdfa;
+		border-radius: 12px;
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.04);
+	}
+
+	.ndc-card-logo-box {
+		width: 95px;
+		height: 52px;
+		padding: 3px 6px;
+	}
+
+	.edu-card-logo {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+
+	.edu-card-text {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
 	}
 
 	.edu-degree {
@@ -587,15 +821,101 @@ const certifications = [
 
 	.edu-institution {
 		font-size: 0.9375rem;
-		color: var(--accent);
-		font-weight: 500;
+		color: var(--text-muted);
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
+
+	.inst-web-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		color: var(--accent);
+		font-weight: 600;
+		transition: color 0.15s ease;
+	}
+
+	.inst-web-link:hover {
+		color: var(--accent-hover);
+		text-decoration: underline;
+	}
+
+	.inst-divider {
+		opacity: 0.4;
+	}
+
 
 	.edu-summary {
 		font-size: 0.9375rem;
 		line-height: 1.6;
 		color: var(--text-muted);
 	}
+
+	.edu-focus-areas {
+		margin-top: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.focus-title {
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+		color: var(--text-main);
+	}
+
+	.focus-list {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		list-style: none;
+	}
+
+	.focus-item {
+		font-size: 0.78rem;
+		padding: 0.25rem 0.6rem;
+		border-radius: 6px;
+		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-muted);
+		border: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.focus-item.club-highlight {
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border-color: rgba(180, 33, 53, 0.2);
+		font-weight: 600;
+	}
+
+
+	.edu-card-footer {
+		margin-top: 0.5rem;
+		padding-top: 0.85rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.15);
+	}
+
+	.edu-details-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.85rem;
+		font-weight: 700;
+		color: var(--accent);
+		transition: all 0.15s ease;
+	}
+
+	.edu-details-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(3px);
+	}
+
+
+
+
+
 
 	/* Certifications Grid */
 	.certs-grid {
@@ -680,4 +1000,44 @@ const certifications = [
 		justify-content: center;
 		margin-top: 0.5rem;
 	}
+
+	/* Thesis About Card */
+	.thesis-about-card {
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+	}
+
+	.thesis-metrics-strip {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 0.85rem;
+		padding: 0.85rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		margin: 0.25rem 0;
+	}
+
+	@media (max-width: 768px) {
+		.thesis-metrics-strip {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.t-strip-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.t-strip-val {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.t-strip-lbl {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
 </style>
+

@@ -1,0 +1,331 @@
+/**
+ * ============================================================================
+ * RESEARCH & ACADEMIC PUBLICATIONS DATA ARCHITECTURE
+ * ============================================================================
+ * Structured data models and benchmarks for academic research papers, 
+ * undergraduate final year thesis, and technical publications.
+ */
+
+export interface BenchmarkEntry {
+	category: 'Deep Learning' | 'Traditional ML';
+	modelName: string;
+	vowelAccuracy: number;
+	consonantAccuracy: number;
+	vowelF1: number;
+	consonantF1: number;
+	isBestOverall?: boolean;
+	isBestBaseline?: boolean;
+	notes?: string;
+}
+
+export interface ResearchPublication {
+	id: string;
+	slug: string;
+	title: string;
+	shortTitle: string;
+	subtitle: string;
+	type: 'Undergraduate Final Year Thesis' | 'Conference Paper' | 'Journal Publication';
+	author: string;
+	authorRole: string;
+	authorNote: string;
+	institution: string;
+	institutionUrl: string;
+	department: string;
+	degree: string;
+	period: string;
+	completionDate: string;
+	projectNumber: string;
+	officialRepositoryUrl: string;
+	pdfDownloadUrl: string;
+	localPdfUrl: string;
+	featured: boolean;
+	badge: string;
+
+	// Executive Summary & Metrics
+	abstract: string;
+	problemStatement: string;
+	datasetName: string;
+	totalImages: number;
+	trainingImages: number;
+	testingImages: number;
+	totalClasses: number;
+	vowelClasses: number;
+	consonantClasses: number;
+
+	keyMetrics: {
+		label: string;
+		value: string;
+		sub: string;
+		highlight?: boolean;
+	}[];
+
+	// Technical Details
+	methodologySummary: string;
+	dataProcessing: string[];
+	modelsEvaluated: {
+		category: string;
+		models: string[];
+	}[];
+	trainingStrategy: string[];
+	benchmarks: BenchmarkEntry[];
+	keyTakeaways: string[];
+	tags: string[];
+}
+
+/**
+ * 16-Model Benchmark Results Matrix
+ */
+export const banglaOcrBenchmarks: BenchmarkEntry[] = [
+	{
+		category: 'Deep Learning',
+		modelName: 'DenseNet',
+		vowelAccuracy: 97.93,
+		consonantAccuracy: 95.99,
+		vowelF1: 0.98,
+		consonantF1: 0.96,
+		isBestOverall: true,
+		notes: 'Leveraged tight interlayer connections for direct gradient propagation and comprehensive multi-scale feature reuse.'
+	},
+	{
+		category: 'Deep Learning',
+		modelName: 'Custom 2-Layer CNN',
+		vowelAccuracy: 92.96,
+		consonantAccuracy: 87.72,
+		vowelF1: 0.93,
+		consonantF1: 0.88,
+		notes: 'Custom convolutional architecture with ReLU activations and MaxPooling layers for spatial compression.'
+	},
+	{
+		category: 'Deep Learning',
+		modelName: 'LeNet-5',
+		vowelAccuracy: 91.63,
+		consonantAccuracy: 85.35,
+		vowelF1: 0.92,
+		consonantF1: 0.85,
+		notes: 'Classic benchmark architecture evaluated under identical training partitions.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Support Vector Machine (SVM)',
+		vowelAccuracy: 88.14,
+		consonantAccuracy: 78.77,
+		vowelF1: 0.88,
+		consonantF1: 0.79,
+		isBestBaseline: true,
+		notes: 'Non-linear kernel SVM established the highest accuracy among all classical machine learning algorithms.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Extra Trees Classifier',
+		vowelAccuracy: 85.05,
+		consonantAccuracy: 72.15,
+		vowelF1: 0.85,
+		consonantF1: 0.72,
+		notes: 'Extremely randomized ensemble decision trees.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Random Forest',
+		vowelAccuracy: 83.64,
+		consonantAccuracy: 71.60,
+		vowelF1: 0.84,
+		consonantF1: 0.71,
+		notes: 'Ensemble bagging forest over tabular pixel arrays.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Bagging Classifier',
+		vowelAccuracy: 81.20,
+		consonantAccuracy: 69.45,
+		vowelF1: 0.81,
+		consonantF1: 0.69,
+		notes: 'Bootstrap aggregating ensemble baseline.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'K-Nearest Neighbors (KNN)',
+		vowelAccuracy: 79.50,
+		consonantAccuracy: 67.80,
+		vowelF1: 0.79,
+		consonantF1: 0.68,
+		notes: 'Distance metric based classification on flattened vectors.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Decision Trees',
+		vowelAccuracy: 76.40,
+		consonantAccuracy: 64.30,
+		vowelF1: 0.76,
+		consonantF1: 0.64,
+		notes: 'Single tree CART splitting baseline.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Logistic Regression',
+		vowelAccuracy: 75.10,
+		consonantAccuracy: 63.85,
+		vowelF1: 0.75,
+		consonantF1: 0.64,
+		notes: 'Multinomial linear classifier with L2 regularization.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Stochastic Gradient Descent (SGD)',
+		vowelAccuracy: 73.90,
+		consonantAccuracy: 62.10,
+		vowelF1: 0.74,
+		consonantF1: 0.62,
+		notes: 'Linear SGD classifier with modified Huber loss.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Nearest Centroid',
+		vowelAccuracy: 68.40,
+		consonantAccuracy: 56.90,
+		vowelF1: 0.68,
+		consonantF1: 0.57,
+		notes: 'Rocchio classification baseline.'
+	},
+	{
+		category: 'Traditional ML',
+		modelName: 'Gaussian Naive Bayes',
+		vowelAccuracy: 62.70,
+		consonantAccuracy: 51.30,
+		vowelF1: 0.62,
+		consonantF1: 0.51,
+		notes: 'Probabilistic baseline assuming pixel conditional independence.'
+	}
+];
+
+/**
+ * Primary Final Year Thesis Research Publication
+ */
+export const finalYearThesisResearch: ResearchPublication = {
+	id: '01-bangla-hwcr-ekush',
+	slug: '01-bangla-hwcr-ekush',
+	title: 'CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement',
+	shortTitle: 'Bangla Handwritten Character Recognition (Ekush Benchmark)',
+	subtitle: 'Benchmarking 16 Deep Learning & Classical Machine Learning Models on Isolated Characters',
+	type: 'Undergraduate Final Year Thesis',
+	author: 'Marcel David Baroi',
+	authorRole: 'Sole Researcher & Author (Individual Thesis)',
+	authorNote: 'Conducted independently as the final year capstone thesis defense for B.Sc. in Computer Science & Engineering.',
+	institution: 'Daffodil International University',
+	institutionUrl: 'https://daffodilvarsity.edu.bd',
+	department: 'Department of Computer Science & Engineering',
+	degree: 'Bachelor of Science in Computer Science & Engineering',
+	period: '2023 — 2024',
+	completionDate: '2024',
+	projectNumber: '26095',
+	officialRepositoryUrl:
+		'https://internship.daffodilvarsity.edu.bd/?app=home&cmd=reportsViewPDFskin&project_number=26095',
+	pdfDownloadUrl: '/documents/bangla-ocr-thesis-26095.pdf',
+	localPdfUrl: '/documents/bangla-ocr-thesis-26095.pdf',
+	featured: true,
+	badge: 'Final Year Thesis',
+
+	abstract:
+		'Developed an optical character recognition (OCR) pipeline to accurately classify complex handwritten Bangla characters (vowels and consonants). Evaluated and benchmarked 16 machine learning and deep learning models on a curated subset of the Ekush dataset containing 80,000 images across 50 classes. DenseNet achieved peak state-of-the-art recognition accuracy (97.93% on vowels, 95.99% on consonants) by maximizing feature reuse and gradient flow under compute-constrained training.',
+
+	problemStatement:
+		'Bengali Handwritten Character Recognition (BHCR) poses major challenges due to intricate cursive strokes, horizontal connecting lines (Matra), structural similarities across consonants, and high handwriting variability. Furthermore, prior research focused heavily on numerals, leaving isolated character recognition under-explored on large, diverse datasets under constrained compute environments.',
+
+	datasetName: 'Ekush Dataset (Curated Subset)',
+	totalImages: 80000,
+	trainingImages: 50000,
+	testingImages: 30000,
+	totalClasses: 50,
+	vowelClasses: 11,
+	consonantClasses: 39,
+
+	keyMetrics: [
+		{
+			label: 'VOWEL ACCURACY',
+			value: '97.93%',
+			sub: 'DenseNet (Macro F1: 0.98)',
+			highlight: true
+		},
+		{
+			label: 'CONSONANT ACCURACY',
+			value: '95.99%',
+			sub: 'DenseNet (Macro F1: 0.96)',
+			highlight: true
+		},
+		{
+			label: 'DATASET VOLUME',
+			value: '80,000',
+			sub: '50k Train / 30k Test Images'
+		},
+		{
+			label: 'MODELS BENCHMARKED',
+			value: '16 Classifiers',
+			sub: 'Deep Learning vs Traditional ML'
+		}
+	],
+
+	methodologySummary:
+		'The research implemented an empirical comparative framework spanning 16 algorithmic architectures. Deep learning models (DenseNet, Custom 2-Layer CNN, and LeNet-5) processed 2D spatial feature representations, while classical machine learning classifiers (SVM, Extra Trees, Random Forest, Bagging, KNN, Logistic Regression, SGD, Nearest Centroid, Naive Bayes) were trained on normalized tabular pixel vectors.',
+
+	dataProcessing: [
+		'Grayscale conversion and intensity normalization ([0, 1] range)',
+		'Spatial uniform image resizing to 28×28 and 32×32 pixel matrices',
+		'Tabular pixel matrix flattening for classical machine learning algorithm ingestion',
+		'Stratified class partitioning ensuring balanced representation across all 50 character classes'
+	],
+
+	modelsEvaluated: [
+		{
+			category: 'Deep Learning Architectures (CNNs)',
+			models: [
+				'DenseNet (Densely Connected Convolutional Networks)',
+				'Custom 2-Layer CNN with ReLU & Max Pooling',
+				'LeNet-5 Classic Convolutional Network'
+			]
+		},
+		{
+			category: 'Classical Machine Learning Classifiers',
+			models: [
+				'Support Vector Machine (Linear & RBF Kernels)',
+				'Extra Trees (Extremely Randomized Trees)',
+				'Random Forest Classifier',
+				'Bagging Classifier (Bootstrap Aggregating)',
+				'K-Nearest Neighbors (KNN)',
+				'Decision Trees (CART)',
+				'Multinomial Logistic Regression',
+				'Stochastic Gradient Descent (SGD)',
+				'Nearest Centroid Classifier',
+				'Gaussian Naive Bayes'
+			]
+		}
+	],
+
+	trainingStrategy: [
+		'Implemented a 5:3 train-test split for Deep Learning CNN models (50,000 train / 30,000 test)',
+		'Implemented an 8:2 stratified split for classical ML models',
+		'Optimized DenseNet over 5 epochs using Adam optimizer and CrossEntropyLoss to maximize feature reuse while avoiding overfitting and high compute load',
+		'Evaluated performance using Accuracy, Macro Precision, Macro Recall, and Macro F1-Score'
+	],
+
+	benchmarks: banglaOcrBenchmarks,
+
+	keyTakeaways: [
+		'DenseNet achieved the highest performance across all metrics (97.93% vowel accuracy, 95.99% consonant accuracy) by leveraging tight interlayer connections for gradient propagation and feature reuse.',
+		'Non-linear Support Vector Machines (88.14% vowel, 78.77% consonant) outperformed all other tree-based and distance-based classical algorithms, establishing the best non-neural baseline.',
+		'Consonant recognition presented a significantly higher error rate across all 16 classifiers due to shared structural strokes, subtle ligature differences, and higher intra-class handwriting variability compared to vowels.',
+		'Feature reuse in densely connected layers allowed superior accuracy within just 5 training epochs, demonstrating high efficiency under constrained computational resources.'
+	],
+
+	tags: [
+		'Deep Learning',
+		'Computer Vision',
+		'Convolutional Neural Networks (CNN)',
+		'DenseNet',
+		'Optical Character Recognition (OCR)',
+		'Ekush Dataset',
+		'Bangla Language Processing',
+		'PyTorch / Scikit-Learn',
+		'Academic Thesis'
+	]
+};
+
+export const allResearchPublications = [finalYearThesisResearch];

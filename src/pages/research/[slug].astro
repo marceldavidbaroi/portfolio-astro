@@ -1,0 +1,1026 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { finalYearThesisResearch, allResearchPublications } from '../../data/research';
+
+export async function getStaticPaths() {
+	return allResearchPublications.map((pub) => ({
+		params: { slug: pub.slug },
+		props: { publication: pub }
+	}));
+}
+
+const { publication } = Astro.props;
+---
+
+<BaseLayout
+	title={`${publication.shortTitle} — Academic Research | Marcel David Baroi`}
+	description={publication.abstract}
+	isWide={true}
+>
+	<div class="research-page-container font-mono">
+		<!-- Breadcrumbs -->
+		<nav class="breadcrumb-nav font-mono">
+			<a href="/" class="breadcrumb-link">Home</a>
+			<span class="breadcrumb-sep">/</span>
+			<a href="/about" class="breadcrumb-link">Profile</a>
+			<span class="breadcrumb-sep">/</span>
+			<a href="/education/bsc-cse" class="breadcrumb-link">B.Sc. in CSE</a>
+			<span class="breadcrumb-sep">/</span>
+			<span class="breadcrumb-current">Research Thesis</span>
+		</nav>
+
+		<!-- Hero Section -->
+		<header class="pub-hero card">
+			<div class="hero-top-meta">
+				<span class="section-tag font-dot">01 // FINAL YEAR THESIS RESEARCH</span>
+				<span class="badge-status font-mono">{publication.badge}</span>
+			</div>
+
+			<div class="pub-title-group">
+				<h1 class="pub-title font-dot">
+					{publication.title}
+				</h1>
+				<p class="pub-subtitle font-mono">
+					{publication.subtitle}
+				</p>
+			</div>
+
+			<div class="pub-author-line font-mono">
+				<div class="author-item">
+					<span class="author-label">AUTHOR:</span>
+					<span class="author-val font-dot">{publication.author}</span>
+					<span class="author-role-badge">Sole Researcher</span>
+				</div>
+				<span class="author-sep">•</span>
+				<div class="author-item">
+					<span class="author-label">INSTITUTION:</span>
+					<a href={publication.institutionUrl} target="_blank" rel="noopener noreferrer" class="author-link font-dot">
+						{publication.institution}
+					</a>
+				</div>
+				<span class="author-sep">•</span>
+				<div class="author-item">
+					<span class="author-label">PROJECT ID:</span>
+					<span class="author-val font-mono">#{publication.projectNumber}</span>
+				</div>
+			</div>
+
+			<!-- Action Buttons Row -->
+			<div class="action-buttons-row">
+				<a
+					href={publication.officialRepositoryUrl}
+					target="_blank"
+					rel="noopener noreferrer"
+					class="btn-primary-link font-mono"
+				>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+						<polyline points="15 3 21 3 21 9"></polyline>
+						<line x1="10" y1="14" x2="21" y2="3"></line>
+					</svg>
+					<span>Official DIU Repository Portal</span>
+				</a>
+
+				<a
+					href={publication.pdfDownloadUrl}
+					target="_blank"
+					download="Bangla-HWCR-Ekush-Thesis-MarcelDavidBaroi.pdf"
+					class="btn-secondary-link font-mono"
+				>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					<span>Download Full Thesis PDF (5.4 MB)</span>
+				</a>
+			</div>
+
+			<!-- Core Meta Banner -->
+			<div class="meta-banner-grid">
+				{publication.keyMetrics.map((m) => (
+					<div class="meta-item">
+						<span class="meta-label">{m.label}</span>
+						<span class={`meta-val font-dot ${m.highlight ? 'highlight' : ''}`}>{m.value}</span>
+						<span class="meta-sub font-mono">{m.sub}</span>
+					</div>
+				))}
+			</div>
+		</header>
+
+		<!-- Main Content Sections -->
+		<div class="research-body">
+			<!-- 1. Abstract & Problem Statement -->
+			<section class="research-section card">
+				<div class="section-heading-group">
+					<span class="subtag font-dot">01 // ABSTRACT & MOTIVATION</span>
+					<h2 class="section-h2 font-dot">Research Overview & Problem Statement</h2>
+				</div>
+
+				<div class="abstract-box">
+					<span class="box-tag font-dot">EXECUTIVE ABSTRACT</span>
+					<p class="abstract-text font-mono">
+						{publication.abstract}
+					</p>
+				</div>
+
+				<div class="problem-breakdown">
+					<h3 class="problem-h3 font-dot">Key Optical & Linguistic Challenges in Bangla OCR:</h3>
+					<div class="challenges-grid font-mono">
+						<div class="challenge-item">
+							<div class="ch-num font-dot">01</div>
+							<div class="ch-content">
+								<strong class="ch-title font-dot">Intricate Cursive Morphology & Matra</strong>
+								<p>Bangla script features continuous horizontal headline strokes (Matra) and cursive modifier loops that distort character boundaries in handwritten form.</p>
+							</div>
+						</div>
+						<div class="challenge-item">
+							<div class="ch-num font-dot">02</div>
+							<div class="ch-content">
+								<strong class="ch-title font-dot">High Consonant Structural Ambiguity</strong>
+								<p>Consonants share identical root glyphs differing only by dots, interior loops, or minor ascender strokes, creating acute inter-class confusion.</p>
+							</div>
+						</div>
+						<div class="challenge-item">
+							<div class="ch-num font-dot">03</div>
+							<div class="ch-content">
+								<strong class="ch-title font-dot">Limited Isolated Character Benchmarks</strong>
+								<p>Prior research focused primarily on handwritten digit recognition, leaving comprehensive 50-class isolated character benchmarks under-explored.</p>
+							</div>
+						</div>
+						<div class="challenge-item">
+							<div class="ch-num font-dot">04</div>
+							<div class="ch-content">
+								<strong class="ch-title font-dot">Compute-Constrained Optimization</strong>
+								<p>Designing deep architectures capable of extracting discriminative spatial features while training efficiently under strict hardware resource budgets.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- 2. Dataset & Preprocessing Pipeline -->
+			<section class="research-section card">
+				<div class="section-heading-group">
+					<span class="subtag font-dot">02 // DATASET & PIPELINE</span>
+					<h2 class="section-h2 font-dot">Ekush Dataset Partitioning & Preprocessing</h2>
+					<p class="section-desc font-mono">
+						Curated subset of the benchmark Ekush dataset representing balanced handwritten characters across 50 distinct classes.
+					</p>
+				</div>
+
+				<div class="dataset-stats-row font-mono">
+					<div class="stat-card">
+						<span class="stat-val font-dot">80,000</span>
+						<span class="stat-lbl">Total Clean Images</span>
+					</div>
+					<div class="stat-card">
+						<span class="stat-val font-dot">50,000</span>
+						<span class="stat-lbl">Training Partition (1k/class)</span>
+					</div>
+					<div class="stat-card">
+						<span class="stat-val font-dot">30,000</span>
+						<span class="stat-lbl">Testing Partition (600/class)</span>
+					</div>
+					<div class="stat-card">
+						<span class="stat-val font-dot">50 Classes</span>
+						<span class="stat-lbl">11 Vowels + 39 Consonants</span>
+					</div>
+				</div>
+
+				<div class="pipeline-list font-mono">
+					<h3 class="pipeline-title font-dot">Data Transformation & Normalization Steps:</h3>
+					<ul class="steps-ul">
+						{publication.dataProcessing.map((step) => (
+							<li class="step-li">
+								<span class="step-bullet font-dot">›</span>
+								<span>{step}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			</section>
+
+			<!-- 3. Empirical Results & 16-Model Benchmarks -->
+			<section class="research-section card">
+				<div class="section-heading-group">
+					<span class="subtag font-dot">03 // EMPIRICAL BENCHMARKS</span>
+					<h2 class="section-h2 font-dot">Comparative Model Performance Matrix</h2>
+					<p class="section-desc font-mono">
+						Comprehensive evaluation of 16 classification algorithms across Vowel and Consonant test partitions.
+					</p>
+				</div>
+
+				<div class="table-responsive">
+					<table class="benchmark-table font-mono">
+						<thead>
+							<tr>
+								<th>Paradigm</th>
+								<th>Classifier / Architecture</th>
+								<th>Vowel Accuracy</th>
+								<th>Consonant Accuracy</th>
+								<th>Vowel F1</th>
+								<th>Consonant F1</th>
+								<th>Key Characteristics</th>
+							</tr>
+						</thead>
+						<tbody>
+							{publication.benchmarks.map((b) => (
+								<tr class={b.isBestOverall ? 'row-best-overall' : b.isBestBaseline ? 'row-best-baseline' : ''}>
+									<td>
+										<span class={`cat-pill ${b.category === 'Deep Learning' ? 'cat-dl' : 'cat-ml'}`}>
+											{b.category}
+										</span>
+									</td>
+									<td class="model-name-cell">
+										<strong class="font-dot">{b.modelName}</strong>
+										{b.isBestOverall && <span class="badge-best font-dot">Best Overall</span>}
+										{b.isBestBaseline && <span class="badge-baseline font-dot">Best Classical ML</span>}
+									</td>
+									<td class="num-cell">
+										<span class="score-val font-dot">{b.vowelAccuracy.toFixed(2)}%</span>
+										<div class="mini-bar-track">
+											<div class="mini-bar-fill" style={`width: ${b.vowelAccuracy}%`}></div>
+										</div>
+									</td>
+									<td class="num-cell">
+										<span class="score-val font-dot">{b.consonantAccuracy.toFixed(2)}%</span>
+										<div class="mini-bar-track">
+											<div class="mini-bar-fill consonant-fill" style={`width: ${b.consonantAccuracy}%`}></div>
+										</div>
+									</td>
+									<td class="f1-cell font-dot">{b.vowelF1.toFixed(2)}</td>
+									<td class="f1-cell font-dot">{b.consonantF1.toFixed(2)}</td>
+									<td class="notes-cell">{b.notes}</td>
+								</tr>
+							))}
+						</tbody>
+					</table>
+				</div>
+			</section>
+
+			<!-- 4. Key Takeaways & Empirical Insights -->
+			<section class="research-section card">
+				<div class="section-heading-group">
+					<span class="subtag font-dot">04 // SCIENTIFIC INSIGHTS</span>
+					<h2 class="section-h2 font-dot">Key Findings & Research Takeaways</h2>
+				</div>
+
+				<div class="takeaways-grid font-mono">
+					{publication.keyTakeaways.map((takeaway, idx) => (
+						<div class="takeaway-card">
+							<div class="takeaway-badge font-dot">{`INSIGHT 0${idx + 1}`}</div>
+							<p class="takeaway-text">{takeaway}</p>
+						</div>
+					))}
+				</div>
+			</section>
+
+			<!-- 5. Academic Citation & Repository Reference -->
+			<section class="research-section card">
+				<div class="section-heading-group">
+					<span class="subtag font-dot">05 // CITATION & REPOSITORY</span>
+					<h2 class="section-h2 font-dot">Thesis Citation & Archived Documentation</h2>
+				</div>
+
+				<div class="citation-box font-mono">
+					<div class="citation-header">
+						<span class="cit-label font-dot">BIBTEX CITATION</span>
+						<span class="cit-status font-mono">Archived in DIU Digital Repository</span>
+					</div>
+					<pre class="bibtex-code"><code>{`@mastersthesis{baroi2024banglaocr,
+  title={CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement},
+  author={Baroi, Marcel David},
+  year={2024},
+  school={Daffodil International University},
+  department={Department of Computer Science and Engineering},
+  type={Undergraduate Final Year Thesis},
+  number={26095},
+  url={https://internship.daffodilvarsity.edu.bd/?app=home&cmd=reportsViewPDFskin&project_number=26095}
+}`}</code></pre>
+				</div>
+
+				<div class="bottom-portal-bar font-mono">
+					<div class="portal-text-group">
+						<h4 class="font-dot">Access Official University Archive</h4>
+						<p>Verify project listing #{publication.projectNumber} on Daffodil International University repository portal.</p>
+					</div>
+					<div class="portal-actions">
+						<a
+							href={publication.officialRepositoryUrl}
+							target="_blank"
+							rel="noopener noreferrer"
+							class="btn-primary-link"
+						>
+							<span>View Official Repository ↗</span>
+						</a>
+						<a
+							href={publication.pdfDownloadUrl}
+							target="_blank"
+							download="Bangla-HWCR-Ekush-Thesis-MarcelDavidBaroi.pdf"
+							class="btn-secondary-link"
+						>
+							<span>Download PDF ↓</span>
+						</a>
+					</div>
+				</div>
+			</section>
+		</div>
+
+		<!-- Cross Navigation -->
+		<div class="cross-nav-row card font-mono">
+			<a href="/education/bsc-cse" class="cross-link font-dot">
+				← Return to B.Sc. in CSE Degree Details & Transcript
+			</a>
+			<a href="/work" class="cross-link font-dot">
+				Explore Featured Engineering Case Studies →
+			</a>
+		</div>
+	</div>
+</BaseLayout>
+
+<style>
+	.research-page-container {
+		width: 100%;
+		max-width: 1080px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		padding-bottom: 4rem;
+		text-align: left;
+	}
+
+
+	/* Breadcrumbs */
+	.breadcrumb-nav {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		flex-wrap: wrap;
+	}
+
+	.breadcrumb-link {
+		color: var(--text-muted);
+		transition: color 0.15s ease;
+	}
+
+	.breadcrumb-link:hover {
+		color: var(--accent);
+	}
+
+	.breadcrumb-sep {
+		opacity: 0.4;
+	}
+
+	.breadcrumb-current {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	/* Hero Section */
+	.pub-hero {
+		padding: 2.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		background: var(--card-bg);
+		border-radius: 16px;
+		border: 1px solid var(--card-border);
+	}
+
+	.hero-top-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.section-tag {
+		font-size: 0.82rem;
+		color: var(--accent);
+		letter-spacing: 0.05em;
+	}
+
+	.badge-status {
+		font-size: 0.78rem;
+		padding: 0.25rem 0.75rem;
+		border-radius: 9999px;
+		background: rgba(180, 33, 53, 0.1);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.pub-title-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+
+	.pub-title {
+		font-size: clamp(1.65rem, 3.5vw, 2.35rem);
+		color: var(--text-main);
+		line-height: 1.25;
+		font-weight: 700;
+	}
+
+	.pub-subtitle {
+		font-size: 1rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	.pub-author-line {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+		font-size: 0.88rem;
+		color: var(--text-muted);
+		flex-wrap: wrap;
+		padding: 0.85rem 1.25rem;
+		background: rgba(95, 80, 56, 0.04);
+		border-radius: 10px;
+		border: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.author-item {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.author-label {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		opacity: 0.7;
+	}
+
+	.author-val {
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.author-role-badge {
+		font-size: 0.68rem;
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+		border: 1px solid rgba(46, 125, 50, 0.25);
+		font-weight: 600;
+	}
+
+	.author-link {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.author-sep {
+		opacity: 0.3;
+	}
+
+	/* Action Buttons Row */
+	.action-buttons-row {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+
+	.btn-primary-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.65rem 1.25rem;
+		background: var(--btn-primary);
+		color: #fffdfa;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		transition: all 0.15s ease;
+	}
+
+	.btn-primary-link:hover {
+		background: var(--accent-hover);
+		transform: translateY(-1px);
+	}
+
+	.btn-secondary-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.65rem 1.25rem;
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-main);
+		border: 1px solid rgba(95, 80, 56, 0.18);
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 600;
+		transition: all 0.15s ease;
+	}
+
+	.btn-secondary-link:hover {
+		background: rgba(95, 80, 56, 0.15);
+		color: var(--accent);
+	}
+
+	/* Meta Banner Grid */
+	.meta-banner-grid {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	@media (max-width: 900px) {
+		.meta-banner-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 520px) {
+		.meta-banner-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.meta-item {
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.meta-label {
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+	}
+
+	.meta-val {
+		font-size: 1.35rem;
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.meta-val.highlight {
+		color: var(--accent);
+	}
+
+	.meta-sub {
+		font-size: 0.76rem;
+		color: var(--text-muted);
+	}
+
+	/* Body & Detail Sections */
+	.research-body {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+	}
+
+	.research-section {
+		padding: 2.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+	}
+
+	.section-heading-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.subtag {
+		font-size: 0.75rem;
+		color: var(--accent);
+		letter-spacing: 0.05em;
+	}
+
+	.section-h2 {
+		font-size: 1.4rem;
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.section-desc {
+		font-size: 0.88rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	/* Abstract Box */
+	.abstract-box {
+		padding: 1.5rem;
+		background: rgba(95, 80, 56, 0.04);
+		border-radius: 12px;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.box-tag {
+		font-size: 0.75rem;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		font-weight: 700;
+	}
+
+	.abstract-text {
+		font-size: 0.95rem;
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	/* Problem Breakdown */
+	.problem-breakdown {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.problem-h3 {
+		font-size: 1.05rem;
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.challenges-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.challenges-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.challenge-item {
+		display: flex;
+		gap: 1rem;
+		padding: 1.25rem;
+		border-radius: 10px;
+		background: rgba(95, 80, 56, 0.03);
+		border: 1px solid rgba(95, 80, 56, 0.08);
+	}
+
+	.ch-num {
+		font-size: 1.25rem;
+		font-weight: 700;
+		color: var(--accent);
+		opacity: 0.6;
+	}
+
+	.ch-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.ch-title {
+		font-size: 0.92rem;
+		color: var(--text-main);
+	}
+
+	.ch-content p {
+		font-size: 0.84rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	/* Dataset Stats */
+	.dataset-stats-row {
+		display: grid;
+		grid-template-columns: repeat(4, 1fr);
+		gap: 1rem;
+	}
+
+	@media (max-width: 768px) {
+		.dataset-stats-row {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	.stat-card {
+		padding: 1.25rem;
+		border-radius: 10px;
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid rgba(95, 80, 56, 0.1);
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		text-align: center;
+	}
+
+	.stat-val {
+		font-size: 1.35rem;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.stat-lbl {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	.pipeline-list {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.pipeline-title {
+		font-size: 0.95rem;
+		color: var(--text-main);
+	}
+
+	.steps-ul {
+		list-style: none;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.step-li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.6rem;
+		font-size: 0.88rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	.step-bullet {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	/* Benchmark Table */
+	.table-responsive {
+		overflow-x: auto;
+	}
+
+	.benchmark-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.85rem;
+		text-align: left;
+	}
+
+	.benchmark-table th {
+		padding: 0.85rem 1rem;
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-main);
+		font-weight: 700;
+		border-bottom: 2px solid rgba(95, 80, 56, 0.15);
+		font-size: 0.78rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.benchmark-table td {
+		padding: 0.85rem 1rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+		vertical-align: middle;
+	}
+
+	.row-best-overall {
+		background: rgba(46, 125, 50, 0.06);
+	}
+
+	.row-best-overall td {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.row-best-baseline {
+		background: rgba(180, 33, 53, 0.04);
+	}
+
+	.cat-pill {
+		font-size: 0.72rem;
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		font-weight: 600;
+	}
+
+	.cat-dl {
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+	}
+
+	.cat-ml {
+		background: rgba(95, 80, 56, 0.1);
+		color: var(--text-muted);
+	}
+
+	.model-name-cell {
+		white-space: nowrap;
+	}
+
+	.badge-best {
+		display: inline-block;
+		margin-left: 0.5rem;
+		font-size: 0.68rem;
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+		background: #2e7d32;
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.badge-baseline {
+		display: inline-block;
+		margin-left: 0.5rem;
+		font-size: 0.68rem;
+		padding: 0.1rem 0.4rem;
+		border-radius: 4px;
+		background: var(--accent);
+		color: #fff;
+		font-weight: 700;
+	}
+
+	.num-cell {
+		min-width: 120px;
+	}
+
+	.score-val {
+		font-weight: 700;
+		color: var(--text-main);
+		font-size: 0.9rem;
+	}
+
+	.mini-bar-track {
+		width: 100%;
+		height: 4px;
+		background: rgba(95, 80, 56, 0.1);
+		border-radius: 2px;
+		margin-top: 4px;
+		overflow: hidden;
+	}
+
+	.mini-bar-fill {
+		height: 100%;
+		background: var(--accent);
+		border-radius: 2px;
+	}
+
+	.mini-bar-fill.consonant-fill {
+		background: #3949ab;
+	}
+
+	.f1-cell {
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.notes-cell {
+		font-size: 0.8rem;
+		line-height: 1.4;
+	}
+
+	/* Takeaways Grid */
+	.takeaways-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 768px) {
+		.takeaways-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.takeaway-card {
+		padding: 1.5rem;
+		border-radius: 12px;
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid rgba(95, 80, 56, 0.1);
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+	}
+
+	.takeaway-badge {
+		font-size: 0.75rem;
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+	}
+
+	.takeaway-text {
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: var(--text-main);
+	}
+
+	/* Citation Box */
+	.citation-box {
+		padding: 1.5rem;
+		background: #1e1b18;
+		border-radius: 12px;
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		color: #e0d8cc;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.citation-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		font-size: 0.75rem;
+		color: #9e9182;
+	}
+
+	.cit-label {
+		color: #d4a373;
+		font-weight: 700;
+	}
+
+	.bibtex-code {
+		margin: 0;
+		font-size: 0.82rem;
+		line-height: 1.55;
+		overflow-x: auto;
+		color: #f7f2ea;
+	}
+
+	/* Bottom Portal Bar */
+	.bottom-portal-bar {
+		padding: 1.5rem 1.75rem;
+		border-radius: 12px;
+		background: rgba(95, 80, 56, 0.05);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.portal-text-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.portal-text-group h4 {
+		font-size: 1.05rem;
+		color: var(--text-main);
+	}
+
+	.portal-text-group p {
+		font-size: 0.84rem;
+		color: var(--text-muted);
+	}
+
+	.portal-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	/* Cross Nav */
+	.cross-nav-row {
+		padding: 1.5rem 2rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.cross-link {
+		font-size: 0.92rem;
+		color: var(--accent);
+		font-weight: 700;
+		transition: color 0.15s ease;
+	}
+
+	.cross-link:hover {
+		color: var(--accent-hover);
+		text-decoration: underline;
+	}
+</style>

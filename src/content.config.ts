@@ -147,7 +147,160 @@ const experience = defineCollection({
 	})
 });
 
+/**
+ * ----------------------------------------------------------------------
+ * 3. ACADEMIC EDUCATION METADATA SCHEMA
+ * ----------------------------------------------------------------------
+ * Structured for undergraduate degree transcripts and academic milestones:
+ * - Degree, institution, period, and honors
+ * - GPA / CGPA and max scale
+ * - Semester breakdown with course codes, grades, quality points, and SGPA
+ * - Focus areas and summaries
+ */
+const education = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/education' }),
+	schema: z.object({
+		id: z.string(),
+		degree: z.string(),
+		shortDegree: z.string().optional(),
+		major: z.string().optional(),
+		field: z.string().optional(),
+		institution: z.string(),
+		institutionShort: z.string().optional(),
+		institutionUrl: z.string().optional(),
+		logo: z.string().optional(),
+		location: z.string().optional(),
+		duration: z.string().optional(),
+		period: z.string(),
+		badge: z.string(),
+		status: z.string().optional().default('Completed'),
+		cgpa: z.number().optional(),
+		gpa: z.number().optional(),
+		maxGpa: z.number().default(4.0),
+		totalCredits: z.number().optional(),
+		totalCourses: z.number().optional(),
+		summary: z.string(),
+		keyFocusAreas: z.array(z.string()).default([]),
+		keyCourses: z.array(z.string()).default([]),
+		coCurricular: z.array(z.string()).default([]),
+		semesters: z
+			.array(
+				z.object({
+					semesterNumber: z.number(),
+					semesterTitle: z.string(),
+					totalCredit: z.number(),
+					sgpa: z.number(),
+					totalQualityPoints: z.number(),
+					highlights: z.array(z.string()).optional(),
+					courses: z.array(
+						z.object({
+							sl: z.number(),
+							code: z.string(),
+							title: z.string(),
+							credit: z.number(),
+							grade: z.string(),
+							gradePoint: z.number(),
+							qualityPoints: z.number(),
+							type: z.enum(['theory', 'lab', 'project']).default('theory'),
+							category: z.string(),
+							categoryLabel: z.string().optional()
+						})
+					)
+				})
+			)
+			.optional()
+	})
+});
+
+/**
+ * ----------------------------------------------------------------------
+ * 4. RESEARCH & PUBLICATIONS METADATA SCHEMA
+ * ----------------------------------------------------------------------
+ * Structured for academic research papers and final year undergraduate thesis:
+ * - Publication title, abstract, problem statement
+ * - Dataset metadata (Ekush dataset, image volume, classes)
+ * - 16-model benchmark comparative results
+ * - Official university repository and PDF documents
+ */
+const research = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/research' }),
+	schema: z.object({
+		id: z.string(),
+		slug: z.string(),
+		title: z.string(),
+		shortTitle: z.string().optional(),
+		subtitle: z.string().optional(),
+		type: z.string().default('Undergraduate Final Year Thesis'),
+		author: z.string(),
+		authorRole: z.string().optional(),
+		authorNote: z.string().optional(),
+		institution: z.string(),
+		institutionUrl: z.string().optional(),
+		department: z.string().optional(),
+		degree: z.string().optional(),
+		period: z.string().optional(),
+		completionDate: z.string().optional(),
+		projectNumber: z.string().optional(),
+		officialRepositoryUrl: z.string().optional(),
+		pdfDownloadUrl: z.string().optional(),
+		localPdfUrl: z.string().optional(),
+		featured: z.boolean().default(true),
+		badge: z.string().default('Research'),
+		abstract: z.string(),
+		problemStatement: z.string(),
+		datasetName: z.string(),
+		totalImages: z.number(),
+		trainingImages: z.number(),
+		testingImages: z.number(),
+		totalClasses: z.number(),
+		vowelClasses: z.number(),
+		consonantClasses: z.number(),
+		keyMetrics: z
+			.array(
+				z.object({
+					label: z.string(),
+					value: z.string(),
+					sub: z.string(),
+					highlight: z.boolean().optional()
+				})
+			)
+			.default([]),
+		methodologySummary: z.string().optional(),
+		dataProcessing: z.array(z.string()).default([]),
+		modelsEvaluated: z
+			.array(
+				z.object({
+					category: z.string(),
+					models: z.array(z.string())
+				})
+			)
+			.default([]),
+		trainingStrategy: z.array(z.string()).default([]),
+		benchmarks: z
+			.array(
+				z.object({
+					category: z.string(),
+					modelName: z.string(),
+					vowelAccuracy: z.number(),
+					consonantAccuracy: z.number(),
+					vowelF1: z.number(),
+					consonantF1: z.number(),
+					isBestOverall: z.boolean().optional(),
+					isBestBaseline: z.boolean().optional(),
+					notes: z.string().optional()
+				})
+			)
+			.default([]),
+		keyTakeaways: z.array(z.string()).default([]),
+		tags: z.array(z.string()).default([])
+	})
+});
+
 export const collections = {
 	projects,
-	experience
+	experience,
+	education,
+	research
 };
+
+
