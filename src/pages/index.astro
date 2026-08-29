@@ -35,7 +35,7 @@ const thesis = finalYearThesisResearch;
 		</div>
 		<h1 class="title font-dot">Marcel David</h1>
 		<p class="subtitle font-dot">Software engineer</p>
-		<p class="hero-bio font-mono">
+		<p class="hero-bio">
 			Specializing in architecture-first full-stack systems, multi-tenant SaaS platforms, and enterprise web solutions across Vue.js/Quasar, Supabase, PHP, and NestJS.
 		</p>
 	</section>
@@ -47,7 +47,7 @@ const thesis = finalYearThesisResearch;
 				<span class="section-tag font-dot">01 // CREATION</span>
 				<h2 class="section-title font-dot">Featured Projects</h2>
 			</div>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				Selected architectural builds, production-grade applications, and engineering experiments.
 			</p>
 		</div>
@@ -57,8 +57,8 @@ const thesis = finalYearThesisResearch;
 				<a href={`/work/${project.slug}`} class="project-showcase-card">
 					<!-- Top Info Header: Title, Description, Keyword Chip -->
 					<div class="card-header-info">
-						<h3 class="project-title font-mono">{project.title}</h3>
-						<p class="project-description font-mono">{project.description}</p>
+						<h3 class="project-title">{project.title}</h3>
+						<p class="project-description">{project.description}</p>
 						<div class="chip-container">
 							<span class="keyword-chip font-mono">{project.chip}</span>
 						</div>
@@ -144,7 +144,7 @@ const thesis = finalYearThesisResearch;
 				<span class="section-tag font-dot">02 // TRAJECTORY</span>
 				<h2 class="section-title font-dot">Work Experience</h2>
 			</div>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				A chronological breakdown of professional engineering roles and technical milestones.
 			</p>
 		</div>
@@ -155,16 +155,16 @@ const thesis = finalYearThesisResearch;
 					<!-- Top Info Header -->
 					<div class="card-header-info">
 						<div class="exp-top-row">
-							<h3 class="project-title font-mono">{item.role}</h3>
+							<h3 class="project-title">{item.role}</h3>
 							<span class="keyword-chip font-mono">{item.period}</span>
 						</div>
-						<p class="exp-company-sub font-mono">
+						<p class="exp-company-sub">
 							<span class="company-name">{item.company}</span>
 							<span class="exp-badge font-mono">{item.badge}</span>
 						</p>
-						<p class="project-description font-mono">{item.summary}</p>
+						<p class="project-description">{item.summary}</p>
 						
-						<ul class="exp-bullets font-mono">
+						<ul class="exp-bullets">
 							{item.highlights.map((h) => (
 								<li>
 									<span class="bullet-dot font-dot">›</span>
@@ -206,17 +206,17 @@ const thesis = finalYearThesisResearch;
 				<span class="section-tag font-dot">03 // PEDIGREE</span>
 				<h2 class="section-title font-dot">Academic Education</h2>
 			</div>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				Formal computer science curriculum, foundational engineering honors, and academic credentials.
 			</p>
 		</div>
 
 		<div class="education-grid">
 			<!-- B.Sc. CSE -->
-			<div class="education-card card font-mono">
+			<div class="education-card card">
 				<div class="edu-top-row">
 					<div class="edu-badge-wrap">
-						<span class="edu-badge">{bscCseProgram.badge}</span>
+						<span class="edu-badge font-mono">{bscCseProgram.badge}</span>
 						<span class="edu-credits-tag font-mono">{bscCseProgram.totalCredits} Credits • 11 Semesters</span>
 					</div>
 					<span class="edu-gpa font-dot">CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</span>
@@ -252,7 +252,7 @@ const thesis = finalYearThesisResearch;
 								</svg>
 							</a>
 							<span class="edu-divider">•</span>
-							<span class="edu-period">{bscCseProgram.period}</span>
+							<span class="edu-period font-mono">{bscCseProgram.period}</span>
 						</div>
 					</div>
 				</div>
@@ -262,7 +262,7 @@ const thesis = finalYearThesisResearch;
 					<span class="edu-course-label font-dot">Core Specializations:</span>
 					<div class="edu-course-tags">
 						{bscCseProgram.keyFocusAreas.slice(0, 4).map((area) => (
-							<span class="edu-tag">{area}</span>
+							<span class="edu-tag font-mono">{area}</span>
 						))}
 					</div>
 				</div>
@@ -279,10 +279,10 @@ const thesis = finalYearThesisResearch;
 			</div>
 
 			<!-- HSC Science -->
-			<div class="education-card card font-mono">
+			<div class="education-card card">
 				<div class="edu-top-row">
 					<div class="edu-badge-wrap">
-						<span class="edu-badge">{hscScienceProgram.badge}</span>
+						<span class="edu-badge font-mono">{hscScienceProgram.badge}</span>
 						<span class="edu-credits-tag font-mono">{hscScienceProgram.field}</span>
 					</div>
 					<span class="edu-gpa font-dot">GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}</span>
@@ -319,7 +319,7 @@ const thesis = finalYearThesisResearch;
 								</svg>
 							</a>
 							<span class="edu-divider">•</span>
-							<span class="edu-period">{hscScienceProgram.period}</span>
+							<span class="edu-period font-mono">{hscScienceProgram.period}</span>
 						</div>
 					</div>
 				</div>
@@ -329,7 +329,7 @@ const thesis = finalYearThesisResearch;
 					<span class="edu-course-label font-dot">Science Curriculum:</span>
 					<div class="edu-course-tags">
 						{hscScienceProgram.keyCourses.map((c) => (
-							<span class="edu-tag">{c}</span>
+							<span class="edu-tag font-mono">{c}</span>
 						))}
 					</div>
 				</div>
@@ -339,7 +339,7 @@ const thesis = finalYearThesisResearch;
 						<span class="edu-course-label font-dot">Co-Curricular Clubs:</span>
 						<div class="edu-course-tags">
 							{hscScienceProgram.coCurricular.map((club) => (
-								<span class="edu-tag club-tag">{club}</span>
+								<span class="edu-tag club-tag font-mono">{club}</span>
 							))}
 						</div>
 					</div>
@@ -365,15 +365,15 @@ const thesis = finalYearThesisResearch;
 				<span class="section-tag font-dot">04 // RESEARCH & PUBLICATIONS</span>
 				<h2 class="section-title font-dot">Final Year Thesis Research</h2>
 			</div>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				Empirical computer vision and optical character recognition (OCR) research defended at Daffodil International University.
 			</p>
 		</div>
 
-		<div class="research-spotlight-card card font-mono">
+		<div class="research-spotlight-card card">
 			<div class="research-top-row">
 				<div class="research-badge-wrap">
-					<span class="research-badge">{thesis.badge}</span>
+					<span class="research-badge font-mono">{thesis.badge}</span>
 					<span class="research-inst-tag font-mono">{thesis.institution} • Project #{thesis.projectNumber}</span>
 				</div>
 				<span class="research-acc font-dot">DenseNet Peak: 97.93% Vowel / 95.99% Consonant</span>

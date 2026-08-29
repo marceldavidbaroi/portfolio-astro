@@ -17,7 +17,7 @@ const { publication } = Astro.props;
 	description={publication.abstract}
 	isWide={true}
 >
-	<div class="research-page-container font-mono">
+	<div class="research-page-container">
 		<!-- Breadcrumbs -->
 		<nav class="breadcrumb-nav font-mono">
 			<a href="/" class="breadcrumb-link">Home</a>
@@ -40,7 +40,7 @@ const { publication } = Astro.props;
 				<h1 class="pub-title font-dot">
 					{publication.title}
 				</h1>
-				<p class="pub-subtitle font-mono">
+				<p class="pub-subtitle">
 					{publication.subtitle}
 				</p>
 			</div>
@@ -48,13 +48,13 @@ const { publication } = Astro.props;
 			<div class="pub-author-line font-mono">
 				<div class="author-item">
 					<span class="author-label">AUTHOR:</span>
-					<span class="author-val font-dot">{publication.author}</span>
+					<span class="author-val">{publication.author}</span>
 					<span class="author-role-badge">Sole Researcher</span>
 				</div>
 				<span class="author-sep">•</span>
 				<div class="author-item">
 					<span class="author-label">INSTITUTION:</span>
-					<a href={publication.institutionUrl} target="_blank" rel="noopener noreferrer" class="author-link font-dot">
+					<a href={publication.institutionUrl} target="_blank" rel="noopener noreferrer" class="author-link">
 						{publication.institution}
 					</a>
 				</div>
@@ -101,7 +101,7 @@ const { publication } = Astro.props;
 				{publication.keyMetrics.map((m) => (
 					<div class="meta-item">
 						<span class="meta-label">{m.label}</span>
-						<span class={`meta-val font-dot ${m.highlight ? 'highlight' : ''}`}>{m.value}</span>
+						<span class={`meta-val font-mono ${m.highlight ? 'highlight' : ''}`}>{m.value}</span>
 						<span class="meta-sub font-mono">{m.sub}</span>
 					</div>
 				))}
@@ -118,40 +118,40 @@ const { publication } = Astro.props;
 				</div>
 
 				<div class="abstract-box">
-					<span class="box-tag font-dot">EXECUTIVE ABSTRACT</span>
-					<p class="abstract-text font-mono">
+					<span class="box-tag font-mono">EXECUTIVE ABSTRACT</span>
+					<p class="abstract-text">
 						{publication.abstract}
 					</p>
 				</div>
 
 				<div class="problem-breakdown">
-					<h3 class="problem-h3 font-dot">Key Optical & Linguistic Challenges in Bangla OCR:</h3>
-					<div class="challenges-grid font-mono">
+					<h3 class="problem-h3">Key Optical & Linguistic Challenges in Bangla OCR:</h3>
+					<div class="challenges-grid">
 						<div class="challenge-item">
-							<div class="ch-num font-dot">01</div>
+							<div class="ch-num font-mono">01</div>
 							<div class="ch-content">
-								<strong class="ch-title font-dot">Intricate Cursive Morphology & Matra</strong>
+								<strong class="ch-title">Intricate Cursive Morphology & Matra</strong>
 								<p>Bangla script features continuous horizontal headline strokes (Matra) and cursive modifier loops that distort character boundaries in handwritten form.</p>
 							</div>
 						</div>
 						<div class="challenge-item">
-							<div class="ch-num font-dot">02</div>
+							<div class="ch-num font-mono">02</div>
 							<div class="ch-content">
-								<strong class="ch-title font-dot">High Consonant Structural Ambiguity</strong>
+								<strong class="ch-title">High Consonant Structural Ambiguity</strong>
 								<p>Consonants share identical root glyphs differing only by dots, interior loops, or minor ascender strokes, creating acute inter-class confusion.</p>
 							</div>
 						</div>
 						<div class="challenge-item">
-							<div class="ch-num font-dot">03</div>
+							<div class="ch-num font-mono">03</div>
 							<div class="ch-content">
-								<strong class="ch-title font-dot">Limited Isolated Character Benchmarks</strong>
+								<strong class="ch-title">Limited Isolated Character Benchmarks</strong>
 								<p>Prior research focused primarily on handwritten digit recognition, leaving comprehensive 50-class isolated character benchmarks under-explored.</p>
 							</div>
 						</div>
 						<div class="challenge-item">
-							<div class="ch-num font-dot">04</div>
+							<div class="ch-num font-mono">04</div>
 							<div class="ch-content">
-								<strong class="ch-title font-dot">Compute-Constrained Optimization</strong>
+								<strong class="ch-title">Compute-Constrained Optimization</strong>
 								<p>Designing deep architectures capable of extracting discriminative spatial features while training efficiently under strict hardware resource budgets.</p>
 							</div>
 						</div>
@@ -164,36 +164,36 @@ const { publication } = Astro.props;
 				<div class="section-heading-group">
 					<span class="subtag font-dot">02 // DATASET & PIPELINE</span>
 					<h2 class="section-h2 font-dot">Ekush Dataset Partitioning & Preprocessing</h2>
-					<p class="section-desc font-mono">
+					<p class="section-desc">
 						Curated subset of the benchmark Ekush dataset representing balanced handwritten characters across 50 distinct classes.
 					</p>
 				</div>
 
-				<div class="dataset-stats-row font-mono">
+				<div class="dataset-stats-row">
 					<div class="stat-card">
 						<span class="stat-val font-dot">80,000</span>
-						<span class="stat-lbl">Total Clean Images</span>
+						<span class="stat-lbl font-mono">Total Clean Images</span>
 					</div>
 					<div class="stat-card">
 						<span class="stat-val font-dot">50,000</span>
-						<span class="stat-lbl">Training Partition (1k/class)</span>
+						<span class="stat-lbl font-mono">Training Partition (1k/class)</span>
 					</div>
 					<div class="stat-card">
 						<span class="stat-val font-dot">30,000</span>
-						<span class="stat-lbl">Testing Partition (600/class)</span>
+						<span class="stat-lbl font-mono">Testing Partition (600/class)</span>
 					</div>
 					<div class="stat-card">
 						<span class="stat-val font-dot">50 Classes</span>
-						<span class="stat-lbl">11 Vowels + 39 Consonants</span>
+						<span class="stat-lbl font-mono">11 Vowels + 39 Consonants</span>
 					</div>
 				</div>
 
-				<div class="pipeline-list font-mono">
-					<h3 class="pipeline-title font-dot">Data Transformation & Normalization Steps:</h3>
+				<div class="pipeline-list">
+					<h3 class="pipeline-title">Data Transformation & Normalization Steps:</h3>
 					<ul class="steps-ul">
 						{publication.dataProcessing.map((step) => (
 							<li class="step-li">
-								<span class="step-bullet font-dot">›</span>
+								<span class="step-bullet font-mono">›</span>
 								<span>{step}</span>
 							</li>
 						))}
@@ -206,7 +206,7 @@ const { publication } = Astro.props;
 				<div class="section-heading-group">
 					<span class="subtag font-dot">03 // EMPIRICAL BENCHMARKS</span>
 					<h2 class="section-h2 font-dot">Comparative Model Performance Matrix</h2>
-					<p class="section-desc font-mono">
+					<p class="section-desc">
 						Comprehensive evaluation of 16 classification algorithms across Vowel and Consonant test partitions.
 					</p>
 				</div>
@@ -233,24 +233,24 @@ const { publication } = Astro.props;
 										</span>
 									</td>
 									<td class="model-name-cell">
-										<strong class="font-dot">{b.modelName}</strong>
-										{b.isBestOverall && <span class="badge-best font-dot">Best Overall</span>}
-										{b.isBestBaseline && <span class="badge-baseline font-dot">Best Classical ML</span>}
+										<strong class="font-mono">{b.modelName}</strong>
+										{b.isBestOverall && <span class="badge-best font-mono">Best Overall</span>}
+										{b.isBestBaseline && <span class="badge-baseline font-mono">Best Classical ML</span>}
 									</td>
 									<td class="num-cell">
-										<span class="score-val font-dot">{b.vowelAccuracy.toFixed(2)}%</span>
+										<span class="score-val font-mono">{b.vowelAccuracy.toFixed(2)}%</span>
 										<div class="mini-bar-track">
 											<div class="mini-bar-fill" style={`width: ${b.vowelAccuracy}%`}></div>
 										</div>
 									</td>
 									<td class="num-cell">
-										<span class="score-val font-dot">{b.consonantAccuracy.toFixed(2)}%</span>
+										<span class="score-val font-mono">{b.consonantAccuracy.toFixed(2)}%</span>
 										<div class="mini-bar-track">
 											<div class="mini-bar-fill consonant-fill" style={`width: ${b.consonantAccuracy}%`}></div>
 										</div>
 									</td>
-									<td class="f1-cell font-dot">{b.vowelF1.toFixed(2)}</td>
-									<td class="f1-cell font-dot">{b.consonantF1.toFixed(2)}</td>
+									<td class="f1-cell font-mono">{b.vowelF1.toFixed(2)}</td>
+									<td class="f1-cell font-mono">{b.consonantF1.toFixed(2)}</td>
 									<td class="notes-cell">{b.notes}</td>
 								</tr>
 							))}
@@ -266,10 +266,10 @@ const { publication } = Astro.props;
 					<h2 class="section-h2 font-dot">Key Findings & Research Takeaways</h2>
 				</div>
 
-				<div class="takeaways-grid font-mono">
+				<div class="takeaways-grid">
 					{publication.keyTakeaways.map((takeaway, idx) => (
 						<div class="takeaway-card">
-							<div class="takeaway-badge font-dot">{`INSIGHT 0${idx + 1}`}</div>
+							<div class="takeaway-badge font-mono">{`INSIGHT 0${idx + 1}`}</div>
 							<p class="takeaway-text">{takeaway}</p>
 						</div>
 					))}
@@ -283,12 +283,12 @@ const { publication } = Astro.props;
 					<h2 class="section-h2 font-dot">Thesis Citation & Archived Documentation</h2>
 				</div>
 
-				<div class="citation-box font-mono">
+				<div class="citation-box">
 					<div class="citation-header">
-						<span class="cit-label font-dot">BIBTEX CITATION</span>
+						<span class="cit-label font-mono">BIBTEX CITATION</span>
 						<span class="cit-status font-mono">Archived in DIU Digital Repository</span>
 					</div>
-					<pre class="bibtex-code"><code>{`@mastersthesis{baroi2024banglaocr,
+					<pre class="bibtex-code font-mono"><code>{`@mastersthesis{baroi2024banglaocr,
   title={CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement},
   author={Baroi, Marcel David},
   year={2024},
@@ -300,12 +300,12 @@ const { publication } = Astro.props;
 }`}</code></pre>
 				</div>
 
-				<div class="bottom-portal-bar font-mono">
+				<div class="bottom-portal-bar">
 					<div class="portal-text-group">
-						<h4 class="font-dot">Access Official University Archive</h4>
+						<h4>Access Official University Archive</h4>
 						<p>Verify project listing #{publication.projectNumber} on Daffodil International University repository portal.</p>
 					</div>
-					<div class="portal-actions">
+					<div class="portal-actions font-mono">
 						<a
 							href={publication.officialRepositoryUrl}
 							target="_blank"
@@ -328,11 +328,11 @@ const { publication } = Astro.props;
 		</div>
 
 		<!-- Cross Navigation -->
-		<div class="cross-nav-row card font-mono">
-			<a href="/education/bsc-cse" class="cross-link font-dot">
+		<div class="cross-nav-row card">
+			<a href="/education/bsc-cse" class="cross-link">
 				← Return to B.Sc. in CSE Degree Details & Transcript
 			</a>
-			<a href="/work" class="cross-link font-dot">
+			<a href="/work" class="cross-link">
 				Explore Featured Engineering Case Studies →
 			</a>
 		</div>

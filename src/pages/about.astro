@@ -2,11 +2,13 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { bscCseProgram, hscScienceProgram } from '../data/education';
 import { finalYearThesisResearch } from '../data/research';
+import { certifications } from '../data/certifications';
 
 const thesis = finalYearThesisResearch;
+const totalCertsCount = 33;
 
 const metrics = [
-	{ value: '3.91', label: 'B.Sc. in CSE CGPA', sub: 'Daffodil International University' },
+	{ value: '3.91', label: 'B.Sc. in CSE CGPA', sub: 'Daffodil Int. University (Batch 55)' },
 	{ value: '+60%', label: 'Code Reusability', sub: 'Via Private Package Architectures' },
 	{ value: '100%', label: 'RLS Data Isolation', sub: 'Multi-Tenant SaaS Security' },
 	{ value: '10+', label: 'Platforms Shipped', sub: 'Enterprise, SaaS & Mobile' }
@@ -15,92 +17,163 @@ const metrics = [
 const principles = [
 	{
 		num: '01',
-		title: 'Architecture-First Synthesis',
-		desc: 'I model relational data, map intricate dependency graphs, and validate specifications before writing code or employing AI boilerplate synthesis (Cursor Agentic, GitHub Copilot).'
+		tag: 'SPECIFICATION & MODELING',
+		title: 'Architecture-First AI Synthesis',
+		iconType: 'layers',
+		desc: 'I do not use AI tools to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.'
 	},
 	{
 		num: '02',
-		title: 'Strict Data & Type Safety',
-		desc: 'I design PostgreSQL schemas with explicit constraints, TypeORM/Supabase Row-Level Security (RLS), and end-to-end TypeScript interfaces from backend DTOs to frontend state.'
+		tag: 'DEFENSIVE DATA LAYERS',
+		title: 'Zero-Trust Relational Data',
+		iconType: 'shield',
+		desc: 'Data corruption is catastrophic. I enforce data integrity at the database engine level using PostgreSQL row-level security (RLS), foreign key cascades, strict triggers, and automated schema migrations, ensuring security rules cannot be bypassed at the application layer.'
 	},
 	{
 		num: '03',
-		title: 'Modular Infrastructure',
-		desc: 'I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries.'
+		tag: 'MODULAR COMPONENT SYSTEMS',
+		title: 'Atomic Enterprise Reusability',
+		iconType: 'package',
+		desc: 'Code that isn’t reusable becomes technical debt. I construct internal package architectures, shared design systems, and headless core libraries published via private npm registries, enabling multi-app synchronization and reducing redundant codebases by over 60%.'
 	},
 	{
 		num: '04',
-		title: 'Measurable Impact (Google XYZ)',
-		desc: 'Every technical decision is measured against real metrics: decreasing dashboard load times by 48%, reducing ticket approval latency by 85%, or eliminating runtime bugs.'
+		tag: 'SCALABLE RESILIENCE',
+		title: 'Measurable Velocity & Longevity',
+		iconType: 'trending',
+		desc: 'Software must outlive team rotations and scale spikes. I write predictable TypeScript contracts, keep state management centralized, and structure clean repository hierarchies that new engineers can comprehend on day one.'
 	}
 ];
 
 const skillCategories = [
 	{
-		category: 'Engineering Workflow',
+		category: 'Architecture, Synthesis & AI Workflows',
+		tag: 'CORE ENGINE',
+		iconType: 'zap',
 		items: [
-			'Architecture-First AI Synthesis',
-			'Relational Data Modeling',
-			'Systematic Code Validation',
-			'Structural Codebase Refactoring',
-			'Automated MVP Scaffolding'
+			'Autonomous Agent Architecture & Synthesis Workflows',
+			'Enterprise System Architecture & Microservices',
+			'Relational Data Modeling & Multi-Tenant Database Design',
+			'State Management & Event-Driven Reactive Flows',
+			'High-Fidelity UI/UX & Responsive Spatial Systems'
 		]
 	},
 	{
 		category: 'Backend & Cloud Services',
+		tag: 'DATA & APIS',
+		iconType: 'database',
 		items: [
-			'PHP (Core & MVC)',
-			'Supabase (Realtime, RLS)',
-			'NestJS',
-			'Node.js',
-			'Express',
-			'TypeORM',
-			'PostgreSQL',
-			'MongoDB',
-			'RESTful API Engineering'
+			'PHP (Core & MVC Architecture)',
+			'PostgreSQL & Complex Query Optimization',
+			'Supabase (Row-Level Security & Realtime)',
+			'NestJS & Node.js Microservices',
+			'Express & RESTful API Gateways',
+			'TypeORM, Prisma & Relational Migrations',
+			'MongoDB Document Stores'
 		]
 	},
 	{
-		category: 'Frontend Ecosystem',
+		category: 'Frontend & Mobile Ecosystem',
+		tag: 'USER INTERFACES',
+		iconType: 'layout',
 		items: [
-			'Vue.js (v2/v3)',
-			'Quasar Framework',
-			'TypeScript',
-			'JavaScript (ES6+)',
-			'React',
-			'Next.js (App Router)',
-			'React Native',
-			'Pinia',
-			'Vuex'
+			'Vue.js (v2 / v3 Composition API)',
+			'Quasar Framework (SPA / PWA Suites)',
+			'TypeScript & Strict Compile-Time Contracts',
+			'React & Next.js (App Router & SSR)',
+			'React Native Cross-Platform Mobile',
+			'Pinia & Vuex Centralized Reactive Stores'
 		]
 	},
 	{
-		category: 'Styles & Architecture',
+		category: 'Architecture, Versioning & DevOps',
+		tag: 'INFRASTRUCTURE',
+		iconType: 'shield',
 		items: [
-			'Tailwind CSS',
-			'ShadCN UI',
-			'Bootstrap',
-			'Figma to Code',
-			'Semantic Versioning (SemVer)',
-			'Private Git Registries',
-			'Git Submodules',
-			'Multi-Tenant SaaS'
+			'Multi-Tenant SaaS Data Segregation (RLS)',
+			'Private Git Registries & Semantic Versioning (SemVer)',
+			'Git Submodules & Multi-Repo Orchestration',
+			'Tailwind CSS & Modern Utility UI Primitives',
+			'Figma-to-Code Accessible Component Translation',
+			'Docker Containerization & Dev Environments'
 		]
 	}
 ];
 
-const certifications = [
-	{ title: 'Responsible AI: Applying AI Principles with Google Cloud', issuer: 'Google Cloud', date: 'Aug 2025', id: '17581956' },
-	{ title: 'Prompt Design in Vertex AI', issuer: 'Google Cloud', date: 'Aug 2025', id: '17581523' },
-	{ title: 'Introduction to Responsible AI', issuer: 'Google Cloud', date: 'Aug 2025', id: '17472223' },
-	{ title: 'Introduction to Large Language Models', issuer: 'Google Cloud', date: 'Aug 2025', id: '17320196' },
-	{ title: 'Introduction to Generative AI', issuer: 'Google Cloud', date: 'Jul 2025', id: '17216550' },
-	{ title: 'Project Management Foundations Suite', issuer: 'LinkedIn Professional', date: 'May 2025' },
-	{ title: 'Python Essentials 1 & 2', issuer: 'Cisco Networking Academy', date: 'May 2025' },
-	{ title: 'JavaScript Essentials 1 & 2', issuer: 'Cisco Networking Academy', date: 'Oct 2024' },
-	{ title: 'Career Essentials in Generative AI', issuer: 'Microsoft & LinkedIn', date: 'Mar 2024' },
-	{ title: 'Responsive Web Design Studio Suite', issuer: 'freeCodeCamp', date: 'Mar 2025', id: 'marceldavid-rwd' },
-	{ title: 'Graphic Design Foundations (Typography & Layout)', issuer: 'LinkedIn Academy', date: 'Jul 2022' }
+const compactCerts = [
+	{
+		title: 'Responsible AI: Applying AI Principles with Google Cloud',
+		issuer: 'Google Cloud',
+		date: 'Aug 2025',
+		id: '17581956',
+		iconType: 'bot',
+		url: 'https://www.cloudskillsboost.google/public_profiles/2c7e1de9-096d-4df9-8fc6-c832b77bdc77/badges/17581956?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share'
+	},
+	{
+		title: 'Prompt Design in Vertex AI',
+		issuer: 'Google Cloud',
+		date: 'Aug 2025',
+		id: '17581523',
+		iconType: 'sparkles',
+		url: 'https://www.cloudskillsboost.google/public_profiles/2c7e1de9-096d-4df9-8fc6-c832b77bdc77/badges/17581523?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share'
+	},
+	{
+		title: 'Python Essentials 2',
+		issuer: 'Cisco Networking Academy',
+		date: 'May 2025',
+		iconType: 'terminal',
+		url: 'https://www.credly.com/badges/4523a28b-20c5-4c97-99b8-df6187b7171f/linked_in_profile'
+	},
+	{
+		title: 'JavaScript Essentials 2',
+		issuer: 'Cisco Networking Academy',
+		date: 'Oct 2024',
+		iconType: 'code',
+		url: 'https://www.credly.com/badges/61d5e8b3-adc0-4980-9c39-660f137d9173/linked_in_profile'
+	},
+	{
+		title: 'Responsive Web Design',
+		issuer: 'freeCodeCamp',
+		date: 'Mar 2025',
+		id: 'marceldavid-rwd',
+		iconType: 'globe',
+		url: 'https://freecodecamp.org/certification/marceldavid/responsive-web-design'
+	},
+	{
+		title: 'Career Essentials in Generative AI by Microsoft and LinkedIn',
+		issuer: 'Microsoft & LinkedIn',
+		date: 'Mar 2024',
+		iconType: 'award',
+		url: 'https://www.linkedin.com/learning/certificates/5b375a66aa4203fa0bcfa8cb5761d62f1053cf9fdd182f663b6be8b228f6406f'
+	}
+];
+
+const compactPursuits = [
+	{
+		title: 'Classical Percussion (Tabla)',
+		iconType: 'music',
+		tag: '2015 — 2017 • 3 YRS TRAINING',
+		desc: '3 years of classical Tabla training (2015–2017). Practicing classical Indian rhythm cycles (Taal), mathematical subdivisions, and tempo cadence cultivated deep focus and systematic discipline.'
+	},
+	{
+		title: 'Drawing & Fine Arts (Competition Winner)',
+		iconType: 'pen',
+		tag: '2014 — 2015 • MULTI-AWARD WINNER',
+		desc: 'Formal fine arts training (2014–2015) with multiple drawing competition awards. Freehand illustration and spatial proportion geometry directly inform frontend component hierarchy.'
+	},
+	{
+		title: 'Role-Play Acting & Community Theatre',
+		iconType: 'theater',
+		tag: 'COMMUNITY & CHURCH DRAMA',
+		desc: 'Active actor in numerous role-play acting performances and church drama programs, developing empathetic perspective-taking, vocal presence, and collaborative stage confidence.'
+	},
+	{
+		title: 'Cinema & Screenplay Architecture',
+		iconType: 'film',
+		tag: 'CINEPHILE & NARRATIVE DESIGN',
+		desc: 'Avid cinephile analyzing world cinema, cinematography, and narrative pacing—drawing parallels between screenwriting structural coherence and enterprise domain invariant stability.',
+		url: 'https://www.imdb.com/user/p.bk6ud655mqlvdqktibh2swwdzm?ref_=ext_shr_lnk'
+	}
 ];
 ---
 
@@ -109,20 +182,20 @@ const certifications = [
 	description="Personal background, engineering philosophy, technical skill matrix, education, and credentials of Marcel David Baroi."
 >
 	<!-- 1. Header Profile -->
-	<section class="about-hero">
+	<section class="about-hero" id="profile">
 		<div class="hero-status">
 			<span class="status-dot"></span>
 			<span class="status-text font-mono">[001] BASED IN DHAKA, BANGLADESH • HYBRID / REMOTE</span>
 		</div>
 
 		<div class="hero-titles">
-			<span class="section-tag font-dot">00 // ABOUT ME</span>
+			<span class="section-tag font-dot">00 // EXECUTIVE PROFILE</span>
 			<h1 class="title font-dot">Marcel David Baroi</h1>
-			<p class="subtitle font-dot">Full-Stack Software Engineer</p>
+			<p class="subtitle font-dot">Full-Stack Software Engineer & System Architect</p>
 		</div>
 
-		<p class="hero-bio font-mono">
-			Highly disciplined Full-Stack Software Engineer specializing in planning, architecting, and delivering enterprise web applications, multi-tenant SaaS structures, and cross-platform native software ecosystems.
+		<p class="hero-bio">
+			Disciplined Full-Stack Software Engineer specializing in planning, architecting, and delivering enterprise web applications, multi-tenant SaaS structures, and cross-platform native software ecosystems.
 		</p>
 
 		<!-- Action Links & Contact Pills -->
@@ -141,37 +214,135 @@ const certifications = [
 				GitHub
 			</a>
 		</div>
+
+		<!-- Academic Pedigree Top Highlight Strip -->
+		<div class="hero-pedigree-strip font-mono">
+			<span class="pedigree-label">ACADEMIC FOUNDATION //</span>
+			<div class="pedigree-cards-grid">
+				<a href="/education/bsc-cse" class="pedigree-card card" title="View B.Sc. in CSE Details & Transcript">
+					<div class="pedigree-logo-box diu-box">
+						<img
+							src={bscCseProgram.logo || "/images/education/daffodil-logo.png"}
+							alt="Daffodil International University Crest"
+							class="pedigree-logo-img"
+							width="44"
+							height="44"
+							loading="eager"
+						/>
+					</div>
+					<div class="pedigree-info">
+						<div class="pedigree-top">
+							<span class="pedigree-inst">Daffodil International University</span>
+							<span class="pedigree-badge font-mono diu-badge">CSE Batch 55</span>
+						</div>
+						<span class="pedigree-deg font-mono">B.Sc. in CSE (CGPA 3.91) • <strong>CSE Batch 55</strong></span>
+					</div>
+					<span class="pedigree-arrow">→</span>
+				</a>
+
+				<a href="/education/hsc-science" class="pedigree-card card" title="View Notre Dame College Details & Heritage">
+					<div class="pedigree-logo-box ndc-box">
+						<img
+							src={hscScienceProgram.logo || "/images/education/ndc-logo.png"}
+							alt="Notre Dame College Dhaka Crest"
+							class="pedigree-logo-img ndc-seal"
+							width="44"
+							height="44"
+							loading="eager"
+						/>
+					</div>
+					<div class="pedigree-info">
+						<div class="pedigree-top">
+							<span class="pedigree-inst">Notre Dame College, Dhaka</span>
+							<span class="pedigree-badge font-mono">Batch '19 // Group 13</span>
+						</div>
+						<span class="pedigree-deg font-mono">HSC Science (GPA 4.67) • <strong>Batch '19, Group 13</strong></span>
+					</div>
+					<span class="pedigree-arrow">→</span>
+				</a>
+			</div>
+		</div>
+
+		<!-- ON THIS PAGE: Quick Section Index Navigator -->
+		<nav class="on-this-page-bar card" aria-label="On this page navigation">
+			<div class="otp-header">
+				<svg class="otp-svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<circle cx="12" cy="12" r="10"></circle>
+					<polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"></polygon>
+				</svg>
+				<span class="otp-label font-mono">ON THIS PAGE // QUICK JUMP:</span>
+			</div>
+			<div class="otp-links">
+				<a href="#philosophy" class="otp-link">01. Architecture & Methodology</a>
+				<a href="#capabilities" class="otp-link">02. Capabilities & Stack</a>
+				<a href="#academic-pedigree" class="otp-link">03. Education & Thesis</a>
+				<a href="#credentials-section" class="otp-link">04. Credentials</a>
+				<a href="#beyond-terminal" class="otp-link">05. Beyond Code</a>
+				<a href="#collaboration" class="otp-link">06. Contact</a>
+			</div>
+		</nav>
 	</section>
 
-	<!-- 2. Metrics Strip -->
-	<section class="about-section">
+	<!-- 2. Metrics Strip (At a Glance) -->
+	<section class="about-section" id="at-a-glance">
 		<div class="metrics-grid">
 			{metrics.map((m) => (
-				<div class="metric-card card font-mono">
+				<div class="metric-card card">
 					<span class="metric-num font-dot">{m.value}</span>
 					<span class="metric-label">{m.label}</span>
-					<span class="metric-sub">{m.sub}</span>
+					<span class="metric-sub font-mono">{m.sub}</span>
 				</div>
 			))}
 		</div>
 	</section>
 
-	<!-- 3. Engineering Philosophy & How I Work -->
-	<section class="about-section">
+	<!-- 3. Engineering Philosophy & Architecture (Direct on About Page) -->
+	<section class="about-section" id="philosophy">
 		<div class="section-header">
-			<span class="section-tag font-dot">01 // PHILOSOPHY</span>
+			<span class="section-tag font-dot">01 // ARCHITECTURE & METHODOLOGY</span>
 			<h2 class="section-title font-dot">Architecture-First Paradigm</h2>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				Building production-grade software requires sound structural foundations before code generation.
 			</p>
 		</div>
 
 		<div class="principles-grid">
 			{principles.map((p) => (
-				<div class="principle-card card font-mono">
+				<div class="principle-card card">
 					<div class="principle-header">
-						<span class="principle-num font-dot">{p.num}</span>
-						<h3 class="principle-title">{p.title}</h3>
+						<div class="principle-icon-wrap">
+							{p.iconType === 'layers' && (
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+									<polyline points="2 17 12 22 22 17"></polyline>
+									<polyline points="2 12 12 17 22 12"></polyline>
+								</svg>
+							)}
+							{p.iconType === 'shield' && (
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+								</svg>
+							)}
+							{p.iconType === 'package' && (
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M16.5 9.4 7.55 4.24"></path>
+									<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+									<polyline points="3.29 7 12 12 20.71 7"></polyline>
+									<line x1="12" y1="22" x2="12" y2="12"></line>
+								</svg>
+							)}
+							{p.iconType === 'trending' && (
+								<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+									<polyline points="17 6 23 6 23 12"></polyline>
+								</svg>
+							)}
+						</div>
+						<div class="principle-title-group">
+							<span class="principle-tag font-mono">{p.tag}</span>
+							<h3 class="principle-title">{p.title}</h3>
+						</div>
+						<span class="principle-num font-mono">{p.num}</span>
 					</div>
 					<p class="principle-desc">{p.desc}</p>
 				</div>
@@ -179,272 +350,320 @@ const certifications = [
 		</div>
 	</section>
 
-	<!-- 4. Core Technical Matrix -->
-	<section class="about-section">
+	<!-- 4. Core Technical Matrix & Capabilities (Direct on About Page) -->
+	<section class="about-section" id="capabilities">
 		<div class="section-header">
-			<span class="section-tag font-dot">02 // CAPABILITIES</span>
+			<span class="section-tag font-dot">02 // CAPABILITIES & STACK</span>
 			<h2 class="section-title font-dot">Technical Skill Matrix</h2>
-			<p class="section-desc font-mono">
+			<p class="section-desc">
 				Technologies, frameworks, and architectural tools leveraged across production environments.
 			</p>
 		</div>
 
 		<div class="skills-grid">
 			{skillCategories.map((group) => (
-				<div class="skill-card card font-mono">
-					<h3 class="skill-category-title">{group.category}</h3>
-					<ul class="skill-tags">
+				<div class="skill-card card">
+					<div class="skill-card-top">
+						<div class="skill-icon-pill">
+							{group.iconType === 'zap' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+								</svg>
+							)}
+							{group.iconType === 'database' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+									<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+									<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+								</svg>
+							)}
+							{group.iconType === 'layout' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+									<line x1="8" y1="21" x2="16" y2="21"></line>
+									<line x1="12" y1="17" x2="12" y2="21"></line>
+								</svg>
+							)}
+							{group.iconType === 'shield' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+								</svg>
+							)}
+							<span class="skill-category-title">{group.category}</span>
+						</div>
+						<span class="skill-tag font-mono">{group.tag}</span>
+					</div>
+
+					<div class="skill-chips-wrap">
 						{group.items.map((skill) => (
-							<li class="skill-tag">{skill}</li>
+							<div class="skill-chip">
+								<span class="st-dot"></span>
+								<span class="skill-name">{skill}</span>
+							</div>
 						))}
-					</ul>
+					</div>
 				</div>
 			))}
 		</div>
 	</section>
 
-	<!-- 5. Formal Education & Research -->
-	<section class="about-section" id="academic-curriculum">
+	<!-- 5. Academic Pedigree & Thesis (Icon-driven Summary Cards) -->
+	<section class="about-section" id="academic-pedigree">
 		<div class="section-header">
-			<span class="section-tag font-dot">03 // PEDIGREE</span>
-			<h2 class="section-title font-dot">Academic Education & Research</h2>
-			<p class="section-desc font-mono">
-				Undergraduate computer science degree, higher secondary science foundation, and final year thesis research.
+			<span class="section-tag font-dot">03 // EDUCATION & RESEARCH</span>
+			<h2 class="section-title font-dot">Academic Pedigree & Research</h2>
+			<p class="section-desc">
+				Formal degree programs, higher secondary foundation, and solo undergraduate thesis.
 			</p>
 		</div>
 
-		<div class="edu-grid">
-			<!-- DIU B.Sc. in CSE -->
-			<div class="edu-card card font-mono">
-				<div class="edu-top">
-					<div class="edu-badge-group">
-						<span class="edu-badge">{bscCseProgram.badge}</span>
-						<span class="edu-duration-badge font-mono">{bscCseProgram.duration}</span>
-					</div>
-					<span class="edu-gpa font-dot">CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</span>
-				</div>
-
-				<div class="edu-card-main">
-					{bscCseProgram.logo && (
-						<div class="edu-card-logo-box">
-							<img
-								src={bscCseProgram.logo}
-								alt={`${bscCseProgram.institution} Crest`}
-								class="edu-card-logo"
-								width="56"
-								height="56"
-								loading="lazy"
-							/>
+		<div class="compact-edu-grid">
+			<!-- DIU Card -->
+			<div class="compact-card card">
+				<div class="c-top">
+					<div class="c-left-icon">
+						<div class="c-svg-box">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+								<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+							</svg>
 						</div>
-					)}
-					<div class="edu-card-text">
-						<h3 class="edu-degree">{bscCseProgram.degree}</h3>
-						<p class="edu-institution">
-							<a
-								href={bscCseProgram.institutionUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inst-web-link"
-								title={`Visit ${bscCseProgram.institution} Website`}
-							>
-								<span>{bscCseProgram.institution}</span>
-								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-									<polyline points="15 3 21 3 21 9"></polyline>
-									<line x1="10" y1="14" x2="21" y2="3"></line>
-								</svg>
-							</a>
-							<span class="inst-divider">•</span>
-							<span>{bscCseProgram.location}</span>
-						</p>
+						<div>
+							<span class="c-inst-tag font-mono">DIU CSE BATCH 55</span>
+							<h3 class="c-title">B.Sc. in Computer Science & Engineering</h3>
+						</div>
 					</div>
+					<span class="c-stat-pill font-mono">CGPA 3.91 / 4.00</span>
 				</div>
-
-				<p class="edu-summary">
-					{bscCseProgram.summary}
+				<p class="c-summary">
+					142-credit UGC uniform curriculum encompassing algorithms, distributed systems, AI, and 6 consecutive Grade A+ software practicums.
 				</p>
-				<div class="edu-focus-areas">
-					<span class="focus-title font-dot">Key Academic Focus:</span>
-					<ul class="focus-list">
-						{bscCseProgram.keyFocusAreas.map((area) => (
-							<li class="focus-item">{area}</li>
-						))}
-					</ul>
-				</div>
-				<div class="edu-card-footer">
-					<a href="/education/bsc-cse" class="edu-details-link font-dot">
-						<span>View B.Sc. in CSE Full Details & Transcript</span>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
+				<a href="/education/bsc-cse" class="c-action-btn">
+					<span>View B.Sc. Details & 11-Semester Transcript →</span>
+				</a>
 			</div>
 
-			<!-- NDC HSC -->
-			<div class="edu-card card font-mono">
-				<div class="edu-top">
-					<div class="edu-badge-group">
-						<span class="edu-badge">{hscScienceProgram.badge}</span>
-						<span class="edu-duration-badge font-mono">{hscScienceProgram.period}</span>
-					</div>
-					<span class="edu-gpa font-dot">GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}</span>
-				</div>
-
-				<div class="edu-card-main">
-					{hscScienceProgram.logo && (
-						<div class="edu-card-logo-box ndc-card-logo-box">
-							<img
-								src={hscScienceProgram.logo}
-								alt={`${hscScienceProgram.institution} Logo`}
-								class="edu-card-logo"
-								width="90"
-								height="40"
-								loading="lazy"
-							/>
+			<!-- NDC Card -->
+			<div class="compact-card card">
+				<div class="c-top">
+					<div class="c-left-icon">
+						<div class="c-svg-box">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<line x1="3" y1="21" x2="21" y2="21"></line>
+								<line x1="6" y1="18" x2="6" y2="10"></line>
+								<line x1="10" y1="18" x2="10" y2="10"></line>
+								<line x1="14" y1="18" x2="14" y2="10"></line>
+								<line x1="18" y1="18" x2="18" y2="10"></line>
+								<polygon points="12 2 2 8 22 8"></polygon>
+							</svg>
 						</div>
-					)}
-					<div class="edu-card-text">
-						<h3 class="edu-degree">{hscScienceProgram.degree}</h3>
-						<p class="edu-institution">
-							<a
-								href={hscScienceProgram.institutionUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inst-web-link"
-								title={`Visit ${hscScienceProgram.institution} Website`}
-							>
-								<span>{hscScienceProgram.institution}</span>
-								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-									<polyline points="15 3 21 3 21 9"></polyline>
-									<line x1="10" y1="14" x2="21" y2="3"></line>
-								</svg>
-							</a>
-							<span class="inst-divider">•</span>
-							<span>{hscScienceProgram.location}</span>
-						</p>
+						<div>
+							<span class="c-inst-tag font-mono">BATCH '19 // GROUP 13</span>
+							<h3 class="c-title">Higher Secondary Certificate (HSC Science)</h3>
+						</div>
 					</div>
+					<span class="c-stat-pill font-mono">GPA 4.67 / 5.00</span>
 				</div>
-
-				<p class="edu-summary">
-					{hscScienceProgram.summary}
+				<p class="c-summary">
+					Notre Dame College (Room 304). Rigorous scientific foundation, math club participation, and campus leadership.
 				</p>
-				<div class="edu-focus-areas">
-					<span class="focus-title font-dot">Science Curriculum:</span>
-					<ul class="focus-list">
-						{hscScienceProgram.keyCourses.map((c) => (
-							<li class="focus-item">{c}</li>
-						))}
-					</ul>
-				</div>
-				{hscScienceProgram.coCurricular && (
-					<div class="edu-focus-areas">
-						<span class="focus-title font-dot">Co-Curricular Clubs:</span>
-						<ul class="focus-list">
-							{hscScienceProgram.coCurricular.map((club) => (
-								<li class="focus-item club-highlight">{club}</li>
-							))}
-						</ul>
-					</div>
-				)}
-				<div class="edu-card-footer">
-					<a href="/education/hsc-science" class="edu-details-link font-dot">
-						<span>View Notre Dame College HSC Details & Curriculum</span>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
+				<a href="/education/hsc-science" class="c-action-btn">
+					<span>View Notre Dame College Details & Heritage →</span>
+				</a>
 			</div>
 
-			<!-- Final Year Thesis Research -->
-			<div class="edu-card card font-mono thesis-about-card">
-				<div class="edu-top">
-					<div class="edu-badge-group">
-						<span class="edu-badge font-dot">{thesis.badge}</span>
-						<span class="edu-duration-badge font-mono">{thesis.institution} • #{thesis.projectNumber}</span>
+			<!-- Thesis Card -->
+			<div class="compact-card card">
+				<div class="c-top">
+					<div class="c-left-icon">
+						<div class="c-svg-box">
+							<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<polyline points="10 9 9 9 8 9"></polyline>
+							</svg>
+						</div>
+						<div>
+							<span class="c-inst-tag font-mono">FINAL YEAR THESIS</span>
+							<h3 class="c-title">Bangla Handwritten Character Recognition</h3>
+						</div>
 					</div>
-					<span class="edu-gpa font-dot">DenseNet: 97.93% / 95.99%</span>
+					<span class="c-stat-pill font-mono">DenseNet: 97.93%</span>
 				</div>
-
-				<div class="edu-card-main">
-					<div class="edu-card-text">
-						<h3 class="edu-degree">{thesis.title}</h3>
-						<p class="edu-institution">
-							<span>Author: {thesis.author} ({thesis.authorRole})</span>
-							<span class="inst-divider">•</span>
-							<span>Ekush Dataset Benchmark (80,000 Images)</span>
-						</p>
-					</div>
-				</div>
-
-				<p class="edu-summary">
-					{thesis.abstract}
+				<p class="c-summary">
+					Solo undergraduate research evaluating 16 deep learning models on 80,000 Ekush dataset images with DenseNet-201 benchmark excellence.
 				</p>
-
-				<div class="thesis-metrics-strip font-mono">
-					<div class="t-strip-item">
-						<span class="t-strip-val font-dot">97.93%</span>
-						<span class="t-strip-lbl">Vowel Acc (F1: 0.98)</span>
-					</div>
-					<div class="t-strip-item">
-						<span class="t-strip-val font-dot">95.99%</span>
-						<span class="t-strip-lbl">Consonant Acc (F1: 0.96)</span>
-					</div>
-					<div class="t-strip-item">
-						<span class="t-strip-val font-dot">16 Models</span>
-						<span class="t-strip-lbl">Comparative Benchmarks</span>
-					</div>
-					<div class="t-strip-item">
-						<span class="t-strip-val font-dot">Solo Thesis</span>
-						<span class="t-strip-lbl">Individual Research</span>
-					</div>
-				</div>
-
-				<div class="edu-card-footer">
-					<a href="/research/01-bangla-hwcr-ekush" class="edu-details-link font-dot">
-						<span>Read Full Research Paper & 16-Model Benchmarks</span>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
+				<a href="/research/01-bangla-hwcr-ekush" class="c-action-btn">
+					<span>Read Research Paper & 16-Model Benchmarks →</span>
+				</a>
 			</div>
 		</div>
 	</section>
 
-	<!-- 6. Verified Credentials & Certifications -->
-	<section class="about-section">
+	<!-- 6. Verified Credentials (Icon-driven Compact Grid) -->
+	<section class="about-section" id="credentials-section">
 		<div class="section-header">
-			<span class="section-tag font-dot">04 // CREDENTIALS</span>
-			<h2 class="section-title font-dot">Verified Certifications</h2>
-			<p class="section-desc font-mono">
-				Specialized certifications across Google Cloud AI, Generative AI, Cisco Networking, and Software Engineering.
+			<span class="section-tag font-dot">04 // VERIFIED CREDENTIALS</span>
+			<h2 class="section-title font-dot">Professional Certifications</h2>
+			<p class="section-desc">
+				Verified certifications across Google Cloud AI, Generative AI, Cisco Networking, and Frontend Engineering.
 			</p>
 		</div>
 
-		<div class="certs-grid font-mono">
-			{certifications.map((cert) => (
-				<div class="cert-card card">
-					<div class="cert-top">
-						<span class="cert-issuer">{cert.issuer}</span>
-						<span class="cert-date">{cert.date}</span>
+		<div class="compact-certs-grid">
+			{compactCerts.map((cert) => (
+				<a href={cert.url} target="_blank" rel="noopener noreferrer" class="compact-cert-pill card" title={`Verify ${cert.title} on ${cert.issuer}`}>
+					<div class="cert-svg-box">
+						{cert.iconType === 'bot' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="3" y="11" width="18" height="10" rx="2"></rect>
+								<circle cx="12" cy="5" r="2"></circle>
+								<path d="M12 7v4"></path>
+								<line x1="8" y1="16" x2="8" y2="16"></line>
+								<line x1="16" y1="16" x2="16" y2="16"></line>
+							</svg>
+						)}
+						{cert.iconType === 'sparkles' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+							</svg>
+						)}
+						{cert.iconType === 'terminal' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="4 17 10 11 4 5"></polyline>
+								<line x1="12" y1="19" x2="20" y2="19"></line>
+							</svg>
+						)}
+						{cert.iconType === 'code' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polyline points="16 18 22 12 16 6"></polyline>
+								<polyline points="8 6 2 12 8 18"></polyline>
+							</svg>
+						)}
+						{cert.iconType === 'globe' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="12" r="10"></circle>
+								<line x1="2" y1="12" x2="22" y2="12"></line>
+								<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
+							</svg>
+						)}
+						{cert.iconType === 'award' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<circle cx="12" cy="8" r="7"></circle>
+								<polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline>
+							</svg>
+						)}
 					</div>
-					<h3 class="cert-name">{cert.title}</h3>
-					{cert.id && <span class="cert-id font-mono">Credential ID: {cert.id}</span>}
+					<div class="cert-meta">
+						<div class="cert-top-row">
+							<span class="cert-issuer font-mono">{cert.issuer}</span>
+							<span class="cert-date font-mono">{cert.date}</span>
+						</div>
+						<h3 class="cert-title">{cert.title}</h3>
+						{cert.id && <span class="cert-id font-mono">ID: {cert.id}</span>}
+					</div>
+				</a>
+			))}
+		</div>
+
+		<div class="section-footer-link">
+			<a href="/credentials" class="full-dir-btn">
+				<span>View All 33 Verified Credentials & Verification Details →</span>
+			</a>
+		</div>
+	</section>
+
+	<!-- 7. Beyond the Terminal (Icon-driven Compact Cards) -->
+	<section class="about-section" id="beyond-terminal">
+		<div class="section-header">
+			<span class="section-tag font-dot">05 // BEYOND THE TERMINAL</span>
+			<h2 class="section-title font-dot">Personal Dimensions & Creative Pursuits</h2>
+			<p class="section-desc">
+				Rhythm, visual craft, narrative structures, and deep endurance that shape my engineering approach.
+			</p>
+		</div>
+
+		<div class="compact-pursuits-grid">
+			{compactPursuits.map((p) => (
+				<div class="compact-pursuit-card card">
+					<div class="pursuit-top">
+						<div class="pursuit-svg-box">
+							{p.iconType === 'music' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M9 18V5l12-2v13"></path>
+									<circle cx="6" cy="18" r="3"></circle>
+									<circle cx="18" cy="16" r="3"></circle>
+								</svg>
+							)}
+							{p.iconType === 'pen' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="m12 19 7-7 3 3-7 7-3-3z"></path>
+									<path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+									<path d="m2 2 7.586 7.586"></path>
+									<circle cx="11" cy="11" r="2"></circle>
+								</svg>
+							)}
+							{p.iconType === 'film' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<rect width="20" height="20" x="2" y="2" rx="2.18" ry="2.18"></rect>
+									<line x1="7" y1="2" x2="7" y2="22"></line>
+									<line x1="17" y1="2" x2="17" y2="22"></line>
+									<line x1="2" y1="12" x2="22" y2="12"></line>
+									<line x1="2" y1="7" x2="7" y2="7"></line>
+									<line x1="2" y1="17" x2="7" y2="17"></line>
+									<line x1="17" y1="17" x2="22" y2="17"></line>
+									<line x1="17" y1="7" x2="22" y2="7"></line>
+								</svg>
+							)}
+							{p.iconType === 'theater' && (
+								<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+									<path d="M4 10a8 8 0 0 1 16 0c0 3.5-3 6-8 6s-8-2.5-8-6Z"></path>
+									<circle cx="9" cy="9" r="1" fill="currentColor"></circle>
+									<circle cx="15" cy="9" r="1" fill="currentColor"></circle>
+									<path d="M9 13c1 1 5 1 6 0"></path>
+								</svg>
+							)}
+						</div>
+						<div class="pursuit-title-wrap">
+							<span class="pursuit-tag font-mono">{p.tag}</span>
+							<h3 class="pursuit-name">{p.title}</h3>
+						</div>
+					</div>
+					<p class="pursuit-text">{p.desc}</p>
+					{p.url && (
+						<a href={p.url} target="_blank" rel="noopener noreferrer" class="pursuit-link font-mono">
+							<span>View IMDb Profile</span>
+							<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+								<polyline points="15 3 21 3 21 9"></polyline>
+								<line x1="10" y1="14" x2="21" y2="3"></line>
+							</svg>
+						</a>
+					)}
 				</div>
 			))}
 		</div>
+
+		<div class="archive-callout-card card">
+			<div class="callout-left">
+				<span class="callout-tag font-mono">PRESERVED MEMOIRS // 2017 — 2024</span>
+				<h3 class="callout-title">Explore Personal Archives & College Chapters</h3>
+				<p class="callout-desc">
+					Read chronicled memoirs from Notre Dame College (Nobin Boron, Pope Francis 2017 Youth Assembly, 2018 Student Road Safety Movement), and creative dimensions.
+				</p>
+			</div>
+			<a href="/archive" class="callout-btn">
+				<span>View Personal Archives & Journey →</span>
+			</a>
+		</div>
 	</section>
 
-	<!-- 7. Contact CTA Box -->
-	<section class="about-section">
-		<div class="cta-card card font-mono">
-			<span class="section-tag font-dot">05 // COLLABORATION</span>
+	<!-- 8. Contact CTA Box -->
+	<section class="about-section" id="collaboration">
+		<div class="cta-card card">
+			<span class="section-tag font-dot">06 // COLLABORATION</span>
 			<h2 class="cta-title font-dot">Let's Build Something Resilient</h2>
 			<p class="cta-text">
 				Available for full-stack engineering roles, system architecture design, and high-impact SaaS development.
@@ -462,9 +681,13 @@ const certifications = [
 </BaseLayout>
 
 <style>
+	html {
+		scroll-behavior: smooth;
+	}
+
 	.about-hero {
 		width: 100%;
-		padding: 3rem 0 2rem;
+		padding: 3rem 0 1.5rem;
 		text-align: left;
 		display: flex;
 		flex-direction: column;
@@ -515,34 +738,28 @@ const certifications = [
 		color: var(--accent);
 		text-transform: uppercase;
 		font-weight: 700;
-		-webkit-text-stroke: 0.25px currentColor;
 	}
 
 	.title {
-		font-size: clamp(3rem, 7vw, 5.5rem);
+		font-size: clamp(2.5rem, 6vw, 4rem);
 		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
 		color: var(--text-main);
-		line-height: 1.05;
-		-webkit-text-stroke: 0.45px currentColor;
-		text-rendering: optimizeLegibility;
+		line-height: 1.1;
+		letter-spacing: 0.02em;
+		text-transform: uppercase;
 	}
 
 	.subtitle {
-		font-size: clamp(1.35rem, 3vw, 2.25rem);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
+		font-size: clamp(1.2rem, 3vw, 1.6rem);
 		color: var(--accent);
-		font-weight: 700;
-		-webkit-text-stroke: 0.35px currentColor;
+		font-weight: 600;
 	}
 
 	.hero-bio {
-		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
-		line-height: 1.65;
+		font-size: 1.05rem;
+		line-height: 1.7;
 		color: var(--text-muted);
-		max-width: 820px;
+		max-width: 800px;
 	}
 
 	.hero-actions {
@@ -563,10 +780,189 @@ const certifications = [
 		color: var(--accent);
 	}
 
+	/* Hero Pedigree Strip */
+	.hero-pedigree-strip {
+		margin-top: 0.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		width: 100%;
+	}
+
+	.pedigree-label {
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.pedigree-cards-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		width: 100%;
+	}
+
+	@media (max-width: 768px) {
+		.pedigree-cards-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.pedigree-card {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		padding: 1rem 1.25rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.pedigree-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(180, 33, 53, 0.08);
+	}
+
+	.pedigree-logo-box {
+		width: 48px;
+		height: 48px;
+		border-radius: 10px;
+		background: rgba(255, 255, 255, 0.95);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+		padding: 4px;
+	}
+
+	.pedigree-logo-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+	}
+
+	.pedigree-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		flex: 1;
+		min-width: 0;
+	}
+
+	.pedigree-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.pedigree-inst {
+		font-size: 0.92rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.pedigree-badge {
+		font-size: 0.72rem;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		font-weight: 700;
+		white-space: nowrap;
+	}
+
+	.pedigree-badge.diu-badge {
+		background: rgba(27, 77, 62, 0.1);
+		color: #1b4d3e;
+	}
+
+	.pedigree-deg {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		line-height: 1.35;
+	}
+
+	.pedigree-arrow {
+		font-size: 1.1rem;
+		color: var(--accent);
+		font-weight: 700;
+		transition: transform 0.15s ease;
+		flex-shrink: 0;
+	}
+
+	.pedigree-card:hover .pedigree-arrow {
+		transform: translateX(3px);
+	}
+
+	/* On This Page Quick Nav Bar */
+	.on-this-page-bar {
+		margin-top: 1rem;
+		padding: 1.15rem 1.4rem;
+		border-radius: 12px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.18);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.otp-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.otp-svg {
+		color: var(--accent);
+		flex-shrink: 0;
+	}
+
+	.otp-label {
+		font-size: 0.74rem;
+		font-weight: 700;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+	}
+
+	.otp-links {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.otp-link {
+		font-size: 0.75rem;
+		padding: 0.3rem 0.65rem;
+		border-radius: 6px;
+		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-main);
+		text-decoration: none;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		transition: all 0.15s ease;
+		font-weight: 600;
+	}
+
+	.otp-link:hover {
+		background: var(--accent);
+		color: #fffdfa;
+		border-color: var(--accent);
+		transform: translateY(-1px);
+	}
+
 	.about-section {
 		width: 100%;
-		margin-top: 5rem;
+		margin-top: 4.5rem;
 		text-align: left;
+		scroll-margin-top: 5rem;
 	}
 
 	.section-header {
@@ -582,7 +978,6 @@ const certifications = [
 		letter-spacing: 0.05em;
 		text-transform: uppercase;
 		color: var(--text-main);
-		-webkit-text-stroke: 0.35px currentColor;
 	}
 
 	.section-desc {
@@ -599,7 +994,7 @@ const certifications = [
 		gap: 1.25rem;
 	}
 
-	@media (max-width: 860px) {
+	@media (max-width: 900px) {
 		.metrics-grid {
 			grid-template-columns: repeat(2, 1fr);
 		}
@@ -612,20 +1007,24 @@ const certifications = [
 	}
 
 	.metric-card {
-		padding: 1.75rem 1.25rem;
+		padding: 1.75rem 1.5rem;
+		border-radius: 12px;
 		display: flex;
 		flex-direction: column;
-		gap: 0.3rem;
-		text-align: left;
+		gap: 0.35rem;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 	}
 
 	.metric-num {
 		font-size: 2.25rem;
+		font-weight: 700;
 		color: var(--accent);
+		line-height: 1;
 	}
 
 	.metric-label {
-		font-size: 0.875rem;
+		font-size: 0.9rem;
 		font-weight: 600;
 		color: var(--text-main);
 	}
@@ -639,7 +1038,7 @@ const certifications = [
 	.principles-grid {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
+		gap: 1.25rem;
 	}
 
 	@media (max-width: 768px) {
@@ -649,31 +1048,70 @@ const certifications = [
 	}
 
 	.principle-card {
-		padding: 2.25rem;
+		padding: 1.75rem;
+		border-radius: 14px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		display: flex;
 		flex-direction: column;
 		gap: 0.85rem;
+		transition: all 0.2s ease;
+	}
+
+	.principle-card:hover {
+		border-color: rgba(180, 33, 53, 0.35);
+		transform: translateY(-2px);
 	}
 
 	.principle-header {
 		display: flex;
 		align-items: center;
-		gap: 0.75rem;
+		gap: 0.85rem;
 	}
 
-	.principle-num {
-		font-size: 1.5rem;
+	.principle-icon-wrap {
+		width: 40px;
+		height: 40px;
+		border-radius: 10px;
+		background: rgba(180, 33, 53, 0.08);
 		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.principle-title-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		flex: 1;
+	}
+
+	.principle-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		font-weight: 700;
 	}
 
 	.principle-title {
-		font-size: 1.15rem;
+		font-size: 1.05rem;
 		font-weight: 700;
 		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.principle-num {
+		font-size: 1.25rem;
+		font-weight: 800;
+		color: var(--text-muted);
+		opacity: 0.4;
 	}
 
 	.principle-desc {
-		font-size: 0.9375rem;
+		font-size: 0.86rem;
 		line-height: 1.6;
 		color: var(--text-muted);
 	}
@@ -682,262 +1120,254 @@ const certifications = [
 	.skills-grid {
 		display: grid;
 		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
+		gap: 1.25rem;
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 800px) {
 		.skills-grid {
 			grid-template-columns: 1fr;
 		}
 	}
 
 	.skill-card {
-		padding: 2rem;
+		padding: 1.75rem;
+		border-radius: 14px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		display: flex;
 		flex-direction: column;
 		gap: 1.15rem;
+		transition: all 0.2s ease;
 	}
 
-	.skill-category-title {
-		font-size: 1.15rem;
-		font-weight: 700;
-		color: var(--accent);
+	.skill-card:hover {
+		border-color: rgba(180, 33, 53, 0.35);
 	}
 
-	.skill-tags {
-		list-style: none;
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.5rem;
-	}
-
-	.skill-tag {
-		font-size: 0.8125rem;
-		padding: 0.35rem 0.75rem;
-		background: rgba(95, 80, 56, 0.07);
-		border-radius: 6px;
-		color: var(--text-main);
-		border: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	/* Education Grid */
-	.edu-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.edu-card {
-		padding: 2.25rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.edu-top {
+	.skill-card-top {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
-	.edu-badge-group {
+	.skill-icon-pill {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.edu-badge {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: rgba(95, 80, 56, 0.08);
-		padding: 0.25rem 0.65rem;
-		border-radius: 9999px;
-		color: var(--btn-primary);
-		border: 1px solid rgba(95, 80, 56, 0.15);
-	}
-
-	.edu-duration-badge {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		background: rgba(95, 80, 56, 0.05);
-		padding: 0.25rem 0.55rem;
-		border-radius: 6px;
-	}
-
-	.edu-gpa {
-		font-size: 1.25rem;
+		gap: 0.6rem;
 		color: var(--accent);
 	}
 
-	.edu-card-main {
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
-		margin: 0.25rem 0;
-	}
-
-	.edu-card-logo-box {
-		width: 58px;
-		height: 58px;
-		flex-shrink: 0;
-		padding: 4px;
-		background: #fffdfa;
-		border-radius: 12px;
-		border: 1px solid rgba(95, 80, 56, 0.15);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.04);
-	}
-
-	.ndc-card-logo-box {
-		width: 95px;
-		height: 52px;
-		padding: 3px 6px;
-	}
-
-	.edu-card-logo {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-	}
-
-
-	.edu-card-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.edu-degree {
-		font-size: 1.35rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.edu-institution {
-		font-size: 0.9375rem;
-		color: var(--text-muted);
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.inst-web-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.3rem;
+	.skill-tag {
+		font-size: 0.68rem;
 		color: var(--accent);
-		font-weight: 600;
-		transition: color 0.15s ease;
-	}
-
-	.inst-web-link:hover {
-		color: var(--accent-hover);
-		text-decoration: underline;
-	}
-
-	.inst-divider {
-		opacity: 0.4;
-	}
-
-
-	.edu-summary {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--text-muted);
-	}
-
-	.edu-focus-areas {
-		margin-top: 0.5rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
-	}
-
-	.focus-title {
-		font-size: 0.78rem;
-		text-transform: uppercase;
-		letter-spacing: 0.04em;
-		color: var(--text-main);
-	}
-
-	.focus-list {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-		list-style: none;
-	}
-
-	.focus-item {
-		font-size: 0.78rem;
-		padding: 0.25rem 0.6rem;
-		border-radius: 6px;
-		background: rgba(95, 80, 56, 0.06);
-		color: var(--text-muted);
-		border: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	.focus-item.club-highlight {
 		background: rgba(180, 33, 53, 0.08);
-		color: var(--accent);
-		border-color: rgba(180, 33, 53, 0.2);
-		font-weight: 600;
-	}
-
-
-	.edu-card-footer {
-		margin-top: 0.5rem;
-		padding-top: 0.85rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.15);
-	}
-
-	.edu-details-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		font-size: 0.85rem;
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
 		font-weight: 700;
-		color: var(--accent);
+	}
+
+	.skill-category-title {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.skill-chips-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.skill-chip {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid rgba(95, 80, 56, 0.09);
+		font-size: 0.82rem;
+		color: var(--text-main);
 		transition: all 0.15s ease;
 	}
 
-	.edu-details-link:hover {
-		color: var(--accent-hover);
-		transform: translateX(3px);
+	.skill-chip:hover {
+		border-color: rgba(180, 33, 53, 0.3);
+		background: rgba(180, 33, 53, 0.04);
 	}
 
+	.st-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent);
+		flex-shrink: 0;
+	}
 
-
-
-
-
-	/* Certifications Grid */
-	.certs-grid {
+	/* Compact Education Cards */
+	.compact-edu-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(3, 1fr);
 		gap: 1.25rem;
 	}
 
-	@media (max-width: 768px) {
-		.certs-grid {
+	@media (max-width: 900px) {
+		.compact-edu-grid {
 			grid-template-columns: 1fr;
 		}
 	}
 
-	.cert-card {
-		padding: 1.5rem;
+	.compact-card {
+		padding: 1.6rem;
+		border-radius: 14px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		display: flex;
 		flex-direction: column;
+		gap: 0.85rem;
+		transition: all 0.2s ease;
+	}
+
+	.compact-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+		box-shadow: 0 6px 20px rgba(180, 33, 53, 0.08);
+	}
+
+	.c-top {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
 		gap: 0.5rem;
 	}
 
-	.cert-top {
+	.c-left-icon {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.65rem;
+	}
+
+	.c-svg-box {
+		width: 38px;
+		height: 38px;
+		border-radius: 8px;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.c-inst-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+
+	.c-title {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.c-stat-pill {
+		font-size: 0.72rem;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		padding: 0.2rem 0.55rem;
+		border-radius: 4px;
+		font-weight: 700;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	.c-summary {
+		font-size: 0.82rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+		flex: 1;
+	}
+
+	.c-action-btn {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		padding-top: 0.5rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.12);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		transition: all 0.15s ease;
+	}
+
+	.c-action-btn:hover {
+		color: var(--accent-hover);
+		transform: translateX(3px);
+	}
+
+	/* Compact Certs Grid */
+	.compact-certs-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1rem;
+	}
+
+	@media (max-width: 900px) {
+		.compact-certs-grid {
+			grid-template-columns: repeat(2, 1fr);
+		}
+	}
+
+	@media (max-width: 600px) {
+		.compact-certs-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.compact-cert-pill {
+		padding: 1.15rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		align-items: flex-start;
+		gap: 0.75rem;
+		transition: all 0.15s ease;
+	}
+
+	.compact-cert-pill:hover {
+		border-color: rgba(180, 33, 53, 0.35);
+		transform: translateY(-2px);
+	}
+
+	.cert-svg-box {
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.18);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.cert-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		min-width: 0;
+	}
+
+	.cert-top-row {
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
@@ -945,28 +1375,202 @@ const certifications = [
 	}
 
 	.cert-issuer {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		font-size: 0.68rem;
 		color: var(--accent);
-		font-weight: 600;
+		font-weight: 700;
 	}
 
 	.cert-date {
-		font-size: 0.75rem;
+		font-size: 0.68rem;
 		color: var(--text-muted);
 	}
 
-	.cert-name {
-		font-size: 0.9375rem;
-		font-weight: 600;
+	.cert-title {
+		font-size: 0.88rem;
+		font-weight: 700;
 		color: var(--text-main);
-		line-height: 1.4;
+		line-height: 1.3;
 	}
 
 	.cert-id {
-		font-size: 0.6875rem;
+		font-size: 0.68rem;
 		color: var(--text-muted);
+		opacity: 0.85;
+	}
+
+	.section-footer-link {
+		margin-top: 1.25rem;
+		text-align: left;
+	}
+
+	.full-dir-btn {
+		font-size: 0.86rem;
+		color: var(--accent);
+		font-weight: 700;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		transition: all 0.15s ease;
+	}
+
+	.full-dir-btn:hover {
+		color: var(--accent-hover);
+		transform: translateX(3px);
+	}
+
+	/* Compact Pursuits Grid */
+	.compact-pursuits-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.compact-pursuits-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.compact-pursuit-card {
+		padding: 1.35rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		transition: all 0.15s ease;
+	}
+
+	.compact-pursuit-card:hover {
+		border-color: rgba(180, 33, 53, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.pursuit-top {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.pursuit-svg-box {
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.18);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.pursuit-title-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.pursuit-tag {
+		font-size: 0.65rem;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		font-weight: 700;
+	}
+
+	.pursuit-name {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.pursuit-text {
+		font-size: 0.82rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	.pursuit-link {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+		transition: all 0.15s ease;
+	}
+
+	.pursuit-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(2px);
+	}
+
+	/* Archive Callout Card */
+	.archive-callout-card {
+		padding: 1.75rem 2rem;
+		border-radius: 14px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.callout-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		max-width: 680px;
+	}
+
+	.callout-tag {
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.callout-title {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+	}
+
+	.callout-desc {
+		font-size: 0.84rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.callout-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.7rem 1.35rem;
+		background: var(--btn-primary);
+		color: #fffdfa;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: all 0.15s ease;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	.callout-btn:hover {
+		background: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 14px rgba(180, 33, 53, 0.2);
 	}
 
 	/* CTA Box */
@@ -1000,44 +1604,4 @@ const certifications = [
 		justify-content: center;
 		margin-top: 0.5rem;
 	}
-
-	/* Thesis About Card */
-	.thesis-about-card {
-		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-	}
-
-	.thesis-metrics-strip {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 0.85rem;
-		padding: 0.85rem 0;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
-		margin: 0.25rem 0;
-	}
-
-	@media (max-width: 768px) {
-		.thesis-metrics-strip {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	.t-strip-item {
-		display: flex;
-		flex-direction: column;
-		gap: 0.15rem;
-	}
-
-	.t-strip-val {
-		font-size: 1.15rem;
-		font-weight: 700;
-		color: var(--accent);
-	}
-
-	.t-strip-lbl {
-		font-size: 0.72rem;
-		color: var(--text-muted);
-	}
 </style>
-

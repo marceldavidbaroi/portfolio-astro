@@ -18,7 +18,7 @@ const projects = allProjects
 			<h1 class="work-title font-dot">Selected Work</h1>
 			<p class="work-subtitle font-dot">Enterprise SaaS & Architecture Systems</p>
 		</div>
-		<p class="work-lead font-mono">
+		<p class="work-lead">
 			A complete catalog of production platforms, multi-tenant frameworks, mobile systems, and full-stack software architectures accumulated through 2026.
 		</p>
 	</section>
@@ -29,8 +29,8 @@ const projects = allProjects
 				<a href={`/work/${project.slug}`} class="project-showcase-card">
 					<!-- Top Info Header: Title, Description, Keyword Chip -->
 					<div class="card-header-info">
-						<h3 class="project-title font-mono">{project.title}</h3>
-						<p class="project-description font-mono">{project.description}</p>
+						<h3 class="project-title">{project.title}</h3>
+						<p class="project-description">{project.description}</p>
 						<div class="chip-container">
 							<span class="keyword-chip font-mono">{project.chip}</span>
 						</div>

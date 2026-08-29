@@ -80,6 +80,15 @@ export interface DegreeProgram {
 	semesters: Semester[];
 }
 
+export interface FormativeMilestone {
+	title: string;
+	tag: string;
+	period: string;
+	description: string;
+	impact: string;
+	url?: string;
+}
+
 export interface PreUniversityEducation {
 	id: string;
 	degree: string;
@@ -97,7 +106,9 @@ export interface PreUniversityEducation {
 	summary: string;
 	keyCourses: string[];
 	coCurricular?: string[];
+	formativeMilestones?: FormativeMilestone[];
 }
+
 
 
 
@@ -1107,7 +1118,7 @@ export const universitySemesters: Semester[] = [
 export const bscCseProgram: DegreeProgram = {
 	id: 'bsc-cse',
 	degree: 'Bachelor of Science in Computer Science & Engineering',
-	shortDegree: 'B.Sc. in CSE',
+	shortDegree: 'B.Sc. in CSE (Batch 55)',
 	major: 'Computer Science & Engineering',
 	institution: 'Daffodil International University (DIU)',
 	institutionShort: 'DIU',
@@ -1116,7 +1127,7 @@ export const bscCseProgram: DegreeProgram = {
 	location: 'Dhaka, Bangladesh',
 	duration: '4 Years (11 Semesters)',
 	period: '2020 — 2024',
-	badge: 'Graduated 2024',
+	badge: 'CSE Batch 55',
 	status: 'Completed',
 	cgpa: 3.91,
 	maxGpa: 4.0,
@@ -1124,7 +1135,7 @@ export const bscCseProgram: DegreeProgram = {
 	totalCourses: 70,
 
 	summary:
-		'Rigorous 142-credit undergraduate curriculum encompassing core computer science algorithms, systems architecture, distributed computing, database management, software engineering, artificial intelligence, and applied robotics under the UGC Uniform Grading System.',
+		'Rigorous 142-credit undergraduate curriculum (**CSE Batch 55**) encompassing core computer science algorithms, systems architecture, distributed computing, database management, software engineering, artificial intelligence, and applied robotics under the UGC Uniform Grading System.',
 	keyFocusAreas: [
 		'Software Engineering & Full-Lifecycle Projects (Software Projects I–VI)',
 		'Distributed Systems, Operating Systems & Relational Databases',
@@ -1142,19 +1153,19 @@ export const bscCseProgram: DegreeProgram = {
 export const hscScienceProgram: PreUniversityEducation = {
 	id: 'hsc-science',
 	degree: 'Higher Secondary Certificate (HSC) — Science',
-	shortDegree: 'HSC Science',
-	field: 'Science Group',
+	shortDegree: 'HSC Science (Batch \'19, Group 13)',
+	field: 'Science Group (Batch \'19, Group 13)',
 	institution: 'Notre Dame College, Dhaka',
 	institutionShort: 'Notre Dame College',
 	institutionUrl: 'https://ndc.edu.bd/',
 	logo: '/images/education/ndc-logo.png',
 	location: 'Dhaka, Bangladesh',
 	period: '2017 — 2019',
-	badge: 'Graduated 2019',
+	badge: 'Batch \'19 // Group 13',
 	gpa: 4.67,
 	maxGpa: 5.0,
 	summary:
-		'Completed Higher Secondary Certificate in Science from Notre Dame College, Dhaka with GPA 4.67 / 5.00 under the Dhaka Education Board, covering the standard science curriculum and actively participating in club activities.',
+		'Completed Higher Secondary Certificate in Science from Notre Dame College, Dhaka (**Batch \'19, Group 13**) with GPA 4.67 / 5.00 under the Dhaka Education Board, covering the standard science curriculum and actively participating in club activities.',
 	keyCourses: [
 		'Physics',
 		'Chemistry',
@@ -1167,6 +1178,35 @@ export const hscScienceProgram: PreUniversityEducation = {
 	coCurricular: [
 		'Notre Dame Math Club (NDMC)',
 		'Notre Dame Cultural Club (NDCC)'
+	],
+	formativeMilestones: [
+		{
+			title: 'Pope Francis Apostolic Visit & Protocol Volunteer Force',
+			tag: 'CAMPUS MILESTONE // 2017',
+			period: 'December 2, 2017',
+			description:
+				'Handpicked by Father Susanto among a 20-member student volunteer team and subsequently selected into the elite 6-member core protocol force for Pope Francis’s 100,000-attendee Papal Mass at Ramna and 10,000-youth NDC campus gathering. Underwent multi-week training in international VIP and event security protocols.',
+			impact: 'Cross-cultural leadership, international security protocol & institutional pride',
+			url: '/archive/pope-francis-visit-2017'
+		},
+		{
+			title: 'Student-Led Road Safety & Civic Governance Movement',
+			tag: 'CIVIC LEADERSHIP // 2018',
+			period: 'July — August 2018',
+			description:
+				'Participated in the historic, student-organized nationwide road safety movement across Dhaka, actively advocating for vehicle licensing compliance, emergency lane discipline, and civic accountability.',
+			impact: 'Systemic discipline, civic duty & collective leadership',
+			url: '/archive/road-safety-movement-2018'
+		},
+		{
+			title: 'Noterdamian Traditions of Rigor & Punctuality',
+			tag: 'CAMPUS CULTURE & HERITAGE',
+			period: '2017 — 2019',
+			description:
+				'Immersed in Notre Dame College’s legendary institutional ethos—strict 8:10 AM gate punctuality, academic camaraderie across Ganguly and Harrington halls, and holistic character formation.',
+			impact: 'Uncompromising punctuality, integrity & resilience',
+			url: '/archive#rag-day'
+		}
 	]
 };
 

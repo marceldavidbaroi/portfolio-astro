@@ -1,0 +1,311 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const principles = [
+	{
+		num: '01',
+		tag: 'SPECIFICATION & MODELING',
+		title: 'Architecture-First AI Synthesis',
+		subtitle: 'Structuring Systems Before Generating Code',
+		icon: '🏗️',
+		desc: 'I do not use AI tools (Cursor Agentic, Copilot) to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.'
+	},
+	{
+		num: '02',
+		tag: 'DEFENSIVE DATA LAYERS',
+		title: 'Strict Data & Type Safety',
+		subtitle: 'Row-Level Security, Strong Typing & Schema Invariants',
+		icon: '🛡️',
+		desc: 'I enforce integrity at the lowest layer: PostgreSQL database constraints, CHECK rules, foreign key cascades, and Supabase Row-Level Security (RLS) policies. On the application layer, end-to-end TypeScript interfaces ensure backend Data Transfer Objects (DTOs) match frontend reactive state contracts without runtime coercion.'
+	},
+	{
+		num: '03',
+		tag: 'CODEBASE SUSTAINABILITY',
+		title: 'Modular Infrastructure & Monorepo Packages',
+		subtitle: 'Decoupling Monoliths into Versioned Assets',
+		icon: '📦',
+		desc: 'I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.'
+	},
+	{
+		num: '04',
+		tag: 'OUTCOME MEASUREMENT',
+		title: 'Measurable Impact (Google XYZ Framework)',
+		subtitle: 'Quantifying Every Engineering Decision',
+		icon: '📈',
+		desc: 'Engineering is only as good as its measurable outcomes. Every feature or refactor is framed using the Google XYZ format: "Accomplished [X], as measured by [Y], by doing [Z]". Whether cutting ticket approval latency by 85%, reducing bundle load time by 48%, or maintaining zero security leaks across multi-tenant SaaS platforms.'
+	}
+];
+---
+
+<BaseLayout
+	title="Engineering Philosophy & System Architecture | Marcel David Baroi"
+	description="Core architectural principles, AI synthesis workflows, data safety standards, and engineering methodology of Marcel David Baroi."
+	isWide={true}
+>
+	<div class="philosophy-page-container">
+		<!-- Breadcrumbs -->
+		<nav class="page-breadcrumb font-mono" aria-label="Breadcrumb">
+			<a href="/" class="b-link">Home</a>
+			<span class="b-sep">/</span>
+			<a href="/about" class="b-link">About</a>
+			<span class="b-sep">/</span>
+			<span class="b-curr">Engineering Philosophy</span>
+		</nav>
+
+		<!-- Hero Header -->
+		<header class="philo-hero card">
+			<div class="hero-top-meta">
+				<span class="section-tag font-dot">01 // CORE PHILOSOPHY</span>
+				<span class="badge-status success font-mono">System Paradigms</span>
+			</div>
+
+			<h1 class="philo-title font-dot">Engineering Philosophy & Architectural Standards</h1>
+			<p class="philo-subtitle font-dot">Architecture-First Synthesis • Zero-Trust Data Layers • Measurable Velocity</p>
+
+			<p class="philo-intro">
+				Building enterprise software requires structural foresight, relational data integrity, and disciplined versioning. These four foundational principles govern every line of code, schema migration, and production deployment I lead.
+			</p>
+		</header>
+
+		<!-- Principles Deep Dive -->
+		<div class="principles-deep-grid">
+			{principles.map((p) => (
+				<article class="philo-detail-card card">
+					<div class="p-card-header">
+						<span class="p-num font-mono">{p.num}</span>
+						<div class="p-header-meta">
+							<span class="p-tag font-mono">{p.tag}</span>
+							<h2 class="p-title">{p.title}</h2>
+							<p class="p-sub">{p.subtitle}</p>
+						</div>
+						<span class="p-icon">{p.icon}</span>
+					</div>
+
+					<p class="p-desc">{p.desc}</p>
+				</article>
+			))}
+		</div>
+
+		<!-- Cross Navigation -->
+		<div class="philo-cross-nav card">
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">EXECUTIVE PROFILE</span>
+				<a href="/about" class="nav-link">← Return to About Profile</a>
+			</div>
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">CAPABILITIES</span>
+				<a href="/skills" class="nav-link">Technical Skill Matrix →</a>
+			</div>
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">PROVEN WORK</span>
+				<a href="/work" class="nav-link">Explore Production Case Studies →</a>
+			</div>
+		</div>
+	</div>
+</BaseLayout>
+
+<style>
+	.philosophy-page-container {
+		width: 100%;
+		max-width: 1080px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		padding: 1rem 1rem 4rem;
+		text-align: left;
+	}
+
+	/* Breadcrumb */
+	.page-breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.b-link {
+		color: var(--text-muted);
+		transition: color 0.15s ease;
+	}
+
+	.b-link:hover {
+		color: var(--accent);
+	}
+
+	.b-sep {
+		opacity: 0.4;
+	}
+
+	.b-curr {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	/* Hero */
+	.philo-hero {
+		padding: 2.25rem;
+		border-radius: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+	}
+
+	.hero-top-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.badge-status.success {
+		font-size: 0.72rem;
+		padding: 0.2rem 0.65rem;
+		border-radius: 9999px;
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+		border: 1px solid rgba(46, 125, 50, 0.25);
+		font-weight: 700;
+	}
+
+	.philo-title {
+		font-size: clamp(1.85rem, 3.5vw, 2.5rem);
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.2;
+	}
+
+	.philo-subtitle {
+		font-size: 1rem;
+		color: var(--accent);
+	}
+
+	.philo-intro {
+		font-size: 0.92rem;
+		line-height: 1.65;
+		color: var(--text-muted);
+		max-width: 860px;
+	}
+
+	/* Principles Grid */
+	.principles-deep-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 800px) {
+		.principles-deep-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.philo-detail-card {
+		padding: 1.75rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		transition: all 0.15s ease;
+	}
+
+	.philo-detail-card:hover {
+		border-color: rgba(180, 33, 53, 0.35);
+		transform: translateY(-2px);
+	}
+
+	.p-card-header {
+		display: flex;
+		align-items: flex-start;
+		gap: 1rem;
+	}
+
+	.p-num {
+		font-size: 1.5rem;
+		font-weight: 800;
+		color: var(--accent);
+		line-height: 1;
+		flex-shrink: 0;
+	}
+
+	.p-header-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		flex: 1;
+	}
+
+	.p-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		letter-spacing: 0.08em;
+		font-weight: 700;
+	}
+
+	.p-title {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.p-sub {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+
+	.p-icon {
+		font-size: 1.5rem;
+		line-height: 1;
+		flex-shrink: 0;
+	}
+
+	.p-desc {
+		font-size: 0.88rem;
+		line-height: 1.65;
+		color: var(--text-muted);
+	}
+
+	/* Cross Navigation */
+	.philo-cross-nav {
+		padding: 1.75rem 2rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.nav-col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.nav-lbl {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+	}
+
+	.nav-link {
+		font-size: 0.92rem;
+		color: var(--accent);
+		font-weight: 700;
+		transition: all 0.15s ease;
+	}
+
+	.nav-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(2px);
+	}
+</style>

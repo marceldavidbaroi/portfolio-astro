@@ -36,10 +36,10 @@ const pageDesc = isBsc
 ---
 
 <BaseLayout title={pageTitle} description={pageDesc} isWide={true}>
-	<div class="edu-detail-container font-mono">
+	<div class="edu-detail-container">
 		<!-- Top Breadcrumb Navigation -->
 		<nav class="edu-breadcrumb" aria-label="Breadcrumb">
-			<a href="/about#academic-curriculum" class="breadcrumb-link font-dot">
+			<a href="/about#academic-curriculum" class="breadcrumb-link font-mono">
 				<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 					<line x1="19" y1="12" x2="5" y2="12"></line>
 					<polyline points="12 19 5 12 12 5"></polyline>
@@ -53,8 +53,13 @@ const pageDesc = isBsc
 		<!-- Hero Section -->
 		<header class="edu-hero card">
 			<div class="hero-top-meta">
-				<span class="section-tag font-dot">{isBsc ? '01 // UNDERGRADUATE DEGREE' : '02 // HIGHER SECONDARY'}</span>
-				<span class="badge-status success">{isBsc ? bscCseProgram.badge : hscScienceProgram.badge}</span>
+				<span class="section-tag">{isBsc ? '01 // UNDERGRADUATE DEGREE' : '02 // HIGHER SECONDARY'}</span>
+				<div class="hero-badges-wrap">
+					<span class={isBsc ? "diu-batch-badge font-mono" : "ndc-batch-badge font-mono"}>
+						{isBsc ? "CSE BATCH 55" : "BATCH '19 // GROUP 13"}
+					</span>
+					<span class="badge-status success">{isBsc ? bscCseProgram.badge : hscScienceProgram.badge}</span>
+				</div>
 			</div>
 
 			<div class="edu-hero-main-group">
@@ -92,7 +97,7 @@ const pageDesc = isBsc
 							href={isBsc ? bscCseProgram.institutionUrl : hscScienceProgram.institutionUrl}
 							target="_blank"
 							rel="noopener noreferrer"
-							class="inst-name-link font-dot"
+							class="inst-name-link"
 							title={`Visit ${isBsc ? bscCseProgram.institution : hscScienceProgram.institution} Official Website`}
 						>
 							<span>{isBsc ? bscCseProgram.institution : hscScienceProgram.institution}</span>
@@ -109,43 +114,56 @@ const pageDesc = isBsc
 			</div>
 
 			<div class="official-portal-row">
+				{!isBsc && (
+					<a
+						href="/education/hsc-science/gallery"
+						class="official-portal-link highlight-gallery font-mono"
+					>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+							<circle cx="9" cy="9" r="2"></circle>
+							<path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+						</svg>
+						<span>Explore NDC Photo Gallery & Memoirs (75+ Photos) →</span>
+					</a>
+				)}
+
 				<a
 					href={isBsc ? bscCseProgram.institutionUrl : hscScienceProgram.institutionUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="official-portal-btn font-mono"
+					class="official-portal-link font-mono"
 				>
 					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
 						<circle cx="12" cy="12" r="10"></circle>
 						<line x1="2" y1="12" x2="22" y2="12"></line>
 						<path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1 4-10z"></path>
 					</svg>
-					<span>Official {isBsc ? 'University' : 'College'} Portal ({isBsc ? 'daffodilvarsity.edu.bd' : 'ndc.edu.bd'})</span>
-					<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M7 17l9.2-9.2M17 17V7H7"></path>
-					</svg>
+					<span>Official Institutional Portal ↗</span>
 				</a>
 			</div>
 
-			<!-- Core Meta Banner -->
-			<div class="meta-banner-grid">
+			<!-- Metadata Summary Bar -->
+			<div class="edu-meta-strip font-mono">
 				<div class="meta-item">
-					<span class="meta-label">RESULT / STANDING</span>
+					<span class="meta-lbl">RESULT / STANDING</span>
 					<span class="meta-val font-dot highlight">
 						{isBsc ? `CGPA ${bscCseProgram.cgpa.toFixed(2)} / 4.00` : `GPA ${hscScienceProgram.gpa.toFixed(2)} / 5.00`}
 					</span>
 				</div>
 				<div class="meta-item">
-					<span class="meta-label">ACADEMIC PERIOD</span>
-					<span class="meta-val font-dot">{isBsc ? bscCseProgram.period : hscScienceProgram.period}</span>
+					<span class="meta-lbl">{isBsc ? 'DEPARTMENT & BATCH' : 'COLLEGE BATCH'}</span>
+					<span class="meta-val highlight-batch">
+						{isBsc ? 'CSE Batch 55' : "Batch '19 (Group 13)"}
+					</span>
 				</div>
 				<div class="meta-item">
-					<span class="meta-label">PROGRAM DURATION</span>
-					<span class="meta-val font-dot">{isBsc ? bscCseProgram.duration : '2 Years (Higher Secondary)'}</span>
+					<span class="meta-lbl">DURATION</span>
+					<span class="meta-val">{isBsc ? bscCseProgram.period : hscScienceProgram.period}</span>
 				</div>
 				<div class="meta-item">
-					<span class="meta-label">STATUS</span>
-					<span class="meta-val font-dot status-verified">Completed & Verified</span>
+					<span class="meta-lbl">ACCREDITATION</span>
+					<span class="meta-val status-verified">Completed & Verified</span>
 				</div>
 			</div>
 		</header>
@@ -158,7 +176,7 @@ const pageDesc = isBsc
 				<!-- 1. Executive Program Overview & Scope -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">01 // CURRICULUM ARCHITECTURE</span>
+						<span class="subtag">01 // CURRICULUM ARCHITECTURE</span>
 						<h2 class="section-h2 font-dot">Degree Overview & Academic Scope</h2>
 					</div>
 					<p class="section-paragraph">
@@ -166,28 +184,32 @@ const pageDesc = isBsc
 					</p>
 
 					<div class="key-highlights-box">
-						<h3 class="highlights-title font-dot">Key Academic Milestones:</h3>
+						<h3 class="highlights-title">Key Academic Milestones:</h3>
 						<ul class="highlights-list">
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
+								<strong>Academic Batch & Department:</strong> Proud alumnus of <strong>CSE Batch 55</strong>, Department of Computer Science & Engineering.
+							</li>
+							<li>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>High Academic Standing:</strong> Achieved a <strong>3.91 / 4.00 CGPA</strong> under the standardized UGC Uniform Grading System, ranking among top academic achievers.
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>100% Software Projects Excellence:</strong> Scored <strong>Grade A+ (4.00)</strong> in all 6 consecutive hands-on software development practicums (Software Project I through VI).
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>Core Systems & Architecture Mastery:</strong> Comprehensive coursework across Distributed Operating Systems, Compiler Design, Database Management Systems, Computer Networks, and Computer Architecture.
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
 								<div>
-									<strong>Final Year Thesis Defense:</strong> Researched and defended <em>"CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement"</em> (DIU Project #26095) with <strong>97.93% Vowel</strong> and <strong>95.99% Consonant</strong> accuracy on DenseNet. <a href="/research/01-bangla-hwcr-ekush" class="inline-thesis-link font-dot">Read Research Paper & Benchmarks →</a>
+									<strong>Final Year Thesis Defense:</strong> Researched and defended <em>"CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement"</em> (DIU Project #26095) with <strong>97.93% Vowel</strong> and <strong>95.99% Consonant</strong> accuracy on DenseNet. <a href="/research/01-bangla-hwcr-ekush" class="inline-thesis-link">Read Research Paper & Benchmarks →</a>
 								</div>
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>Artificial Intelligence & Applied Data Science:</strong> Specialized coursework and laboratory defense in Artificial Intelligence, Machine Learning, Big Data & IoT, Computer Vision, and Robotics.
 							</li>
 						</ul>
@@ -197,15 +219,15 @@ const pageDesc = isBsc
 				<!-- 2. Academic Core Competency Matrix -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">02 // DOMAIN CLUSTERS</span>
+						<span class="subtag">02 // DOMAIN CLUSTERS</span>
 						<h2 class="section-h2 font-dot">Computer Science Specializations</h2>
 					</div>
 
 					<div class="competencies-grid">
 						{bscCseProgram.keyFocusAreas.map((area, idx) => (
 							<div class="comp-card">
-								<div class="comp-number font-dot">{`0${idx + 1}`}</div>
-								<h4 class="comp-title font-dot">{area}</h4>
+								<div class="comp-number font-mono">{`0${idx + 1}`}</div>
+								<h4 class="comp-title">{area}</h4>
 							</div>
 						))}
 					</div>
@@ -214,7 +236,7 @@ const pageDesc = isBsc
 				<!-- 3. Final Year Undergraduate Thesis Highlight -->
 				<section class="detail-section card thesis-highlight-card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">03 // FINAL YEAR THESIS & RESEARCH DEFENSE</span>
+						<span class="subtag">03 // FINAL YEAR THESIS & RESEARCH DEFENSE</span>
 						<h2 class="section-h2 font-dot">CNN-Based Bangla Handwritten Character Recognition</h2>
 						<p class="section-subtext">
 							Independent final year thesis research exploring the benchmark Ekush dataset (80,000 images, 50 character classes) and evaluating 16 deep learning and classical machine learning models.
@@ -241,7 +263,7 @@ const pageDesc = isBsc
 					</div>
 
 					<div class="thesis-cta-row">
-						<a href="/research/01-bangla-hwcr-ekush" class="thesis-btn-primary font-dot">
+						<a href="/research/01-bangla-hwcr-ekush" class="thesis-btn-primary font-mono">
 							<span>Read Full Research Paper & 16-Model Benchmarks</span>
 							<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
 								<line x1="5" y1="12" x2="19" y2="12"></line>
@@ -282,7 +304,7 @@ const pageDesc = isBsc
 				<!-- 4. Complete Interactive 11-Semester Transcript Component -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">04 // TRANSCRIPT DIRECTORY</span>
+						<span class="subtag">04 // TRANSCRIPT DIRECTORY</span>
 						<h2 class="section-h2 font-dot">Official Undergraduate Transcript</h2>
 						<p class="section-subtext">
 							Explore course-by-course performance across all 11 semesters, filter by domain cluster, or search specific course codes (e.g. <code>CSE311</code>, <code>CSE414</code>).
@@ -300,7 +322,7 @@ const pageDesc = isBsc
 				<!-- 1. Academic Overview & Pedigree -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">01 // PEDIGREE & OVERVIEW</span>
+						<span class="subtag">01 // PEDIGREE & OVERVIEW</span>
 						<h2 class="section-h2 font-dot">Higher Secondary Academic Overview</h2>
 					</div>
 					<p class="section-paragraph">
@@ -308,28 +330,59 @@ const pageDesc = isBsc
 					</p>
 
 					<div class="key-highlights-box">
-						<h3 class="highlights-title font-dot">Academic Profile Highlights:</h3>
+						<h3 class="highlights-title">Academic Profile Highlights:</h3>
 						<ul class="highlights-list">
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>Academic Result:</strong> Achieved <strong>GPA 4.67 / 5.00</strong> in the Science group examination under the Dhaka Education Board.
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
-								<strong>Institution:</strong> Notre Dame College (Dhaka), established in 1949, renowned for academic excellence and student development.
+								<span class="bullet-accent font-mono">›</span>
+								<strong>Notre Dame College Identity:</strong> Proud alumnus of <strong>Batch '19, Group 13</strong> (Room 304).
 							</li>
 							<li>
-								<span class="bullet-accent font-dot">›</span>
+								<span class="bullet-accent font-mono">›</span>
+								<strong>Institution:</strong> Notre Dame College (Dhaka), established in 1949, renowned for academic excellence and holistic character formation.
+							</li>
+							<li>
+								<span class="bullet-accent font-mono">›</span>
 								<strong>Curriculum:</strong> Full science curriculum covering Physics, Chemistry, Higher Mathematics, Biology, ICT, English, and Bangla.
 							</li>
 						</ul>
+					</div>
+
+					<!-- Group 13 Aerial Formation Display -->
+					<div class="group-photo-showcase">
+						<div class="group-photo-frame card">
+							<img
+								src="/images/education/ndc-batch-19-group-13.jpg"
+								alt="Notre Dame College Batch '19 Group 13 Formation Display"
+								class="group-aerial-img"
+								loading="lazy"
+							/>
+							<div class="group-photo-caption">
+								<div class="caption-header font-mono">
+									<span class="c-tag">CAMPUS BROTHERHOOD</span>
+									<span class="c-sep">•</span>
+									<span class="c-batch">BATCH '19 // GROUP 13 // ROOM 304</span>
+								</div>
+								<p class="caption-text">
+									Aerial lawn formation of <strong>Group 13 (Batch '19)</strong> creating the iconic "13" numeral with classmates and spelling out "NDC 19" using transparent college bags on the Notre Dame College field.
+								</p>
+								<div class="caption-action-row">
+									<a href="/education/hsc-science/gallery" class="view-gallery-btn font-mono">
+										<span>Explore Full NDC Photo Gallery & Campus Memoirs →</span>
+									</a>
+								</div>
+							</div>
+						</div>
 					</div>
 				</section>
 
 				<!-- 2. Subjects Studied -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">02 // CURRICULUM</span>
+						<span class="subtag">02 // CURRICULUM</span>
 						<h2 class="section-h2 font-dot">Subjects Studied (Science Group)</h2>
 						<p class="section-subtext">Standard Higher Secondary Certificate science curriculum for science college students.</p>
 					</div>
@@ -339,7 +392,7 @@ const pageDesc = isBsc
 							<div class="hsc-subject-card card">
 								<div class="hsc-sub-left">
 									<span class="hsc-dot"></span>
-									<span class="hsc-sub-name font-dot">{subject}</span>
+									<span class="hsc-sub-name">{subject}</span>
 								</div>
 								<span class="hsc-sub-badge font-mono">HSC Science</span>
 							</div>
@@ -350,19 +403,19 @@ const pageDesc = isBsc
 				<!-- 3. Co-Curricular & Club Activities -->
 				<section class="detail-section card">
 					<div class="section-heading-group">
-						<span class="subtag font-dot">03 // CO-CURRICULAR ACTIVITIES</span>
+						<span class="subtag">03 // CO-CURRICULAR ACTIVITIES</span>
 						<h2 class="section-h2 font-dot">Clubs & Activities</h2>
 						<p class="section-subtext">Active participation in student clubs and extracurricular initiatives at Notre Dame College.</p>
 					</div>
 
 					<div class="clubs-grid">
-						<div class="club-card card font-mono">
+						<div class="club-card card">
 							<div class="club-header">
 								<div class="club-icon-wrap">
-									<span class="club-icon font-dot">∑</span>
+									<span class="club-icon font-mono">∑</span>
 								</div>
 								<div>
-									<h3 class="club-title font-dot">Notre Dame Math Club (NDMC)</h3>
+									<h3 class="club-title">Notre Dame Math Club (NDMC)</h3>
 									<span class="club-role font-mono">Club Member & Participant</span>
 								</div>
 							</div>
@@ -371,13 +424,13 @@ const pageDesc = isBsc
 							</p>
 						</div>
 
-						<div class="club-card card font-mono">
+						<div class="club-card card">
 							<div class="club-header">
 								<div class="club-icon-wrap">
-									<span class="club-icon font-dot">🎭</span>
+									<span class="club-icon font-mono">🎭</span>
 								</div>
 								<div>
-									<h3 class="club-title font-dot">Notre Dame Cultural Club (NDCC)</h3>
+									<h3 class="club-title">Notre Dame Cultural Club (NDCC)</h3>
 									<span class="club-role font-mono">Club Member & Participant</span>
 								</div>
 							</div>
@@ -387,32 +440,77 @@ const pageDesc = isBsc
 						</div>
 					</div>
 				</section>
+
+				<!-- 4. Formative Milestones & Civic Leadership -->
+				{hscScienceProgram.formativeMilestones && (
+					<section class="detail-section card">
+						<div class="section-heading-group">
+							<span class="subtag">04 // FORMATIVE MILESTONES & CIVIC ENGAGEMENT</span>
+							<h2 class="section-h2 font-dot">Campus Legacy & Civic Leadership</h2>
+							<p class="section-subtext">Defining historical events, student leadership, and cultural heritage experienced during the Notre Dame College years.</p>
+						</div>
+
+						<div class="milestones-grid">
+							{hscScienceProgram.formativeMilestones.map((m) => {
+								const Tag = m.url ? 'a' : 'div';
+								return (
+									<Tag
+										href={m.url}
+										class={`milestone-card card ${m.url ? 'is-clickable' : ''}`}
+										title={m.url ? `Read full chronicle in Personal Archive ↗` : undefined}
+									>
+										<div class="m-top-row">
+											<span class="m-tag font-mono">{m.tag}</span>
+											<span class="m-period font-mono">{m.period}</span>
+										</div>
+										<h3 class="m-title">
+											{m.title}
+											{m.url && <span class="m-ext-arrow font-mono">↗</span>}
+										</h3>
+										<p class="m-desc">{m.description}</p>
+										{m.impact && (
+											<div class="m-impact font-mono">
+												<span class="m-impact-lbl font-mono">Takeaway:</span>
+												<span class="m-impact-val">{m.impact}</span>
+											</div>
+										)}
+										{m.url && (
+											<div class="m-read-more font-mono">
+												<span>Read Full Chronicle in Personal Archive →</span>
+											</div>
+										)}
+									</Tag>
+								);
+							})}
+						</div>
+					</section>
+				)}
 			</div>
 		)}
 
 		<!-- Bottom Pagination / Cross Navigation -->
 		<div class="edu-cross-nav card">
 			<div class="cross-nav-left">
-				<span class="cross-nav-label font-dot">ACADEMIC DIRECTORY</span>
-				<a href="/about#academic-curriculum" class="cross-nav-link font-dot">
+				<span class="cross-nav-label font-mono">ACADEMIC DIRECTORY</span>
+				<a href="/about#academic-curriculum" class="cross-nav-link">
 					← Return to About & Full Profile
 				</a>
 			</div>
 			{isBsc && (
 				<div class="cross-nav-mid">
-					<span class="cross-nav-label font-dot">FINAL YEAR THESIS</span>
-					<a href="/research/01-bangla-hwcr-ekush" class="cross-nav-link highlight font-dot">
+					<span class="cross-nav-label font-mono">FINAL YEAR THESIS</span>
+					<a href="/research/01-bangla-hwcr-ekush" class="cross-nav-link highlight">
 						Bangla OCR Research Paper (DIU #26095) ↗
 					</a>
 				</div>
 			)}
 			<div class="cross-nav-right">
-				<span class="cross-nav-label font-dot">{isBsc ? 'PREVIOUS EDUCATION' : 'HIGHER EDUCATION'}</span>
+				<span class="cross-nav-label font-mono">{isBsc ? 'PREVIOUS EDUCATION' : 'HIGHER EDUCATION'}</span>
 				<a
 					href={isBsc ? '/education/hsc-science' : '/education/bsc-cse'}
-					class="cross-nav-link font-dot"
+					class="cross-nav-link"
 				>
-					{isBsc ? 'Higher Secondary Certificate (HSC) →' : 'B.Sc. in Computer Science & Engineering →'}
+					{isBsc ? 'Notre Dame College (HSC Science) →' : 'B.Sc. in CSE (Daffodil Intl University) →'}
 				</a>
 			</div>
 		</div>
@@ -500,6 +598,42 @@ const pageDesc = isBsc
 		border: 1px solid rgba(46, 125, 50, 0.25);
 	}
 
+	.hero-badges-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		flex-wrap: wrap;
+	}
+
+	.ndc-batch-badge {
+		font-size: 0.8rem;
+		font-weight: 800;
+		padding: 0.28rem 0.85rem;
+		border-radius: 9999px;
+		background: var(--accent);
+		color: #fffdfa;
+		letter-spacing: 0.06em;
+		box-shadow: 0 2px 8px rgba(180, 33, 53, 0.25);
+	}
+
+	.diu-batch-badge {
+		font-size: 0.8rem;
+		font-weight: 800;
+		padding: 0.28rem 0.85rem;
+		border-radius: 9999px;
+		background: #1b4d3e;
+		color: #fffdfa;
+		letter-spacing: 0.06em;
+		box-shadow: 0 2px 8px rgba(27, 77, 62, 0.25);
+	}
+
+	.meta-val.highlight-batch {
+		color: var(--accent);
+		font-weight: 800;
+		letter-spacing: 0.02em;
+	}
+
+
 	.edu-hero-main-group {
 		display: flex;
 		align-items: center;
@@ -583,7 +717,42 @@ const pageDesc = isBsc
 	.official-portal-row {
 		display: flex;
 		align-items: center;
+		gap: 0.85rem;
+		flex-wrap: wrap;
 		margin-top: 0.25rem;
+	}
+
+	.official-portal-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.4rem 0.85rem;
+		border-radius: 8px;
+		background: rgba(95, 80, 56, 0.06);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+		color: var(--text-main);
+		font-size: 0.78rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: all 0.15s ease;
+	}
+
+	.official-portal-link:hover {
+		background: rgba(95, 80, 56, 0.12);
+		color: var(--accent);
+	}
+
+	.official-portal-link.highlight-gallery {
+		background: rgba(180, 33, 53, 0.1);
+		border-color: rgba(180, 33, 53, 0.3);
+		color: var(--accent);
+	}
+
+	.official-portal-link.highlight-gallery:hover {
+		background: var(--accent);
+		color: #fffdfa;
+		border-color: var(--accent);
+		transform: translateY(-1px);
 	}
 
 	.official-portal-btn {
@@ -880,6 +1049,105 @@ const pageDesc = isBsc
 		object-fit: contain;
 	}
 
+	/* Group 13 Aerial Photo Showcase */
+	.group-photo-showcase {
+		margin-top: 1.5rem;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+	}
+
+	.group-photo-frame {
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		overflow: hidden;
+		border-radius: 14px;
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		transition: border-color 0.15s ease;
+	}
+
+	.group-photo-frame:hover {
+		border-color: rgba(180, 33, 53, 0.35);
+	}
+
+	.group-aerial-img {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+		max-height: 540px;
+		object-fit: cover;
+		display: block;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.group-photo-caption {
+		padding: 1rem 1.25rem;
+		background: rgba(95, 80, 56, 0.03);
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.caption-header {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.72rem;
+		font-weight: 700;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		flex-wrap: wrap;
+	}
+
+	.c-tag {
+		color: var(--accent);
+	}
+
+	.c-sep {
+		opacity: 0.4;
+	}
+
+	.c-batch {
+		color: var(--text-main);
+	}
+
+	.caption-text {
+		font-size: 0.86rem;
+		color: var(--text-muted);
+		line-height: 1.55;
+	}
+
+	.caption-action-row {
+		margin-top: 0.4rem;
+		padding-top: 0.75rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.12);
+	}
+
+	.view-gallery-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		padding: 0.35rem 0.75rem;
+		border-radius: 6px;
+		background: rgba(180, 33, 53, 0.08);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		transition: all 0.15s ease;
+	}
+
+	.view-gallery-btn:hover {
+		background: var(--accent);
+		color: #fffdfa;
+		transform: translateX(2px);
+	}
+
 	/* HSC Subjects Grid */
 	.hsc-subjects-grid {
 		display: grid;
@@ -1004,6 +1272,130 @@ const pageDesc = isBsc
 
 	.inline-thesis-link:hover {
 		color: var(--accent-hover);
+	}
+
+	/* Milestones Grid */
+	.milestones-grid {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 900px) {
+		.milestones-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.milestone-card {
+		padding: 1.5rem;
+		border-radius: 12px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.18);
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.milestone-card.is-clickable {
+		cursor: pointer;
+	}
+
+	.milestone-card.is-clickable:hover {
+		border-color: var(--accent);
+		transform: translateY(-3px);
+		box-shadow: 0 8px 24px rgba(180, 33, 53, 0.12);
+	}
+
+	.m-top-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.m-tag {
+		font-size: 0.7rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: rgba(180, 33, 53, 0.1);
+		color: var(--accent);
+		padding: 0.2rem 0.55rem;
+		border-radius: 4px;
+		font-weight: 700;
+	}
+
+	.m-period {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.m-title {
+		font-size: 1rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.35rem;
+	}
+
+	.m-ext-arrow {
+		color: var(--accent);
+		font-size: 0.95rem;
+		transition: transform 0.15s ease;
+	}
+
+	.milestone-card.is-clickable:hover .m-ext-arrow {
+		transform: translate(2px, -2px);
+	}
+
+	.m-desc {
+		font-size: 0.84rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+		flex: 1;
+	}
+
+	.m-impact {
+		padding-top: 0.65rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.15);
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.m-impact-lbl {
+		font-size: 0.68rem;
+		color: var(--accent);
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+	}
+
+	.m-impact-val {
+		font-size: 0.78rem;
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.m-read-more {
+		padding-top: 0.5rem;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		display: flex;
+		align-items: center;
+		gap: 0.25rem;
+		transition: transform 0.15s ease;
+	}
+
+	.milestone-card.is-clickable:hover .m-read-more {
+		transform: translateX(3px);
 	}
 
 	/* Cross Navigation Bar */

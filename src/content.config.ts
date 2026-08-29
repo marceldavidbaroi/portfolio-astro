@@ -183,6 +183,18 @@ const education = defineCollection({
 		keyFocusAreas: z.array(z.string()).default([]),
 		keyCourses: z.array(z.string()).default([]),
 		coCurricular: z.array(z.string()).default([]),
+		formativeMilestones: z
+			.array(
+				z.object({
+					title: z.string(),
+					tag: z.string(),
+					period: z.string(),
+					description: z.string(),
+					impact: z.string().optional(),
+					url: z.string().optional()
+				})
+			)
+			.default([]),
 		semesters: z
 			.array(
 				z.object({

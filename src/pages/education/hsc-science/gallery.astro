@@ -1,0 +1,1143 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const galleries = [
+	{
+		id: 'group-13-brotherhood',
+		tag: 'BATCH \'19 // GROUP 13',
+		title: 'Group 13 & Room 304 Brotherhood',
+		desc: 'The iconic lawn formation where Group 13 classmates formed the numeral "13" and arranged transparent college bags into "NDC 19".',
+		photos: [
+			{
+				src: '/images/education/ndc-batch-19-group-13.jpg',
+				title: 'Group 13 Aerial Numeral Formation',
+				caption: 'Lawn formation on the NDC field: Group 13 classmates forming "13" with "NDC 19" bag art.',
+				span: 'full'
+			}
+		]
+	},
+	{
+		id: 'civic-movement-2018',
+		tag: 'CIVIC SOLIDARITY // JULY — AUGUST 2018',
+		title: '2018 Student Road Safety Movement',
+		desc: 'Historic moments when Notre Dame College students mobilized from Arambagh to Shapla Chottor demanding transport reform and creating the emergency lane.',
+		memoirLink: '/archive/road-safety-movement-2018',
+		photos: [
+			{
+				src: '/images/archive/road-safety/03-shapla-chottor-blockade-aerial.jpg',
+				title: 'Shapla Chottor Aerial Blockade',
+				caption: 'Thousands of high school students peacefully holding the Shapla Chottor intersection in Motijheel.',
+				span: 'wide'
+			},
+			{
+				src: '/images/archive/road-safety/05-ndc-students-chanting-slogans.jpg',
+				title: 'NDC Students Chanting Slogans',
+				caption: 'Uniform-clad students raising slogans and holding handwritten placards for road safety.',
+				span: 'normal'
+			},
+			{
+				src: '/images/archive/road-safety/01-overbridge-crowd-gathering.jpg',
+				title: 'Arambagh Foot-Overbridge Assembly',
+				caption: 'Students assembling across foot-overbridges and thoroughfares around Arambagh.',
+				span: 'normal'
+			},
+			{
+				src: '/images/archive/road-safety/02-street-march-bus-halt.jpg',
+				title: 'Avenue March & Bus Inspection',
+				caption: 'Marching through avenues to inspect driver licenses and ensure reckless buses were halted.',
+				span: 'normal'
+			},
+			{
+				src: '/images/archive/road-safety/04-placard-writing-on-asphalt.jpg',
+				title: 'Handwritten Placards on Asphalt',
+				caption: 'Students sitting on the street asphalt writing Bengali placards: "উই ওয়ান্ট জাস্টিস".',
+				span: 'normal'
+			}
+		]
+	},
+	{
+		id: 'pope-francis-2017',
+		tag: 'HISTORIC EVENT // 2017',
+		title: 'Pope Francis Apostolic Visit & Protocol Volunteer Force',
+		desc: 'Selected by Father Susanto into the 6-member core volunteer protocol detail for the 100,000-attendee Ramna Mass and 10,000-youth NDC campus gathering.',
+		memoirLink: '/archive/pope-francis-visit-2017',
+		photos: [
+			{
+				src: '/images/archive/pope-francis/pope-francis-notre-dame-college-stage.jpg',
+				title: 'Pope Francis on the NDC Stage',
+				caption: 'Pope Francis addressing 10,000 youth on the Notre Dame College sports ground alongside Cardinal Patrick D’Rozario and SSF officers.',
+				span: 'wide'
+			},
+			{
+				src: '/images/archive/pope-francis/pope-francis-popemobile-ramna.jpg',
+				title: 'The Popemobile at Suhrawardy Udyan',
+				caption: 'Pope Francis greeting thousands of faithful with floral garlands from the Popemobile at Ramna.',
+				span: 'normal'
+			},
+			{
+				src: '/images/archive/pope-francis/pope-francis-logo-2017.png',
+				title: 'Official Visit Emblem ("সম্প্রীতি ও শান্তি")',
+				caption: 'Official emblem representing harmony, peace, the cross, and the national lotus in Bangladesh colors.',
+				span: 'normal',
+				isEmblem: true
+			}
+		]
+	},
+	{
+		id: 'ndc-visit-dec-2018',
+		tag: 'CAMPUS REVISIT // 18 DECEMBER 2018',
+		title: 'Notre Dame College Campus & Friends Revisit (18 Dec 2018)',
+		desc: 'A preserved photo album capturing friends, classrooms, lush greens, corridors, and campus moments on 18 December 2018.',
+		photos: [
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_140117.jpg',
+				title: 'Entering College Grounds',
+				caption: 'Walking into the campus grounds on a pleasant winter afternoon (18 Dec 2018).',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142525.jpg',
+				title: 'Friends by Ganguly Building',
+				caption: 'Catching up with peers and classmates near the iconic red-brick architecture.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142654.jpg',
+				title: 'Campus Walkway & Hallways',
+				caption: 'Walking through the collegiate pathways connecting Harrington and Timm halls.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142705.jpg',
+				title: 'College Friends Portrait',
+				caption: 'Group portrait of college friends gathered together in high spirits.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142851.jpg',
+				title: 'Priceless Campus Moments',
+				caption: 'Conversations and laughter between classes across the campus courtyards.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142908.jpg',
+				title: 'College Brotherhood',
+				caption: 'Cherished memories and brotherhood among classmates.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_142941.jpg',
+				title: 'Group Snapshot with Friends',
+				caption: 'Smiling with good friends under the shaded collegiate corridors.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_143013.jpg',
+				title: 'Campus Courtyard Gathering',
+				caption: 'Classmates standing together amidst the vibrant green campus lawn.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_143019.jpg',
+				title: 'Friends by the Corridor',
+				caption: 'Walking past familiar lecture halls and corridors.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_143133.jpg',
+				title: 'Classroom & Bench Memoirs',
+				caption: 'Revisiting the familiar student benches and memories.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_143530.jpg',
+				title: 'Courtyard View',
+				caption: 'Serene view of Notre Dame College’s green field and tranquil collegiate grounds.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_145243.jpg',
+				title: 'Lawn & Field Promenade',
+				caption: 'Students gathered along the sports field perimeter in conversation.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_150939.jpg',
+				title: 'Classmates Gathering',
+				caption: 'Good times and memories with friends during the visit.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_151505.jpg',
+				title: 'College Lawn Candid',
+				caption: 'Sharing laughs and stories on the expansive lawn of NDC.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_152040.jpg',
+				title: 'Corridor & Pillars Snapshot',
+				caption: 'Posing alongside the historic pillars of Notre Dame College.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_152743.jpg',
+				title: 'Friends Gathering',
+				caption: 'Classmates sharing a warm afternoon together on campus.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_152752.jpg',
+				title: 'Afternoon Sunlight on Campus',
+				caption: 'Warm winter afternoon light falling over the college buildings.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_154751.jpg',
+				title: 'Brothers in Uniform & Style',
+				caption: 'A memorable snapshot capturing youthful collegiate energy.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155335.jpg',
+				title: 'Lush Campus Grounds',
+				caption: 'The picturesque green trees and open grounds of Notre Dame College.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155401.jpg',
+				title: 'Friendship & Camaraderie',
+				caption: 'Everlasting friendship formed during our high school years.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155424.jpg',
+				title: 'College Stairways & Halls',
+				caption: 'Gathering on the staircases where thousands of Notredamians walked.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155433.jpg',
+				title: 'Lawn Portrait with Friends',
+				caption: 'A cherished portrait on the lush grass of the sports pavilion.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155456.jpg',
+				title: 'Joyful Moments on Campus',
+				caption: 'Candid smiles and unforgettable student brotherhood.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155550.jpg',
+				title: 'NDC Heritage & Youth',
+				caption: 'Standing together proud of our Notredamian heritage.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155554.jpg',
+				title: 'Walking the Campus Path',
+				caption: 'Strolling through the campus grounds surrounded by greenery.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155622.jpg',
+				title: 'Friends by the Green Field',
+				caption: 'Capturing memories that will last a lifetime.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155624.jpg',
+				title: 'Campus Afternoon Smiles',
+				caption: 'Bright smiles with close friends after classes.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155657.jpg',
+				title: 'Notre Dame College Brotherhood',
+				caption: 'Batchmates standing together with unity and shared dreams.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155933.jpg',
+				title: 'Winter Campus Light',
+				caption: 'Golden hour sunlight over the historic college campus.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155946.jpg',
+				title: 'Evening Gathering',
+				caption: 'Wrapping up a wonderful visit with dear classmates.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_155955.jpg',
+				title: 'Friends by College Arch',
+				caption: 'Group photo by the collegiate archway.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_160532.jpg',
+				title: 'Sunset on Notre Dame College',
+				caption: 'Late afternoon serenity and peaceful campus landscape.',
+				span: 'normal'
+			},
+			{
+				src: '/images/education/ndc-visit-2018/IMG_20181218_160547.jpg',
+				title: 'Closing Moments of the Visit',
+				caption: 'Final evening photograph marking a heartwarming return to our alma mater.',
+				span: 'normal'
+			}
+		]
+	},
+	{
+		id: 'ndc-college-memories',
+		tag: 'CAMPUS LIFE & FRIENDSHIPS // 2018 — 2019',
+		title: 'Notre Dame College Student Life & Memories',
+		desc: 'A visual archive of friendships, candid moments, college uniform days, and brotherhood across campus.',
+		photos: [
+			{ src: '/images/education/college-memories/FB_IMG_1534393215216.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537385542.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537387787.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537390463.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537393943.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537397144.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537399836.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537402721.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537405427.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537408484.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539537411097.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615941686.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615947834.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615950978.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615959874.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615971474.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615976384.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615979598.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615982430.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615989982.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615994689.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539615997945.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616000447.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616002794.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616007571.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616012357.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616017331.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539616020125.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539695355547.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/FB_IMG_1539695648383.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/IMG-20181015-WA0001.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/IMG-20181015-WA0002.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/IMG_20190103_091811.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/IMG_20190103_091842.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/IMG_20190103_091947.jpg', span: 'normal' },
+			{ src: '/images/education/college-memories/Screenshot_2018-10-16-12-07-02-118_com.facebook.katana.png', span: 'normal' },
+			{ src: '/images/education/college-memories/received_466877903801730.jpeg', span: 'normal' }
+		]
+	}
+];
+---
+
+<BaseLayout
+	title="Notre Dame College Photo Gallery & Memoirs | Marcel David Baroi"
+	description="Photo gallery, student brotherhood, and chronicled memories from Notre Dame College (HSC Science Batch '19, Group 13) by Marcel David Baroi."
+	isWide={true}
+>
+	<div class="gallery-page-container">
+		<!-- Breadcrumbs -->
+		<nav class="page-breadcrumb font-mono" aria-label="Breadcrumb">
+			<a href="/" class="b-link">Home</a>
+			<span class="b-sep">/</span>
+			<a href="/about" class="b-link">About</a>
+			<span class="b-sep">/</span>
+			<a href="/education/hsc-science" class="b-link">Notre Dame College (HSC Science)</a>
+			<span class="b-sep">/</span>
+			<span class="b-curr">Photo Gallery & Memoirs</span>
+		</nav>
+
+		<!-- Hero Header -->
+		<header class="gallery-hero card">
+			<div class="hero-top-meta">
+				<span class="section-tag font-mono">CAMPUS ARCHIVES // 2017 — 2019</span>
+				<span class="badge-status font-mono">Batch '19 • Group 13 • Room 304</span>
+			</div>
+
+			<div class="title-group">
+				<h1 class="gallery-title font-dot">Notre Dame College Photo Gallery & Campus Memoirs</h1>
+				<p class="gallery-subtitle">
+					Visual chronicles of campus brotherhood, iconic lawn formations, historic papal visits, and the 2018 civic movements.
+				</p>
+			</div>
+
+			<div class="gallery-meta-bar font-mono">
+				<div class="meta-item">
+					<span class="m-lbl">COLLEGE:</span>
+					<span class="m-val">Notre Dame College, Dhaka</span>
+				</div>
+				<span class="m-sep">•</span>
+				<div class="meta-item">
+					<span class="m-lbl">BATCH & GROUP:</span>
+					<span class="m-val">Batch '19 // Group 13 (Science)</span>
+				</div>
+				<span class="m-sep">•</span>
+				<div class="meta-item">
+					<span class="m-lbl">HERITAGE:</span>
+					<span class="m-val">Ganguly • Harrington • Timm • Room 304</span>
+				</div>
+			</div>
+		</header>
+
+		<!-- Galleries Sections -->
+		<div class="galleries-list">
+			{galleries.map((section, sIdx) => (
+				<section class="gallery-section card" id={section.id}>
+					<div class="section-header">
+						<div class="s-left">
+							<span class="s-tag font-mono">{section.tag}</span>
+							<h2 class="s-title">{section.title}</h2>
+							<p class="s-desc">{section.desc}</p>
+						</div>
+						{section.memoirLink && (
+							<a href={section.memoirLink} class="s-memoir-btn font-mono">
+								<span>Read Full Written Memoir →</span>
+							</a>
+						)}
+					</div>
+
+					<div class:list={['photos-grid', (section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') ? 'revisit-dense-grid' : 'curated-photos-grid']}>
+						{section.photos.map((photo, pIdx) => (
+							<div
+								class:list={[
+									'photo-item-card card',
+									photo.span === 'full' && 'span-full',
+									photo.span === 'wide' && 'span-wide',
+									(section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') && 'revisit-photo-card'
+								]}
+								data-spotlight-src={photo.src}
+								data-spotlight-title={photo.title || section.title}
+								data-spotlight-caption={photo.caption || ''}
+								role="button"
+								tabindex="0"
+								title="Click to view full screen"
+							>
+								<div class="photo-img-wrap">
+									<img
+										src={photo.src}
+										alt={photo.title || 'Notre Dame College Photo'}
+										class:list={['gallery-img', photo.isEmblem && 'is-emblem']}
+										loading="lazy"
+									/>
+									<div class="photo-zoom-hint font-mono">
+										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+											<circle cx="11" cy="11" r="8"></circle>
+											<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+											<line x1="11" y1="8" x2="11" y2="14"></line>
+											<line x1="8" y1="11" x2="14" y2="11"></line>
+										</svg>
+										<span>View</span>
+									</div>
+								</div>
+								{section.id !== 'ndc-visit-dec-2018' && section.id !== 'ndc-college-memories' && (
+									<div class="photo-meta">
+										<h3 class="photo-title">{photo.title}</h3>
+										<p class="photo-caption font-mono">{photo.caption}</p>
+									</div>
+								)}
+							</div>
+						))}
+					</div>
+				</section>
+			))}
+		</div>
+
+		<!-- Interactive Spotlight Modal Component -->
+		<div id="gallery-spotlight-modal" class="spotlight-modal" aria-hidden="true" role="dialog">
+			<div class="spotlight-backdrop" id="spotlight-backdrop"></div>
+			<div class="spotlight-content">
+				<button class="spotlight-close-btn font-mono" id="spotlight-close" aria-label="Close spotlight view">
+					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<line x1="18" y1="6" x2="6" y2="18"></line>
+						<line x1="6" y1="6" x2="18" y2="18"></line>
+					</svg>
+					<span>ESC</span>
+				</button>
+
+				<button class="spotlight-nav-btn prev font-mono" id="spotlight-prev" aria-label="Previous photo">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="15 18 9 12 15 6"></polyline>
+					</svg>
+				</button>
+
+				<div class="spotlight-image-stage">
+					<img id="spotlight-img" src="" alt="Full view" class="spotlight-full-img" />
+					<div class="spotlight-caption-bar">
+						<div class="sc-left">
+							<h3 id="spotlight-title" class="sc-title"></h3>
+							<p id="spotlight-desc" class="sc-caption font-mono"></p>
+						</div>
+						<span id="spotlight-counter" class="sc-counter font-mono"></span>
+					</div>
+				</div>
+
+				<button class="spotlight-nav-btn next font-mono" id="spotlight-next" aria-label="Next photo">
+					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<polyline points="9 18 15 12 9 6"></polyline>
+					</svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Cross Navigation -->
+		<div class="gallery-cross-nav card">
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">ACADEMIC DETAILS</span>
+				<a href="/education/hsc-science" class="nav-link">← Return to Notre Dame College Overview</a>
+			</div>
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">CHRONICLED ARCHIVES</span>
+				<a href="/archive" class="nav-link">Personal Archives & Journey →</a>
+			</div>
+			<div class="nav-col">
+				<span class="nav-lbl font-mono">HIGHER EDUCATION</span>
+				<a href="/education/bsc-cse" class="nav-link">B.Sc. in CSE (Daffodil Intl Univ) →</a>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		function initSpotlight() {
+			const cards = Array.from(document.querySelectorAll('[data-spotlight-src]'));
+			const modal = document.getElementById('gallery-spotlight-modal');
+			const backdrop = document.getElementById('spotlight-backdrop');
+			const closeBtn = document.getElementById('spotlight-close');
+			const prevBtn = document.getElementById('spotlight-prev');
+			const nextBtn = document.getElementById('spotlight-next');
+			const spotImg = document.getElementById('spotlight-img') as HTMLImageElement;
+			const spotTitle = document.getElementById('spotlight-title');
+			const spotDesc = document.getElementById('spotlight-desc');
+			const spotCounter = document.getElementById('spotlight-counter');
+
+			if (!modal || !spotImg || cards.length === 0) return;
+
+			let currentIndex = 0;
+
+			function openSpotlight(index: number) {
+				currentIndex = (index + cards.length) % cards.length;
+				const card = cards[currentIndex] as HTMLElement;
+				const src = card.dataset.spotlightSrc || '';
+				const title = card.dataset.spotlightTitle || '';
+				const caption = card.dataset.spotlightCaption || '';
+
+				spotImg.src = src;
+				if (spotTitle) spotTitle.textContent = title;
+				if (spotDesc) spotDesc.textContent = caption;
+				if (spotCounter) spotCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
+
+				modal.classList.add('is-open');
+				modal.setAttribute('aria-hidden', 'false');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeSpotlight() {
+				modal.classList.remove('is-open');
+				modal.setAttribute('aria-hidden', 'true');
+				document.body.style.overflow = '';
+				spotImg.src = '';
+			}
+
+			function showNext() {
+				openSpotlight(currentIndex + 1);
+			}
+
+			function showPrev() {
+				openSpotlight(currentIndex - 1);
+			}
+
+			cards.forEach((card, idx) => {
+				card.addEventListener('click', () => openSpotlight(idx));
+				card.addEventListener('keydown', (e) => {
+					if ((e as KeyboardEvent).key === 'Enter') openSpotlight(idx);
+				});
+			});
+
+			closeBtn?.addEventListener('click', closeSpotlight);
+			backdrop?.addEventListener('click', closeSpotlight);
+			nextBtn?.addEventListener('click', showNext);
+			prevBtn?.addEventListener('click', showPrev);
+
+			window.addEventListener('keydown', (e) => {
+				if (!modal.classList.contains('is-open')) return;
+				if (e.key === 'Escape') closeSpotlight();
+				if (e.key === 'ArrowRight') showNext();
+				if (e.key === 'ArrowLeft') showPrev();
+			});
+		}
+
+		if (document.readyState === 'loading') {
+			document.addEventListener('DOMContentLoaded', initSpotlight);
+		} else {
+			initSpotlight();
+		}
+	</script>
+</BaseLayout>
+
+<style>
+	.gallery-page-container {
+		width: 100%;
+		max-width: 1040px;
+		margin: 0 auto;
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+		padding: 1rem 1rem 4rem;
+		text-align: left;
+	}
+
+	/* Breadcrumb */
+	.page-breadcrumb {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+		flex-wrap: wrap;
+	}
+
+	.b-link {
+		color: var(--text-muted);
+		transition: color 0.15s ease;
+		text-decoration: none;
+	}
+
+	.b-link:hover {
+		color: var(--accent);
+	}
+
+	.b-sep {
+		opacity: 0.4;
+	}
+
+	.b-curr {
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	/* Hero */
+	.gallery-hero {
+		padding: 2.5rem;
+		border-radius: 16px;
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+	}
+
+	.hero-top-meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.badge-status {
+		font-size: 0.72rem;
+		padding: 0.2rem 0.65rem;
+		border-radius: 9999px;
+		background: rgba(180, 33, 53, 0.1);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+		font-weight: 700;
+	}
+
+	.title-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.gallery-title {
+		font-size: clamp(1.85rem, 3.6vw, 2.6rem);
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.2;
+	}
+
+	.gallery-subtitle {
+		font-size: 1.02rem;
+		color: var(--text-muted);
+		line-height: 1.45;
+	}
+
+	.gallery-meta-bar {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+		flex-wrap: wrap;
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		padding: 0.85rem 1rem;
+		background: rgba(95, 80, 56, 0.05);
+		border-radius: 8px;
+		border: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.meta-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		flex-wrap: wrap;
+	}
+
+	.m-lbl {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.m-val {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.m-sep {
+		opacity: 0.3;
+	}
+
+	/* Galleries List */
+	.galleries-list {
+		display: flex;
+		flex-direction: column;
+		gap: 2.5rem;
+	}
+
+	.gallery-section {
+		padding: 2.25rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.section-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		gap: 1.25rem;
+		flex-wrap: wrap;
+		padding-bottom: 1.25rem;
+		border-bottom: 1px dashed rgba(95, 80, 56, 0.15);
+	}
+
+	.s-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		max-width: 680px;
+	}
+
+	.s-tag {
+		font-size: 0.72rem;
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+
+	.s-title {
+		font-size: 1.4rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.s-desc {
+		font-size: 0.88rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	.s-memoir-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		padding: 0.45rem 0.85rem;
+		border-radius: 6px;
+		background: rgba(180, 33, 53, 0.08);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		transition: all 0.15s ease;
+	}
+
+	.s-memoir-btn:hover {
+		background: var(--accent);
+		color: #fffdfa;
+		transform: translateX(2px);
+	}
+
+	/* Photos Grids */
+	.curated-photos-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	@media (max-width: 768px) {
+		.curated-photos-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	/* Dense Multi-Column Gallery Grid (4 to 5 per row on desktop) */
+	.revisit-dense-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
+		gap: 0.85rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	@media (max-width: 640px) {
+		.revisit-dense-grid {
+			grid-template-columns: repeat(2, 1fr);
+			gap: 0.65rem;
+		}
+	}
+
+	.photo-item-card {
+		width: 100%;
+		box-sizing: border-box;
+		border-radius: 12px;
+		overflow: hidden;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		cursor: pointer;
+		position: relative;
+		transition: all 0.2s ease;
+	}
+
+	.photo-item-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+	}
+
+	.photo-item-card.span-full {
+		grid-column: 1 / -1;
+	}
+
+	.photo-item-card.span-wide {
+		grid-column: 1 / -1;
+	}
+
+	.revisit-photo-card {
+		border-radius: 10px;
+		background: transparent;
+	}
+
+	.revisit-photo-card .photo-img-wrap {
+		aspect-ratio: 4 / 3;
+	}
+
+	.revisit-photo-card .gallery-img {
+		height: 100%;
+		width: 100%;
+		object-fit: cover;
+		border-bottom: none;
+	}
+
+	.photo-img-wrap {
+		width: 100%;
+		position: relative;
+		overflow: hidden;
+		background: rgba(95, 80, 56, 0.03);
+	}
+
+	.gallery-img {
+		width: 100%;
+		height: auto;
+		max-height: 480px;
+		object-fit: cover;
+		display: block;
+		border-bottom: 1px solid var(--card-border);
+		transition: transform 0.3s ease;
+	}
+
+	.photo-item-card:hover .gallery-img {
+		transform: scale(1.03);
+	}
+
+	.gallery-img.is-emblem {
+		object-fit: contain;
+		background: #ffffff;
+		padding: 1.5rem;
+		max-height: 260px;
+	}
+
+	.photo-zoom-hint {
+		position: absolute;
+		top: 0.6rem;
+		right: 0.6rem;
+		display: flex;
+		align-items: center;
+		gap: 0.3rem;
+		padding: 0.25rem 0.55rem;
+		border-radius: 6px;
+		background: rgba(18, 16, 12, 0.75);
+		color: #fffdfa;
+		font-size: 0.68rem;
+		font-weight: 700;
+		backdrop-filter: blur(4px);
+		opacity: 0;
+		transform: translateY(-4px);
+		transition: all 0.2s ease;
+		pointer-events: none;
+	}
+
+	.photo-item-card:hover .photo-zoom-hint {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.photo-meta {
+		padding: 1rem 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		background: rgba(95, 80, 56, 0.02);
+	}
+
+	.photo-title {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.photo-caption {
+		font-size: 0.76rem;
+		color: var(--text-muted);
+		line-height: 1.45;
+	}
+
+	/* Spotlight Modal Styles */
+	.spotlight-modal {
+		position: fixed;
+		inset: 0;
+		z-index: 99999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.25s ease;
+	}
+
+	.spotlight-modal.is-open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.spotlight-backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(10, 8, 6, 0.92);
+		backdrop-filter: blur(8px);
+	}
+
+	.spotlight-content {
+		position: relative;
+		z-index: 2;
+		width: 100%;
+		max-width: 1100px;
+		height: 92vh;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 1rem;
+		box-sizing: border-box;
+	}
+
+	.spotlight-close-btn {
+		position: absolute;
+		top: 1.25rem;
+		right: 1.5rem;
+		z-index: 10;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		background: rgba(255, 255, 255, 0.12);
+		color: #fffdfa;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		padding: 0.45rem 0.85rem;
+		border-radius: 8px;
+		font-size: 0.78rem;
+		font-weight: 700;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.spotlight-close-btn:hover {
+		background: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.spotlight-nav-btn {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 10;
+		width: 48px;
+		height: 48px;
+		border-radius: 50%;
+		background: rgba(255, 255, 255, 0.14);
+		border: 1px solid rgba(255, 255, 255, 0.25);
+		color: #fffdfa;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.spotlight-nav-btn:hover {
+		background: var(--accent);
+		border-color: var(--accent);
+		transform: translateY(-50%) scale(1.08);
+	}
+
+	.spotlight-nav-btn.prev {
+		left: 1.5rem;
+	}
+
+	.spotlight-nav-btn.next {
+		right: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.spotlight-nav-btn.prev {
+			left: 0.5rem;
+		}
+		.spotlight-nav-btn.next {
+			right: 0.5rem;
+		}
+	}
+
+	.spotlight-image-stage {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		max-width: 90%;
+		max-height: 86vh;
+		gap: 0.85rem;
+	}
+
+	.spotlight-full-img {
+		max-width: 100%;
+		max-height: 72vh;
+		object-fit: contain;
+		border-radius: 10px;
+		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+		animation: spotlightZoom 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+	}
+
+	@keyframes spotlightZoom {
+		from {
+			opacity: 0;
+			transform: scale(0.96);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	.spotlight-caption-bar {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		width: 100%;
+		padding: 0.65rem 1rem;
+		background: rgba(255, 255, 255, 0.08);
+		backdrop-filter: blur(8px);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 8px;
+		color: #fffdfa;
+	}
+
+	.sc-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		text-align: left;
+	}
+
+	.sc-title {
+		font-size: 0.92rem;
+		font-weight: 700;
+		color: #fffdfa;
+	}
+
+	.sc-caption {
+		font-size: 0.76rem;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.sc-counter {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(255, 255, 255, 0.12);
+		padding: 0.2rem 0.6rem;
+		border-radius: 6px;
+		flex-shrink: 0;
+	}
+
+	/* Cross Navigation */
+	.gallery-cross-nav {
+		padding: 1.75rem 2rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.gallery-cross-nav {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.nav-col {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.nav-lbl {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		letter-spacing: 0.06em;
+	}
+
+	.nav-link {
+		font-size: 0.88rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		transition: transform 0.15s ease;
+	}
+
+	.nav-link:hover {
+		transform: translateX(3px);
+	}
+</style>
