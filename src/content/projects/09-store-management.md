@@ -24,8 +24,7 @@ techStack:
     - "Git"
     - "Figma to Code Workflows"
 
-links:
-  github: "https://github.com/marceldavidbaroi"
+
 
 images:
   - "/images/thumb-1.png"

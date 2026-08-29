@@ -34,9 +34,7 @@ techStack:
     - "Capacitor Android Release Builds (APK/AAB)"
     - "Quasar Vite SPA (Web + Native from one codebase)"
     - "Git"
-
 links:
-  github: "https://github.com/marceldavidbaroi"
   parentPlatform: "https://tradeflowbd.com"
 
 images:

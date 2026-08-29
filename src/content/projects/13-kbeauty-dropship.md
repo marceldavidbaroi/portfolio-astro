@@ -25,8 +25,7 @@ techStack:
   devops:
     - "Git"
 
-links:
-  github: "https://github.com/marceldavidbaroi"
+
 
 images:
   - "/images/thumb-1.png"

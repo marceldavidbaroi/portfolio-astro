@@ -42,8 +42,8 @@ techStack:
     - "ESLint & Prettier"
 
 links:
-  github: "https://github.com/marceldavidbaroi/MindVault_Backend"
-  liveDemo: "https://github.com/marceldavidbaroi/MindVault_Frontend"
+  githubFrontend: "https://github.com/marceldavidbaroi/MindVault_Frontend"
+  githubBackend: "https://github.com/marceldavidbaroi/MindVault_Backend"
 
 images:
   - "/images/thumb-1.png"
