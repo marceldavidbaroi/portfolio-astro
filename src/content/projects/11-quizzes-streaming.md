@@ -1,34 +1,41 @@
 ---
 id: "11"
 title: "SuperCards Quiz – Internal Learning & Assessment Platform"
-subtitle: "A card-based quiz authoring and participation system built on Vue 3 / Quasar, enabling teams to create, publish, take, and review knowledge assessments inside the SuperCards workspace."
-description: "The Quiz module transforms SuperCards' universal card model into a full learning surface — authors build timed assessments with MCQ and fill-in-the-blank questions, publish them by category, and employees take quizzes with live scoring, mistake review, and performance analytics. The module was fully refactored into a modular, reusable architecture with dedicated store, service, and component layers."
+subtitle: "Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration."
 chip: "Learning & Assessment"
 order: 11
 featured: true
 platformType: "desktop"
 
-role: "Frontend Engineer"
-timeline: "2025"
+role: "Frontend Engineer (Learning Systems Lead)"
+timeline: "Oct 2025 — Dec 2025"
 status: "Completed"
 
 techStack:
   frontend:
     - "Vue 3 (Composition API)"
-    - "Quasar v2"
+    - "Quasar Framework (v2)"
+    - "TypeScript"
     - "Pinia (quiz-store)"
-    - "md-editor-v3 / q-editor (rich content)"
-    - "MediaManager (question attachments)"
+    - "md-editor-v3 / q-editor"
   backend:
     - "Laravel REST API (quizbuilder service)"
-    - "Card/tag meta-field system"
-  integrations:
-    - "OpenAI GPT-4o-mini (AI question generation)"
-    - "SuperCards TaskDetails shell (shared card UI)"
+    - "Card & Tag Meta-Field System"
+    - "OpenAI GPT-4o-mini Integration"
+  database: []
   devops:
-    - "Vite"
+    - "Vite Build System"
     - "Quasar CLI"
-    - "Git"
+    - "Git & GitHub"
+  mobile_hardware: []
+
+links:
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
 
 images:
   - "/images/projects/quiz/challenge-cards-grid.png"
@@ -39,21 +46,46 @@ images:
 visualAssets:
   heroMockup: "/images/projects/quiz/challenge-cards-grid.png"
 
-executiveOverview: "Delivered a production-ready internal assessment platform as measured by four end-to-end user journeys (create, author, discover, participate) across 15 dedicated Vue files, by fully refactoring the Quiz module into isolated pages, composable components, a Pinia store, and a dedicated API service — while reusing the platform's card, tag, and media primitives instead of building a separate LMS."
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z]."
 
 impactMetrics:
   - label: "User Journeys"
-    value: "4"
-    detail: "Quiz creation, studio authoring, challenge discovery, and timed participation — each with its own route and orchestration page."
-  - label: "Question Types"
-    value: "2"
-    detail: "Multiple choice (single or multi-correct) and fill-in-the-blank, both supporting rich text and image attachments."
-  - label: "Module Components"
-    value: "11"
-    detail: "Dedicated UI components for cards, authoring, display, results, review, and participant analytics — extracted from monolithic pages during refactor."
-  - label: "AI-Assisted Authoring"
-    value: "Yes"
-    detail: "Authors can generate MCQ and fill-in-the-blank questions from quiz title/description via OpenAI, preview them, and inject into the form."
+    value: "4 Workflows"
+    detail: "Creation, Studio Authoring, Challenge Discovery, and Timed Attend"
+  - label: "Module Refactor"
+    value: "11 Components"
+    detail: "Clean separation across authoring, live display, and mistake review"
+  - label: "AI Acceleration"
+    value: "GPT-4o"
+    detail: "Automated MCQ and fill-in-the-blank question generation from descriptions"
+  - label: "Timed Assessment"
+    value: "4-Phase Flow"
+    detail: "Intro → Countdown Session → Score Calculation → Mistake Walkthrough"
+  - label: "Platform Reuse"
+    value: "100% Shared"
+    detail: "Reused universal task card model without separate LMS infrastructure"
+  - label: "Session Safety"
+    value: "Auto-Submit"
+    detail: "Defensive client countdown timers with instant score payload normalization"
+
+valueProposition:
+  targetCustomer: "Enterprise People Ops, Training Coordinators & Internal Knowledge Leads"
+  items:
+    - painTitle: "Fragmented External Quiz Tools (Google Forms / Typeform)"
+      painDescription: "Running assessments on external survey tools disconnected test scores from employee employee work profiles and project teams."
+      gainTitle: "Embedded Native Learning Surface in SuperCards"
+      gainDescription: "Directly transformed the platform's universal card model into timed quizzes, associating assessment results with real employee profiles."
+
+    - painTitle: "Slow Manual Question Bank Creation for Authors"
+      painDescription: "Training coordinators spent hours manually formatting multiple-choice options and fill-in-the-blank text inputs."
+      gainTitle: "AI-Powered Question Studio (OpenAI GPT-4o)"
+      gainDescription: "Integrated automated question generation that creates structured MCQ banks from course titles in seconds for author review."
+
+    - painTitle: "Lack of Immediate Feedback & Mistake Walkthroughs"
+      painDescription: "Traditional quiz forms showed binary pass/fail grades without allowing employees to inspect correct answers and explanations."
+      gainTitle: "Post-Submission Mistake Review Engine"
+      gainDescription: "Engineered an interactive review screen showing correct explanations, highlighted answer differences, and grade score badging."
 
 problemStatement: "Organizations running knowledge checks through spreadsheets, external quiz tools, or ad-hoc forms had no way to tie assessments to their existing project and people data. Authors could not see who participated, how teams scored, or whether content was ready to publish. Employees had no single place to discover available quizzes, track their own scores, or review mistakes after submission."
 

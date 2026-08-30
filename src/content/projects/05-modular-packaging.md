@@ -1,14 +1,16 @@
 ---
 id: "05"
 title: "Enterprise Modular Packaging System"
-subtitle: "Decomposing enterprise Quasar & Vue 3 applications into autonomous, reusable npm packages with isolated build pipelines."
-description: "Implemented core feature modules, integration testing, and Proof of Concept (POC) validation for an enterprise Quasar packaging system that transforms UI components and business domains into reusable npm packages."
+subtitle: "Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing."
 chip: "Quasar & npm Architecture"
 order: 5
 featured: false
+platformType: "desktop"
 
 role: "Frontend Implementation & POC Engineer"
-timeline: "2025 — 2026"
+timeline: "2025 — Q1 2026"
 status: "Completed & Adopted"
 
 techStack:
@@ -28,8 +30,13 @@ techStack:
     - "Automated CI/CD Package Publishing"
     - "npm / pnpm Workspaces"
     - "Integration & Monorepo Testing"
+  mobile_hardware: []
 
-
+links:
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
 
 images:
   - "/images/thumb-1.png"
@@ -40,21 +47,46 @@ images:
 visualAssets:
   heroMockup: "/images/dummy-project.png"
 
-executiveOverview: "Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages used across multiple client applications."
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z]."
 
 impactMetrics:
-  - label: "Package Extraction"
-    value: "npm Modules"
-    detail: "Decoupled monolithic components into standalone scoped packages"
   - label: "Code Reusability"
     value: "+65%"
     detail: "Plug-and-play adoption across multiple client web applications"
+  - label: "Package Extraction"
+    value: "Scoped npm"
+    detail: "Decoupled monolithic components into standalone private packages"
   - label: "POC & Testing"
     value: "100% Passed"
     detail: "End-to-end package bundling, style extraction, and runtime validation"
   - label: "Release Autonomy"
     value: "SemVer"
     detail: "Independent versioning without rebasing entire host monoliths"
+  - label: "Package Rollout"
+    value: "<1 Hour"
+    detail: "Standardized template manifests for rapid component modularization"
+  - label: "Style Isolation"
+    value: "Zero Collisions"
+    detail: "Vite library mode bundling with host Quasar theme consumption"
+
+valueProposition:
+  targetCustomer: "Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers"
+  items:
+    - painTitle: "Fragile Code Copy-Pasting Across Client Repositories"
+      painDescription: "Identical Quasar tables, auth flows, and form components were duplicated by copy-pasting, causing divergent bug patches across 3+ client monoliths."
+      gainTitle: "Autonomous Scoped Private npm Packages"
+      gainDescription: "Shared domain features and UI components packaged as independently versioned npm modules with automated CI/CD publication."
+
+    - painTitle: "CSS Style Clashes & Duplicate Runtime Bundles"
+      painDescription: "Packaging Quasar components traditionally bundled duplicate Vue/Quasar runtimes and caused conflicting global CSS overrides."
+      gainTitle: "Vite Library Mode with Explicit Externalization"
+      gainDescription: "Configured Vite to externalize Vue and Quasar core while auto-injecting tree-shakeable directives and styles cleanly on package mount."
+
+    - painTitle: "Risky Production Deployments of Unverified Packages"
+      painDescription: "Publishing unvalidated npm packages broke downstream client builds due to missing TypeScript declarations (.d.ts) or peer dependency mismatches."
+      gainTitle: "Verdaccio & pnpm Link POC Sandbox Testbed"
+      gainDescription: "Engineered a local registry testbed ensuring 100% type safety and runtime validation prior to publishing packages to production registries."
 
 problemStatement: "Large enterprise client applications built on Quasar were duplicating identical UI components, tables, filters, authentication flows, and business workflows by copy-pasting across repositories. When a bug was discovered or a feature was enhanced, engineers had to patch multiple monoliths manually, resulting in divergent codebases and severe maintenance overhead."
 

@@ -27,12 +27,31 @@ const projects = allProjects
 		<div class="projects-grid">
 			{projects.map((project) => (
 				<a href={`/work/${project.slug}`} class="project-showcase-card">
-					<!-- Top Info Header: Title, Description, Keyword Chip -->
+					<!-- Top Info Header: CV-Style Layout (Title, Role & Timeline, Google XYZ Accomplishment, Skill Chips) -->
 					<div class="card-header-info">
-						<h3 class="project-title">{project.title}</h3>
-						<p class="project-description">{project.description}</p>
+						<div class="card-title-row">
+							<h3 class="project-title font-sans">{project.title}</h3>
+						</div>
+						{project.role && (
+							<div class="card-cv-meta font-mono">
+								<span class="cv-role">{project.role}</span>
+								{project.timeline && <span class="cv-timeline">· {project.timeline}</span>}
+							</div>
+						)}
+						<p class="project-description font-sans">{project.description}</p>
 						<div class="chip-container">
 							<span class="keyword-chip font-mono">{project.chip}</span>
+							{(() => {
+								const topStack = [
+									...(project.techStack?.frontend || []),
+									...(project.techStack?.mobile_hardware || []),
+									...(project.techStack?.backend || []),
+									...(project.techStack?.database || [])
+								].slice(0, 3);
+								return topStack.map((tech) => (
+									<span class="keyword-chip stack-chip font-mono">{tech}</span>
+								));
+							})()}
 						</div>
 					</div>
 
@@ -41,7 +60,6 @@ const projects = allProjects
 						const validImages = (project.images || []).filter((img) => img && !img.includes('thumb-'));
 						const thumbsToRender = validImages.length > 0 ? validImages.slice(0, 4) : [null, null, null, null];
 						const count = thumbsToRender.length;
-						const isBlankMode = validImages.length === 0;
 
 						return (
 							<div class={`card-image-slot slot-${project.platformType || 'desktop'} count-${count}`}>
@@ -208,26 +226,56 @@ const projects = allProjects
 		z-index: 2;
 	}
 
+	.card-title-row {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+	}
+
 	.project-title {
-		font-size: 1.85rem;
+		font-family: var(--font-sans);
+		font-size: 1.65rem;
 		font-weight: 800;
 		color: var(--text-main);
-		letter-spacing: -0.03em;
-		line-height: 1.15;
+		letter-spacing: -0.025em;
+		line-height: 1.2;
 		text-align: left;
+	}
+
+	.card-cv-meta {
+		font-size: 0.75rem;
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.cv-role {
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.cv-timeline {
+		color: var(--text-muted);
+		font-weight: 500;
+		text-transform: none;
 	}
 
 	.project-description {
 		font-size: 0.875rem;
-		line-height: 1.5;
-		color: var(--text-muted);
-		max-width: 90%;
+		line-height: 1.55;
+		color: var(--text-main);
+		max-width: 92%;
 		text-align: left;
 	}
 
 	.chip-container {
 		margin-top: 0.65rem;
 		text-align: left;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
 	}
 
 	.keyword-chip {
@@ -242,6 +290,12 @@ const projects = allProjects
 		font-size: 0.8125rem;
 		font-weight: 500;
 		transition: all 0.2s ease;
+	}
+
+	.keyword-chip.stack-chip {
+		border-color: rgba(95, 80, 56, 0.25);
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.04);
 	}
 
 	.project-showcase-card:hover .keyword-chip {

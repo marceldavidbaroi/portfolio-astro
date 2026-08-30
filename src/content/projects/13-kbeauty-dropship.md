@@ -1,15 +1,16 @@
 ---
 id: "13"
 title: "Koba – K-Beauty Cross-Border Commerce Platform"
-subtitle: "UK-sourced Korean beauty catalog with automated scraping, commission-based reseller pricing, dual-scope storefront, and customer intelligence — built inside TradeflowBD."
-description: "Engineered a tenant-scoped K-Beauty vertical that scrapes UK wholesale catalogs, powers staff and customer-facing commerce from one Vue codebase, calculates multi-layer commission splits at checkout, and profiles repeat buyers by phone for delivery risk and demand analytics."
+subtitle: "Cross-border Korean beauty commerce platform with automated UK catalog scraping, multi-layer reseller commission engine, and dual-scope storefronts."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Architected a cross-border K-Beauty commerce vertical achieving automated catalog ingestion for 40+ brands and 5-layer commission calculation via Python ETL scrapers, dual-scope Quasar storefronts, and PostgreSQL RPCs."
 chip: "Cross-Border Commerce"
 order: 13
 featured: true
 platformType: "desktop"
 
-role: "Full-Stack Developer"
-timeline: "2025 — Present"
+role: "Full-Stack Developer (Commerce & Data Pipelines)"
+timeline: "2025"
 status: "Active Production"
 
 techStack:
@@ -17,39 +18,75 @@ techStack:
     - "Quasar Framework (v2)"
     - "Vue.js (v3) + TypeScript"
     - "Pinia"
-    - "Shared App + Shop Scopes"
+    - "Shared Staff App & Customer Shop Scopes"
   backend:
     - "Supabase (PostgreSQL + Auth + RPCs)"
     - "Row-Level Security (RLS)"
-  data_pipeline:
-    - "Python 3 (BeautifulSoup + Requests)"
-    - "Kobareseller.com Retail Scraper"
-    - "Koba International WooCommerce API Scraper"
+    - "Python 3 (BeautifulSoup & Requests)"
+    - "WooCommerce REST API Pipeline"
   database:
     - "PostgreSQL (koba_products, koba_orders, koba_carts)"
-    - "Security-Definer RPCs (place_koba_order, get_koba_customer_profile)"
+    - "Atomic RPCs (place_koba_order, get_koba_customer_profile)"
   devops:
-    - "pnpm Scripts (python:koba-retail / python:koba-wholesale)"
-    - "Git"
+    - "pnpm Scripts (ETL pipelines)"
+    - "Git & GitHub"
+  mobile_hardware: []
 
-executiveOverview: "Built a cross-border K-Beauty commerce vertical inside TradeflowBD — automating UK catalog ingestion via Python scrapers, enabling resellers to set custom sell prices above base commission, running staff desk and customer storefront from shared Vue pages, and computing net order commission through a configurable charge engine (COD, packing, invoice, gateway flat fees) with phone-based customer profiling for repeat-buyer intelligence."
+links:
+  liveDemo: ""
+  parentPlatform: "https://tradeflowbd.com"
+  github: ""
+  docs: ""
+
+images:
+  - "/images/thumb-1.png"
+  - "/images/thumb-2.png"
+  - "/images/thumb-3.png"
+  - "/images/thumb-4.png"
+
+visualAssets:
+  heroMockup: "/images/dummy-project.png"
+
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Built a cross-border K-Beauty commerce vertical inside TradeflowBD [X] — automating UK catalog ingestion via Python scrapers, enabling resellers to set custom sell prices above base commission, and powering staff desk and customer storefronts from shared Vue pages [Y] with a 5-layer commission engine and phone-based customer profiling for repeat-buyer intelligence [Z]."
 
 impactMetrics:
-  - label: "Catalog Sources"
-    value: "2"
-    detail: "UK retail (Kobareseller) + wholesale (Koba International WooCommerce)"
-  - label: "Commerce Surfaces"
-    value: "2"
-    detail: "Staff app desk + customer B2B storefront (shared components)"
+  - label: "Catalog Ingestion"
+    value: "40+ Brands"
+    detail: "COSRX, Laneige, Beauty of Joseon, Anua auto-detected via Python scrapers"
+  - label: "Commission Engine"
+    value: "5 Layers"
+    detail: "Base commission, custom price markup, COD %, packing & gateway flat fees"
+  - label: "Commerce Scopes"
+    value: "2 Surfaces"
+    detail: "Staff order desk + customer B2B storefront from one shared Vue codebase"
   - label: "Order Lifecycle"
     value: "6 Stages"
-    detail: "pending → confirmed → processing → shipped → delivered → cancelled"
-  - label: "Commission Layers"
-    value: "5"
-    detail: "Base commission, custom price markup, COD %, flat packing/invoice/gateway fees"
-  - label: "K-Beauty Brands"
-    value: "40+"
-    detail: "COSRX, Laneige, Innisfree, Beauty of Joseon, Anua, and more auto-detected"
+    detail: "Pending → Confirmed → Processing → Shipped → Delivered → Cancelled"
+  - label: "Order Ingestion"
+    value: "Atomic RPC"
+    detail: "Cart snapshot to order and items in a single ACID PostgreSQL transaction"
+  - label: "Customer CRM"
+    value: "Phone Profile"
+    detail: "Repeat buyer profile, spend frequency, and brand demand analytics"
+
+valueProposition:
+  targetCustomer: "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations"
+  items:
+    - painTitle: "Manual Spreadsheet Price Copying from UK Wholesalers"
+      painDescription: "Resellers spent hours manually browsing UK wholesale websites and copying prices into spreadsheets, resulting in stale catalog prices."
+      gainTitle: "Automated Python Scraping & Ingestion Pipelines"
+      gainDescription: "Engineered automated scrapers for kobareseller.com and WooCommerce APIs, auto-tagging 40+ K-Beauty brands into PostgreSQL."
+
+    - painTitle: "Complex Manual Commission & COD Profit Calculations"
+      painDescription: "Calculating custom price markups, delivery adjustments, gateway fees, and packing fees by hand led to payout disputes."
+      gainTitle: "5-Layer Real-Time Commission Calculation Engine"
+      gainDescription: "Automated real-time profit share calculations at checkout, recording net commission transparently for monthly reconciliation."
+
+    - painTitle: "Zero Customer Intelligence on Cash-on-Delivery Orders"
+      painDescription: "Resellers had no visibility into whether a phone number had high return rates or previous successful deliveries before dispatching."
+      gainTitle: "Phone-Based Customer CRM & Delivery Analytics"
+      gainDescription: "Engineered customer profiling RPCs that display buyer order frequency, total spend, and delivery history upon phone lookup."
 
 problemStatement: "Bangladeshi K-Beauty resellers sourced products from UK wholesalers manually — copying prices from kobareseller.com into spreadsheets, calculating commissions by hand, taking orders over WhatsApp, and having no visibility into repeat customer delivery history or brand demand patterns."
 

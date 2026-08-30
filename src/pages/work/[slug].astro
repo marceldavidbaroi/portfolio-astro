@@ -4,17 +4,30 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
-	return projects.map((project, index) => {
-		const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+	const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
+
+	const paths: any[] = [];
+	projects.forEach((project) => {
 		const currentIndex = sorted.findIndex((p) => p.id === project.id);
 		const prevProject = currentIndex > 0 ? sorted[currentIndex - 1] : null;
 		const nextProject = currentIndex < sorted.length - 1 ? sorted[currentIndex + 1] : null;
 
-		return {
+		// Support file-based slug (e.g. "01-tradeflowbd")
+		paths.push({
 			params: { slug: project.id },
 			props: { project, prevProject, nextProject }
-		};
+		});
+
+		// If entry has custom data.id (e.g. "01"), also support that slug if different
+		if (project.data.id && project.data.id !== project.id) {
+			paths.push({
+				params: { slug: project.data.id },
+				props: { project, prevProject, nextProject }
+			});
+		}
 	});
+
+	return paths;
 }
 
 const { project, prevProject, nextProject } = Astro.props;
@@ -32,6 +45,9 @@ if (data.techStack && Object.keys(data.techStack).length > 0) {
 }
 if (data.problemStatement || (data.keyDecisions && data.keyDecisions.length > 0)) {
 	tocItems.push({ id: 'engineering-decisions', text: 'Engineering Decisions', depth: 2 });
+}
+if (data.valueProposition) {
+	tocItems.push({ id: 'value-proposition', text: 'Value Proposition Canvas', depth: 2 });
 }
 if (data.securityReliability?.length > 0 || data.futureRoadmap?.length > 0) {
 	tocItems.push({ id: 'security-roadmap', text: 'Security & Roadmap', depth: 2 });
@@ -108,6 +124,10 @@ const hasActionButtons = Boolean(
 			
 			{data.subtitle && (
 				<p class="case-subtitle">{data.subtitle}</p>
+			)}
+
+			{data.description && (
+				<p class="case-description font-sans">{data.description}</p>
 			)}
 
 			<!-- Action Buttons / Links (Only rendered if genuine links exist) -->
@@ -212,15 +232,23 @@ const hasActionButtons = Boolean(
 				{data.role && (
 					<div class="meta-box card">
 						<span class="meta-label">Role & Responsibilities</span>
-						<p class="meta-value">{data.role}</p>
+						<p class="meta-value font-sans">{data.role}</p>
 					</div>
 				)}
 				{data.timeline && (
 					<div class="meta-box card">
 						<span class="meta-label">Timeline & Lifecycle</span>
-						<p class="meta-value">{data.timeline}</p>
+						<p class="meta-value font-sans">{data.timeline}</p>
 					</div>
 				)}
+				<div class="meta-box card">
+					<span class="meta-label">Project Classification</span>
+					<p class="meta-value font-sans">
+						{hasActionButtons && isRealUrl(data.links?.github) 
+							? '🌐 Open Source Architecture' 
+							: '🔒 Proprietary Commercial Platform'}
+					</p>
+				</div>
 			</div>
 		</section>
 
@@ -228,9 +256,9 @@ const hasActionButtons = Boolean(
 		{data.executiveOverview && (
 			<section class="case-section" id="executive-overview">
 				<div class="xyz-overview-card card">
-					<span class="section-tag font-dot">01 // IMPACT FORMULA</span>
-					<h2 class="section-heading font-dot">Executive Overview</h2>
-					<blockquote class="xyz-quote">
+					<span class="section-tag font-mono">01 // IMPACT FORMULA</span>
+					<h2 class="section-heading">Executive Overview</h2>
+					<blockquote class="xyz-quote font-sans">
 						"{data.executiveOverview}"
 					</blockquote>
 
@@ -238,9 +266,9 @@ const hasActionButtons = Boolean(
 						<div class="metrics-row">
 							{data.impactMetrics.map((metric) => (
 								<div class="metric-card">
-									<span class="metric-val font-dot">{metric.value}</span>
+									<span class="metric-val font-mono">{metric.value}</span>
 									<span class="metric-lbl font-mono">{metric.label}</span>
-									{metric.detail && <span class="metric-sub">{metric.detail}</span>}
+									{metric.detail && <span class="metric-sub font-sans">{metric.detail}</span>}
 								</div>
 							))}
 						</div>
@@ -249,17 +277,17 @@ const hasActionButtons = Boolean(
 			</section>
 		)}
 
-		<!-- 4. Categorized Tech Stack Matrix -->
+		<!-- 4. Categorized Tech Stack Matrix (Directly under Overview for Rapid Technical Scanning) -->
 		{data.techStack && (
 			<section class="case-section" id="tech-stack">
-				<span class="section-tag font-dot">02 // ARCHITECTURE</span>
-				<h2 class="section-heading font-dot">Technology Stack</h2>
+				<span class="section-tag font-mono">02 // ARCHITECTURE</span>
+				<h2 class="section-heading">Technology Stack</h2>
 				
 				<div class="tech-stack-grid">
 					{data.techStack.frontend && data.techStack.frontend.length > 0 && (
 						<div class="tech-group card">
 							<span class="tech-group-title">Frontend Ecosystem</span>
-							<div class="tech-tags-wrap">
+							<div class="tech-tags-wrap font-mono">
 								{data.techStack.frontend.map((item) => (
 									<span class="tech-badge">{item}</span>
 								))}
@@ -269,7 +297,7 @@ const hasActionButtons = Boolean(
 					{data.techStack.mobile_hardware && data.techStack.mobile_hardware.length > 0 && (
 						<div class="tech-group card">
 							<span class="tech-group-title">Mobile Hardware & ML Kit</span>
-							<div class="tech-tags-wrap">
+							<div class="tech-tags-wrap font-mono">
 								{data.techStack.mobile_hardware.map((item) => (
 									<span class="tech-badge">{item}</span>
 								))}
@@ -279,7 +307,7 @@ const hasActionButtons = Boolean(
 					{data.techStack.backend && data.techStack.backend.length > 0 && (
 						<div class="tech-group card">
 							<span class="tech-group-title">Backend & APIs</span>
-							<div class="tech-tags-wrap">
+							<div class="tech-tags-wrap font-mono">
 								{data.techStack.backend.map((item) => (
 									<span class="tech-badge">{item}</span>
 								))}
@@ -289,7 +317,7 @@ const hasActionButtons = Boolean(
 					{data.techStack.database && data.techStack.database.length > 0 && (
 						<div class="tech-group card">
 							<span class="tech-group-title">Database & Storage</span>
-							<div class="tech-tags-wrap">
+							<div class="tech-tags-wrap font-mono">
 								{data.techStack.database.map((item) => (
 									<span class="tech-badge">{item}</span>
 								))}
@@ -299,7 +327,7 @@ const hasActionButtons = Boolean(
 					{data.techStack.devops && data.techStack.devops.length > 0 && (
 						<div class="tech-group card">
 							<span class="tech-group-title">DevOps & Tooling</span>
-							<div class="tech-tags-wrap">
+							<div class="tech-tags-wrap font-mono">
 								{data.techStack.devops.map((item) => (
 									<span class="tech-badge">{item}</span>
 								))}
@@ -313,40 +341,124 @@ const hasActionButtons = Boolean(
 		<!-- 5. Problem Statement & Key Technical Decisions -->
 		{(data.problemStatement || (data.keyDecisions && data.keyDecisions.length > 0)) && (
 			<section class="case-section" id="engineering-decisions">
-				<span class="section-tag font-dot">03 // ENGINEERING DECISIONS</span>
-				<h2 class="section-heading font-dot">Technical Challenges & Solutions</h2>
+				<span class="section-tag font-mono">03 // ENGINEERING DECISIONS</span>
+				<h2 class="section-heading">Technical Challenges & Solutions</h2>
 
 				{data.problemStatement && (
 					<div class="problem-box card">
-						<span class="problem-title">Problem Statement & User Friction</span>
-						<p class="problem-body">{data.problemStatement}</p>
+						<div class="problem-badge-row">
+							<span class="problem-badge font-mono">PROBLEM STATEMENT</span>
+							<span class="problem-tag font-mono">CORE FRICTION</span>
+						</div>
+						<p class="problem-body font-sans">{data.problemStatement}</p>
 					</div>
 				)}
 
 				{data.keyDecisions && data.keyDecisions.length > 0 && (
-					<div class="decisions-list">
-						{data.keyDecisions.map((item, idx) => (
-							<div class="decision-card card">
-								<div class="decision-header">
-									<span class="decision-index font-dot">0{idx + 1}</span>
-									<h3 class="decision-challenge font-mono">{item.challenge}</h3>
-								</div>
-								<div class="decision-body">
-									<div class="decision-row">
-										<span class="decision-lbl">Action / Decision:</span>
-										<p class="decision-desc">{item.decision}</p>
-									</div>
-									{item.outcome && (
-										<div class="decision-row outcome-row">
-											<span class="decision-lbl">Measured Outcome:</span>
-											<p class="decision-desc">{item.outcome}</p>
-										</div>
-									)}
-								</div>
-							</div>
-						))}
+					<div class="architecture-matrix-container card">
+						<div class="matrix-table-wrapper">
+							<table class="architecture-matrix-table">
+								<thead>
+									<tr class="font-mono">
+										<th class="col-challenge">01 // Architectural Challenge</th>
+										<th class="col-solution">02 // Engineering Solution</th>
+										<th class="col-impact">03 // Measured Impact</th>
+									</tr>
+								</thead>
+								<tbody>
+									{data.keyDecisions.map((item, idx) => (
+										<tr class="matrix-row">
+											<td class="cell-challenge">
+												<div class="challenge-title-wrap">
+													<span class="challenge-idx font-mono">0{idx + 1}</span>
+													<span class="challenge-name font-sans">{item.challenge}</span>
+												</div>
+											</td>
+											<td class="cell-solution font-sans">
+												<div class="solution-text-box">
+													<p>{item.decision}</p>
+												</div>
+											</td>
+											<td class="cell-impact font-sans">
+												{item.outcome ? (
+													<div class="impact-pill-wrap">
+														<span class="impact-check">✓</span>
+														<p class="impact-text">{item.outcome}</p>
+													</div>
+												) : (
+													<span class="impact-none font-mono">—</span>
+												)}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
 					</div>
 				)}
+			</section>
+		)}
+
+		<!-- 6. Value Proposition Canvas (2-Column Pain vs Gain Industry Standard) -->
+		{data.valueProposition && (
+			<section class="case-section" id="value-proposition">
+				<span class="section-tag font-mono">04 // PRODUCT STRATEGY</span>
+				<h2 class="section-heading">Value Proposition Canvas</h2>
+				
+				<div class="vpc-target-row">
+					<span class="vpc-target-label font-mono">TARGET MARKET & USERS:</span>
+					<span class="vpc-target-val font-sans">{data.valueProposition.targetCustomer}</span>
+				</div>
+
+				<div class="vpc-matrix-container card">
+					<div class="vpc-table-wrapper">
+						<table class="vpc-table">
+							<thead>
+								<tr class="font-mono">
+									<th class="vpc-th-pains">
+										<div class="vpc-th-title-wrap">
+											<span class="vpc-th-icon">🛑</span>
+											<span>Severe Pains & User Friction (Before)</span>
+										</div>
+									</th>
+									<th class="vpc-th-gains">
+										<div class="vpc-th-title-wrap">
+											<span class="vpc-th-icon">⚡</span>
+											<span>Architectural Gains & Resolution (After)</span>
+										</div>
+									</th>
+								</tr>
+							</thead>
+							<tbody>
+								{data.valueProposition.items.map((item) => (
+									<tr class="vpc-row">
+										<!-- Left Column: Pain / Friction -->
+										<td class="vpc-cell-pain">
+											<div class="vpc-pair-box">
+												<div class="vpc-pair-header">
+													<span class="vpc-pain-cross">✕</span>
+													<h4 class="vpc-pair-title vpc-pain-title font-sans">{item.painTitle}</h4>
+												</div>
+												<p class="vpc-pair-desc font-sans">{item.painDescription}</p>
+											</div>
+										</td>
+
+										<!-- Right Column: Gain / Solution -->
+										<td class="vpc-cell-gain">
+											<div class="vpc-pair-box">
+												<div class="vpc-pair-header">
+													<span class="vpc-gain-check">✓</span>
+													<h4 class="vpc-pair-title vpc-gain-title font-sans">{item.gainTitle}</h4>
+												</div>
+												<p class="vpc-pair-desc font-sans">{item.gainDescription}</p>
+											</div>
+										</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</section>
 		)}
 
@@ -356,7 +468,7 @@ const hasActionButtons = Boolean(
 				<div class="security-roadmap-grid">
 					{data.securityReliability?.length > 0 && (
 						<div class="card font-mono">
-							<span class="section-tag font-dot">SECURITY</span>
+							<span class="section-tag font-mono">SECURITY</span>
 							<h3 class="box-heading">Security & Reliability</h3>
 							<ul class="check-list">
 								{data.securityReliability.map((item) => (
@@ -370,12 +482,12 @@ const hasActionButtons = Boolean(
 					)}
 					{data.futureRoadmap?.length > 0 && (
 						<div class="card font-mono">
-							<span class="section-tag font-dot">ROADMAP</span>
+							<span class="section-tag font-mono">ROADMAP</span>
 							<h3 class="box-heading">Future Iterations</h3>
 							<ul class="check-list">
 								{data.futureRoadmap.map((item) => (
 									<li>
-										<span class="bullet-accent font-dot">›</span>
+										<span class="bullet-accent">›</span>
 										<span>{item}</span>
 									</li>
 								))}
@@ -411,31 +523,22 @@ const hasActionButtons = Boolean(
 		</footer>
 	</article>
 
-	<!-- Right Side Sticky Table of Contents Navigation -->
+	<!-- Right Side Sticky Table of Contents Navigation (Minimalist Border-Line Style) -->
 	{tocItems.length > 0 && (
 		<aside class="case-toc-sidebar" aria-label="Table of Contents">
-			<div class="toc-sticky-box">
-				<div class="toc-header">
-					<span class="toc-pulse-dot"></span>
-					<span class="toc-title font-dot">ON THIS PAGE</span>
-				</div>
-				<nav class="toc-nav">
+			<div class="toc-minimal-nav">
+				<span class="toc-title font-mono">ON THIS PAGE</span>
+				<div class="toc-line-group">
+					<div class="toc-track-line"></div>
 					<ul class="toc-list font-mono">
 						{tocItems.map((item) => (
 							<li class="toc-item">
 								<a href={`#${item.id}`} class="toc-link" data-target={item.id}>
-									<span class="toc-indicator">›</span>
-									<span class="toc-text">{item.text}</span>
+									<span class="toc-link-text">{item.text}</span>
 								</a>
 							</li>
 						))}
 					</ul>
-				</nav>
-				<div class="toc-footer">
-					<button type="button" class="toc-top-btn font-mono" id="toc-top-button" aria-label="Back to top">
-						<span>Back to top</span>
-						<span class="font-dot">↑</span>
-					</button>
 				</div>
 			</div>
 		</aside>
@@ -444,10 +547,11 @@ const hasActionButtons = Boolean(
 </BaseLayout>
 
 <style>
+	/* Minimalist Right-Side Table of Contents (Indicator Line Style) */
 	.case-layout-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) 240px;
-		gap: 3rem;
+		grid-template-columns: minmax(0, 1fr) 200px;
+		gap: 2.5rem;
 		width: 100%;
 		align-items: start;
 		position: relative;
@@ -463,142 +567,121 @@ const hasActionButtons = Boolean(
 		}
 	}
 
-	/* Sticky Right-Side Table of Contents */
 	.case-toc-sidebar {
 		position: sticky;
-		top: 6rem;
+		top: 6.5rem;
 		max-height: calc(100vh - 8rem);
 		display: flex;
 		flex-direction: column;
+		align-items: flex-start;
+		text-align: left;
 		z-index: 20;
-		padding-top: 2rem;
+		padding-top: 1.5rem;
 	}
 
-	.toc-sticky-box {
-		padding: 1.25rem 1rem;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		border-radius: 16px;
+	.toc-minimal-nav {
+		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 0.85rem;
-		box-shadow: 0 4px 20px rgba(95, 80, 56, 0.04);
-	}
-
-	.toc-header {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding-bottom: 0.6rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
-	}
-
-	.toc-pulse-dot {
-		width: 6px;
-		height: 6px;
-		border-radius: 50%;
-		background: var(--accent);
-		box-shadow: 0 0 6px var(--accent);
-		display: inline-block;
+		align-items: flex-start;
+		text-align: left;
+		gap: 0.75rem;
+		background: transparent;
+		border: none;
+		padding: 0;
 	}
 
 	.toc-title {
-		font-size: 0.75rem;
+		font-size: 0.6875rem;
 		font-weight: 700;
-		letter-spacing: 0.08em;
-		color: var(--text-main);
+		letter-spacing: 0.1em;
+		color: var(--text-muted);
+		text-transform: uppercase;
+		text-align: left;
+		padding-left: 0.25rem;
 	}
 
-	.toc-nav {
+	.toc-line-group {
+		position: relative;
+		width: 100%;
+		max-height: calc(100vh - 12rem);
 		overflow-y: auto;
-		max-height: calc(100vh - 15rem);
-		padding-right: 0.25rem;
+		overflow-x: hidden;
+		display: flex;
+		flex-direction: column;
+		border-left: 1.5px solid rgba(95, 80, 56, 0.15);
+		text-align: left;
+		padding-right: 0.35rem;
 	}
 
-	.toc-nav::-webkit-scrollbar {
+	/* Subtle custom scrollbar */
+	.toc-line-group::-webkit-scrollbar {
 		width: 3px;
 	}
 
-	.toc-nav::-webkit-scrollbar-thumb {
-		background: rgba(95, 80, 56, 0.2);
-		border-radius: 3px;
+	.toc-line-group::-webkit-scrollbar-track {
+		background: transparent;
+	}
+
+	.toc-line-group::-webkit-scrollbar-thumb {
+		background: rgba(95, 80, 56, 0.18);
+		border-radius: 9999px;
+	}
+
+	.toc-line-group::-webkit-scrollbar-thumb:hover {
+		background: var(--accent);
 	}
 
 	.toc-list {
 		list-style: none;
+		margin: 0;
+		padding: 0;
+		width: 100%;
 		display: flex;
 		flex-direction: column;
-		gap: 0.25rem;
+		gap: 0.15rem;
+		text-align: left;
 	}
 
 	.toc-item {
-		font-size: 0.8125rem;
+		position: relative;
+		width: 100%;
+		text-align: left;
 	}
 
 	.toc-link {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.35rem;
+		position: relative;
+		display: block;
+		width: 100%;
+		padding: 0.35rem 0 0.35rem 1rem;
 		color: var(--text-muted);
 		text-decoration: none !important;
-		padding: 0.35rem 0.5rem;
-		border-radius: 6px;
-		transition: all 0.15s ease;
-		line-height: 1.35;
+		font-size: 0.8125rem;
+		line-height: 1.4;
+		transition: color 0.18s ease;
+		margin-left: -1.5px;
+		border-left: 2px solid transparent;
+		text-align: left;
 	}
 
-	.toc-indicator {
-		color: transparent;
-		transition: color 0.15s ease, transform 0.15s ease;
-		font-weight: bold;
-		flex-shrink: 0;
+	.toc-link-text {
+		display: block;
+		text-align: left;
+		transition: transform 0.18s ease;
 	}
 
 	.toc-link:hover {
-		color: var(--accent);
-		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-main);
 	}
 
-	.toc-link:hover .toc-indicator {
-		color: var(--accent);
+	.toc-link:hover .toc-link-text {
 		transform: translateX(2px);
 	}
 
 	.toc-link.active {
 		color: var(--accent);
-		font-weight: 700;
-		background: rgba(180, 33, 53, 0.08);
-	}
-
-	.toc-link.active .toc-indicator {
-		color: var(--accent);
-	}
-
-	.toc-footer {
-		padding-top: 0.6rem;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	.toc-top-btn {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		width: 100%;
-		background: transparent;
-		border: none;
-		cursor: pointer;
-		font-family: inherit;
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		text-decoration: none !important;
-		padding: 0.35rem 0.5rem;
-		border-radius: 6px;
-		transition: all 0.2s ease;
-	}
-
-	.toc-top-btn:hover {
-		color: var(--accent);
-		background: rgba(95, 80, 56, 0.06);
+		font-weight: 600;
+		border-left-color: var(--accent);
 	}
 
 	.case-study-page {
@@ -688,8 +771,21 @@ const hasActionButtons = Boolean(
 	.case-subtitle {
 		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
 		line-height: 1.6;
-		color: var(--text-muted);
+		color: var(--accent);
 		max-width: 850px;
+		font-weight: 600;
+	}
+
+	.case-description {
+		font-size: clamp(0.95rem, 1.5vw, 1.05rem);
+		line-height: 1.65;
+		color: var(--text-main);
+		max-width: 850px;
+		margin-top: 0.15rem;
+		background: rgba(95, 80, 56, 0.04);
+		border-left: 3px solid var(--accent);
+		padding: 0.85rem 1.25rem;
+		border-radius: 0 12px 12px 0;
 	}
 
 	.project-actions {
@@ -834,12 +930,20 @@ const hasActionButtons = Boolean(
 	}
 
 	.hero-mockup-frame {
+		max-width: 680px;
+		margin: 0 auto;
 		width: 100%;
 		background: #ffffff;
-		border: 1px solid rgba(95, 80, 56, 0.18);
-		border-radius: 24px;
+		border: 8px solid rgba(95, 80, 56, 0.32);
+		border-radius: 28px;
 		overflow: hidden;
-		box-shadow: 0 20px 50px rgba(95, 80, 56, 0.1);
+		box-shadow: 0 16px 45px rgba(95, 80, 56, 0.14);
+		transition: transform 0.25s ease, box-shadow 0.25s ease;
+	}
+
+	.hero-mockup-frame:hover {
+		transform: translateY(-3px);
+		box-shadow: 0 22px 50px rgba(95, 80, 56, 0.18);
 	}
 
 	.browser-header {
@@ -914,35 +1018,35 @@ const hasActionButtons = Boolean(
 	/* Metadata Grid */
 	.metadata-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 		gap: 1.25rem;
 	}
 
-	@media (max-width: 768px) {
-		.metadata-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
 	.meta-box {
-		padding: 1.5rem;
+		padding: 1.35rem 1.5rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.4rem;
+		gap: 0.35rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.03);
 	}
 
 	.meta-label {
 		font-size: 0.75rem;
 		text-transform: uppercase;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.08em;
 		color: var(--accent);
-		font-weight: 600;
+		font-weight: 700;
+		font-family: var(--font-mono);
 	}
 
 	.meta-value {
 		font-size: 0.9375rem;
 		line-height: 1.5;
 		color: var(--text-main);
+		font-weight: 500;
 	}
 
 	/* XYZ Overview Card */
@@ -951,22 +1055,27 @@ const hasActionButtons = Boolean(
 		display: flex;
 		flex-direction: column;
 		gap: 1.5rem;
+		border-radius: 24px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.035) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.22);
+		box-shadow: 0 8px 30px rgba(95, 80, 56, 0.06);
 	}
 
 	.xyz-quote {
 		font-size: clamp(1.05rem, 1.8vw, 1.25rem);
 		line-height: 1.7;
 		color: var(--text-main);
-		font-style: italic;
+		font-style: normal;
 		border-left: 3px solid var(--accent);
-		padding-left: 1.25rem;
+		padding-left: 1.35rem;
+		font-weight: 400;
 	}
 
 	.metrics-row {
 		display: grid;
 		grid-template-columns: repeat(4, 1fr);
 		gap: 1rem;
-		margin-top: 1rem;
+		margin-top: 0.5rem;
 		padding-top: 1.5rem;
 		border-top: 1px solid rgba(95, 80, 56, 0.12);
 	}
@@ -987,22 +1096,30 @@ const hasActionButtons = Boolean(
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
+		padding: 0.75rem 1rem;
+		background: #ffffff;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		border-radius: 12px;
+		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.03);
 	}
 
 	.metric-val {
-		font-size: 1.85rem;
+		font-size: 1.75rem;
+		font-weight: 700;
 		color: var(--accent);
 	}
 
 	.metric-lbl {
 		font-size: 0.8125rem;
-		font-weight: 600;
+		font-weight: 700;
 		color: var(--text-main);
+		letter-spacing: 0.02em;
 	}
 
 	.metric-sub {
 		font-size: 0.75rem;
 		color: var(--text-muted);
+		line-height: 1.4;
 	}
 
 	/* Tech Stack */
@@ -1023,14 +1140,25 @@ const hasActionButtons = Boolean(
 		display: flex;
 		flex-direction: column;
 		gap: 0.85rem;
+		border-radius: 16px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.tech-group:hover {
+		border-color: rgba(95, 80, 56, 0.25);
+		transform: translateY(-2px);
+		box-shadow: 0 8px 20px rgba(95, 80, 56, 0.05);
 	}
 
 	.tech-group-title {
-		font-size: 0.875rem;
+		font-size: 0.8125rem;
 		font-weight: 700;
 		color: var(--accent);
 		text-transform: uppercase;
-		letter-spacing: 0.05em;
+		letter-spacing: 0.08em;
+		font-family: var(--font-mono);
 	}
 
 	.tech-tags-wrap {
@@ -1041,94 +1169,375 @@ const hasActionButtons = Boolean(
 
 	.tech-badge {
 		font-size: 0.8125rem;
-		padding: 0.3rem 0.65rem;
-		background: rgba(95, 80, 56, 0.08);
-		border-radius: 6px;
+		padding: 0.35rem 0.75rem;
+		background: #ffffff;
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		border-radius: 8px;
 		color: var(--text-main);
+		font-weight: 500;
 	}
 
-	/* Decisions */
+	/* Decisions & Problem Statement */
 	.problem-box {
-		padding: 1.75rem;
+		padding: 1.75rem 2rem;
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		margin-bottom: 1.5rem;
+		gap: 0.75rem;
+		margin-bottom: 2rem;
+		border-left: 4px solid var(--accent);
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
+		border-radius: 16px;
+		border-top: 1px solid var(--card-border);
+		border-right: 1px solid var(--card-border);
+		border-bottom: 1px solid var(--card-border);
 	}
 
-	.problem-title {
-		font-size: 0.875rem;
-		font-weight: 700;
+	.problem-badge-row {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+	}
+
+	.problem-badge {
+		font-size: 0.75rem;
+		padding: 0.25rem 0.75rem;
+		border-radius: 9999px;
+		background: rgba(180, 33, 53, 0.1);
 		color: var(--accent);
-		text-transform: uppercase;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+	}
+
+	.problem-tag {
+		font-size: 0.8125rem;
+		color: var(--text-muted);
 		letter-spacing: 0.05em;
 	}
 
 	.problem-body {
-		font-size: 0.9375rem;
+		font-size: 1rem;
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	/* Architecture Matrix Table */
+	.architecture-matrix-container {
+		padding: 0;
+		overflow: hidden;
+		border-radius: 20px;
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		box-shadow: 0 4px 20px rgba(95, 80, 56, 0.04);
+	}
+
+	.matrix-table-wrapper {
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	.architecture-matrix-table {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: left;
+		font-size: 0.875rem;
+		min-width: 760px;
+		font-family: var(--font-sans);
+	}
+
+	.architecture-matrix-table thead {
+		background: rgba(95, 80, 56, 0.08);
+		border-bottom: 2px solid rgba(95, 80, 56, 0.16);
+		font-family: var(--font-mono);
+	}
+
+	.architecture-matrix-table th {
+		padding: 1.15rem 1.35rem;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--text-main);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.col-challenge {
+		width: 28%;
+	}
+
+	.col-solution {
+		width: 44%;
+	}
+
+	.col-impact {
+		width: 28%;
+	}
+
+	.matrix-row {
+		background: #ffffff;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		transition: background 0.18s ease, border-left-color 0.18s ease;
+	}
+
+	.matrix-row:nth-child(even) {
+		background: #fbf9f5;
+	}
+
+	.matrix-row:last-child {
+		border-bottom: none;
+	}
+
+	.matrix-row:hover {
+		background: rgba(180, 33, 53, 0.04);
+	}
+
+	.architecture-matrix-table td {
+		padding: 1.35rem 1.5rem;
+		vertical-align: top;
 		line-height: 1.6;
-		color: var(--text-muted);
+		font-family: var(--font-sans);
 	}
 
-	.decisions-list {
+	.cell-challenge {
+		background: transparent;
+		border-right: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.challenge-title-wrap {
 		display: flex;
 		flex-direction: column;
-		gap: 1.25rem;
+		gap: 0.35rem;
 	}
 
-	.decision-card {
-		padding: 1.75rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.decision-header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-	}
-
-	.decision-index {
-		font-size: 1.35rem;
+	.challenge-idx {
+		font-size: 0.75rem;
+		font-weight: 700;
 		color: var(--accent);
+		letter-spacing: 0.08em;
 	}
 
-	.decision-challenge {
-		font-size: 1.1rem;
+	.challenge-name {
+		font-size: 0.9375rem;
 		font-weight: 700;
 		color: var(--text-main);
+		line-height: 1.35;
 	}
 
-	.decision-body {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.decision-row {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.decision-lbl {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--text-muted);
-		font-weight: 600;
-	}
-
-	.decision-desc {
-		font-size: 0.9375rem;
-		line-height: 1.55;
+	.cell-solution {
 		color: var(--text-main);
+		border-right: 1px solid rgba(95, 80, 56, 0.1);
 	}
 
-	.outcome-row {
-		padding-top: 0.6rem;
-		border-top: 1px solid rgba(95, 80, 56, 0.08);
+	.solution-text-box p {
+		margin: 0;
+		font-size: 0.875rem;
+		color: var(--text-main);
+		line-height: 1.6;
+	}
+
+	.cell-impact {
+		background: transparent;
+	}
+
+	.impact-pill-wrap {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.5rem;
+	}
+
+	.impact-check {
+		color: #16a34a;
+		font-weight: bold;
+		font-size: 0.9375rem;
+		line-height: 1.4;
+		flex-shrink: 0;
+	}
+
+	.impact-text {
+		margin: 0;
+		font-size: 0.84375rem;
+		color: #15803d;
+		line-height: 1.5;
+		font-weight: 500;
+	}
+
+	.impact-none {
+		color: var(--text-muted);
+	}
+
+	/* Value Proposition Canvas (VPC) Table Styles */
+	.vpc-target-row {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		padding: 0.85rem 1.35rem;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: 12px;
+		margin-bottom: 1.5rem;
+	}
+
+	.vpc-target-label {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		letter-spacing: 0.08em;
+	}
+
+	.vpc-target-val {
+		font-size: 0.9375rem;
+		color: var(--text-main);
+		font-weight: 700;
+	}
+
+	.vpc-matrix-container {
+		padding: 0;
+		overflow: hidden;
+		border-radius: 20px;
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		box-shadow: 0 4px 20px rgba(95, 80, 56, 0.04);
+	}
+
+	.vpc-table-wrapper {
+		width: 100%;
+		overflow-x: auto;
+	}
+
+	.vpc-table {
+		width: 100%;
+		border-collapse: collapse;
+		text-align: left;
+		font-size: 0.875rem;
+		min-width: 820px;
+		font-family: var(--font-sans);
+	}
+
+	.vpc-table thead {
+		background: rgba(95, 80, 56, 0.08);
+		border-bottom: 2px solid rgba(95, 80, 56, 0.16);
+		font-family: var(--font-mono);
+	}
+
+	.vpc-table th {
+		padding: 1.15rem 1.35rem;
+		font-size: 0.8125rem;
+		font-weight: 700;
+		letter-spacing: 0.06em;
+		color: var(--text-main);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.vpc-th-dimension {
+		width: 22%;
+	}
+
+	.vpc-th-pains {
+		width: 50%;
+		border-right: 1px solid rgba(95, 80, 56, 0.14);
+		background: rgba(239, 68, 68, 0.05);
+	}
+
+	.vpc-th-gains {
+		width: 50%;
+		background: rgba(34, 197, 94, 0.05);
+	}
+
+	.vpc-th-title-wrap {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 700;
+	}
+
+	.vpc-th-icon {
+		font-size: 0.9375rem;
+	}
+
+	.vpc-row {
+		background: #ffffff;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		transition: background 0.15s ease;
+	}
+
+	.vpc-row:nth-child(even) {
+		background: #fbf9f5;
+	}
+
+	.vpc-row:last-child {
+		border-bottom: none;
+	}
+
+	.vpc-row:hover {
+		background: rgba(180, 33, 53, 0.04);
+	}
+
+	.vpc-table td {
+		padding: 1.35rem 1.6rem;
+		vertical-align: top;
+		line-height: 1.6;
+		font-family: var(--font-sans);
+	}
+
+	.vpc-cell-pain {
+		border-right: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.vpc-cell-gain {
+		background: transparent;
+	}
+
+	.vpc-pair-box {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.vpc-pair-header {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.55rem;
+	}
+
+	.vpc-pain-cross {
+		color: #dc2626;
+		font-size: 0.875rem;
+		font-weight: 800;
+		flex-shrink: 0;
+		line-height: 1.35;
+	}
+
+	.vpc-gain-check {
+		color: #16a34a;
+		font-size: 0.9375rem;
+		font-weight: 800;
+		flex-shrink: 0;
+		line-height: 1.35;
+	}
+
+	.vpc-pair-title {
+		margin: 0;
+		font-size: 0.9375rem;
+		font-weight: 700;
+		line-height: 1.35;
+		letter-spacing: -0.01em;
+	}
+
+	.vpc-pain-title {
+		color: #b91c1c;
+	}
+
+	.vpc-gain-title {
+		color: #15803d;
+	}
+
+	.vpc-pair-desc {
+		margin: 0;
+		font-size: 0.875rem;
+		color: var(--text-main);
+		line-height: 1.6;
+		padding-left: 1.35rem;
 	}
 
 
@@ -1245,38 +1654,56 @@ const hasActionButtons = Boolean(
 	}
 
 	/* Markdown Mobile Phone Mockup Frame (Compact & Realistic) */
-	.md-mockup-mobile-wrapper {
+	:global(.md-mockup-mobile-wrapper) {
 		display: flex;
 		justify-content: center;
 		margin: 2.25rem auto;
 		width: 100%;
 	}
 
-	.md-mobile-phone-device {
+	:global(.md-mobile-phone-device) {
 		max-width: 250px;
 		width: 100%;
 		background: #ffffff;
-		border: 4px solid rgba(95, 80, 56, 0.35);
-		border-radius: 34px;
+		border: 6px solid rgba(95, 80, 56, 0.45) !important;
+		border-radius: 36px;
 		overflow: hidden;
-		box-shadow: 0 16px 40px rgba(95, 80, 56, 0.14);
+		box-shadow: 0 16px 40px rgba(95, 80, 56, 0.16);
 		display: flex;
 		flex-direction: column;
 		transition: transform 0.25s ease, box-shadow 0.25s ease;
 	}
 
-	.md-mobile-phone-device:hover {
+	:global(.md-mobile-phone-device:hover) {
 		transform: translateY(-4px);
-		box-shadow: 0 20px 48px rgba(95, 80, 56, 0.2);
+		box-shadow: 0 22px 48px rgba(95, 80, 56, 0.22);
 	}
 
-	.md-mobile-phone-device .mobile-mockup-screen {
+	:global(.md-mobile-phone-device .mobile-speaker-notch) {
+		padding: 0.5rem 0.75rem 0.35rem;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: 6px;
+		background: #fbf9f5;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	:global(.md-mobile-phone-device .mobile-mockup-screen) {
 		background: #ffffff;
 		width: 100%;
 		overflow: hidden;
 	}
 
-	.md-mobile-phone-device img {
+	:global(.md-mobile-phone-device .mobile-home-indicator) {
+		width: 80px;
+		height: 3px;
+		background: rgba(95, 80, 56, 0.35);
+		border-radius: 9999px;
+		margin: 0.45rem auto;
+	}
+
+	:global(.md-mobile-phone-device img) {
 		width: 100% !important;
 		max-width: 100% !important;
 		height: auto !important;
@@ -1288,72 +1715,82 @@ const hasActionButtons = Boolean(
 		object-fit: contain !important;
 	}
 
-	/* Markdown Tablet Mockup Frame (Compact Web View with Realistic Tablet Border) */
-	.md-mockup-tablet-wrapper {
+	/* Markdown Tablet Mockup Frame (Compact Realistic Tablet Border) */
+	:global(.md-mockup-tablet-wrapper) {
 		display: flex;
-		justify-content: center;
+		flex-direction: column;
+		align-items: center;
 		width: 100%;
 		margin: 2.25rem auto;
+		gap: 0.65rem;
 	}
 
-	.md-tablet-device {
+	:global(.md-tablet-device) {
 		max-width: 620px;
 		width: 100%;
 		background: #ffffff;
-		border: 7px solid rgba(95, 80, 56, 0.32);
-		border-radius: 28px;
+		border: 8px solid rgba(95, 80, 56, 0.45) !important;
+		border-radius: 26px;
 		overflow: hidden;
-		box-shadow: 0 16px 45px rgba(95, 80, 56, 0.14);
+		box-shadow: 0 16px 42px rgba(95, 80, 56, 0.16);
 		display: flex;
 		flex-direction: column;
 		transition: transform 0.25s ease, box-shadow 0.25s ease;
 	}
 
-	.md-tablet-device:hover {
+	:global(.md-tablet-device:hover) {
 		transform: translateY(-3px);
-		box-shadow: 0 22px 50px rgba(95, 80, 56, 0.18);
+		box-shadow: 0 22px 50px rgba(95, 80, 56, 0.22);
 	}
 
-	.tablet-top-bezel {
+	:global(.tablet-top-bezel) {
 		height: 14px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		background: #fbf9f5;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
 	}
 
-	.tablet-camera-dot {
+	:global(.tablet-camera-dot) {
 		width: 5px;
 		height: 5px;
 		border-radius: 50%;
-		background: rgba(95, 80, 56, 0.4);
+		background: rgba(95, 80, 56, 0.45);
 	}
 
-	.tablet-browser-bar {
-		display: flex;
-		align-items: center;
-		padding: 0.35rem 0.75rem;
-		background: #f4f0e7;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
-		gap: 0.65rem;
-	}
-
-	.tablet-screen-area {
+	:global(.tablet-screen-area) {
 		background: #ffffff;
 		width: 100%;
 		overflow: hidden;
 	}
 
-	.tablet-home-indicator {
-		width: 120px;
-		height: 4px;
-		background: rgba(95, 80, 56, 0.3);
-		border-radius: 9999px;
-		margin: 0.5rem auto 0.45rem;
+	:global(.tablet-bottom-bezel) {
+		height: 16px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background: #fbf9f5;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
 	}
 
-	.md-tablet-device img {
+	:global(.tablet-home-indicator) {
+		width: 120px;
+		height: 4px;
+		background: rgba(95, 80, 56, 0.35);
+		border-radius: 9999px;
+	}
+
+	:global(.md-tablet-caption) {
+		font-size: 0.8125rem;
+		font-family: 'NType 82 Mono', monospace;
+		color: var(--text-muted);
+		text-align: center;
+		max-width: 600px;
+		line-height: 1.4;
+	}
+
+	:global(.md-tablet-device img) {
 		width: 100% !important;
 		max-width: 100% !important;
 		height: auto !important;
@@ -1382,8 +1819,16 @@ const hasActionButtons = Boolean(
 		border-radius: 14px;
 		overflow: hidden;
 		border: 1px solid var(--card-border);
-		background: var(--card-bg);
+		background: #ffffff;
 		font-size: 0.875rem;
+	}
+
+	.markdown-article tbody tr:nth-child(even) {
+		background: #fbf9f5;
+	}
+
+	.markdown-article tbody tr:hover {
+		background: rgba(180, 33, 53, 0.04);
 	}
 
 	.markdown-article th,
@@ -1479,6 +1924,25 @@ const hasActionButtons = Boolean(
 		max-width: 100% !important;
 		height: auto !important;
 	}
+
+	/* Rounded Mermaid graph nodes & subgraphs */
+	:global(.mermaid svg .node rect),
+	:global(.mermaid svg .node polygon),
+	:global(.mermaid svg rect.basic.label-container),
+	:global(.mermaid svg .label-container),
+	:global(.mermaid svg .cluster rect),
+	:global(.mermaid svg .subgraph rect),
+	:global(.mermaid svg .actor),
+	:global(.mermaid svg .note),
+	:global(.mermaid svg g.statediagram-state rect) {
+		rx: 10px !important;
+		ry: 10px !important;
+	}
+
+	:global(.mermaid svg .cluster rect) {
+		rx: 14px !important;
+		ry: 14px !important;
+	}
 </style>
 
 <script>
@@ -1541,6 +2005,11 @@ const hasActionButtons = Boolean(
 					activationBkgColor: '#f4f0e7',
 					fontFamily: 'NType 82 Mono, monospace',
 					fontSize: '13px'
+				},
+				flowchart: {
+					curve: 'basis',
+					htmlLabels: true,
+					padding: 16
 				},
 				securityLevel: 'loose'
 			});
@@ -1651,25 +2120,32 @@ const hasActionButtons = Boolean(
 
 			function applyDeviceFrame(img: HTMLImageElement) {
 				// Avoid double wrapping
-				if (img.closest('.md-mobile-phone-device') || img.closest('.md-desktop-browser-box')) return;
+				if (img.closest('.md-mobile-phone-device') || img.closest('.md-tablet-device')) return;
 
 				const src = (img.getAttribute('src') || '').toLowerCase();
-				const alt = (img.getAttribute('alt') || '').toLowerCase();
+				const rawAlt = img.getAttribute('alt') || '';
+				const alt = rawAlt.toLowerCase();
 
 				// Size-based aspect ratio detection: height > width = mobile phone, otherwise tablet / desktop frame
-				const w = img.naturalWidth || 1;
-				const h = img.naturalHeight || 1;
-				const isVerticalPortrait = h > (w * 1.12);
+				const w = img.naturalWidth || img.width || 0;
+				const h = img.naturalHeight || img.height || 0;
+				const isVerticalPortrait = (w > 0 && h > 0) ? (h > (w * 1.12)) : false;
 
 				const isExplicitMobile = src.includes('#mobile') || alt.includes('[mobile]') || alt.includes('mobile');
-				const isExplicitDesktop = src.includes('#desktop') || alt.includes('[desktop]') || alt.includes('desktop') || alt.includes('web');
+				const isExplicitDesktop = src.includes('#desktop') || alt.includes('[desktop]') || alt.includes('desktop') || alt.includes('web') || alt.includes('dashboard') || alt.includes('costing') || alt.includes('shipment');
 
 				// Decision: explicit tag takes precedence, otherwise automated aspect ratio detection
 				const isMobileDevice = isExplicitMobile ? true : (isExplicitDesktop ? false : isVerticalPortrait);
 
 				// Clean visual metadata tag from alt attribute
-				const cleanAlt = (img.getAttribute('alt') || '').replace(/\[(mobile|desktop|tablet)\]/gi, '').trim();
+				const cleanAlt = rawAlt.replace(/\[(mobile|desktop|tablet)\]/gi, '').trim();
 				img.setAttribute('alt', cleanAlt);
+
+				// Find container to replace: if img is wrapped solely in a <p>, replace the <p>
+				const parentP = img.parentElement;
+				const targetInsertNode = (parentP && parentP.tagName.toLowerCase() === 'p' && parentP.children.length === 1) 
+					? parentP 
+					: img;
 
 				if (isMobileDevice) {
 					const wrapper = document.createElement('div');
@@ -1688,12 +2164,16 @@ const hasActionButtons = Boolean(
 					const homeIndicator = document.createElement('div');
 					homeIndicator.className = 'mobile-home-indicator';
 
-					img.parentNode?.insertBefore(wrapper, img);
+					targetInsertNode.parentNode?.insertBefore(wrapper, targetInsertNode);
 					screen.appendChild(img);
 					device.appendChild(notch);
 					device.appendChild(screen);
 					device.appendChild(homeIndicator);
 					wrapper.appendChild(device);
+
+					if (targetInsertNode !== img && targetInsertNode.parentNode) {
+						targetInsertNode.remove();
+					}
 				} else {
 					// Render compact realistic Tablet frame for web / landscape images
 					const wrapper = document.createElement('div');
@@ -1706,32 +2186,36 @@ const hasActionButtons = Boolean(
 					topBezel.className = 'tablet-top-bezel';
 					topBezel.innerHTML = '<span class="tablet-camera-dot"></span>';
 
-					const browserBar = document.createElement('div');
-					browserBar.className = 'tablet-browser-bar';
-					browserBar.innerHTML = '<div class="window-dots"><span></span><span></span><span></span></div><span class="browser-url">app.portal.internal/dashboard</span>';
-
 					const screenArea = document.createElement('div');
 					screenArea.className = 'tablet-screen-area';
 
-					const homeIndicator = document.createElement('div');
-					homeIndicator.className = 'tablet-home-indicator';
+					const bottomBezel = document.createElement('div');
+					bottomBezel.className = 'tablet-bottom-bezel';
+					bottomBezel.innerHTML = '<span class="tablet-home-indicator"></span>';
 
-					img.parentNode?.insertBefore(wrapper, img);
+					targetInsertNode.parentNode?.insertBefore(wrapper, targetInsertNode);
 					screenArea.appendChild(img);
 					tablet.appendChild(topBezel);
-					tablet.appendChild(browserBar);
 					tablet.appendChild(screenArea);
-					tablet.appendChild(homeIndicator);
+					tablet.appendChild(bottomBezel);
 					wrapper.appendChild(tablet);
+
+					// Render clean bottom label underneath if descriptive alt text exists
+					if (cleanAlt && cleanAlt.length > 0) {
+						const caption = document.createElement('span');
+						caption.className = 'md-tablet-caption';
+						caption.textContent = cleanAlt;
+						wrapper.appendChild(caption);
+					}
+
+					if (targetInsertNode !== img && targetInsertNode.parentNode) {
+						targetInsertNode.remove();
+					}
 				}
 			}
 
 			articleImgs.forEach((img) => {
-				if (img.complete && img.naturalWidth > 0) {
-					applyDeviceFrame(img);
-				} else {
-					img.addEventListener('load', () => applyDeviceFrame(img), { once: true });
-				}
+				applyDeviceFrame(img);
 			});
 		}
 

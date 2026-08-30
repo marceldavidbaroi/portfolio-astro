@@ -81,6 +81,19 @@ const projects = defineCollection({
 		// Deep-Dive Technical Engineering Sections (Optional Frontmatter Fields)
 		problemStatement: z.string().optional(),
 		architectureSummary: z.string().optional(),
+		valueProposition: z
+			.object({
+				targetCustomer: z.string(),
+				items: z.array(
+					z.object({
+						painTitle: z.string(),
+						painDescription: z.string(),
+						gainTitle: z.string(),
+						gainDescription: z.string()
+					})
+				)
+			})
+			.optional(),
 		keyDecisions: z
 			.array(
 				z.object({

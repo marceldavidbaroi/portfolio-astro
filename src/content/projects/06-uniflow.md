@@ -2,10 +2,12 @@
 id: "06"
 title: "UNIFLOW – Interactive Class Management & Collaborative Learning Platform"
 subtitle: "Real-time collaborative academic portal built with Quasar Framework, Vue 3, Pinia, Firebase Firestore, and ApexCharts analytics."
-description: "Architected a real-time class and group collaboration platform with Quasar (Vue 3) and Firebase, featuring live interactive sessions, structured grading rubrics, smart note sharing, and academic analytics."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Architected a real-time academic collaboration portal achieving sub-second classroom state synchronization and 4-tier institutional modeling via Firebase Firestore listeners, Quasar (Vue 3), and 8 modular Pinia stores."
 chip: "Quasar & Firebase Platform"
 order: 6
 featured: false
+platformType: "desktop"
 
 role: "Lead Full-Stack Developer"
 timeline: "2024 — 2025"
@@ -32,9 +34,13 @@ techStack:
     - "ESLint 9 + Prettier"
     - "PostCSS & Autoprefixer"
     - "Git & GitHub"
+  mobile_hardware: []
 
 links:
+  liveDemo: ""
+  parentPlatform: ""
   github: "https://github.com/marceldavidbaroi/UniFlow-"
+  docs: ""
 
 images:
   - "/images/thumb-1.png"
@@ -45,21 +51,46 @@ images:
 visualAssets:
   heroMockup: "/images/dummy-project.png"
 
-executiveOverview: "Engineered UNIFLOW, a modern real-time interactive class management and group collaboration platform for university students and educators. Built with Quasar Framework (Vue 3) and Firebase Firestore, the system delivers live interactive lecture sessions, 4-tier academic hierarchy modeling (Faculty → Department → Course → Group), multi-criterion assignment grading rubrics, collaborative smart notes, and institutional performance analytics via ApexCharts."
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Engineered UNIFLOW, a modern real-time interactive class management and group collaboration platform for university students and educators [X]. Built with Quasar Framework (Vue 3) and Firebase Firestore, the system delivers live interactive lecture sessions and sub-second classroom synchronization [Y] via a 4-tier academic hierarchy model (Faculty → Department → Course → Group), multi-criterion grading rubrics, collaborative smart notes, and 8 modular Pinia stores [Z]."
 
 impactMetrics:
-  - label: "Real-Time Sync"
-    value: "Firestore"
-    detail: "Sub-second live state synchronization for active classroom sessions"
-  - label: "Academic Depth"
+  - label: "State Synchronization"
+    value: "Sub-Second"
+    detail: "Live Firestore onSnapshot listeners synchronizing classroom state"
+  - label: "Academic Modeling"
     value: "4 Tiers"
     detail: "Faculty, Department, Course, and Group relational document hierarchy"
-  - label: "Analytics"
+  - label: "State Architecture"
+    value: "8 Stores"
+    detail: "Modular Pinia domain isolation with persisted local caching"
+  - label: "Grading Rubrics"
+    value: "Multi-Criteria"
+    detail: "Custom evaluation criteria with peer and instructor review toggles"
+  - label: "Visual Analytics"
     value: "ApexCharts"
     detail: "Interactive student task completion and session participation rollups"
-  - label: "State Architecture"
-    value: "8 Pinia Stores"
-    detail: "Modular domain isolation with persisted local caching"
+  - label: "Security Enforcement"
+    value: "Role-Based"
+    detail: "Granular Firestore security rules for students, teachers, and admins"
+
+valueProposition:
+  targetCustomer: "University Educators, Academic Departments & Student Study Groups"
+  items:
+    - painTitle: "Fragmented Classroom Collaboration Tools"
+      painDescription: "Lectures, code playgrounds, chat threads, and grading sheets were spread across 4+ disconnected web apps, causing student context-switching."
+      gainTitle: "Unified Interactive Real-Time Lecture Hub"
+      gainDescription: "Single Quasar (Vue 3) interface synchronizing live video feeds, embedded code editors, and question queues in real-time."
+
+    - painTitle: "Rigid & Opaque Assignment Grading Methods"
+      painDescription: "Traditional university portals offered only binary score inputs without transparent breakdown of grading criteria or peer evaluation."
+      gainTitle: "Multi-Criterion Assignment Grading Rubrics"
+      gainDescription: "Customizable sub-collections allowing teachers to define multi-factor rubrics with automated score rollups and peer review."
+
+    - painTitle: "High Database Latency on Course Roster Queries"
+      painDescription: "Relational SQL joins across complex university departments, faculties, and student groups slowed down dashboard loads."
+      gainTitle: "4-Tier Denormalized NoSQL Document Model"
+      gainDescription: "Engineered high-speed Firestore schemas with sub-50ms query reads for course rosters and student group permissions."
 
 problemStatement: "University classrooms often suffer from fragmented tools—scattered video links, detached discussion boards, external code playgrounds, and disconnected grading spreadsheets—leading to student disengagement and heavy administrative friction for instructors."
 

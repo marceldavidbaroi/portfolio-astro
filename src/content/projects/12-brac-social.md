@@ -1,43 +1,84 @@
 ---
 id: "12"
 title: "BRAC Social Platform – UI Refinement & Responsive Optimization"
-subtitle: "Frontend UI refinement, cross-device responsiveness, and layout stabilization for BRAC's internal social collaboration app using Vue 3 and Quasar Framework."
-description: "Delivered essential UI enhancements, layout bug fixes, and mobile/tablet responsive optimizations for the BRAC internal social collaboration portal built on Quasar Framework and Vue 3."
+subtitle: "Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Optimized the BRAC internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization."
 chip: "UI & Responsiveness"
 order: 12
 featured: false
 platformType: "desktop"
 
 role: "Frontend UI & Responsiveness Contributor"
-timeline: "2024 — 2025"
+timeline: "2024 — Jan 2025"
 status: "Completed"
 
 techStack:
   frontend:
     - "Quasar Framework (v2)"
-    - "Vue.js (v3)"
-    - "TypeScript / JavaScript"
-    - "CSS3 / Flexbox / Grid"
-    - "Responsive Viewport Breakpoints"
+    - "Vue.js (v3) + TypeScript"
+    - "CSS3 Flexbox / Grid"
+    - "Quasar Screen Breakpoints ($q.screen)"
   backend:
-    - "REST API Integration"
+    - "REST API Discussion Feed Gateways"
   database: []
   devops:
-    - "Git"
-    - "Vite"
+    - "Vite Build System"
+    - "Git & GitHub"
+  mobile_hardware: []
 
-executiveOverview: "Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3. Focused on eliminating mobile/tablet rendering glitches, standardizing interactive feed card components, and improving overall product usability across varying screen sizes."
+links:
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
+
+images:
+  - "/images/thumb-1.png"
+  - "/images/thumb-2.png"
+  - "/images/thumb-3.png"
+  - "/images/thumb-4.png"
+
+visualAssets:
+  heroMockup: "/images/dummy-project.png"
+
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z]."
 
 impactMetrics:
-  - label: "Contribution Scope"
-    value: "Frontend UI"
-    detail: "Directly resolved layout bugs and responsive interface defects"
-  - label: "Device Responsiveness"
+  - label: "Device Fluidity"
     value: "100% Fluid"
-    detail: "Mobile, tablet, and desktop viewport alignment across social feeds"
-  - label: "UI Framework"
+    detail: "Zero horizontal overflow across smartphones, tablets, and desktop monitors"
+  - label: "Media Rendering"
+    value: "Zero Clipping"
+    detail: "Adaptive multi-image attachment previews and fluid typography constraints"
+  - label: "Touch Usability"
+    value: "48px Targets"
+    detail: "Standardized accessible tap targets for reactions, comments, and drawers"
+  - label: "Component Polish"
     value: "Quasar v2"
-    detail: "Standardized feed components and media cards on Quasar and Vue 3"
+    detail: "Standardized discussion cards and smooth drawer transition animations"
+  - label: "Layout Shifts"
+    value: "Zero CLS"
+    detail: "Eliminated cumulative layout shifts during dynamic feed rendering"
+
+valueProposition:
+  targetCustomer: "Internal Enterprise Staff, Field Coordinators & Organizational Teams"
+  items:
+    - painTitle: "Broken Mobile Views & Horizontal Viewport Overflow"
+      painDescription: "Field coordinators accessing the internal social portal on smartphones encountered clipped text cards and awkward horizontal scrolling."
+      gainTitle: "Fluid Quasar Responsive Grid Refactoring"
+      gainDescription: "Rebuilt rigid desktop sections using dynamic Quasar screen utilities ($q.screen) for seamless smartphone and tablet adaptability."
+
+    - painTitle: "Disjointed Media Attachment Previews"
+      painDescription: "High-resolution photos posted in discussion threads broke container boundaries and caused severe visual misalignment."
+      gainTitle: "Adaptive Multi-Image Gallery Containers"
+      gainDescription: "Engineered responsive image grid components that constrain high-res media while preserving crisp aspect ratios."
+
+    - painTitle: "Frustrating Small Tap Targets on Touchscreens"
+      painDescription: "Reaction buttons, comment replies, and notification drawers were difficult to trigger on touch devices due to tiny hit targets."
+      gainTitle: "48px Accessible Mobile Touch Ergonomics"
+      gainDescription: "Standardized tap targets, active press feedback, and fluid drawer gestures across all interactive feed elements."
 
 problemStatement: "The initial internal social platform suffered from visual inconsistencies, broken mobile drawer states, overflowing text cards, and rigid desktop-first styling that degraded the user experience for field staff and mobile browser users."
 

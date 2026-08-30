@@ -1,36 +1,44 @@
 ---
 id: "07"
 title: "PennyPerfect – Modular Accounting Suite"
-subtitle: "A multi-package Vue 3 / Quasar SPA for chart of accounts, transactions, financial statements, and reporting—wired to a Laravel multi-tenant API."
-description: "PennyPerfect is delivered as seven composable @itc/* frontend packages orchestrated by a meta-package, each owning routes, Pinia stores, and Quasar UI for a distinct accounting domain. The suite plugs into the Supercards host via boot files, Vue provide/inject, and @itc/menu-system auto-discovery, consuming a single backend package (itc/pennyperfect) under /api/v1 with Sanctum auth and tenant scoping."
+subtitle: "Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs."
 chip: "Fintech & Enterprise SaaS"
 order: 7
 featured: false
 platformType: "desktop"
 
 role: "Frontend Engineer (Modular Package Architecture)"
-timeline: "2025–2026"
+timeline: "2025 — H1 2026"
 status: "Active Production"
 
 techStack:
   frontend:
-    - "Quasar v2 / Vue 3 / TypeScript"
-    - "Pinia (+ pinia-plugin-persistedstate)"
-    - "Vue Router 4 (appPlugin route discovery)"
-    - "Vite 7 (Library builds: ESM + CJS)"
-    - "html2canvas + jsPDF (Report PDF export)"
-    - "@itc/coreservice, @itc/auth, @itc/menu-system, @itc/dialogue"
+    - "Quasar Framework (v2)"
+    - "Vue.js (v3) + TypeScript"
+    - "Pinia (+ PersistedState)"
+    - "Vue Router 4 (appPlugin Discovery)"
+    - "Vite 7 (Library Mode: ESM/CJS)"
+    - "html2canvas + jsPDF"
   backend:
-    - "Laravel API (itc/pennyperfect)"
+    - "Laravel 11 API (itc/pennyperfect)"
     - "Laravel Sanctum (auth:sanctum)"
-    - "itc/core-auth-accounts (Tenant branches, Users)"
+    - "Multi-Tenant Branch & User Scoping"
   database:
-    - "PostgreSQL (Tenant-scoped accounts, Transactions, Tax codes)"
+    - "PostgreSQL (Double-Entry Ledgers, Tax Codes & Statements)"
   devops:
-    - "pnpm workspaces (workspace:*)"
+    - "pnpm Workspaces (workspace:*)"
     - "Nested Git Submodules (.modules)"
-    - "Docker Compose local stack"
-    - "Vite HMR + pnpm discover:ci for menus/routes"
+    - "Docker Compose Local Stack"
+    - "Vite HMR & Menu Auto-Discovery"
+  mobile_hardware: []
+
+links:
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
 
 images:
   - "/images/projects/pennyperfect/chart-of-accounts.png"
@@ -42,21 +50,46 @@ images:
 visualAssets:
   heroMockup: "/images/projects/pennyperfect/chart-of-accounts.png"
 
-executiveOverview: "Delivered a full double-entry accounting UI for multi-tenant Supercards tenants by decomposing PennyPerfect into seven independently publishable Vue packages—covering chart of accounts, journal/income/expense transactions, balance sheet, income statement, operational reports, and loan-app settings—measured by six production menu surfaces under /penny-perfect/* with zero new backend packages, by standardizing apiClient/authStore/tenantStore inject, aligning legacy branch APIs to GET /tenants/{tenantId}/branches, and fixing a tax-API boot regression that caused session logout on page load."
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z]."
 
 impactMetrics:
   - label: "Modular Packages"
-    value: "7 FE + 1 BE"
-    detail: "Six feature packages plus @itc/pennyperfect meta-orchestrator, backed by itc/pennyperfect Laravel package"
+    value: "7 Packages"
+    detail: "Six domain packages orchestrated by a meta-dependency installer"
   - label: "Production Surfaces"
-    value: "6 menus"
-    detail: "Chart of Accounts, Transactions, Income Statement, Balance Sheet, Reports, and Settings auto-discovered"
+    value: "6 Menus"
+    detail: "Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings"
   - label: "API Surface"
-    value: "15+ endpoints"
-    detail: "Accounts CRUD, tax codes, transactions, statements, ledger, summaries, and debit/credit preview"
-  - label: "Integration Fix"
-    value: "P0 logout resolved"
-    detail: "Boot-time configureTaxApi + lazy dialog loading eliminated 401-driven logout on Transactions"
+    value: "15+ Endpoints"
+    detail: "Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups"
+  - label: "Integration Stability"
+    value: "P0 Resolved"
+    detail: "Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout"
+  - label: "Report Export Engine"
+    value: "A4 PDF"
+    detail: "Client-side multi-page summary PDF assembly via html2canvas & jsPDF"
+  - label: "Multi-Tenant Scoping"
+    value: "100% Isolated"
+    detail: "Tenant context and branch routing via dynamic API interceptors"
+
+valueProposition:
+  targetCustomer: "Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads"
+  items:
+    - painTitle: "Monolithic Frontend Bloat Across Accounting Modules"
+      painDescription: "Integrating double-entry accounting into host applications traditionally bloated frontend bundles and coupled financial code with unrelated core app logic."
+      gainTitle: "7 Composable Autonomous Vue Library Packages"
+      gainDescription: "Decomposed the suite into independently versioned packages (@itc/pennyperfect-*) orchestrated by a meta-package with dynamic route discovery."
+
+    - painTitle: "P0 Session Logouts from Premature Boot-Time API Calls"
+      painDescription: "Unauthenticated tax code fetch calls during initial application boot triggered 401 errors, inadvertently logging users out of their host session."
+      gainTitle: "Lazy Dialog Loading & Safe Host Boot Handlers"
+      gainDescription: "Engineered configureTaxApi boot abstractions and deferred API requests until dialog mount, guaranteeing 100% boot stability."
+
+    - painTitle: "Heavy Server-Side PDF Rendering Infrastructure"
+      painDescription: "Generating multi-page A4 balance sheets and monthly income statements previously required dedicated headless browser microservices."
+      gainTitle: "Client-Side In-Browser A4 PDF Assembly"
+      gainDescription: "Engineered client-side rendering with hidden iframes, html2canvas rasterization, and jsPDF assembly for instant zero-server PDF exports."
 
 problemStatement: "Finance teams inside Supercards tenants needed in-app accounting—accounts, journal entries, tax-aware income/expense, and standard financial reports—without bolting on a separate ERP. Legacy PennyPerfect UIs assumed a monolithic loan-app API (e.g. /loanapp/branchs, cashbook import/export) and wrong default API hosts, causing broken branch filters, failed imports, and session logout when tax endpoints 401'd on page load."
 

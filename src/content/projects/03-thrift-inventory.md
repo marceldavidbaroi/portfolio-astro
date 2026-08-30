@@ -1,16 +1,17 @@
 ---
 id: "03"
 title: "Thrift App – Mobile Warehouse Inventory & Barcode Automation"
-subtitle: "Capacitor Android companion for second-hand retail — ML Kit barcode scanning, stock registration, shelf audit, and live sync with TradeflowBD."
-description: "Built a mobile-first warehouse companion app with Google ML Kit barcode decoding, continuous batch scanning, shelf/box audit mode, bilingual UI, and Supabase-backed stock registration wired to the TradeflowBD Thrift vertical."
+subtitle: "Capacitor Android companion for second-hand retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time TradeflowBD sync."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs."
 chip: "Mobile Hardware & IoT"
 order: 3
 featured: true
-
-role: "Full-Stack Mobile Developer"
-timeline: "2025 — Present"
-status: "Active Production (v1.0.5)"
 platformType: "mobile"
+
+role: "Full-Stack Mobile Engineer (Solo Contributor)"
+timeline: "2026 — Present"
+status: "Active Production (v1.0.5)"
 
 techStack:
   frontend:
@@ -22,8 +23,8 @@ techStack:
   mobile_hardware:
     - "@capacitor-mlkit/barcode-scanning (Google ML Kit)"
     - "@capacitor/camera (Product Photo Capture)"
-    - "Native Haptic + Audio Scan Feedback"
-    - "@capgo/capacitor-social-login (Native Google Sign-In)"
+    - "Native Haptic & Audio Scan Feedback"
+    - "@capgo/capacitor-social-login (Native Google Auth)"
   backend:
     - "Supabase (PostgreSQL + Auth + RPCs)"
     - "Cloudinary (Direct Image Upload via Edge Function)"
@@ -33,9 +34,12 @@ techStack:
   devops:
     - "Capacitor Android Release Builds (APK/AAB)"
     - "Quasar Vite SPA (Web + Native from one codebase)"
-    - "Git"
+
 links:
+  liveDemo: ""
   parentPlatform: "https://tradeflowbd.com"
+  github: "https://github.com/marceldavidbaroi"
+  docs: ""
 
 images:
   - "/images/projects/thrift/dashboard.png"
@@ -51,24 +55,51 @@ visualAssets:
     - "/images/projects/thrift/scanner.png"
     - "/images/projects/thrift/inventory.png"
 
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation."
 
 impactMetrics:
-  - label: "Scan Modes"
-    value: "2"
-    detail: "Single-item lookup and continuous batch queue scanning"
-  - label: "Operator Languages"
-    value: "2"
-    detail: "English and Bengali (বাংলা) with persisted locale"
-  - label: "Audit Discrepancy Types"
-    value: "3"
-    detail: "Verified, Missing, and Misplaced item detection per shelf/box"
-  - label: "Platforms"
-    value: "2"
-    detail: "Android native app + responsive web from one Quasar codebase"
-  - label: "Backend Writes"
-    value: "Atomic"
-    detail: "All stock registration via register_thrift_stock_from_app RPC"
+  - label: "Continuous Scan Engine"
+    value: "Batch Mode"
+    detail: "High-speed camera decoding with audio/haptic confirmation"
+  - label: "Bin Audit Discrepancy Detection"
+    value: "3 States"
+    detail: "Verified, missing, and misplaced item detection per shelf/box"
+  - label: "Operator Localization"
+    value: "Bilingual"
+    detail: "English and Bengali (বাংলা) with persisted device locale"
+  - label: "Stock Registration Ingestion"
+    value: "Atomic RPC"
+    detail: "Transactional writes across stocks, barcodes, and Cloudinary CDN"
+  - label: "Intake Latency"
+    value: "Sub-Second"
+    detail: "Instant on-shelf garment registration and sync to TradeflowBD"
+  - label: "Unified Cross-Platform"
+    value: "1 Codebase"
+    detail: "Android native APK/AAB + responsive web via Quasar & Capacitor"
+
+valueProposition:
+  targetCustomer: "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams"
+  items:
+    - painTitle: "Desktop-Tethered Registration Bottlenecks"
+      painDescription: "Floor operators had to haul garments to desktop PCs or hand-write paper intake sheets, causing massive intake delays during container arrivals."
+      gainTitle: "On-Floor Mobile Registration with Photo Upload"
+      gainDescription: "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds."
+
+    - painTitle: "Undetected Misplaced Stock & Phantom Out-of-Stocks"
+      painDescription: "Garments placed on incorrect shelf/box bins went unnoticed for weeks, showing as unavailable for sale while physically in the warehouse."
+      gainTitle: "Structured 3-State Shelf & Bin Audit Mode"
+      gainDescription: "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs."
+
+    - painTitle: "Slow Single-Item Scanning & Form Navigation Fatigue"
+      painDescription: "Scanning barcode labels one-by-one with mandatory screen confirmation caused high operator fatigue and slow intake rates."
+      gainTitle: "Google ML Kit Continuous Batch Queue Scanning"
+      gainDescription: "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates."
+
+    - painTitle: "Language Barrier for Warehouse Floor Staff"
+      painDescription: "Complex English ERP interfaces caused operator misclassification and required extensive supervision."
+      gainTitle: "Bilingual Operator Interface (English + Bengali)"
+      gainDescription: "Complete high-contrast bilingual localization (বাংলা + EN) with persisted device locale and large touch targets designed for warehouse floors."
 
 problemStatement: "Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC."
 

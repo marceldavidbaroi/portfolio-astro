@@ -1,14 +1,16 @@
 ---
 id: "01"
 title: "TradeflowBD – Multi-Tenant Wholesale ERP & Commerce Platform"
-subtitle: "A plug-and-play multi-tenant wholesale ERP covering procurement, parent-pooled warehouse stock, child sales desks, B2B storefronts, and universal wallet ledger settlement."
-description: "Architected a multi-tenant SaaS platform spanning 17+ domain modules, 980+ migrations, 4 application scopes, and database-enforced Supabase Row-Level Security."
+subtitle: "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation, landed cost engine, and universal double-entry wallet."
+# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
+description: "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules and 4 application scopes via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions."
 chip: "Enterprise ERP & SaaS"
 order: 1
 featured: true
+platformType: "desktop"
 
 role: "Lead Framework & Migration Engineer"
-timeline: "2024 — Present"
+timeline: "2026 — Present"
 status: "Active Production"
 
 techStack:
@@ -27,15 +29,22 @@ techStack:
     - "Google OAuth"
   database:
     - "PostgreSQL 15+"
-    - "980+ Versioned Migrations"
     - "Universal Double-Entry Wallet"
     - "Landed Cost Apportionment Engine"
+    - "980+ Versioned Migrations"
   devops:
     - "Cloudflare Pages"
     - "Docker Local Supabase"
     - "Python ETL Pipelines"
     - "Capacitor Android"
     - "Cloudinary CDN"
+  mobile_hardware: []
+
+links:
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
 
 images:
   - "/images/projects/tradeflowbd/dashboard.png"
@@ -53,27 +62,51 @@ visualAssets:
     - "/images/projects/tradeflowbd/shipment-details.png"
     - "/images/projects/tradeflowbd/product-costing.png"
 
-executiveOverview: "Architected a plug-and-play multi-tenant SaaS ERP platform that enabled parent wholesale corporations and child sales desks to dynamically toggle business modules based on subscription tiers [X], achieving 100% database-enforced tenant data isolation across 17+ domain modules, 980+ migrations, and 4 application scopes [Y] by designing recursive PostgreSQL Row-Level Security policies, parent-pooled virtual stock allocation algorithms, and atomic PostgreSQL RPC transactions [Z]."
+# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
+executiveOverview: "Architected a plug-and-play multi-tenant SaaS ERP platform that enabled parent wholesale corporations and child sales desks to dynamically toggle business modules based on subscription tiers [X], achieving 100% database-enforced tenant data isolation and zero inventory overselling across 17+ domain modules and 4 application scopes [Y] by designing recursive PostgreSQL Row-Level Security policies, parent-pooled virtual stock allocation algorithms, and atomic PostgreSQL RPC transactions [Z]."
 
 impactMetrics:
   - label: "Tenant Data Isolation"
     value: "100%"
-    detail: "Enforced at database level via 200+ RLS policies"
+    detail: "Enforced at database engine level via 200+ RLS policies"
   - label: "Domain Modules"
     value: "17+"
     detail: "Procurement, Commerce, Finance, Verticals, Capital"
-  - label: "Database Migrations"
-    value: "980+"
-    detail: "Versioned schema with local Docker replay"
-  - label: "Vue Components"
-    value: "470+"
-    detail: "Page → Store → Service → Repository pattern"
+  - label: "Application Scopes"
+    value: "4 Surfaces"
+    detail: "Platform Admin, Parent ERP, B2B Shop, Investor Portal"
+  - label: "Inventory Overselling"
+    value: "Eliminated"
+    detail: "Single ATP source of truth via parent-pooled allocations"
   - label: "Atomic RPCs"
     value: "300+"
-    detail: "All complex financial writes server-side & type-safe"
-  - label: "Stock Duplication"
-    value: "Eliminated"
-    detail: "Single ATP source of truth via virtual allocations"
+    detail: "All complex financial writes server-side & ACID compliant"
+  - label: "Landed Cost Engine"
+    value: "Automated"
+    detail: "Deterministic freight and duty apportionment per SKU"
+
+valueProposition:
+  targetCustomer: "Wholesale Import Conglomerates, Parent Corporations & Sister Sales Desks"
+  items:
+    - painTitle: "Siloed Stock Counts & Out-of-Stock Checkouts"
+      painDescription: "Sister concerns counted warehouse stock separately, causing frequent overselling, duplicate inventory entries, and fulfillment delays."
+      gainTitle: "Parent-Pooled Virtual Allocation (ATP)"
+      gainDescription: "Physical stock exists strictly on the parent entity; child sales desks consume real-time virtual slices with zero overselling across POS and storefronts."
+
+    - painTitle: "Fragmented Landed Costing & Pricing Guesswork"
+      painDescription: "Customs duties, freight tariffs, and FX rates calculated manually in spreadsheets produced inaccurate margin projections and financial leakages."
+      gainTitle: "Automated Landed Cost Apportionment Engine"
+      gainDescription: "Deterministic server-side RPC apportions freight weight and customs fees per SKU, locking authoritative unit costs at shipment finalization."
+
+    - painTitle: "Multi-Tenant Data Leakage Risks Between Sister Desks"
+      painDescription: "Competing sister desks operating on a shared database risked viewing sensitive pricing, customer lists, and financial yield reports."
+      gainTitle: "100% Database-Enforced Row-Level Security"
+      gainDescription: "200+ PostgreSQL RLS policies evaluate session claims at the database engine level, eliminating application-layer leaks."
+
+    - painTitle: "Unreconciled Invoices & Shadow Excel Accounting"
+      painDescription: "Multi-desk payments, dropship margins, and credit lines maintained in unlinked ledgers resulted in unreconciled balances."
+      gainTitle: "Universal Double-Entry Multi-Currency Wallet"
+      gainDescription: "Atomic database RPCs settle buyer payments, partner payouts, and platform fee splits with audit-trailed journal entries."
 
 problemStatement: "Wholesale import enterprises operated through fragmented spreadsheets for costing, manual shipment logs, isolated stock counts per desk, and shadow accounting in Excel. This caused frequent overselling, unreconciled financial balances, and massive risk of cross-tenant data leakage between competing sister concerns."
 
