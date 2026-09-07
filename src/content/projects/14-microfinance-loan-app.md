@@ -38,12 +38,12 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/microfinance/collections.png"
-  - "/images/projects/microfinance/web-collections.png"
-  - "/images/projects/microfinance/web-members.png"
+  - "/images/projects/microfinance/collections.webp"
+  - "/images/projects/microfinance/web-collections.webp"
+  - "/images/projects/microfinance/web-members.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/microfinance/collections.png"
+  heroMockup: "/images/projects/microfinance/collections.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Developed a solo frontend microfinance loan collection mobile app for Android and contributed responsive branch loan management interfaces on the web portal using Quasar Framework, Vue 3, and Pinia [X]. Equipped field agents with daily collection lists and digital receipts [Y], cutting collection turnaround by +50% and eliminating end-of-day branch cash discrepancies via offline schedule caching and automated settlement summaries [Z]."
@@ -202,13 +202,13 @@ sequenceDiagram
 ## Visual Workflows & Production Interfaces
 
 ### 1. Field Mobile Android App — Route Collection List
-![Field Agent Collection Route List [mobile]](/images/projects/microfinance/collections.png#mobile)
+![Field Agent Collection Route List [mobile]](/images/projects/microfinance/collections.webp#mobile)
 
 ### 2. Web Management Portal — Branch Collections Ledger
-![Web Portal Branch Collection Ledger [desktop]](/images/projects/microfinance/web-collections.png#desktop)
+![Web Portal Branch Collection Ledger [desktop]](/images/projects/microfinance/web-collections.webp#desktop)
 
 ### 3. Web Management Portal — Member Accounts & Loan Approvals
-![Web Portal Member Loan Accounts [desktop]](/images/projects/microfinance/web-members.png#desktop)
+![Web Portal Member Loan Accounts [desktop]](/images/projects/microfinance/web-members.webp#desktop)
 
 ---
 

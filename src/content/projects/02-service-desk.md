@@ -43,14 +43,14 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/service-desk/inbox-ticket-detail.png"
-  - "/images/projects/service-desk/inbox-tickets-list.png"
-  - "/images/projects/service-desk/form-builder-questions.png"
-  - "/images/projects/service-desk/form-builder-settings.png"
-  - "/images/projects/service-desk/email-template-editor.png"
+  - "/images/projects/service-desk/inbox-ticket-detail.webp"
+  - "/images/projects/service-desk/inbox-tickets-list.webp"
+  - "/images/projects/service-desk/form-builder-questions.webp"
+  - "/images/projects/service-desk/form-builder-settings.webp"
+  - "/images/projects/service-desk/email-template-editor.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/service-desk/inbox-ticket-detail.png"
+  heroMockup: "/images/projects/service-desk/inbox-ticket-detail.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z]."
@@ -259,19 +259,19 @@ flowchart TB
 ## Visual Workflows & Production Interfaces
 
 ### 1. Split-Pane Agent Inbox & Threaded Detail View
-![Service Desk Agent Inbox Split View [desktop]](/images/projects/service-desk/inbox-ticket-detail.png#desktop)
+![Service Desk Agent Inbox Split View [desktop]](/images/projects/service-desk/inbox-ticket-detail.webp#desktop)
 
 ### 2. Multi-Channel Ticket Queue & Filter View
-![Service Desk All Tickets Queue [desktop]](/images/projects/service-desk/inbox-tickets-list.png#desktop)
+![Service Desk All Tickets Queue [desktop]](/images/projects/service-desk/inbox-tickets-list.webp#desktop)
 
 ### 3. Public Web Form Field Builder
-![Service Desk Form Builder Questions [desktop]](/images/projects/service-desk/form-builder-questions.png#desktop)
+![Service Desk Form Builder Questions [desktop]](/images/projects/service-desk/form-builder-questions.webp#desktop)
 
 ### 4. Public Form Routing & Mailbox Settings
-![Service Desk Form Builder Settings [desktop]](/images/projects/service-desk/form-builder-settings.png#desktop)
+![Service Desk Form Builder Settings [desktop]](/images/projects/service-desk/form-builder-settings.webp#desktop)
 
 ### 5. Multi-Channel Email Template & Auto-Ack Editor
-![Service Desk Email Template Editor [desktop]](/images/projects/service-desk/email-template-editor.png#desktop)
+![Service Desk Email Template Editor [desktop]](/images/projects/service-desk/email-template-editor.webp#desktop)
 
 ---
 

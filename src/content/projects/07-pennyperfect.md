@@ -41,14 +41,14 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/pennyperfect/chart-of-accounts.png"
-  - "/images/projects/pennyperfect/transactions.png"
-  - "/images/projects/pennyperfect/balance-sheet.png"
-  - "/images/projects/pennyperfect/income-statement.png"
-  - "/images/projects/pennyperfect/reports.png"
+  - "/images/projects/pennyperfect/chart-of-accounts.webp"
+  - "/images/projects/pennyperfect/transactions.webp"
+  - "/images/projects/pennyperfect/balance-sheet.webp"
+  - "/images/projects/pennyperfect/income-statement.webp"
+  - "/images/projects/pennyperfect/reports.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/pennyperfect/chart-of-accounts.png"
+  heroMockup: "/images/projects/pennyperfect/chart-of-accounts.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z]."
@@ -258,18 +258,18 @@ erDiagram
 ## Visual Workflows & Production Interfaces
 
 ### 1. Chart of Accounts Ledger Hierarchy
-![PennyPerfect Chart of Accounts](/images/projects/pennyperfect/chart-of-accounts.png)
+![PennyPerfect Chart of Accounts](/images/projects/pennyperfect/chart-of-accounts.webp)
 
 ### 2. Multi-Tab Transactions & Tax Code Management
-![PennyPerfect Transactions Ledger](/images/projects/pennyperfect/transactions.png)
+![PennyPerfect Transactions Ledger](/images/projects/pennyperfect/transactions.webp)
 
 ### 3. Financial Statements: Balance Sheet & Income Statement
-![PennyPerfect Balance Sheet](/images/projects/pennyperfect/balance-sheet.png)
+![PennyPerfect Balance Sheet](/images/projects/pennyperfect/balance-sheet.webp)
 
-![PennyPerfect Income Statement](/images/projects/pennyperfect/income-statement.png)
+![PennyPerfect Income Statement](/images/projects/pennyperfect/income-statement.webp)
 
 ### 4. Operational Financial Reports & Export
-![PennyPerfect Reports & Summaries](/images/projects/pennyperfect/reports.png)
+![PennyPerfect Reports & Summaries](/images/projects/pennyperfect/reports.webp)
 
 ---
 

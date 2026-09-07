@@ -47,20 +47,20 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/tradeflowbd/dashboard.png"
-  - "/images/projects/tradeflowbd/shipments-list.png"
-  - "/images/projects/tradeflowbd/shipment-details.png"
-  - "/images/projects/tradeflowbd/product-costing.png"
+  - "/images/projects/tradeflowbd/dashboard.webp"
+  - "/images/projects/tradeflowbd/shipments-list.webp"
+  - "/images/projects/tradeflowbd/shipment-details.webp"
+  - "/images/projects/tradeflowbd/product-costing.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/tradeflowbd/dashboard.png"
-  architectureDiagram: "/images/projects/tradeflowbd/shipments-list.png"
-  databaseErd: "/images/projects/tradeflowbd/shipment-details.png"
+  heroMockup: "/images/projects/tradeflowbd/dashboard.webp"
+  architectureDiagram: "/images/projects/tradeflowbd/shipments-list.webp"
+  databaseErd: "/images/projects/tradeflowbd/shipment-details.webp"
   screenshots:
-    - "/images/projects/tradeflowbd/dashboard.png"
-    - "/images/projects/tradeflowbd/shipments-list.png"
-    - "/images/projects/tradeflowbd/shipment-details.png"
-    - "/images/projects/tradeflowbd/product-costing.png"
+    - "/images/projects/tradeflowbd/dashboard.webp"
+    - "/images/projects/tradeflowbd/shipments-list.webp"
+    - "/images/projects/tradeflowbd/shipment-details.webp"
+    - "/images/projects/tradeflowbd/product-costing.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Architected a plug-and-play multi-tenant SaaS ERP platform that enabled parent wholesale corporations and child sales desks to dynamically toggle business modules based on subscription tiers [X], achieving 100% database-enforced tenant data isolation and zero inventory overselling across 17+ domain modules and 4 application scopes [Y] by designing recursive PostgreSQL Row-Level Security policies, parent-pooled virtual stock allocation algorithms, and atomic PostgreSQL RPC transactions [Z]."
@@ -209,7 +209,7 @@ Pre-Order Costing → Inbound Shipment & Landed Cost → Warehouse Pooling
         → Universal Wallet Settlement → Treasury & Investor Reporting
 ```
 
-![TradeflowBD Executive Dashboard — Live Sellable Stock, Valuation & Batches](/images/projects/tradeflowbd/dashboard.png)
+![TradeflowBD Executive Dashboard — Live Sellable Stock, Valuation & Batches](/images/projects/tradeflowbd/dashboard.webp)
 
 One platform. Four login surfaces. Database-enforced isolation. Configuration-driven modules.
 
@@ -569,9 +569,9 @@ mindmap
 | **Thrift** | Second-hand vertical: consignment shipments, thermal barcodes, garment measurements, POS, COD remittance |
 | **Koba** | UK catalog scraping pipeline (Python), commission pricing, cross-border order fulfillment |
 
-![Product-Based Costing V2 — Pre-Order Demand, FX Rates & Profit Margin Modeling](/images/projects/tradeflowbd/product-costing.png)
+![Product-Based Costing V2 — Pre-Order Demand, FX Rates & Profit Margin Modeling](/images/projects/tradeflowbd/product-costing.webp)
 
-![Procurement & Inbound Shipments List — Real-Time Batch Lifecycle & Archival Tracking](/images/projects/tradeflowbd/shipments-list.png)
+![Procurement & Inbound Shipments List — Real-Time Batch Lifecycle & Archival Tracking](/images/projects/tradeflowbd/shipments-list.webp)
 
 ---
 
@@ -605,7 +605,7 @@ sequenceDiagram
 
 Every margin report, invoice line, and investor yield calculation depends on accurate unit costs stamped at shipment finalization.
 
-![Shipment Details & Landed Cost Breakdown — Real-time Item Weight & Currency Apportionment](/images/projects/tradeflowbd/shipment-details.png)
+![Shipment Details & Landed Cost Breakdown — Real-time Item Weight & Currency Apportionment](/images/projects/tradeflowbd/shipment-details.webp)
 
 ```mermaid
 flowchart LR

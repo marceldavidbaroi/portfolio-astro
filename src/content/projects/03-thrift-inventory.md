@@ -42,18 +42,18 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/thrift/dashboard.png"
-  - "/images/projects/thrift/register.png"
-  - "/images/projects/thrift/scanner.png"
-  - "/images/projects/thrift/inventory.png"
+  - "/images/projects/thrift/dashboard.webp"
+  - "/images/projects/thrift/register.webp"
+  - "/images/projects/thrift/scanner.webp"
+  - "/images/projects/thrift/inventory.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/thrift/dashboard.png"
+  heroMockup: "/images/projects/thrift/dashboard.webp"
   screenshots:
-    - "/images/projects/thrift/dashboard.png"
-    - "/images/projects/thrift/register.png"
-    - "/images/projects/thrift/scanner.png"
-    - "/images/projects/thrift/inventory.png"
+    - "/images/projects/thrift/dashboard.webp"
+    - "/images/projects/thrift/register.webp"
+    - "/images/projects/thrift/scanner.webp"
+    - "/images/projects/thrift/inventory.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation."
@@ -238,9 +238,9 @@ flowchart LR
 | **Audit Mode** | `/audit-mode` | Shelf/box stocktake with verified / missing / misplaced detection |
 | **Stock List** | `/stock-list` | Searchable inventory with status, condition, shelf/box filters |
 
-![Thrift App Mobile Warehouse Overview & Daily KPI Dashboard](/images/projects/thrift/dashboard.png)
+![Thrift App Mobile Warehouse Overview & Daily KPI Dashboard](/images/projects/thrift/dashboard.webp)
 
-![Thrift App Live Inventory Feed with Barcode & Garment Specifications](/images/projects/thrift/inventory.png)
+![Thrift App Live Inventory Feed with Barcode & Garment Specifications](/images/projects/thrift/inventory.webp)
 
 ---
 
@@ -318,7 +318,7 @@ flowchart TD
 | **Single Scan** | Scan → show item detail card → action (move, status change) | One-off lookup or correction |
 | **Continuous Scan** | Scan repeatedly → items queue up → batch move or batch status update | High-volume intake or bulk corrections |
 
-![Thrift App Single & Continuous Barcode Scanner UI](/images/projects/thrift/scanner.png)
+![Thrift App Single & Continuous Barcode Scanner UI](/images/projects/thrift/scanner.webp)
 
 ### Scan feedback system
 
@@ -366,7 +366,7 @@ flowchart TD
 
 Full garment intake at the warehouse shelf — no desktop required.
 
-![Thrift App Mobile Stock Intake & Garment Registration Form](/images/projects/thrift/register.png)
+![Thrift App Mobile Stock Intake & Garment Registration Form](/images/projects/thrift/register.webp)
 
 ```mermaid
 sequenceDiagram

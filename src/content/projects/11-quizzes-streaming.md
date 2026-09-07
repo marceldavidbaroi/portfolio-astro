@@ -38,13 +38,13 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/quiz/challenge-cards-grid.png"
-  - "/images/projects/quiz/attend-quiz-active.png"
-  - "/images/projects/quiz/attend-quiz-intro.png"
-  - "/images/projects/quiz/create-quiz-dialog.png"
+  - "/images/projects/quiz/challenge-cards-grid.webp"
+  - "/images/projects/quiz/attend-quiz-active.webp"
+  - "/images/projects/quiz/attend-quiz-intro.webp"
+  - "/images/projects/quiz/create-quiz-dialog.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/quiz/challenge-cards-grid.png"
+  heroMockup: "/images/projects/quiz/challenge-cards-grid.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z]."
@@ -228,7 +228,7 @@ flowchart LR
 
 A lightweight entry point where authors create a new quiz card via the platform's shared creation dialog. On submit, the system tags the card as a **Quiz** entity type with category and difficulty settings.
 
-![Create New Quiz Dialog [desktop]](/images/projects/quiz/create-quiz-dialog.png#desktop)
+![Create New Quiz Dialog [desktop]](/images/projects/quiz/create-quiz-dialog.webp#desktop)
 
 ---
 
@@ -236,7 +236,7 @@ A lightweight entry point where authors create a new quiz card via the platform'
 
 The employee-facing catalog of available assessments. Employees can browse published quizzes by category tabs, search by title, and inspect score distributions.
 
-![SuperCards Quiz Challenge Yourself Catalog [desktop]](/images/projects/quiz/challenge-cards-grid.png#desktop)
+![SuperCards Quiz Challenge Yourself Catalog [desktop]](/images/projects/quiz/challenge-cards-grid.webp#desktop)
 
 ---
 
@@ -244,9 +244,9 @@ The employee-facing catalog of available assessments. Employees can browse publi
 
 A structured assessment experience with clear pre-quiz instructions, countdown timers, progress bars, and instant submission.
 
-![Quiz Instructions & Pre-Test View [desktop]](/images/projects/quiz/attend-quiz-intro.png#desktop)
+![Quiz Instructions & Pre-Test View [desktop]](/images/projects/quiz/attend-quiz-intro.webp#desktop)
 
-![Active Timed Assessment with Progress & MCQ Questions [desktop]](/images/projects/quiz/attend-quiz-active.png#desktop)
+![Active Timed Assessment with Progress & MCQ Questions [desktop]](/images/projects/quiz/attend-quiz-active.webp#desktop)
 
 ```mermaid
 stateDiagram-v2

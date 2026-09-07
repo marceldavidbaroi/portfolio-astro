@@ -37,10 +37,10 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/docstach/preview.png"
+  - "/images/projects/docstach/preview.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/docstach/preview.png"
+  heroMockup: "/images/projects/docstach/preview.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
 executiveOverview: "Engineered the frontend document preview system for Docstach using Quasar Framework (Vue 3) and TypeScript [X], transforming raw ticket thread data and automated responses into structured, publishable documentation [Y] by building a dedicated 3-pane viewport layout with recursive navigation, a dynamic DOM-scanned 'On This Page' Table of Contents, and scoped HTML sanitization [Z]."
@@ -162,7 +162,7 @@ flowchart TB
 ## Visual Workflows & Document Preview Interface
 
 ### Dedicated 3-Pane Document Preview Interface
-![Docstach Document Preview Interface [desktop]](/images/projects/docstach/preview.png#desktop)
+![Docstach Document Preview Interface [desktop]](/images/projects/docstach/preview.webp#desktop)
 
 ---
 
