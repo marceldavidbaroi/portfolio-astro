@@ -1,6 +1,6 @@
 ---
 id: "08"
-title: "Docstach – Automated Document Response & Preview Engine"
+title: "Documentation Engine – Automated Helpdesk Document Generator"
 subtitle: "Interactive 3-pane document preview engine built with Quasar Framework, Vue 3, Pinia, and reactive IntersectionObserver Table of Contents."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
 description: "Engineered a dedicated 3-pane documentation preview engine in Quasar (Vue 3), converting raw ticket threads into publication-grade documents with dynamic DOM-scanned Table of Contents and safe HTML parsing."
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend UI & Document Preview Engineer (Solo Contributor)"
 timeline: "2025 — Feb 2026"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

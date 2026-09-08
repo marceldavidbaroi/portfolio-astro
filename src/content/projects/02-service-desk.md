@@ -1,6 +1,6 @@
 ---
 id: "02"
-title: "Service Desk – Multi-Channel Support Platform"
+title: "Customer Support System – Multi-Channel Helpdesk Platform"
 subtitle: "Full-stack customer support and helpdesk platform with split-pane triage, dual-database engine (MongoDB + MySQL), and automated IMAP email ticketing."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
 description: "Architected a multi-tenant customer support platform delivering sub-second triage across 4 agent workbenches and 3 ingestion channels by designing a dual-database engine (MongoDB + MySQL), automated IMAP synchronization, and a Laravel BFF."
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Full-Stack Software Engineer (Solo Core Contributor)"
 timeline: "2026 — Present"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

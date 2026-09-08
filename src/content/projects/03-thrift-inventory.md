@@ -1,7 +1,7 @@
 ---
 id: "03"
-title: "Thrift App – Mobile Warehouse Inventory & Barcode Automation"
-subtitle: "Capacitor Android companion for second-hand retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time TradeflowBD sync."
+title: "Inventory Management – Mobile Warehouse & Barcode Automation"
+subtitle: "Capacitor Android companion for retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time backend sync."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
 description: "Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs."
 chip: "Mobile Hardware & IoT"
@@ -12,6 +12,7 @@ platformType: "mobile"
 role: "Full-Stack Mobile Engineer (Solo Contributor)"
 timeline: "2026 — Present"
 status: "Active Production (v1.0.5)"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

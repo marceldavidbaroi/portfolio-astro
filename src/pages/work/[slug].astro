@@ -34,6 +34,31 @@ const { project, prevProject, nextProject } = Astro.props;
 const { data } = project;
 const { Content, headings } = await render(project);
 
+// Calculate estimated reading time based on total word count of content and structured sections
+const rawBody = project.body || '';
+const structuredWords = [
+	data.title || '',
+	data.subtitle || '',
+	data.description || '',
+	data.executiveOverview || '',
+	data.problemStatement || '',
+	data.architectureSummary || '',
+	...(data.impactMetrics?.map((m: any) => `${m.label} ${m.value} ${m.detail || ''}`) || []),
+	...(data.keyDecisions?.map((k: any) => `${k.challenge} ${k.decision} ${k.outcome || ''}`) || []),
+	...(data.securityReliability || []),
+	...(data.futureRoadmap || [])
+].join(' ');
+
+const totalWordCount = (rawBody + ' ' + structuredWords)
+	.replace(/[#*`_~[\]()]/g, ' ')
+	.trim()
+	.split(/\s+/)
+	.filter(Boolean).length;
+
+const wordsPerMinute = 200;
+const readingMinutes = Math.max(1, Math.ceil(totalWordCount / wordsPerMinute));
+const readingTimeText = `${readingMinutes} min read`;
+
 // Construct comprehensive table of contents
 const tocItems: { id: string; text: string; depth: number }[] = [];
 
@@ -110,7 +135,16 @@ const hasActionButtons = Boolean(
 				<a href="/work" class="back-link">
 					<span class="arrow">‹</span> Back to Selected Work
 				</a>
-				<span class="case-tag font-dot">CASE STUDY // {data.id}</span>
+				<div class="breadcrumb-right">
+					<span class="read-time-pill font-mono">
+						<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polyline points="12 6 12 12 16 14"></polyline>
+						</svg>
+						{readingTimeText}
+					</span>
+					<span class="case-tag font-dot">CASE STUDY // {data.id}</span>
+				</div>
 			</div>
 
 		<!-- Main Case Study Header -->
@@ -118,6 +152,13 @@ const hasActionButtons = Boolean(
 			<div class="header-badge-row">
 				<span class="chip-accent font-dot">{data.chip}</span>
 				{data.status && <span class="status-pill">{data.status}</span>}
+				<span class="header-read-time font-mono">
+					<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<circle cx="12" cy="12" r="10"></circle>
+						<polyline points="12 6 12 12 16 14"></polyline>
+					</svg>
+					{readingTimeText}
+				</span>
 			</div>
 
 			<h1 class="case-title font-dot">{data.title}</h1>
@@ -244,13 +285,25 @@ const hasActionButtons = Boolean(
 				<div class="meta-box card">
 					<span class="meta-label">Project Classification</span>
 					<p class="meta-value font-sans">
-						{hasActionButtons && isRealUrl(data.links?.github) 
+						{data.classification || (hasActionButtons && isRealUrl(data.links?.github) 
 							? '🌐 Open Source Architecture' 
-							: '🔒 Proprietary Commercial Platform'}
+							: '🔒 Proprietary Enterprise IP')}
+					</p>
+				</div>
+				<div class="meta-box card meta-box-readtime">
+					<span class="meta-label">Recruiter Review Budget</span>
+					<p class="meta-value font-sans readtime-meta-val">
+						<svg class="meta-clock-icon" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+							<circle cx="12" cy="12" r="10"></circle>
+							<polyline points="12 6 12 12 16 14"></polyline>
+						</svg>
+						<span>{readingTimeText}</span>
+						<span class="readtime-sub font-mono">({totalWordCount.toLocaleString()} words)</span>
 					</p>
 				</div>
 			</div>
 		</section>
+
 
 		<!-- 3. Executive Overview (Google XYZ Pattern) & KPI Metric Badges -->
 		{data.executiveOverview && (
@@ -505,18 +558,73 @@ const hasActionButtons = Boolean(
 			</div>
 		</section>
 
+		<!-- 9. Sticky Recruiter Conversion & Discussion CTA Banner -->
+		<section class="case-section" id="discuss-system">
+			<div class="discuss-system-card card">
+				<div class="discuss-content">
+					<div class="discuss-badge-row">
+						<span class="pulse-dot"></span>
+						<span class="discuss-status font-mono">DISCUSS ARCHITECTURE & OPPORTUNITIES</span>
+					</div>
+					<h2 class="discuss-title font-sans">Interested in how {data.title.split('–')[0]?.trim() || data.title} was built?</h2>
+					<p class="discuss-lead font-sans">
+						I’m available to walk through the technical design, PostgreSQL RLS schemas, multi-tenant transaction mechanics, or discuss senior engineering opportunities.
+					</p>
+					<div class="discuss-action-buttons">
+						<a 
+							href={`mailto:marceldavidbaroi@gmail.com?subject=${encodeURIComponent(`Discussion: ${data.title} Architecture & Engineering Scope`)}&body=${encodeURIComponent(`Hi Marcel,\n\nI reviewed your case study for ${data.title} on your portfolio.\n\nI'd like to discuss...`)}`} 
+							class="btn btn-accent discuss-btn-main font-mono"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect width="20" height="16" x="2" y="4" rx="2"></rect>
+								<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+							</svg>
+							Discuss This Architecture
+						</a>
+						<a 
+							href="https://linkedin.com/in/marcel-david-baroi" 
+							target="_blank" 
+							rel="noopener noreferrer" 
+							class="btn btn-secondary font-mono"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+								<rect width="4" height="12" x="2" y="9"></rect>
+								<circle cx="4" cy="4" r="2"></circle>
+							</svg>
+							Connect on LinkedIn
+						</a>
+						<a 
+							href="/resume.pdf" 
+							target="_blank" 
+							class="btn btn-secondary font-mono"
+						>
+							<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+								<polyline points="14 2 14 8 20 8"></polyline>
+								<line x1="16" y1="13" x2="8" y2="13"></line>
+								<line x1="16" y1="17" x2="8" y2="17"></line>
+								<line x1="10" y1="9" x2="8" y2="9"></line>
+							</svg>
+							Download CV (PDF)
+						</a>
+					</div>
+				</div>
+			</div>
+		</section>
+
 		<!-- Bottom Pagination / Project Navigation -->
 		<footer class="case-footer-nav">
 			{prevProject ? (
 				<a href={`/work/${prevProject.id}`} class="nav-prev card">
-					<span class="nav-dir">‹ PREVIOUS PROJECT</span>
+					<span class="nav-dir font-mono">‹ PREVIOUS PROJECT</span>
 					<span class="nav-name">{prevProject.data.title}</span>
 				</a>
 			) : <div />}
 
 			{nextProject ? (
 				<a href={`/work/${nextProject.id}`} class="nav-next card">
-					<span class="nav-dir">NEXT PROJECT ›</span>
+					<span class="nav-dir font-mono">NEXT PROJECT ›</span>
 					<span class="nav-name">{nextProject.data.title}</span>
 				</a>
 			) : <div />}
@@ -540,6 +648,16 @@ const hasActionButtons = Boolean(
 						))}
 					</ul>
 				</div>
+				<a 
+					href={`mailto:marceldavidbaroi@gmail.com?subject=${encodeURIComponent(`Discussion: ${data.title}`)}`}
+					class="toc-discuss-link font-mono"
+				>
+					<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+						<rect width="20" height="16" x="2" y="4" rx="2"></rect>
+						<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+					</svg>
+					Discuss System →
+				</a>
 			</div>
 		</aside>
 	)}
@@ -684,6 +802,31 @@ const hasActionButtons = Boolean(
 		border-left-color: var(--accent);
 	}
 
+	.toc-discuss-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.75rem;
+		color: var(--accent);
+		font-weight: 600;
+		text-decoration: none !important;
+		padding: 0.5rem 0.75rem;
+		border-radius: 9999px;
+		background: rgba(180, 33, 53, 0.08);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+		transition: all 0.2s ease;
+		margin-top: 0.85rem;
+		width: 100%;
+		justify-content: center;
+	}
+
+	.toc-discuss-link:hover {
+		background: var(--accent);
+		color: #ffffff;
+		border-color: var(--accent);
+		transform: translateY(-1px);
+	}
+
 	.case-study-page {
 		width: 100%;
 		max-width: 100%;
@@ -701,6 +844,29 @@ const hasActionButtons = Boolean(
 		margin-bottom: 2rem;
 		flex-wrap: wrap;
 		gap: 1rem;
+	}
+
+	.breadcrumb-right {
+		display: flex;
+		align-items: center;
+		gap: 0.85rem;
+	}
+
+	.read-time-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		font-size: 0.75rem;
+		font-weight: 600;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.07);
+		border: 1px solid rgba(95, 80, 56, 0.16);
+		padding: 0.25rem 0.65rem;
+		border-radius: 9999px;
+	}
+
+	.read-time-pill svg {
+		color: var(--accent);
 	}
 
 	.back-link {
@@ -733,7 +899,25 @@ const hasActionButtons = Boolean(
 	.header-badge-row {
 		display: flex;
 		align-items: center;
+		flex-wrap: wrap;
 		gap: 0.75rem;
+	}
+
+	.header-read-time {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.06);
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		padding: 0.25rem 0.65rem;
+		border-radius: 9999px;
+		font-weight: 600;
+	}
+
+	.header-read-time svg {
+		color: var(--accent);
 	}
 
 	.chip-accent {
@@ -1047,6 +1231,24 @@ const hasActionButtons = Boolean(
 		line-height: 1.5;
 		color: var(--text-main);
 		font-weight: 500;
+	}
+
+	.readtime-meta-val {
+		display: inline-flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.meta-clock-icon {
+		color: var(--accent);
+		flex-shrink: 0;
+	}
+
+	.readtime-sub {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		font-weight: 400;
 	}
 
 	/* XYZ Overview Card */
@@ -1854,9 +2056,113 @@ const hasActionButtons = Boolean(
 		font-style: italic;
 	}
 
+	/* Discussion & Sticky Recruiter Conversion Card */
+	.discuss-system-card {
+		padding: 2.75rem 2.5rem;
+		border-radius: 28px;
+		background: linear-gradient(135deg, #ffffff 0%, #fbf9f4 100%);
+		border: 1px solid rgba(180, 33, 53, 0.25);
+		box-shadow: 0 16px 40px rgba(95, 80, 56, 0.08);
+		position: relative;
+		overflow: hidden;
+	}
+
+	.discuss-system-card::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 4px;
+		background: linear-gradient(90deg, var(--accent) 0%, var(--btn-primary) 100%);
+	}
+
+	.discuss-content {
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+		text-align: left;
+	}
+
+	.discuss-badge-row {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+	}
+
+	.pulse-dot {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		background: #16a34a;
+		box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+		animation: pulse-green 2s infinite;
+	}
+
+	@keyframes pulse-green {
+		0% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(22, 163, 74, 0.7);
+		}
+		70% {
+			transform: scale(1);
+			box-shadow: 0 0 0 6px rgba(22, 163, 74, 0);
+		}
+		100% {
+			transform: scale(0.95);
+			box-shadow: 0 0 0 0 rgba(22, 163, 74, 0);
+		}
+	}
+
+	.discuss-status {
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		text-transform: uppercase;
+	}
+
+	.discuss-title {
+		font-size: clamp(1.4rem, 2.5vw, 1.85rem);
+		font-weight: 800;
+		color: var(--text-main);
+		line-height: 1.2;
+		letter-spacing: -0.02em;
+	}
+
+	.discuss-lead {
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 720px;
+	}
+
+	.discuss-action-buttons {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.85rem;
+		margin-top: 0.5rem;
+	}
+
+	.discuss-btn-main {
+		background: var(--accent);
+		color: #ffffff;
+		border-color: var(--accent);
+		padding: 0.75rem 1.35rem;
+		font-weight: 600;
+	}
+
+	.discuss-btn-main:hover {
+		background: var(--accent-hover);
+		border-color: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: 0 6px 16px rgba(180, 33, 53, 0.25);
+	}
+
 	/* Footer Pagination */
 	.case-footer-nav {
-		margin-top: 5rem;
+		margin-top: 3.5rem;
 		padding-top: 2rem;
 		border-top: 1px solid rgba(95, 80, 56, 0.12);
 		display: grid;

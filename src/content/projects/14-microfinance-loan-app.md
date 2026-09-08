@@ -12,6 +12,7 @@ platformType: "mobile"
 role: "Frontend Engineer (Solo Mobile & Web Contributor)"
 timeline: "2025"
 status: "Completed"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

@@ -1,9 +1,9 @@
 ---
 id: "12"
-title: "BRAC Social Platform – UI Refinement & Responsive Optimization"
+title: "Enterprise Social Collaboration Platform – UI Refinement"
 subtitle: "Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Optimized the BRAC internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization."
+description: "Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization."
 chip: "UI & Responsiveness"
 order: 12
 featured: false
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend UI & Responsiveness Contributor"
 timeline: "2024 — Jan 2025"
 status: "Completed"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

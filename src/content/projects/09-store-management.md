@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "UI/UX Integration Engineer (Frontend Lead)"
 timeline: "Feb 2026 — Apr 2026"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

@@ -1,0 +1,284 @@
+---
+import type { CompactPursuitItem } from '../../data/aboutData';
+
+interface Props {
+	compactPursuits: CompactPursuitItem[];
+}
+
+const { compactPursuits } = Astro.props;
+---
+
+<section class="about-section" id="beyond-terminal">
+	<div class="section-header">
+		<span class="section-tag font-dot">06 // BEYOND THE TERMINAL</span>
+		<h2 class="section-title font-dot">Personal Dimensions & Creative Pursuits</h2>
+		<p class="section-desc">
+			Rhythm, visual craft, narrative structures, and deep endurance that shape my engineering approach.
+		</p>
+	</div>
+
+	<div class="compact-pursuits-grid">
+		{compactPursuits.map((p) => (
+			<div class="compact-pursuit-card card">
+				<div class="pursuit-top">
+					<div class="pursuit-svg-box">
+						{p.iconType === 'music' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M9 18V5l12-2v13"></path>
+								<circle cx="6" cy="18" r="3"></circle>
+								<circle cx="18" cy="16" r="3"></circle>
+							</svg>
+						)}
+						{p.iconType === 'pen' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="m12 19 7-7 3 3-7 7-3-3z"></path>
+								<path d="m18 13-1.5-7.5L2 2l3.5 14.5L13 18l5-5z"></path>
+								<path d="m2 2 7.586 7.586"></path>
+								<circle cx="11" cy="11" r="2"></circle>
+							</svg>
+						)}
+						{p.iconType === 'film' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect width="20" height="20" x="2" y="2" rx="2.18" ry="2.18"></rect>
+								<line x1="7" y1="2" x2="7" y2="22"></line>
+								<line x1="17" y1="2" x2="17" y2="22"></line>
+								<line x1="2" y1="12" x2="22" y2="12"></line>
+								<line x1="2" y1="7" x2="7" y2="7"></line>
+								<line x1="2" y1="17" x2="7" y2="17"></line>
+								<line x1="17" y1="17" x2="22" y2="17"></line>
+								<line x1="17" y1="7" x2="22" y2="7"></line>
+							</svg>
+						)}
+						{p.iconType === 'theater' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M4 10a8 8 0 0 1 16 0c0 3.5-3 6-8 6s-8-2.5-8-6Z"></path>
+								<circle cx="9" cy="9" r="1" fill="currentColor"></circle>
+								<circle cx="15" cy="9" r="1" fill="currentColor"></circle>
+								<path d="M9 13c1 1 5 1 6 0"></path>
+							</svg>
+						)}
+					</div>
+					<div class="pursuit-title-wrap">
+						<span class="pursuit-tag font-mono">{p.tag}</span>
+						<h3 class="pursuit-name">{p.title}</h3>
+					</div>
+				</div>
+				<p class="pursuit-text">{p.desc}</p>
+				{p.url && (
+					<a href={p.url} target="_blank" rel="noopener noreferrer" class="pursuit-link font-mono">
+						<span>View IMDb Profile</span>
+						<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+							<polyline points="15 3 21 3 21 9"></polyline>
+							<line x1="10" y1="14" x2="21" y2="3"></line>
+						</svg>
+					</a>
+				)}
+			</div>
+		))}
+	</div>
+
+	<div class="archive-callout-card card">
+		<div class="callout-left">
+			<span class="callout-tag font-mono">PRESERVED MEMOIRS // 2017 — 2024</span>
+			<h3 class="callout-title">Explore Personal Archives & College Chapters</h3>
+			<p class="callout-desc">
+				Read chronicled memoirs from Notre Dame College (Nobin Boron, Pope Francis 2017 Youth Assembly, 2018 Student Road Safety Movement), and creative dimensions.
+			</p>
+		</div>
+		<a href="/archive" class="callout-btn">
+			<span>View Personal Archives & Journey →</span>
+		</a>
+	</div>
+</section>
+
+<style>
+	.about-section {
+		width: 100%;
+		margin-top: 4.5rem;
+		text-align: left;
+		scroll-margin-top: 5rem;
+	}
+
+	.section-header {
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.section-tag {
+		font-size: 0.9375rem;
+		letter-spacing: 0.12em;
+		color: var(--accent);
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+
+	.section-title {
+		font-size: clamp(2rem, 4vw, 2.75rem);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--text-main);
+	}
+
+	.section-desc {
+		font-size: 0.9375rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+		max-width: 700px;
+	}
+
+	.compact-pursuits-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1rem;
+		margin-bottom: 1.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.compact-pursuits-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.compact-pursuit-card {
+		padding: 1.35rem;
+		border-radius: 12px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 0.65rem;
+		transition: all 0.15s ease;
+	}
+
+	.compact-pursuit-card:hover {
+		border-color: rgba(180, 33, 53, 0.3);
+		transform: translateY(-2px);
+	}
+
+	.pursuit-top {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.pursuit-svg-box {
+		width: 36px;
+		height: 36px;
+		border-radius: 8px;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.18);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		flex-shrink: 0;
+	}
+
+	.pursuit-title-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.pursuit-tag {
+		font-size: 0.65rem;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+		font-weight: 700;
+	}
+
+	.pursuit-name {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.pursuit-text {
+		font-size: 0.82rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	.pursuit-link {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+		transition: all 0.15s ease;
+	}
+
+	.pursuit-link:hover {
+		color: var(--accent-hover);
+		transform: translateX(2px);
+	}
+
+	.archive-callout-card {
+		padding: 1.75rem 2rem;
+		border-radius: 14px;
+		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1.5rem;
+		flex-wrap: wrap;
+	}
+
+	.callout-left {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		max-width: 680px;
+	}
+
+	.callout-tag {
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.callout-title {
+		font-size: 1.15rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+	}
+
+	.callout-desc {
+		font-size: 0.84rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+	}
+
+	.callout-btn {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		padding: 0.7rem 1.35rem;
+		background: var(--btn-primary);
+		color: #fffdfa;
+		border-radius: 8px;
+		font-size: 0.88rem;
+		font-weight: 700;
+		text-decoration: none;
+		transition: all 0.15s ease;
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	.callout-btn:hover {
+		background: var(--accent-hover);
+		transform: translateY(-2px);
+		box-shadow: 0 4px 14px rgba(180, 33, 53, 0.2);
+	}
+</style>

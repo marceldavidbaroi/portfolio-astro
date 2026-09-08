@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend Engineer (Modular Architecture Lead)"
 timeline: "2024 — Present"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

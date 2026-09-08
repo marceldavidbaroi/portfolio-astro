@@ -1,9 +1,9 @@
 ---
 id: "13"
-title: "Koba – K-Beauty Cross-Border Commerce Platform"
-subtitle: "Cross-border Korean beauty commerce platform with automated UK catalog scraping, multi-layer reseller commission engine, and dual-scope storefronts."
+title: "Cross-Border Beauty Commerce & Catalog Ordering System"
+subtitle: "Cross-border beauty commerce platform with automated catalog scraping, multi-layer reseller commission engine, and dual-scope storefronts."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected a cross-border K-Beauty commerce vertical achieving automated catalog ingestion for 40+ brands and 5-layer commission calculation via Python ETL scrapers, dual-scope Quasar storefronts, and PostgreSQL RPCs."
+description: "Architected a cross-border commerce vertical achieving automated catalog ingestion for 40+ brands and 5-layer commission calculation via Python ETL scrapers, dual-scope Quasar storefronts, and PostgreSQL RPCs."
 chip: "Cross-Border Commerce"
 order: 13
 featured: true
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Full-Stack Developer (Commerce & Data Pipelines)"
 timeline: "2025"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

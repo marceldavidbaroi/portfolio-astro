@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Lead Full-Stack Developer"
 timeline: "2024 — 2025"
 status: "Completed"
+classification: "Independent System / Platform"
 
 techStack:
   frontend:

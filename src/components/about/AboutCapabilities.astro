@@ -1,0 +1,220 @@
+---
+import type { SkillCategoryGroup } from '../../data/aboutData';
+
+interface Props {
+	skillCategories: SkillCategoryGroup[];
+}
+
+const { skillCategories } = Astro.props;
+---
+
+<section class="about-section" id="capabilities">
+	<div class="section-header">
+		<span class="section-tag font-dot">02 // CAPABILITIES & STACK</span>
+		<h2 class="section-title font-dot">Technical Skill Matrix</h2>
+		<p class="section-desc">
+			Technologies, frameworks, and architectural tools leveraged across production environments.
+		</p>
+	</div>
+
+	<div class="skills-grid">
+		{skillCategories.map((group) => (
+			<div class="skill-card card">
+				<div class="skill-card-top">
+					<div class="skill-icon-pill">
+						{group.iconType === 'zap' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+							</svg>
+						)}
+						{group.iconType === 'database' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<ellipse cx="12" cy="5" rx="9" ry="3"></ellipse>
+								<path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path>
+								<path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path>
+							</svg>
+						)}
+						{group.iconType === 'layout' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+								<line x1="8" y1="21" x2="16" y2="21"></line>
+								<line x1="12" y1="17" x2="12" y2="21"></line>
+							</svg>
+						)}
+						{group.iconType === 'shield' && (
+							<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+								<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+							</svg>
+						)}
+						<span class="skill-category-title">{group.category}</span>
+					</div>
+					<span class="skill-tag font-mono">{group.tag}</span>
+				</div>
+
+				<div class="skill-chips-wrap">
+					{group.items.map((skill) => (
+						<div class="skill-chip">
+							<span class="st-dot"></span>
+							<span class="skill-name">{skill}</span>
+						</div>
+					))}
+				</div>
+			</div>
+		))}
+	</div>
+
+	<div class="section-footer-link">
+		<a href="/skills" class="full-dir-btn">
+			<span>Explore Full Skills Matrix & Categorized Proficiencies →</span>
+		</a>
+	</div>
+</section>
+
+<style>
+	.about-section {
+		width: 100%;
+		margin-top: 4.5rem;
+		text-align: left;
+		scroll-margin-top: 5rem;
+	}
+
+	.section-header {
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.section-tag {
+		font-size: 0.9375rem;
+		letter-spacing: 0.12em;
+		color: var(--accent);
+		text-transform: uppercase;
+		font-weight: 700;
+	}
+
+	.section-title {
+		font-size: clamp(2rem, 4vw, 2.75rem);
+		font-weight: 700;
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+		color: var(--text-main);
+	}
+
+	.section-desc {
+		font-size: 0.9375rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+		max-width: 700px;
+	}
+
+	.skills-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+	}
+
+	@media (max-width: 800px) {
+		.skills-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.skill-card {
+		padding: 1.75rem;
+		border-radius: 14px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+		transition: all 0.2s ease;
+	}
+
+	.skill-card:hover {
+		border-color: rgba(180, 33, 53, 0.35);
+	}
+
+	.skill-card-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.skill-icon-pill {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		color: var(--accent);
+	}
+
+	.skill-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		background: rgba(180, 33, 53, 0.08);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		font-weight: 700;
+	}
+
+	.skill-category-title {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.3;
+	}
+
+	.skill-chips-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+	}
+
+	.skill-chip {
+		display: flex;
+		align-items: center;
+		gap: 0.6rem;
+		padding: 0.5rem 0.75rem;
+		border-radius: 8px;
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid rgba(95, 80, 56, 0.09);
+		font-size: 0.82rem;
+		color: var(--text-main);
+		transition: all 0.15s ease;
+	}
+
+	.skill-chip:hover {
+		border-color: rgba(180, 33, 53, 0.3);
+		background: rgba(180, 33, 53, 0.04);
+	}
+
+	.st-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent);
+		flex-shrink: 0;
+	}
+
+	.section-footer-link {
+		margin-top: 1.5rem;
+		text-align: left;
+	}
+
+	.full-dir-btn {
+		font-size: 0.86rem;
+		color: var(--accent);
+		font-weight: 700;
+		text-decoration: none;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		transition: all 0.15s ease;
+	}
+
+	.full-dir-btn:hover {
+		color: var(--accent-hover);
+		transform: translateX(3px);
+	}
+</style>

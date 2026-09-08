@@ -27,6 +27,7 @@ const projects = defineCollection({
 		role: z.string().optional(),
 		timeline: z.string().optional(),
 		status: z.string().optional().default('Completed'),
+		classification: z.string().optional().default('🔒 Proprietary Enterprise IP'),
 		platformType: z.enum(['desktop', 'mobile']).default('desktop'),
 
 		// Categorized Tech Stack

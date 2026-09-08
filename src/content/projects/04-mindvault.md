@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Full-Stack Software Engineer & System Architect"
 timeline: "2025"
 status: "Completed"
+classification: "🌐 Open Source Architecture"
 
 techStack:
   frontend:

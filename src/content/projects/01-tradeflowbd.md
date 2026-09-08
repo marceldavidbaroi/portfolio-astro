@@ -1,6 +1,6 @@
 ---
 id: "01"
-title: "TradeflowBD – Multi-Tenant Wholesale ERP & Commerce Platform"
+title: "Enterprise Wholesale ERP – Multi-Tenant Commerce Platform"
 subtitle: "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation, landed cost engine, and universal double-entry wallet."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
 description: "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules and 4 application scopes via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions."
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Lead Framework & Migration Engineer"
 timeline: "2026 — Present"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

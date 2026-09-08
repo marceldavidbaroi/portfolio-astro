@@ -1,6 +1,6 @@
 ---
 id: "07"
-title: "PennyPerfect – Modular Accounting Suite"
+title: "Finance & Accounting App – Modular Enterprise Suite"
 subtitle: "Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
 description: "Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs."
@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend Engineer (Modular Package Architecture)"
 timeline: "2025 — H1 2026"
 status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

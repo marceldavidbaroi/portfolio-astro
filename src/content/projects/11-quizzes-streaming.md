@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend Engineer (Learning Systems Lead)"
 timeline: "Oct 2025 — Dec 2025"
 status: "Completed"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:

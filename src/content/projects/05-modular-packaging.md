@@ -12,6 +12,7 @@ platformType: "desktop"
 role: "Frontend Implementation & POC Engineer"
 timeline: "2025 — Q1 2026"
 status: "Completed & Adopted"
+classification: "🔒 Proprietary Enterprise IP"
 
 techStack:
   frontend:
