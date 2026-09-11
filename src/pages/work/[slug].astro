@@ -9,6 +9,7 @@ import CaseMarkdown from '../../components/work/CaseMarkdown.astro';
 import CaseAdjacentNav from '../../components/work/CaseAdjacentNav.astro';
 import CaseToc from '../../components/work/CaseToc.astro';
 import { ipLabel, isRealUrl, shots } from '../../lib/work';
+import '../../styles/case.css';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -127,18 +128,3 @@ const stackRows = [
 		{showToc && <CaseToc items={tocItems} />}
 	</div>
 </BaseLayout>
-
-<style>
-	.case-shell.has-toc {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) 11rem;
-		gap: 2.5rem;
-		align-items: start;
-	}
-
-	@media (max-width: 1200px) {
-		.case-shell.has-toc {
-			grid-template-columns: 1fr;
-		}
-	}
-</style>

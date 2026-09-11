@@ -1,0 +1,516 @@
+/* Case study `/work/[slug]` — layout grids only. Shared primitives live in ui.css. */
+
+/* —— Shell + TOC —— */
+.case-shell {
+	min-width: 0;
+}
+
+.case-shell.has-toc {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) 11rem;
+	gap: 2.5rem;
+	align-items: start;
+}
+
+.case {
+	min-width: 0;
+	overflow-x: clip;
+}
+
+@media (max-width: 1200px) {
+	.case-shell.has-toc {
+		grid-template-columns: 1fr;
+	}
+}
+
+.toc {
+	position: sticky;
+	top: 0.75rem;
+	z-index: 30;
+	padding: 0.35rem 0 0.75rem;
+	max-height: calc(100vh - 1.5rem);
+	overflow-y: auto;
+	overscroll-behavior: contain;
+	background: var(--bg-color);
+}
+
+.toc ul {
+	list-style: none;
+	margin: 0.45rem 0 0;
+	padding: 0;
+	border-left: 1px solid rgba(95, 80, 56, 0.14);
+}
+
+.toc a {
+	display: block;
+	padding: 0.28rem 0 0.28rem 0.75rem;
+	font-size: var(--type-kicker);
+	letter-spacing: 0.04em;
+	line-height: 1.35;
+	color: var(--text-muted);
+	text-decoration: none;
+	border-left: 2px solid transparent;
+	margin-left: -1px;
+	overflow-wrap: anywhere;
+}
+
+.toc a.is-on,
+.toc a:hover {
+	color: var(--accent);
+	border-left-color: var(--accent);
+}
+
+@media (max-width: 1200px) {
+	.toc {
+		display: none;
+	}
+}
+
+/* —— Breadcrumb —— */
+.crumb {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	gap: 0.25rem;
+	font-size: var(--type-meta);
+	color: var(--text-muted);
+	margin-bottom: 1.15rem;
+}
+
+.crumb a {
+	color: var(--accent);
+	text-decoration: none;
+}
+
+.crumb a:hover {
+	text-decoration: underline;
+}
+
+.crumb-time {
+	margin-left: auto;
+}
+
+/* —— Hero —— */
+.case-title {
+	margin: 0.45rem 0 0;
+	font-size: clamp(1.85rem, 5vw, 3.1rem);
+	font-weight: 800;
+	letter-spacing: -0.04em;
+	line-height: 1.08;
+	color: var(--text-main);
+}
+
+.case-meta {
+	margin: 0.55rem 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem 1rem;
+	font-size: 1.02rem;
+	font-weight: 500;
+	color: var(--text-muted);
+}
+
+.case .xyz {
+	margin: 0.85rem 0 0;
+	font-size: var(--type-body);
+	line-height: 1.55;
+	color: var(--text-main);
+	max-width: 42rem;
+}
+
+.case > .metric-row {
+	gap: 0.85rem 1.35rem;
+	margin: 1.1rem 0 0;
+	padding: 0.9rem 0 0;
+	border-top: 1px solid rgba(95, 80, 56, 0.12);
+}
+
+.case > .hero-actions {
+	margin-top: 1rem;
+}
+
+.hero-well {
+	margin: 1.75rem 0 0;
+	background: var(--card-bg);
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	overflow: hidden;
+	display: flex;
+	justify-content: center;
+	padding: 1rem;
+}
+
+.hero-well > img {
+	display: block;
+	width: 100%;
+	aspect-ratio: 16 / 10;
+	object-fit: cover;
+	object-position: top center;
+	background: var(--card-bg);
+}
+
+.hero-well:hover .shot-stack .shot-layer {
+	transform: rotate(calc(-7deg + var(--i) * 4deg)) translateY(-3px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+	.hero-well {
+		animation: case-rise var(--dur-enter) var(--ease-out) both;
+	}
+}
+
+@keyframes case-rise {
+	from {
+		opacity: 0;
+		transform: translateY(18px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-well:hover .shot-stack .shot-layer {
+		transform: none;
+	}
+}
+
+/* —— Meta rail —— */
+.meta-rail {
+	display: grid;
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+	gap: 1rem 1.5rem;
+	margin: 1.75rem 0 0;
+	padding: 1.1rem 0;
+	border-top: 1px solid rgba(95, 80, 56, 0.12);
+	border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+}
+
+.meta-rail dt {
+	font-size: var(--type-caption);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	margin: 0 0 0.3rem;
+}
+
+.meta-rail dd {
+	margin: 0;
+	font-size: 0.95rem;
+	line-height: 1.4;
+	color: var(--text-main);
+}
+
+/* —— Structured article —— */
+.case > section,
+.case .markdown-article {
+	margin-top: 2.35rem;
+	scroll-margin-top: 1rem;
+}
+
+.case .overview {
+	margin: 0.85rem 0 0;
+	font-size: var(--type-body);
+	line-height: 1.55;
+	color: var(--text-main);
+	max-width: 42rem;
+}
+
+.case .target {
+	margin: 0.45rem 0 0;
+	font-size: var(--type-meta);
+	color: var(--text-muted);
+}
+
+.decision-row,
+.ba-row {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem 1.5rem;
+	padding: 1rem 0;
+	border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+}
+
+.decision-row {
+	grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.decision-row p,
+.ba-row p {
+	margin: 0.25rem 0 0;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	color: var(--text-main);
+	overflow-wrap: break-word;
+}
+
+.decision-row strong,
+.ba-row strong {
+	display: block;
+	margin-top: 0.25rem;
+	font-size: 0.95rem;
+	line-height: 1.4;
+	color: var(--text-main);
+}
+
+.stack-block {
+	margin-top: 0.55rem;
+}
+
+.stack-line {
+	margin: 0.35rem 0 0;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: baseline;
+	row-gap: 0.2rem;
+	font-size: 0.98rem;
+	line-height: 1.55;
+	letter-spacing: -0.01em;
+	color: var(--text-main);
+}
+
+.stack-kicker {
+	margin-right: 0.75rem;
+	font-size: var(--type-kicker);
+	letter-spacing: 0.1em;
+	text-transform: uppercase;
+	color: var(--accent);
+	font-weight: 700;
+	flex: 0 0 5.5rem;
+}
+
+.stack-line span:not(.stack-kicker) {
+	overflow-wrap: anywhere;
+}
+
+.stack-line span:not(.stack-kicker):not(:nth-child(2))::before {
+	content: '·';
+	margin-right: 0.4rem;
+	color: var(--accent);
+}
+
+.notes {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1.5rem;
+}
+
+.notes ul {
+	margin: 0.45rem 0 0;
+	padding-left: 1.1rem;
+	font-size: 0.95rem;
+	line-height: 1.55;
+	color: var(--text-main);
+}
+
+/* —— Markdown body —— */
+.markdown-article {
+	margin-top: 2.5rem;
+	max-width: min(42rem, 100%);
+	min-width: 0;
+	font-size: 1.02rem;
+	line-height: 1.65;
+	scroll-margin-top: 1rem;
+	color: var(--text-main);
+	overflow-x: clip;
+	overflow-wrap: break-word;
+}
+
+.markdown-article h2 {
+	margin: 2.25rem 0 0.7rem;
+	font-size: 1.25rem;
+	font-weight: 800;
+	letter-spacing: -0.03em;
+	scroll-margin-top: 1rem;
+	line-height: 1.25;
+}
+
+.markdown-article h3 {
+	margin: 1.55rem 0 0.5rem;
+	font-size: 1.05rem;
+	font-weight: 700;
+	letter-spacing: -0.02em;
+	scroll-margin-top: 1rem;
+	line-height: 1.3;
+	color: var(--text-main);
+}
+
+.markdown-article p {
+	margin: 0.7rem 0;
+}
+
+.markdown-article ul,
+.markdown-article ol {
+	margin: 0.55rem 0;
+	padding-left: 1.2rem;
+}
+
+.markdown-article li {
+	margin: 0.25rem 0;
+}
+
+.markdown-article li::marker {
+	color: var(--accent);
+}
+
+/* Screenshots / figures — never escape the reading column */
+.markdown-article img {
+	display: block;
+	max-width: 100%;
+	width: auto;
+	height: auto;
+	margin: 1rem 0 1.35rem;
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	background: var(--card-bg);
+	object-fit: contain;
+	object-position: top left;
+}
+
+.markdown-article p:has(> img:only-child) {
+	margin: 0.85rem 0 1.35rem;
+	padding: 0.65rem;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	-webkit-overflow-scrolling: touch;
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	background: var(--card-bg);
+}
+
+.markdown-article p:has(> img:only-child) img {
+	margin: 0;
+	border: 0;
+	min-width: 0;
+}
+
+.markdown-article table {
+	width: 100%;
+	max-width: 100%;
+	border-collapse: collapse;
+	font-size: 0.95rem;
+	line-height: 1.5;
+	margin: 1rem 0 1.35rem;
+	display: block;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	-webkit-overflow-scrolling: touch;
+}
+
+.markdown-article thead,
+.markdown-article tbody,
+.markdown-article tr {
+	width: 100%;
+}
+
+.markdown-article th,
+.markdown-article td {
+	padding: 0.55rem 0.75rem 0.55rem 0;
+	text-align: left;
+	vertical-align: top;
+	border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+}
+
+.markdown-article th {
+	font-family: var(--font-mono, ui-monospace, monospace);
+	font-size: var(--type-caption);
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	white-space: nowrap;
+}
+
+.markdown-article pre {
+	margin: 1rem 0;
+	padding: 0.9rem 1rem;
+	max-width: 100%;
+	overflow-x: auto;
+	overscroll-behavior-x: contain;
+	background: var(--card-bg);
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	font-size: 0.875rem;
+	line-height: 1.5;
+}
+
+.markdown-article code {
+	font-size: 0.9em;
+}
+
+.markdown-article :not(pre) > code {
+	padding: 0.1em 0.35em;
+	background: var(--card-bg);
+	border: 1px solid rgba(95, 80, 56, 0.1);
+}
+
+.markdown-article hr {
+	margin: 1.75rem 0;
+	border: 0;
+	border-top: 1px solid rgba(95, 80, 56, 0.12);
+}
+
+.markdown-article blockquote {
+	margin: 1rem 0;
+	padding: 0.15rem 0 0.15rem 1rem;
+	border-left: 2px solid var(--accent);
+	color: var(--text-muted);
+}
+
+.markdown-article .mermaid {
+	margin: 1.25rem 0;
+	background: var(--card-bg);
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	padding: 1rem;
+	overflow-x: auto;
+	max-width: 100%;
+}
+
+/* —— Adjacent + close —— */
+.adjacent {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 1rem;
+	margin-top: 2.5rem;
+	padding-top: 1.15rem;
+	border-top: 1px solid rgba(95, 80, 56, 0.12);
+}
+
+.adjacent a {
+	display: flex;
+	flex-direction: column;
+	gap: 0.25rem;
+	text-decoration: none;
+	color: inherit;
+	min-width: 0;
+}
+
+.adjacent .next {
+	text-align: right;
+}
+
+.adjacent a:hover span:last-child {
+	color: var(--accent);
+}
+
+.case .close .hero-actions {
+	margin-top: 1rem;
+}
+
+@media (max-width: 900px) {
+	.meta-rail,
+	.decision-row,
+	.ba-row,
+	.notes {
+		grid-template-columns: 1fr;
+	}
+
+	.stack-kicker {
+		flex-basis: 100%;
+	}
+
+	.adjacent {
+		grid-template-columns: 1fr;
+	}
+
+	.adjacent .next {
+		text-align: left;
+	}
+}
