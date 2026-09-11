@@ -1,53 +1,47 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import AboutHero from '../components/about/AboutHero.astro';
-import AboutMetrics from '../components/about/AboutMetrics.astro';
+import AboutJump from '../components/about/AboutJump.astro';
 import AboutCapabilities from '../components/about/AboutCapabilities.astro';
 import AboutCareer from '../components/about/AboutCareer.astro';
 import AboutPhilosophy from '../components/about/AboutPhilosophy.astro';
 import AboutEducationResearch from '../components/about/AboutEducationResearch.astro';
 import AboutCredentials from '../components/about/AboutCredentials.astro';
 import AboutBeyondTerminal from '../components/about/AboutBeyondTerminal.astro';
-import AboutContactCTA from '../components/about/AboutContactCTA.astro';
+import HomeContactClose from '../components/home/HomeContactClose.astro';
+import { getCollection } from 'astro:content';
 
 import {
 	metrics,
 	principles,
 	skillCategories,
-	careerHighlights,
 	compactCerts,
 	compactPursuits
 } from '../data/aboutData';
+
+import '../styles/about.css';
+
+const experience = (await getCollection('experience'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((entry) => ({
+		slug: entry.id,
+		...entry.data,
+	}));
 ---
 
-<BaseLayout 
-	title="About Marcel David Baroi | Full-Stack & Enterprise Systems Engineer" 
+<BaseLayout
+	title="About Marcel David Baroi | Full-Stack & Enterprise Systems Engineer"
 	description="Personal background, engineering philosophy, technical skill matrix, education, and credentials of Marcel David Baroi."
+	isWide
+	alignStart
 >
-	<!-- 1. Header Profile & Triage Hero -->
-	<AboutHero />
-
-	<!-- 2. Metrics Strip (At a Glance) -->
-	<AboutMetrics metrics={metrics} />
-
-	<!-- 3. Core Technical Matrix & Capabilities -->
-	<AboutCapabilities skillCategories={skillCategories} />
-
-	<!-- 4. Executive Career Trajectory -->
-	<AboutCareer careerHighlights={careerHighlights} />
-
-	<!-- 5. Engineering Philosophy & Architecture -->
+	<AboutHero metrics={metrics} />
+	<AboutJump />
 	<AboutPhilosophy principles={principles} />
-
-	<!-- 6. Academic Pedigree & Research -->
+	<AboutCapabilities skillCategories={skillCategories} />
+	<AboutCareer experience={experience} />
 	<AboutEducationResearch />
-
-	<!-- 7. Verified Industry Credentials -->
 	<AboutCredentials compactCerts={compactCerts} />
-
-	<!-- 8. Beyond the Terminal (Civic Leadership & Creative Craft) -->
 	<AboutBeyondTerminal compactPursuits={compactPursuits} />
-
-	<!-- 9. Closing Collaboration & Contact CTA -->
-	<AboutContactCTA />
+	<HomeContactClose />
 </BaseLayout>

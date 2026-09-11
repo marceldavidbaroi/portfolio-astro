@@ -1,5 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import AtticBreadcrumb from './about/AtticBreadcrumb.astro';
+import '../styles/about.css';
 
 interface Photo {
 	src: string;
@@ -14,41 +16,100 @@ interface Props {
 	description: string;
 	photos: Photo[];
 	emptyHint: string;
+	useAtticChrome?: boolean;
 }
 
-const { title, backHref, backLabel, tag, description, photos, emptyHint } = Astro.props;
+const { title, backHref, backLabel, tag, description, photos, emptyHint, useAtticChrome = false } = Astro.props;
+const draftCaption = '[draft] Gallery caption';
 ---
 
-<BaseLayout title={`Marcel David Baroi | ${title}`}>
-	<section class="gallery-page">
-		<a href={backHref} class="back-link font-mono">← {backLabel}</a>
-		<header class="gallery-header">
-			<span class="gallery-tag font-mono">{tag}</span>
-			<h1 class="gallery-title font-dot">{title}</h1>
-			<p class="gallery-desc">{description}</p>
-		</header>
+<BaseLayout title={`Marcel David Baroi | ${title}`} isWide alignStart={useAtticChrome}>
+	<section class:list={['gallery-page', { 'gallery-attic': useAtticChrome }]}>
+		{useAtticChrome ? (
+			<>
+				<nav class="attic-crumb font-mono gallery-crumb" aria-label="Breadcrumb">
+					<a href="/about" class="attic-crumb-link">About</a>
+					<span class="attic-crumb-sep" aria-hidden="true">/</span>
+					<a href="/about#school" class="attic-crumb-link">School</a>
+					<span class="attic-crumb-sep" aria-hidden="true">/</span>
+					<span class="attic-crumb-current">Gallery</span>
+				</nav>
+				<header class="about-attic-head">
+					<p class="label font-mono about-attic-kicker">{tag}</p>
+					<h1 class="about-attic-title">{title}</h1>
+					<p class="about-attic-lead">{description}</p>
+				</header>
+			</>
+		) : (
+			<>
+				<a href={backHref} class="back-link font-mono">← {backLabel}</a>
+				<header class="gallery-header">
+					<span class="gallery-tag font-mono">{tag}</span>
+					<h1 class="gallery-title font-dot">{title}</h1>
+					<p class="gallery-desc">{description}</p>
+				</header>
+			</>
+		)}
 
 		{photos.length > 0 ? (
-			<div class="gallery-grid">
+			<div class="gallery-grid" id="gallery-grid">
 				{photos.map((photo) => (
-					<figure class="gallery-item">
-						<img src={photo.src} alt={photo.caption} loading="lazy" />
-						<figcaption class="font-mono">{photo.caption}</figcaption>
+					<figure class="gallery-item" data-caption={photo.caption || draftCaption}>
+						<button type="button" class="gallery-shot" data-src={photo.src} data-alt={photo.caption || draftCaption}>
+							<img src={photo.src} alt={photo.caption || draftCaption} loading="lazy" />
+						</button>
+						<figcaption class="font-mono">{photo.caption || draftCaption}</figcaption>
 					</figure>
 				))}
 			</div>
 		) : (
 			<p class="gallery-empty font-mono" set:html={emptyHint} />
 		)}
+
+		{useAtticChrome && <a href={backHref} class="about-return font-mono">← {backLabel}</a>}
 	</section>
 </BaseLayout>
 
+<script>
+	const grid = document.getElementById('gallery-grid');
+	if (grid) {
+		grid.addEventListener('click', (e) => {
+			const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.gallery-shot');
+			if (!btn) return;
+			const src = btn.dataset.src;
+			const alt = btn.dataset.alt || '';
+			if (!src) return;
+			const overlay = document.createElement('div');
+			overlay.className = 'gallery-spotlight';
+			overlay.innerHTML = `<button type="button" class="gallery-spotlight-close" aria-label="Close">×</button><img src="${src}" alt="${alt}" />`;
+			document.body.appendChild(overlay);
+			const close = () => overlay.remove();
+			overlay.addEventListener('click', (ev) => {
+				if (ev.target === overlay || (ev.target as HTMLElement).classList.contains('gallery-spotlight-close')) close();
+			});
+			document.addEventListener('keydown', (ev) => {
+				if (ev.key === 'Escape') close();
+			}, { once: true });
+		});
+	}
+</script>
+
 <style>
 	.gallery-page {
-		max-width: 960px;
+		max-width: 1180px;
 		margin: 0 auto;
-		padding: 2.5rem 1.25rem 4rem;
+		padding: 2rem 0 4rem;
 	}
+
+	.gallery-attic {
+		max-width: none;
+		margin: 0;
+	}
+
+	.gallery-crumb {
+		margin-bottom: 1rem;
+	}
+
 	.back-link {
 		display: inline-block;
 		font-size: 0.75rem;
@@ -57,47 +118,85 @@ const { title, backHref, backLabel, tag, description, photos, emptyHint } = Astr
 		text-decoration: none;
 		margin-bottom: 1.25rem;
 	}
+
 	.gallery-tag {
 		font-size: 0.7rem;
 		font-weight: 700;
 		color: var(--accent);
 		letter-spacing: 0.06em;
 	}
+
 	.gallery-title {
 		font-size: clamp(1.5rem, 3vw, 2rem);
 		font-weight: 700;
 		margin: 0.35rem 0 0.5rem;
 	}
+
 	.gallery-desc {
 		color: var(--text-muted);
 		font-size: 0.95rem;
 	}
+
 	.gallery-empty {
 		margin-top: 2rem;
 		font-size: 0.8rem;
 		color: var(--text-muted);
 	}
+
 	.gallery-grid {
 		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 		gap: 1rem;
 		margin-top: 1.5rem;
 	}
-	.gallery-item {
-		margin: 0;
-		border-radius: 10px;
-		overflow: hidden;
-		border: 1px solid var(--card-border);
-	}
-	.gallery-item img {
-		width: 100%;
+
+	.gallery-shot {
 		display: block;
-		aspect-ratio: 4/3;
+		width: 100%;
+		padding: 0;
+		border: 0;
+		background: var(--card-bg);
+		cursor: pointer;
+	}
+
+	.gallery-shot img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 3;
 		object-fit: cover;
 	}
+
 	.gallery-item figcaption {
-		padding: 0.5rem 0.65rem;
-		font-size: 0.7rem;
+		margin-top: 0.35rem;
+		font-size: var(--type-caption);
 		color: var(--text-muted);
+	}
+
+	:global(.gallery-spotlight) {
+		position: fixed;
+		inset: 0;
+		z-index: 100;
+		background: rgba(43, 37, 30, 0.88);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+
+	:global(.gallery-spotlight img) {
+		max-width: min(92vw, 960px);
+		max-height: 88vh;
+		object-fit: contain;
+	}
+
+	:global(.gallery-spotlight-close) {
+		position: absolute;
+		top: 1rem;
+		right: 1rem;
+		border: 0;
+		background: transparent;
+		color: #fffdfa;
+		font-size: 2rem;
+		cursor: pointer;
 	}
 </style>

@@ -2,6 +2,7 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { mediaMap, resolveAssets } from '../../../lib/media';
+import '../../../styles/about.css';
 
 const galleryEntry = await getEntry('galleries', 'hsc-science');
 if (!galleryEntry) throw new Error('Missing galleries/hsc-science');
@@ -33,56 +34,30 @@ const galleries = galleryEntry.data.albums.map((album) => {
 <BaseLayout
 	title="Notre Dame College Photo Gallery & Memoirs | Marcel David Baroi"
 	description="Photo gallery, student brotherhood, and chronicled memories from Notre Dame College (HSC Science Batch '19, Group 13) by Marcel David Baroi."
-	isWide={true}
+	isWide
+	alignStart
 >
-	<div class="gallery-page-container">
-		<!-- Breadcrumbs -->
-		<nav class="page-breadcrumb font-mono" aria-label="Breadcrumb">
-			<a href="/" class="b-link">Home</a>
-			<span class="b-sep">/</span>
-			<a href="/about" class="b-link">About</a>
-			<span class="b-sep">/</span>
-			<a href="/education/hsc-science" class="b-link">Notre Dame College (HSC Science)</a>
-			<span class="b-sep">/</span>
-			<span class="b-curr">Photo Gallery & Memoirs</span>
+	<div class="gallery-page-container gallery-attic-page">
+		<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
+			<a href="/about" class="attic-crumb-link">About</a>
+			<span class="attic-crumb-sep" aria-hidden="true">/</span>
+			<a href="/about#school" class="attic-crumb-link">School</a>
+			<span class="attic-crumb-sep" aria-hidden="true">/</span>
+			<span class="attic-crumb-current">Gallery</span>
 		</nav>
 
-		<!-- Hero Header -->
-		<header class="gallery-hero card">
-			<div class="hero-top-meta">
-				<span class="section-tag font-mono">CAMPUS ARCHIVES // 2017 — 2019</span>
-				<span class="badge-status font-mono">Batch '19 • Group 13 • Room 304</span>
-			</div>
-
-			<div class="title-group">
-				<h1 class="gallery-title font-dot">Notre Dame College Photo Gallery & Campus Memoirs</h1>
-				<p class="gallery-subtitle">
-					Visual chronicles of campus brotherhood, iconic lawn formations, historic papal visits, and the 2018 civic movements.
-				</p>
-			</div>
-
-			<div class="gallery-meta-bar font-mono">
-				<div class="meta-item">
-					<span class="m-lbl">COLLEGE:</span>
-					<span class="m-val">Notre Dame College, Dhaka</span>
-				</div>
-				<span class="m-sep">•</span>
-				<div class="meta-item">
-					<span class="m-lbl">BATCH & GROUP:</span>
-					<span class="m-val">Batch '19 // Group 13 (Science)</span>
-				</div>
-				<span class="m-sep">•</span>
-				<div class="meta-item">
-					<span class="m-lbl">HERITAGE:</span>
-					<span class="m-val">Ganguly • Harrington • Timm • Room 304</span>
-				</div>
-			</div>
+		<header class="about-attic-head">
+			<p class="label font-mono about-attic-kicker">Gallery</p>
+			<h1 class="about-attic-title">Notre Dame College photo archive</h1>
+			<p class="about-attic-lead">
+				Visual chronicles of campus brotherhood, historic papal visits, and the 2018 civic movements. Batch '19 · Group 13.
+			</p>
 		</header>
 
 		<!-- Galleries Sections -->
 		<div class="galleries-list">
 			{galleries.map((section, sIdx) => (
-				<section class="gallery-section card" id={section.id}>
+				<section class="gallery-section edu-slot" id={section.id}>
 					<div class="section-header">
 						<div class="s-left">
 							<span class="s-tag font-mono">{section.tag}</span>
@@ -180,7 +155,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		</div>
 
 		<!-- Cross Navigation -->
-		<div class="gallery-cross-nav card">
+		<div class="gallery-cross-nav edu-text-nav">
 			<div class="nav-col">
 				<span class="nav-lbl font-mono">ACADEMIC DETAILS</span>
 				<a href="/education/hsc-science" class="nav-link">← Return to Notre Dame College Overview</a>

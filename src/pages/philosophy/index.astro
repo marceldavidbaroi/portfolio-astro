@@ -1,90 +1,75 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
 import { getCollection } from 'astro:content';
+import { philosophyBandExtras } from '../../data/aboutLayoutDummy';
+import '../../styles/about.css';
 
 const principles = (await getCollection('philosophy'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((e) => e.data);
+
+function bandExtra(num: string) {
+	return philosophyBandExtras.find((b) => b.principleNum === num);
+}
 ---
 
 <BaseLayout
 	title="Engineering Philosophy & System Architecture | Marcel David Baroi"
 	description="Core architectural principles, AI synthesis workflows, data safety standards, and engineering methodology of Marcel David Baroi."
-	isWide={true}
+	isWide
+	alignStart
 >
-	<div class="philosophy-page-container">
-		<!-- Breadcrumbs -->
-		<nav class="page-breadcrumb font-mono" aria-label="Breadcrumb">
-			<a href="/" class="b-link">Home</a>
-			<span class="b-sep">/</span>
-			<a href="/about" class="b-link">About</a>
-			<span class="b-sep">/</span>
-			<span class="b-curr">Engineering Philosophy</span>
-		</nav>
+	<AtticBreadcrumb current="Philosophy" />
 
-		<!-- Hero Header -->
-		<header class="philo-hero card">
-			<div class="hero-top-meta">
-				<span class="section-tag font-dot">01 // CORE PHILOSOPHY</span>
-				<span class="badge-status success font-mono">System Paradigms</span>
-			</div>
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">Philosophy</p>
+		<h1 class="about-attic-title">Engineering principles</h1>
+		<p class="about-attic-lead">
+			Four foundational paradigms governing architecture-first synthesis, zero-trust data layers, modular reusability, and measurable velocity.
+		</p>
+	</header>
 
-			<h1 class="philo-title font-dot">Engineering Philosophy & Architectural Standards</h1>
-			<p class="philo-subtitle font-dot">Architecture-First Synthesis • Zero-Trust Data Layers • Measurable Velocity</p>
-
-			<p class="philo-intro">
-				Building enterprise software requires structural foresight, relational data integrity, and disciplined versioning. These four foundational principles govern every line of code, schema migration, and production deployment I lead — each proven live in production case studies.
-			</p>
-		</header>
-
-		<!-- Principles Deep Dive -->
-		<div class="principles-deep-grid">
-			{principles.map((p) => (
-				<article class="philo-detail-card card">
-					<div class="p-card-header">
-						<span class="p-num font-mono">{p.num}</span>
-						<div class="p-header-meta">
-							<span class="p-tag font-mono">{p.tag}</span>
-							<h2 class="p-title">{p.title}</h2>
-							<p class="p-sub">{p.subtitle}</p>
-						</div>
-						<span class="p-icon">{p.icon}</span>
-					</div>
-
-					<blockquote class="p-pullquote font-sans">
-						“{p.pullQuote}”
-					</blockquote>
-
-					<p class="p-desc">{p.desc}</p>
-
-					<pre class="language-mermaid"><code class="language-mermaid">{p.mermaid}</code></pre>
-
-					<div class="p-proof-links font-mono">
-						<span class="proof-label">Live Proof:</span>
-						{p.proofLinks.map((link) => (
-							<a href={link.href} class="proof-link">{link.label} →</a>
-						))}
+	{principles.map((p) => {
+		const extra = bandExtra(p.num);
+		const mermaid = p.mermaid || extra?.mermaid || 'flowchart LR\n  A["[draft]"] --> B["[draft]"]';
+		const proofLinks = p.proofLinks?.length
+			? p.proofLinks
+			: extra
+				? [{ href: extra.proofHref, label: extra.proofLabel }]
+				: [];
+		return (
+			<section class="about-section about-philo-band" id={`principle-${p.num}`}>
+				<article class="about-principle-row about-philo-band-head">
+					<p class="about-principle-num font-mono">{p.num}</p>
+					<div>
+						<h2 class="about-principle-title">{p.title}</h2>
+						{(p.subtitle || extra?.subtitle) && (
+							<p class="about-philo-subtitle">{p.subtitle || extra?.subtitle}</p>
+						)}
 					</div>
 				</article>
-			))}
-		</div>
+				{p.pullQuote && <blockquote class="about-philo-quote">"{p.pullQuote}"</blockquote>}
+				<p class="about-principle-body">{p.desc}</p>
+				<div class="about-philo-slot">
+					<pre class="language-mermaid"><code class="language-mermaid">{mermaid}</code></pre>
+				</div>
+				{proofLinks.length > 0 && (
+					<p class="about-philo-proofs font-mono">
+						{proofLinks.map((link) => (
+							<a href={link.href} class="about-principle-proof">{link.label}</a>
+						))}
+					</p>
+				)}
+			</section>
+		);
+	})}
 
-		<!-- Cross Navigation -->
-		<div class="philo-cross-nav card">
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">EXECUTIVE PROFILE</span>
-				<a href="/about" class="nav-link">← Return to About Profile</a>
-			</div>
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">CAPABILITIES</span>
-				<a href="/skills" class="nav-link">Technical Skill Matrix →</a>
-			</div>
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">PROVEN WORK</span>
-				<a href="/work" class="nav-link">Explore Production Case Studies →</a>
-			</div>
-		</div>
-	</div>
+	<nav class="about-philo-exits font-mono" aria-label="Related pages">
+		<a href="/about" class="text-link">← About</a>
+		<a href="/skills" class="text-link">Skills →</a>
+		<a href="/work" class="text-link">Work →</a>
+	</nav>
 </BaseLayout>
 
 <script>
@@ -110,19 +95,16 @@ const principles = (await getCollection('philosophy'))
 				lineColor: '#5f5038',
 				secondaryColor: '#fffdfa',
 				tertiaryColor: '#ede7da',
-				fontFamily: 'Geist, sans-serif'
-			}
+				fontFamily: 'Geist, sans-serif',
+			},
 		});
 
 		for (const pre of uniquePres) {
 			const code = pre.querySelector('code')?.textContent || pre.textContent || '';
-			const wrapper = document.createElement('div');
-			wrapper.className = 'mermaid-diagram-card';
 			const diagramDiv = document.createElement('div');
 			diagramDiv.className = 'mermaid';
 			diagramDiv.textContent = code.trim();
-			wrapper.appendChild(diagramDiv);
-			pre.replaceWith(wrapper);
+			pre.replaceWith(diagramDiv);
 		}
 
 		await mermaid.run();
@@ -133,265 +115,51 @@ const principles = (await getCollection('philosophy'))
 </script>
 
 <style>
-	.philosophy-page-container {
-		width: 100%;
-		max-width: 1080px;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		gap: 2.5rem;
-		padding: 1rem 1rem 4rem;
-		text-align: left;
+	.about-philo-band-head {
+		border-top: 0;
+		padding-top: 0;
 	}
 
-	.page-breadcrumb {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.8rem;
+	.about-philo-subtitle {
+		margin: 0.25rem 0 0;
+		font-size: var(--type-meta);
 		color: var(--text-muted);
 	}
 
-	.b-link {
-		color: var(--text-muted);
-		transition: color 0.15s ease;
-	}
-
-	.b-link:hover {
-		color: var(--accent);
-	}
-
-	.b-sep {
-		opacity: 0.4;
-	}
-
-	.b-curr {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-	.philo-hero {
-		padding: 2.25rem;
-		border-radius: 16px;
-		display: flex;
-		flex-direction: column;
-		gap: 1.15rem;
-		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-	}
-
-	.hero-top-meta {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.badge-status.success {
-		font-size: 0.72rem;
-		padding: 0.2rem 0.65rem;
-		border-radius: 9999px;
-		background: rgba(46, 125, 50, 0.12);
-		color: #2e7d32;
-		border: 1px solid rgba(46, 125, 50, 0.25);
-		font-weight: 700;
-	}
-
-	.philo-title {
-		font-size: clamp(1.85rem, 3.5vw, 2.5rem);
-		font-weight: 700;
+	.about-philo-quote {
+		margin: 0 0 0.85rem;
+		padding-left: 1rem;
+		border-left: 2px solid rgba(180, 33, 53, 0.35);
+		font-size: var(--type-xyz);
+		line-height: 1.55;
 		color: var(--text-main);
-		line-height: 1.2;
-	}
-
-	.philo-subtitle {
-		font-size: 1rem;
-		color: var(--accent);
-	}
-
-	.philo-intro {
-		font-size: 0.92rem;
-		line-height: 1.65;
-		color: var(--text-muted);
-		max-width: 860px;
-	}
-
-	.principles-deep-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.philo-detail-card {
-		padding: 1.75rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-		transition: all 0.15s ease;
-	}
-
-	.philo-detail-card:hover {
-		border-color: rgba(180, 33, 53, 0.35);
-		transform: translateY(-2px);
-	}
-
-	.p-card-header {
-		display: flex;
-		align-items: flex-start;
-		gap: 1rem;
-	}
-
-	.p-num {
-		font-size: 1.5rem;
-		font-weight: 800;
-		color: var(--accent);
-		line-height: 1;
-		flex-shrink: 0;
-	}
-
-	.p-header-meta {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		flex: 1;
-	}
-
-	.p-tag {
-		font-size: 0.68rem;
-		color: var(--accent);
-		letter-spacing: 0.08em;
-		font-weight: 700;
-	}
-
-	.p-title {
-		font-size: 1.15rem;
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.3;
-	}
-
-	.p-sub {
-		font-size: 0.78rem;
-		color: var(--text-muted);
-	}
-
-	.p-icon {
-		font-size: 1.5rem;
-		line-height: 1;
-		flex-shrink: 0;
-	}
-
-	.p-pullquote {
-		margin: 0;
-		padding: 0.85rem 1rem;
-		border-left: 3px solid var(--accent);
-		background: rgba(180, 33, 53, 0.05);
-		border-radius: 0 8px 8px 0;
-		font-size: 0.95rem;
 		font-style: italic;
-		line-height: 1.5;
-		color: var(--text-main);
-		font-weight: 500;
 	}
 
-	.p-desc {
-		font-size: 0.88rem;
-		line-height: 1.65;
-		color: var(--text-muted);
-	}
-
-	.p-proof-links {
-		display: flex;
-		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.5rem;
-		padding-top: 0.5rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.15);
-	}
-
-	.proof-label {
-		font-size: 0.7rem;
-		color: var(--text-muted);
-		font-weight: 700;
-		letter-spacing: 0.04em;
-	}
-
-	.proof-link {
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: var(--accent);
-		background: rgba(180, 33, 53, 0.06);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-		padding: 0.25rem 0.6rem;
-		border-radius: 6px;
-		text-decoration: none;
-		transition: all 0.15s ease;
-	}
-
-	.proof-link:hover {
-		background: var(--accent);
-		color: #fffdfa;
-	}
-
-	.mermaid-diagram-card {
-		background: #ffffff;
-		border: 1px solid var(--card-border);
-		border-radius: 14px;
-		padding: 1.25rem 1rem;
-		overflow-x: auto;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.mermaid {
-		width: 100%;
-		display: flex;
-		justify-content: center;
-	}
-
-	.mermaid svg {
-		max-width: 100% !important;
-		height: auto !important;
-	}
-
-	.philo-cross-nav {
-		padding: 1.75rem 2rem;
-		border-radius: 16px;
+	.about-philo-slot {
+		margin: 1rem 0;
+		padding: 1.25rem;
 		background: var(--card-bg);
-		border: 1px solid var(--card-border);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		overflow-x: auto;
+	}
+
+	.about-philo-slot pre {
+		margin: 0;
+		background: transparent;
+	}
+
+	.about-philo-proofs {
 		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		gap: 1.5rem;
 		flex-wrap: wrap;
+		gap: 0.75rem 1.25rem;
+		margin: 0.5rem 0 0;
 	}
 
-	.nav-col {
+	.about-philo-exits {
 		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.nav-lbl {
-		font-size: 0.72rem;
-		color: var(--text-muted);
-		letter-spacing: 0.05em;
-	}
-
-	.nav-link {
-		font-size: 0.92rem;
-		color: var(--accent);
-		font-weight: 700;
-		transition: all 0.15s ease;
-	}
-
-	.nav-link:hover {
-		color: var(--accent-hover);
-		transform: translateX(2px);
+		flex-wrap: wrap;
+		gap: 1rem 1.5rem;
+		margin: 2.5rem 0 1rem;
 	}
 </style>

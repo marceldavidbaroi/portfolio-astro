@@ -1,240 +1,102 @@
 ---
+import { getEntry } from 'astro:content';
+import { schoolExtras } from '../../data/aboutLayoutDummy';
+
+const bscEntry = await getEntry('education', 'bsc-cse');
+const hscEntry = await getEntry('education', 'hsc-science');
+const researchEntry = await getEntry('research', '01-bangla-hwcr-ekush');
+
+if (!bscEntry || !hscEntry || !researchEntry) {
+	throw new Error('Missing education or research content for About school section');
+}
+
+const bsc = bscEntry.data;
+const hsc = hscEntry.data;
+const thesis = researchEntry.data;
+
+const bscPrimary = `${bsc.shortDegree ?? 'B.Sc. CSE'} · ${bsc.institutionShort} · ${(bsc.cgpa ?? 0).toFixed(2)}`;
+const bscThird = schoolExtras.bsc.thirdLine.startsWith('[draft]')
+	? `${bsc.totalCredits ?? 142} cr`
+	: schoolExtras.bsc.thirdLine;
+const thesisPrimary = `Thesis · ${thesis.shortTitle ?? 'Bangla HWCR'} · ${thesis.accuracy ?? '97.93%'}`;
+const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).toFixed(2)}`;
 ---
 
-<section class="about-section" id="academic-pedigree">
-	<div class="section-header">
-		<span class="section-tag font-dot">05 // EDUCATION & RESEARCH</span>
-		<h2 class="section-title font-dot">Academic Pedigree & Research</h2>
-		<p class="section-desc">
-			Formal CS degree program and solo undergraduate deep-learning thesis — the academic signals international recruiters triage first.
-		</p>
+<section class="about-section" id="school" aria-labelledby="school-heading">
+	<div class="section-kicker">
+		<h2 id="school-heading" class="label font-mono">School</h2>
 	</div>
 
-	<div class="compact-edu-grid">
-		<!-- DIU Card -->
-		<div class="compact-card card">
-			<div class="c-top">
-				<div class="c-left-icon">
-					<div class="c-svg-box">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
-							<path d="M6 12v5c3 3 9 3 12 0v-5"></path>
-						</svg>
-					</div>
-					<div>
-						<span class="c-inst-tag font-mono">DIU CSE BATCH 55</span>
-						<h3 class="c-title">B.Sc. in Computer Science & Engineering</h3>
-					</div>
-				</div>
-				<span class="c-stat-pill font-mono">CGPA 3.91 / 4.00</span>
-			</div>
-			<p class="c-summary">
-				142-credit UGC uniform curriculum encompassing algorithms, distributed systems, AI, and 6 consecutive Grade A+ software practicums.
-			</p>
-			<a href="/education/bsc-cse" class="c-action-btn">
-				<span>View B.Sc. Details & 11-Semester Transcript →</span>
-			</a>
+	<a class="about-school-row" href="/education/bsc-cse">
+		{bsc.logo ? (
+			<img src={bsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
+		) : (
+			<span class="about-school-logo" aria-hidden="true"></span>
+		)}
+		<div class="about-school-lines">
+			<p class="about-school-primary">{bscPrimary}</p>
+			<p class="about-school-secondary">{bscThird}</p>
 		</div>
+		<span class="section-link font-mono">Transcript →</span>
+	</a>
 
-		<!-- Thesis Card -->
-		<div class="compact-card card">
-			<div class="c-top">
-				<div class="c-left-icon">
-					<div class="c-svg-box">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-							<polyline points="14 2 14 8 20 8"></polyline>
-							<line x1="16" y1="13" x2="8" y2="13"></line>
-							<line x1="16" y1="17" x2="8" y2="17"></line>
-							<polyline points="10 9 9 9 8 9"></polyline>
-						</svg>
-					</div>
-					<div>
-						<span class="c-inst-tag font-mono">FINAL YEAR THESIS</span>
-						<h3 class="c-title">Bangla Handwritten Character Recognition</h3>
-					</div>
-				</div>
-				<span class="c-stat-pill font-mono">DenseNet: 97.93%</span>
-			</div>
-			<p class="c-summary">
-				Solo undergraduate research evaluating 16 deep learning models on 80,000 Ekush dataset images with DenseNet-201 benchmark excellence.
-			</p>
-			<a href="/research/01-bangla-hwcr-ekush" class="c-action-btn">
-				<span>Read Research Paper & 16-Model Benchmarks →</span>
-			</a>
+	<a class="about-school-row" href={`/research/${thesis.slug}`}>
+		<span class="about-school-logo about-school-logo-slot" aria-hidden="true"></span>
+		<div class="about-school-lines">
+			<p class="about-school-primary">{thesisPrimary}</p>
+			<p class="about-school-secondary">{schoolExtras.thesis.thirdLine.replace('[draft] ', '')}</p>
 		</div>
-	</div>
+		<span class="section-link font-mono">Paper →</span>
+	</a>
 
-	<p class="archive-note font-mono">
-		Pre-university collegiate formative years (civic leadership, protocol volunteering) are preserved in the
-		<a href="/archive">Civic Leadership Archives →</a>
+	<a class="about-school-row" href="/education/hsc-science">
+		{hsc.logo ? (
+			<img src={hsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
+		) : (
+			<span class="about-school-logo" aria-hidden="true"></span>
+		)}
+		<div class="about-school-lines">
+			<p class="about-school-primary">{hscPrimary}</p>
+			<p class="about-school-secondary">{schoolExtras.hsc.thirdLine.replace('[draft] ', '')}</p>
+		</div>
+		<span class="section-link font-mono">Details →</span>
+	</a>
+
+	<p class="about-school-archive font-mono">
+		<a href={schoolExtras.archiveHref}>{schoolExtras.archiveLine.replace('[draft] ', '')}</a>
 	</p>
 </section>
 
 <style>
-	.about-section {
-		width: 100%;
-		margin-top: 4.5rem;
-		text-align: left;
-		scroll-margin-top: 5rem;
-	}
-
-	.section-header {
-		margin-bottom: 2rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.section-tag {
-		font-size: 0.9375rem;
-		letter-spacing: 0.12em;
-		color: var(--accent);
-		text-transform: uppercase;
-		font-weight: 700;
-	}
-
-	.section-title {
-		font-size: clamp(2rem, 4vw, 2.75rem);
-		font-weight: 700;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: var(--text-main);
-	}
-
-	.section-desc {
-		font-size: 0.9375rem;
-		line-height: 1.5;
-		color: var(--text-muted);
-		max-width: 700px;
-	}
-
-	.compact-edu-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-	}
-
-	@media (max-width: 900px) {
-		.compact-edu-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.compact-card {
-		padding: 1.6rem;
-		border-radius: 14px;
+	.about-school-logo-slot {
+		display: block;
 		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-		transition: all 0.2s ease;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		border-radius: 6px;
 	}
 
-	.compact-card:hover {
-		border-color: var(--accent);
-		transform: translateY(-2px);
-		box-shadow: 0 6px 20px rgba(180, 33, 53, 0.08);
-	}
-
-	.c-top {
-		display: flex;
-		align-items: flex-start;
-		justify-content: space-between;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.c-left-icon {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.65rem;
-	}
-
-	.c-svg-box {
-		width: 38px;
-		height: 38px;
-		border-radius: 8px;
-		background: rgba(180, 33, 53, 0.08);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
-	.c-inst-tag {
-		font-size: 0.68rem;
-		color: var(--accent);
-		font-weight: 700;
-		letter-spacing: 0.06em;
-	}
-
-	.c-title {
-		font-size: 0.95rem;
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.3;
-	}
-
-	.c-stat-pill {
-		font-size: 0.72rem;
-		background: rgba(180, 33, 53, 0.08);
-		color: var(--accent);
-		padding: 0.2rem 0.55rem;
-		border-radius: 4px;
-		font-weight: 700;
-		white-space: nowrap;
-		flex-shrink: 0;
-	}
-
-	@media (max-width: 480px) {
-		.c-stat-pill {
-			white-space: normal;
-		}
-	}
-
-	.c-summary {
-		font-size: 0.82rem;
-		line-height: 1.55;
-		color: var(--text-muted);
-		flex: 1;
-	}
-
-	.c-action-btn {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--accent);
+	.about-school-row {
 		text-decoration: none;
-		padding-top: 0.5rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.12);
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		transition: all 0.15s ease;
+		color: inherit;
 	}
 
-	.c-action-btn:hover {
-		color: var(--accent-hover);
-		transform: translateX(3px);
+	.about-school-row:hover .about-school-primary {
+		color: var(--accent);
 	}
 
-	.archive-note {
-		margin-top: 1.25rem;
-		font-size: 0.75rem;
+	.about-school-archive {
+		margin: 1rem 0 0;
+		font-size: var(--type-meta);
 		color: var(--text-muted);
-		line-height: 1.5;
 	}
 
-	.archive-note a {
+	.about-school-archive a {
 		color: var(--accent);
 		font-weight: 700;
 		text-decoration: none;
 	}
 
-	.archive-note a:hover {
+	.about-school-archive a:hover {
 		text-decoration: underline;
 	}
 </style>

@@ -1,5 +1,6 @@
 ---
 import '../../styles/education.css';
+import '../../styles/about.css';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import EduBreadcrumb from '../../components/education/EduBreadcrumb.astro';
 import EduHero from '../../components/education/EduHero.astro';
@@ -34,7 +35,7 @@ const pageDesc = isBsc
 	: `Foundational science curriculum, Higher Mathematics, Physics, Chemistry, and academic credentials at ${hscScienceProgram.institution}.`;
 ---
 
-<BaseLayout title={pageTitle} description={pageDesc} isWide={true}>
+<BaseLayout title={pageTitle} description={pageDesc} isWide alignStart>
 	<div class="edu-detail-container">
 		<EduBreadcrumb isBsc={isBsc} />
 		<EduHero isBsc={isBsc} bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />

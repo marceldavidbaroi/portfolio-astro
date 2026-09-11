@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
 import { mediaMap, resolveAsset, resolveAssets } from '../../lib/media';
+import '../../styles/about.css';
 
 export async function getStaticPaths() {
 	const entries = await getCollection('archive');
@@ -9,7 +10,7 @@ export async function getStaticPaths() {
 		.filter((e) => e.data.kind === 'memoir' && e.data.slug)
 		.map((entry) => ({
 			params: { slug: entry.data.slug },
-			props: { entry }
+			props: { entry },
 		}));
 }
 
@@ -17,16 +18,13 @@ const { entry } = Astro.props;
 const d = entry.data;
 const map = mediaMap(await getCollection('media'));
 
-const keyStats = d.stats || [];
-const pillarsOfReflection = d.pillars || [];
-
 const eventPhases = (d.phases || []).map((phase) => {
 	const image = phase.imageId ? resolveAsset(phase.imageId, map) : null;
 	return {
 		...phase,
 		imageSrc: image?.src,
 		imageAlt: image?.alt,
-		imageCaption: phase.imageCaption || image?.caption
+		imageCaption: phase.imageCaption || image?.caption || '[draft] Phase image caption',
 	};
 });
 
@@ -34,9 +32,9 @@ const days = (d.days || []).map((day) => ({
 	...day,
 	images: resolveAssets(day.imageIds || [], map).map((a) => ({
 		src: a.src,
-		alt: a.alt,
-		caption: a.caption || a.alt
-	}))
+		alt: a.alt || '[draft] Archive photo',
+		caption: a.caption || a.alt || '[draft] Caption',
+	})),
 }));
 
 const isPhases = eventPhases.length > 0;
@@ -44,679 +42,121 @@ const pageTitle = d.pageTitle || `${d.title} | Marcel David Baroi`;
 const pageDescription = d.pageDescription || d.body || d.title;
 ---
 
-<BaseLayout title={pageTitle} description={pageDescription} isWide={true}>
-	<div class="memoir-page-container">
-		<nav class="page-breadcrumb font-mono" aria-label="Breadcrumb">
-			<a href="/" class="b-link">Home</a>
-			<span class="b-sep">/</span>
-			<a href="/about" class="b-link">About</a>
-			<span class="b-sep">/</span>
-			<a href="/archive" class="b-link">Personal Archives</a>
-			<span class="b-sep">/</span>
-			<span class="b-curr">{d.breadcrumbLabel || d.title}</span>
-		</nav>
+<BaseLayout title={pageTitle} description={pageDescription} isWide alignStart>
+	<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
+		<a href="/about" class="attic-crumb-link">About</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<a href="/archive" class="attic-crumb-link">Archive</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<span class="attic-crumb-current">{d.breadcrumbLabel || d.title}</span>
+	</nav>
 
-		<header class="memoir-hero card">
-			<div class="hero-top-meta">
-				<span class="section-tag font-mono">{d.heroTag || d.tag}</span>
-				{d.heroBadge && <span class="badge-status font-mono">{d.heroBadge}</span>}
-			</div>
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">{d.heroTag || d.tag}</p>
+		<h1 class="about-attic-title">{d.memoirTitle || d.title}</h1>
+		{(d.memoirSubtitle || d.subtitle) && <p class="about-attic-lead">{d.memoirSubtitle || d.subtitle}</p>}
+		{d.body && <p class="about-principle-body memoir-lead">{d.body}</p>}
 
-			<div class="title-group">
-				<h1 class="memoir-title font-dot">{d.memoirTitle || d.title}</h1>
-				<p class="memoir-subtitle">{d.memoirSubtitle || d.subtitle}</p>
-			</div>
-
-			{d.authorMeta && d.authorMeta.length > 0 && (
-				<div class="author-meta-bar font-mono">
-					{d.authorMeta.map((m, i) => (
-						<>
-							{i > 0 && <span class="m-sep">•</span>}
-							<div class="meta-item">
-								<span class="m-lbl">{m.label}</span>
-								<span class="m-val">{m.value}</span>
-								{m.role && <span class="m-role">{m.role}</span>}
-							</div>
-						</>
-					))}
-				</div>
-			)}
-
-			{keyStats.length > 0 && (
-				<div class="key-metrics-grid font-mono">
-					{keyStats.map((stat) => (
-						<div class="k-metric-card">
-							<span class="k-val font-mono">{stat.value}</span>
-							<span class="k-lbl">{stat.label}</span>
-							{stat.sub && <span class="k-sub">{stat.sub}</span>}
-						</div>
-					))}
-				</div>
-			)}
-
-			{d.executiveQuote && (
-				<div class="executive-quote-box">
-					<p class="quote-text">{d.executiveQuote}</p>
-				</div>
-			)}
-		</header>
-
-		{isPhases ? (
-			<div class="chronicle-timeline">
-				{eventPhases.map((phase, idx) => (
-					<article class="phase-segment-card card" id={`phase-${idx + 1}`}>
-						<div class="phase-header">
-							<div class="phase-badge-wrap">
-								<span class="phase-icon">{phase.icon}</span>
-								<span class="phase-date-tag font-mono">{phase.phaseTag}</span>
-							</div>
-							<div class="phase-title-box">
-								<h2 class="phase-headline">{phase.headline}</h2>
-								<p class="phase-subtitle">{phase.subtitle}</p>
-							</div>
-						</div>
-
-						{phase.imageSrc && (
-							<div class="phase-image-container">
-								<div class="image-frame card">
-									<img
-										src={phase.imageSrc}
-										alt={phase.imageAlt}
-										class:list={['archival-photo', phase.isEmblem && 'is-emblem']}
-										loading="lazy"
-									/>
-									<p class="image-caption font-mono">{phase.imageCaption}</p>
-								</div>
-							</div>
-						)}
-
-						<div class="phase-body">
-							{phase.storyParagraphs.map((para) => (
-								<p class="story-p">{para}</p>
-							))}
-						</div>
-
-						{phase.reflectionQuote && (
-							<div class="phase-quote-callout">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="quote-svg">
-									<path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4 1 6 3 8Z"></path>
-									<path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4 1 6 3 8Z"></path>
-								</svg>
-								<p class="quote-callout-text">{phase.reflectionQuote}</p>
-							</div>
-						)}
-					</article>
+		{d.stats && d.stats.length > 0 && (
+			<ul class="about-hero-proof memoir-metrics">
+				{d.stats.map((stat) => (
+					<li>
+						<strong>{stat.value}</strong>
+						<span>{stat.label}</span>
+					</li>
 				))}
-			</div>
-		) : (
-			<div class="chronicle-timeline">
-				{days.map((day, idx) => (
-					<article class="phase-segment-card day-segment-card card" id={`day-${idx + 1}`}>
-						<div class="phase-header day-header">
-							<div class="phase-badge-wrap day-badge-wrap">
-								<span class="phase-icon day-icon">{day.icon}</span>
-								<span class="phase-date-tag day-date-tag font-mono">{day.dateTag}</span>
-							</div>
-							<div class="phase-title-box day-title-box">
-								<h2 class="phase-headline day-headline">{day.headline}</h2>
-								<p class="phase-subtitle day-subtitle">{day.subtitle}</p>
-							</div>
-						</div>
-
-						<div class="phase-body day-body">
-							{day.storyParagraphs.map((para) => (
-								<p class="story-p">{para}</p>
-							))}
-						</div>
-
-						{day.reflectionQuote && (
-							<div class="phase-quote-callout day-quote-callout">
-								<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="quote-svg">
-									<path d="M3 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2H4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4 1 6 3 8Z"></path>
-									<path d="M15 21c3 0 7-1 7-8V5c0-1.25-.75-2-2-2h-4c-1.25 0-2 .75-2 2v6c0 1.25.75 2 2 2 0 4 1 6 3 8Z"></path>
-								</svg>
-								<p class="quote-callout-text">{day.reflectionQuote}</p>
-							</div>
-						)}
-
-						{day.images && day.images.length > 0 && (
-							<div class="day-images-grid">
-								{day.images.map((img) => (
-									<div class="image-frame card">
-										<img src={img.src} alt={img.alt} class="archival-photo" loading="lazy" />
-										<p class="image-caption font-mono">{img.caption}</p>
-									</div>
-								))}
-							</div>
-						)}
-					</article>
-				))}
-			</div>
+			</ul>
 		)}
+	</header>
 
-		{pillarsOfReflection.length > 0 && (
-			<section class="reflections-section card">
-				<div class="section-title-wrap">
-					<span class="section-tag font-mono">{d.reflectionsTag || '02 // REFLECTIONS'}</span>
-					<h2 class="section-title">{d.reflectionsTitle || 'Formative Reflections'}</h2>
-					{d.reflectionsDesc && <p class="section-desc">{d.reflectionsDesc}</p>}
-				</div>
-				<div class="pillars-grid">
-					{pillarsOfReflection.map((p) => (
-						<div class="pillar-card card">
-							<div class="p-top">
-								<span class="p-icon">{p.icon}</span>
-								<span class="p-tag font-mono">{p.tag}</span>
-							</div>
-							<h3 class="p-title">{p.title}</h3>
-							<p class="p-desc">{p.desc}</p>
-						</div>
-					))}
-				</div>
+	{isPhases ? (
+		eventPhases.map((phase, idx) => (
+			<section class="about-section memoir-band" id={`phase-${idx + 1}`}>
+				<p class="about-rail-tag font-mono">{phase.phaseTag || `[draft] Phase ${idx + 1}`}</p>
+				<h2 class="about-section-title">{phase.headline || phase.phaseTitle || '[draft] Phase headline'}</h2>
+				{phase.subtitle && <p class="about-rail-sub">{phase.subtitle}</p>}
+				{phase.imageSrc && (
+					<figure class="memoir-figure edu-slot">
+						<img src={phase.imageSrc} alt={phase.imageAlt || ''} loading="lazy" />
+						<figcaption class="font-mono">{phase.imageCaption}</figcaption>
+					</figure>
+				)}
+				{(phase.storyParagraphs || []).map((para) => <p class="about-principle-body">{para}</p>)}
+				{phase.reflectionQuote && <blockquote class="about-philo-quote">{phase.reflectionQuote}</blockquote>}
 			</section>
-		)}
-
-		{(d.crossNav || []).length > 0 && (
-			<div class="memoir-cross-nav card">
-				{d.crossNav.map((n) => (
-					<div class="nav-col">
-						<span class="nav-lbl font-mono">{n.lbl}</span>
-						<a href={n.href} class="nav-link">{n.text}</a>
+		))
+	) : (
+		days.map((day, idx) => (
+			<section class="about-section memoir-band" id={`day-${idx + 1}`}>
+				<p class="about-rail-tag font-mono">{day.dateTag || `[draft] Day ${idx + 1}`}</p>
+				<h2 class="about-section-title">{day.headline || '[draft] Day headline'}</h2>
+				{day.subtitle && <p class="about-rail-sub">{day.subtitle}</p>}
+				{(day.storyParagraphs || []).map((para) => <p class="about-principle-body">{para}</p>)}
+				{day.reflectionQuote && <blockquote class="about-philo-quote">{day.reflectionQuote}</blockquote>}
+				{day.images && day.images.length > 0 && (
+					<div class="memoir-shots">
+						{day.images.map((img) => (
+							<figure class="memoir-figure edu-slot">
+								<img src={img.src} alt={img.alt} loading="lazy" />
+								<figcaption class="font-mono">{img.caption}</figcaption>
+							</figure>
+						))}
 					</div>
-				))}
-			</div>
-		)}
-	</div>
+				)}
+			</section>
+		))
+	)}
+
+	{(d.pillars || []).length > 0 && (
+		<section class="about-section">
+			<h2 class="about-section-title">Reflection</h2>
+			{(d.pillars || []).map((pillar) => (
+				<div class="about-beyond-row">
+					<p class="about-beyond-term">{pillar.title || pillar.tag}</p>
+					<p class="about-beyond-desc">{pillar.desc || '[draft] Reflection paragraph'}</p>
+				</div>
+			))}
+		</section>
+	)}
+
+	<a href="/archive" class="about-return font-mono">← Archive</a>
 </BaseLayout>
 
 <style>
-	.memoir-page-container {
-		width: 100%;
-		max-width: 960px;
-		margin: 0 auto;
-		display: flex;
-		flex-direction: column;
-		gap: 2.5rem;
-		padding: 1rem 1rem 4rem;
-		text-align: left;
+	.memoir-lead {
+		margin-top: 0.75rem;
 	}
 
-	/* Breadcrumb */
-	.page-breadcrumb {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.8rem;
-		color: var(--text-muted);
-		flex-wrap: wrap;
+	.memoir-metrics {
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+		margin-top: 1rem;
 	}
 
-	.b-link {
-		color: var(--text-muted);
-		transition: color 0.15s ease;
-		text-decoration: none;
+	.memoir-band {
+		padding-top: 2rem;
 	}
 
-	.b-link:hover {
-		color: var(--accent);
+	.memoir-figure {
+		margin: 1rem 0;
 	}
 
-	.b-sep {
-		opacity: 0.4;
-	}
-
-	.b-curr {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-	/* Hero */
-	.memoir-hero {
-		padding: 2.5rem;
-		border-radius: 16px;
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
-		border: 1px solid rgba(180, 33, 53, 0.25);
-	}
-
-	.hero-top-meta {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.badge-status {
-		font-size: 0.72rem;
-		padding: 0.2rem 0.65rem;
-		border-radius: 9999px;
-		background: rgba(180, 33, 53, 0.1);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.25);
-		font-weight: 700;
-	}
-
-	.title-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.memoir-title {
-		font-size: clamp(1.85rem, 3.6vw, 2.6rem);
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.2;
-	}
-
-	.memoir-subtitle {
-		font-size: 1.02rem;
-		color: var(--accent);
-		line-height: 1.45;
-	}
-
-	.author-meta-bar {
-		display: flex;
-		align-items: center;
-		gap: 0.85rem;
-		flex-wrap: wrap;
-		font-size: 0.78rem;
-		color: var(--text-muted);
-		padding: 0.85rem 1rem;
-		background: rgba(95, 80, 56, 0.05);
-		border-radius: 8px;
-		border: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	.meta-item {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		flex-wrap: wrap;
-	}
-
-	.m-lbl {
-		color: var(--accent);
-		font-weight: 700;
-	}
-
-	.m-val {
-		color: var(--text-main);
-		font-weight: 600;
-	}
-
-	.m-role {
-		color: var(--text-muted);
-		opacity: 0.85;
-	}
-
-	.m-sep {
-		opacity: 0.3;
-	}
-
-	/* Key Metrics Grid */
-	.key-metrics-grid {
-		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 0.75rem;
-		padding-top: 0.85rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.15);
-	}
-
-	@media (max-width: 800px) {
-		.key-metrics-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	@media (max-width: 480px) {
-		.key-metrics-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.k-metric-card {
-		padding: 0.85rem 1rem;
-		border-radius: 10px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 0.15rem;
-	}
-
-	.k-val {
-		font-size: 1.25rem;
-		font-weight: 800;
-		color: var(--accent);
-	}
-
-	.k-lbl {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.k-sub {
-		font-size: 0.68rem;
-		color: var(--text-muted);
-	}
-
-	.executive-quote-box {
-		padding: 1.25rem 1.5rem;
-		border-left: 3px solid var(--accent);
-		background: rgba(180, 33, 53, 0.04);
-		border-radius: 0 10px 10px 0;
-	}
-
-	.quote-text {
-		font-size: 0.96rem;
-		font-style: italic;
-		line-height: 1.6;
-		color: var(--text-main);
-	}
-
-	/* Timeline Cards */
-	.chronicle-timeline {
-		display: flex;
-		flex-direction: column;
-		gap: 2.25rem;
-	}
-
-	.phase-segment-card {
-		width: 100%;
-		max-width: 100%;
-		box-sizing: border-box;
-		padding: 2.25rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 1.35rem;
-		overflow: hidden;
-		transition: border-color 0.15s ease;
-	}
-
-	.phase-segment-card:hover {
-		border-color: rgba(180, 33, 53, 0.35);
-	}
-
-	.phase-header {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		padding-bottom: 1rem;
-		border-bottom: 1px dashed rgba(95, 80, 56, 0.15);
-	}
-
-	.phase-badge-wrap {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-	}
-
-	.phase-icon {
-		font-size: 1.25rem;
-	}
-
-	.phase-date-tag {
-		font-size: 0.72rem;
-		color: var(--accent);
-		letter-spacing: 0.06em;
-		font-weight: 700;
-	}
-
-	.phase-headline {
-		font-size: 1.45rem;
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.3;
-	}
-
-	.phase-subtitle {
-		font-size: 0.92rem;
-		color: var(--text-muted);
-		line-height: 1.45;
-	}
-
-	/* Archival Image Display */
-	.phase-image-container {
-		width: 100%;
-		max-width: 100%;
-		box-sizing: border-box;
-		overflow: hidden;
-		margin: 0.25rem 0;
-	}
-
-	.image-frame {
-		width: 100%;
-		max-width: 100%;
-		box-sizing: border-box;
-		overflow: hidden;
-		border-radius: 12px;
-		background: rgba(95, 80, 56, 0.04);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-	}
-
-	.archival-photo {
-		width: 100%;
-		max-width: 100%;
-		height: auto;
-		max-height: 480px;
-		object-fit: cover;
+	.memoir-figure img {
 		display: block;
-		border-bottom: 1px solid var(--card-border);
-	}
-
-	.archival-photo.is-emblem {
-		object-fit: contain;
-		background: #ffffff;
-		padding: 1.5rem;
-		max-height: 280px;
-	}
-
-	.image-caption {
-		padding: 0.75rem 1rem;
-		font-size: 0.75rem;
-		color: var(--text-muted);
-		line-height: 1.4;
-		background: rgba(95, 80, 56, 0.03);
-	}
-
-	.phase-body {
-		display: flex;
-		flex-direction: column;
-		gap: 1rem;
-	}
-
-	.story-p {
-		font-size: 0.95rem;
-		line-height: 1.75;
-		color: var(--text-main);
-		text-align: justify;
-	}
-
-	/* Quotation Callout */
-	.phase-quote-callout {
-		display: flex;
-		align-items: flex-start;
-		gap: 0.85rem;
-		padding: 1.15rem 1.35rem;
-		background: rgba(180, 33, 53, 0.04);
-		border: 1px solid rgba(180, 33, 53, 0.15);
-		border-radius: 10px;
-	}
-
-	.quote-svg {
-		color: var(--accent);
-		flex-shrink: 0;
-		margin-top: 0.15rem;
-		opacity: 0.85;
-	}
-
-	.quote-callout-text {
-		font-size: 0.92rem;
-		font-style: italic;
-		line-height: 1.55;
-		color: var(--text-main);
-		font-weight: 500;
-	}
-
-	/* Reflections Section */
-	.reflections-section {
-		padding: 2.25rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
-	}
-
-	.section-title-wrap {
-		display: flex;
-		flex-direction: column;
-		gap: 0.4rem;
-	}
-
-	.section-title {
-		font-size: 1.45rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.section-desc {
-		font-size: 0.92rem;
-		line-height: 1.6;
-		color: var(--text-muted);
-	}
-
-	.pillars-grid {
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.25rem;
-	}
-
-	@media (max-width: 860px) {
-		.pillars-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.pillar-card {
-		padding: 1.5rem;
-		border-radius: 12px;
-		background: rgba(95, 80, 56, 0.03);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 0.65rem;
-	}
-
-	.p-top {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.5rem;
-	}
-
-	.p-icon {
-		font-size: 1.25rem;
-	}
-
-	.p-tag {
-		font-size: 0.65rem;
-		color: var(--accent);
-		background: rgba(180, 33, 53, 0.08);
-		padding: 0.15rem 0.45rem;
-		border-radius: 4px;
-		font-weight: 700;
-	}
-
-	.p-title {
-		font-size: 0.98rem;
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.35;
-	}
-
-	.p-desc {
-		font-size: 0.84rem;
-		line-height: 1.55;
-		color: var(--text-muted);
-	}
-
-	/* Cross Navigation */
-	.memoir-cross-nav {
-		padding: 1.75rem 2rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
-	}
-
-	@media (max-width: 768px) {
-		.memoir-cross-nav {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.nav-col {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.nav-lbl {
-		font-size: 0.7rem;
-		color: var(--text-muted);
-		letter-spacing: 0.06em;
-	}
-
-	.nav-link {
-		font-size: 0.88rem;
-		font-weight: 700;
-		color: var(--accent);
-		text-decoration: none;
-		transition: transform 0.15s ease;
-	}
-
-	.nav-link:hover {
-		transform: translateX(3px);
-	}
-
-	.day-images-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-		gap: 1rem;
-		margin: 1.25rem 0;
-	}
-	.day-image-card {
-		margin: 0;
-		border-radius: 10px;
-		overflow: hidden;
-		border: 1px solid var(--card-border);
-		background: var(--card-bg);
-	}
-	.day-image-card img {
 		width: 100%;
-		display: block;
-		aspect-ratio: 4/3;
+		max-height: 28rem;
 		object-fit: cover;
 	}
-	.day-image-caption {
-		padding: 0.55rem 0.75rem;
-		font-size: 0.72rem;
-		color: var(--text-muted);
-		line-height: 1.4;
-	}
-\n</style>
 
+	.memoir-figure figcaption {
+		margin-top: 0.35rem;
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+	}
+
+	.memoir-shots {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+		gap: 1rem;
+		margin-top: 1rem;
+	}
+</style>

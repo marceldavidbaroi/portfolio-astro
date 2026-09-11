@@ -1,209 +1,47 @@
 ---
 import type { PrincipleItem } from '../../data/aboutData';
+import { principleProofLinks } from '../../data/aboutLayoutDummy';
 
 interface Props {
 	principles: PrincipleItem[];
 }
 
+type PrincipleWithProof = PrincipleItem & {
+	proofHref?: string;
+	proofLabel?: string;
+};
+
 const { principles } = Astro.props;
+
+function proofFor(principle: PrincipleItem) {
+	const withProof = principle as PrincipleWithProof;
+	const dummy = principleProofLinks.find((link) => link.principleNum === principle.num);
+	return {
+		href: withProof.proofHref ?? dummy?.href,
+		label: withProof.proofLabel ?? dummy?.label,
+	};
+}
 ---
 
-<section class="about-section" id="philosophy">
-	<div class="section-header">
-		<span class="section-tag font-dot">04 // ARCHITECTURE & METHODOLOGY</span>
-		<h2 class="section-title font-dot">Architecture-First Paradigm</h2>
-		<p class="section-desc">
-			Building production-grade software requires sound structural foundations before code generation.
-		</p>
+<section class="about-section" id="how-i-work" aria-labelledby="how-i-work-heading">
+	<div class="section-kicker">
+		<h2 id="how-i-work-heading" class="label font-mono">How I work</h2>
+		<a href="/philosophy" class="section-link font-mono">Full philosophy →</a>
 	</div>
 
-	<div class="principles-grid">
-		{principles.map((p) => (
-			<div class="principle-card card">
-				<div class="principle-header">
-					<div class="principle-icon-wrap">
-						{p.iconType === 'layers' && (
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
-								<polyline points="2 17 12 22 22 17"></polyline>
-								<polyline points="2 12 12 17 22 12"></polyline>
-							</svg>
-						)}
-						{p.iconType === 'shield' && (
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
-							</svg>
-						)}
-						{p.iconType === 'package' && (
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<path d="M16.5 9.4 7.55 4.24"></path>
-								<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
-								<polyline points="3.29 7 12 12 20.71 7"></polyline>
-								<line x1="12" y1="22" x2="12" y2="12"></line>
-							</svg>
-						)}
-						{p.iconType === 'trending' && (
-							<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-								<polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
-								<polyline points="17 6 23 6 23 12"></polyline>
-							</svg>
-						)}
-					</div>
-					<div class="principle-title-group">
-						<span class="principle-tag font-mono">{p.tag}</span>
-						<h3 class="principle-title">{p.title}</h3>
-					</div>
-					<span class="principle-num font-mono">{p.num}</span>
+	{principles.map((p) => {
+		const proof = proofFor(p);
+		return (
+			<article class="about-principle-row">
+				<p class="about-principle-num font-mono">{p.num}</p>
+				<div>
+					<h3 class="about-principle-title">{p.title}</h3>
+					<p class="about-principle-body">{p.desc}</p>
+					{proof.href && proof.label && (
+						<a href={proof.href} class="about-principle-proof font-mono">{proof.label}</a>
+					)}
 				</div>
-				<p class="principle-desc">{p.desc}</p>
-			</div>
-		))}
-	</div>
-
-	<div class="section-footer-link">
-		<a href="/philosophy" class="full-dir-btn">
-			<span>Read Full Engineering Philosophy & Architectural Tenets →</span>
-		</a>
-	</div>
+			</article>
+		);
+	})}
 </section>
-
-<style>
-	.about-section {
-		width: 100%;
-		margin-top: 4.5rem;
-		text-align: left;
-		scroll-margin-top: 5rem;
-	}
-
-	.section-header {
-		margin-bottom: 2rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.section-tag {
-		font-size: 0.9375rem;
-		letter-spacing: 0.12em;
-		color: var(--accent);
-		text-transform: uppercase;
-		font-weight: 700;
-	}
-
-	.section-title {
-		font-size: clamp(2rem, 4vw, 2.75rem);
-		font-weight: 700;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: var(--text-main);
-	}
-
-	.section-desc {
-		font-size: 0.9375rem;
-		line-height: 1.5;
-		color: var(--text-muted);
-		max-width: 700px;
-	}
-
-	.principles-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-	}
-
-	@media (max-width: 768px) {
-		.principles-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.principle-card {
-		padding: 1.75rem;
-		border-radius: 14px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-		transition: all 0.2s ease;
-	}
-
-	.principle-card:hover {
-		border-color: rgba(180, 33, 53, 0.35);
-		transform: translateY(-2px);
-	}
-
-	.principle-header {
-		display: flex;
-		align-items: center;
-		gap: 0.85rem;
-	}
-
-	.principle-icon-wrap {
-		width: 40px;
-		height: 40px;
-		border-radius: 10px;
-		background: rgba(180, 33, 53, 0.08);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		flex-shrink: 0;
-	}
-
-	.principle-title-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		flex: 1;
-	}
-
-	.principle-tag {
-		font-size: 0.68rem;
-		color: var(--accent);
-		letter-spacing: 0.06em;
-		font-weight: 700;
-	}
-
-	.principle-title {
-		font-size: 1.05rem;
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.3;
-	}
-
-	.principle-num {
-		font-size: 1.25rem;
-		font-weight: 800;
-		color: var(--text-muted);
-		opacity: 0.4;
-	}
-
-	.principle-desc {
-		font-size: 0.86rem;
-		line-height: 1.6;
-		color: var(--text-muted);
-	}
-
-	.section-footer-link {
-		margin-top: 1.5rem;
-		text-align: left;
-	}
-
-	.full-dir-btn {
-		font-size: 0.86rem;
-		color: var(--accent);
-		font-weight: 700;
-		text-decoration: none;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		transition: all 0.15s ease;
-	}
-
-	.full-dir-btn:hover {
-		color: var(--accent-hover);
-		transform: translateX(3px);
-	}
-</style>
