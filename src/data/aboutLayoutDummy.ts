@@ -228,3 +228,21 @@ export const credsTotalCountLabel = '[draft] 33';
 
 /** Career highlight one-liner when an experience entry lacks highlights. */
 export const careerHighlightFallback = '[draft] One-line role highlight for experience rail.';
+
+export interface HscClubRow {
+	title: string;
+	role: string;
+	desc: string;
+}
+
+export const hscClubRows: HscClubRow[] = [
+	{
+		title: '[draft] Club name',
+		role: '[draft] Role · tag',
+		desc: '[draft] One-line club activity description.',
+	},
+];
+
+export const galleryCaptionFallback = '[draft] Gallery caption';
+
+export const experienceGalleryKicker = '[draft] Workplace';

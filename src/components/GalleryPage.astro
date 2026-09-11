@@ -16,21 +16,39 @@ interface Props {
 	description: string;
 	photos: Photo[];
 	emptyHint: string;
+	/** @deprecated Prefer `crumb` */
 	useAtticChrome?: boolean;
+	crumb?: 'school' | 'experience';
 }
 
-const { title, backHref, backLabel, tag, description, photos, emptyHint, useAtticChrome = false } = Astro.props;
+const { title, backHref, backLabel, tag, description, photos, emptyHint, useAtticChrome = false, crumb } = Astro.props;
+const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 const draftCaption = '[draft] Gallery caption';
 ---
 
-<BaseLayout title={`Marcel David Baroi | ${title}`} isWide alignStart={useAtticChrome}>
-	<section class:list={['gallery-page', { 'gallery-attic': useAtticChrome }]}>
-		{useAtticChrome ? (
+<BaseLayout title={`Marcel David Baroi | ${title}`} isWide alignStart={Boolean(atticCrumb)}>
+	<section class:list={['gallery-page', { 'gallery-attic': Boolean(atticCrumb) }]}>
+		{atticCrumb === 'school' ? (
 			<>
 				<nav class="attic-crumb font-mono gallery-crumb" aria-label="Breadcrumb">
 					<a href="/about" class="attic-crumb-link">About</a>
 					<span class="attic-crumb-sep" aria-hidden="true">/</span>
 					<a href="/about#school" class="attic-crumb-link">School</a>
+					<span class="attic-crumb-sep" aria-hidden="true">/</span>
+					<span class="attic-crumb-current">Gallery</span>
+				</nav>
+				<header class="about-attic-head">
+					<p class="label font-mono about-attic-kicker">{tag}</p>
+					<h1 class="about-attic-title">{title}</h1>
+					<p class="about-attic-lead">{description}</p>
+				</header>
+			</>
+		) : atticCrumb === 'experience' ? (
+			<>
+				<nav class="attic-crumb font-mono gallery-crumb" aria-label="Breadcrumb">
+					<a href="/" class="attic-crumb-link">Home</a>
+					<span class="attic-crumb-sep" aria-hidden="true">/</span>
+					<a href="/#experience" class="attic-crumb-link">Experience</a>
 					<span class="attic-crumb-sep" aria-hidden="true">/</span>
 					<span class="attic-crumb-current">Gallery</span>
 				</nav>
@@ -66,7 +84,7 @@ const draftCaption = '[draft] Gallery caption';
 			<p class="gallery-empty font-mono" set:html={emptyHint} />
 		)}
 
-		{useAtticChrome && <a href={backHref} class="about-return font-mono">← {backLabel}</a>}
+		{atticCrumb && <a href={backHref} class="about-return font-mono">← {backLabel}</a>}
 	</section>
 </BaseLayout>
 

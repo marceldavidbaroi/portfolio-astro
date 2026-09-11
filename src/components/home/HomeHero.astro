@@ -40,8 +40,8 @@ const { portraitSrc, proof } = Astro.props;
 				<img
 					src={portraitSrc}
 					alt="Portrait of Marcel David Baroi"
-					width="640"
-					height="854"
+					width="720"
+					height="960"
 				/>
 			) : (
 				<div class="portrait-slot" role="img" aria-label="Portrait placeholder. Add public/images/portrait.webp">
@@ -179,9 +179,10 @@ const { portraitSrc, proof } = Astro.props;
 	.portrait-slot {
 		display: block;
 		width: 100%;
+		height: auto;
 		aspect-ratio: 3 / 4;
 		object-fit: cover;
-		object-position: center top;
+		object-position: center 18%;
 		background: var(--card-bg);
 	}
 

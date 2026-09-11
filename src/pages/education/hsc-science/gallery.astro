@@ -2,7 +2,9 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { mediaMap, resolveAssets } from '../../../lib/media';
+import { galleryCaptionFallback } from '../../../data/aboutLayoutDummy';
 import '../../../styles/about.css';
+import '../../../styles/education.css';
 
 const galleryEntry = await getEntry('galleries', 'hsc-science');
 if (!galleryEntry) throw new Error('Missing galleries/hsc-science');
@@ -22,7 +24,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		photos: album.photos.map((p, i) => ({
 			src: assets[i].src,
 			title: assets[i].title,
-			caption: assets[i].caption,
+			caption: assets[i].caption || galleryCaptionFallback,
 			alt: assets[i].alt,
 			span: p.span,
 			isEmblem: p.isEmblem
@@ -37,7 +39,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 	isWide
 	alignStart
 >
-	<div class="gallery-page-container gallery-attic-page">
+	<div class="hsc-gallery-page">
 		<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
 			<a href="/about" class="attic-crumb-link">About</a>
 			<span class="attic-crumb-sep" aria-hidden="true">/</span>
@@ -54,132 +56,97 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			</p>
 		</header>
 
-		<!-- Galleries Sections -->
-		<div class="galleries-list">
-			{galleries.map((section, sIdx) => (
-				<section class="gallery-section edu-slot" id={section.id}>
-					<div class="section-header">
-						<div class="s-left">
-							<span class="s-tag font-mono">{section.tag}</span>
-							<h2 class="s-title">{section.title}</h2>
-							<p class="s-desc">{section.desc}</p>
+		<div class="hsc-gallery-sections">
+			{galleries.map((section) => (
+				<section class="hsc-gallery-section" id={section.id}>
+					<header class="hsc-gallery-section-head">
+						<div>
+							<p class="label font-mono">{section.tag}</p>
+							<h2 class="edu-section-title">{section.title}</h2>
+							<p class="edu-body-text">{section.desc}</p>
 						</div>
 						{section.memoirLink && (
-							<a href={section.memoirLink} class="s-memoir-btn font-mono">
-								<span>Read Full Written Memoir →</span>
-							</a>
+							<a href={section.memoirLink} class="text-link font-mono">Read memoir →</a>
 						)}
-					</div>
+					</header>
 
-					<div class:list={['photos-grid', (section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') ? 'revisit-dense-grid' : 'curated-photos-grid']}>
-						{section.photos.map((photo, pIdx) => (
-							<div
+					<div
+						class:list={[
+							'hsc-gallery-grid',
+							(section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') && 'hsc-gallery-grid--dense'
+						]}
+					>
+						{section.photos.map((photo) => (
+							<figure
 								class:list={[
-									'photo-item-card card',
-									photo.span === 'full' && 'span-full',
-									photo.span === 'wide' && 'span-wide',
-									(section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') && 'revisit-photo-card'
+									'hsc-gallery-item',
+									photo.span === 'full' && 'hsc-gallery-item--full',
+									photo.span === 'wide' && 'hsc-gallery-item--wide'
 								]}
 								data-spotlight-src={photo.src}
 								data-spotlight-title={photo.title || section.title}
-								data-spotlight-caption={photo.caption || ''}
-								role="button"
-								tabindex="0"
-								title="Click to view full screen"
+								data-spotlight-caption={photo.caption}
 							>
-								<div class="photo-img-wrap">
+								<button
+									type="button"
+									class="hsc-gallery-shot"
+									aria-label={`View ${photo.title || section.title}`}
+								>
 									<img
 										src={photo.src}
-										alt={photo.alt || photo.title || 'Notre Dame College Photo'}
-										class:list={['gallery-img', photo.isEmblem && 'is-emblem']}
+										alt={photo.alt || photo.title || 'Notre Dame College photo'}
+										class:list={['hsc-gallery-img', photo.isEmblem && 'is-emblem']}
 										loading="lazy"
 									/>
-									<div class="photo-zoom-hint font-mono">
-										<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-											<circle cx="11" cy="11" r="8"></circle>
-											<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-											<line x1="11" y1="8" x2="11" y2="14"></line>
-											<line x1="8" y1="11" x2="14" y2="11"></line>
-										</svg>
-										<span>View</span>
-									</div>
-								</div>
+								</button>
 								{section.id !== 'ndc-visit-dec-2018' && section.id !== 'ndc-college-memories' && (
-									<div class="photo-meta">
-										<h3 class="photo-title">{photo.title}</h3>
-										<p class="photo-caption font-mono">{photo.caption}</p>
-									</div>
+									<figcaption class="font-mono">
+										{photo.title && <strong>{photo.title}</strong>}
+										{photo.caption && <span>{photo.caption}</span>}
+									</figcaption>
 								)}
-							</div>
+							</figure>
 						))}
 					</div>
 				</section>
 			))}
 		</div>
 
-		<!-- Interactive Spotlight Modal Component -->
-		<div id="gallery-spotlight-modal" class="spotlight-modal" aria-hidden="true" role="dialog">
-			<div class="spotlight-backdrop" id="spotlight-backdrop"></div>
-			<div class="spotlight-content">
-				<button class="spotlight-close-btn font-mono" id="spotlight-close" aria-label="Close spotlight view">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<line x1="18" y1="6" x2="6" y2="18"></line>
-						<line x1="6" y1="6" x2="18" y2="18"></line>
-					</svg>
-					<span>ESC</span>
-				</button>
-
-				<button class="spotlight-nav-btn prev font-mono" id="spotlight-prev" aria-label="Previous photo">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polyline points="15 18 9 12 15 6"></polyline>
-					</svg>
-				</button>
-
-				<div class="spotlight-image-stage">
-					<img id="spotlight-img" src="" alt="Full view" class="spotlight-full-img" />
-					<div class="spotlight-caption-bar">
-						<div class="sc-left">
-							<h3 id="spotlight-title" class="sc-title"></h3>
-							<p id="spotlight-desc" class="sc-caption font-mono"></p>
+		<div id="gallery-spotlight-modal" class="hsc-spotlight" aria-hidden="true" role="dialog">
+			<div class="hsc-spotlight-backdrop" id="spotlight-backdrop"></div>
+			<div class="hsc-spotlight-panel">
+				<button class="hsc-spotlight-close font-mono" id="spotlight-close" type="button" aria-label="Close">Close</button>
+				<button class="hsc-spotlight-nav prev font-mono" id="spotlight-prev" type="button" aria-label="Previous photo">←</button>
+				<div class="hsc-spotlight-stage">
+					<img id="spotlight-img" src="" alt="" class="hsc-spotlight-img" />
+					<div class="hsc-spotlight-meta">
+						<div>
+							<h3 id="spotlight-title" class="hsc-spotlight-title"></h3>
+							<p id="spotlight-desc" class="hsc-spotlight-caption font-mono"></p>
 						</div>
-						<span id="spotlight-counter" class="sc-counter font-mono"></span>
+						<span id="spotlight-counter" class="hsc-spotlight-counter font-mono"></span>
 					</div>
 				</div>
-
-				<button class="spotlight-nav-btn next font-mono" id="spotlight-next" aria-label="Next photo">
-					<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<polyline points="9 18 15 12 9 6"></polyline>
-					</svg>
-				</button>
+				<button class="hsc-spotlight-nav next font-mono" id="spotlight-next" type="button" aria-label="Next photo">→</button>
 			</div>
 		</div>
 
-		<!-- Cross Navigation -->
-		<div class="gallery-cross-nav edu-text-nav">
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">ACADEMIC DETAILS</span>
-				<a href="/education/hsc-science" class="nav-link">← Return to Notre Dame College Overview</a>
-			</div>
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">CHRONICLED ARCHIVES</span>
-				<a href="/archive" class="nav-link">Personal Archives & Journey →</a>
-			</div>
-			<div class="nav-col">
-				<span class="nav-lbl font-mono">HIGHER EDUCATION</span>
-				<a href="/education/bsc-cse" class="nav-link">B.Sc. in CSE (Daffodil Intl Univ) →</a>
-			</div>
-		</div>
+		<nav class="edu-text-nav font-mono" aria-label="Gallery navigation">
+			<a href="/education/hsc-science" class="text-link">← HSC Science overview</a>
+			<a href="/archive" class="text-link">Personal archives →</a>
+			<a href="/education/bsc-cse" class="text-link">B.Sc. CSE →</a>
+		</nav>
 	</div>
 
 	<script>
 		function initSpotlight() {
-			const cards = Array.from(document.querySelectorAll('[data-spotlight-src]'));
+			const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-spotlight-src]'));
 			const modal = document.getElementById('gallery-spotlight-modal');
 			const backdrop = document.getElementById('spotlight-backdrop');
 			const closeBtn = document.getElementById('spotlight-close');
 			const prevBtn = document.getElementById('spotlight-prev');
 			const nextBtn = document.getElementById('spotlight-next');
-			const spotImg = document.getElementById('spotlight-img') as HTMLImageElement;
+			const spotImg = document.getElementById('spotlight-img') as HTMLImageElement | null;
 			const spotTitle = document.getElementById('spotlight-title');
 			const spotDesc = document.getElementById('spotlight-desc');
 			const spotCounter = document.getElementById('spotlight-counter');
@@ -190,12 +157,13 @@ const galleries = galleryEntry.data.albums.map((album) => {
 
 			function openSpotlight(index: number) {
 				currentIndex = (index + cards.length) % cards.length;
-				const card = cards[currentIndex] as HTMLElement;
+				const card = cards[currentIndex];
 				const src = card.dataset.spotlightSrc || '';
 				const title = card.dataset.spotlightTitle || '';
 				const caption = card.dataset.spotlightCaption || '';
 
 				spotImg.src = src;
+				spotImg.alt = title || caption || 'Gallery photo';
 				if (spotTitle) spotTitle.textContent = title;
 				if (spotDesc) spotDesc.textContent = caption;
 				if (spotCounter) spotCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
@@ -212,16 +180,9 @@ const galleries = galleryEntry.data.albums.map((album) => {
 				spotImg.src = '';
 			}
 
-			function showNext() {
-				openSpotlight(currentIndex + 1);
-			}
-
-			function showPrev() {
-				openSpotlight(currentIndex - 1);
-			}
-
 			cards.forEach((card, idx) => {
-				card.addEventListener('click', () => openSpotlight(idx));
+				const trigger = card.querySelector('button') || card;
+				trigger.addEventListener('click', () => openSpotlight(idx));
 				card.addEventListener('keydown', (e) => {
 					if ((e as KeyboardEvent).key === 'Enter') openSpotlight(idx);
 				});
@@ -229,583 +190,207 @@ const galleries = galleryEntry.data.albums.map((album) => {
 
 			closeBtn?.addEventListener('click', closeSpotlight);
 			backdrop?.addEventListener('click', closeSpotlight);
-			nextBtn?.addEventListener('click', showNext);
-			prevBtn?.addEventListener('click', showPrev);
+			nextBtn?.addEventListener('click', () => openSpotlight(currentIndex + 1));
+			prevBtn?.addEventListener('click', () => openSpotlight(currentIndex - 1));
 
 			window.addEventListener('keydown', (e) => {
 				if (!modal.classList.contains('is-open')) return;
 				if (e.key === 'Escape') closeSpotlight();
-				if (e.key === 'ArrowRight') showNext();
-				if (e.key === 'ArrowLeft') showPrev();
+				if (e.key === 'ArrowRight') openSpotlight(currentIndex + 1);
+				if (e.key === 'ArrowLeft') openSpotlight(currentIndex - 1);
 			});
 		}
 
-		if (document.readyState === 'loading') {
-			document.addEventListener('DOMContentLoaded', initSpotlight);
-		} else {
-			initSpotlight();
-		}
+		initSpotlight();
+		document.addEventListener('astro:page-load', initSpotlight);
 	</script>
 </BaseLayout>
 
 <style>
-	.gallery-page-container {
-		width: 100%;
-		max-width: 1040px;
-		margin: 0 auto;
+	.hsc-gallery-page {
 		display: flex;
 		flex-direction: column;
-		gap: 2.5rem;
-		padding: 1rem 1rem 4rem;
-		text-align: left;
+		gap: 2rem;
+		padding: 0 0 4rem;
 	}
 
-	/* Breadcrumb */
-	.page-breadcrumb {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		font-size: 0.8rem;
-		color: var(--text-muted);
-		flex-wrap: wrap;
-	}
-
-	.b-link {
-		color: var(--text-muted);
-		transition: color 0.15s ease;
-		text-decoration: none;
-	}
-
-	.b-link:hover {
-		color: var(--accent);
-	}
-
-	.b-sep {
-		opacity: 0.4;
-	}
-
-	.b-curr {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-	/* Hero */
-	.gallery-hero {
-		padding: 2.5rem;
-		border-radius: 16px;
-		display: flex;
-		flex-direction: column;
-		gap: 1.25rem;
-		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.04) 100%);
-		border: 1px solid rgba(180, 33, 53, 0.25);
-	}
-
-	.hero-top-meta {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.badge-status {
-		font-size: 0.72rem;
-		padding: 0.2rem 0.65rem;
-		border-radius: 9999px;
-		background: rgba(180, 33, 53, 0.1);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.25);
-		font-weight: 700;
-	}
-
-	.title-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-	}
-
-	.gallery-title {
-		font-size: clamp(1.85rem, 3.6vw, 2.6rem);
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.2;
-	}
-
-	.gallery-subtitle {
-		font-size: 1.02rem;
-		color: var(--text-muted);
-		line-height: 1.45;
-	}
-
-	.gallery-meta-bar {
-		display: flex;
-		align-items: center;
-		gap: 0.85rem;
-		flex-wrap: wrap;
-		font-size: 0.78rem;
-		color: var(--text-muted);
-		padding: 0.85rem 1rem;
-		background: rgba(95, 80, 56, 0.05);
-		border-radius: 8px;
-		border: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	.meta-item {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		flex-wrap: wrap;
-	}
-
-	.m-lbl {
-		color: var(--accent);
-		font-weight: 700;
-	}
-
-	.m-val {
-		color: var(--text-main);
-		font-weight: 600;
-	}
-
-	.m-sep {
-		opacity: 0.3;
-	}
-
-	/* Galleries List */
-	.galleries-list {
+	.hsc-gallery-sections {
 		display: flex;
 		flex-direction: column;
 		gap: 2.5rem;
 	}
 
-	.gallery-section {
-		padding: 2.25rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		gap: 1.5rem;
+	.hsc-gallery-section {
+		padding: 2rem 0 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
 	}
 
-	.section-header {
+	.hsc-gallery-section-head {
 		display: flex;
-		justify-content: space-between;
+		flex-wrap: wrap;
 		align-items: flex-start;
-		gap: 1.25rem;
-		flex-wrap: wrap;
-		padding-bottom: 1.25rem;
-		border-bottom: 1px dashed rgba(95, 80, 56, 0.15);
+		justify-content: space-between;
+		gap: 1rem 1.5rem;
+		margin-bottom: 1.25rem;
 	}
 
-	.s-left {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-		max-width: 680px;
-	}
-
-	.s-tag {
-		font-size: 0.72rem;
-		color: var(--accent);
-		font-weight: 700;
-		letter-spacing: 0.06em;
-	}
-
-	.s-title {
-		font-size: 1.4rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.s-desc {
-		font-size: 0.88rem;
-		color: var(--text-muted);
-		line-height: 1.5;
-	}
-
-	.s-memoir-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.35rem;
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--accent);
-		text-decoration: none;
-		padding: 0.45rem 0.85rem;
-		border-radius: 6px;
-		background: rgba(180, 33, 53, 0.08);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-		transition: all 0.15s ease;
-	}
-
-	.s-memoir-btn:hover {
-		background: var(--accent);
-		color: #fffdfa;
-		transform: translateX(2px);
-	}
-
-	/* Photos Grids */
-	.curated-photos-grid {
+	.hsc-gallery-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.25rem;
-		width: 100%;
-		box-sizing: border-box;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
 	}
 
-	@media (max-width: 768px) {
-		.curated-photos-grid {
-			grid-template-columns: 1fr;
-		}
+	.hsc-gallery-grid--dense {
+		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
 	}
 
-	/* Dense Multi-Column Gallery Grid (4 to 5 per row on desktop) */
-	.revisit-dense-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(185px, 1fr));
-		gap: 0.85rem;
-		width: 100%;
-		box-sizing: border-box;
-	}
-
-	@media (max-width: 640px) {
-		.revisit-dense-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: 0.65rem;
-		}
-	}
-
-	.photo-item-card {
-		width: 100%;
-		box-sizing: border-box;
-		border-radius: 12px;
-		overflow: hidden;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: flex;
-		flex-direction: column;
-		cursor: pointer;
-		position: relative;
-		transition: all 0.2s ease;
-	}
-
-	.photo-item-card:hover {
-		border-color: var(--accent);
-		transform: translateY(-2px);
-		box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
-	}
-
-	.photo-item-card.span-full {
+	.hsc-gallery-item--full,
+	.hsc-gallery-item--wide {
 		grid-column: 1 / -1;
 	}
 
-	.photo-item-card.span-wide {
-		grid-column: 1 / -1;
-	}
-
-	.revisit-photo-card {
-		border-radius: 10px;
-		background: transparent;
-	}
-
-	.revisit-photo-card .photo-img-wrap {
-		aspect-ratio: 4 / 3;
-	}
-
-	.revisit-photo-card .gallery-img {
-		height: 100%;
-		width: 100%;
-		object-fit: cover;
-		border-bottom: none;
-	}
-
-	.photo-img-wrap {
-		width: 100%;
-		position: relative;
-		overflow: hidden;
-		background: rgba(95, 80, 56, 0.03);
-	}
-
-	.gallery-img {
-		width: 100%;
-		height: auto;
-		max-height: 480px;
-		object-fit: cover;
+	.hsc-gallery-shot {
 		display: block;
-		border-bottom: 1px solid var(--card-border);
-		transition: transform 0.3s ease;
+		width: 100%;
+		padding: 0;
+		border: 0;
+		background: var(--card-bg);
+		cursor: pointer;
 	}
 
-	.photo-item-card:hover .gallery-img {
-		transform: scale(1.03);
+	.hsc-gallery-img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 3;
+		object-fit: cover;
 	}
 
-	.gallery-img.is-emblem {
+	.hsc-gallery-img.is-emblem {
 		object-fit: contain;
-		background: #ffffff;
-		padding: 1.5rem;
-		max-height: 260px;
+		background: #fffdfa;
+		padding: 1rem;
 	}
 
-	.photo-zoom-hint {
-		position: absolute;
-		top: 0.6rem;
-		right: 0.6rem;
-		display: flex;
-		align-items: center;
-		gap: 0.3rem;
-		padding: 0.25rem 0.55rem;
-		border-radius: 6px;
-		background: rgba(18, 16, 12, 0.75);
-		color: #fffdfa;
-		font-size: 0.68rem;
-		font-weight: 700;
-		backdrop-filter: blur(4px);
-		opacity: 0;
-		transform: translateY(-4px);
-		transition: all 0.2s ease;
-		pointer-events: none;
-	}
-
-	.photo-item-card:hover .photo-zoom-hint {
-		opacity: 1;
-		transform: translateY(0);
-	}
-
-	.photo-meta {
-		padding: 1rem 1.25rem;
+	.hsc-gallery-item figcaption {
 		display: flex;
 		flex-direction: column;
-		gap: 0.35rem;
-		background: rgba(95, 80, 56, 0.02);
-	}
-
-	.photo-title {
-		font-size: 0.95rem;
-		font-weight: 700;
-		color: var(--text-main);
-	}
-
-	.photo-caption {
-		font-size: 0.76rem;
+		gap: 0.15rem;
+		margin-top: 0.35rem;
+		font-size: var(--type-caption);
 		color: var(--text-muted);
-		line-height: 1.45;
 	}
 
-	/* Spotlight Modal Styles */
-	.spotlight-modal {
+	.hsc-gallery-item figcaption strong {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.hsc-spotlight {
 		position: fixed;
 		inset: 0;
-		z-index: 99999;
+		z-index: 100;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		opacity: 0;
 		pointer-events: none;
-		transition: opacity 0.25s ease;
+		transition: opacity 0.2s ease;
 	}
 
-	.spotlight-modal.is-open {
+	.hsc-spotlight.is-open {
 		opacity: 1;
 		pointer-events: auto;
 	}
 
-	.spotlight-backdrop {
+	.hsc-spotlight-backdrop {
 		position: absolute;
 		inset: 0;
-		background: rgba(10, 8, 6, 0.92);
-		backdrop-filter: blur(8px);
+		background: rgba(43, 37, 30, 0.9);
 	}
 
-	.spotlight-content {
+	.hsc-spotlight-panel {
 		position: relative;
-		z-index: 2;
-		width: 100%;
-		max-width: 1100px;
-		height: 92vh;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		z-index: 1;
+		width: min(100%, 1100px);
 		padding: 1rem;
 		box-sizing: border-box;
 	}
 
-	.spotlight-close-btn {
+	.hsc-spotlight-close {
 		position: absolute;
-		top: 1.25rem;
-		right: 1.5rem;
-		z-index: 10;
-		display: inline-flex;
-		align-items: center;
-		gap: 0.4rem;
-		background: rgba(255, 255, 255, 0.12);
+		top: 0.5rem;
+		right: 0.5rem;
+		border: 0;
+		background: transparent;
 		color: #fffdfa;
-		border: 1px solid rgba(255, 255, 255, 0.2);
-		padding: 0.45rem 0.85rem;
-		border-radius: 8px;
-		font-size: 0.78rem;
-		font-weight: 700;
 		cursor: pointer;
-		transition: all 0.15s ease;
+		font-size: var(--type-caption);
 	}
 
-	.spotlight-close-btn:hover {
-		background: var(--accent);
-		border-color: var(--accent);
-	}
-
-	.spotlight-nav-btn {
+	.hsc-spotlight-nav {
 		position: absolute;
 		top: 50%;
 		transform: translateY(-50%);
-		z-index: 10;
-		width: 48px;
-		height: 48px;
-		border-radius: 50%;
-		background: rgba(255, 255, 255, 0.14);
-		border: 1px solid rgba(255, 255, 255, 0.25);
+		border: 0;
+		background: transparent;
 		color: #fffdfa;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		font-size: 1.25rem;
 		cursor: pointer;
-		transition: all 0.15s ease;
+		padding: 0.5rem;
 	}
 
-	.spotlight-nav-btn:hover {
-		background: var(--accent);
-		border-color: var(--accent);
-		transform: translateY(-50%) scale(1.08);
+	.hsc-spotlight-nav.prev {
+		left: 0;
 	}
 
-	.spotlight-nav-btn.prev {
-		left: 1.5rem;
+	.hsc-spotlight-nav.next {
+		right: 0;
 	}
 
-	.spotlight-nav-btn.next {
-		right: 1.5rem;
-	}
-
-	@media (max-width: 768px) {
-		.spotlight-nav-btn.prev {
-			left: 0.5rem;
-		}
-		.spotlight-nav-btn.next {
-			right: 0.5rem;
-		}
-	}
-
-	.spotlight-image-stage {
+	.hsc-spotlight-stage {
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		justify-content: center;
-		max-width: 90%;
-		max-height: 86vh;
-		gap: 0.85rem;
+		gap: 0.75rem;
+		padding: 0 2.5rem;
 	}
 
-	.spotlight-full-img {
+	.hsc-spotlight-img {
 		max-width: 100%;
 		max-height: 72vh;
 		object-fit: contain;
-		border-radius: 10px;
-		box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
-		animation: spotlightZoom 0.2s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	@keyframes spotlightZoom {
-		from {
-			opacity: 0;
-			transform: scale(0.96);
-		}
-		to {
-			opacity: 1;
-			transform: scale(1);
-		}
-	}
-
-	.spotlight-caption-bar {
+	.hsc-spotlight-meta {
 		display: flex;
-		align-items: center;
+		align-items: flex-start;
 		justify-content: space-between;
-		gap: 1.5rem;
+		gap: 1rem;
 		width: 100%;
-		padding: 0.65rem 1rem;
-		background: rgba(255, 255, 255, 0.08);
-		backdrop-filter: blur(8px);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		border-radius: 8px;
 		color: #fffdfa;
 	}
 
-	.sc-left {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-		text-align: left;
-	}
-
-	.sc-title {
-		font-size: 0.92rem;
+	.hsc-spotlight-title {
+		margin: 0;
+		font-size: 0.95rem;
 		font-weight: 700;
-		color: #fffdfa;
 	}
 
-	.sc-caption {
-		font-size: 0.76rem;
-		color: rgba(255, 255, 255, 0.75);
+	.hsc-spotlight-caption {
+		margin: 0.2rem 0 0;
+		font-size: var(--type-caption);
+		color: rgba(255, 253, 250, 0.75);
 	}
 
-	.sc-counter {
-		font-size: 0.78rem;
-		font-weight: 700;
-		color: var(--accent);
-		background: rgba(255, 255, 255, 0.12);
-		padding: 0.2rem 0.6rem;
-		border-radius: 6px;
+	.hsc-spotlight-counter {
 		flex-shrink: 0;
-	}
-
-	/* Cross Navigation */
-	.gallery-cross-nav {
-		padding: 1.75rem 2rem;
-		border-radius: 16px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		display: grid;
-		grid-template-columns: repeat(3, 1fr);
-		gap: 1.5rem;
+		font-size: var(--type-caption);
+		color: rgba(255, 253, 250, 0.85);
 	}
 
 	@media (max-width: 768px) {
-		.gallery-cross-nav {
+		.hsc-gallery-grid {
 			grid-template-columns: 1fr;
 		}
-	}
-
-	.nav-col {
-		display: flex;
-		flex-direction: column;
-		gap: 0.35rem;
-	}
-
-	.nav-lbl {
-		font-size: 0.7rem;
-		color: var(--text-muted);
-		letter-spacing: 0.06em;
-	}
-
-	.nav-link {
-		font-size: 0.88rem;
-		font-weight: 700;
-		color: var(--accent);
-		text-decoration: none;
-		transition: transform 0.15s ease;
-	}
-
-	.nav-link:hover {
-		transform: translateX(3px);
 	}
 </style>

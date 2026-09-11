@@ -13,98 +13,53 @@ const program = await getEntry('education', 'bsc-cse');
 if (!program) throw new Error('Missing education/bsc-cse');
 const semesters = (program.data.semesters || []) as Semester[];
 const stats = getAcademicStatistics(semesters);
+const topGradeCount = stats.gradeCounts['A+'] + stats.gradeCounts.A;
 const categories = Object.keys(courseCategoryLabels) as CourseCategory[];
 const bscCseProgram = program.data;
 ---
 
 <div class="transcript-wrapper">
-	<!-- Top Academic Statistics Bar -->
-	<div class="academic-stats-grid">
-		<div class="stat-box card">
-			<span class="stat-label font-mono">CUMULATIVE CGPA</span>
-			<div class="stat-val-group">
-				<span class="stat-num font-dot">3.91</span>
-				<span class="stat-scale font-mono">/ 4.00</span>
-			</div>
-			<span class="stat-badge success">Outstanding Honors</span>
+	<ul class="transcript-stats">
+		<li>
+			<strong>{stats.cgpa.toFixed(2)}</strong>
+			<span>CGPA / 4.00</span>
+		</li>
+		<li>
+			<strong>{stats.totalCredits.toFixed(1)}</strong>
+			<span>Total credits</span>
+		</li>
+		<li>
+			<strong>{topGradeCount} / {stats.totalCourses}</strong>
+			<span>A+ / A courses</span>
+		</li>
+		<li>
+			<strong>{stats.softwareProjectsCount} / {stats.softwareProjectsCount}</strong>
+			<span>Software projects A+</span>
+		</li>
+	</ul>
+
+	<div class="transcript-toolbar">
+		<div class="about-tabs" role="tablist" aria-label="Transcript views">
+			<button class="about-tab is-active view-tab font-mono" type="button" data-view="semesters" id="btn-view-semesters">Semesters</button>
+			<button class="about-tab view-tab font-mono" type="button" data-view="categories" id="btn-view-categories">Clusters</button>
+			<button class="about-tab view-tab font-mono" type="button" data-view="ugc-scale" id="btn-view-ugc">UGC scale</button>
 		</div>
 
-		<div class="stat-box card">
-			<span class="stat-label font-mono">TOTAL CREDITS</span>
-			<div class="stat-val-group">
-				<span class="stat-num font-dot">142.0</span>
-				<span class="stat-scale font-mono">Credits</span>
-			</div>
-			<span class="stat-badge">11 Semesters</span>
-		</div>
-
-		<div class="stat-box card">
-			<span class="stat-label font-mono">COURSE MASTERY</span>
-			<div class="stat-val-group">
-				<span class="stat-num font-dot">88.6%</span>
-				<span class="stat-scale font-mono">A+ / A</span>
-			</div>
-			<span class="stat-badge highlight">62 / 70 Courses</span>
-		</div>
-
-		<div class="stat-box card">
-			<span class="stat-label font-mono">SOFTWARE PROJECTS</span>
-			<div class="stat-val-group">
-				<span class="stat-num font-dot">6 / 6</span>
-				<span class="stat-scale font-mono">Projects</span>
-			</div>
-			<span class="stat-badge success">100% Grade A+</span>
-		</div>
-	</div>
-
-	<!-- Interactive Controls Toolbar -->
-	<div class="transcript-toolbar card">
-		<div class="toolbar-left">
-			<div class="view-switchers" role="tablist">
-				<button class="view-tab active" data-view="semesters" id="btn-view-semesters">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-						<line x1="16" y1="2" x2="16" y2="6"></line>
-						<line x1="8" y1="2" x2="8" y2="6"></line>
-						<line x1="3" y1="10" x2="21" y2="10"></line>
-					</svg>
-					Semester View
-				</button>
-				<button class="view-tab" data-view="categories" id="btn-view-categories">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
-						<path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
-					</svg>
-					Discipline Clusters
-				</button>
-				<button class="view-tab" data-view="ugc-scale" id="btn-view-ugc">
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<circle cx="12" cy="12" r="10"></circle>
-						<line x1="12" y1="16" x2="12" y2="12"></line>
-						<line x1="12" y1="8" x2="12.01" y2="8"></line>
-					</svg>
-					UGC Grading Scale
-				</button>
-			</div>
-		</div>
-
-		<div class="toolbar-right">
-			<div class="search-wrapper">
-				<svg class="search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-					<circle cx="11" cy="11" r="8"></circle>
-					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
-				</svg>
+		<div class="transcript-toolbar-actions">
+			<label class="transcript-search-wrap">
+				<span class="sr-only">Search courses</span>
 				<input
-					type="text"
+					type="search"
 					id="course-search-input"
-					placeholder="Search course code or title..."
-					class="course-search-input font-mono"
+					placeholder="Course code or title…"
+					class="transcript-search font-sans"
+					autocomplete="off"
 				/>
-				<button id="clear-search-btn" class="clear-search hidden" aria-label="Clear search">✕</button>
-			</div>
-			<button id="toggle-expand-all" class="toolbar-btn font-mono">
-				<span id="expand-btn-text">Expand All</span>
+			</label>
+			<button id="toggle-expand-all" class="text-link font-mono" type="button">
+				<span id="expand-btn-text">Expand all</span>
 			</button>
+			<button id="clear-search-btn" class="text-link font-mono hidden" type="button" aria-label="Clear search">Clear</button>
 		</div>
 	</div>
 
@@ -112,7 +67,7 @@ const bscCseProgram = program.data;
 	<div id="semesters-view" class="view-panel active">
 		<div class="semesters-list">
 			{bscCseProgram.semesters.map((sem, semIdx) => (
-				<details class="semester-accordion card" open={semIdx < 2} data-semester={sem.semesterNumber}>
+				<details class="semester-accordion" open={semIdx < 2} data-semester={sem.semesterNumber}>
 					<summary class="semester-summary">
 						<div class="sem-summary-left">
 							<span class="sem-chevron">
@@ -200,7 +155,7 @@ const bscCseProgram = program.data;
 					s.courses.filter((c) => c.category === cat.category).map((c) => ({ ...c, semNum: s.semesterNumber }))
 				);
 				return (
-					<div class="category-card card">
+					<div class="category-block edu-slot">
 						<div class="category-header">
 							<div class="cat-title-group">
 								<span class="cat-indicator"></span>
@@ -236,7 +191,7 @@ const bscCseProgram = program.data;
 
 	<!-- VIEW 3: UGC Grading Scale Reference -->
 	<div id="ugc-scale-view" class="view-panel hidden">
-		<div class="ugc-card card">
+		<div class="ugc-block edu-slot">
 			<div class="ugc-header">
 				<h3 class="ugc-title">University Grants Commission (UGC) Uniform Grading System</h3>
 				<p class="ugc-sub">
@@ -274,7 +229,7 @@ const bscCseProgram = program.data;
 	</div>
 
 	<!-- Search Results Feedback (Hidden by default) -->
-	<div id="search-no-results" class="no-results-box card font-mono hidden">
+	<div id="search-no-results" class="no-results-box font-mono hidden">
 		<p>No matching courses found for query. Try searching by course code (e.g. <code>CSE311</code>) or title.</p>
 	</div>
 </div>
@@ -294,8 +249,10 @@ const bscCseProgram = program.data;
 				const targetView = tab.getAttribute('data-view');
 				if (!targetView) return;
 
-				tabs.forEach((t) => t.classList.remove('active'));
-				tab.classList.add('active');
+				tabs.forEach((t) => {
+					t.classList.remove('active', 'is-active');
+				});
+				tab.classList.add('active', 'is-active');
 
 				Object.entries(panels).forEach(([key, panel]) => {
 					if (panel) {
@@ -323,7 +280,7 @@ const bscCseProgram = program.data;
 				acc.open = allExpanded;
 			});
 			if (btnText) {
-				btnText.textContent = allExpanded ? 'Collapse All' : 'Expand All';
+				btnText.textContent = allExpanded ? 'Collapse all' : 'Expand all';
 			}
 		});
 

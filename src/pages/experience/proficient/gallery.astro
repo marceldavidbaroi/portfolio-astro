@@ -1,6 +1,7 @@
 ---
 import GalleryPage from '../../../components/GalleryPage.astro';
 import { getCollection, getEntry } from 'astro:content';
+import { experienceGalleryKicker } from '../../../data/aboutLayoutDummy';
 import { mediaMap, resolveAssets } from '../../../lib/media';
 
 const gallery = await getEntry('galleries', 'proficient');
@@ -16,9 +17,10 @@ const photos =
 <GalleryPage
 	title={title}
 	backHref="/#experience"
-	backLabel="Work Experience"
-	tag="01 // WORKPLACE"
+	backLabel="Experience"
+	tag={experienceGalleryKicker}
 	description="Photo gallery for the Proficient role. Add images anytime."
 	photos={photos}
 	emptyHint='Photos coming soon — drop files in <code>public/images/experience/</code>.'
+	crumb="experience"
 />
