@@ -2,26 +2,69 @@
 interface Props {
 	images?: string[];
 	phone?: boolean;
-	size?: 'row' | 'hero';
+	size?: 'row' | 'row-still' | 'hero' | 'feature';
 }
 
 const { images = [], phone = false, size = 'row' } = Astro.props;
 const thumbs = images.filter((img) => img && !img.includes('thumb-') && !img.includes('dummy')).slice(0, 3);
 const layers = thumbs.length > 0 ? thumbs : [null];
+const featureStill = thumbs[0] ?? null;
+const eager = size === 'hero' || size === 'feature';
+const isStill = size === 'feature' || size === 'row-still';
 ---
 
-<div class:list={['shot-stack', { 'is-phone': phone, 'is-hero': size === 'hero' }]} aria-hidden="true">
-	{layers.map((src, i) => (
-		<span class:list={['shot-layer', { 'is-empty': !src }]} style={`--i: ${i}`}>
-			{src && <img src={src} alt="" loading={size === 'hero' ? 'eager' : 'lazy'} />}
+{isStill ? (
+	<div class:list={['shot-still', { 'is-row': size === 'row-still' }]} aria-hidden="true">
+		<span class:list={['shot-still-frame', { 'is-empty': !featureStill }]}>
+			{featureStill && <img src={featureStill} alt="" loading={eager ? 'eager' : 'lazy'} />}
 		</span>
-	))}
-</div>
+	</div>
+) : (
+	<div class:list={['shot-stack', { 'is-phone': phone, 'is-hero': size === 'hero' }]} aria-hidden="true">
+		{layers.map((src, i) => (
+			<span class:list={['shot-layer', { 'is-empty': !src }]} style={`--i: ${i}`}>
+				{src && <img src={src} alt="" loading={eager ? 'eager' : 'lazy'} />}
+			</span>
+		))}
+	</div>
+)}
 
 <style>
+	.shot-still {
+		width: 100%;
+		max-width: none;
+		justify-self: end;
+	}
+
+	.shot-still.is-row {
+		max-width: 11rem;
+	}
+
+	.shot-still-frame {
+		display: block;
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		border-radius: 2px;
+		border: 1px solid rgba(95, 80, 56, 0.18);
+		background: var(--card-bg);
+		overflow: hidden;
+	}
+
+	.shot-still-frame.is-empty {
+		border-style: dashed;
+	}
+
+	.shot-still-frame img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+	}
+
 	.shot-stack {
-		--w: 86px;
-		--h: 56px;
+		--w: 104px;
+		--h: 65px;
 		position: relative;
 		width: calc(var(--w) + 20px);
 		height: calc(var(--h) + 14px);
@@ -60,10 +103,10 @@ const layers = thumbs.length > 0 ? thumbs : [null];
 		height: var(--h);
 		border-radius: 7px;
 		border: 1px solid rgba(95, 80, 56, 0.2);
-		background: #fffdfa;
+		background: var(--paper);
 		box-shadow: 0 8px 16px rgba(95, 80, 56, 0.12);
 		overflow: hidden;
-		transform: rotate(calc(-11deg + var(--i) * 5deg));
+		transform: rotate(calc(-6deg + var(--i) * 3deg));
 		z-index: calc(4 - var(--i));
 		transition: transform var(--dur-ui) var(--ease-out);
 	}

@@ -10,7 +10,7 @@ This file is the design contract for Home. Sibling contracts: [header.md](./head
 Editorial stationery, not a product splash or a card catalog.
 
 - Warm paper field, burgundy used sparingly (one solid button, labels, one close rule).
-- Left-aligned identity. NDot **once** (the name). Geist for titles and body. Mono for status, dates, kickers, links.
+- Left-aligned identity. Geist 800 spelled name (no NDot). Mono for status, dates, kickers, links.
 - Hierarchy by **layout type**, not by repeating rounded cards.
 - Recruiter scan in ~8 seconds: who, what they ship, proof, next action.
 
@@ -18,15 +18,14 @@ Editorial stationery, not a product splash or a card catalog.
 
 | Token | Value | Use |
 |---|---|---|
-| Paper | `#fffdfa` | Page background |
+| Paper | `#fffcf8` | Page background |
 | Card / slot | `#f4f0e7` | Portrait empty, shot empty |
 | Ink | `#2b251e` | Name, titles, body |
 | Muted | `#746855` | Role, dates, captions |
-| Accent | `#b42135` | Labels, primary button, close rule |
-| Accent hover | `#96192a` | Button hover |
+| Accent | `#84353f` | Labels, primary button, close rule |
+| Accent hover | derived (`color-mix` 75% accent + ink) | Button hover — ~`#6d3136` |
 | Line | `rgba(95, 80, 56, 0.10–0.14)` | Section hairlines |
 | Sans | Geist | Body, titles |
-| Display | NDot 55 | Name only |
 | Mono | NType 82 Mono | Status, kickers, CTAs, dates |
 
 Page shell: `BaseLayout` with `isWide` + `alignStart`. Content column ~1180px, left-aligned, `overflow-x: clip`.
@@ -42,21 +41,22 @@ AVAILABLE · REMOTE / RELOCATION · DHAKA     ┌──────────�
 Marcel David Baroi                          │ portrait │
 Full-Stack Engineer — multi-tenant SaaS     │  3:4     │
 I design and ship Vue / Quasar…             └──────────┘
-10+          100%          3.91
 [ EMAIL ME ]  [ RESUME ]  LinkedIn  GitHub
 ────────────────────────────────────────────
 
 WORK                              All 14 →
 ENTERPRISE ERP & SAAS
-Title (XYZ paragraph)
-100%     17+     4 Surfaces          Read case study →
+Title
+100%     17+     4 Surfaces
+XYZ paragraph
+Read case study →                    [16:10 still]
 ────────────────────────────────────────────
 (same band ×2 — TradeflowBD, Service Desk)
 
 chip · title                              [shot fan]
 chip · title                              [shot fan]
 … (5 supporting rows, 2 columns)
-See all work · 14 case studies            View archive →
+See all work · 14 case studies  All 14 →    View archive →  (/archive, muted)
 ────────────────────────────────────────────
 
 EXPERIENCE
@@ -86,7 +86,6 @@ Marcel David          ┌─────┐
 Baroi                 │ 3:4 │
 Full-Stack Engineer —  └─────┘
 (role + bio full width)
-10+   100%   3.91
 [EMAIL] [RESUME] LinkedIn GitHub
 
 WORK                    All 14 →
@@ -120,7 +119,7 @@ Each block is a different layout. Do not turn them back into identical cards.
 | Section | Layout | What it is | What it is not |
 |---|---|---|---|
 | Hero | 60/40 identity + portrait | Person + hire facts | Product screenshot, centered splash |
-| Work focus | Text band + 3 metrics + CTA | Two stories, size = importance | 2×2 equal cards |
+| Work focus | Copy + CTA + 16:10 still (~40% band) | Two stories, size = importance | 2×2 equal cards, metrics as third column |
 | Work support | Row + small stacked shots | Catalog glance | Large mosaics |
 | Work exit | Index row | Path to all 14 | Dead end into Experience |
 | Experience | Date \| role rail | Scan line | Photo stacks |
@@ -132,7 +131,7 @@ Each block is a different layout. Do not turn them back into identical cards.
 
 - Focus: `01-tradeflowbd`, `02-service-desk`
 - Support: `07-pennyperfect`, `03-thrift-inventory`, `14-microfinance-loan-app`, `11-quizzes-streaming`, `08-docstach`
-- Exit: `/work` (count from collection)
+- Exit: “See all work” → `/work`; “View archive →” → `/archive` (muted secondary)
 
 Shot fans: first 3 non-`thumb-` images, slight rotate per layer. Phone projects use a taller stack.
 
@@ -148,22 +147,20 @@ Two rows: B.Sc. CSE DIU 3.91 and HSC Science Notre Dame 4.67. Home keeps college
 
 | Role | Face | Size (desktop) | Color |
 |---|---|---|---|
-| Name | NDot | clamp 1.85–3.35rem | ink |
+| Name | Geist 800 | clamp 1.85–3.35rem | ink |
 | Section H3 | Geist 800 | ~1.15–1.55rem | ink |
 | Body / bio | Geist | 1.05rem | ink |
 | Role | Geist 500 | 1.02rem | muted |
 | Close title | Geist 800 | clamp 2–3rem | ink |
 | Label / kicker | Mono 700 uppercase | 0.62rem | accent |
 | Status / dates | Mono | 0.68rem | muted |
-| Metric value | Mono/Geist | 0.92–1.35rem | ink |
-| Metric label | Mono uppercase | 0.58rem | muted |
 | Pill button | Mono 700 uppercase | 0.72rem | cream on accent / ink ghost |
 
-Known issue: labels at 0.58–0.72rem feel small. If we bump type, raise **size** first (body ~16px, labels ~12–13px). Do not darken the whole palette. Body contrast is already 14.9:1; muted on paper is 5.4:1 (AA at normal size, weak at caption size).
+Known issue: kickers still at 0.62–0.72rem in some specs may feel small. Metric captions use `--type-caption` (`0.75rem`). If we bump type further, raise **size** first. Do not darken the palette. Body contrast is already 14.9:1; muted on paper is 5.4:1 (AA at `0.75rem` and up).
 
 ## Motion
 
-Portrait: slight rotate (−1.1deg), `rise` fade if `prefers-reduced-motion: no-preference`.  
+Portrait: straight frame, light shadow, `rise` fade if `prefers-reduced-motion: no-preference`. No caption on real photo.  
 Work row hover: title → accent; shot layers lift slightly.  
 No `translateY` lift on every block.
 
@@ -187,6 +184,6 @@ Work: band → case study; index row → `/work`.
 - Wrap every section in 16px cards
 - Put hobbies on Home
 - Put ATS in the hero
-- Use NDot on anything except the name
+- Use NDot on the Home name
 - Treat education as a second experience card
 - Hide the path to all work

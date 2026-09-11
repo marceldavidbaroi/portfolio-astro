@@ -14,7 +14,6 @@
 
 .case {
 	min-width: 0;
-	overflow-x: clip;
 }
 
 @media (max-width: 1200px) {
@@ -54,8 +53,12 @@
 	overflow-wrap: anywhere;
 }
 
-.toc a.is-on,
 .toc a:hover {
+	color: var(--text-main);
+	border-left-color: var(--text-main);
+}
+
+.toc a.is-on {
 	color: var(--accent);
 	border-left-color: var(--accent);
 }
@@ -78,11 +81,13 @@
 }
 
 .crumb a {
-	color: var(--accent);
+	color: var(--text-muted);
 	text-decoration: none;
+	transition: color var(--dur-fast) ease;
 }
 
 .crumb a:hover {
+	color: var(--text-main);
 	text-decoration: underline;
 }
 
@@ -118,13 +123,6 @@
 	max-width: 42rem;
 }
 
-.case > .metric-row {
-	gap: 0.85rem 1.35rem;
-	margin: 1.1rem 0 0;
-	padding: 0.9rem 0 0;
-	border-top: 1px solid rgba(95, 80, 56, 0.12);
-}
-
 .case > .hero-actions {
 	margin-top: 1rem;
 }
@@ -133,23 +131,28 @@
 	margin: 1.75rem 0 0;
 	background: var(--card-bg);
 	border: 1px solid rgba(95, 80, 56, 0.12);
-	overflow: hidden;
 	display: flex;
 	justify-content: center;
-	padding: 1rem;
+	padding: 0;
+	min-width: 0;
 }
 
 .hero-well > img {
 	display: block;
 	width: 100%;
-	aspect-ratio: 16 / 10;
-	object-fit: cover;
+	height: auto;
+	max-width: 100%;
+	object-fit: contain;
 	object-position: top center;
 	background: var(--card-bg);
 }
 
-.hero-well:hover .shot-stack .shot-layer {
-	transform: rotate(calc(-7deg + var(--i) * 4deg)) translateY(-3px);
+.hero-well.is-phone > img {
+	width: auto;
+	max-width: min(220px, 100%);
+	margin: 0 auto;
+	object-fit: contain;
+	object-position: top center;
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -166,12 +169,6 @@
 	to {
 		opacity: 1;
 		transform: translateY(0);
-	}
-}
-
-@media (prefers-reduced-motion: reduce) {
-	.hero-well:hover .shot-stack .shot-layer {
-		transform: none;
 	}
 }
 
@@ -286,7 +283,7 @@
 .stack-line span:not(.stack-kicker):not(:nth-child(2))::before {
 	content: '·';
 	margin-right: 0.4rem;
-	color: var(--accent);
+	color: var(--text-muted);
 }
 
 .notes {
@@ -306,14 +303,22 @@
 /* —— Markdown body —— */
 .markdown-article {
 	margin-top: 2.5rem;
-	max-width: min(42rem, 100%);
+	max-width: 100%;
 	min-width: 0;
 	font-size: 1.02rem;
 	line-height: 1.65;
 	scroll-margin-top: 1rem;
 	color: var(--text-main);
-	overflow-x: clip;
 	overflow-wrap: break-word;
+}
+
+.markdown-article > p,
+.markdown-article > ul,
+.markdown-article > ol,
+.markdown-article > blockquote,
+.markdown-article > h2,
+.markdown-article > h3 {
+	max-width: 42rem;
 }
 
 .markdown-article h2 {
@@ -350,14 +355,14 @@
 }
 
 .markdown-article li::marker {
-	color: var(--accent);
+	color: var(--text-muted);
 }
 
-/* Screenshots / figures — never escape the reading column */
+/* Screenshots — scale to column width; never crop or overflow */
 .markdown-article img {
 	display: block;
+	width: 100%;
 	max-width: 100%;
-	width: auto;
 	height: auto;
 	margin: 1rem 0 1.35rem;
 	border: 1px solid rgba(95, 80, 56, 0.12);
@@ -366,12 +371,14 @@
 	object-position: top left;
 }
 
+.markdown-article p:has(> img) {
+	max-width: 100%;
+	min-width: 0;
+}
+
 .markdown-article p:has(> img:only-child) {
 	margin: 0.85rem 0 1.35rem;
 	padding: 0.65rem;
-	overflow-x: auto;
-	overscroll-behavior-x: contain;
-	-webkit-overflow-scrolling: touch;
 	border: 1px solid rgba(95, 80, 56, 0.12);
 	background: var(--card-bg);
 }
@@ -379,7 +386,9 @@
 .markdown-article p:has(> img:only-child) img {
 	margin: 0;
 	border: 0;
-	min-width: 0;
+	width: 100%;
+	max-width: 100%;
+	height: auto;
 }
 
 .markdown-article table {
@@ -487,7 +496,8 @@
 }
 
 .adjacent a:hover span:last-child {
-	color: var(--accent);
+	color: var(--text-main);
+	text-decoration: underline;
 }
 
 .case .close .hero-actions {

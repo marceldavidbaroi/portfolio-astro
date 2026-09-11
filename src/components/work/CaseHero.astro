@@ -1,13 +1,4 @@
 ---
-import ShotFan from './ShotFan.astro';
-import { site } from '../../data/site';
-
-interface Metric {
-	value: string;
-	label: string;
-	detail?: string;
-}
-
 interface Links {
 	liveDemo?: string;
 	parentPlatform?: string;
@@ -25,7 +16,6 @@ interface Props {
 	role?: string;
 	timeline?: string;
 	description?: string;
-	impactMetrics?: Metric[];
 	links?: Links;
 	hasActions: boolean;
 	live: boolean;
@@ -34,8 +24,7 @@ interface Props {
 	ghFront: boolean;
 	ghBack: boolean;
 	docs: boolean;
-	heroStill?: string | null;
-	realImages: string[];
+	heroImage?: string | null;
 	isPhone: boolean;
 }
 
@@ -47,7 +36,6 @@ const {
 	role,
 	timeline,
 	description,
-	impactMetrics,
 	links,
 	hasActions,
 	live,
@@ -56,12 +44,11 @@ const {
 	ghFront,
 	ghBack,
 	docs,
-	heroStill,
-	realImages,
+	heroImage,
 	isPhone
 } = Astro.props;
 
-const showActions = hasActions || !live;
+const showActions = hasActions;
 ---
 
 <p class="kicker font-mono">
@@ -69,30 +56,17 @@ const showActions = hasActions || !live;
 	{status && <> · {status}</>}
 	<span> · {classLabel}</span>
 </p>
-<h1 class="case-title">{title}</h1>
+<h1 class="case-title font-sans">{title}</h1>
 <p class="case-meta">
 	{role && <span>{role}</span>}
 	{timeline && <span>{timeline}</span>}
 </p>
 {description && <p class="xyz">{description}</p>}
 
-{impactMetrics && impactMetrics.length > 0 && (
-	<ul class="metric-row font-mono">
-		{impactMetrics.map((m) => (
-			<li>
-				<b>{m.value}</b>
-				<span>{m.label}</span>
-			</li>
-		))}
-	</ul>
-)}
-
 {showActions && (
 	<div class="hero-actions">
-		{live ? (
+		{live && (
 			<a class="btn-solid font-mono" href={links!.liveDemo} target="_blank" rel="noopener noreferrer">Live</a>
-		) : (
-			<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email</a>
 		)}
 		{parent && (
 			<a class="btn-ghost font-mono" href={links!.parentPlatform} target="_blank" rel="noopener noreferrer">Parent</a>
@@ -112,14 +86,8 @@ const showActions = hasActions || !live;
 	</div>
 )}
 
-{(heroStill || realImages.length > 0) && (
-	<div class="hero-well">
-		{isPhone ? (
-			<ShotFan images={realImages} phone size="hero" />
-		) : heroStill ? (
-			<img src={heroStill} alt={`${title} interface`} width="1280" height="800" />
-		) : (
-			<ShotFan images={realImages} size="hero" />
-		)}
+{heroImage && (
+	<div class:list={['hero-well', { 'is-phone': isPhone }]}>
+		<img src={heroImage} alt={`${title} interface`} width={isPhone ? 400 : 1280} height={isPhone ? 720 : 800} loading="eager" />
 	</div>
 )}

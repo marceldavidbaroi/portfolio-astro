@@ -1,6 +1,5 @@
 ---
 import { getEntry } from 'astro:content';
-import { schoolExtras } from '../../data/aboutLayoutDummy';
 
 const bscEntry = await getEntry('education', 'bsc-cse');
 const hscEntry = await getEntry('education', 'hsc-science');
@@ -15,11 +14,12 @@ const hsc = hscEntry.data;
 const thesis = researchEntry.data;
 
 const bscPrimary = `${bsc.shortDegree ?? 'B.Sc. CSE'} · ${bsc.institutionShort} · ${(bsc.cgpa ?? 0).toFixed(2)}`;
-const bscThird = schoolExtras.bsc.thirdLine.startsWith('[draft]')
-	? `${bsc.totalCredits ?? 142} cr`
-	: schoolExtras.bsc.thirdLine;
-const thesisPrimary = `Thesis · ${thesis.shortTitle ?? 'Bangla HWCR'} · ${thesis.accuracy ?? '97.93%'}`;
+const bscThird = bsc.totalCredits ? `${bsc.totalCredits} cr` : null;
+const thesisMetric = thesis.keyMetrics?.find((m) => m.label?.toLowerCase().includes('vowel'));
+const thesisPrimary = `Thesis · ${thesis.shortTitle ?? 'Bangla HWCR'} · ${thesisMetric?.value ?? '97.93%'}`;
+const thesisThird = thesisMetric ? `DenseNet · ${thesisMetric.value} accuracy` : null;
 const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).toFixed(2)}`;
+const hscThird = hsc.field ? hsc.field.replace(/^Science Group /, '') : null;
 ---
 
 <section class="about-section" id="school" aria-labelledby="school-heading">
@@ -35,7 +35,7 @@ const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).t
 		)}
 		<div class="about-school-lines">
 			<p class="about-school-primary">{bscPrimary}</p>
-			<p class="about-school-secondary">{bscThird}</p>
+			{bscThird && <p class="about-school-secondary">{bscThird}</p>}
 		</div>
 		<span class="section-link font-mono">Transcript →</span>
 	</a>
@@ -44,7 +44,7 @@ const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).t
 		<span class="about-school-logo about-school-logo-slot" aria-hidden="true"></span>
 		<div class="about-school-lines">
 			<p class="about-school-primary">{thesisPrimary}</p>
-			<p class="about-school-secondary">{schoolExtras.thesis.thirdLine.replace('[draft] ', '')}</p>
+			{thesisThird && <p class="about-school-secondary">{thesisThird}</p>}
 		</div>
 		<span class="section-link font-mono">Paper →</span>
 	</a>
@@ -57,13 +57,13 @@ const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).t
 		)}
 		<div class="about-school-lines">
 			<p class="about-school-primary">{hscPrimary}</p>
-			<p class="about-school-secondary">{schoolExtras.hsc.thirdLine.replace('[draft] ', '')}</p>
+			{hscThird && <p class="about-school-secondary">{hscThird}</p>}
 		</div>
 		<span class="section-link font-mono">Details →</span>
 	</a>
 
 	<p class="about-school-archive font-mono">
-		<a href={schoolExtras.archiveHref}>{schoolExtras.archiveLine.replace('[draft] ', '')}</a>
+		<a href="/archive">Civic years → Archive</a>
 	</p>
 </section>
 
@@ -81,7 +81,7 @@ const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).t
 	}
 
 	.about-school-row:hover .about-school-primary {
-		color: var(--accent);
+		color: var(--text-main);
 	}
 
 	.about-school-archive {
@@ -91,7 +91,7 @@ const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).t
 	}
 
 	.about-school-archive a {
-		color: var(--accent);
+		color: var(--text-main);
 		font-weight: 700;
 		text-decoration: none;
 	}

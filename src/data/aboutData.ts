@@ -10,6 +10,8 @@ export interface PrincipleItem {
 	title: string;
 	iconType: 'layers' | 'shield' | 'package' | 'trending';
 	desc: string;
+	proofHref?: string;
+	proofLabel?: string;
 }
 
 export interface SkillItem {
@@ -89,28 +91,36 @@ export const principles: PrincipleItem[] = [
 		tag: 'SPECIFICATION & MODELING',
 		title: 'Architecture-First AI Synthesis',
 		iconType: 'layers',
-		desc: 'I do not use AI tools to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.'
+		desc: 'I do not use AI tools to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.',
+		proofHref: '/work/01-tradeflowbd',
+		proofLabel: 'TradeflowBD ERP →',
 	},
 	{
 		num: '02',
 		tag: 'DEFENSIVE DATA LAYERS',
 		title: 'Zero-Trust Relational Data',
 		iconType: 'shield',
-		desc: 'Data corruption is catastrophic. I enforce data integrity at the database engine level using PostgreSQL row-level security (RLS), foreign key cascades, strict triggers, and automated schema migrations, ensuring security rules cannot be bypassed at the application layer.'
+		desc: 'Data corruption is catastrophic. I enforce data integrity at the database engine level using PostgreSQL row-level security (RLS), foreign key cascades, strict triggers, and automated schema migrations, ensuring security rules cannot be bypassed at the application layer.',
+		proofHref: '/work/01-tradeflowbd',
+		proofLabel: 'RLS case study →',
 	},
 	{
 		num: '03',
 		tag: 'MODULAR COMPONENT SYSTEMS',
 		title: 'Atomic Enterprise Reusability',
 		iconType: 'package',
-		desc: 'Code that isn’t reusable becomes technical debt. I construct internal package architectures, shared design systems, and headless core libraries published via private npm registries, enabling multi-app synchronization and reducing redundant codebases by over 60%.'
+		desc: 'Code that isn’t reusable becomes technical debt. I construct internal package architectures, shared design systems, and headless core libraries published via private npm registries, enabling multi-app synchronization and reducing redundant codebases by over 60%.',
+		proofHref: '/work/05-modular-packaging',
+		proofLabel: 'Modular packaging →',
 	},
 	{
 		num: '04',
 		tag: 'SCALABLE RESILIENCE',
 		title: 'Measurable Velocity & Longevity',
 		iconType: 'trending',
-		desc: 'Software must outlive team rotations and scale spikes. I write predictable TypeScript contracts, keep state management centralized, and structure clean repository hierarchies that new engineers can comprehend on day one.'
+		desc: 'Software must outlive team rotations and scale spikes. I write predictable TypeScript contracts, keep state management centralized, and structure clean repository hierarchies that new engineers can comprehend on day one.',
+		proofHref: '/work/02-service-desk',
+		proofLabel: 'Service desk →',
 	}
 ];
 

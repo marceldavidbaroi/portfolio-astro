@@ -2,7 +2,6 @@
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 import { getCollection, getEntry } from 'astro:content';
 import { mediaMap, resolveAssets } from '../../../lib/media';
-import { galleryCaptionFallback } from '../../../data/aboutLayoutDummy';
 import '../../../styles/about.css';
 import '../../../styles/education.css';
 
@@ -24,7 +23,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		photos: album.photos.map((p, i) => ({
 			src: assets[i].src,
 			title: assets[i].title,
-			caption: assets[i].caption || galleryCaptionFallback,
+			caption: assets[i].caption || '',
 			alt: assets[i].alt,
 			span: p.span,
 			isEmblem: p.isEmblem
@@ -70,12 +69,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 						)}
 					</header>
 
-					<div
-						class:list={[
-							'hsc-gallery-grid',
-							(section.id === 'ndc-visit-dec-2018' || section.id === 'ndc-college-memories') && 'hsc-gallery-grid--dense'
-						]}
-					>
+					<div class="hsc-gallery-grid">
 						{section.photos.map((photo) => (
 							<figure
 								class:list={[
@@ -237,11 +231,9 @@ const galleries = galleryEntry.data.albums.map((album) => {
 	.hsc-gallery-grid {
 		display: grid;
 		grid-template-columns: repeat(2, minmax(0, 1fr));
-		gap: 1rem;
-	}
-
-	.hsc-gallery-grid--dense {
-		grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+		gap: 1px;
+		background: rgba(95, 80, 56, 0.12);
+		border: 1px solid rgba(95, 80, 56, 0.12);
 	}
 
 	.hsc-gallery-item--full,
@@ -249,13 +241,19 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		grid-column: 1 / -1;
 	}
 
+	.hsc-gallery-item {
+		background: var(--paper);
+	}
+
 	.hsc-gallery-shot {
 		display: block;
 		width: 100%;
 		padding: 0;
 		border: 0;
-		background: var(--card-bg);
+		background: var(--paper);
 		cursor: pointer;
+		border-radius: 0;
+		box-shadow: none;
 	}
 
 	.hsc-gallery-img {
@@ -267,7 +265,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 
 	.hsc-gallery-img.is-emblem {
 		object-fit: contain;
-		background: #fffdfa;
+		background: var(--paper);
 		padding: 1rem;
 	}
 
@@ -322,7 +320,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		right: 0.5rem;
 		border: 0;
 		background: transparent;
-		color: #fffdfa;
+		color: var(--paper);
 		cursor: pointer;
 		font-size: var(--type-caption);
 	}
@@ -333,7 +331,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		transform: translateY(-50%);
 		border: 0;
 		background: transparent;
-		color: #fffdfa;
+		color: var(--paper);
 		font-size: 1.25rem;
 		cursor: pointer;
 		padding: 0.5rem;
@@ -367,7 +365,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		justify-content: space-between;
 		gap: 1rem;
 		width: 100%;
-		color: #fffdfa;
+		color: var(--paper);
 	}
 
 	.hsc-spotlight-title {
@@ -379,16 +377,16 @@ const galleries = galleryEntry.data.albums.map((album) => {
 	.hsc-spotlight-caption {
 		margin: 0.2rem 0 0;
 		font-size: var(--type-caption);
-		color: rgba(255, 253, 250, 0.75);
+		color: rgba(255, 252, 248, 0.75);
 	}
 
 	.hsc-spotlight-counter {
 		flex-shrink: 0;
 		font-size: var(--type-caption);
-		color: rgba(255, 253, 250, 0.85);
+		color: rgba(255, 252, 248, 0.85);
 	}
 
-	@media (max-width: 768px) {
+	@media (max-width: 900px) {
 		.hsc-gallery-grid {
 			grid-template-columns: 1fr;
 		}

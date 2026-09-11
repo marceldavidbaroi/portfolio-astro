@@ -1,14 +1,11 @@
 ---
 import type { SkillCategoryGroup } from '../../data/aboutData';
-import { stackLegend } from '../../data/aboutLayoutDummy';
 
 interface Props {
 	skillCategories: SkillCategoryGroup[];
 }
 
 const { skillCategories } = Astro.props;
-
-const legend = stackLegend;
 ---
 
 <section class="about-section" id="stack" aria-labelledby="stack-heading">
@@ -17,7 +14,7 @@ const legend = stackLegend;
 		<a href="/skills" class="section-link font-mono">Full matrix →</a>
 	</div>
 
-	<p class="about-stack-legend font-mono">{legend}</p>
+	<p class="about-stack-legend font-mono">Primary = ink · Prior = muted · Descriptions on /skills</p>
 
 	{skillCategories.map((group) => (
 		<div class="about-stack-block">

@@ -10,7 +10,7 @@ Close band and actions match Home. Chrome from [header.md](./header.md).
 The person file. Home is the 8-second hire scan. About is the 90-second “who is this, how do they work, can I trust the pedigree.”
 
 - Same stationery. Same left edge. Same burgundy budget (labels, one solid button, one 2px close rule).
-- NDot **once** (the name). Section titles Geist 800. No `00 // EXECUTIVE PROFILE` stamps.
+- Spelled name in Geist 800 (no NDot). Section titles Geist 800. No `00 // EXECUTIVE PROFILE` stamps.
 - Hierarchy by **layout type**, not a stack of identical cards.
 - Hobbies, thesis, certs, and philosophy live here. They do not leak onto Home.
 
@@ -29,7 +29,7 @@ ABOUT
 Marcel David Baroi
 Full-Stack Engineer — multi-tenant SaaS
 Longer bio (3–5 lines). Architecture-first. Vue / Quasar / PostgreSQL.
-10+          100%          3.91          +60%
+10+ platforms shipped · 100% RLS … · 3.91 B.Sc. … · +60% code reusability
 [ EMAIL ME ]  [ RESUME ]  LinkedIn  GitHub
 Jump  How I work · Stack · Career · School · Certs · Beyond
 ────────────────────────────────────────────
@@ -84,7 +84,7 @@ Phone (≤900):
 ABOUT
 Marcel David Baroi
 role + bio
-metrics 2×2
+proof line (muted)
 [EMAIL] [RESUME] LinkedIn GitHub
 Jump as wrapping mono links
 
@@ -117,7 +117,7 @@ Each block is a different layout. Do not wrap them in `card`.
 
 | Section | Layout | What it is | What it is not |
 |---|---|---|---|
-| Hero | Masthead + bio + 4 proof stats + Home actions | Identity with more room than Home | Pedigree cards, ATS, pill triage bar, on-this-page card |
+| Hero | Masthead + bio + one proof line + Home actions | Identity with more room than Home | KPI dashboard, ATS, pill triage bar, on-this-page card |
 | Jump | Mono links on one hairline | In-page index | Numbered `01. Impact` chip bar |
 | How I work | Numbered essay list (01–04) | Method | Icon tiles, 2×2 principle cards |
 | Stack | Category columns / stacked lists | Hire-me-for-this vs prior | Chip clouds, emoji category headers |
@@ -131,7 +131,7 @@ Each block is a different layout. Do not wrap them in `card`.
 
 - Status line optional; if used, match Home (`AVAILABLE · REMOTE / RELOCATION · DHAKA`), not a green-glow pill.
 - Bio may be longer than Home (still concrete verbs, no “disciplined full-stack specializing in…” filler).
-- Proof: reuse Home three (`10+`, `100%`, `3.91`) and add `+60%` reusability as the fourth. Same metric type recipe (value + short label).
+- Proof: one muted mid-dot line with all four (`10+`, `100%`, `3.91`, `+60%`) — not a KPI grid.
 - Actions: Email solid, Resume ghost, LinkedIn + GitHub text. No Copy Email button in the hero (Menu already copies). No ATS.
 
 ### How I work

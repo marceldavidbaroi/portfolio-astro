@@ -9,7 +9,6 @@ import HomeEducationStrip from '../components/home/HomeEducationStrip.astro';
 import HomeSkillsStrip from '../components/home/HomeSkillsStrip.astro';
 import HomeContactClose from '../components/home/HomeContactClose.astro';
 import { getCollection, getEntry } from 'astro:content';
-import { metrics } from '../data/aboutData';
 import { mediaMap, resolveAssets } from '../lib/media';
 
 const media = mediaMap(await getCollection('media'));
@@ -47,18 +46,12 @@ const experience = (await getCollection('experience'))
 const portraitFile = ['portrait.webp', 'portrait.jpg', 'portrait.jpeg', 'portrait.png']
 	.find((name) => fs.existsSync(path.join(process.cwd(), 'public/images', name)));
 const portraitSrc = portraitFile ? `/images/${portraitFile}` : null;
-const proof = [
-	metrics.find((m) => m.value === '10+'),
-	metrics.find((m) => m.value === '100%'),
-	metrics.find((m) => m.value === '3.91')
-].filter(Boolean);
-
 const skills = ['Vue 3', 'Quasar', 'TypeScript', 'PostgreSQL', 'Supabase', 'NestJS', 'Docker', 'Pinia'];
 const workCount = projectEntries.length;
 ---
 
 <BaseLayout isWide alignStart>
-	<HomeHero portraitSrc={portraitSrc} proof={proof} />
+	<HomeHero portraitSrc={portraitSrc} />
 
 	{featured && (
 		<HomeFeaturedWork focused={focused} supporting={supporting} workCount={workCount} />

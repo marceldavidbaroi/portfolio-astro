@@ -3,27 +3,24 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
 import { getCollection } from 'astro:content';
 import { mediaMap, resolveAsset } from '../../lib/media';
-import { archiveRailExtras } from '../../data/aboutLayoutDummy';
 import '../../styles/about.css';
 
 const map = mediaMap(await getCollection('media'));
-const archiveEntries = (await getCollection('archive'))
+const railEntries = (await getCollection('archive'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((entry) => {
 		const d = entry.data;
 		const thumbnail = d.thumbnailId ? resolveAsset(d.thumbnailId, map).src : undefined;
 		return {
-			date: d.tag?.split('//')[1]?.trim() || '[draft] Date',
-			tag: d.tag?.split('//')[0]?.trim() || d.tag || '[draft] CIVIC',
+			date: d.tag?.split('//')[1]?.trim() || '',
+			tag: d.tag?.split('//')[0]?.trim() || d.tag || '',
 			title: d.title,
-			subtitle: d.subtitle || '[draft] Archive entry subtitle',
+			subtitle: d.subtitle || '',
 			href: d.dedicatedUrl || '/archive',
 			thumbnail,
 			body: d.body,
 		};
 	});
-
-const railEntries = archiveEntries.length >= 3 ? archiveEntries : [...archiveEntries, ...archiveRailExtras];
 ---
 
 <BaseLayout
@@ -49,7 +46,7 @@ const railEntries = archiveEntries.length >= 3 ? archiveEntries : [...archiveEnt
 				<div>
 					<p class="about-rail-tag font-mono">{entry.tag}</p>
 					<h2 class="about-rail-title">{entry.title}</h2>
-					<p class="about-rail-sub">{entry.subtitle}</p>
+					{entry.subtitle && <p class="about-rail-sub">{entry.subtitle}</p>}
 					{entry.thumbnail && (
 						<div class="about-shot-fan" aria-hidden="true">
 							<img src={entry.thumbnail} alt="" class="about-shot-fan-img" loading="lazy" />
@@ -79,7 +76,7 @@ const railEntries = archiveEntries.length >= 3 ? archiveEntries : [...archiveEnt
 	}
 
 	.about-archive-row:hover .about-rail-title {
-		color: var(--accent);
+		color: var(--text-main);
 	}
 
 	.about-shot-fan {
@@ -103,7 +100,7 @@ const railEntries = archiveEntries.length >= 3 ? archiveEntries : [...archiveEnt
 	}
 
 	.about-archive-beyond a {
-		color: var(--accent);
+		color: var(--text-main);
 		font-weight: 700;
 		text-decoration: none;
 	}

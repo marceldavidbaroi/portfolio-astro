@@ -2,16 +2,11 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
 import { getCollection } from 'astro:content';
-import { philosophyBandExtras } from '../../data/aboutLayoutDummy';
 import '../../styles/about.css';
 
 const principles = (await getCollection('philosophy'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((e) => e.data);
-
-function bandExtra(num: string) {
-	return philosophyBandExtras.find((b) => b.principleNum === num);
-}
 ---
 
 <BaseLayout
@@ -30,40 +25,31 @@ function bandExtra(num: string) {
 		</p>
 	</header>
 
-	{principles.map((p) => {
-		const extra = bandExtra(p.num);
-		const mermaid = p.mermaid || extra?.mermaid || 'flowchart LR\n  A["[draft]"] --> B["[draft]"]';
-		const proofLinks = p.proofLinks?.length
-			? p.proofLinks
-			: extra
-				? [{ href: extra.proofHref, label: extra.proofLabel }]
-				: [];
-		return (
+	{principles.map((p) => (
 			<section class="about-section about-philo-band" id={`principle-${p.num}`}>
 				<article class="about-principle-row about-philo-band-head">
 					<p class="about-principle-num font-mono">{p.num}</p>
 					<div>
 						<h2 class="about-principle-title">{p.title}</h2>
-						{(p.subtitle || extra?.subtitle) && (
-							<p class="about-philo-subtitle">{p.subtitle || extra?.subtitle}</p>
-						)}
+						{p.subtitle && <p class="about-philo-subtitle">{p.subtitle}</p>}
 					</div>
 				</article>
 				{p.pullQuote && <blockquote class="about-philo-quote">"{p.pullQuote}"</blockquote>}
 				<p class="about-principle-body">{p.desc}</p>
-				<div class="about-philo-slot">
-					<pre class="language-mermaid"><code class="language-mermaid">{mermaid}</code></pre>
-				</div>
-				{proofLinks.length > 0 && (
+				{p.mermaid && (
+					<div class="about-philo-slot">
+						<pre class="language-mermaid"><code class="language-mermaid">{p.mermaid}</code></pre>
+					</div>
+				)}
+				{p.proofLinks && p.proofLinks.length > 0 && (
 					<p class="about-philo-proofs font-mono">
-						{proofLinks.map((link) => (
+						{p.proofLinks.map((link) => (
 							<a href={link.href} class="about-principle-proof">{link.label}</a>
 						))}
 					</p>
 				)}
 			</section>
-		);
-	})}
+		))}
 
 	<nav class="about-philo-exits font-mono" aria-label="Related pages">
 		<a href="/about" class="text-link">← About</a>
@@ -91,9 +77,9 @@ function bandExtra(num: string) {
 			themeVariables: {
 				primaryColor: '#f4f0e7',
 				primaryTextColor: '#2b251e',
-				primaryBorderColor: '#b42135',
+				primaryBorderColor: '#84353f',
 				lineColor: '#5f5038',
-				secondaryColor: '#fffdfa',
+				secondaryColor: '#fffcf8',
 				tertiaryColor: '#ede7da',
 				fontFamily: 'Geist, sans-serif',
 			},
@@ -129,7 +115,7 @@ function bandExtra(num: string) {
 	.about-philo-quote {
 		margin: 0 0 0.85rem;
 		padding-left: 1rem;
-		border-left: 2px solid rgba(180, 33, 53, 0.35);
+		border-left: 2px solid rgba(var(--accent-rgb), 0.35);
 		font-size: var(--type-xyz);
 		line-height: 1.55;
 		color: var(--text-main);
@@ -146,7 +132,11 @@ function bandExtra(num: string) {
 
 	.about-philo-slot pre {
 		margin: 0;
-		background: transparent;
+		background: transparent !important;
+		border-radius: 0 !important;
+		box-shadow: none !important;
+		border: 0 !important;
+		padding: 0 !important;
 	}
 
 	.about-philo-proofs {

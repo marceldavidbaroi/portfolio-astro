@@ -48,13 +48,13 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/tradeflowbd/dashboard.webp"
   - "/images/projects/tradeflowbd/shipments-list.webp"
   - "/images/projects/tradeflowbd/shipment-details.webp"
   - "/images/projects/tradeflowbd/product-costing.webp"
+  - "/images/projects/tradeflowbd/dashboard.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/tradeflowbd/dashboard.webp"
+  heroMockup: "/images/projects/tradeflowbd/shipments-list.webp"
   architectureDiagram: "/images/projects/tradeflowbd/shipments-list.webp"
   databaseErd: "/images/projects/tradeflowbd/shipment-details.webp"
   screenshots:

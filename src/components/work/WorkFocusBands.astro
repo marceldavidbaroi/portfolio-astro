@@ -1,0 +1,147 @@
+---
+import ShotFan from './ShotFan.astro';
+
+interface Metric {
+	value: string;
+	label: string;
+}
+
+interface Project {
+	slug: string;
+	categories: string[];
+	searchString: string;
+	chip?: string;
+	title: string;
+	description?: string;
+	impactMetrics?: Metric[];
+	thumbs: string[];
+	platformType?: string;
+}
+
+interface Props {
+	projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="focus-section" aria-label="Featured case studies">
+	<div class="focus-list" id="focus-list">
+		{projects.map((project) => (
+			<a
+				class="feature-band catalog-item"
+				href={`/work/${project.slug}`}
+				data-categories={project.categories.join(' ')}
+				data-search-content={project.searchString}
+			>
+				<div class="feature-copy">
+					<p class="kicker font-mono">{project.chip}</p>
+					<h2 class="feature-title">{project.title}</h2>
+					{(project.impactMetrics || []).length > 0 && (
+						<ul class="metric-row font-mono feature-metrics">
+							{(project.impactMetrics || []).slice(0, 3).map((m) => (
+								<li>
+									<b>{m.value}</b>
+									<span>{m.label}</span>
+								</li>
+							))}
+						</ul>
+					)}
+					<p class="feature-desc">{project.description}</p>
+					<span class="inline-cta font-mono">Read case study →</span>
+				</div>
+				<ShotFan images={project.thumbs} phone={project.platformType === 'mobile'} size="feature" />
+			</a>
+		))}
+	</div>
+</section>
+
+<style>
+	.focus-section {
+		padding-bottom: 0.35rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.focus-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.focus-section[hidden],
+	.feature-band[hidden] {
+		display: none !important;
+	}
+
+	.feature-band {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(280px, 42%);
+		gap: 1.5rem 2rem;
+		align-items: center;
+		text-decoration: none;
+		color: inherit;
+		padding: 1.5rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.focus-list .feature-band:first-child {
+		padding-top: 0;
+	}
+
+	.feature-band:last-child {
+		border-bottom: 0;
+	}
+
+	.feature-band:hover .feature-title {
+		color: var(--accent);
+	}
+
+	.feature-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.feature-metrics {
+		margin-top: 0.1rem;
+	}
+
+	@media (max-width: 900px) {
+		.feature-band {
+			grid-template-columns: 1fr;
+			gap: 0.85rem;
+			padding: 1.2rem 0;
+		}
+
+		.feature-band :global(.shot-still) {
+			justify-self: start;
+			max-width: 100%;
+		}
+
+		.feature-metrics {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.65rem;
+			width: 100%;
+		}
+
+		.feature-metrics li {
+			min-width: 0;
+		}
+
+		.feature-metrics b,
+		.feature-metrics span {
+			overflow-wrap: break-word;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.feature-metrics {
+			gap: 0.4rem;
+		}
+
+		.feature-metrics b {
+			font-size: 0.82rem;
+		}
+	}
+</style>

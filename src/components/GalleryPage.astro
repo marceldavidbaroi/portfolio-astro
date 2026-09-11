@@ -23,7 +23,6 @@ interface Props {
 
 const { title, backHref, backLabel, tag, description, photos, emptyHint, useAtticChrome = false, crumb } = Astro.props;
 const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
-const draftCaption = '[draft] Gallery caption';
 ---
 
 <BaseLayout title={`Marcel David Baroi | ${title}`} isWide alignStart={Boolean(atticCrumb)}>
@@ -63,7 +62,7 @@ const draftCaption = '[draft] Gallery caption';
 				<a href={backHref} class="back-link font-mono">← {backLabel}</a>
 				<header class="gallery-header">
 					<span class="gallery-tag font-mono">{tag}</span>
-					<h1 class="gallery-title font-dot">{title}</h1>
+					<h1 class="gallery-title font-sans">{title}</h1>
 					<p class="gallery-desc">{description}</p>
 				</header>
 			</>
@@ -72,11 +71,11 @@ const draftCaption = '[draft] Gallery caption';
 		{photos.length > 0 ? (
 			<div class="gallery-grid" id="gallery-grid">
 				{photos.map((photo) => (
-					<figure class="gallery-item" data-caption={photo.caption || draftCaption}>
-						<button type="button" class="gallery-shot" data-src={photo.src} data-alt={photo.caption || draftCaption}>
-							<img src={photo.src} alt={photo.caption || draftCaption} loading="lazy" />
+					<figure class="gallery-item" data-caption={photo.caption}>
+						<button type="button" class="gallery-shot" data-src={photo.src} data-alt={photo.caption}>
+							<img src={photo.src} alt={photo.caption} loading="lazy" />
 						</button>
-						<figcaption class="font-mono">{photo.caption || draftCaption}</figcaption>
+						{photo.caption && <figcaption class="font-mono">{photo.caption}</figcaption>}
 					</figure>
 				))}
 			</div>
@@ -132,9 +131,13 @@ const draftCaption = '[draft] Gallery caption';
 		display: inline-block;
 		font-size: 0.75rem;
 		font-weight: 700;
-		color: var(--accent);
+		color: var(--text-main);
 		text-decoration: none;
 		margin-bottom: 1.25rem;
+	}
+
+	.back-link:hover {
+		text-decoration: underline;
 	}
 
 	.gallery-tag {
@@ -213,7 +216,7 @@ const draftCaption = '[draft] Gallery caption';
 		right: 1rem;
 		border: 0;
 		background: transparent;
-		color: #fffdfa;
+		color: var(--paper);
 		font-size: 2rem;
 		cursor: pointer;
 	}

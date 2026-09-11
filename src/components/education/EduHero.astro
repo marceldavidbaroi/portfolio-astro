@@ -1,6 +1,5 @@
 ---
 import type { CollectionEntry } from 'astro:content';
-import { educationFactsRail } from '../../data/aboutLayoutDummy';
 
 type EduData = CollectionEntry<'education'>['data'];
 
@@ -18,9 +17,9 @@ const facts = isBsc
 			{ label: 'Program', value: program.degree },
 			{ label: 'Institution', value: program.institutionShort },
 			{ label: 'CGPA', value: `${program.cgpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
-			{ label: 'Credits', value: String(program.totalCredits ?? educationFactsRail[3]?.value.replace('[draft] ', '')) },
+			{ label: 'Credits', value: String(program.totalCredits ?? '') },
 			{ label: 'Period', value: program.period },
-			{ label: 'Status', value: program.status ?? educationFactsRail[0]?.value },
+			{ label: 'Status', value: program.status ?? 'Completed' },
 		]
 	: [
 			{ label: 'Program', value: program.degree },
@@ -28,7 +27,7 @@ const facts = isBsc
 			{ label: 'GPA', value: `${program.gpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
 			{ label: 'Period', value: program.period },
 			{ label: 'Location', value: program.location },
-			{ label: 'Status', value: program.status ?? '[draft] Completed' },
+			{ label: 'Status', value: program.status ?? 'Completed' },
 		];
 ---
 

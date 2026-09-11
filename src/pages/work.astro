@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import WorkMasthead from '../components/work/WorkMasthead.astro';
+import WorkFocusBands from '../components/work/WorkFocusBands.astro';
 import WorkFilters from '../components/work/WorkFilters.astro';
 import WorkCatalog from '../components/work/WorkCatalog.astro';
 import WorkArchiveTeaser from '../components/work/WorkArchiveTeaser.astro';
 import { getCollection } from 'astro:content';
-import { getProjectCategory, shots, stackNames } from '../lib/work';
+import { FOCUS_IDS, getProjectCategory, shots, stackNames } from '../lib/work';
 
 const allProjects = await getCollection('projects');
 
@@ -25,6 +26,8 @@ const projects = allProjects
 	});
 
 const workCount = projects.length;
+const focused = FOCUS_IDS.map((id) => projects.find((p) => p.slug === id)).filter(Boolean);
+const catalog = projects.filter((p) => !FOCUS_IDS.includes(p.slug as (typeof FOCUS_IDS)[number]));
 
 const counts = {
 	all: workCount,
@@ -53,6 +56,7 @@ const stackLinks = [
 <BaseLayout title="Work & Case Studies | Marcel David Baroi" isWide alignStart>
 	<WorkMasthead workCount={workCount} />
 	<WorkFilters tabs={tabs} stackLinks={stackLinks} workCount={workCount} />
-	<WorkCatalog projects={projects} />
+	<WorkFocusBands projects={focused} />
+	<WorkCatalog projects={catalog} />
 	<WorkArchiveTeaser />
 </BaseLayout>

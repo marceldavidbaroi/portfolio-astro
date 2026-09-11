@@ -8,7 +8,6 @@ const totalCount = skillCategories.reduce((acc, cat) => acc + cat.items.length, 
 const primaryCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((i) => i.tier === 'primary').length, 0);
 const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((i) => i.tier === 'secondary').length, 0);
 
-const draftDesc = '[draft] Description pending for this skill.';
 ---
 
 <BaseLayout
@@ -50,7 +49,7 @@ const draftDesc = '[draft] Description pending for this skill.';
 						data-category={cat.id}
 					>
 						<p class:list={['about-skill-name', { 'is-prior': skill.tier === 'secondary' }]}>{skill.name}</p>
-						<p class="about-skill-desc">{skill.desc || draftDesc}</p>
+						{skill.desc && <p class="about-skill-desc">{skill.desc}</p>}
 					</div>
 				))}
 			</section>

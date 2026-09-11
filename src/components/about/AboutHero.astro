@@ -8,12 +8,15 @@ interface Props {
 
 const { metrics } = Astro.props;
 
-const proof = [
+const proofLine = [
 	metrics.find((m) => m.value === '10+'),
 	metrics.find((m) => m.value === '100%'),
 	metrics.find((m) => m.value === '3.91'),
 	metrics.find((m) => m.value === '+60%'),
-].filter(Boolean);
+]
+	.filter(Boolean)
+	.map((m) => `${m!.value} ${m!.label}`)
+	.join(' · ');
 
 const bioParagraphs = [
 	'I design and ship Vue / Quasar systems on PostgreSQL — wholesale ERP, support desks, and operations tools used in production.',
@@ -24,25 +27,15 @@ const bioParagraphs = [
 
 <section class="about-hero" id="profile" aria-label="About">
 	<p class="label font-mono about-hero-kicker">About</p>
-	<p class="about-hero-status font-mono">
-		<span class="about-hero-status-dot" aria-hidden="true"></span>
-		Available · Remote / relocation · Dhaka · US/EU overlap
-	</p>
-	<h1 class="about-hero-name font-dot">{site.name}</h1>
+	<p class="about-hero-status font-mono">Available · Remote / relocation · Dhaka · US/EU overlap</p>
+	<h1 class="about-hero-name font-sans">{site.name}</h1>
 	<p class="about-hero-role">Full-Stack Engineer — multi-tenant SaaS</p>
 	<div class="about-hero-bio">
 		{bioParagraphs.map((line) => (
 			<p>{line}</p>
 		))}
 	</div>
-	<ul class="about-hero-proof">
-		{proof.map((m) => (
-			<li>
-				<strong>{m.value}</strong>
-				<span>{m.label}</span>
-			</li>
-		))}
-	</ul>
+	<p class="about-hero-proof-line">{proofLine}</p>
 	<div class="hero-actions">
 		<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email me</a>
 		<a class="btn-ghost font-mono" href={site.resumePdf} target="_blank" rel="noopener noreferrer">Resume</a>

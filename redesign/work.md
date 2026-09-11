@@ -21,11 +21,11 @@ Identical to Home. Do not invent a second palette.
 
 | Token | Value | Use |
 |---|---|---|
-| Paper | `#fffdfa` | Page |
+| Paper | `#fffcf8` | Page |
 | Slot | `#f4f0e7` | Empty shot, hero well |
 | Ink | `#2b251e` | Titles, XYZ, body |
 | Muted | `#746855` | Role, dates, tab idle, captions |
-| Accent | `#b42135` | Kickers, active tab, CTAs, close rule |
+| Accent | `#84353f` | Kickers, active tab, CTAs, close rule |
 | Line | `rgba(95, 80, 56, 0.10–0.14)` | Bands, rows, filter hairline |
 
 Shell: `BaseLayout` with `isWide` **and** `alignStart` (Home). Column ~1180px, left-aligned, `overflow-x: clip`. Today’s `/work` is centered and card-wrapped — that goes away.
@@ -60,11 +60,10 @@ ENTERPRISE ERP & SAAS
 Title (XYZ, clamp 4)
 100%     17+     4 Surfaces          Read case study →
 ────────────────────────────────────────────
-(same .feature-band ×2 — TradeflowBD, Service Desk)
+(same .feature-band ×2 — TradeflowBD, Service Desk; hidden when filter/search excludes them)
 
-chip · title                              [shot fan]
-role · timeline
-XYZ (clamp 3) · 100%  17+  Vue · Quasar
+chip · title                              [one 16:10 still]
+subtitle (clamp 1)
 ────────────────────────────────────────────
 …remaining, 1 column, data.order, skip the two focus ids
 
@@ -110,10 +109,9 @@ Title in Geist 800
 Role · Timeline
 XYZ description (same sentence as the index, not a second slogan)
 
-100%     17+     4 Surfaces     980+
 [ EMAIL / LIVE if real ]  Repo  Docs     (Home .btn-solid / .btn-ghost / .text-link)
 
-[ one hero 16:10  or  Home 3-layer shot fan / phone stack ]
+[ one hero 16:10 still — or 9:16 for phone projects ]
 
 Role          Timeline         Class
 Engineer      2025 — Present   Proprietary
@@ -148,8 +146,8 @@ Reuse Home class grammar. Copy layout from `index.astro`, then add catalog field
 |---|---|---|---|
 | Masthead | Home `.label` + Geist H1 + one lead. Count in the kicker (`WORK · 14 CASE STUDIES`) | Directory | NDot “SELECTED WORK”, `01 // DIRECTORY`, burgundy subtitle |
 | Filters | Hairline tabs + underline search. Optional sticky once header is hidden | Find a case | Pill toolbar card, filled active chip, “Quick Stack” button cloud |
-| Focus | Home `.feature-band` ×2 (grid: copy \| metrics \| CTA) | The hire stories | 2×2 equal cards, shot mosaic on the focus pair |
-| Catalog | Home `.work-item` + `.shot-stack`, **one column**, extra CV lines | The rest | 4-thumb mosaic, fake notches, 2-col equal cards |
+| Focus | Home `.feature-band` ×2 (copy + metrics under title + CTA + 16:10 still) | The hire stories | Flat catalog where every row is equal |
+| Catalog | Chip + title + one-line subtitle + fan, **one column** | The rest | XYZ + metrics + CTA CV dump |
 | Empty | One muted sentence + `Clear` | Honest miss | Illustration |
 | Exit | Home `.work-index` energy: `View archive →` | Civic / non-case | Dead end, second close CTA |
 
@@ -172,22 +170,22 @@ Status when filtering: `Showing 4 of 14` + `Clear` in mono 0.68rem.
 Sticky filter (index only):
 
 - `position: sticky; top: 0; z-index: 40` (header is 50).
-- Paper `rgba(255, 253, 250, 0.82)` + blur + bottom hairline only after scroll — match `header.is-scrolled`.
+- Solid paper (`var(--paper)`) + bottom hairline when pinned — no blur or glass.
 - Because the header **hides on the way down**, the filter can sit at the physical top without a 57px offset. Do **not** add `top: 57px` “for the header”; that leaves a dead gap when the bar is gone.
 - If JS is easier: add `is-pinned` when `header` has `is-hidden`. Either way, never show header + filter stacked as two bars.
 
 ### Catalog row
 
-Home `.work-item` is chip + title | 7.4rem fan. On Work, same fan, richer left:
+Home `.work-item` is chip + title | fan. On Work catalog, same density + one subtitle line:
 
 ```
 chip
-title (Geist 800, ~1.15rem — Home .support-title / .feature-title scale)
-role · timeline · class          (mono 0.68rem muted)
-XYZ clamp 3
-3 metrics · 3 stack names        (Home .metric-row + mid-dots)
+title (~1.08rem)
+subtitle clamp 1                 (muted)
                               [ .shot-stack ]
 ```
+
+Metrics and “Read case study →” live on focus bands and case pages only.
 
 Fan: first 3 non-`thumb-` images, `--i` rotate per layer (Home). `platformType === 'mobile'` → `.shot-stack.is-phone`. Missing → one empty slot, not four placeholders.
 
@@ -201,9 +199,9 @@ Classification = one muted mono word (Proprietary / Open source / Independent). 
 |---|---|---|---|
 | Top | Mono breadcrumb `Work / {title}` + read time | Orientation | `CASE STUDY // 01` NDot, clock pill |
 | Title | Chip · class · status. Geist title. Role · timeline. XYZ | CV entry expanded | NDot subtitle, emoji in class |
-| Metrics | Home `.metric-row` (3–6) | Proof | Gradient KPI pills, quote card |
+| Meta rail | Role · Timeline · Class (3-cell) | Proof at a glance | KPI metric row under title |
 | Actions | Home `.hero-actions`: one `.btn-solid` max | Live if `isRealUrl` | SVG on every button |
-| Hero | One 16:10 well **or** Home `.shot-stack` / phone stack | Evidence | Fake browser chrome, `app.{id}.internal`, 4-up mosaic |
+| Hero | One 16:10 still (9:16 phone) | Evidence | Shot fan, fake browser chrome, 4-up mosaic |
 | Meta | 3-cell rail, hairline, no cards | Role, time, class | “Recruiter Review Budget” |
 | Overview | Paragraph | `executiveOverview` | `01 // IMPACT FORMULA` |
 | Decisions | Rows: challenge → decision → outcome | Trade-offs | Icon accordion |
@@ -216,9 +214,11 @@ Classification = one muted mono word (Proprietary / Open source / Independent). 
 
 ### Links
 
-Keep `isRealUrl`. Solid = Live (or Email if no live). Ghost / text = repos, docs, parent.
+Keep `isRealUrl`. Solid = Live only when a real URL exists. Ghost / text = repos, docs, parent. Email lives in the close band, not the hero.
 
-### TOC
+### TOC (structured only)
+
+Overview · Decisions · Before → after · Stack · Security — from structured case fields only. Do not append markdown `h2`s.
 
 Optional. Desktop only, viewport ≳1200, ≥4 sections, sticky `top: 0.75rem`, `z-index: 30`. Phone: omit. Not a card under the title. Must remain usable while the header is hidden (no offset that assumes a persistent bar).
 
@@ -240,7 +240,7 @@ Home table, plus:
 | Breadcrumb / dates | Mono | 0.68rem | muted |
 | Kicker / CTA | Mono 700 uppercase | 0.62–0.72rem | accent |
 | Metric value | Mono | 0.92rem | ink |
-| Metric label | Mono uppercase | 0.58rem | muted |
+| Metric label | Mono uppercase | 0.75rem | muted |
 
 If type feels small, raise **size** first (Home note). Do not darken the palette. No NDot on Work.
 

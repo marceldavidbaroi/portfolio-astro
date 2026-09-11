@@ -20,9 +20,9 @@ Same as Home. Header-specific:
 
 | Token | Value | Use |
 |---|---|---|
-| Bar | `transparent` → paper 82% + blur while visible mid-page | Sticky; slides away on scroll down |
+| Bar | `transparent` → solid paper while visible mid-page | Sticky; slides away on scroll down; no `backdrop-filter` |
 | Hairline | `rgba(95, 80, 56, 0.08)` | Only while `is-scrolled` and visible |
-| Active | Accent `#b42135` | Current route word |
+| Active | Accent `#84353f` + 2px underline | Current route word (same as Work tabs) |
 | Idle | Muted `#746855` | Other routes |
 | Menu desktop | Muted ink, no fill | `⌘K` hint |
 | Menu phone | Cream on accent | Solid pill, word “Menu” |
@@ -56,17 +56,17 @@ Dhaka · Available · Remote / relocation
 Command menu (overlay):
 
 ```
-          [ paper dialog, ~420px ]
-          Jump to…                         ESC
+          [ paper dialog, ~420px, 5px radius ]
+          Jump to…
           ────────────────────────────────
-          Home                        nav
-          Work / Case studies         nav
-          About                       nav
+          Home                        Page
+          Work / Case studies         Page
+          About                       Page
           — more —
-          Resume (PDF)             action
-          Copy email            clipboard
-          LinkedIn               action
-          GitHub                 action
+          Resume (PDF)                File
+          Copy email                  Copy
+          LinkedIn                    Link
+          GitHub                      Link
           ────────────────────────────────
           ↑↓  ↵  Esc
 ```
@@ -76,11 +76,11 @@ Command menu (overlay):
 | Piece | Layout | What it is | What it is not |
 |---|---|---|---|
 | Nav | Left-aligned word list, Geist 500 ~0.94rem | Three routes | Centered island, pills, NDot |
-| Active | Color only (accent) | You are here | Background chip, underline bar, weight jump that reflows |
+| Active | Accent + 2px bottom rule | You are here | Background chip, weight jump that reflows |
 | Menu | Right. Desktop: mono `⌘K`. Phone: solid Menu | Opens command palette | Hamburger that expands an in-header drawer |
 | Scroll | Hide on scroll down (after ~72px); show on scroll up or top. Paper + hairline while revealed mid-page | Reading room | Always-on bar, drop shadow, shrinking logo |
 | Footer | One mono line, muted, left-aligned in the content column | Status reminder | Second close CTA, social icon row, copyright block |
-| Command menu | Centered paper panel, Geist labels, mono type/meta | Keyboard jump + mobile overflow | Dark modal, search-engine chrome, emoji |
+| Command menu | ~420px paper panel, 4–6px radius, Geist labels, mono meta (“Page”, “File”) | Keyboard jump + mobile overflow | Spotlight chrome, search icon, ESC chip, blur backdrop |
 
 ### Routes in the bar
 

@@ -22,7 +22,7 @@ Easy to read: raise type size before darkening color.
 2. **Size means importance.** Feature bands are bigger than support rows. Do not make every block equal.
 3. **Burgundy is a budget.** Labels, one solid button, active nav word, 2px close rule. Nowhere else by default.
 4. **Raise type size before darkening color.** Body contrast is already strong. Captions fail when they are too small.
-5. **NDot is the name only.** Geist for titles and body. Mono for status, dates, kickers, CTAs.
+5. **Spelled name, not a dotted wordmark.** Geist 800 for the Home H1 and page titles. No NDot on the name. Mono for status, dates, kickers, CTAs.
 
 ---
 
@@ -30,12 +30,12 @@ Easy to read: raise type size before darkening color.
 
 | Name | CSS var | Value | Use |
 |---|---|---|---|
-| Paper | `--bg-color` / `--paper` | `#fffdfa` | Page background; cream on solid buttons |
+| Paper | `--bg-color` / `--paper` | `#fffcf8` | Page background; cream on solid buttons (~1% warmer than `#fffdfa`) |
 | Slot | `--card-bg` / `--slot` | `#f4f0e7` | Empty portrait / shot wells; code block fill |
 | Ink | `--text-main` / `--ink` | `#2b251e` | Titles, body, metric values |
 | Muted | `--text-muted` / `--muted` | `#746855` | Role, dates, idle nav, captions |
-| Accent | `--accent` | `#b42135` | Kickers, solid button, active word, close rule |
-| Accent hover | `--accent-hover` | `#96192a` | Solid button hover |
+| Accent | `--accent` | `#84353f` | Kickers, solid button, active word, close rule — wine on paper |
+| Accent hover | `--accent-hover` | `color-mix(in oklch, var(--accent) 75%, var(--ink))` | Solid button hover — dried ink (derived from accent) |
 | Line | `--card-border` / `--line` | `rgba(95, 80, 56, 0.12)` | Hairlines; range 0.08–0.14 opacity |
 
 **Do not use:** `--btn-primary` / `--btn-primary-hover` (legacy brown). Buttons use accent.
@@ -48,13 +48,13 @@ Contrast notes: ink on paper ~14.9:1. Muted on paper ~5.4:1 (AA at normal size; 
 
 | Role | Face | Size | Color | CSS var |
 |---|---|---|---|---|
-| Name | NDot 55 | clamp(1.85rem, 6vw, 3.35rem) | ink | — |
+| Name | Geist 800 | clamp(1.85rem, 6vw, 3.35rem) | ink | Home H1 — spelled, Slack-safe |
 | Page title | Geist 800 | clamp(1.85rem, 5vw, 2.6rem) | ink | — |
 | Section / feature title | Geist 800 | clamp(1.15rem, 2.1vw, 1.55rem) | ink | — |
 | Body / lead | Geist | 1.05rem / 1.55 lh | ink | `--type-body` |
 | XYZ / band body | Geist | 1rem / 1.55 lh | ink | `--type-xyz` |
 | Kicker / label | Mono 700 uppercase | 0.75rem | accent | `--type-kicker` |
-| Metric label / tiny caption | Mono uppercase | 0.6875rem | muted | `--type-caption` |
+| Metric label / tiny caption | Mono uppercase | 0.75rem | muted | `--type-caption` |
 | Status / dates / footer | Mono | 0.75rem | muted | `--type-meta` |
 | CTA / pill button | Mono 700 uppercase | 0.8125rem | cream on accent / ink ghost | `--type-cta` |
 | Filter tab | Geist 500 | 0.9375rem | muted / accent active | `--type-tab` |
@@ -95,13 +95,14 @@ Reuse these class names. Do not invent a parallel set.
 | Class | Recipe |
 |---|---|
 | `.label` / `.kicker` | Mono uppercase accent; `--type-kicker` |
-| `.btn-solid` | Pill; accent fill; cream text; `--type-cta` |
-| `.btn-ghost` | Pill; transparent; ink + line border; hover → accent |
-| `.text-link` / `.section-link` / `.inline-cta` | Mono accent; underline on hover; `--type-cta` or slightly smaller |
+| `.btn-solid` | 2px radius; accent fill; cream text; `--type-cta` |
+| `.btn-ghost` | 2px radius; transparent; ink + line border; hover → ink |
+| `.text-link` / `.section-link` / `.inline-cta` | Mono ink; underline on hover; `--type-cta` or slightly smaller |
 | `.feature-band` | Grid: copy \| metrics \| CTA; hairline bottom; size = importance |
 | `.work-item` | Row: copy + shot fan; hairline; whole row links |
-| `.shot-stack` / `ShotFan` | Up to 3 stacked shots; slight rotate; phone variant taller |
-| `.metric-row` | Value (mono) + uppercase caption (`--type-caption`) |
+| `.shot-stack` / `ShotFan` | Feature = one 16:10 still; catalog `row-still`; hero phone variant taller |
+| `pre` | 6px radius; slot fill; **no** box-shadow |
+| `.metric-row` | Value Geist 800 + uppercase mono caption (`--type-caption`) |
 | `.close` | 2px accent top rule; kicker + title + Email/LinkedIn |
 | `.tab` | Geist; accent + 2px underline when active; no filled chip |
 | `.search` | Underline input; no box |
@@ -164,7 +165,7 @@ Sticky Work filters may use a static blur while pinned (not an animated blur). H
 
 ## Do not
 
-- NDot on anything except the Home name
+- NDot on the Home or About name (use Geist 800 spelled name)
 - `01 //` or `CASE STUDY //` section stamps
 - Equal 16px card grids or 4-thumb mosaics
 - Icon row (Resume, ATS, GitHub, LinkedIn, mail) in the header

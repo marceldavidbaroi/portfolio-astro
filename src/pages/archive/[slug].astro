@@ -24,7 +24,7 @@ const eventPhases = (d.phases || []).map((phase) => {
 		...phase,
 		imageSrc: image?.src,
 		imageAlt: image?.alt,
-		imageCaption: phase.imageCaption || image?.caption || '[draft] Phase image caption',
+		imageCaption: phase.imageCaption || image?.caption || '',
 	};
 });
 
@@ -32,8 +32,8 @@ const days = (d.days || []).map((day) => ({
 	...day,
 	images: resolveAssets(day.imageIds || [], map).map((a) => ({
 		src: a.src,
-		alt: a.alt || '[draft] Archive photo',
-		caption: a.caption || a.alt || '[draft] Caption',
+		alt: a.alt || '',
+		caption: a.caption || a.alt || '',
 	})),
 }));
 
@@ -72,13 +72,13 @@ const pageDescription = d.pageDescription || d.body || d.title;
 	{isPhases ? (
 		eventPhases.map((phase, idx) => (
 			<section class="about-section memoir-band" id={`phase-${idx + 1}`}>
-				<p class="about-rail-tag font-mono">{phase.phaseTag || `[draft] Phase ${idx + 1}`}</p>
-				<h2 class="about-section-title">{phase.headline || phase.phaseTitle || '[draft] Phase headline'}</h2>
+				{phase.phaseTag && <p class="about-rail-tag font-mono">{phase.phaseTag}</p>}
+				<h2 class="about-section-title">{phase.headline || phase.phaseTitle}</h2>
 				{phase.subtitle && <p class="about-rail-sub">{phase.subtitle}</p>}
 				{phase.imageSrc && (
 					<figure class="memoir-figure edu-slot">
 						<img src={phase.imageSrc} alt={phase.imageAlt || ''} loading="lazy" />
-						<figcaption class="font-mono">{phase.imageCaption}</figcaption>
+						{phase.imageCaption && <figcaption class="font-mono">{phase.imageCaption}</figcaption>}
 					</figure>
 				)}
 				{(phase.storyParagraphs || []).map((para) => <p class="about-principle-body">{para}</p>)}
@@ -88,8 +88,8 @@ const pageDescription = d.pageDescription || d.body || d.title;
 	) : (
 		days.map((day, idx) => (
 			<section class="about-section memoir-band" id={`day-${idx + 1}`}>
-				<p class="about-rail-tag font-mono">{day.dateTag || `[draft] Day ${idx + 1}`}</p>
-				<h2 class="about-section-title">{day.headline || '[draft] Day headline'}</h2>
+				{day.dateTag && <p class="about-rail-tag font-mono">{day.dateTag}</p>}
+				<h2 class="about-section-title">{day.headline}</h2>
 				{day.subtitle && <p class="about-rail-sub">{day.subtitle}</p>}
 				{(day.storyParagraphs || []).map((para) => <p class="about-principle-body">{para}</p>)}
 				{day.reflectionQuote && <blockquote class="about-philo-quote">{day.reflectionQuote}</blockquote>}
@@ -98,7 +98,7 @@ const pageDescription = d.pageDescription || d.body || d.title;
 						{day.images.map((img) => (
 							<figure class="memoir-figure edu-slot">
 								<img src={img.src} alt={img.alt} loading="lazy" />
-								<figcaption class="font-mono">{img.caption}</figcaption>
+								{img.caption && <figcaption class="font-mono">{img.caption}</figcaption>}
 							</figure>
 						))}
 					</div>
@@ -113,7 +113,7 @@ const pageDescription = d.pageDescription || d.body || d.title;
 			{(d.pillars || []).map((pillar) => (
 				<div class="about-beyond-row">
 					<p class="about-beyond-term">{pillar.title || pillar.tag}</p>
-					<p class="about-beyond-desc">{pillar.desc || '[draft] Reflection paragraph'}</p>
+					{pillar.desc && <p class="about-beyond-desc">{pillar.desc}</p>}
 				</div>
 			))}
 		</section>

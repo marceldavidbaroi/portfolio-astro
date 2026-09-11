@@ -13,16 +13,19 @@ interface ExperienceItem {
 
 interface Props {
 	experience: ExperienceItem[];
+	heading?: 'visible' | 'none';
 }
 
-const { experience } = Astro.props;
+const { experience, heading = 'visible' } = Astro.props;
 ---
 
-<section class="experience" aria-labelledby="exp-heading">
-	<div class="section-kicker">
-		<p class="label font-mono">Experience</p>
-	</div>
-	<h2 id="exp-heading" class="sr-only">Work experience</h2>
+<section class="experience" aria-labelledby={heading === 'visible' ? 'exp-heading' : undefined}>
+	{heading === 'visible' && (
+		<div class="section-kicker">
+			<p class="label font-mono">Experience</p>
+		</div>
+	)}
+	{heading === 'visible' && <h2 id="exp-heading" class="sr-only">Work experience</h2>}
 	<ol class="rail">
 		{experience.map((item) => {
 			const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
@@ -103,16 +106,13 @@ const { experience } = Astro.props;
 		font-size: var(--type-caption);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.28);
-		padding: 0.12rem 0.4rem;
-		border-radius: 9999px;
+		color: var(--text-muted);
 	}
 
 	.rail-company {
 		margin: 0.2rem 0 0;
 		font-size: 0.92rem;
-		color: var(--accent);
+		color: var(--text-muted);
 		font-weight: 600;
 	}
 
@@ -145,8 +145,8 @@ const { experience } = Astro.props;
 	}
 
 	.rail-links a:hover {
-		color: var(--accent);
-		border-color: var(--accent);
+		color: var(--text-main);
+		border-color: rgba(95, 80, 56, 0.42);
 	}
 
 	@media (max-width: 900px) {

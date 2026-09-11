@@ -1,26 +1,11 @@
 ---
 import type { PrincipleItem } from '../../data/aboutData';
-import { principleProofLinks } from '../../data/aboutLayoutDummy';
 
 interface Props {
 	principles: PrincipleItem[];
 }
 
-type PrincipleWithProof = PrincipleItem & {
-	proofHref?: string;
-	proofLabel?: string;
-};
-
 const { principles } = Astro.props;
-
-function proofFor(principle: PrincipleItem) {
-	const withProof = principle as PrincipleWithProof;
-	const dummy = principleProofLinks.find((link) => link.principleNum === principle.num);
-	return {
-		href: withProof.proofHref ?? dummy?.href,
-		label: withProof.proofLabel ?? dummy?.label,
-	};
-}
 ---
 
 <section class="about-section" id="how-i-work" aria-labelledby="how-i-work-heading">
@@ -29,19 +14,16 @@ function proofFor(principle: PrincipleItem) {
 		<a href="/philosophy" class="section-link font-mono">Full philosophy →</a>
 	</div>
 
-	{principles.map((p) => {
-		const proof = proofFor(p);
-		return (
-			<article class="about-principle-row">
-				<p class="about-principle-num font-mono">{p.num}</p>
-				<div>
-					<h3 class="about-principle-title">{p.title}</h3>
-					<p class="about-principle-body">{p.desc}</p>
-					{proof.href && proof.label && (
-						<a href={proof.href} class="about-principle-proof font-mono">{proof.label}</a>
-					)}
-				</div>
-			</article>
-		);
-	})}
+	{principles.map((p) => (
+		<article class="about-principle-row">
+			<p class="about-principle-num font-mono">{p.num}</p>
+			<div>
+				<h3 class="about-principle-title font-sans">{p.title}</h3>
+				<p class="about-principle-body">{p.desc}</p>
+				{p.proofHref && p.proofLabel && (
+					<a href={p.proofHref} class="about-principle-proof font-mono">{p.proofLabel}</a>
+				)}
+			</div>
+		</article>
+	))}
 </section>

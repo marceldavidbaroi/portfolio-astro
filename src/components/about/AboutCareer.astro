@@ -1,6 +1,5 @@
 ---
 import HomeExperienceRail from '../home/HomeExperienceRail.astro';
-import { careerHighlightFallback } from '../../data/aboutLayoutDummy';
 
 interface ExperienceItem {
 	slug: string;
@@ -22,11 +21,10 @@ const { experience } = Astro.props;
 
 const experienceWithLines = experience.map((item) => {
 	const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
-	const highlight = line ?? careerHighlightFallback;
 	return {
 		...item,
-		summary: highlight,
-		highlights: item.highlights?.length ? item.highlights : [highlight],
+		summary: line ?? '',
+		highlights: item.highlights?.length ? item.highlights : line ? [line] : [],
 	};
 });
 ---
@@ -36,7 +34,7 @@ const experienceWithLines = experience.map((item) => {
 		<h2 id="career-heading" class="label font-mono">Career</h2>
 		<a href="/work" class="section-link font-mono">All work →</a>
 	</div>
-	<HomeExperienceRail experience={experienceWithLines} />
+	<HomeExperienceRail experience={experienceWithLines} heading="none" />
 </section>
 
 <style>

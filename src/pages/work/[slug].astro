@@ -30,7 +30,7 @@ export async function getStaticPaths() {
 
 const { project, prevProject, nextProject } = Astro.props;
 const { data } = project;
-const { Content, headings } = await render(project);
+const { Content } = await render(project);
 
 const rawBody = project.body || '';
 const structuredWords = [
@@ -45,16 +45,11 @@ const totalWordCount = (rawBody + ' ' + structuredWords).replace(/[#*`_~[\]()]/g
 const readingTimeText = `${Math.max(1, Math.ceil(totalWordCount / 200))} min`;
 
 const tocItems: { id: string; text: string }[] = [];
-if (data.executiveOverview || data.impactMetrics?.length) tocItems.push({ id: 'overview', text: 'Overview' });
+if (data.executiveOverview) tocItems.push({ id: 'overview', text: 'Overview' });
 if (data.keyDecisions?.length || data.problemStatement) tocItems.push({ id: 'decisions', text: 'Decisions' });
 if (data.valueProposition) tocItems.push({ id: 'before-after', text: 'Before → after' });
 if (data.techStack) tocItems.push({ id: 'stack', text: 'Stack' });
 if (data.securityReliability?.length || data.futureRoadmap?.length) tocItems.push({ id: 'security-roadmap', text: 'Security' });
-headings.forEach((h) => {
-	if (h.depth === 2 && !tocItems.some((item) => item.id === h.slug || item.text.toLowerCase() === h.text.toLowerCase())) {
-		tocItems.push({ id: h.slug, text: h.text });
-	}
-});
 const showToc = tocItems.length >= 4;
 
 const classLabel = ipLabel(data.classification);
@@ -67,12 +62,9 @@ const docs = isRealUrl(data.links?.docs);
 const hasActions = live || parent || github || ghFront || ghBack || docs;
 
 const realImages = shots(data.images);
-const heroStill =
-	data.platformType !== 'mobile' &&
-	data.visualAssets?.heroMockup &&
-	!data.visualAssets.heroMockup.includes('dummy')
-		? data.visualAssets.heroMockup
-		: realImages[0];
+const heroMockup = data.visualAssets?.heroMockup;
+const heroImage =
+	(heroMockup && !heroMockup.includes('dummy') ? heroMockup : null) || realImages[0] || null;
 const isPhone = data.platformType === 'mobile';
 
 const stackRows = [
@@ -96,7 +88,6 @@ const stackRows = [
 				role={data.role}
 				timeline={data.timeline}
 				description={data.description}
-				impactMetrics={data.impactMetrics}
 				links={data.links}
 				hasActions={hasActions}
 				live={live}
@@ -105,8 +96,7 @@ const stackRows = [
 				ghFront={ghFront}
 				ghBack={ghBack}
 				docs={docs}
-				heroStill={heroStill}
-				realImages={realImages}
+				heroImage={heroImage}
 				isPhone={isPhone}
 			/>
 			<CaseMetaRail role={data.role} timeline={data.timeline} classLabel={classLabel} />

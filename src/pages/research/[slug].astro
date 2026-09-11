@@ -1,7 +1,6 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
-import { researchMetaExtras } from '../../data/aboutLayoutDummy';
 import '../../styles/about.css';
 
 export async function getStaticPaths() {
@@ -13,8 +12,8 @@ export async function getStaticPaths() {
 }
 
 const { publication } = Astro.props;
-const actionHref = publication.officialRepositoryUrl || researchMetaExtras.actionHref;
-const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : researchMetaExtras.actionLabel;
+const actionHref = publication.officialRepositoryUrl || publication.pdfDownloadUrl;
+const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 'Download PDF';
 ---
 
 <BaseLayout
@@ -51,16 +50,18 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 			</div>
 			<div class="edu-fact">
 				<dt>Period</dt>
-				<dd>{publication.period || researchMetaExtras.submissionDate}</dd>
+				<dd>{publication.period}</dd>
 			</div>
 		</dl>
 
-		<div class="hero-actions">
-			<a class="btn-solid font-mono" href={actionHref} target="_blank" rel="noopener noreferrer">{actionLabel}</a>
-			{publication.pdfDownloadUrl && (
-				<a class="btn-ghost font-mono" href={publication.pdfDownloadUrl} target="_blank" rel="noopener noreferrer">Download PDF</a>
-			)}
-		</div>
+		{actionHref && (
+			<div class="hero-actions">
+				<a class="btn-solid font-mono" href={actionHref} target="_blank" rel="noopener noreferrer">{actionLabel}</a>
+				{publication.pdfDownloadUrl && publication.officialRepositoryUrl && (
+					<a class="btn-ghost font-mono" href={publication.pdfDownloadUrl} target="_blank" rel="noopener noreferrer">Download PDF</a>
+				)}
+			</div>
+		)}
 	</header>
 
 	<section class="about-section">
@@ -78,14 +79,14 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 	{publication.keyMetrics?.length > 0 && (
 		<section class="about-section">
 			<h2 class="about-section-title">Key metrics</h2>
-			<ul class="about-hero-proof research-metrics">
+			<dl class="edu-facts-rail font-mono">
 				{publication.keyMetrics.map((m) => (
-					<li>
-						<strong>{m.value}</strong>
-						<span>{m.label}</span>
-					</li>
+					<div class="edu-fact">
+						<dt>{m.label}</dt>
+						<dd>{m.value}</dd>
+					</div>
 				))}
-			</ul>
+			</dl>
 		</section>
 	)}
 

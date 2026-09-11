@@ -45,9 +45,13 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		</label>
 	</div>
 	<p class="stack-line font-mono" id="stack-links">
-		{stackLinks.map((link) => (
-			<button type="button" class="stack-link" data-tech-query={link.query}>{link.label}</button>
+		{stackLinks.map((link, i) => (
+			<>
+				{i > 0 && <span class="stack-dot" aria-hidden="true">·</span>}
+				<button type="button" class="stack-link" data-tech-query={link.query}>{link.label}</button>
+			</>
 		))}
+		<span class="stack-dot" aria-hidden="true">·</span>
 		<button type="button" class="stack-link is-reset" id="filter-reset">Reset</button>
 	</p>
 	<p class="status-line font-mono" id="filter-status" hidden>
@@ -65,7 +69,9 @@ const { tabs, stackLinks, workCount } = Astro.props;
 	const empty = document.getElementById('work-empty');
 	const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
 	const stackBtns = document.querySelectorAll<HTMLButtonElement>('[data-tech-query]');
-	const items = document.querySelectorAll<HTMLAnchorElement>('.work-item');
+	const items = document.querySelectorAll<HTMLAnchorElement>('.catalog-item');
+	const focusList = document.getElementById('focus-list');
+	const focusSection = document.querySelector('.focus-section');
 	const total = items.length;
 
 	let category = 'all';
@@ -95,6 +101,10 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		if (status) status.hidden = !filtered;
 		if (resultsCount) resultsCount.textContent = `Showing ${visible} of ${total}`;
 		if (empty) empty.hidden = visible !== 0;
+
+		const focusItems = focusList?.querySelectorAll<HTMLAnchorElement>('.catalog-item') ?? [];
+		const anyFocusVisible = Array.from(focusItems).some((el) => !el.hidden);
+		if (focusSection) focusSection.hidden = focusItems.length > 0 && !anyFocusVisible;
 
 		stackBtns.forEach((btn) => {
 			btn.classList.toggle('is-on', Boolean(btn.dataset.techQuery) && q === (btn.dataset.techQuery || ''));
@@ -161,10 +171,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 	}
 
 	.filters.is-pinned {
-		background: rgba(255, 253, 250, 0.82);
-		backdrop-filter: blur(14px);
-		-webkit-backdrop-filter: blur(14px);
-		box-shadow: 0 1px 0 rgba(95, 80, 56, 0.08);
+		background: var(--paper);
 		margin-inline: -1.5rem;
 		padding-inline: 1.5rem;
 	}
@@ -231,11 +238,17 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
-		gap: 0.35rem 0.85rem;
+		gap: 0.2rem 0.35rem;
 		margin: 0.65rem 0 0;
 		font-size: var(--type-meta);
 		letter-spacing: 0.04em;
 		color: var(--text-muted);
+	}
+
+	.stack-dot {
+		color: var(--text-muted);
+		opacity: 0.65;
+		user-select: none;
 	}
 
 	.stack-link {
@@ -249,15 +262,13 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		cursor: pointer;
 		text-transform: none;
 		letter-spacing: inherit;
+		border-radius: 0;
 	}
 
 	.stack-link:hover,
 	.stack-link.is-on {
-		color: var(--accent);
-	}
-
-	.stack-link.is-reset {
-		margin-left: 0.25rem;
+		color: var(--text-main);
+		text-decoration: underline;
 	}
 
 	.status-line[hidden] {
