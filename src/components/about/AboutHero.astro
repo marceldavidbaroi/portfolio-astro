@@ -1,6 +1,7 @@
 ---
 import { bscCseProgram } from '../../data/education';
 import { finalYearThesisResearch } from '../../data/research';
+import CopyEmailButton from '../CopyEmailButton.astro';
 ---
 
 <section class="about-hero" id="profile">
@@ -21,16 +22,44 @@ import { finalYearThesisResearch } from '../../data/research';
 		Disciplined Full-Stack & Enterprise Systems Engineer specializing in planning, architecting, and delivering enterprise web applications, multi-tenant SaaS structures, and cross-platform native software ecosystems.
 	</p>
 
+	<!-- 15-Second Recruiter Triage Pill Bar -->
+	<div class="triage-pill-bar font-mono">
+		<span class="triage-pill">
+			<span class="triage-label">Location</span>
+			<span class="triage-val">Dhaka, BD (UTC+6) • US/EU Overlap</span>
+		</span>
+		<span class="triage-pill">
+			<span class="triage-label">Specialization</span>
+			<span class="triage-val">Enterprise SaaS & Distributed Schemas</span>
+		</span>
+		<span class="triage-pill">
+			<span class="triage-label">Work Status</span>
+			<span class="triage-val">Full-Time / Contract • Open to Relocation</span>
+		</span>
+	</div>
+
 	<!-- Action Links & Contact Pills -->
 	<div class="hero-actions">
-		<a href="mailto:marceldavidbaroi@gmail.com" class="btn btn-accent font-mono">
+		<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-accent font-mono" title="Download Resume (PDF)">
+			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+				<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+				<polyline points="7 10 12 15 17 10"></polyline>
+				<line x1="12" y1="15" x2="12" y2="3"></line>
+			</svg>
+			Download Resume (PDF)
+		</a>
+		<a href="/resume.txt" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono" title="ATS plain-text CV">
+			ATS Text CV
+		</a>
+		<a href="mailto:marceldavidbaroi@gmail.com" class="btn btn-primary font-mono">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<rect width="20" height="16" x="2" y="4" rx="2"></rect>
 				<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
 			</svg>
-			Get In Touch
+			Email Me
 		</a>
-		<a href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono">
+		<CopyEmailButton variant="button" label="Copy Email" />
+		<a href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
 			LinkedIn
 		</a>
 		<a href="https://github.com/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
@@ -93,11 +122,12 @@ import { finalYearThesisResearch } from '../../data/research';
 		<div class="otp-links">
 			<a href="#at-a-glance" class="otp-link">01. Impact Metrics</a>
 			<a href="#capabilities" class="otp-link">02. Capabilities & Stack</a>
-			<a href="#philosophy" class="otp-link">03. Architecture & Methodology</a>
-			<a href="#academic-pedigree" class="otp-link">04. Education & Thesis</a>
-			<a href="#credentials-section" class="otp-link">05. Credentials</a>
-			<a href="#beyond-terminal" class="otp-link">06. Beyond Code</a>
-			<a href="#collaboration" class="otp-link">07. Contact</a>
+			<a href="#career-highlights" class="otp-link">03. Career Trajectory</a>
+			<a href="#philosophy" class="otp-link">04. Architecture & Methodology</a>
+			<a href="#academic-pedigree" class="otp-link">05. Education & Thesis</a>
+			<a href="#credentials-section" class="otp-link">06. Credentials</a>
+			<a href="#beyond-terminal" class="otp-link">07. Beyond Code</a>
+			<a href="#collaboration" class="otp-link">08. Contact</a>
 		</div>
 	</nav>
 </section>
@@ -121,6 +151,7 @@ import { finalYearThesisResearch } from '../../data/research';
 		padding: 0.35rem 0.9rem;
 		border-radius: 9999px;
 		width: fit-content;
+		flex-wrap: wrap;
 	}
 
 	.status-dot {
@@ -191,11 +222,45 @@ import { finalYearThesisResearch } from '../../data/research';
 		max-width: 800px;
 	}
 
+	.triage-pill-bar {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+		width: 100%;
+	}
+
+	.triage-pill {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+		padding: 0.55rem 0.9rem;
+		border-radius: 10px;
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		min-width: 180px;
+		flex: 1;
+	}
+
+	.triage-label {
+		font-size: 0.65rem;
+		letter-spacing: 0.08em;
+		color: var(--accent);
+		font-weight: 700;
+		text-transform: uppercase;
+	}
+
+	.triage-val {
+		font-size: 0.78rem;
+		color: var(--text-main);
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
 	.hero-actions {
 		display: flex;
 		flex-wrap: wrap;
 		gap: 0.75rem;
-		margin-top: 0.5rem;
+		margin-top: 0.25rem;
 	}
 
 	.btn-secondary {
@@ -399,5 +464,20 @@ import { finalYearThesisResearch } from '../../data/research';
 		color: #fffdfa;
 		border-color: var(--accent);
 		transform: translateY(-1px);
+	}
+
+	@media (max-width: 480px) {
+		.triage-pill {
+			min-width: 0;
+			flex: 1 1 100%;
+		}
+
+		.pedigree-badge {
+			white-space: normal;
+		}
+
+		.pedigree-card {
+			flex-wrap: wrap;
+		}
 	}
 </style>

@@ -10,7 +10,7 @@ const { compactPursuits } = Astro.props;
 
 <section class="about-section" id="beyond-terminal">
 	<div class="section-header">
-		<span class="section-tag font-dot">06 // BEYOND THE TERMINAL</span>
+		<span class="section-tag font-dot">07 // BEYOND THE TERMINAL</span>
 		<h2 class="section-title font-dot">Personal Dimensions & Creative Pursuits</h2>
 		<p class="section-desc">
 			Rhythm, visual craft, narrative structures, and deep endurance that shape my engineering approach.
@@ -87,7 +87,7 @@ const { compactPursuits } = Astro.props;
 			</p>
 		</div>
 		<a href="/archive" class="callout-btn">
-			<span>View Personal Archives & Journey →</span>
+			<span>Explore Civic Leadership Archives & Memoirs →</span>
 		</a>
 	</div>
 </section>
@@ -263,6 +263,7 @@ const { compactPursuits } = Astro.props;
 	.callout-btn {
 		display: inline-flex;
 		align-items: center;
+		justify-content: center;
 		gap: 0.5rem;
 		padding: 0.7rem 1.35rem;
 		background: var(--btn-primary);
@@ -272,13 +273,24 @@ const { compactPursuits } = Astro.props;
 		font-weight: 700;
 		text-decoration: none;
 		transition: all 0.15s ease;
-		white-space: nowrap;
 		flex-shrink: 0;
+		text-align: center;
 	}
 
 	.callout-btn:hover {
 		background: var(--accent-hover);
 		transform: translateY(-2px);
 		box-shadow: 0 4px 14px rgba(180, 33, 53, 0.2);
+	}
+
+	@media (max-width: 640px) {
+		.archive-callout-card {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.callout-btn {
+			width: 100%;
+		}
 	}
 </style>

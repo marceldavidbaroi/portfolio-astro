@@ -1,9 +1,10 @@
 ---
+import CopyEmailButton from '../CopyEmailButton.astro';
 ---
 
 <section class="about-section" id="collaboration">
 	<div class="cta-card card">
-		<span class="section-tag font-dot">07 // COLLABORATION</span>
+		<span class="section-tag font-dot">08 // COLLABORATION</span>
 		<h2 class="cta-title font-dot">Let's Build Something Resilient</h2>
 		<p class="cta-text">
 			Available for full-stack engineering roles, system architecture design, and high-impact SaaS development.
@@ -16,8 +17,17 @@
 				</svg>
 				Email Me Directly
 			</a>
+			<CopyEmailButton variant="button" label="Copy Email" />
 			<a href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono">
 				Connect on LinkedIn
+			</a>
+			<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+					<polyline points="7 10 12 15 17 10"></polyline>
+					<line x1="12" y1="15" x2="12" y2="3"></line>
+				</svg>
+				Download Resume (PDF)
 			</a>
 		</div>
 	</div>
@@ -68,5 +78,16 @@
 		flex-wrap: wrap;
 		justify-content: center;
 		margin-top: 0.5rem;
+	}
+
+	.btn-secondary {
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		color: var(--text-main);
+	}
+
+	.btn-secondary:hover {
+		border-color: var(--accent);
+		color: var(--accent);
 	}
 </style>

@@ -3,10 +3,10 @@
 
 <section class="about-section" id="academic-pedigree">
 	<div class="section-header">
-		<span class="section-tag font-dot">04 // EDUCATION & RESEARCH</span>
+		<span class="section-tag font-dot">05 // EDUCATION & RESEARCH</span>
 		<h2 class="section-title font-dot">Academic Pedigree & Research</h2>
 		<p class="section-desc">
-			Formal degree programs, higher secondary foundation, and solo undergraduate thesis.
+			Formal CS degree program and solo undergraduate deep-learning thesis — the academic signals international recruiters triage first.
 		</p>
 	</div>
 
@@ -33,35 +33,6 @@
 			</p>
 			<a href="/education/bsc-cse" class="c-action-btn">
 				<span>View B.Sc. Details & 11-Semester Transcript →</span>
-			</a>
-		</div>
-
-		<!-- NDC Card -->
-		<div class="compact-card card">
-			<div class="c-top">
-				<div class="c-left-icon">
-					<div class="c-svg-box">
-						<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-							<line x1="3" y1="21" x2="21" y2="21"></line>
-							<line x1="6" y1="18" x2="6" y2="10"></line>
-							<line x1="10" y1="18" x2="10" y2="10"></line>
-							<line x1="14" y1="18" x2="14" y2="10"></line>
-							<line x1="18" y1="18" x2="18" y2="10"></line>
-							<polygon points="12 2 2 8 22 8"></polygon>
-						</svg>
-					</div>
-					<div>
-						<span class="c-inst-tag font-mono">BATCH '19 // GROUP 13</span>
-						<h3 class="c-title">Higher Secondary Certificate (HSC Science)</h3>
-					</div>
-				</div>
-				<span class="c-stat-pill font-mono">GPA 4.67 / 5.00</span>
-			</div>
-			<p class="c-summary">
-				Notre Dame College (Room 304). Rigorous scientific foundation, math club participation, and campus leadership.
-			</p>
-			<a href="/education/hsc-science" class="c-action-btn">
-				<span>View Notre Dame College Details & Heritage →</span>
 			</a>
 		</div>
 
@@ -93,6 +64,11 @@
 			</a>
 		</div>
 	</div>
+
+	<p class="archive-note font-mono">
+		Pre-university collegiate formative years (civic leadership, protocol volunteering) are preserved in the
+		<a href="/archive">Civic Leadership Archives →</a>
+	</p>
 </section>
 
 <style>
@@ -135,7 +111,7 @@
 
 	.compact-edu-grid {
 		display: grid;
-		grid-template-columns: repeat(3, 1fr);
+		grid-template-columns: repeat(2, 1fr);
 		gap: 1.25rem;
 	}
 
@@ -167,6 +143,7 @@
 		align-items: flex-start;
 		justify-content: space-between;
 		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
 
 	.c-left-icon {
@@ -213,6 +190,12 @@
 		flex-shrink: 0;
 	}
 
+	@media (max-width: 480px) {
+		.c-stat-pill {
+			white-space: normal;
+		}
+	}
+
 	.c-summary {
 		font-size: 0.82rem;
 		line-height: 1.55;
@@ -236,5 +219,22 @@
 	.c-action-btn:hover {
 		color: var(--accent-hover);
 		transform: translateX(3px);
+	}
+
+	.archive-note {
+		margin-top: 1.25rem;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		line-height: 1.5;
+	}
+
+	.archive-note a {
+		color: var(--accent);
+		font-weight: 700;
+		text-decoration: none;
+	}
+
+	.archive-note a:hover {
+		text-decoration: underline;
 	}
 </style>

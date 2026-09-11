@@ -148,6 +148,25 @@ const experience = defineCollection({
 		highlights: z.array(z.string()).default([]),
 		responsibilities: z.array(z.string()).default([]),
 
+		// Linked production case studies for recruiter triage
+		relatedProjects: z
+			.array(
+				z.object({
+					slug: z.string(),
+					label: z.string()
+				})
+			)
+			.default([]),
+
+		// Company mark for compact experience cards
+		companyLogo: z.string().optional(),
+		/** Stacked preview photos on homepage experience cards (up to 3 shown). */
+		cardImages: z.array(z.string()).default([]),
+		/** Click-through gallery for the photo stack. */
+		galleryHref: z.string().optional(),
+		/** @deprecated Prefer cardImages */
+		cardImage: z.string().optional(),
+
 		// Core Stack for Terminal Preview & Categorized Skills
 		stack: z.array(z.string()).default([]),
 		skillsByCategory: z

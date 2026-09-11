@@ -2,6 +2,12 @@
 role: "Independent Software Developer / Freelance Engineer"
 company: "Client Solutions & Open-Source Engineering"
 companyUrl: "https://github.com/marceldavidbaroi"
+companyLogo: "/images/experience/freelance-logo.png"
+cardImages:
+  - "/images/experience/freelance-card-1.png"
+  - "/images/experience/freelance-card-2.png"
+  - "/images/experience/freelance-card-3.png"
+galleryHref: "/experience/freelance/gallery"
 location: "Dhaka, Bangladesh (Remote)"
 employmentType: "Freelance & Contract"
 period: "2022 — 2024"
@@ -32,6 +38,12 @@ responsibilities:
   - "Plan, prototype, and build end-to-end full-stack architectures"
   - "Implement relational database designs, index strategies, and secure JWT authentication systems"
   - "Explore emerging AI workflows and agentic synthesis paradigms for developer productivity"
+
+relatedProjects:
+  - slug: "04-mindvault"
+    label: "MindVault Financial Ledger"
+  - slug: "13-kbeauty-dropship"
+    label: "KBeauty Dropship Dashboard"
 
 stack:
   - "NestJS"

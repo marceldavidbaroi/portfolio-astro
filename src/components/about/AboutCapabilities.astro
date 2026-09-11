@@ -197,6 +197,7 @@ const { skillCategories } = Astro.props;
 		align-items: center;
 		justify-content: space-between;
 		gap: 0.5rem;
+		flex-wrap: wrap;
 	}
 
 	.skill-icon-pill {
@@ -323,5 +324,12 @@ const { skillCategories } = Astro.props;
 	.full-dir-btn:hover {
 		color: var(--accent-hover);
 		transform: translateX(3px);
+	}
+
+	@media (max-width: 640px) {
+		.header-meta-row {
+			flex-direction: column;
+			align-items: flex-start;
+		}
 	}
 </style>

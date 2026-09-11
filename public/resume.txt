@@ -1,0 +1,112 @@
+MARCEL DAVID BAROI
+Full-Stack & Enterprise Systems Engineer
+Dhaka, Bangladesh (UTC+6) · US/EU Overlap
+Available for Full-Time · Remote / Relocation
+
+Email: marceldavidbaroi@gmail.com
+LinkedIn: https://linkedin.com/in/marceldavidbaroi
+GitHub: https://github.com/marceldavidbaroi
+Portfolio: /
+Resume PDF: /resume.pdf
+
+========================================================================
+SUMMARY
+========================================================================
+Full-Stack & Enterprise Systems Engineer specializing in multi-tenant SaaS,
+relational PostgreSQL/Supabase architectures with Row-Level Security (RLS),
+Vue 3 / Quasar application suites, and architecture-first delivery.
+
+Primary stack: Vue 3, Quasar, TypeScript, PostgreSQL, Supabase (RLS),
+Pinia, NestJS, PHP (MVC), Docker, SemVer private npm packages.
+
+========================================================================
+IMPACT HIGHLIGHTS
+========================================================================
+- 10+ platforms shipped (enterprise ERP, multi-tenant SaaS, mobile)
+- 100% RLS tenant data isolation on multi-tenant systems
+- +60% code reusability via private SemVer package architectures
+- B.Sc. CSE CGPA 3.91 / 4.00 (Daffodil International University, Batch 55)
+
+========================================================================
+EXPERIENCE
+========================================================================
+
+Software Engineer
+Proficient Information Systems — Dhaka, Bangladesh (Hybrid)
+November 2024 — Present
+
+Architected multi-tenant SaaS systems and private package infrastructures
+that increased cross-project code reusability by 60% and accelerated MVP
+delivery cycles by 50% by designing decoupled Quasar component registries,
+implementing strict Supabase RLS policies, and driving architecture-first
+AI-assisted synthesis workflows.
+
+Highlights:
+- Architecture-first AI development workflows (Cursor Agentic)
+- Private Quasar package infrastructure (+60% reusability)
+- Full-stack migrations React/Firebase → Quasar + Supabase RLS
+- TypeScript hardening of legacy JavaScript codebases
+
+Associated case studies: TradeflowBD ERP, Enterprise Service Desk,
+Modular Packaging Infrastructure
+
+------------------------------------------------------------------------
+
+Independent Software Developer / Freelance Engineer
+Client Solutions & Open-Source Engineering — Remote
+2022 — 2024
+
+Architected scalable backend APIs and responsive modern web interfaces
+that achieved 95+ Lighthouse scores and sub-80ms query speeds by designing
+layered NestJS REST microservices, indexed PostgreSQL schemas, and
+type-safe Next.js SSR frontends.
+
+Highlights:
+- MindVault financial ledger (NestJS, TypeORM, PostgreSQL, Next.js)
+- KBeauty dropshipping dashboard (Supabase Realtime)
+- Full-stack Node.js/MongoDB platforms with session auth
+
+Associated case studies: MindVault, KBeauty Dropship Dashboard
+
+========================================================================
+EDUCATION & RESEARCH
+========================================================================
+B.Sc. in Computer Science & Engineering
+Daffodil International University — CSE Batch 55
+CGPA 3.91 / 4.00 · 142 credits · 6 consecutive A+ software practicums
+
+Final Year Thesis (Sole Researcher):
+CNN-Based Bangla Handwritten Character Recognition on Ekush Dataset
+DenseNet-201 peak accuracy 97.93% · 16 benchmarked deep learning models
+PDF: /documents/bangla-ocr-thesis-26095.pdf
+
+========================================================================
+CORE TECHNICAL SKILLS (PRIMARY PRODUCTION)
+========================================================================
+Architecture: Architecture-First AI Synthesis, Multi-Tenant RLS Schemas,
+  SemVer Packaging, Relational Data Modeling (3NF)
+Backend: PostgreSQL, Supabase, Node.js / NestJS, PHP (MVC), REST APIs
+Frontend: Vue 3 (Composition API), Quasar, React / Next.js, TypeScript, Pinia
+DevOps: Docker, Git Submodules / Monorepos, Cloudflare Pages
+
+========================================================================
+SELECTED CREDENTIALS
+========================================================================
+- Responsible AI: Applying AI Principles with Google Cloud (Google Cloud)
+- Prompt Design in Vertex AI (Google Cloud)
+- Python Essentials 2 (Cisco Networking Academy)
+- JavaScript Essentials 2 (Cisco Networking Academy)
+- Career Essentials in Generative AI (Microsoft & LinkedIn)
+- Responsive Web Design (freeCodeCamp)
+
+Full directory: /credentials
+
+========================================================================
+LINKS
+========================================================================
+Work portfolio: /work
+About: /about
+Skills: /skills
+Philosophy: /philosophy
+ATS text CV: /resume.txt
+PDF resume: /resume.pdf

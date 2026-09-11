@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import AboutHero from '../components/about/AboutHero.astro';
 import AboutMetrics from '../components/about/AboutMetrics.astro';
 import AboutCapabilities from '../components/about/AboutCapabilities.astro';
+import AboutCareer from '../components/about/AboutCareer.astro';
 import AboutPhilosophy from '../components/about/AboutPhilosophy.astro';
 import AboutEducationResearch from '../components/about/AboutEducationResearch.astro';
 import AboutCredentials from '../components/about/AboutCredentials.astro';
@@ -13,6 +14,7 @@ import {
 	metrics,
 	principles,
 	skillCategories,
+	careerHighlights,
 	compactCerts,
 	compactPursuits
 } from '../data/aboutData';
@@ -31,18 +33,21 @@ import {
 	<!-- 3. Core Technical Matrix & Capabilities -->
 	<AboutCapabilities skillCategories={skillCategories} />
 
-	<!-- 4. Engineering Philosophy & Architecture -->
+	<!-- 4. Executive Career Trajectory -->
+	<AboutCareer careerHighlights={careerHighlights} />
+
+	<!-- 5. Engineering Philosophy & Architecture -->
 	<AboutPhilosophy principles={principles} />
 
-	<!-- 5. Academic Pedigree & Research -->
+	<!-- 6. Academic Pedigree & Research -->
 	<AboutEducationResearch />
 
-	<!-- 6. Verified Industry Credentials -->
+	<!-- 7. Verified Industry Credentials -->
 	<AboutCredentials compactCerts={compactCerts} />
 
-	<!-- 7. Beyond the Terminal (Civic Leadership & Creative Craft) -->
+	<!-- 8. Beyond the Terminal (Civic Leadership & Creative Craft) -->
 	<AboutBeyondTerminal compactPursuits={compactPursuits} />
 
-	<!-- 8. Closing Collaboration & Contact CTA -->
+	<!-- 9. Closing Collaboration & Contact CTA -->
 	<AboutContactCTA />
 </BaseLayout>

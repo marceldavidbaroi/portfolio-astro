@@ -117,6 +117,15 @@ const { publication } = Astro.props;
 					<h2 class="section-h2 font-dot">Research Overview & Problem Statement</h2>
 				</div>
 
+				<div class="exec-takeaways-card">
+					<span class="box-tag font-mono">EXECUTIVE TAKEAWAYS IN 3 BULLETS</span>
+					<ul class="exec-takeaways-list">
+						{publication.keyTakeaways.slice(0, 3).map((takeaway) => (
+							<li>{takeaway}</li>
+						))}
+					</ul>
+				</div>
+
 				<div class="abstract-box">
 					<span class="box-tag font-mono">EXECUTIVE ABSTRACT</span>
 					<p class="abstract-text">
@@ -618,6 +627,32 @@ const { publication } = Astro.props;
 		font-size: 0.88rem;
 		color: var(--text-muted);
 		line-height: 1.5;
+	}
+
+	/* Executive Takeaways (above abstract) */
+	.exec-takeaways-card {
+		padding: 1.35rem 1.5rem;
+		background: linear-gradient(135deg, rgba(180, 33, 53, 0.06) 0%, rgba(95, 80, 56, 0.04) 100%);
+		border-radius: 12px;
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.exec-takeaways-list {
+		margin: 0;
+		padding-left: 1.15rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+	}
+
+	.exec-takeaways-list li {
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--text-main);
+		font-weight: 500;
 	}
 
 	/* Abstract Box */

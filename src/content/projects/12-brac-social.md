@@ -109,6 +109,13 @@ The **BRAC Social Platform** is an internal team collaboration portal designed t
 
 Built with **Vue 3** and the **Quasar Framework**, I tackled real-world UI pain points to deliver a cohesive product feel without adding unnecessary complexity.
 
+```mermaid
+flowchart LR
+  QuasarClient["Quasar Vue 3 Client"] --> BreakpointLayer["$q.screen / Grid Breakpoints"]
+  BreakpointLayer --> FeedCards["Feed Cards & Media Grids"]
+  FeedCards --> RestApi["REST Discussion Feed API"]
+```
+
 ---
 
 ## Core Responsibilities & What I Delivered

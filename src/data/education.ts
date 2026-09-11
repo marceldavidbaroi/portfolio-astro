@@ -66,6 +66,12 @@ export interface DegreeProgram {
 	institutionShort: string;
 	institutionUrl?: string;
 	logo?: string;
+	/** Homepage stacked preview photos (up to 3). */
+	cardImages?: string[];
+	/** Click-through gallery for the photo stack. */
+	galleryHref?: string;
+	/** @deprecated Prefer cardImages */
+	cardImage?: string;
 	location: string;
 	duration: string;
 	period: string;
@@ -98,6 +104,12 @@ export interface PreUniversityEducation {
 	institutionShort: string;
 	institutionUrl?: string;
 	logo?: string;
+	/** Homepage stacked preview photos (up to 3). */
+	cardImages?: string[];
+	/** Click-through gallery for the photo stack. */
+	galleryHref?: string;
+	/** @deprecated Prefer cardImages */
+	cardImage?: string;
 	location: string;
 	period: string;
 	badge: string;
@@ -1124,6 +1136,12 @@ export const bscCseProgram: DegreeProgram = {
 	institutionShort: 'DIU',
 	institutionUrl: 'https://daffodilvarsity.edu.bd/',
 	logo: '/images/education/daffodil-logo.webp',
+	cardImages: [
+		'/images/education/diu-card-1.png',
+		'/images/education/diu-card-2.png',
+		'/images/education/diu-card-3.png'
+	],
+	galleryHref: '/education/bsc-cse/gallery',
 	location: 'Dhaka, Bangladesh',
 	duration: '4 Years (11 Semesters)',
 	period: '2020 — 2024',
@@ -1159,6 +1177,12 @@ export const hscScienceProgram: PreUniversityEducation = {
 	institutionShort: 'Notre Dame College',
 	institutionUrl: 'https://ndc.edu.bd/',
 	logo: '/images/education/ndc-logo.webp',
+	cardImages: [
+		'/images/education/ndc-batch-19-group-13.webp',
+		'/images/education/ndc-visit-2018/IMG_20181218_140117.webp',
+		'/images/archive/pope-francis/pope-francis-notre-dame-college-stage.webp'
+	],
+	galleryHref: '/education/hsc-science/gallery',
 	location: 'Dhaka, Bangladesh',
 	period: '2017 — 2019',
 	badge: 'Batch \'19 // Group 13',

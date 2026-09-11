@@ -1,17 +1,45 @@
 ---
+import CommandMenu from '../components/CommandMenu.astro';
+
 interface Props {
 	title?: string;
 	description?: string;
 	isWide?: boolean;
+	alignStart?: boolean;
 }
 
 const {
-	title = 'Marcel David Baroi | Full-Stack & Enterprise Systems Engineer',
-	description = 'Portfolio & Case Studies of Marcel David Baroi, Full-Stack & Enterprise Systems Engineer specializing in multi-tenant SaaS, Vue.js/Quasar, Supabase, and architecture-first systems.',
+	title = 'Marcel David Baroi | Full-Stack Engineer',
+	description = 'Portfolio & Case Studies of Marcel David Baroi, Full-Stack Engineer specializing in multi-tenant SaaS, Vue.js/Quasar, Supabase, and architecture-first systems.',
 	isWide = false,
+	alignStart = false,
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
+const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
+const ogImageUrl = new URL('/og-preview.png', Astro.site ?? Astro.url.origin).href;
+
+const personJsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'Person',
+	name: 'Marcel David Baroi',
+	jobTitle: 'Full-Stack Engineer',
+	email: 'mailto:marceldavidbaroi@gmail.com',
+	url: canonicalUrl,
+	address: {
+		'@type': 'PostalAddress',
+		addressLocality: 'Dhaka',
+		addressCountry: 'BD',
+	},
+	alumniOf: {
+		'@type': 'CollegeOrUniversity',
+		name: 'Daffodil International University',
+	},
+	sameAs: [
+		'https://github.com/marceldavidbaroi',
+		'https://linkedin.com/in/marceldavidbaroi',
+	],
+};
 ---
 
 <!doctype html>
@@ -20,12 +48,30 @@ const currentPath = Astro.url.pathname;
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<meta name="description" content={description} />
+		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
+
+		<!-- Open Graph -->
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={ogImageUrl} />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+
+		<!-- Twitter Card -->
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImageUrl} />
+
+		<script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
 	</head>
 	<body>
 		<div class="layout-wrapper">
@@ -56,8 +102,71 @@ const currentPath = Astro.url.pathname;
 						</a>
 					</nav>
 
-					<!-- Right Social Links -->
+					<!-- Right Social Links + Resume -->
 					<div class="social-links">
+						<button
+							type="button"
+							class="cmdk-hint font-mono"
+							id="cmdk-hint-btn"
+							title="Open command menu (⌘K / Ctrl+K)"
+							aria-label="Open menu"
+						>
+							<span class="cmdk-hint-keys">⌘K</span>
+							<span class="cmdk-hint-menu" aria-hidden="true">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									stroke-width="2"
+									stroke-linecap="round"
+									stroke-linejoin="round"
+								>
+									<line x1="4" y1="6" x2="20" y2="6"></line>
+									<line x1="4" y1="12" x2="20" y2="12"></line>
+									<line x1="4" y1="18" x2="20" y2="18"></line>
+								</svg>
+								Menu
+							</span>
+						</button>
+						<a
+							href="/resume.pdf"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="header-resume-btn font-mono"
+							title="Download Resume (PDF)"
+							aria-label="Download Resume PDF"
+						>
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								width="14"
+								height="14"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round"
+								aria-hidden="true"
+							>
+								<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+								<polyline points="7 10 12 15 17 10"></polyline>
+								<line x1="12" y1="15" x2="12" y2="3"></line>
+							</svg>
+							<span class="header-resume-label">Resume</span>
+						</a>
+						<a
+							href="/resume.txt"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="header-ats-btn font-mono"
+							title="ATS plain-text CV"
+							aria-label="Open ATS text CV"
+						>
+							ATS
+						</a>
 						<a
 							href="https://github.com/marceldavidbaroi"
 							target="_blank"
@@ -127,10 +236,20 @@ const currentPath = Astro.url.pathname;
 				</div>
 			</header>
 
-			<main class:list={['main-content', { 'wide-container': isWide }]}>
+			<main class:list={['main-content', { 'wide-container': isWide, 'align-start': alignStart }]}>
 				<slot />
 			</main>
+
+			<footer class="site-footer">
+				<div class="footer-inner font-mono">
+					<span class="footer-pill">Based in Dhaka (UTC+6) · 4–5 hrs overlap with US East &amp; EU CET</span>
+					<span class="footer-sep" aria-hidden="true">·</span>
+					<span class="footer-pill footer-pill-accent">Available for Full-Time · Remote / Relocation</span>
+				</div>
+			</footer>
 		</div>
+
+		<CommandMenu />
 
 		<script>
 			const header = document.getElementById('site-header');
@@ -143,6 +262,11 @@ const currentPath = Astro.url.pathname;
 			};
 			window.addEventListener('scroll', handleScroll, { passive: true });
 			handleScroll();
+
+			const cmdkHint = document.getElementById('cmdk-hint-btn');
+			cmdkHint?.addEventListener('click', () => {
+				(window as any).__openCommandMenu?.();
+			});
 		</script>
 	</body>
 </html>
@@ -333,7 +457,85 @@ const currentPath = Astro.url.pathname;
 		display: flex;
 		align-items: center;
 		justify-content: flex-end;
-		gap: 0.75rem;
+		gap: 0.5rem;
+	}
+
+	.cmdk-hint {
+		display: none;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		padding: 0.3rem 0.55rem;
+		border-radius: 6px;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.06);
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		cursor: pointer;
+		transition: all 0.15s ease;
+	}
+
+	.cmdk-hint:hover {
+		color: var(--accent);
+		border-color: rgba(180, 33, 53, 0.25);
+	}
+
+	.cmdk-hint-menu {
+		display: none;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	@media (min-width: 900px) {
+		.cmdk-hint {
+			display: inline-flex;
+		}
+	}
+
+	.header-resume-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		padding: 0.4rem 0.85rem;
+		border-radius: 9999px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		background: var(--accent);
+		color: #ffffff;
+		text-decoration: none;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.header-resume-btn:hover {
+		background: var(--accent-hover);
+		transform: translateY(-1px);
+	}
+
+	.header-ats-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.4rem 0.55rem;
+		border-radius: 9999px;
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		background: transparent;
+		color: var(--text-muted);
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		text-decoration: none;
+		transition: all 0.2s ease;
+	}
+
+	.header-ats-btn:hover {
+		color: var(--accent);
+		border-color: rgba(180, 33, 53, 0.35);
+		transform: translateY(-1px);
 	}
 
 	.social-btn {
@@ -357,6 +559,88 @@ const currentPath = Astro.url.pathname;
 		transform: translateY(-1px);
 	}
 
+	/* Progressive header compression */
+	@media (max-width: 900px) {
+		.header-ats-btn {
+			display: none;
+		}
+		.nav {
+			gap: 1.25rem;
+		}
+		.nav-link {
+			font-size: 0.875rem;
+		}
+	}
+
+	/* Small screens: nav + Menu only; actions live in command menu */
+	@media (max-width: 768px) {
+		.header {
+			padding: 0.85rem 1rem;
+		}
+		.header.scrolled {
+			padding: 0.65rem 1rem;
+		}
+		.header-container {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: space-between;
+			gap: 1rem;
+		}
+		.header-left {
+			display: none;
+		}
+		.nav {
+			gap: 1.1rem;
+			width: auto;
+			justify-content: flex-start;
+			flex-shrink: 1;
+			min-width: 0;
+		}
+		.nav-link {
+			font-size: 0.875rem;
+		}
+		.social-links {
+			width: auto;
+			flex-shrink: 0;
+			justify-content: flex-end;
+			gap: 0;
+		}
+		.header-resume-btn,
+		.header-ats-btn,
+		.social-btn {
+			display: none;
+		}
+		.cmdk-hint {
+			display: inline-flex;
+			padding: 0.45rem 0.75rem;
+			border-radius: 9999px;
+			font-size: 0.75rem;
+			background: var(--accent);
+			color: #ffffff;
+			border-color: transparent;
+		}
+		.cmdk-hint:hover {
+			color: #ffffff;
+			background: var(--accent-hover);
+			border-color: transparent;
+		}
+		.cmdk-hint-keys {
+			display: none;
+		}
+		.cmdk-hint-menu {
+			display: inline-flex;
+		}
+		.main-content {
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+		.main-content.wide-container {
+			padding-left: 1rem;
+			padding-right: 1rem;
+		}
+	}
+
 	.main-content {
 		width: 100%;
 		max-width: 960px;
@@ -366,12 +650,74 @@ const currentPath = Astro.url.pathname;
 		align-items: center;
 		text-align: center;
 		transition: max-width 0.3s ease;
+		flex: 1;
 	}
 
 	.main-content.wide-container {
 		max-width: 1280px;
 		padding-left: 2rem;
 		padding-right: 2rem;
+	}
+
+	.main-content.align-start {
+		align-items: stretch;
+		text-align: left;
+		max-width: 1180px;
+		padding-top: 1.25rem;
+		padding-bottom: 4.5rem;
+		overflow-x: clip;
+	}
+
+	.site-footer {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding: 1.25rem 1.5rem 2rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.08);
+		background: rgba(244, 240, 231, 0.45);
+	}
+
+	.footer-inner {
+		width: 100%;
+		max-width: 1140px;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem 0.75rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.03em;
+		color: var(--text-muted);
+		text-align: center;
+	}
+
+	.footer-pill-accent {
+		color: var(--text-main);
+		font-weight: 600;
+	}
+
+	.footer-sep {
+		opacity: 0.45;
+	}
+
+	@media (max-width: 640px) {
+		.footer-sep {
+			display: none;
+		}
+		.footer-inner {
+			flex-direction: column;
+			gap: 0.35rem;
+			padding-inline: 0.25rem;
+		}
+		.footer-pill {
+			display: block;
+			max-width: 22rem;
+			line-height: 1.45;
+			overflow-wrap: break-word;
+		}
+		.main-content.align-start {
+			padding-bottom: 3.75rem;
+		}
 	}
 
 	/* Reusable card & button utilities */

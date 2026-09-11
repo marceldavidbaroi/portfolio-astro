@@ -8,7 +8,16 @@ const principles = [
 		title: 'Architecture-First AI Synthesis',
 		subtitle: 'Structuring Systems Before Generating Code',
 		icon: '🏗️',
-		desc: 'I do not use AI tools (Cursor Agentic, Copilot) to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.'
+		pullQuote: 'AI synthesizes the blueprint — it does not invent the architecture.',
+		desc: 'I do not use AI tools (Cursor Agentic, Copilot) to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.',
+		mermaid: `flowchart LR
+  Spec["Schema & Contracts"] --> Graph["Dependency Graph"]
+  Graph --> AI["AI Synthesis"]
+  AI --> Code["Production Code"]`,
+		proofLinks: [
+			{ href: '/work/05-modular-packaging', label: 'Modular Packaging' },
+			{ href: '/work/01-tradeflowbd', label: 'TradeflowBD ERP' }
+		]
 	},
 	{
 		num: '02',
@@ -16,7 +25,15 @@ const principles = [
 		title: 'Strict Data & Type Safety',
 		subtitle: 'Row-Level Security, Strong Typing & Schema Invariants',
 		icon: '🛡️',
-		desc: 'I enforce integrity at the lowest layer: PostgreSQL database constraints, CHECK rules, foreign key cascades, and Supabase Row-Level Security (RLS) policies. On the application layer, end-to-end TypeScript interfaces ensure backend Data Transfer Objects (DTOs) match frontend reactive state contracts without runtime coercion.'
+		pullQuote: 'Security that lives only in application middleware can be bypassed. Enforce it at the database engine.',
+		desc: 'I enforce integrity at the lowest layer: PostgreSQL database constraints, CHECK rules, foreign key cascades, and Supabase Row-Level Security (RLS) policies. On the application layer, end-to-end TypeScript interfaces ensure backend Data Transfer Objects (DTOs) match frontend reactive state contracts without runtime coercion.',
+		mermaid: `flowchart TB
+  App["Vue / Nest Client"] --> API["API Layer"]
+  API --> RLS["PostgreSQL RLS"]
+  RLS --> Data["Tenant-Isolated Data"]`,
+		proofLinks: [
+			{ href: '/work/01-tradeflowbd', label: 'TradeflowBD · 100% RLS' }
+		]
 	},
 	{
 		num: '03',
@@ -24,7 +41,15 @@ const principles = [
 		title: 'Modular Infrastructure & Monorepo Packages',
 		subtitle: 'Decoupling Monoliths into Versioned Assets',
 		icon: '📦',
-		desc: 'I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.'
+		pullQuote: 'Shared business logic belongs in SemVer packages — not copy-pasted across repos.',
+		desc: 'I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.',
+		mermaid: `flowchart LR
+  Core["@org/core SemVer"] --> AppA["ERP App"]
+  Core --> AppB["POS App"]
+  Core --> AppC["Mobile Suite"]`,
+		proofLinks: [
+			{ href: '/work/05-modular-packaging', label: 'Private Package Architecture' }
+		]
 	},
 	{
 		num: '04',
@@ -32,7 +57,14 @@ const principles = [
 		title: 'Measurable Impact (Google XYZ Framework)',
 		subtitle: 'Quantifying Every Engineering Decision',
 		icon: '📈',
-		desc: 'Engineering is only as good as its measurable outcomes. Every feature or refactor is framed using the Google XYZ format: "Accomplished [X], as measured by [Y], by doing [Z]". Whether cutting ticket approval latency by 85%, reducing bundle load time by 48%, or maintaining zero security leaks across multi-tenant SaaS platforms.'
+		pullQuote: 'Accomplished [X], as measured by [Y], by doing [Z].',
+		desc: 'Engineering is only as good as its measurable outcomes. Every feature or refactor is framed using the Google XYZ format: "Accomplished [X], as measured by [Y], by doing [Z]". Whether cutting ticket approval latency by 85%, reducing bundle load time by 48%, or maintaining zero security leaks across multi-tenant SaaS platforms.',
+		mermaid: `flowchart LR
+  X["X · Capability"] --> Y["Y · Metric"]
+  Y --> Z["Z · Method"]`,
+		proofLinks: [
+			{ href: '/work/02-service-desk', label: 'Service Desk · Latency Impact' }
+		]
 	}
 ];
 ---
@@ -63,7 +95,7 @@ const principles = [
 			<p class="philo-subtitle font-dot">Architecture-First Synthesis • Zero-Trust Data Layers • Measurable Velocity</p>
 
 			<p class="philo-intro">
-				Building enterprise software requires structural foresight, relational data integrity, and disciplined versioning. These four foundational principles govern every line of code, schema migration, and production deployment I lead.
+				Building enterprise software requires structural foresight, relational data integrity, and disciplined versioning. These four foundational principles govern every line of code, schema migration, and production deployment I lead — each proven live in production case studies.
 			</p>
 		</header>
 
@@ -81,7 +113,20 @@ const principles = [
 						<span class="p-icon">{p.icon}</span>
 					</div>
 
+					<blockquote class="p-pullquote font-sans">
+						“{p.pullQuote}”
+					</blockquote>
+
 					<p class="p-desc">{p.desc}</p>
+
+					<pre class="language-mermaid"><code class="language-mermaid">{p.mermaid}</code></pre>
+
+					<div class="p-proof-links font-mono">
+						<span class="proof-label">Live Proof:</span>
+						{p.proofLinks.map((link) => (
+							<a href={link.href} class="proof-link">{link.label} →</a>
+						))}
+					</div>
 				</article>
 			))}
 		</div>
@@ -104,6 +149,51 @@ const principles = [
 	</div>
 </BaseLayout>
 
+<script>
+	async function initMermaid() {
+		const codeBlocks = Array.from(document.querySelectorAll('pre.language-mermaid, code.language-mermaid'));
+		const uniquePres = new Set<HTMLElement>();
+		codeBlocks.forEach((el) => {
+			const pre = el.tagName === 'PRE' ? el : el.closest('pre');
+			if (pre instanceof HTMLElement) uniquePres.add(pre);
+		});
+
+		if (uniquePres.size === 0) return;
+
+		const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+		mermaid.initialize({
+			startOnLoad: false,
+			theme: 'base',
+			securityLevel: 'loose',
+			themeVariables: {
+				primaryColor: '#f4f0e7',
+				primaryTextColor: '#2b251e',
+				primaryBorderColor: '#b42135',
+				lineColor: '#5f5038',
+				secondaryColor: '#fffdfa',
+				tertiaryColor: '#ede7da',
+				fontFamily: 'Geist, sans-serif'
+			}
+		});
+
+		for (const pre of uniquePres) {
+			const code = pre.querySelector('code')?.textContent || pre.textContent || '';
+			const wrapper = document.createElement('div');
+			wrapper.className = 'mermaid-diagram-card';
+			const diagramDiv = document.createElement('div');
+			diagramDiv.className = 'mermaid';
+			diagramDiv.textContent = code.trim();
+			wrapper.appendChild(diagramDiv);
+			pre.replaceWith(wrapper);
+		}
+
+		await mermaid.run();
+	}
+
+	initMermaid();
+	document.addEventListener('astro:page-load', initMermaid);
+</script>
+
 <style>
 	.philosophy-page-container {
 		width: 100%;
@@ -116,7 +206,6 @@ const principles = [
 		text-align: left;
 	}
 
-	/* Breadcrumb */
 	.page-breadcrumb {
 		display: flex;
 		align-items: center;
@@ -143,7 +232,6 @@ const principles = [
 		font-weight: 600;
 	}
 
-	/* Hero */
 	.philo-hero {
 		padding: 2.25rem;
 		border-radius: 16px;
@@ -191,17 +279,10 @@ const principles = [
 		max-width: 860px;
 	}
 
-	/* Principles Grid */
 	.principles-deep-grid {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
+		grid-template-columns: 1fr;
 		gap: 1.5rem;
-	}
-
-	@media (max-width: 800px) {
-		.principles-deep-grid {
-			grid-template-columns: 1fr;
-		}
 	}
 
 	.philo-detail-card {
@@ -266,13 +347,80 @@ const principles = [
 		flex-shrink: 0;
 	}
 
+	.p-pullquote {
+		margin: 0;
+		padding: 0.85rem 1rem;
+		border-left: 3px solid var(--accent);
+		background: rgba(180, 33, 53, 0.05);
+		border-radius: 0 8px 8px 0;
+		font-size: 0.95rem;
+		font-style: italic;
+		line-height: 1.5;
+		color: var(--text-main);
+		font-weight: 500;
+	}
+
 	.p-desc {
 		font-size: 0.88rem;
 		line-height: 1.65;
 		color: var(--text-muted);
 	}
 
-	/* Cross Navigation */
+	.p-proof-links {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		padding-top: 0.5rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.15);
+	}
+
+	.proof-label {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+	}
+
+	.proof-link {
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(180, 33, 53, 0.06);
+		border: 1px solid rgba(180, 33, 53, 0.2);
+		padding: 0.25rem 0.6rem;
+		border-radius: 6px;
+		text-decoration: none;
+		transition: all 0.15s ease;
+	}
+
+	.proof-link:hover {
+		background: var(--accent);
+		color: #fffdfa;
+	}
+
+	.mermaid-diagram-card {
+		background: #ffffff;
+		border: 1px solid var(--card-border);
+		border-radius: 14px;
+		padding: 1.25rem 1rem;
+		overflow-x: auto;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+
+	.mermaid {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+	}
+
+	.mermaid svg {
+		max-width: 100% !important;
+		height: auto !important;
+	}
+
 	.philo-cross-nav {
 		padding: 1.75rem 2rem;
 		border-radius: 16px;

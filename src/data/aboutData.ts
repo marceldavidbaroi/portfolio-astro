@@ -46,11 +46,41 @@ export interface CompactPursuitItem {
 	url?: string;
 }
 
+export interface CareerHighlightItem {
+	tag: string;
+	title: string;
+	description: string;
+	metrics: string[];
+	caseStudyHref?: string;
+	caseStudyLabel?: string;
+}
+
 export const metrics: MetricItem[] = [
 	{ value: '3.91', label: 'B.Sc. in CSE CGPA', sub: 'Daffodil Int. University (Batch 55)' },
 	{ value: '+60%', label: 'Code Reusability', sub: 'Via Private Package Architectures' },
 	{ value: '100%', label: 'RLS Data Isolation', sub: 'Multi-Tenant SaaS Security' },
 	{ value: '10+', label: 'Platforms Shipped', sub: 'Enterprise, SaaS & Mobile' }
+];
+
+export const careerHighlights: CareerHighlightItem[] = [
+	{
+		tag: 'ENTERPRISE SaaS & ERP',
+		title: 'Multi-Tenant Wholesale ERP Systems',
+		description:
+			'Architected parent-pooled stock allocation and landed cost engines with 100% RLS tenant isolation across 17+ domain modules and atomic PostgreSQL RPC transactions.',
+		metrics: ['100% RLS Isolation', '17+ Domain Modules', '980+ Migrations'],
+		caseStudyHref: '/work/01-tradeflowbd',
+		caseStudyLabel: 'TradeflowBD ERP Case Study →'
+	},
+	{
+		tag: 'CROSS-PLATFORM MOBILE & WEB',
+		title: 'Unified Quasar / Vue 3 Application Suites',
+		description:
+			'Engineered unified Quasar/Vue 3 applications backed by private SemVer package registries, cutting cross-project code duplication by 60% while accelerating MVP delivery cycles.',
+		metrics: ['+60% Reusability', '−50% MVP Turnaround', 'Private npm Registries'],
+		caseStudyHref: '/work/05-modular-packaging',
+		caseStudyLabel: 'Modular Packaging Case Study →'
+	}
 ];
 
 export const principles: PrincipleItem[] = [

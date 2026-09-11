@@ -208,6 +208,21 @@ const quickTechFilters = [
 						<div class="chip-container">
 							<span class="keyword-chip font-mono">{project.chip}</span>
 							{(() => {
+								const cls = (project.classification || '').toLowerCase();
+								let ipLabel = 'Proprietary';
+								let ipClass = 'ip-proprietary';
+								if (cls.includes('open source')) {
+									ipLabel = 'Open Source';
+									ipClass = 'ip-opensource';
+								} else if (cls.includes('independent')) {
+									ipLabel = 'Independent';
+									ipClass = 'ip-independent';
+								}
+								return (
+									<span class={`keyword-chip ip-chip font-mono ${ipClass}`}>{ipLabel}</span>
+								);
+							})()}
+							{(() => {
 								const topStack = [
 									...(project.techStack?.frontend || []),
 									...(project.techStack?.mobile_hardware || []),
@@ -854,6 +869,28 @@ const quickTechFilters = [
 		background: rgba(95, 80, 56, 0.04);
 	}
 
+	.keyword-chip.ip-chip {
+		font-weight: 700;
+	}
+
+	.keyword-chip.ip-proprietary {
+		border-color: rgba(180, 33, 53, 0.3);
+		color: var(--accent);
+		background: rgba(180, 33, 53, 0.08);
+	}
+
+	.keyword-chip.ip-opensource {
+		border-color: rgba(21, 128, 61, 0.3);
+		color: #15803d;
+		background: rgba(21, 128, 61, 0.08);
+	}
+
+	.keyword-chip.ip-independent {
+		border-color: rgba(37, 99, 235, 0.3);
+		color: #2563eb;
+		background: rgba(37, 99, 235, 0.08);
+	}
+
 	.project-showcase-card:hover .keyword-chip {
 		background: var(--btn-primary);
 		color: #fffdfa;
@@ -1097,6 +1134,34 @@ const quickTechFilters = [
 	.fallback-btn:hover {
 		background: var(--btn-primary-hover);
 		transform: translateY(-2px);
+	}
+
+	/* Mobile/tablet: keep angled mosaics; only tighten card chrome */
+	@media (max-width: 768px) {
+		.project-showcase-card {
+			min-height: auto;
+		}
+
+		.card-header-info {
+			padding: 1.25rem 1.25rem 0.75rem;
+		}
+
+		.project-title {
+			font-size: 1.35rem;
+		}
+
+		.card-image-slot {
+			min-height: 260px;
+		}
+
+		.category-tab {
+			font-size: 0.8125rem;
+			padding: 0.5rem 0.85rem;
+		}
+
+		.search-input {
+			font-size: 0.875rem;
+		}
 	}
 </style>
 

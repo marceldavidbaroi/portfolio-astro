@@ -2,6 +2,12 @@
 role: "Software Engineer"
 company: "Proficient Information Systems"
 companyUrl: "https://proficient.systems"
+companyLogo: "/images/experience/proficient-logo.png"
+cardImages:
+  - "/images/experience/proficient-card-1.png"
+  - "/images/experience/proficient-card-2.png"
+  - "/images/experience/proficient-card-3.png"
+galleryHref: "/experience/proficient/gallery"
 location: "Dhaka, Bangladesh (Hybrid)"
 employmentType: "Full-time"
 period: "November 2024 — Present"
@@ -34,6 +40,14 @@ responsibilities:
   - "Design relational database schemas and implement Row-Level Security policies in PostgreSQL/Supabase"
   - "Lead frontend architecture refactoring towards modern TypeScript and Vue 3 / Quasar standards"
   - "Collaborate with cross-functional design and product teams on technical feasibility and delivery"
+
+relatedProjects:
+  - slug: "01-tradeflowbd"
+    label: "TradeflowBD Multi-Tenant ERP"
+  - slug: "02-service-desk"
+    label: "Enterprise Service Desk"
+  - slug: "05-modular-packaging"
+    label: "Modular Packaging Infrastructure"
 
 stack:
   - "Vue.js (v3)"

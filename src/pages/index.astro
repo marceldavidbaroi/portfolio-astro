@@ -1,1669 +1,1200 @@
 ---
+import fs from 'node:fs';
+import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { getCollection } from 'astro:content';
+import { bscCseProgram, hscScienceProgram } from '../data/education';
+import { metrics } from '../data/aboutData';
 
 const projectEntries = await getCollection('projects');
-const projects = projectEntries
+const byId = Object.fromEntries(projectEntries.map((entry) => [entry.id, { slug: entry.id, ...entry.data }]));
+
+const focused = ['01-tradeflowbd', '02-service-desk']
+	.map((id) => byId[id])
+	.filter(Boolean);
+const featured = focused[0];
+const supporting = [
+	'07-pennyperfect',
+	'03-thrift-inventory',
+	'14-microfinance-loan-app',
+	'11-quizzes-streaming',
+	'08-docstach'
+]
+	.map((id) => byId[id])
+	.filter(Boolean);
+
+const experience = (await getCollection('experience'))
 	.sort((a, b) => a.data.order - b.data.order)
-	.slice(0, 4)
 	.map((entry) => ({
 		slug: entry.id,
 		...entry.data
 	}));
 
-const experienceEntries = await getCollection('experience');
-const experience = experienceEntries
-	.sort((a, b) => a.data.order - b.data.order)
-	.map((entry) => ({
-		slug: entry.id,
-		...entry.data
-	}));
+const portraitFile = ['portrait.webp', 'portrait.jpg', 'portrait.jpeg', 'portrait.png']
+	.find((name) => fs.existsSync(path.join(process.cwd(), 'public/images', name)));
+const portraitSrc = portraitFile ? `/images/${portraitFile}` : null;
+const proof = [
+	metrics.find((m) => m.value === '10+'),
+	metrics.find((m) => m.value === '100%'),
+	metrics.find((m) => m.value === '3.91')
+].filter(Boolean);
 
-import { bscCseProgram, hscScienceProgram, getAcademicStatistics } from '../data/education';
-import { finalYearThesisResearch } from '../data/research';
+const skills = ['Vue 3', 'Quasar', 'TypeScript', 'PostgreSQL', 'Supabase', 'NestJS', 'Docker', 'Pinia'];
+const workCount = projectEntries.length;
 
-const stats = getAcademicStatistics();
-const thesis = finalYearThesisResearch;
+function shots(project: { images?: string[] }) {
+	return (project.images || []).filter((img) => img && !img.includes('thumb-')).slice(0, 3);
+}
 ---
 
-<BaseLayout title="Marcel David Baroi | Full-Stack & Enterprise Systems Engineer">
-	<!-- Hero Section -->
-	<section class="hero">
-		<div class="hero-status">
-			<span class="status-dot"></span>
-			<span class="status-text font-mono">AVAILABLE FOR OPPORTUNITIES</span>
-			<span class="status-divider font-mono">•</span>
-			<span class="status-text font-mono timezone-tag">DHAKA (UTC+6) • US/EU OVERLAP</span>
-		</div>
-		<h1 class="title font-dot">Marcel David</h1>
-		<p class="subtitle font-dot">Full-Stack & Enterprise Systems Engineer</p>
-		<p class="hero-bio">
-			Specializing in architecture-first full-stack systems, multi-tenant SaaS platforms, and enterprise web solutions across Vue.js/Quasar, Supabase, PHP, and NestJS.
-		</p>
-
-		<!-- 1-Click Recruiter Triage Actions -->
-		<div class="hero-actions-container">
-			<!-- Primary Focal Action -->
-			<a
-				href="/resume.pdf"
-				target="_blank"
-				rel="noopener noreferrer"
-				class="btn btn-accent font-mono hero-resume-btn"
-				id="hero-resume-btn"
-				title="Download Resume (PDF)"
-			>
-				<svg
-					xmlns="http://www.w3.org/2000/svg"
-					width="16"
-					height="16"
-					viewBox="0 0 24 24"
-					fill="none"
-					stroke="currentColor"
-					stroke-width="2"
-					stroke-linecap="round"
-					stroke-linejoin="round"
-				>
-					<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-					<polyline points="14 2 14 8 20 8"></polyline>
-					<line x1="12" y1="18" x2="12" y2="12"></line>
-					<line x1="9" y1="15" x2="15" y2="15"></line>
-				</svg>
-				<span>Download Resume (PDF)</span>
-			</a>
-
-			<!-- Quick Contact & Social Icon Strip -->
-			<div class="hero-social-strip">
-				<a
-					href="mailto:marceldavidbaroi@gmail.com"
-					class="hero-icon-btn"
-					title="Send Email (marceldavidbaroi@gmail.com)"
-					aria-label="Email"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="17"
-						height="17"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<rect width="20" height="16" x="2" y="4" rx="2"></rect>
-						<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
-					</svg>
-				</a>
-
-				<a
-					href="https://linkedin.com/in/marceldavidbaroi"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hero-icon-btn"
-					title="Connect on LinkedIn"
-					aria-label="LinkedIn"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="17"
-						height="17"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
-						<rect width="4" height="12" x="2" y="9"></rect>
-						<circle cx="4" cy="4" r="2"></circle>
-					</svg>
-				</a>
-
-				<a
-					href="https://github.com/marceldavidbaroi"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hero-icon-btn"
-					title="View GitHub Repositories"
-					aria-label="GitHub"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="17"
-						height="17"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"></path>
-						<path d="M9 18c-4.51 2-5-2-7-2"></path>
-					</svg>
-				</a>
-
-				<a
-					href="https://wa.me/8801700000000"
-					target="_blank"
-					rel="noopener noreferrer"
-					class="hero-icon-btn hero-icon-wa"
-					title="Direct Message on WhatsApp"
-					aria-label="WhatsApp"
-				>
-					<svg
-						xmlns="http://www.w3.org/2000/svg"
-						width="17"
-						height="17"
-						viewBox="0 0 24 24"
-						fill="none"
-						stroke="currentColor"
-						stroke-width="2"
-						stroke-linecap="round"
-						stroke-linejoin="round"
-					>
-						<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-					</svg>
-				</a>
-			</div>
-		</div>
-	</section>
-
-	<!-- Projects Section -->
-	<section id="projects" class="section">
-		<div class="section-header">
-			<div class="section-label-group">
-				<span class="section-tag font-dot">01 // CREATION</span>
-				<h2 class="section-title font-dot">Featured Projects</h2>
-			</div>
-			<p class="section-desc">
-				Selected architectural builds, production-grade applications, and engineering experiments.
+<BaseLayout isWide alignStart>
+	<section class="hero" aria-label="Introduction">
+		<div class="hero-grid">
+			<p class="status font-mono">
+				<span class="status-dot" aria-hidden="true"></span>
+				Available · Remote / relocation · Dhaka · US/EU overlap
 			</p>
-		</div>
+			<h1 class="name font-dot">Marcel David Baroi</h1>
+			<p class="role">Full-Stack Engineer — multi-tenant SaaS &amp; enterprise systems</p>
+			<p class="bio">
+				I design and ship Vue / Quasar systems on PostgreSQL — wholesale ERP, support desks, and operations tools used in production.
+			</p>
+			<ul class="proof">
+				{proof.map((m) => (
+					<li>
+						<strong>{m.value}</strong>
+						<span>{m.label}</span>
+					</li>
+				))}
+			</ul>
+			<div class="hero-actions">
+				<a class="btn-solid font-mono" href="mailto:marceldavidbaroi@gmail.com">Email me</a>
+				<a class="btn-ghost font-mono" href="/resume.pdf" target="_blank" rel="noopener noreferrer">Resume</a>
+				<a class="text-link font-mono" href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
+				<a class="text-link font-mono" href="https://github.com/marceldavidbaroi" target="_blank" rel="noopener noreferrer">GitHub</a>
+			</div>
 
-		<div class="projects-grid">
-			{projects.map((project) => (
-				<a href={`/work/${project.slug}`} class="project-showcase-card">
-					<!-- Top Info Header: CV-Style Layout (Title, Role & Timeline, Google XYZ Accomplishment, Skill Chips) -->
-					<div class="card-header-info">
-						<div class="card-title-row">
-							<h3 class="project-title font-sans">{project.title}</h3>
-						</div>
-						{project.role && (
-							<div class="card-cv-meta font-mono">
-								<span class="cv-role">{project.role}</span>
-								{project.timeline && <span class="cv-timeline">· {project.timeline}</span>}
-							</div>
-						)}
-						<p class="project-description font-sans">{project.description}</p>
-						<div class="chip-container">
-							<span class="keyword-chip font-mono">{project.chip}</span>
-							{(() => {
-								const topStack = [
-									...(project.techStack?.frontend || []),
-									...(project.techStack?.mobile_hardware || []),
-									...(project.techStack?.backend || []),
-									...(project.techStack?.database || [])
-								].slice(0, 3);
-								return topStack.map((tech) => (
-									<span class="keyword-chip stack-chip font-mono">{tech}</span>
-								));
-							})()}
-						</div>
+			<figure class="hero-portrait">
+				{portraitSrc ? (
+					<img
+						src={portraitSrc}
+						alt="Portrait of Marcel David Baroi"
+						width="640"
+						height="854"
+					/>
+				) : (
+					<div class="portrait-slot" role="img" aria-label="Portrait placeholder. Add public/images/portrait.webp">
+						<span class="portrait-initials font-dot">MDB</span>
+						<span class="portrait-hint font-mono">Add public/images/portrait.webp</span>
 					</div>
-
-					<!-- Bottom Image Slot: Desktop (16:10) or Mobile (9:19.5 Phone) Screenshots -->
-					{(() => {
-						const validImages = (project.images || []).filter((img) => img && !img.includes('thumb-'));
-						const thumbsToRender = validImages.length > 0 ? validImages.slice(0, 4) : [null, null, null, null];
-						const count = thumbsToRender.length;
-
-						return (
-							<div class={`card-image-slot slot-${project.platformType || 'desktop'} count-${count}`}>
-								<div class={`thumbs-mosaic mosaic-${project.platformType || 'desktop'} mosaic-count-${count}`}>
-									{thumbsToRender.map((img, idx) => {
-										const isMobile = img 
-											? (!img.includes('web-') && !img.includes('dashboard') && !img.includes('chart-of-accounts') && !img.includes('balance-sheet') && !img.includes('reports') && (img.includes('collections.png') || img.includes('scanner') || img.includes('register.png') || img.includes('inventory.png') || img.includes('mobile') || project.platformType === 'mobile'))
-											: project.platformType === 'mobile';
-										return (
-											<div class={`thumb-card thumb-${idx + 1} ${isMobile ? 'thumb-mobile-device' : 'thumb-desktop-window'}`}>
-												{isMobile && (
-													<div class="mobile-phone-notch">
-														<span class="notch-pill"></span>
-													</div>
-												)}
-												{img ? (
-													<img src={img} alt={`${project.title} Preview ${idx + 1}`} class="thumb-img" loading="lazy" />
-												) : (
-													<div class="thumb-placeholder">
-														<svg 
-															xmlns="http://www.w3.org/2000/svg" 
-															width="32" 
-															height="32" 
-															viewBox="0 0 24 24" 
-															fill="none" 
-															stroke="currentColor" 
-															stroke-width="1.5" 
-															stroke-linecap="round" 
-															stroke-linejoin="round"
-															class="placeholder-icon"
-														>
-															{isMobile ? (
-																<>
-																	<rect width="14" height="20" x="5" y="2" rx="2" ry="2"></rect>
-																	<line x1="12" x2="12.01" y1="18" y2="18"></line>
-																</>
-															) : (
-																<>
-																	<rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
-																	<circle cx="8.5" cy="8.5" r="1.5"></circle>
-																	<polyline points="21 15 16 10 5 21"></polyline>
-																</>
-															)}
-														</svg>
-														<span class="placeholder-idx font-mono">{isMobile ? `SCREEN 0${idx + 1}` : `PREVIEW 0${idx + 1}`}</span>
-													</div>
-												)}
-											</div>
-										);
-									})}
-								</div>
-							</div>
-						);
-					})()}
-				</a>
-			))}
-		</div>
-
-		<!-- View All Projects Button -->
-		<div class="projects-action-row">
-			<a href="/work" class="btn-explore-all font-mono">
-				<span>Explore All Projects</span>
-				<span class="action-arrow font-dot">→</span>
-			</a>
+				)}
+				<figcaption class="portrait-caption font-mono">Marcel David Baroi</figcaption>
+			</figure>
 		</div>
 	</section>
 
-	<!-- Experience Section -->
-	<section id="experience" class="section">
-		<div class="section-header">
-			<div class="section-label-group">
-				<span class="section-tag font-dot">02 // TRAJECTORY</span>
-				<h2 class="section-title font-dot">Work Experience</h2>
+	{featured && (
+		<section class="featured" aria-labelledby="work-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Work</p>
+				<a class="section-link font-mono" href="/work">All {workCount} →</a>
 			</div>
-			<p class="section-desc">
-				A chronological breakdown of professional engineering roles and technical milestones.
-			</p>
-		</div>
+			<h2 id="work-heading" class="sr-only">Featured work</h2>
 
-		<div class="experience-grid">
-			{experience.map((item) => (
-				<article class="experience-showcase-card">
-					<!-- Top Info Header -->
-					<div class="card-header-info">
-						<div class="exp-top-row">
-							<h3 class="project-title">{item.role}</h3>
-							<span class="keyword-chip font-mono">{item.period}</span>
+			<div class="focus-list">
+				{focused.map((project) => (
+					<a class="feature-band" href={`/work/${project.slug}`}>
+						<div class="feature-meta">
+							<p class="kicker font-mono">{project.chip}</p>
+							<h3 class="feature-title">{project.title}</h3>
+							<p class="feature-desc">{project.description}</p>
 						</div>
-						<p class="exp-company-sub">
-							<span class="company-name">{item.company}</span>
-							<span class="exp-badge font-mono">{item.badge}</span>
-						</p>
-						<p class="project-description">{item.summary}</p>
-						
-						<ul class="exp-bullets">
-							{item.highlights.map((h) => (
+						<ul class="metric-row font-mono">
+							{(project.impactMetrics || []).slice(0, 3).map((m) => (
 								<li>
-									<span class="bullet-dot font-dot">›</span>
-									<span>{h}</span>
+									<b>{m.value}</b>
+									<span>{m.label}</span>
 								</li>
 							))}
 						</ul>
-					</div>
+						<span class="inline-cta font-mono">Read case study →</span>
+					</a>
+				))}
+			</div>
 
-					<!-- Visual Code / Architecture Window Area -->
-					<div class="card-image-slot">
-						<div class="exp-code-window font-mono">
-							<div class="window-header">
-								<div class="win-dots">
-									<span></span><span></span><span></span>
-								</div>
-								<span class="win-title">{item.company.toLowerCase().replace(/\s+/g, '-')}-core.config</span>
+			<div class="work-list">
+				{supporting.map((project) => {
+					const thumbs = shots(project);
+					const isMobile = project.platformType === 'mobile';
+					return (
+						<a class="work-item" href={`/work/${project.slug}`}>
+							<div class="work-copy">
+								<p class="kicker font-mono">{project.chip}</p>
+								<h3 class="support-title">{project.title}</h3>
 							</div>
-							<div class="window-body">
-								<div class="code-line"><span class="c-key">status:</span> <span class="c-val">'active'</span>,</div>
-								<div class="code-line"><span class="c-key">uptime:</span> <span class="c-num">99.99</span>,</div>
-								<div class="code-line"><span class="c-key">stack:</span> [</div>
-								{item.stack.map((s) => (
-									<div class="code-indent"><span class="c-str">'{s}'</span>,</div>
-								))}
-								<div class="code-line">]</div>
+							<div class:list={['shot-stack', { 'is-phone': isMobile }]} aria-hidden="true">
+								{thumbs.length > 0 ? (
+									thumbs.map((src, i) => (
+										<span class="shot-layer" style={`--i: ${i}`}>
+											<img src={src} alt="" loading="lazy" />
+										</span>
+									))
+								) : (
+									<span class="shot-layer is-empty" style="--i: 0"></span>
+								)}
 							</div>
-						</div>
-					</div>
-				</article>
-			))}
+						</a>
+					);
+				})}
+			</div>
+
+			<a class="work-index" href="/work">
+				<span class="work-index-copy">
+					<span class="work-index-title">See all work</span>
+					<span class="work-index-meta font-mono">{workCount} case studies</span>
+				</span>
+				<span class="section-link font-mono">View archive →</span>
+			</a>
+		</section>
+	)}
+
+	<section class="experience" aria-labelledby="exp-heading">
+		<div class="section-kicker">
+			<p class="label font-mono">Experience</p>
 		</div>
+		<h2 id="exp-heading" class="sr-only">Work experience</h2>
+		<ol class="rail">
+			{experience.map((item) => {
+				const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
+				return (
+					<li class="rail-row">
+						<p class="rail-when font-mono">{item.period}</p>
+						<div class="rail-body">
+							<div class="rail-head">
+								<h3 class="rail-role">{item.role}</h3>
+								{item.badge && <span class="rail-badge font-mono">{item.badge}</span>}
+							</div>
+							<p class="rail-company">{item.company}</p>
+							<p class="rail-line">{line}</p>
+							{item.relatedProjects && item.relatedProjects.length > 0 && (
+								<p class="rail-links font-mono">
+									{item.relatedProjects.slice(0, 2).map((rp) => (
+										<a href={`/work/${rp.slug}`}>{rp.label}</a>
+									))}
+								</p>
+							)}
+						</div>
+					</li>
+				);
+			})}
+		</ol>
 	</section>
 
-	<!-- Education Section -->
-	<section id="education" class="section">
-		<div class="section-header">
-			<div class="section-label-group">
-				<span class="section-tag font-dot">03 // PEDIGREE</span>
-				<h2 class="section-title font-dot">Academic Education</h2>
-			</div>
-			<p class="section-desc">
-				Formal computer science curriculum, foundational engineering honors, and academic credentials.
-			</p>
-		</div>
-
-		<div class="education-grid">
-			<!-- B.Sc. CSE -->
-			<div class="education-card card">
-				<div class="edu-top-row">
-					<div class="edu-badge-wrap">
-						<span class="edu-badge font-mono">{bscCseProgram.badge}</span>
-						<span class="edu-credits-tag font-mono">{bscCseProgram.totalCredits} Credits • 11 Semesters</span>
-					</div>
-					<span class="edu-gpa font-dot">CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</span>
-				</div>
-				<div class="edu-card-main">
-					{bscCseProgram.logo && (
-						<div class="edu-card-logo-box">
-							<img
-								src={bscCseProgram.logo}
-								alt={`${bscCseProgram.institution} Crest`}
-								class="edu-card-logo"
-								width="52"
-								height="52"
-								loading="lazy"
-							/>
-						</div>
-					)}
-					<div class="edu-card-text">
-						<h3 class="edu-degree">{bscCseProgram.degree}</h3>
-						<div class="edu-inst-row">
-							<a
-								href={bscCseProgram.institutionUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inst-web-link"
-								title={`Visit ${bscCseProgram.institution} Website`}
-							>
-								<span>{bscCseProgram.institution}</span>
-								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-									<polyline points="15 3 21 3 21 9"></polyline>
-									<line x1="10" y1="14" x2="21" y2="3"></line>
-								</svg>
-							</a>
-							<span class="edu-divider">•</span>
-							<span class="edu-period font-mono">{bscCseProgram.period}</span>
-						</div>
-					</div>
-				</div>
-				<p class="edu-summary">{bscCseProgram.summary}</p>
-				
-				<div class="edu-courses">
-					<span class="edu-course-label font-dot">Core Specializations:</span>
-					<div class="edu-course-tags">
-						{bscCseProgram.keyFocusAreas.slice(0, 4).map((area) => (
-							<span class="edu-tag font-mono">{area}</span>
-						))}
-					</div>
-				</div>
-
-				<div class="edu-footer-link">
-					<a href="/education/bsc-cse" class="transcript-link font-dot">
-						<span>View B.Sc. in CSE Full Details & Transcript</span>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
-			</div>
-
-			<!-- HSC Science -->
-			<div class="education-card card">
-				<div class="edu-top-row">
-					<div class="edu-badge-wrap">
-						<span class="edu-badge font-mono">{hscScienceProgram.badge}</span>
-						<span class="edu-credits-tag font-mono">{hscScienceProgram.field}</span>
-					</div>
-					<span class="edu-gpa font-dot">GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}</span>
-				</div>
-
-				<div class="edu-card-main">
-					{hscScienceProgram.logo && (
-						<div class="edu-card-logo-box ndc-card-logo-box">
-							<img
-								src={hscScienceProgram.logo}
-								alt={`${hscScienceProgram.institution} Logo`}
-								class="edu-card-logo"
-								width="90"
-								height="40"
-								loading="lazy"
-							/>
-						</div>
-					)}
-					<div class="edu-card-text">
-						<h3 class="edu-degree">{hscScienceProgram.degree}</h3>
-						<div class="edu-inst-row">
-							<a
-								href={hscScienceProgram.institutionUrl}
-								target="_blank"
-								rel="noopener noreferrer"
-								class="inst-web-link"
-								title={`Visit ${hscScienceProgram.institution} Website`}
-							>
-								<span>{hscScienceProgram.institution}</span>
-								<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-									<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-									<polyline points="15 3 21 3 21 9"></polyline>
-									<line x1="10" y1="14" x2="21" y2="3"></line>
-								</svg>
-							</a>
-							<span class="edu-divider">•</span>
-							<span class="edu-period font-mono">{hscScienceProgram.period}</span>
-						</div>
-					</div>
-				</div>
-				<p class="edu-summary">{hscScienceProgram.summary}</p>
-				
-				<div class="edu-courses">
-					<span class="edu-course-label font-dot">Science Curriculum:</span>
-					<div class="edu-course-tags">
-						{hscScienceProgram.keyCourses.map((c) => (
-							<span class="edu-tag font-mono">{c}</span>
-						))}
-					</div>
-				</div>
-
-				{hscScienceProgram.coCurricular && (
-					<div class="edu-courses">
-						<span class="edu-course-label font-dot">Co-Curricular Clubs:</span>
-						<div class="edu-course-tags">
-							{hscScienceProgram.coCurricular.map((club) => (
-								<span class="edu-tag club-tag font-mono">{club}</span>
-							))}
-						</div>
-					</div>
+	<section class="education" aria-label="Education">
+		<p class="label font-mono">Education</p>
+		<div class="edu-list">
+			<a class="edu-row" href="/education/bsc-cse">
+				{bscCseProgram.logo && (
+					<img src={bscCseProgram.logo} alt="" class="edu-logo" width="28" height="28" />
 				)}
-
-				<div class="edu-footer-link">
-					<a href="/education/hsc-science" class="transcript-link font-dot">
-						<span>View Notre Dame College HSC Details & Curriculum</span>
-						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-							<line x1="5" y1="12" x2="19" y2="12"></line>
-							<polyline points="12 5 19 12 12 19"></polyline>
-						</svg>
-					</a>
-				</div>
-			</div>
+				<p class="edu-copy">
+					<strong>{bscCseProgram.shortDegree}</strong>
+					<span class="edu-sep">·</span>
+					{bscCseProgram.institutionShort}
+					<span class="edu-sep">·</span>
+					CGPA {bscCseProgram.cgpa.toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}
+				</p>
+				<span class="section-link font-mono">Transcript →</span>
+			</a>
+			<a class="edu-row" href="/education/hsc-science">
+				{hscScienceProgram.logo && (
+					<img src={hscScienceProgram.logo} alt="" class="edu-logo edu-logo-wide" width="40" height="24" />
+				)}
+				<p class="edu-copy">
+					<strong>HSC Science</strong>
+					<span class="edu-sep">·</span>
+					{hscScienceProgram.institutionShort}
+					<span class="edu-sep">·</span>
+					GPA {hscScienceProgram.gpa.toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}
+				</p>
+				<span class="section-link font-mono">Details →</span>
+			</a>
 		</div>
 	</section>
 
-	<!-- Academic Research & Thesis Section -->
-	<section id="research" class="section">
-		<div class="section-header">
-			<div class="section-label-group">
-				<span class="section-tag font-dot">04 // RESEARCH & PUBLICATIONS</span>
-				<h2 class="section-title font-dot">Final Year Thesis Research</h2>
-			</div>
-			<p class="section-desc">
-				Empirical computer vision and optical character recognition (OCR) research defended at Daffodil International University.
+	<section class="skills" aria-label="Skills">
+		<div class="skills-row">
+			<p class="label font-mono">Stack</p>
+			<p class="skills-line">
+				{skills.map((name) => (
+					<span>{name}</span>
+				))}
 			</p>
+			<a class="section-link font-mono" href="/skills">Full matrix →</a>
 		</div>
+	</section>
 
-		<div class="research-spotlight-card card">
-			<div class="research-top-row">
-				<div class="research-badge-wrap">
-					<span class="research-badge font-mono">{thesis.badge}</span>
-					<span class="research-inst-tag font-mono">{thesis.institution} • Project #{thesis.projectNumber}</span>
-				</div>
-				<span class="research-acc font-dot">DenseNet Peak: 97.93% Vowel / 95.99% Consonant</span>
-			</div>
-
-			<h3 class="research-title font-dot">
-				<a href="/research/01-bangla-hwcr-ekush" class="research-title-link">
-					{thesis.title}
-				</a>
-			</h3>
-
-			<p class="research-abstract">
-				{thesis.abstract}
-			</p>
-
-			<div class="research-metrics-grid">
-				<div class="r-metric-box">
-					<span class="r-metric-val font-dot">97.93%</span>
-					<span class="r-metric-lbl">Vowel Accuracy (F1: 0.98)</span>
-				</div>
-				<div class="r-metric-box">
-					<span class="r-metric-val font-dot">95.99%</span>
-					<span class="r-metric-lbl">Consonant Accuracy (F1: 0.96)</span>
-				</div>
-				<div class="r-metric-box">
-					<span class="r-metric-val font-dot">80,000</span>
-					<span class="r-metric-lbl">Ekush Dataset Images</span>
-				</div>
-				<div class="r-metric-box">
-					<span class="r-metric-val font-dot">16 Models</span>
-					<span class="r-metric-lbl">Empirical Benchmarks</span>
-				</div>
-			</div>
-
-			<div class="research-footer-row">
-				<a href="/research/01-bangla-hwcr-ekush" class="research-cta-primary font-dot">
-					<span>View Full Thesis Research & 16-Model Benchmarks</span>
-					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-						<line x1="5" y1="12" x2="19" y2="12"></line>
-						<polyline points="12 5 19 12 12 19"></polyline>
-					</svg>
-				</a>
-
-				<a
-					href={thesis.officialRepositoryUrl}
-					target="_blank"
-					rel="noopener noreferrer"
-					class="research-cta-secondary font-mono"
-				>
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
-						<polyline points="15 3 21 3 21 9"></polyline>
-						<line x1="10" y1="14" x2="21" y2="3"></line>
-					</svg>
-					<span>DIU Repository Listing</span>
-				</a>
-
-				<a
-					href={thesis.pdfDownloadUrl}
-					target="_blank"
-					download="Bangla-HWCR-Ekush-Thesis-MarcelDavidBaroi.pdf"
-					class="research-cta-secondary font-mono"
-				>
-					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
-						<polyline points="7 10 12 15 17 10"></polyline>
-						<line x1="12" y1="15" x2="12" y2="3"></line>
-					</svg>
-					<span>Download PDF (5.4 MB)</span>
-				</a>
-			</div>
+	<section class="close" aria-label="Contact">
+		<p class="close-kicker font-mono">Available for full-time · remote or relocation</p>
+		<p class="close-title">Let’s talk.</p>
+		<div class="hero-actions">
+			<a class="btn-solid font-mono" href="mailto:marceldavidbaroi@gmail.com">Email me</a>
+			<a class="btn-ghost font-mono" href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer">LinkedIn</a>
 		</div>
 	</section>
 </BaseLayout>
 
 <style>
-	/* Hero Section */
-	.hero {
-		min-height: calc(85vh - 100px);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 1.25rem;
-		padding: 3rem 0;
-		text-align: center;
-	}
-
-	.hero-status {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.6rem;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		padding: 0.35rem 0.9rem;
-		border-radius: 9999px;
-		margin-bottom: 0.5rem;
-	}
-
-	.status-dot {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background-color: #22c55e;
-		box-shadow: 0 0 10px rgba(34, 197, 94, 0.6);
-		animation: pulse 2s infinite ease-in-out;
-	}
-
-	@keyframes pulse {
-		0%, 100% { opacity: 1; transform: scale(1); }
-		50% { opacity: 0.5; transform: scale(0.85); }
-	}
-
-	.status-text {
-		font-size: 0.8125rem;
-		letter-spacing: 0.06em;
-		color: var(--text-muted);
-		font-weight: 500;
-	}
-
-	.status-divider {
-		font-size: 0.8125rem;
-		color: var(--card-border);
-		opacity: 0.8;
-	}
-
-	.timezone-tag {
-		color: var(--text-main);
-		font-weight: 600;
-	}
-
-	.title {
-		font-size: clamp(3.5rem, 10vw, 8.5rem);
-		font-weight: 700;
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--text-main);
-		line-height: 1.02;
-		word-break: break-word;
-		-webkit-text-stroke: 0.5px currentColor;
-		text-rendering: optimizeLegibility;
-	}
-
-	.subtitle {
-		font-size: clamp(1.5rem, 4vw, 3rem);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--accent);
-		line-height: 1.15;
-		font-weight: 700;
-		-webkit-text-stroke: 0.35px currentColor;
-	}
-
-	.hero-bio {
-		font-size: clamp(1rem, 1.8vw, 1.15rem);
-		line-height: 1.6;
-		color: var(--text-muted);
-		max-width: 620px;
-		margin-top: 0.5rem;
-	}
-
-	.hero-actions-container {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 1.125rem;
-		margin-top: 1.25rem;
-	}
-
-	.hero-resume-btn {
-		font-size: 0.9375rem;
-		font-weight: 600;
-		letter-spacing: 0.04em;
-		padding: 0.75rem 1.6rem;
-		box-shadow: 0 4px 16px rgba(180, 33, 53, 0.22);
-	}
-
-	.hero-social-strip {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		gap: 0.625rem;
-	}
-
-	.hero-icon-btn {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 38px;
-		height: 38px;
-		border-radius: 50%;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		color: var(--text-muted);
-		transition: all 0.2s ease;
-	}
-
-	.hero-icon-btn:hover {
-		color: var(--text-main);
-		border-color: rgba(180, 33, 53, 0.4);
-		background: var(--bg-color);
-		transform: translateY(-2px);
-		box-shadow: 0 4px 12px rgba(95, 80, 56, 0.12);
-	}
-
-	.hero-icon-btn:hover svg {
-		color: var(--accent);
-	}
-
-	.hero-icon-wa:hover svg {
-		color: #22c55e;
-	}
-
-	/* Section Common Styles */
-	.section {
-		width: 100%;
-		margin-top: 7rem;
-		text-align: left;
-	}
-
-	.section-header {
-		margin-bottom: 2.5rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.section-label-group {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.section-tag {
-		font-size: 0.9375rem;
-		letter-spacing: 0.12em;
-		color: var(--accent);
-		text-transform: uppercase;
-		font-weight: 700;
-		-webkit-text-stroke: 0.25px currentColor;
-	}
-
-	.section-title {
-		font-size: clamp(2rem, 4vw, 2.75rem);
-		font-weight: 700;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		color: var(--text-main);
-		line-height: 1.1;
-		-webkit-text-stroke: 0.35px currentColor;
-	}
-
-	.section-desc {
-		font-size: 1rem;
-		line-height: 1.5;
-		color: var(--text-muted);
-		max-width: 640px;
-	}
-
-	/* Projects 2-Column Grid */
-	.projects-grid {
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 1.5rem;
-	}
-
-	@media (max-width: 768px) {
-		.projects-grid {
-			grid-template-columns: 1fr;
-		}
-	}
-
-	.projects-action-row {
-		display: flex;
-		justify-content: center;
-		margin-top: 3rem;
-		width: 100%;
-	}
-
-	.btn-explore-all {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.75rem;
-		padding: 0.9rem 2rem;
-		border-radius: 9999px;
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		color: var(--text-main);
-		font-size: 0.9375rem;
-		font-weight: 500;
-		text-decoration: none !important;
-		transition: all 0.25s ease;
-		box-shadow: 0 4px 15px rgba(95, 80, 56, 0.05);
-	}
-
-	.btn-explore-all:hover {
-		background: var(--btn-primary);
-		color: #fffdfa;
-		border-color: var(--btn-primary);
-		transform: translateY(-2px);
-		box-shadow: 0 10px 25px rgba(95, 80, 56, 0.15);
-	}
-
-	.action-arrow {
-		font-size: 1.15rem;
-		color: var(--accent);
-		transition: transform 0.2s ease, color 0.2s ease;
-	}
-
-	.btn-explore-all:hover .action-arrow {
-		color: #ffffff;
-		transform: translateX(4px);
-	}
-
-	/* Exact Reference Card Styling */
-	.project-showcase-card,
-	.project-showcase-card:hover,
-	.project-showcase-card:focus,
-	.project-showcase-card:active {
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		border-radius: 32px;
+	.sr-only {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
 		overflow: hidden;
-		display: flex;
-		flex-direction: column;
-		justify-content: space-between;
-		min-height: 600px;
-		position: relative;
-		text-decoration: none !important;
-		color: inherit;
-		cursor: pointer;
-		transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+		clip: rect(0, 0, 0, 0);
+		white-space: nowrap;
+		border: 0;
 	}
 
-	.project-showcase-card * {
-		text-decoration: none !important;
+	.label {
+		font-size: 0.62rem;
+		letter-spacing: 0.16em;
+		text-transform: uppercase;
+		color: var(--accent);
+		font-weight: 700;
+		margin: 0;
 	}
 
-	.project-showcase-card:hover {
-		transform: translateY(-4px);
-		border-color: rgba(95, 80, 56, 0.28);
-		box-shadow: 0 20px 45px rgba(95, 80, 56, 0.1);
-	}
-
-	.card-header-info {
-		padding: 2.25rem 2.25rem 1rem 2.25rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		z-index: 2;
-	}
-
-	.card-title-row {
+	.section-kicker {
 		display: flex;
 		align-items: baseline;
 		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 1rem;
 	}
 
-	.project-title {
-		font-family: var(--font-sans);
-		font-size: 1.65rem;
-		font-weight: 800;
-		color: var(--text-main);
-		letter-spacing: -0.025em;
-		line-height: 1.2;
-		text-align: left;
-	}
-
-	.card-cv-meta {
-		font-size: 0.75rem;
-		display: flex;
-		align-items: center;
-		gap: 0.4rem;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-	}
-
-	.cv-role {
+	.section-link,
+	.text-link,
+	.inline-cta {
+		font-size: 0.72rem;
 		font-weight: 700;
+		letter-spacing: 0.04em;
 		color: var(--accent);
+		text-decoration: none;
+		white-space: nowrap;
 	}
 
-	.cv-timeline {
-		color: var(--text-muted);
-		font-weight: 500;
-		text-transform: none;
+	.section-link:hover,
+	.text-link:hover,
+	.inline-cta:hover {
+		text-decoration: underline;
 	}
 
-	.project-description {
-		font-size: 0.875rem;
-		line-height: 1.55;
-		color: var(--text-main);
-		max-width: 92%;
+	.kicker {
+		font-size: 0.62rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--accent);
+		margin: 0;
+		font-weight: 700;
 	}
 
-	.chip-container {
-		margin-top: 0.65rem;
-		display: flex;
+	/* Hero */
+	.hero {
+		padding-bottom: 4.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+		grid-template-areas:
+			'status portrait'
+			'name portrait'
+			'role portrait'
+			'bio portrait'
+			'proof portrait'
+			'actions portrait';
+		column-gap: 2.75rem;
+		row-gap: 0.7rem;
+		align-items: start;
+	}
+
+	.status { grid-area: status; }
+	.name { grid-area: name; }
+	.role { grid-area: role; }
+	.bio { grid-area: bio; }
+	.proof { grid-area: proof; }
+	.hero-actions { grid-area: actions; }
+	.hero-portrait { grid-area: portrait; }
+
+	.status {
+		display: inline-flex;
+		align-items: center;
 		flex-wrap: wrap;
 		gap: 0.45rem;
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		margin: 0;
+		line-height: 1.45;
 	}
 
-	.keyword-chip {
+	.status-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: #3f7d4e;
+		flex-shrink: 0;
+	}
+
+	.name {
+		font-size: clamp(1.85rem, 6vw, 3.35rem);
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		line-height: 1.05;
+		color: var(--text-main);
+		margin: 0;
+		text-transform: none;
+		-webkit-text-stroke: 0.3px currentColor;
+		overflow-wrap: break-word;
+	}
+
+	.role {
+		margin: 0;
+		font-size: 1.02rem;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		color: var(--text-muted);
+		line-height: 1.35;
+		max-width: 28rem;
+	}
+
+	.bio {
+		margin: 0.15rem 0 0;
+		font-size: 1.05rem;
+		line-height: 1.55;
+		color: var(--text-main);
+		max-width: 34rem;
+	}
+
+	.proof {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.35rem 1.75rem;
+		margin: 0.55rem 0 0.15rem;
+		padding: 0.85rem 0 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.proof li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.12rem;
+	}
+
+	.proof strong {
+		font-size: 1.35rem;
+		letter-spacing: -0.03em;
+		line-height: 1;
+		color: var(--text-main);
+	}
+
+	.proof span {
+		font-size: 0.68rem;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1rem;
+		margin-top: 0.35rem;
+	}
+
+	.btn-solid,
+	.btn-ghost {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
-		padding: 0.4rem 1.15rem;
+		padding: 0.62rem 1.15rem;
 		border-radius: 9999px;
-		border: 1px solid rgba(95, 80, 56, 0.7);
+		font-size: 0.72rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		text-decoration: none;
+	}
+
+	.btn-solid {
+		background: var(--accent);
+		color: #fffdfa;
+	}
+
+	.btn-solid:hover {
+		background: var(--accent-hover);
+	}
+
+	.btn-ghost {
 		background: transparent;
 		color: var(--text-main);
-		font-size: 0.8125rem;
-		font-weight: 500;
-		transition: all 0.2s ease;
+		border: 1px solid rgba(95, 80, 56, 0.28);
 	}
 
-	.keyword-chip.stack-chip {
-		border-color: rgba(95, 80, 56, 0.25);
+	.btn-ghost:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.hero-portrait {
+		justify-self: end;
+		width: 100%;
+		max-width: 300px;
+		margin: 0;
+		background: #fffdfa;
+		padding: 0.45rem 0.45rem 1.2rem;
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		box-shadow: 0 18px 40px rgba(95, 80, 56, 0.14);
+		transform: rotate(-1.1deg);
+	}
+
+	.hero-portrait img,
+	.portrait-slot {
+		display: block;
+		width: 100%;
+		aspect-ratio: 3 / 4;
+		object-fit: cover;
+		object-position: center top;
+		background: var(--card-bg);
+	}
+
+	.portrait-slot {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.7rem;
+		border: 1px dashed rgba(95, 80, 56, 0.28);
+		background: linear-gradient(180deg, #f4f0e7 0%, #ebe6d8 100%);
+	}
+
+	.portrait-initials {
+		font-size: 2.1rem;
+		letter-spacing: 0.08em;
+		color: var(--text-main);
+		-webkit-text-stroke: 0.3px currentColor;
+	}
+
+	.portrait-hint {
+		font-size: 0.55rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
 		color: var(--text-muted);
-		background: rgba(95, 80, 56, 0.04);
+		text-align: center;
+		max-width: 12rem;
+		line-height: 1.4;
 	}
 
-	.project-showcase-card:hover .keyword-chip {
-		background: var(--btn-primary);
-		color: #fffdfa;
-		border-color: var(--btn-primary);
+	.portrait-caption {
+		display: block;
+		margin-top: 0.65rem;
+		padding: 0 0.15rem;
+		font-size: 0.58rem;
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-muted);
 	}
 
-	/* Card Image / Media Slot: Desktop & Mobile Screen Support */
-	.card-image-slot {
-		position: relative;
-		min-height: 380px;
-		width: 100%;
-		overflow: hidden;
-		display: flex;
-		align-items: flex-end;
-		justify-content: flex-end;
+	@media (prefers-reduced-motion: no-preference) {
+		.hero-portrait {
+			animation: rise 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+		}
 	}
 
-	/* Desktop Screenshot Mosaic: 16:10 Widescreen */
-	.mosaic-desktop {
-		position: absolute;
-		right: -60px;
-		bottom: -60px;
-		width: 620px;
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: rotate(-1.1deg) translateY(18px);
+		}
+		to {
+			opacity: 1;
+			transform: rotate(-1.1deg) translateY(0);
+		}
+	}
+
+	/* Featured + supporting */
+	.featured {
+		padding: 3.75rem 0 3.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.focus-list {
+		margin-bottom: 0.35rem;
+	}
+
+	.feature-band {
 		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 16px;
-		transform: rotate(-20deg) skew(-2deg);
-		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+		grid-template-columns: minmax(0, 1.4fr) auto auto;
+		gap: 1.5rem 2rem;
+		align-items: end;
+		text-decoration: none;
+		color: inherit;
+		padding: 1.5rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
 	}
 
-	.mosaic-desktop.mosaic-count-1 {
-		width: 440px;
-		grid-template-columns: 1fr;
-		right: -20px;
-		bottom: -30px;
-		transform: rotate(-14deg) skew(-1deg);
+	.focus-list .feature-band:first-child {
+		padding-top: 0;
 	}
 
-	.mosaic-desktop.mosaic-count-2 {
-		width: 520px;
-		grid-template-columns: repeat(2, 1fr);
-		right: -30px;
-		bottom: -40px;
-		transform: rotate(-16deg) skew(-1deg);
+	.feature-band:hover .feature-title {
+		color: var(--accent);
 	}
 
-	.project-showcase-card:hover .mosaic-desktop {
-		transform: rotate(-16deg) skew(-1deg) translateY(-10px);
+	.feature-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
 	}
 
-	.project-showcase-card:hover .mosaic-desktop.mosaic-count-1 {
-		transform: rotate(-10deg) skew(0deg) translateY(-10px);
+	.feature-title {
+		margin: 0;
+		font-size: clamp(1.15rem, 2.1vw, 1.55rem);
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		line-height: 1.2;
+		color: var(--text-main);
+		overflow-wrap: break-word;
 	}
 
-	/* Mobile Screenshot Mosaic: 9:19.5 Slim Smartphone Grid */
-	.mosaic-mobile {
-		position: absolute;
-		right: -25px;
-		bottom: -50px;
-		width: 480px;
-		display: grid;
-		grid-template-columns: repeat(2, 1fr);
-		gap: 18px;
-		transform: rotate(-14deg) skew(-1deg);
-		transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-	}
-
-	.mosaic-mobile.mosaic-count-1 {
-		width: 220px;
-		grid-template-columns: 1fr;
-		right: 30px;
-		bottom: -30px;
-		transform: rotate(-8deg) skew(0deg);
-	}
-
-	.mosaic-mobile.mosaic-count-2 {
-		width: 340px;
-		grid-template-columns: repeat(2, 1fr);
-		right: 0px;
-		bottom: -35px;
-		transform: rotate(-10deg) skew(0deg);
-	}
-
-	.project-showcase-card:hover .mosaic-mobile {
-		transform: rotate(-10deg) skew(0deg) translateY(-12px);
-	}
-
-	.project-showcase-card:hover .mosaic-mobile.mosaic-count-1 {
-		transform: rotate(-4deg) skew(0deg) translateY(-12px);
-	}
-
-	.thumb-card {
-		background: linear-gradient(145deg, #ffffff 0%, #f7f4ee 100%);
-		border: 1px solid rgba(95, 80, 56, 0.16);
+	.feature-desc {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--text-main);
+		display: -webkit-box;
+		-webkit-line-clamp: 4;
+		-webkit-box-orient: vertical;
 		overflow: hidden;
-		box-shadow: 0 14px 32px rgba(95, 80, 56, 0.12);
-		width: 100%;
+	}
+
+	.metric-row {
+		list-style: none;
 		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem 1.1rem;
+		margin: 0.25rem 0 0;
+		padding: 0;
+	}
+
+	.metric-row li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+	}
+
+	.metric-row b {
+		font-size: 0.92rem;
+		letter-spacing: 0.02em;
+		color: var(--text-main);
+	}
+
+	.metric-row span {
+		font-size: 0.58rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	.work-list {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		column-gap: 2.25rem;
+	}
+
+	.work-item {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 7.4rem;
 		align-items: center;
-		justify-content: center;
-		transition: all 0.25s ease;
+		gap: 0.7rem 0.85rem;
+		padding: 0.85rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+		min-width: 0;
+	}
+
+	.work-item:hover .support-title {
+		color: var(--accent);
+	}
+
+	.work-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.28rem;
+		min-width: 0;
+	}
+
+	.shot-stack {
+		--w: 86px;
+		--h: 56px;
 		position: relative;
+		width: calc(var(--w) + 20px);
+		height: calc(var(--h) + 14px);
+		justify-self: end;
+		isolation: isolate;
 	}
 
-	/* Desktop Window Card */
-	.thumb-desktop-window {
-		border-radius: 12px;
-		aspect-ratio: 16 / 10;
+	.shot-stack.is-phone {
+		--w: 40px;
+		--h: 70px;
+		width: calc(var(--w) + 28px);
+		height: calc(var(--h) + 10px);
 	}
 
-	/* Mobile Smartphone Frame Card */
-	.thumb-mobile-device {
-		border-radius: 24px;
-		aspect-ratio: 9 / 19;
-		border: 2px solid rgba(95, 80, 56, 0.22);
-		box-shadow: 0 16px 36px rgba(95, 80, 56, 0.15);
-		background: #ffffff;
-	}
-
-	.mobile-phone-notch {
+	.shot-layer {
 		position: absolute;
-		top: 6px;
-		left: 50%;
-		transform: translateX(-50%);
-		z-index: 10;
-		display: flex;
-		align-items: center;
-		justify-content: center;
+		right: calc(var(--i) * 7px);
+		bottom: calc(var(--i) * 5px);
+		width: var(--w);
+		height: var(--h);
+		border-radius: 7px;
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		background: #fffdfa;
+		box-shadow: 0 8px 16px rgba(95, 80, 56, 0.12);
+		overflow: hidden;
+		transform: rotate(calc(-11deg + var(--i) * 5deg));
+		z-index: calc(4 - var(--i));
+		transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1);
 	}
 
-	.notch-pill {
-		width: 32px;
-		height: 4px;
-		background: rgba(95, 80, 56, 0.35);
-		border-radius: 9999px;
+	.shot-stack.is-phone .shot-layer {
+		border-radius: 9px;
 	}
 
-	.thumb-img {
+	.shot-layer.is-empty {
+		border-style: dashed;
+		background: var(--card-bg);
+	}
+
+	.shot-layer img {
+		display: block;
 		width: 100%;
 		height: 100%;
 		object-fit: cover;
 		object-position: top center;
-		display: block;
-		transition: transform 0.3s ease;
 	}
 
-	.thumb-mobile-device .thumb-img {
-		object-position: top left;
+	.work-item:hover .shot-layer {
+		transform: rotate(calc(-7deg + var(--i) * 4deg)) translateY(-3px);
 	}
 
-	.project-showcase-card:hover .thumb-img {
-		transform: scale(1.04);
-	}
-
-	.thumb-placeholder {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.6rem;
-		color: rgba(95, 80, 56, 0.45);
-		transition: color 0.2s ease, transform 0.2s ease;
-	}
-
-	.project-showcase-card:hover .thumb-placeholder {
-		color: var(--accent);
-	}
-
-	.placeholder-icon {
-		opacity: 0.7;
-		transition: transform 0.25s ease, opacity 0.25s ease;
-	}
-
-	.project-showcase-card:hover .placeholder-icon {
-		opacity: 1;
-		transform: scale(1.1);
-	}
-
-	.placeholder-idx {
-		font-size: 0.6875rem;
-		letter-spacing: 0.08em;
-		color: var(--text-muted);
-		font-weight: 500;
-	}
-
-	/* Experience Showcase: Single Card per Row */
-	.experience-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 2rem;
-	}
-
-	.experience-showcase-card {
-		background: var(--card-bg);
-		border: 1px solid var(--card-border);
-		border-radius: 32px;
-		overflow: hidden;
-		display: grid;
-		grid-template-columns: 1.2fr 1fr;
-		min-height: 400px;
-		position: relative;
-		transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-	}
-
-	@media (max-width: 860px) {
-		.experience-showcase-card {
-			grid-template-columns: 1fr;
-			min-height: 520px;
-		}
-	}
-
-	.experience-showcase-card:hover {
-		transform: translateY(-4px);
-		border-color: rgba(95, 80, 56, 0.28);
-		box-shadow: 0 20px 45px rgba(95, 80, 56, 0.1);
-	}
-
-	.experience-showcase-card .card-header-info {
-		padding: 2.5rem 2.25rem;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		gap: 0.65rem;
-	}
-
-	.experience-showcase-card .card-image-slot {
-		min-height: 320px;
-		display: flex;
-		align-items: center;
-		justify-content: flex-end;
-	}
-
-	.exp-top-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.exp-company-sub {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		font-size: 0.9375rem;
-	}
-
-	.company-name {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-	.exp-badge {
-		font-size: 0.6875rem;
-		letter-spacing: 0.05em;
-		text-transform: uppercase;
-		background: rgba(95, 80, 56, 0.08);
-		border: 1px solid rgba(95, 80, 56, 0.15);
-		color: var(--btn-primary);
-		padding: 0.15rem 0.5rem;
-		border-radius: 9999px;
-	}
-
-	.exp-bullets {
-		list-style: none;
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
-		margin-top: 0.4rem;
-	}
-
-	.exp-bullets li {
-		display: flex;
-		align-items: baseline;
-		gap: 0.5rem;
-		font-size: 0.8125rem;
-		line-height: 1.45;
-		color: var(--text-muted);
-	}
-
-	/* Angled Code & Config Window Mockup */
-	.exp-code-window {
-		position: absolute;
-		right: -25px;
-		bottom: -20px;
-		width: 360px;
-		background: #ffffff;
-		color: var(--text-main);
-		border-radius: 18px;
-		border: 1px solid rgba(95, 80, 56, 0.18);
-		box-shadow: -12px -12px 36px rgba(95, 80, 56, 0.12);
-		padding: 1.1rem 1.25rem;
-		transform: rotate(-12deg);
-		transition: transform 0.3s ease;
-	}
-
-	.experience-showcase-card:hover .exp-code-window {
-		transform: rotate(-8deg) translateY(-8px);
-	}
-
-	.window-header {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		padding-bottom: 0.6rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
-		margin-bottom: 0.6rem;
-	}
-
-	.win-dots {
-		display: flex;
-		gap: 5px;
-	}
-
-	.win-dots span {
-		width: 8px;
-		height: 8px;
-		border-radius: 50%;
-		background: rgba(95, 80, 56, 0.2);
-	}
-
-	.win-dots span:nth-child(1) { background: #ef4444; }
-	.win-dots span:nth-child(2) { background: #f59e0b; }
-	.win-dots span:nth-child(3) { background: #10b981; }
-
-	.win-title {
-		font-size: 0.6875rem;
-		color: var(--text-muted);
-		font-weight: 500;
-	}
-
-	.window-body {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		font-size: 0.75rem;
-	}
-
-	.code-line {
-		color: var(--text-main);
-	}
-
-	.code-indent {
-		padding-left: 1rem;
-	}
-
-	.c-key {
-		color: var(--btn-primary);
-		font-weight: 600;
-	}
-
-	.c-val {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-	.c-num {
-		color: #d97706;
-		font-weight: 600;
-	}
-
-	.c-str {
-		color: var(--accent);
-	}
-
-	/* Academic Education Section */
-	.education-grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		gap: 1.5rem;
-	}
-
-	.education-card {
-		padding: 2.25rem;
-		display: flex;
-		flex-direction: column;
-		gap: 0.85rem;
-		text-align: left;
-	}
-
-	.edu-top-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.edu-badge {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: rgba(95, 80, 56, 0.08);
-		border: 1px solid rgba(95, 80, 56, 0.15);
-		padding: 0.2rem 0.65rem;
-		border-radius: 9999px;
-		color: var(--btn-primary);
-		font-weight: 500;
-	}
-
-	.edu-gpa {
-		font-size: 1.25rem;
-		color: var(--accent);
-	}
-
-	.edu-card-main {
-		display: flex;
-		align-items: center;
-		gap: 1.25rem;
-		margin: 0.25rem 0;
-	}
-
-	.edu-card-logo-box {
-		width: 52px;
-		height: 52px;
-		flex-shrink: 0;
-		padding: 4px;
-		background: #fffdfa;
-		border-radius: 12px;
-		border: 1px solid rgba(95, 80, 56, 0.15);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		box-shadow: 0 2px 8px rgba(95, 80, 56, 0.04);
-	}
-
-	.ndc-card-logo-box {
-		width: 88px;
-		height: 48px;
-		padding: 3px 6px;
-	}
-
-	.edu-card-logo {
-		width: 100%;
-		height: 100%;
-		object-fit: contain;
-	}
-
-
-	.edu-card-text {
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-	}
-
-	.edu-degree {
-		font-size: clamp(1.25rem, 2.2vw, 1.5rem);
-		font-weight: 700;
-		color: var(--text-main);
-		letter-spacing: -0.02em;
-	}
-
-	.edu-inst-row {
-		display: flex;
-		align-items: center;
-		gap: 0.6rem;
-		font-size: 0.9375rem;
-		flex-wrap: wrap;
-	}
-
-	.inst-web-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.3rem;
-		color: var(--accent);
-		font-weight: 600;
-		transition: color 0.15s ease;
-	}
-
-	.inst-web-link:hover {
-		color: var(--accent-hover);
-		text-decoration: underline;
-	}
-
-	.edu-inst {
-		color: var(--accent);
-		font-weight: 600;
-	}
-
-
-	.edu-divider {
-		color: var(--text-muted);
-		opacity: 0.5;
-	}
-
-	.edu-period {
-		color: var(--text-muted);
-	}
-
-	.edu-summary {
-		font-size: 0.9375rem;
-		line-height: 1.6;
-		color: var(--text-muted);
-	}
-
-	.edu-courses {
-		display: flex;
-		align-items: center;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-		margin-top: 0.5rem;
-		padding-top: 1rem;
-		border-top: 1px solid rgba(95, 80, 56, 0.08);
-	}
-
-	.edu-course-label {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		color: var(--text-muted);
-		font-weight: 600;
-	}
-
-	.edu-badge-wrap {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.edu-credits-tag {
-		font-size: 0.72rem;
-		color: var(--text-muted);
-		background: rgba(95, 80, 56, 0.06);
-		padding: 0.2rem 0.5rem;
-		border-radius: 4px;
-	}
-
-	.edu-course-tags {
-		display: flex;
-		flex-wrap: wrap;
-		gap: 0.4rem;
-	}
-
-	.edu-tag {
-		font-size: 0.75rem;
-		padding: 0.25rem 0.6rem;
-		background: rgba(95, 80, 56, 0.06);
-		border-radius: 4px;
-		color: var(--text-main);
-	}
-
-	.edu-tag.club-tag {
-		background: rgba(180, 33, 53, 0.08);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.15);
-		font-weight: 600;
-	}
-
-
-	.edu-footer-link {
-		margin-top: 0.5rem;
-		padding-top: 0.75rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.12);
-	}
-
-	.transcript-link {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		font-size: 0.85rem;
-		font-weight: 700;
-		color: var(--accent);
-		transition: all 0.15s ease;
-	}
-
-	.transcript-link:hover {
-		color: var(--accent-hover);
-		transform: translateX(3px);
-	}
-
-	/* Research Spotlight Card */
-	.research-spotlight-card {
-		padding: 2.25rem;
-		display: flex;
-		flex-direction: column;
-		gap: 1.15rem;
-		border-radius: 16px;
-		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
-		border: 1px solid rgba(180, 33, 53, 0.2);
-	}
-
-	.research-top-row {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: 0.75rem;
-		flex-wrap: wrap;
-	}
-
-	.research-badge-wrap {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		flex-wrap: wrap;
-	}
-
-	.research-badge {
-		font-size: 0.75rem;
-		text-transform: uppercase;
-		letter-spacing: 0.05em;
-		background: rgba(180, 33, 53, 0.1);
-		color: var(--accent);
-		border: 1px solid rgba(180, 33, 53, 0.25);
-		padding: 0.2rem 0.65rem;
-		border-radius: 9999px;
-		font-weight: 700;
-	}
-
-	.research-inst-tag {
-		font-size: 0.75rem;
-		color: var(--text-muted);
-	}
-
-	.research-acc {
-		font-size: 0.88rem;
-		font-weight: 700;
-		color: #2e7d32;
-	}
-
-	.research-title {
-		font-size: clamp(1.25rem, 2.4vw, 1.65rem);
-		font-weight: 700;
-		color: var(--text-main);
-		line-height: 1.35;
-	}
-
-	.research-title-link {
-		color: var(--text-main);
-		transition: color 0.15s ease;
-	}
-
-	.research-title-link:hover {
-		color: var(--accent);
-	}
-
-	.research-abstract {
+	.support-title {
+		margin: 0;
 		font-size: 0.92rem;
-		line-height: 1.6;
+		font-weight: 700;
+		letter-spacing: -0.02em;
+		line-height: 1.3;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		transition: color 0.15s ease;
+	}
+
+	.work-index {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-top: 0.35rem;
+		padding: 1.15rem 0 0.15rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+		min-height: 3.1rem;
+	}
+
+	.work-index-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.18rem;
+		min-width: 0;
+	}
+
+	.work-index-title {
+		font-size: 1.02rem;
+		font-weight: 800;
+		letter-spacing: -0.025em;
+		color: var(--text-main);
+	}
+
+	.work-index-meta {
+		font-size: 0.68rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
 		color: var(--text-muted);
 	}
 
-	.research-metrics-grid {
+	.work-index:hover .work-index-title,
+	.work-index:hover .section-link {
+		color: var(--accent);
+	}
+
+	/* Experience rail */
+	.experience {
+		padding: 3.25rem 0 2.75rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.rail {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.rail-row {
 		display: grid;
-		grid-template-columns: repeat(4, 1fr);
-		gap: 1rem;
+		grid-template-columns: 11.5rem minmax(0, 1fr);
+		gap: 1.5rem;
 		padding: 1.15rem 0;
 		border-top: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.rail-row:last-child {
 		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
 	}
 
-	@media (max-width: 768px) {
-		.research-metrics-grid {
-			grid-template-columns: repeat(2, 1fr);
-		}
-	}
-
-	.r-metric-box {
-		display: flex;
-		flex-direction: column;
-		gap: 0.2rem;
-	}
-
-	.r-metric-val {
-		font-size: 1.25rem;
-		font-weight: 700;
-		color: var(--accent);
-	}
-
-	.r-metric-lbl {
-		font-size: 0.72rem;
+	.rail-when {
+		margin: 0.2rem 0 0;
+		font-size: 0.68rem;
+		letter-spacing: 0.04em;
 		color: var(--text-muted);
 	}
 
-	.research-footer-row {
+	.rail-head {
 		display: flex;
-		align-items: center;
-		gap: 0.85rem;
 		flex-wrap: wrap;
-		margin-top: 0.25rem;
+		align-items: baseline;
+		gap: 0.45rem 0.7rem;
 	}
 
-	.research-cta-primary {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.5rem;
-		padding: 0.65rem 1.25rem;
-		background: var(--btn-primary);
-		color: #fffdfa;
-		border-radius: 8px;
-		font-size: 0.88rem;
-		font-weight: 700;
-		transition: all 0.15s ease;
-	}
-
-	.research-cta-primary:hover {
-		background: var(--accent-hover);
-		transform: translateY(-1px);
-	}
-
-	.research-cta-secondary {
-		display: inline-flex;
-		align-items: center;
-		gap: 0.45rem;
-		padding: 0.65rem 1rem;
-		background: rgba(95, 80, 56, 0.06);
+	.rail-role {
+		margin: 0;
+		font-size: 1.12rem;
+		font-weight: 800;
+		letter-spacing: -0.025em;
 		color: var(--text-main);
-		border: 1px solid rgba(95, 80, 56, 0.15);
-		border-radius: 8px;
-		font-size: 0.82rem;
-		font-weight: 600;
-		transition: all 0.15s ease;
+		overflow-wrap: break-word;
 	}
 
-	.research-cta-secondary:hover {
-		background: rgba(95, 80, 56, 0.12);
+	.rail-badge {
+		font-size: 0.55rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.28);
+		padding: 0.12rem 0.4rem;
+		border-radius: 9999px;
+	}
+
+	.rail-company {
+		margin: 0.2rem 0 0;
+		font-size: 0.92rem;
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.rail-line {
+		margin: 0.45rem 0 0;
+		font-size: 0.9rem;
+		line-height: 1.5;
+		color: var(--text-main);
+		max-width: 42rem;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.rail-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem;
+		margin: 0.65rem 0 0;
+	}
+
+	.rail-links a {
+		font-size: 0.68rem;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+		color: var(--text-main);
+		text-decoration: none;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.28);
+	}
+
+	.rail-links a:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	/* Education + skills */
+	.education,
+	.skills {
+		padding: 1.65rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.education .label {
+		margin-bottom: 0.55rem;
+	}
+
+	.edu-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.edu-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem 1rem;
+		padding: 0.7rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.edu-row:last-child {
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.edu-row:hover .edu-copy strong {
 		color: var(--accent);
 	}
 
+	.skills-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem 1rem;
+	}
+
+	.edu-logo {
+		width: 28px;
+		height: 28px;
+		object-fit: contain;
+		border-radius: 6px;
+		background: #fffdfa;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		padding: 2px;
+		flex-shrink: 0;
+	}
+
+	.edu-logo-wide {
+		width: 40px;
+		height: 24px;
+		padding: 2px 4px;
+	}
+
+	.edu-copy {
+		margin: 0;
+		flex: 1 1 16rem;
+		font-size: 0.95rem;
+		line-height: 1.4;
+		color: var(--text-main);
+	}
+
+	.edu-sep {
+		margin: 0 0.35rem;
+		color: var(--text-muted);
+	}
+
+	.skills-line {
+		margin: 0;
+		flex: 1 1 18rem;
+		min-width: 0;
+		width: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		row-gap: 0.2rem;
+		font-size: 0.98rem;
+		line-height: 1.55;
+		letter-spacing: -0.01em;
+		color: var(--text-main);
+	}
+
+	.skills-line span {
+		white-space: nowrap;
+	}
+
+	.skills-line span:not(:first-child)::before {
+		content: '·';
+		margin-right: 0.4rem;
+		color: var(--accent);
+	}
+
+	/* Close */
+	.close {
+		margin-top: 0.25rem;
+		padding: 3.25rem 0 1.5rem;
+		border-top: 2px solid var(--accent);
+	}
+
+	.close-kicker {
+		margin: 0;
+		font-size: 0.68rem;
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	.close-title {
+		margin: 0.45rem 0 1.1rem;
+		font-size: clamp(2rem, 4vw, 3rem);
+		font-weight: 800;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		color: var(--text-main);
+	}
+
+	@media (max-width: 900px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) 128px;
+			grid-template-areas:
+				'status status'
+				'name portrait'
+				'role role'
+				'bio bio'
+				'proof proof'
+				'actions actions';
+			column-gap: 0.9rem;
+			row-gap: 0.55rem;
+		}
+
+		.hero-portrait {
+			justify-self: end;
+			align-self: start;
+			max-width: 128px;
+			transform: none;
+			padding: 0.28rem 0.28rem 0.55rem;
+			box-shadow: 0 10px 22px rgba(95, 80, 56, 0.12);
+		}
+
+		.portrait-caption,
+		.portrait-hint {
+			display: none;
+		}
+
+		.portrait-initials {
+			font-size: 1.25rem;
+		}
+
+		.feature-band {
+			grid-template-columns: 1fr;
+			gap: 0.85rem;
+			padding: 1.2rem 0;
+		}
+
+		.metric-row {
+			display: grid;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 0.65rem;
+			width: 100%;
+		}
+
+		.metric-row li {
+			min-width: 0;
+		}
+
+		.metric-row b,
+		.metric-row span {
+			overflow-wrap: break-word;
+		}
+
+		.metric-row span {
+			letter-spacing: 0.03em;
+			line-height: 1.3;
+		}
+
+		.inline-cta {
+			justify-self: start;
+		}
+
+		.work-list {
+			grid-template-columns: 1fr;
+		}
+
+		.rail-row {
+			grid-template-columns: 1fr;
+			gap: 0.3rem;
+			padding: 1rem 0;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.hero {
+			padding-bottom: 2.25rem;
+		}
+
+		.featured {
+			padding: 2rem 0 2.15rem;
+		}
+
+		.experience {
+			padding: 2rem 0 1.75rem;
+		}
+
+		.education,
+		.skills {
+			padding: 1.2rem 0;
+		}
+
+		.close {
+			padding: 2.15rem 0 0.5rem;
+		}
+
+		.status {
+			font-size: 0.6rem;
+			letter-spacing: 0.04em;
+			max-width: 100%;
+		}
+
+		.role,
+		.bio {
+			font-size: 0.95rem;
+			max-width: none;
+		}
+
+		.proof {
+			width: 100%;
+			justify-content: space-between;
+			gap: 0.75rem 0.5rem;
+			padding-top: 0.7rem;
+		}
+
+		.proof li {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+
+		.proof strong {
+			font-size: 1.15rem;
+		}
+
+		.proof span {
+			font-size: 0.58rem;
+			line-height: 1.25;
+		}
+
+		.hero-actions {
+			width: 100%;
+			gap: 0.55rem 0.7rem;
+		}
+
+		.btn-solid,
+		.btn-ghost {
+			min-height: 2.6rem;
+			padding: 0.55rem 1rem;
+		}
+
+		.feature-desc {
+			-webkit-line-clamp: 3;
+			font-size: 0.84rem;
+		}
+
+		.shot-stack {
+			--w: 72px;
+			--h: 48px;
+		}
+
+		.shot-stack.is-phone {
+			--w: 34px;
+			--h: 58px;
+		}
+
+		.work-index {
+			flex-wrap: wrap;
+			gap: 0.35rem 1rem;
+			padding-top: 1rem;
+			min-height: 2.85rem;
+		}
+
+		.work-index-title {
+			font-size: 0.98rem;
+		}
+
+		.edu-row {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr);
+			gap: 0.4rem 0.7rem;
+			align-items: center;
+		}
+
+		.edu-row .section-link {
+			grid-column: 2;
+			justify-self: start;
+		}
+
+		.edu-copy {
+			flex: none;
+			min-width: 0;
+			font-size: 0.88rem;
+		}
+
+		.skills-row {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.45rem;
+		}
+
+		.skills-line {
+			flex: none;
+			width: 100%;
+			font-size: 0.9rem;
+		}
+
+		.close {
+			padding-bottom: 1.25rem;
+		}
+
+		.rail-role {
+			font-size: 1rem;
+		}
+
+		.close-title {
+			font-size: clamp(1.7rem, 10vw, 2.4rem);
+		}
+	}
+
+	@media (max-width: 420px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) 104px;
+		}
+
+		.hero-portrait {
+			max-width: 104px;
+		}
+
+		.metric-row {
+			gap: 0.4rem;
+		}
+
+		.metric-row b {
+			font-size: 0.82rem;
+		}
+
+		.work-item {
+			grid-template-columns: minmax(0, 1fr) 6.2rem;
+		}
+	}
 </style>
