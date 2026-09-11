@@ -14,13 +14,14 @@ const projects = allProjects
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((p) => {
 		const categories = getProjectCategory(p);
-		const allStack = stackNames(p.data.techStack);
+		const allStack = stackNames(p.data.techStack, p.data.stack);
 		return {
 			slug: p.id,
 			categories,
 			allStack,
-			searchString: `${p.data.title} ${p.data.subtitle || ''} ${p.data.description || ''} ${p.data.chip || ''} ${p.data.role || ''} ${allStack.join(' ')}`.toLowerCase(),
+			searchString: `${p.data.title} ${p.data.subtitle || ''} ${p.data.description || ''} ${p.data.chip || ''} ${p.data.role || ''} ${(p.data.stack || []).join(' ')} ${allStack.join(' ')}`.toLowerCase(),
 			thumbs: shots(p.data.images),
+			stack: p.data.stack || [],
 			...p.data
 		};
 	});
@@ -46,10 +47,14 @@ const tabs = [
 ];
 
 const stackLinks = [
+	{ label: 'Next.js', query: 'next' },
+	{ label: 'NestJS', query: 'nest' },
+	{ label: 'React', query: 'react' },
 	{ label: 'Vue 3', query: 'vue' },
-	{ label: 'PostgreSQL', query: 'postgresql' },
-	{ label: 'NestJS', query: 'nestjs' },
-	{ label: 'Capacitor', query: 'capacitor' }
+	{ label: 'Quasar', query: 'quasar' },
+	{ label: 'Capacitor', query: 'capacitor' },
+	{ label: 'Firebase', query: 'firebase' },
+	{ label: 'PostgreSQL', query: 'postgresql' }
 ];
 ---
 

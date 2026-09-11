@@ -262,8 +262,20 @@ export const skillCategories: SkillCategoryGroup[] = [
 				badge: 'Core Driver'
 			},
 			{
+				name: 'Flutter & Dart (Cross-Platform Mobile)',
+				desc: 'Cross-platform mobile applications for iOS & Android, reactive widget architectures, state management, and native device integration.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
 				name: 'Pinia Reactive State Management',
 				desc: 'Centralized reactive store design, persistent state plugins, action dispatchers, and modular state trees.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Capacitor & Mobile Web Wrappers',
+				desc: 'Native Android APK builds, hardware sensor integrations (ML Kit barcode scanning, camera), and offline caching.',
 				tier: 'primary',
 				badge: 'Core Driver'
 			},
@@ -272,12 +284,6 @@ export const skillCategories: SkillCategoryGroup[] = [
 				desc: 'Legacy codebase maintenance, legacy ERP UI support, and modernization paths to Vue 3 Composition API.',
 				tier: 'secondary',
 				badge: 'Prior / Migration'
-			},
-			{
-				name: 'React Native & Mobile Development',
-				desc: 'Cross-platform mobile applications, native bridges, offline persistence, and touch ergonomics.',
-				tier: 'secondary',
-				badge: 'Secondary Exposure'
 			}
 		]
 	},
@@ -371,6 +377,12 @@ export const compactPursuits: CompactPursuitItem[] = [
 		iconType: 'music',
 		tag: '2015 — 2017 • 3 YRS TRAINING',
 		desc: '3 years of classical Tabla training (2015–2017). Practicing classical Indian rhythm cycles (Taal), mathematical subdivisions, and tempo cadence cultivated deep focus and systematic discipline.'
+	},
+	{
+		title: 'Academic STEM Mentorship & Tutoring',
+		iconType: 'pen',
+		tag: '2020 — 2025 Q1 • 24 STUDENTS',
+		desc: '5 years of specialized academic mentorship for SSC and HSC candidates from premier institutions across Dhaka. Tutored ~24 talented students in higher mathematics and physics, guiding them to peak GPA-5.00 board exam distinctions.'
 	},
 	{
 		title: 'Drawing & Fine Arts (Competition Winner)',

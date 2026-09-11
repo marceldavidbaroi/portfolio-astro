@@ -14,6 +14,12 @@ timeline: "Feb 2026 — Apr 2026"
 status: "Active Production"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Vue 3"
+  - "TypeScript"
+  - "Pinia"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

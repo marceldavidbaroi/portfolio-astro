@@ -115,6 +115,27 @@
 	color: var(--text-muted);
 }
 
+.case-hero-stack {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.4rem 0.55rem;
+	margin-top: 0.75rem;
+}
+
+.case-hero-stack .stack-badge {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.2rem 0.6rem;
+	font-size: var(--type-meta);
+	letter-spacing: 0.03em;
+	color: var(--text-main);
+	background: rgba(95, 80, 56, 0.08);
+	border: 1px solid rgba(95, 80, 56, 0.16);
+	border-radius: 3px;
+	white-space: nowrap;
+	line-height: 1.25;
+}
+
 .case .xyz {
 	margin: 0.85rem 0 0;
 	font-size: var(--type-body);

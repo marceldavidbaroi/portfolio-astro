@@ -557,22 +557,62 @@
 		"alt": "Notre Dame College student life memory",
 		"group": "ndc-campus"
 	},
+	"exp-proficient-mawa-hackathon": {
+		"id": "exp-proficient-mawa-hackathon",
+		"src": "/images/experience/proficient-mawa-hackathon-2025.png",
+		"alt": "Team Outing – Celebrating Our Hackathon Success at Mawa",
+		"title": "Team Outing – Celebrating Our Hackathon Success at Mawa",
+		"caption": "Celebrating hackathon completion with a team dinner and outing at Mawa.",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-team-2025": {
+		"id": "exp-proficient-team-2025",
+		"src": "/images/experience/proficient-team-2025.jpg",
+		"alt": "Team 2025 (Partial) group gathering",
+		"title": "Team 2025 (Partial)",
+		"caption": "Engineering and operations team gathering at Dhaka headquarters.",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-coxs-bazar-work": {
+		"id": "exp-proficient-coxs-bazar-work",
+		"src": "/images/experience/proficient-coxs-bazar-work-2025.jpg",
+		"alt": "Working from Cox's Bazar - Inani sprint sessions",
+		"title": "Working from Cox's Bazar",
+		"caption": "Collaborative sprint and remote coding sessions in Inani, Cox's Bazar.",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-coxs-bazar-tour": {
+		"id": "exp-proficient-coxs-bazar-tour",
+		"src": "/images/experience/proficient-coxs-bazar-tour-2025.png",
+		"alt": "Cox's Bazar Tour February 2025 company beach retreat",
+		"title": "Cox's Bazar Tour",
+		"caption": "Annual team retreat and group gathering across Cox's Bazar beach.",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-textech-expo": {
+		"id": "exp-proficient-textech-expo",
+		"src": "/images/experience/proficient-textech-expo-2026.jpg",
+		"alt": "25th Textech Bangladesh International Expo 2026 - TeamSlice & Proficient Stall",
+		"title": "25th Textech Bangladesh International Expo 2026",
+		"caption": "4-day international expo stall showcasing ERP360+ solutions and engaging garment industry leaders alongside Reza Khan (CEO, Proficient).",
+		"group": "experience-proficient"
+	},
 	"exp-proficient-card-1": {
 		"id": "exp-proficient-card-1",
-		"src": "/images/experience/proficient-card-1.png",
-		"alt": "Proficient workplace photo",
+		"src": "/images/experience/proficient-mawa-hackathon-2025.png",
+		"alt": "Team Outing – Celebrating Our Hackathon Success at Mawa",
 		"group": "experience-proficient"
 	},
 	"exp-proficient-card-2": {
 		"id": "exp-proficient-card-2",
-		"src": "/images/experience/proficient-card-2.png",
-		"alt": "Proficient workplace photo",
+		"src": "/images/experience/proficient-team-2025.jpg",
+		"alt": "Team 2025 (Partial)",
 		"group": "experience-proficient"
 	},
 	"exp-proficient-card-3": {
 		"id": "exp-proficient-card-3",
-		"src": "/images/experience/proficient-card-3.png",
-		"alt": "Proficient workplace photo",
+		"src": "/images/experience/proficient-coxs-bazar-work-2025.jpg",
+		"alt": "Working from Cox's Bazar",
 		"group": "experience-proficient"
 	},
 	"exp-freelance-card-1": {

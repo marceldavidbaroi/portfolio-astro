@@ -14,6 +14,13 @@ timeline: "2026 — Present"
 status: "Active Production (v1.0.5)"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Vue 3"
+  - "Supabase"
+  - "Capacitor (Android)"
+  - "Google ML Kit"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

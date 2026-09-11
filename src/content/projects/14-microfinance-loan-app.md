@@ -14,6 +14,13 @@ timeline: "2025"
 status: "Completed"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Android Build"
+  - "Vue 3"
+  - "Pinia"
+  - "Capacitor"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

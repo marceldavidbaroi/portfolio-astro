@@ -84,19 +84,25 @@ export function getProjectCategory(p: {
 	return cats;
 }
 
-export function stackNames(techStack?: {
-	frontend?: string[];
-	mobile_hardware?: string[];
-	backend?: string[];
-	database?: string[];
-	devops?: string[];
-}) {
-	if (!techStack) return [];
-	return [
+export function stackNames(
+	techStack?: {
+		frontend?: string[];
+		mobile_hardware?: string[];
+		backend?: string[];
+		database?: string[];
+		devops?: string[];
+	},
+	stack?: string[]
+) {
+	const direct = stack || [];
+	if (!techStack) return direct;
+	const set = new Set([
+		...direct,
 		...(techStack.frontend || []),
 		...(techStack.mobile_hardware || []),
 		...(techStack.backend || []),
 		...(techStack.database || []),
 		...(techStack.devops || [])
-	];
+	]);
+	return Array.from(set);
 }

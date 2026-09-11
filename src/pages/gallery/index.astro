@@ -1,0 +1,254 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
+import AlbumPhotoStack from '../../components/gallery/AlbumPhotoStack.astro';
+import { getAllAlbums } from '../../lib/gallery';
+import '../../styles/about.css';
+
+const allAlbums = await getAllAlbums();
+
+const counts = {
+	all: allAlbums.length,
+	work: allAlbums.filter((a) => a.category === 'work').length,
+	education: allAlbums.filter((a) => a.category === 'education').length,
+	civic: allAlbums.filter((a) => a.category === 'civic').length,
+	life: allAlbums.filter((a) => a.category === 'life').length
+};
+
+const filterTabs = [
+	{ id: 'all', label: 'All', count: counts.all },
+	{ id: 'work', label: 'Work & Career', count: counts.work },
+	{ id: 'education', label: 'Campus & School', count: counts.education },
+	{ id: 'civic', label: 'Civic & Events', count: counts.civic },
+	{ id: 'life', label: 'Life & Memories', count: counts.life }
+].filter((t) => t.id === 'all' || t.count > 0);
+---
+
+<BaseLayout
+	title="Photo Albums & Event Stories | Marcel David Baroi"
+	description="Preserved photography albums, engineering workbenches, academic milestones, and civic operations of Marcel David Baroi."
+	isWide
+	alignStart
+>
+	<AtticBreadcrumb current="Gallery" />
+
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">Gallery</p>
+		<h1 class="about-attic-title">Photo albums &amp; memoirs</h1>
+		<p class="about-attic-lead">
+			Preserved photography collections across engineering workbenches, academic thesis defenses, collegiate discipline, and historic civic operations. Each photo collection carries its narrative story.
+		</p>
+	</header>
+
+	<!-- Category Filter Bar (Standard Stationery Underline Tabs) -->
+	<div class="filters" id="gallery-filters">
+		<div class="tabs" role="tablist" aria-label="Filter albums by category">
+			{filterTabs.map((tab, idx) => (
+				<button
+					type="button"
+					class:list={['tab', { active: idx === 0 }]}
+					data-category={tab.id}
+					role="tab"
+					aria-selected={idx === 0 ? 'true' : 'false'}
+				>
+					{tab.label} <span class="tab-count font-mono">({tab.count})</span>
+				</button>
+			))}
+		</div>
+	</div>
+
+	<!-- Albums Editorial Rail -->
+	<div class="gallery-catalog" id="gallery-catalog">
+		{allAlbums.map((album) => (
+			<a
+				class="about-rail-row gallery-catalog-row"
+				href={`/gallery/${album.id}`}
+				data-album-category={album.category}
+			>
+				<div class="about-rail-when font-mono">
+					<p class="gallery-row-period">{album.period || 'Preserved'}</p>
+					<span class="gallery-row-count">{album.photoCount} photos</span>
+				</div>
+
+				<div class="gallery-row-body">
+					<p class="about-rail-tag font-mono">{album.tag}</p>
+					<h2 class="about-rail-title">{album.title}</h2>
+					{album.story ? (
+						<p class="about-rail-sub">{album.story}</p>
+					) : album.description ? (
+						<p class="about-rail-sub">{album.description}</p>
+					) : null}
+					<div class="gallery-row-meta font-mono">
+						{album.location && <span>{album.location}</span>}
+						{album.location && <span class="meta-sep">·</span>}
+						<span class="section-link">Open album →</span>
+					</div>
+				</div>
+
+				{album.previewThumbs.length > 0 && (
+					<AlbumPhotoStack
+						thumbs={album.previewThumbs}
+						photoCount={album.photoCount}
+						altTitle={album.title}
+					/>
+				)}
+			</a>
+		))}
+	</div>
+
+	<p class="empty font-mono" id="gallery-empty" hidden>
+		No albums found in this category.
+	</p>
+
+	<a href="/about" class="about-return font-mono">← About</a>
+</BaseLayout>
+
+<script>
+	const tabs = document.querySelectorAll<HTMLButtonElement>('.filters .tab');
+	const rows = document.querySelectorAll<HTMLElement>('.gallery-catalog-row');
+	const emptyMsg = document.getElementById('gallery-empty');
+
+	tabs.forEach((tab) => {
+		tab.addEventListener('click', () => {
+			const cat = tab.dataset.category || 'all';
+
+			tabs.forEach((t) => {
+				const isActive = t === tab;
+				t.classList.toggle('active', isActive);
+				t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+			});
+
+			let visibleCount = 0;
+			rows.forEach((row) => {
+				const rowCat = row.dataset.albumCategory;
+				const shouldShow = cat === 'all' || rowCat === cat;
+				row.style.display = shouldShow ? 'grid' : 'none';
+				if (shouldShow) visibleCount++;
+			});
+
+			if (emptyMsg) {
+				emptyMsg.hidden = visibleCount > 0;
+			}
+		});
+	});
+</script>
+
+<style>
+	.filters {
+		margin: 0 0 1.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.tabs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.85rem 1.25rem;
+	}
+
+	.tab {
+		appearance: none;
+		border: 0;
+		background: none;
+		padding: 0.2rem 0 0.45rem;
+		margin: 0;
+		font: inherit;
+		font-size: var(--type-tab);
+		font-weight: 500;
+		color: var(--text-muted);
+		cursor: pointer;
+		border-bottom: 2px solid transparent;
+		transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+	}
+
+	.tab.active,
+	.tab:hover {
+		color: var(--accent);
+	}
+
+	.tab.active {
+		border-bottom-color: var(--accent);
+	}
+
+	.tab-count {
+		font-size: var(--type-caption);
+		margin-left: 0.2rem;
+		opacity: 0.8;
+	}
+
+	.gallery-catalog {
+		display: flex;
+		flex-direction: column;
+		margin-bottom: 3.5rem;
+	}
+
+	.gallery-catalog-row {
+		display: grid;
+		grid-template-columns: 7.4rem minmax(0, 1fr) 8.5rem;
+		gap: 1.25rem 1.5rem;
+		align-items: center;
+		padding: 1.35rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.gallery-catalog-row:first-child {
+		border-top: 0;
+	}
+
+	.gallery-catalog-row:hover .about-rail-title {
+		color: var(--accent);
+	}
+
+	.gallery-row-period {
+		margin: 0.15rem 0 0.2rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+		line-height: 1.35;
+	}
+
+	.gallery-row-count {
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		opacity: 0.8;
+	}
+
+	.gallery-row-body {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.gallery-row-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-top: 0.5rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.gallery-row-meta .meta-sep {
+		opacity: 0.4;
+	}
+
+	.empty {
+		padding: 2.5rem 0;
+		color: var(--text-muted);
+		font-size: var(--type-meta);
+	}
+
+	.empty[hidden] {
+		display: none !important;
+	}
+
+	@media (max-width: 768px) {
+		.gallery-catalog-row {
+			grid-template-columns: 1fr;
+			gap: 0.75rem;
+			align-items: start;
+		}
+	}
+</style>

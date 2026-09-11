@@ -47,6 +47,9 @@ const projects = defineCollection({
 		classification: z.string().optional().default('🔒 Proprietary Enterprise IP'),
 		platformType: z.enum(['desktop', 'mobile']).default('desktop'),
 
+		// Flat Stack Tags for Cards & UI Badges
+		stack: z.array(z.string()).default([]),
+
 		// Categorized Tech Stack
 		techStack: z
 			.object({
@@ -366,33 +369,46 @@ const research = defineCollection({
  * 5. GALLERY ALBUMS (reference media ids — no duplicated paths)
  * ----------------------------------------------------------------------
  */
+const galleryPhotoSchema = z.object({
+	id: z.string(),
+	title: z.string().optional(),
+	caption: z.string().optional(),
+	story: z.string().optional(),
+	date: z.string().optional(),
+	location: z.string().optional(),
+	span: z.enum(['full', 'wide', 'normal']).default('normal').optional(),
+	isEmblem: z.boolean().optional()
+});
+
+const galleryStoryChapterSchema = z.object({
+	id: z.string().optional(),
+	title: z.string(),
+	tag: z.string().optional(),
+	date: z.string().optional(),
+	storyParagraphs: z.array(z.string()).default([]),
+	imageIds: z.array(z.string()).default([])
+});
+
 const galleryAlbumSchema = z.object({
 	id: z.string(),
 	tag: z.string(),
 	title: z.string(),
+	category: z.enum(['work', 'education', 'civic', 'life']).default('life'),
+	period: z.string().optional(),
+	location: z.string().optional(),
 	description: z.string().optional(),
+	story: z.string().optional(),
+	coverImageId: z.string().optional(),
 	memoirHref: z.string().optional(),
-	photos: z
-		.array(
-			z.object({
-				id: z.string(),
-				span: z.enum(['full', 'wide', 'normal']).optional(),
-				isEmblem: z.boolean().optional()
-			})
-		)
-		.default([])
+	stories: z.array(galleryStoryChapterSchema).default([]),
+	photos: z.array(galleryPhotoSchema).default([])
 });
 
 const galleries = defineCollection({
 	loader: glob({ pattern: '**/*.json', base: './src/content/galleries' }),
 	schema: z.object({
 		id: z.string(),
-		owner: z.enum([
-			'education-hsc',
-			'education-bsc',
-			'experience-proficient',
-			'experience-freelance'
-		]),
+		owner: z.string(),
 		title: z.string().optional(),
 		albums: z.array(galleryAlbumSchema).default([])
 	})

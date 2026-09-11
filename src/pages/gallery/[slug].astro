@@ -1,0 +1,448 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllAlbums, type Album } from '../../lib/gallery';
+import '../../styles/about.css';
+
+export async function getStaticPaths() {
+	const allAlbums = await getAllAlbums();
+
+	return allAlbums.map((album, index) => {
+		const prev = index > 0 ? allAlbums[index - 1] : null;
+		const next = index < allAlbums.length - 1 ? allAlbums[index + 1] : null;
+
+		return {
+			params: { slug: album.id },
+			props: {
+				album,
+				prev: prev ? { id: prev.id, title: prev.title } : null,
+				next: next ? { id: next.id, title: next.title } : null
+			}
+		};
+	});
+}
+
+interface Props {
+	album: Album;
+	prev: { id: string; title: string } | null;
+	next: { id: string; title: string } | null;
+}
+
+const { album, prev, next } = Astro.props;
+---
+
+<BaseLayout
+	title={`${album.title} | Story & Preserved Album`}
+	description={album.description || album.story || `Photo album and stories for ${album.title}`}
+	isWide
+	alignStart
+>
+	<!-- Breadcrumb -->
+	<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
+		<a href="/about" class="attic-crumb-link">About</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<a href="/gallery" class="attic-crumb-link">Gallery</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<span class="attic-crumb-current">{album.title}</span>
+	</nav>
+
+	<!-- Editorial Story Masthead -->
+	<header class="story-masthead">
+		<div class="story-header-meta font-mono">
+			<span class="label">{album.tag}</span>
+			{album.period && <span class="story-header-period">· {album.period}</span>}
+		</div>
+
+		<h1 class="story-main-title">{album.title}</h1>
+
+		{album.story && (
+			<div class="story-prologue">
+				<p class="story-prologue-text">{album.story}</p>
+			</div>
+		)}
+
+		<dl class="edu-facts-rail font-mono story-facts-rail">
+			{album.period && (
+				<div class="edu-fact">
+					<dt>Timeline</dt>
+					<dd>{album.period}</dd>
+				</div>
+			)}
+			{album.location && (
+				<div class="edu-fact">
+					<dt>Location</dt>
+					<dd>{album.location}</dd>
+				</div>
+			)}
+			<div class="edu-fact">
+				<dt>Curated</dt>
+				<dd>{album.photoCount} preserved records</dd>
+			</div>
+			{album.memoirHref && (
+				<div class="edu-fact">
+					<dt>Documentary</dt>
+					<dd><a href={album.memoirHref} class="text-link">Dedicated memoir essay →</a></dd>
+				</div>
+			)}
+		</dl>
+	</header>
+
+	<!-- Visual Narrative Stream -->
+	<main class="story-stream" aria-label="Visual narrative stream">
+		{album.photos.map((photo, idx) => {
+			const isCinematic = photo.span === 'wide' || photo.span === 'full' || album.photos.length === 1;
+			const isReversed = !isCinematic && idx % 2 === 1;
+
+			return (
+				<section
+					class:list={[
+						'story-scene',
+						isCinematic ? 'scene-cinematic' : 'scene-split',
+						{ 'is-reversed': isReversed }
+					]}
+					id={`scene-${photo.id}`}
+				>
+					<div class="scene-visual">
+						<figure class="scene-plate">
+							<div class="scene-photo-wrap">
+								<img
+									src={photo.src}
+									alt={photo.alt || photo.title || `${album.title} record ${idx + 1}`}
+									loading={idx < 2 ? 'eager' : 'lazy'}
+								/>
+							</div>
+							<figcaption class="scene-plate-caption font-mono">
+								<span class="plate-num">REC // {String(idx + 1).padStart(2, '0')}</span>
+								{photo.date && <span class="plate-date">{photo.date}</span>}
+								{photo.location && <span class="plate-loc">{photo.location}</span>}
+							</figcaption>
+						</figure>
+					</div>
+
+					<div class="scene-content">
+						<div class="scene-kicker-line font-mono">
+							<span class="scene-number">SCENE {String(idx + 1).padStart(2, '0')}</span>
+							<span class="scene-total">/ {String(album.photos.length).padStart(2, '0')}</span>
+						</div>
+
+						{photo.title && <h2 class="scene-title">{photo.title}</h2>}
+
+						{photo.story && <p class="scene-story-p">{photo.story}</p>}
+
+						{photo.caption && photo.caption !== photo.story && (
+							<div class="scene-field-note font-mono">
+								<span class="field-note-tag">FIELD NOTE</span>
+								<p class="field-note-text">{photo.caption}</p>
+							</div>
+						)}
+					</div>
+				</section>
+			);
+		})}
+	</main>
+
+	<!-- Sequential Storytelling Cross-Nav -->
+	<footer class="story-nav font-mono" aria-label="Story sequential navigation">
+		<div class="story-nav-prev">
+			{prev && (
+				<a href={`/gallery/${prev.id}`} class="text-link">
+					← Previous: {prev.title}
+				</a>
+			)}
+		</div>
+
+		<a href="/gallery" class="text-link story-nav-index">
+			↑ All preserved stories
+		</a>
+
+		<div class="story-nav-next">
+			{next && (
+				<a href={`/gallery/${next.id}`} class="text-link">
+					Next: {next.title} →
+				</a>
+			)}
+		</div>
+	</footer>
+</BaseLayout>
+
+<style>
+	.story-masthead {
+		padding-bottom: 2.75rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		margin-bottom: 3.5rem;
+	}
+
+	.story-header-meta {
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.story-header-period {
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.story-main-title {
+		margin: 0;
+		font-size: clamp(2rem, 5.5vw, 3.1rem);
+		font-weight: 800;
+		line-height: 1.08;
+		letter-spacing: -0.035em;
+		color: var(--text-main);
+		max-width: 48rem;
+	}
+
+	.story-prologue {
+		margin: 1.5rem 0 0;
+		max-width: 46rem;
+		border-left: 2px solid var(--accent);
+		padding-left: 1.25rem;
+	}
+
+	.story-prologue-text {
+		margin: 0;
+		font-size: 1.12rem;
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	.story-facts-rail {
+		margin-top: 2rem;
+	}
+
+	/* Story Scenes Stream */
+	.story-stream {
+		display: flex;
+		flex-direction: column;
+		gap: 4.5rem;
+		margin-bottom: 4.5rem;
+	}
+
+	.story-scene {
+		position: relative;
+		padding-top: 1.5rem;
+	}
+
+	/* Cinematic Wide Layout */
+	.scene-cinematic {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+	}
+
+	.scene-cinematic .scene-visual {
+		width: 100%;
+	}
+
+	.scene-cinematic .scene-photo-wrap {
+		width: 100%;
+		max-height: 640px;
+	}
+
+	.scene-cinematic .scene-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+		gap: 1.5rem 2.5rem;
+		align-items: start;
+		padding-top: 0.5rem;
+	}
+
+	/* Split Alternating Layout */
+	.scene-split {
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		gap: 2.25rem 3rem;
+		align-items: start;
+	}
+
+	.scene-split.is-reversed {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+	}
+
+	.scene-split.is-reversed .scene-visual {
+		order: 2;
+	}
+
+	.scene-split.is-reversed .scene-content {
+		order: 1;
+	}
+
+	/* Scene Plate (Archival Matting) */
+	.scene-plate {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.scene-photo-wrap {
+		width: 100%;
+		border-radius: 2px;
+		border: 1px solid rgba(95, 80, 56, 0.16);
+		background: var(--card-bg);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.scene-photo-wrap img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-height: 540px;
+		object-fit: contain;
+		background: transparent;
+	}
+
+	.scene-plate-caption {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		padding: 0.2rem 0.1rem 0;
+	}
+
+	.plate-num {
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.plate-date,
+	.plate-loc {
+		opacity: 0.85;
+	}
+
+	/* Scene Narrative */
+	.scene-content {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.scene-kicker-line {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		font-size: var(--type-caption);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		margin-bottom: 0.35rem;
+	}
+
+	.scene-number {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.scene-total {
+		color: var(--text-muted);
+		opacity: 0.7;
+	}
+
+	.scene-title {
+		margin: 0 0 0.85rem;
+		font-size: clamp(1.25rem, 2.3vw, 1.6rem);
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+		color: var(--text-main);
+	}
+
+	.scene-story-p {
+		margin: 0 0 1rem;
+		font-size: var(--type-body);
+		line-height: 1.68;
+		color: var(--text-main);
+		max-width: 40rem;
+	}
+
+	.scene-field-note {
+		margin-top: 0.35rem;
+		padding: 0.75rem 1rem;
+		background: var(--card-bg);
+		border-left: 2px solid rgba(95, 80, 56, 0.25);
+		border-radius: 0 2px 2px 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		max-width: 38rem;
+	}
+
+	.field-note-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.field-note-text {
+		margin: 0;
+		font-size: var(--type-meta);
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	/* Sequential Navigation Footer */
+	.story-nav {
+		display: grid;
+		grid-template-columns: 1fr auto 1fr;
+		align-items: center;
+		gap: 1.5rem;
+		padding: 2.5rem 0 3.5rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+		font-size: var(--type-meta);
+	}
+
+	.story-nav-prev {
+		text-align: left;
+	}
+
+	.story-nav-index {
+		text-align: center;
+	}
+
+	.story-nav-next {
+		text-align: right;
+	}
+
+	@media (max-width: 820px) {
+		.story-stream {
+			gap: 3.5rem;
+		}
+
+		.scene-cinematic .scene-content {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.scene-split,
+		.scene-split.is-reversed {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+		}
+
+		.scene-split.is-reversed .scene-visual {
+			order: 1;
+		}
+
+		.scene-split.is-reversed .scene-content {
+			order: 2;
+		}
+
+		.story-nav {
+			grid-template-columns: 1fr;
+			text-align: center;
+			gap: 1.25rem;
+		}
+
+		.story-nav-prev,
+		.story-nav-next {
+			text-align: center;
+		}
+	}
+</style>

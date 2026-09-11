@@ -52,21 +52,55 @@ Modular Packaging Infrastructure
 
 ------------------------------------------------------------------------
 
-Independent Software Developer / Freelance Engineer
-Client Solutions & Open-Source Engineering — Remote
-2022 — 2024
+Software Developer (Proprietary Solutions)
+Software Services & Client Solutions — Dhaka, Bangladesh
+Q3 2025 — Present
 
-Architected scalable backend APIs and responsive modern web interfaces
-that achieved 95+ Lighthouse scores and sub-80ms query speeds by designing
-layered NestJS REST microservices, indexed PostgreSQL schemas, and
-type-safe Next.js SSR frontends.
+Designing and developing proprietary software solutions — engineering the
+TradeflowBD wholesale ERP (my own software tailored to automate commercial trade
+workflows) and Smart Hisab (my own mobile Canteen POS & billing app built with
+Flutter and Supabase for a separate client).
 
 Highlights:
-- MindVault financial ledger (NestJS, TypeORM, PostgreSQL, Next.js)
-- KBeauty dropshipping dashboard (Supabase Realtime)
-- Full-stack Node.js/MongoDB platforms with session auth
+- Wholesale ERP platform (TradeflowBD): multi-tenant stock and landed costing
+- Smart Hisab Canteen POS app: offline-first SQLite queue in Flutter + Supabase
+- Double-entry PostgreSQL ledgers, shift cashbook vaults, and atomic RPCs
+- Direct client delivery and continuous software feature evolution
 
-Associated case studies: MindVault, KBeauty Dropship Dashboard
+Associated case studies: TradeflowBD ERP, Smart Hisab Canteen ERP,
+BrandWala Retail Platform
+
+------------------------------------------------------------------------
+
+Operations & Data Specialist
+BrandWala (Import-Export Trading) — Dhaka, Bangladesh
+2025 — Present
+
+Employed at a small import-export business managing daily operational data,
+product file records, and accounts calculations using Excel. Handled landed-cost
+calculations, supplier reconciliation, and warehouse stock tracking.
+
+Highlights:
+- Operational file records, commercial data, and accounts calculations in Excel
+- Landed-cost calculation (freight, duties, and item margins per import batch)
+- Supplier invoice reconciliation, customer payment ledgers, and stock sheets
+- Practical trade domain insights that directly ground software architectures
+
+------------------------------------------------------------------------
+
+Private STEM & Academic Tutor
+Independent Academic Mentorship — Dhaka, Bangladesh
+2020 — Q1 2025
+
+Conducted specialized academic mentorship in Higher Mathematics, Physics,
+and ICT for SSC and HSC candidates from Dhaka's most reputed schools and
+colleges (including Notre Dame College cohorts). Mentored ~24 talented
+students to outstanding GPA-5.00 board examination distinctions.
+
+Highlights:
+- 5 years of rigorous STEM problem-solving and conceptual pedagogy
+- 24 talented students guided to top board exam results and engineering admissions
+- Formative pedagogical communication and diagnostic analytical frameworks
 
 ========================================================================
 EDUCATION & RESEARCH

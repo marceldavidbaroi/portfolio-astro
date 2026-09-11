@@ -14,6 +14,13 @@ timeline: "2025 — Q1 2026"
 status: "Completed & Adopted"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Vue 3"
+  - "Vite"
+  - "npm"
+  - "GitLab Registry"
+  - "SemVer"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

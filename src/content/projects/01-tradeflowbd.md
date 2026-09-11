@@ -11,8 +11,14 @@ platformType: "desktop"
 
 role: "Lead Framework & Migration Engineer"
 timeline: "2026 — Present"
-status: "Active Production"
 classification: "🔒 Proprietary Enterprise IP"
+
+stack:
+  - "Vue 3"
+  - "Quasar"
+  - "Supabase"
+  - "Capacitor (Android)"
+  - "PostgreSQL"
 
 techStack:
   frontend:
@@ -22,6 +28,8 @@ techStack:
     - "Pinia"
     - "TanStack Query"
     - "Vue Router 5"
+  mobile_hardware:
+    - "Capacitor (Android Build)"
   backend:
     - "Supabase (PostgreSQL 15+)"
     - "Row-Level Security (RLS)"
@@ -39,7 +47,6 @@ techStack:
     - "Python ETL Pipelines"
     - "Capacitor Android"
     - "Cloudinary CDN"
-  mobile_hardware: []
 
 links:
   liveDemo: ""

@@ -16,6 +16,7 @@ interface Project {
 	impactMetrics?: Metric[];
 	thumbs: string[];
 	platformType?: string;
+	stack?: string[];
 }
 
 interface Props {
@@ -48,6 +49,13 @@ const { projects } = Astro.props;
 						</ul>
 					)}
 					<p class="feature-desc">{project.description}</p>
+					{(project.stack || []).length > 0 && (
+						<div class="feature-stack font-mono">
+							{project.stack!.map((tech) => (
+								<span class="stack-badge">{tech}</span>
+							))}
+						</div>
+					)}
 					<span class="inline-cta font-mono">Read case study →</span>
 				</div>
 				<ShotFan images={project.thumbs} phone={project.platformType === 'mobile'} size="feature" />
@@ -100,6 +108,27 @@ const { projects } = Astro.props;
 		flex-direction: column;
 		gap: 0.45rem;
 		min-width: 0;
+	}
+
+	.feature-stack {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem 0.45rem;
+		margin-top: 0.2rem;
+	}
+
+	.stack-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.15rem 0.5rem;
+		font-size: 0.72rem;
+		letter-spacing: 0.02em;
+		color: var(--text-muted);
+		background: rgba(95, 80, 56, 0.08);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		border-radius: 3px;
+		white-space: nowrap;
+		line-height: 1.25;
 	}
 
 	.feature-metrics {

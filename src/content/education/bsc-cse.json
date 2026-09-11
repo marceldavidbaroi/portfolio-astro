@@ -983,5 +983,30 @@
 		"edu-diu-card-2",
 		"edu-diu-card-3"
 	],
-	"galleryHref": "/education/bsc-cse/gallery"
+	"galleryHref": "/education/bsc-cse/gallery",
+	"formativeMilestones": [
+		{
+			"title": "Undergraduate Thesis & Computer Vision Benchmark",
+			"tag": "VARSITY RESEARCH & CAPSTONE // 2024",
+			"period": "2023 — 2024",
+			"description": "Led an empirical comparative study evaluating 16 machine learning and deep convolutional architectures on the Ekush Bangla dataset, achieving 97.93% top accuracy with DenseNet-121 across 367,000+ handwritten images.",
+			"impact": "97.93% Top Accuracy · Published Official University Repository",
+			"url": "/research/01-bangla-hwcr-ekush"
+		},
+		{
+			"title": "Full-Lifecycle Software Engineering Projects (I–VI)",
+			"tag": "VARSITY ENGINEERING LABS // 2021 — 2024",
+			"period": "2021 — 2024",
+			"description": "Designed, developed, and defended end-to-end applications across relational databases, distributed systems, and real-time architectures, including the UNIFLOW academic platform and store management inventory systems.",
+			"impact": "Production Architecture, Relational SQL & Real-Time Sync",
+			"url": "/work/06-uniflow"
+		},
+		{
+			"title": "Dean's List Honors & Academic Merit Scholarships",
+			"tag": "ACADEMIC DISTINCTION // 2020 — 2024",
+			"period": "2020 — 2024",
+			"description": "Maintained continuous high academic standing across 11 semesters, graduating with a 3.91/4.00 CGPA and earning multiple merit scholarship waivers.",
+			"impact": "Top Academic Percentile · 3.91 / 4.00 CGPA"
+		}
+	]
 }

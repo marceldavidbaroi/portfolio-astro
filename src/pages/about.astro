@@ -6,6 +6,7 @@ import AboutCapabilities from '../components/about/AboutCapabilities.astro';
 import AboutCareer from '../components/about/AboutCareer.astro';
 import AboutPhilosophy from '../components/about/AboutPhilosophy.astro';
 import AboutEducationResearch from '../components/about/AboutEducationResearch.astro';
+import AboutGallery from '../components/about/AboutGallery.astro';
 import AboutCredentials from '../components/about/AboutCredentials.astro';
 import AboutBeyondTerminal from '../components/about/AboutBeyondTerminal.astro';
 import HomeContactClose from '../components/home/HomeContactClose.astro';
@@ -21,17 +22,21 @@ import {
 
 import '../styles/about.css';
 
+import { mediaMap, resolveAssets } from '../lib/media';
+
+const media = mediaMap(await getCollection('media'));
 const experience = (await getCollection('experience'))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((entry) => ({
 		slug: entry.id,
 		...entry.data,
+		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src)
 	}));
 ---
 
 <BaseLayout
 	title="About Marcel David Baroi | Full-Stack & Enterprise Systems Engineer"
-	description="Personal background, engineering philosophy, technical skill matrix, education, and credentials of Marcel David Baroi."
+	description="Personal background, engineering philosophy, technical skill matrix, education, credentials, and photo albums of Marcel David Baroi."
 	isWide
 	alignStart
 >
@@ -41,6 +46,7 @@ const experience = (await getCollection('experience'))
 	<AboutCapabilities skillCategories={skillCategories} />
 	<AboutCareer experience={experience} />
 	<AboutEducationResearch />
+	<AboutGallery />
 	<AboutCredentials compactCerts={compactCerts} />
 	<AboutBeyondTerminal compactPursuits={compactPursuits} />
 	<HomeContactClose />

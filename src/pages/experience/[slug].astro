@@ -1,0 +1,826 @@
+---
+import { getCollection, render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { mediaMap, resolveAssets } from '../../lib/media';
+import { getAllAlbums, type Album } from '../../lib/gallery';
+import AlbumPhotoStack from '../../components/gallery/AlbumPhotoStack.astro';
+import '../../styles/about.css';
+
+export async function getStaticPaths() {
+	const allEntries = await getCollection('experience');
+	const sorted = [...allEntries].sort((a, b) => a.data.order - b.data.order);
+	const allAlbums = await getAllAlbums();
+
+	return sorted.map((entry, index) => {
+		const prev = index > 0 ? sorted[index - 1] : null;
+		const next = index < sorted.length - 1 ? sorted[index + 1] : null;
+
+		// Match associated album if galleryHref is configured
+		let relatedAlbum: Album | null = null;
+		if (entry.data.galleryHref) {
+			const slug = entry.data.galleryHref.replace('/gallery/', '').replace(/^\//, '');
+			relatedAlbum = allAlbums.find((a) => a.id === slug) || null;
+		}
+
+		return {
+			params: { slug: entry.id },
+			props: {
+				entry,
+				relatedAlbum,
+				prev: prev ? { id: prev.id, role: prev.data.role, company: prev.data.company } : null,
+				next: next ? { id: next.id, role: next.data.role, company: next.data.company } : null
+			}
+		};
+	});
+}
+
+interface Props {
+	entry: any;
+	relatedAlbum: Album | null;
+	prev: { id: string; role: string; company: string } | null;
+	next: { id: string; role: string; company: string } | null;
+}
+
+const { entry, relatedAlbum, prev, next } = Astro.props;
+const { data } = entry;
+const { Content } = await render(entry);
+
+const media = mediaMap(await getCollection('media'));
+const resolvedThumbs = resolveAssets(data.cardImages || [], media).map((a) => a.src);
+
+const hasMetrics = data.metrics && data.metrics.length > 0;
+const hasResponsibilities = data.responsibilities && data.responsibilities.length > 0;
+const hasHighlights = data.highlights && data.highlights.length > 0;
+const hasRelatedProjects = data.relatedProjects && data.relatedProjects.length > 0;
+const hasSkills = data.skillsByCategory && Object.keys(data.skillsByCategory).length > 0;
+---
+
+<BaseLayout
+	title={`${data.role} | ${data.company}`}
+	description={data.summary || data.executiveImpact || `${data.role} at ${data.company}`}
+	isWide
+	alignStart
+>
+	<!-- Breadcrumb Navigation -->
+	<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
+		<a href="/about" class="attic-crumb-link">About</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<a href="/about#career" class="attic-crumb-link">Career</a>
+		<span class="attic-crumb-sep" aria-hidden="true">/</span>
+		<span class="attic-crumb-current">{data.company}</span>
+	</nav>
+
+	<!-- Career Role Masthead -->
+	<header class="exp-masthead">
+		<div class="exp-header-meta font-mono">
+			<span class="label">{data.badge || 'Career Milestone'}</span>
+			<span class="exp-period-sep">·</span>
+			<span class="exp-period">{data.period}</span>
+			{data.employmentType && (
+				<>
+					<span class="exp-period-sep">·</span>
+					<span class="exp-emp-type">{data.employmentType}</span>
+				</>
+			)}
+		</div>
+
+		<div class="exp-title-row">
+			<div class="exp-title-col">
+				<h1 class="exp-role-title">{data.role}</h1>
+				<div class="exp-org-line">
+					<span class="exp-company-name">{data.company}</span>
+					{data.location && (
+						<>
+							<span class="exp-loc-sep font-mono">/</span>
+							<span class="exp-location font-mono">{data.location}</span>
+						</>
+					)}
+				</div>
+			</div>
+
+			{resolvedThumbs.length > 0 && data.galleryHref && (
+				<a href={data.galleryHref} class="exp-header-gallery-link" aria-label={`View ${data.company} photo album`}>
+					<AlbumPhotoStack
+						thumbs={resolvedThumbs}
+						photoCount={resolvedThumbs.length}
+						altTitle={`${data.company} team photo`}
+					/>
+				</a>
+			)}
+		</div>
+
+		<!-- Executive Scope / Google XYZ Formula Callout -->
+		{data.executiveImpact ? (
+			<div class="exp-executive-box">
+				<p class="exp-impact-tag font-mono">Executive Scope &amp; Impact (Google XYZ Formula)</p>
+				<p class="exp-impact-text">{data.executiveImpact}</p>
+			</div>
+		) : data.summary ? (
+			<div class="exp-executive-box">
+				<p class="exp-impact-tag font-mono">Executive Summary</p>
+				<p class="exp-impact-text">{data.summary}</p>
+			</div>
+		) : null}
+
+		<!-- Key Metrics Badges Rail -->
+		{hasMetrics && (
+			<dl class="edu-facts-rail font-mono exp-facts-rail">
+				{data.metrics.map((metric: { label: string; value: string }) => (
+					<div class="edu-fact">
+						<dt>{metric.label}</dt>
+						<dd>{metric.value}</dd>
+					</div>
+				))}
+				{data.galleryHref && (
+					<div class="edu-fact">
+						<dt>Visual Documentary</dt>
+						<dd>
+							<a href="#team-gallery" class="text-link">
+								Preserved Gallery ↓
+							</a>
+						</dd>
+					</div>
+				)}
+			</dl>
+		)}
+	</header>
+
+	<!-- Main Details Grid -->
+	<main class="exp-details-body">
+		<!-- Left / Primary Column: Highlights, Responsibilities & Narrative -->
+		<div class="exp-main-col">
+			{hasHighlights && (
+				<section class="exp-block" aria-labelledby="highlights-heading">
+					<h2 id="highlights-heading" class="exp-section-heading">Key Technical Accomplishments</h2>
+					<ul class="exp-list">
+						{data.highlights.map((item: string) => (
+							<li class="exp-list-item">{item}</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			{hasResponsibilities && (
+				<section class="exp-block" aria-labelledby="responsibilities-heading">
+					<h2 id="responsibilities-heading" class="exp-section-heading">Core Engineering Responsibilities</h2>
+					<ul class="exp-list">
+						{data.responsibilities.map((item: string) => (
+							<li class="exp-list-item">{item}</li>
+						))}
+					</ul>
+				</section>
+			)}
+
+			<!-- Markdown Body Narrative -->
+			<div class="exp-prose">
+				<Content />
+			</div>
+		</div>
+
+		<!-- Right / Sidebar Column: Skills Matrix & Linked Case Studies -->
+		<aside class="exp-sidebar-col font-mono" aria-label="Role Technical Matrix">
+			{hasRelatedProjects && (
+				<div class="exp-side-card">
+					<h3 class="exp-side-heading">Linked Case Studies</h3>
+					<ul class="exp-side-links">
+						{data.relatedProjects.map((rp: { slug: string; label: string }) => (
+							<li>
+								<a href={`/work/${rp.slug}`} class="exp-side-project-link">
+									<span class="bullet">→</span>
+									<span class="name">{rp.label}</span>
+								</a>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+
+			{data.stack && data.stack.length > 0 && (
+				<div class="exp-side-card">
+					<h3 class="exp-side-heading">Primary Tooling &amp; Stack</h3>
+					<div class="exp-stack-chips">
+						{data.stack.map((s: string) => (
+							<span class="exp-stack-chip">{s}</span>
+						))}
+					</div>
+				</div>
+			)}
+
+			{hasSkills && (
+				<div class="exp-side-card">
+					<h3 class="exp-side-heading">Categorized Skills</h3>
+					<div class="exp-skills-group">
+						{data.skillsByCategory.languages && data.skillsByCategory.languages.length > 0 && (
+							<div class="exp-skill-unit">
+								<h4 class="exp-skill-label">Languages</h4>
+								<p class="exp-skill-vals">{data.skillsByCategory.languages.join(', ')}</p>
+							</div>
+						)}
+						{data.skillsByCategory.frameworks && data.skillsByCategory.frameworks.length > 0 && (
+							<div class="exp-skill-unit">
+								<h4 class="exp-skill-label">Frameworks</h4>
+								<p class="exp-skill-vals">{data.skillsByCategory.frameworks.join(', ')}</p>
+							</div>
+						)}
+						{data.skillsByCategory.cloudInfra && data.skillsByCategory.cloudInfra.length > 0 && (
+							<div class="exp-skill-unit">
+								<h4 class="exp-skill-label">Cloud &amp; Infra</h4>
+								<p class="exp-skill-vals">{data.skillsByCategory.cloudInfra.join(', ')}</p>
+							</div>
+						)}
+						{data.skillsByCategory.practices && data.skillsByCategory.practices.length > 0 && (
+							<div class="exp-skill-unit">
+								<h4 class="exp-skill-label">Engineering Practices</h4>
+								<p class="exp-skill-vals">{data.skillsByCategory.practices.join(', ')}</p>
+							</div>
+						)}
+					</div>
+				</div>
+			)}
+		</aside>
+	</main>
+
+	<!-- Integrated Storytelling Visual Gallery Section (if album exists) -->
+	{relatedAlbum && relatedAlbum.photos.length > 0 && (
+		<section class="exp-gallery-section" id="team-gallery" aria-labelledby="team-gallery-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Preserved Visual Documentary</p>
+				<h2 id="team-gallery-heading" class="exp-gallery-title">{relatedAlbum.title}</h2>
+				{relatedAlbum.story && (
+					<p class="exp-gallery-lead">{relatedAlbum.story}</p>
+				)}
+			</div>
+
+			<div class="story-stream" aria-label="Visual narrative stream">
+				{relatedAlbum.photos.map((photo, idx) => {
+					const isCinematic = photo.span === 'wide' || photo.span === 'full' || relatedAlbum.photos.length === 1;
+					const isReversed = !isCinematic && idx % 2 === 1;
+
+					return (
+						<section
+							class:list={[
+								'story-scene',
+								isCinematic ? 'scene-cinematic' : 'scene-split',
+								{ 'is-reversed': isReversed }
+							]}
+							id={`scene-${photo.id}`}
+						>
+							<div class="scene-visual">
+								<figure class="scene-plate">
+									<div class="scene-photo-wrap">
+										<img
+											src={photo.src}
+											alt={photo.alt || photo.title || `${relatedAlbum.title} record ${idx + 1}`}
+											loading={idx < 2 ? 'eager' : 'lazy'}
+										/>
+									</div>
+									<figcaption class="scene-plate-caption font-mono">
+										<span class="plate-num">REC // {String(idx + 1).padStart(2, '0')}</span>
+										{photo.date && <span class="plate-date">{photo.date}</span>}
+										{photo.location && <span class="plate-loc">{photo.location}</span>}
+									</figcaption>
+								</figure>
+							</div>
+
+							<div class="scene-content">
+								<div class="scene-kicker-line font-mono">
+									<span class="scene-number">SCENE {String(idx + 1).padStart(2, '0')}</span>
+									<span class="scene-total">/ {String(relatedAlbum.photos.length).padStart(2, '0')}</span>
+								</div>
+
+								{photo.title && <h3 class="scene-title">{photo.title}</h3>}
+
+								{photo.story && <p class="scene-story-p">{photo.story}</p>}
+
+								{photo.caption && photo.caption !== photo.story && (
+									<div class="scene-field-note font-mono">
+										<span class="field-note-tag">FIELD NOTE</span>
+										<p class="field-note-text">{photo.caption}</p>
+									</div>
+								)}
+							</div>
+						</section>
+					);
+				})}
+			</div>
+		</section>
+	)}
+
+	<!-- Adjacent Cross Navigation Footer -->
+	<footer class="story-nav font-mono exp-cross-nav" aria-label="Career sequential navigation">
+		<div class="story-nav-prev">
+			{prev && (
+				<a href={`/experience/${prev.id}`} class="text-link">
+					← Previous: {prev.company}
+				</a>
+			)}
+		</div>
+
+		<a href="/about#career" class="text-link story-nav-index">
+			↑ All Career Milestones
+		</a>
+
+		<div class="story-nav-next">
+			{next && (
+				<a href={`/experience/${next.id}`} class="text-link">
+					Next: {next.company} →
+				</a>
+			)}
+		</div>
+	</footer>
+</BaseLayout>
+
+<style>
+	.exp-masthead {
+		padding-bottom: 2.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		margin-bottom: 3rem;
+	}
+
+	.exp-header-meta {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-bottom: 0.85rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.exp-period-sep {
+		opacity: 0.6;
+	}
+
+	.exp-title-row {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 2rem;
+		margin-bottom: 1.75rem;
+	}
+
+	.exp-title-col {
+		min-width: 0;
+		flex: 1;
+	}
+
+	.exp-role-title {
+		margin: 0 0 0.4rem;
+		font-size: clamp(1.85rem, 4.5vw, 2.75rem);
+		font-weight: 800;
+		line-height: 1.1;
+		letter-spacing: -0.03em;
+		color: var(--text-main);
+	}
+
+	.exp-org-line {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: 1.15rem;
+	}
+
+	.exp-company-name {
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.exp-loc-sep {
+		color: var(--text-muted);
+		opacity: 0.5;
+	}
+
+	.exp-location {
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.exp-header-gallery-link {
+		text-decoration: none;
+		flex-shrink: 0;
+	}
+
+	/* Executive Scope Box */
+	.exp-executive-box {
+		margin: 1.5rem 0 2rem;
+		padding: 1.25rem 1.5rem;
+		background: var(--card-bg, #f4f0e7);
+		border-left: 3px solid var(--accent);
+		border-radius: 0 2px 2px 0;
+	}
+
+	.exp-impact-tag {
+		margin: 0 0 0.5rem;
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.exp-impact-text {
+		margin: 0;
+		font-size: 1.05rem;
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	.exp-facts-rail {
+		margin-top: 1.75rem;
+	}
+
+	/* Details Body Grid */
+	.exp-details-body {
+		display: grid;
+		grid-template-columns: minmax(0, 1.45fr) minmax(0, 1fr);
+		gap: 3.5rem;
+		margin-bottom: 4rem;
+		align-items: start;
+	}
+
+	.exp-main-col {
+		display: flex;
+		flex-direction: column;
+		gap: 2.75rem;
+	}
+
+	.exp-block {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.exp-section-heading {
+		margin: 0;
+		font-size: 1.35rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		color: var(--text-main);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		padding-bottom: 0.5rem;
+	}
+
+	.exp-list {
+		margin: 0;
+		padding-left: 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.exp-list-item {
+		font-size: var(--type-body);
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	.exp-prose {
+		font-size: var(--type-body);
+		line-height: 1.7;
+		color: var(--text-main);
+	}
+
+	.exp-prose h2,
+	.exp-prose h3 {
+		font-size: 1.25rem;
+		font-weight: 800;
+		margin: 1.75rem 0 0.75rem;
+		color: var(--text-main);
+	}
+
+	.exp-prose p {
+		margin: 0 0 1rem;
+	}
+
+	/* Sidebar Column */
+	.exp-sidebar-col {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+		background: var(--card-bg, #f4f0e7);
+		padding: 1.5rem;
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		border-radius: 2px;
+	}
+
+	.exp-side-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.exp-side-heading {
+		margin: 0;
+		font-size: 0.75rem;
+		font-weight: 700;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent);
+		border-bottom: 1px dashed rgba(95, 80, 56, 0.2);
+		padding-bottom: 0.35rem;
+	}
+
+	.exp-side-links {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+	}
+
+	.exp-side-project-link {
+		display: flex;
+		align-items: baseline;
+		gap: 0.45rem;
+		font-size: var(--type-meta);
+		text-decoration: none;
+		color: var(--text-main);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.2);
+		padding-bottom: 2px;
+		transition: color 0.15s ease, border-color 0.15s ease;
+	}
+
+	.exp-side-project-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.exp-side-project-link .bullet {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.exp-stack-chips {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+	}
+
+	.exp-stack-chip {
+		font-size: 0.72rem;
+		background: var(--paper, #fffcf8);
+		border: 1px solid rgba(95, 80, 56, 0.22);
+		padding: 2px 6px;
+		border-radius: 2px;
+		color: var(--text-main);
+	}
+
+	.exp-skills-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.exp-skill-unit {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.exp-skill-label {
+		margin: 0;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--text-muted);
+		font-weight: 600;
+	}
+
+	.exp-skill-vals {
+		margin: 0;
+		font-size: 0.8rem;
+		line-height: 1.45;
+		color: var(--text-main);
+	}
+
+	/* Integrated Gallery Section */
+	.exp-gallery-section {
+		padding-top: 3.5rem;
+		margin-top: 3.5rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.16);
+		margin-bottom: 4.5rem;
+	}
+
+	.exp-gallery-title {
+		margin: 0.5rem 0 0.5rem;
+		font-size: clamp(1.6rem, 3.5vw, 2.3rem);
+		font-weight: 800;
+		line-height: 1.15;
+		letter-spacing: -0.025em;
+		color: var(--text-main);
+	}
+
+	.exp-gallery-lead {
+		margin: 0 0 2.5rem;
+		font-size: 1.05rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 44rem;
+	}
+
+	/* Story Stream Scenes */
+	.story-stream {
+		display: flex;
+		flex-direction: column;
+		gap: 4rem;
+	}
+
+	.story-scene {
+		position: relative;
+		padding-top: 1.25rem;
+	}
+
+	.scene-cinematic {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.scene-cinematic .scene-visual {
+		width: 100%;
+	}
+
+	.scene-cinematic .scene-photo-wrap {
+		width: 100%;
+		max-height: 600px;
+	}
+
+	.scene-cinematic .scene-content {
+		display: grid;
+		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+		gap: 1.5rem 2.5rem;
+		align-items: start;
+	}
+
+	.scene-split {
+		display: grid;
+		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
+		gap: 2.25rem 3rem;
+		align-items: start;
+	}
+
+	.scene-split.is-reversed {
+		grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
+	}
+
+	.scene-split.is-reversed .scene-visual {
+		order: 2;
+	}
+
+	.scene-split.is-reversed .scene-content {
+		order: 1;
+	}
+
+	.scene-plate {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.scene-photo-wrap {
+		width: 100%;
+		border-radius: 2px;
+		border: 1px solid rgba(95, 80, 56, 0.16);
+		background: var(--card-bg, #f4f0e7);
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.scene-photo-wrap img {
+		display: block;
+		width: 100%;
+		height: auto;
+		max-height: 520px;
+		object-fit: contain;
+	}
+
+	.scene-plate-caption {
+		display: flex;
+		align-items: baseline;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		padding: 0.2rem 0.1rem 0;
+	}
+
+	.plate-num {
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.plate-date,
+	.plate-loc {
+		opacity: 0.85;
+	}
+
+	.scene-content {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.scene-kicker-line {
+		display: flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		font-size: var(--type-caption);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		margin-bottom: 0.35rem;
+	}
+
+	.scene-number {
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.scene-total {
+		color: var(--text-muted);
+		opacity: 0.7;
+	}
+
+	.scene-title {
+		margin: 0 0 0.75rem;
+		font-size: clamp(1.2rem, 2.2vw, 1.5rem);
+		font-weight: 800;
+		line-height: 1.2;
+		letter-spacing: -0.025em;
+		color: var(--text-main);
+	}
+
+	.scene-story-p {
+		margin: 0 0 0.85rem;
+		font-size: var(--type-body);
+		line-height: 1.65;
+		color: var(--text-main);
+	}
+
+	.scene-field-note {
+		margin-top: 0.35rem;
+		padding: 0.75rem 1rem;
+		background: var(--card-bg, #f4f0e7);
+		border-left: 2px solid rgba(95, 80, 56, 0.25);
+		border-radius: 0 2px 2px 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.field-note-tag {
+		font-size: 0.68rem;
+		color: var(--accent);
+		font-weight: 700;
+		letter-spacing: 0.08em;
+	}
+
+	.field-note-text {
+		margin: 0;
+		font-size: var(--type-meta);
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	/* Cross Nav */
+	.exp-cross-nav {
+		padding: 2.5rem 0 3.5rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	@media (max-width: 900px) {
+		.exp-details-body {
+			grid-template-columns: 1fr;
+			gap: 2.5rem;
+		}
+
+		.exp-title-row {
+			flex-direction: column;
+			gap: 1.25rem;
+		}
+
+		.scene-cinematic .scene-content {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.scene-split,
+		.scene-split.is-reversed {
+			grid-template-columns: 1fr;
+			gap: 1.25rem;
+		}
+
+		.scene-split.is-reversed .scene-visual {
+			order: 1;
+		}
+
+		.scene-split.is-reversed .scene-content {
+			order: 2;
+		}
+	}
+</style>

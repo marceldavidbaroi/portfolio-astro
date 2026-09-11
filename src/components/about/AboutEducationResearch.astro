@@ -5,62 +5,67 @@ const bscEntry = await getEntry('education', 'bsc-cse');
 const hscEntry = await getEntry('education', 'hsc-science');
 const researchEntry = await getEntry('research', '01-bangla-hwcr-ekush');
 
-if (!bscEntry || !hscEntry || !researchEntry) {
-	throw new Error('Missing education or research content for About school section');
+if (!bscEntry || !hscEntry) {
+	throw new Error('Missing education content for About school section');
 }
 
 const bsc = bscEntry.data;
 const hsc = hscEntry.data;
-const thesis = researchEntry.data;
+const thesis = researchEntry?.data;
 
 const bscPrimary = `${bsc.shortDegree ?? 'B.Sc. CSE'} · ${bsc.institutionShort} · ${(bsc.cgpa ?? 0).toFixed(2)}`;
 const bscThird = bsc.totalCredits ? `${bsc.totalCredits} cr` : null;
-const thesisMetric = thesis.keyMetrics?.find((m) => m.label?.toLowerCase().includes('vowel'));
-const thesisPrimary = `Thesis · ${thesis.shortTitle ?? 'Bangla HWCR'} · ${thesisMetric?.value ?? '97.93%'}`;
-const thesisThird = thesisMetric ? `DenseNet · ${thesisMetric.value} accuracy` : null;
+const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().includes('vowel'));
 const hscPrimary = `HSC Science · ${hsc.institutionShort} · ${(hsc.gpa ?? 0).toFixed(2)}`;
 const hscThird = hsc.field ? hsc.field.replace(/^Science Group /, '') : null;
 ---
 
 <section class="about-section" id="school" aria-labelledby="school-heading">
 	<div class="section-kicker">
-		<h2 id="school-heading" class="label font-mono">School</h2>
+		<h2 id="school-heading" class="label font-mono">School &amp; University</h2>
 	</div>
 
-	<a class="about-school-row" href="/education/bsc-cse">
-		{bsc.logo ? (
-			<img src={bsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
-		) : (
-			<span class="about-school-logo" aria-hidden="true"></span>
-		)}
-		<div class="about-school-lines">
-			<p class="about-school-primary">{bscPrimary}</p>
-			{bscThird && <p class="about-school-secondary">{bscThird}</p>}
-		</div>
-		<span class="section-link font-mono">Transcript →</span>
-	</a>
+	<!-- University (Varsity) Block with nested Varsity Activity -->
+	<div class="about-school-block">
+		<a class="about-school-row" href="/education/bsc-cse">
+			{bsc.logo ? (
+				<img src={bsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
+			) : (
+				<span class="about-school-logo" aria-hidden="true"></span>
+			)}
+			<div class="about-school-lines">
+				<p class="about-school-primary">{bscPrimary}</p>
+				{bscThird && <p class="about-school-secondary">{bscThird}</p>}
+			</div>
+			<span class="section-link font-mono">Transcript →</span>
+		</a>
 
-	<a class="about-school-row" href={`/research/${thesis.slug}`}>
-		<span class="about-school-logo about-school-logo-slot" aria-hidden="true"></span>
-		<div class="about-school-lines">
-			<p class="about-school-primary">{thesisPrimary}</p>
-			{thesisThird && <p class="about-school-secondary">{thesisThird}</p>}
-		</div>
-		<span class="section-link font-mono">Paper →</span>
-	</a>
-
-	<a class="about-school-row" href="/education/hsc-science">
-		{hsc.logo ? (
-			<img src={hsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
-		) : (
-			<span class="about-school-logo" aria-hidden="true"></span>
+		{thesis && (
+			<div class="about-school-activity font-mono">
+				<span class="activity-kicker">Varsity Activity</span>
+				<a class="activity-link" href={`/research/${thesis.slug}`}>
+					<span>Undergraduate Thesis · {thesis.shortTitle ?? 'Bangla HWCR'} ({thesisMetric?.value ?? '97.93%'})</span>
+					<span class="section-link">Paper →</span>
+				</a>
+			</div>
 		)}
-		<div class="about-school-lines">
-			<p class="about-school-primary">{hscPrimary}</p>
-			{hscThird && <p class="about-school-secondary">{hscThird}</p>}
-		</div>
-		<span class="section-link font-mono">Details →</span>
-	</a>
+	</div>
+
+	<!-- College / School Block -->
+	<div class="about-school-block">
+		<a class="about-school-row" href="/education/hsc-science">
+			{hsc.logo ? (
+				<img src={hsc.logo} alt="" class="about-school-logo" width="40" height="40" loading="lazy" />
+			) : (
+				<span class="about-school-logo" aria-hidden="true"></span>
+			)}
+			<div class="about-school-lines">
+				<p class="about-school-primary">{hscPrimary}</p>
+				{hscThird && <p class="about-school-secondary">{hscThird}</p>}
+			</div>
+			<span class="section-link font-mono">Details →</span>
+		</a>
+	</div>
 
 	<p class="about-school-archive font-mono">
 		<a href="/archive">Civic years → Archive</a>
@@ -68,11 +73,9 @@ const hscThird = hsc.field ? hsc.field.replace(/^Science Group /, '') : null;
 </section>
 
 <style>
-	.about-school-logo-slot {
-		display: block;
-		background: var(--card-bg);
-		border: 1px solid rgba(95, 80, 56, 0.12);
-		border-radius: 6px;
+	.about-school-block {
+		display: flex;
+		flex-direction: column;
 	}
 
 	.about-school-row {
@@ -82,6 +85,44 @@ const hscThird = hsc.field ? hsc.field.replace(/^Science Group /, '') : null;
 
 	.about-school-row:hover .about-school-primary {
 		color: var(--text-main);
+	}
+
+	.about-school-activity {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem 0.75rem;
+		padding: 0.15rem 0 0.85rem 3.5rem;
+		font-size: 0.82rem;
+		margin-top: -0.25rem;
+	}
+
+	.activity-kicker {
+		color: var(--accent, #702632);
+		font-weight: 700;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		background: rgba(112, 38, 50, 0.08);
+		padding: 0.15rem 0.45rem;
+		border-radius: 3px;
+	}
+
+	.activity-link {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color var(--dur-fast) ease;
+	}
+
+	.activity-link:hover {
+		color: var(--text-main);
+	}
+
+	.activity-link .section-link {
+		font-size: 0.78rem;
 	}
 
 	.about-school-archive {
@@ -98,5 +139,12 @@ const hscThird = hsc.field ? hsc.field.replace(/^Science Group /, '') : null;
 
 	.about-school-archive a:hover {
 		text-decoration: underline;
+	}
+
+	@media (max-width: 600px) {
+		.about-school-activity {
+			padding-left: 0;
+			margin-top: 0.25rem;
+		}
 	}
 </style>

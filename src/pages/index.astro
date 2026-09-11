@@ -46,7 +46,7 @@ const experience = (await getCollection('experience'))
 const portraitFile = ['portrait.webp', 'portrait.jpg', 'portrait.jpeg', 'portrait.png']
 	.find((name) => fs.existsSync(path.join(process.cwd(), 'public/images', name)));
 const portraitSrc = portraitFile ? `/images/${portraitFile}` : null;
-const skills = ['Vue 3', 'Quasar', 'TypeScript', 'PostgreSQL', 'Supabase', 'NestJS', 'Docker', 'Pinia'];
+const skills = ['Next.js', 'Vue 3', 'NestJS', 'Flutter', 'TypeScript', 'PostgreSQL', 'Supabase', 'Docker'];
 const workCount = projectEntries.length;
 ---
 

@@ -14,6 +14,13 @@ timeline: "Oct 2025 — Dec 2025"
 status: "Completed"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Vue 3"
+  - "OpenAI API"
+  - "Pinia"
+  - "TypeScript"
+
 techStack:
   frontend:
     - "Vue 3 (Composition API)"

@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-	title = `${site.name} | Full-Stack Engineer`,
-	description = `Portfolio & Case Studies of ${site.name}, Full-Stack Engineer specializing in multi-tenant SaaS, Vue.js/Quasar, Supabase, and architecture-first systems.`,
+	title = `${site.name} | Full-Stack & Mobile Engineer`,
+	description = `Portfolio & Case Studies of ${site.name}, Full-Stack & Mobile Engineer specializing in Next.js, Vue/Quasar, NestJS, Flutter, PostgreSQL, and architecture-first systems.`,
 	isWide = false,
 	alignStart = false,
 } = Astro.props;
@@ -25,7 +25,7 @@ const isWork = currentPath === '/work' || currentPath.startsWith('/work/');
 const isAbout =
 	currentPath === '/about' ||
 	currentPath.startsWith('/about/') ||
-	['/skills', '/credentials', '/philosophy', '/archive', '/education', '/research', '/memories'].some(
+	['/skills', '/credentials', '/philosophy', '/archive', '/education', '/research', '/memories', '/gallery'].some(
 		(root) => currentPath === root || currentPath.startsWith(`${root}/`)
 	);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;

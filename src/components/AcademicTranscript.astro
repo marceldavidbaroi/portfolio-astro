@@ -15,7 +15,6 @@ const semesters = (program.data.semesters || []) as Semester[];
 const stats = getAcademicStatistics(semesters);
 const topGradeCount = stats.gradeCounts['A+'] + stats.gradeCounts.A;
 const categories = Object.keys(courseCategoryLabels) as CourseCategory[];
-const bscCseProgram = program.data;
 ---
 
 <div class="transcript-wrapper">
@@ -66,7 +65,7 @@ const bscCseProgram = program.data;
 	<!-- VIEW 1: Semester Accordion View (Default) -->
 	<div id="semesters-view" class="view-panel active">
 		<div class="semesters-list">
-			{bscCseProgram.semesters.map((sem, semIdx) => (
+			{semesters.map((sem, semIdx) => (
 				<details class="semester-accordion" open={semIdx < 2} data-semester={sem.semesterNumber}>
 					<summary class="semester-summary">
 						<div class="sem-summary-left">
@@ -151,7 +150,7 @@ const bscCseProgram = program.data;
 	<div id="categories-view" class="view-panel hidden">
 		<div class="categories-grid">
 			{stats.categoryBreakdown.map((cat) => {
-				const catCourses = bscCseProgram.semesters.flatMap((s) =>
+				const catCourses = semesters.flatMap((s) =>
 					s.courses.filter((c) => c.category === cat.category).map((c) => ({ ...c, semNum: s.semesterNumber }))
 				);
 				return (

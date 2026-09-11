@@ -26,6 +26,7 @@ interface Props {
 	docs: boolean;
 	heroImage?: string | null;
 	isPhone: boolean;
+	stack?: string[];
 }
 
 const {
@@ -45,7 +46,8 @@ const {
 	ghBack,
 	docs,
 	heroImage,
-	isPhone
+	isPhone,
+	stack
 } = Astro.props;
 
 const showActions = hasActions;
@@ -61,6 +63,13 @@ const showActions = hasActions;
 	{role && <span>{role}</span>}
 	{timeline && <span>{timeline}</span>}
 </p>
+{(stack || []).length > 0 && (
+	<div class="case-hero-stack font-mono">
+		{stack!.map((tech) => (
+			<span class="stack-badge">{tech}</span>
+		))}
+	</div>
+)}
 {description && <p class="xyz">{description}</p>}
 
 {showActions && (

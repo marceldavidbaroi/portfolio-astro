@@ -1,6 +1,55 @@
 {
 	"id": "proficient",
 	"owner": "experience-proficient",
-	"title": "Proficient Information Systems — Gallery",
-	"albums": []
+	"title": "Proficient Information Systems — Career & Team Albums",
+	"albums": [
+		{
+			"id": "proficient-engineering-team",
+			"tag": "CAREER & ENGINEERING // 2024 — PRESENT",
+			"category": "work",
+			"title": "Proficient Engineering Team & Milestone Outings",
+			"period": "2024 — Present",
+			"location": "Dhaka & Cox's Bazar, Bangladesh",
+			"description": "Team hackathons, remote sprints by the beach in Inani, annual retreats, and on-site engineering milestones with the Proficient Information Systems team.",
+			"story": "Collaborating closely with the core engineering team at Proficient Information Systems—from hackathon sprints and Mawa celebrations to remote work retreats in Cox's Bazar.",
+			"photos": [
+				{
+					"id": "exp-proficient-textech-expo",
+					"title": "25th Textech Bangladesh International Expo 2026",
+					"caption": "4-day expo stall presentation of ERP solutions and garment industry software systems with Reza Khan (CEO, Proficient Information Systems).",
+					"story": "Representing our company at the 25th Textech Bangladesh International Expo 2026 with a dedicated ERP solution stall. Over four intense days, we managed the stall setup, engaged directly with potential buyers, industrial leaders, and diverse stakeholders—pitching live product capabilities, discussing modern requirements, and understanding the core software needs of the garments and textile manufacturing sector alongside Reza Khan, CEO of Proficient Information Systems.",
+					"date": "2026",
+					"location": "Dhaka, Bangladesh",
+					"span": "wide"
+				},
+				{
+					"id": "exp-proficient-mawa-hackathon",
+					"title": "Team Outing – Celebrating Our Hackathon Success at Mawa",
+					"caption": "Team dinner at Shokher Hari Restaurant in Mawa after concluding our intense engineering hackathon.",
+					"story": "After weeks of dedication and collaboration, our team successfully completed the hackathon—and what better way to celebrate than with a refreshing group outing to Mawa! Grateful for the teamwork, learning, and memories made along the way. Here’s to more innovation and shared success ahead!",
+					"date": "April 2025",
+					"location": "Mawa, Bangladesh",
+					"span": "wide"
+				},
+				{
+					"id": "exp-proficient-team-2025",
+					"title": "Team 2025 (Partial)",
+					"caption": "Engineering and operations group gathering at headquarters.",
+					"story": "A moment captured with the core engineering and cross-functional teams celebrating our collective milestones and platform releases.",
+					"date": "2025",
+					"location": "Dhaka, Bangladesh",
+					"span": "normal"
+				},
+				{
+					"id": "exp-proficient-coxs-bazar-work",
+					"title": "Working from Cox's Bazar",
+					"caption": "Collaborative sprint, design discussions, and laptop worktable sessions in Inani.",
+					"story": "Remote sprint sessions and collaborative coding by the beach in Inani, Cox's Bazar—balancing high-intensity sprint deliverables with seaside focus.",
+					"date": "January 28–31, 2025",
+					"location": "Inani, Cox's Bazar",
+					"span": "normal"
+				}
+			]
+		}
+	]
 }

@@ -6,40 +6,72 @@
 		{
 			"id": "group-13-brotherhood",
 			"tag": "BATCH '19 // GROUP 13",
+			"category": "education",
+			"period": "2017 — 2019",
+			"location": "Notre Dame College Lawn, Dhaka",
 			"title": "Group 13 & Room 304 Brotherhood",
 			"description": "The iconic lawn formation where Group 13 classmates formed the numeral \"13\" and arranged transparent college bags into \"NDC 19\".",
+			"story": "Standing together on the green field of Notre Dame College, Batch '19 Group 13 formed the iconic numeral 13 with matching transparent bags spelling 'NDC 19' — an everlasting symbol of collegiate discipline, unity, and lifelong brotherhood.",
 			"photos": [
 				{
 					"id": "ndc-batch-19-group-13",
+					"title": "Group 13 Aerial Numeral Formation",
+					"story": "Collegiate classmates arranging themselves into the number 13 on the central lawn.",
 					"span": "full"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142525",
+					"title": "Room 304 Classmates & Lawn Gathering",
+					"story": "Afternoon gathering on the college lawn following practical examinations.",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142654",
+					"title": "Campus Gangway & Field Entrance",
+					"story": "Passing through the collegiate corridors into the central green lawn.",
+					"span": "normal"
 				}
 			]
 		},
 		{
 			"id": "civic-movement-2018",
 			"tag": "CIVIC SOLIDARITY // JULY — AUGUST 2018",
+			"category": "civic",
+			"period": "July — August 2018",
+			"location": "Arambagh & Shapla Chottor, Motijheel",
 			"title": "2018 Student Road Safety Movement",
 			"description": "Historic moments when Notre Dame College students mobilized from Arambagh to Shapla Chottor demanding transport reform and creating the emergency lane.",
+			"story": "Thousands of collegiate students peacefully mobilized across Motijheel, creating Bangladesh's first spontaneous Emergency Lanes for ambulances and verifying driver licenses.",
 			"memoirHref": "/archive/road-safety-movement-2018",
 			"photos": [
 				{
 					"id": "road-safety-shapla-aerial",
+					"title": "Shapla Chottor Blockade",
+					"story": "Aerial vantage showing thousands of students peacefully holding Shapla Chottor intersection.",
 					"span": "wide"
 				},
 				{
 					"id": "road-safety-ndc-chanting",
+					"title": "NDC Student Solidarity",
+					"story": "Students in uniform chanting slogans for accountability and road reform.",
 					"span": "normal"
 				},
 				{
 					"id": "road-safety-overbridge",
+					"title": "Arambagh Overbridge Assembly",
+					"story": "Students maintaining order on foot-overbridges across thoroughfares.",
 					"span": "normal"
 				},
 				{
 					"id": "road-safety-street-march",
+					"title": "Avenue Inspection March",
+					"story": "Checking bus driver permits and halting unlicensed commercial vehicles.",
 					"span": "normal"
 				},
 				{
 					"id": "road-safety-placards",
+					"title": "Handwritten Asphalt Placards",
+					"story": "Writing handwritten signs calling for justice and pedestrian safety.",
 					"span": "normal"
 				}
 			]
@@ -47,20 +79,30 @@
 		{
 			"id": "pope-francis-2017",
 			"tag": "HISTORIC EVENT // 2017",
+			"category": "civic",
+			"period": "30 Nov — 2 Dec 2017",
+			"location": "Ramna Park & Notre Dame College, Dhaka",
 			"title": "Pope Francis Apostolic Visit & Protocol Volunteer Force",
 			"description": "Selected by Father Susanto into the 6-member core volunteer protocol detail for the 100,000-attendee Ramna Mass and 10,000-youth NDC campus gathering.",
+			"story": "Serving on the front-line protocol detail alongside the Special Security Force (SSF) and the Vatican Gendarmerie during the apostolic visit of His Holiness Pope Francis to Dhaka.",
 			"memoirHref": "/archive/pope-francis-visit-2017",
 			"photos": [
 				{
 					"id": "pope-francis-ndc-stage",
+					"title": "Papal Address on the NDC Stage",
+					"story": "Pope Francis addressing 10,000 students from the elevated main stage.",
 					"span": "wide"
 				},
 				{
 					"id": "pope-francis-popemobile",
+					"title": "Popemobile Procession",
+					"story": "Managing crowds as the Popemobile circled through the open grounds.",
 					"span": "normal"
 				},
 				{
 					"id": "pope-francis-logo-2017",
+					"title": "Official Papal Visit Emblem",
+					"story": "Official Vatican & Bangladesh Catholic Bishops' Conference visit insignia.",
 					"span": "normal",
 					"isEmblem": true
 				}

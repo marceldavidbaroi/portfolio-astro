@@ -14,6 +14,13 @@ timeline: "2024 — 2025"
 status: "Completed"
 classification: "Independent System / Platform"
 
+stack:
+  - "Firebase"
+  - "Quasar"
+  - "Vue 3"
+  - "Firestore"
+  - "Pinia"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

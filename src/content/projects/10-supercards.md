@@ -14,6 +14,13 @@ timeline: "2024 — Present"
 status: "Active Production"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Vue 3"
+  - "PHP (Laravel)"
+  - "Capacitor"
+  - "PostgreSQL"
+
 techStack:
   frontend:
     - "Vue 3 (Composition API)"

@@ -14,6 +14,12 @@ timeline: "2024 — Jan 2025"
 status: "Completed"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "Quasar"
+  - "Vue 3"
+  - "CSS Grid"
+  - "Responsive Design"
+
 techStack:
   frontend:
     - "Quasar Framework (v2)"

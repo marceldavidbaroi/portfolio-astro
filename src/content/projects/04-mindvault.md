@@ -14,6 +14,13 @@ timeline: "2025"
 status: "Completed"
 classification: "🌐 Open Source Architecture"
 
+stack:
+  - "Next.js 15"
+  - "NestJS"
+  - "Prisma"
+  - "PostgreSQL"
+  - "TypeScript"
+
 techStack:
   frontend:
     - "Next.js 15 (App Router)"
@@ -26,12 +33,13 @@ techStack:
   backend:
     - "NestJS (Modular 6-Layer Architecture)"
     - "TypeScript"
-    - "TypeORM"
+    - "Prisma ORM & TypeORM"
     - "JWT + Passport.js (Passkeys & Recovery)"
     - "class-validator & class-transformer"
     - "Swagger / OpenAPI 3.0"
   database:
     - "PostgreSQL 15+"
+    - "Prisma ORM"
     - "TypeORM Data Source & Migrations"
     - "Automated Seeders"
   devops:

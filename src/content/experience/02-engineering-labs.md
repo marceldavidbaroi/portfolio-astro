@@ -1,83 +1,86 @@
 ---
-role: "Independent Software Developer / Freelance Engineer"
-company: "Client Solutions & Open-Source Engineering"
+role: "Software Developer (Proprietary Solutions)"
+company: "Software Services & Client Solutions"
 companyUrl: "https://github.com/marceldavidbaroi"
 companyLogo: "/images/experience/freelance-logo.png"
-cardImages:
-  - "exp-freelance-card-1"
-  - "exp-freelance-card-2"
-  - "exp-freelance-card-3"
-galleryHref: "/experience/freelance/gallery"
-location: "Dhaka, Bangladesh (Remote)"
-employmentType: "Freelance & Contract"
-period: "2022 — 2024"
-badge: "Contract & SaaS"
+location: "Dhaka, Bangladesh"
+employmentType: "Independent Contractor"
+period: "Q3 2025 — Present"
+badge: "Current"
 order: 2
 
-summary: "Engineered custom full-stack web applications, microservices, and database architectures for diverse clients and independent products prior to joining Proficient Information Systems."
+summary: "Designing and developing proprietary software solutions — engineering the TradeflowBD wholesale ERP (my own software tailored to automate commercial trade workflows) and Smart Hisab (my own mobile Canteen POS & billing app in Flutter and Supabase for a separate client)."
 
-
-
-executiveImpact: "Architected scalable backend APIs and responsive modern web interfaces that achieved 95+ Lighthouse scores and sub-80ms query speeds [X & Y] by designing layered NestJS REST microservices, indexed PostgreSQL schemas, and type-safe Next.js SSR frontends [Z]."
+executiveImpact: "Architected and developing proprietary full-stack and mobile software solutions [X], engineering the TradeflowBD wholesale ERP to replace manual spreadsheets and developing an offline-first Flutter/Supabase canteen POS [Y] to eliminate operational latency and automate ledger reconciliation [Z]."
 
 metrics:
-  - label: "Lighthouse Score"
-    value: "95+"
-  - label: "API Query Latency"
-    value: "<80ms"
-  - label: "Unit Test Coverage"
-    value: "85%+"
+  - label: "Wholesale ERP"
+    value: "Own Software"
+  - label: "Canteen Client App"
+    value: "Own Software"
+  - label: "Data Isolation"
+    value: "100% RLS"
+  - label: "Client Solutions"
+    value: "2 Systems"
 
 highlights:
-  - "Constructed MindVault: a high-performance personal financial ledger engine utilizing NestJS, TypeORM, PostgreSQL, and Next.js with optimistic TanStack Query cache mutations"
-  - "Built KBeauty dropshipping management dashboard coordinating supplier inventory shifts and transaction fulfillments over Supabase Realtime channels"
-  - "Designed full-stack Node.js/MongoDB platforms (WanderLust, FilmFolio) featuring session authentication, location filtering, and third-party API matrix integrations"
-  - "Earned multiple industry certifications across Google Cloud Vertex AI, Generative AI, and Cisco Networking Academy"
+  - "Independently designing and building a multi-tenant wholesale ERP platform (TradeflowBD) as my own software to automate inventory, landed costing, and invoicing for wholesale clients"
+  - "Independently building Smart Hisab, an offline-first mobile Canteen POS and institutional meal ERP app in Flutter and Supabase as my own software for a separate client"
+  - "Architected double-entry PostgreSQL ledgers, shift cashbook vaults, and atomic RPC transaction functions with 100% Row-Level Security"
+  - "Engineered responsive, high-density web interfaces and offline-first mobile workflows using Vue 3, Quasar Framework, and Flutter"
+  - "Leveraging firsthand operational domain insights in trade accounting to engineer practical, reliable software products"
 
 responsibilities:
-  - "Plan, prototype, and build end-to-end full-stack architectures"
-  - "Implement relational database designs, index strategies, and secure JWT authentication systems"
-  - "Explore emerging AI workflows and agentic synthesis paradigms for developer productivity"
+  - "Architect, develop, and maintain proprietary ERP software solutions using Vue 3, Quasar, and Supabase"
+  - "Build offline-first cross-platform mobile applications in Flutter with local SQLite queues and Bluetooth thermal printing"
+  - "Design atomic PostgreSQL database schemas, Row-Level Security policies, and RPC transaction functions"
+  - "Deliver custom software solutions directly to commercial clients with end-to-end support"
 
 relatedProjects:
-  - slug: "04-mindvault"
-    label: "MindVault Financial Ledger"
+  - slug: "01-tradeflowbd"
+    label: "TradeflowBD Multi-Tenant ERP"
+  - slug: "15-canteen-app"
+    label: "Smart Hisab Canteen ERP (Flutter)"
   - slug: "13-kbeauty-dropship"
-    label: "KBeauty Dropship Dashboard"
+    label: "BrandWala Retail Platform"
 
 stack:
-  - "NestJS"
-  - "Next.js"
-  - "TypeScript"
+  - "Vue 3"
+  - "Quasar"
+  - "Flutter"
+  - "Dart"
+  - "Supabase (RLS)"
   - "PostgreSQL"
-  - "TypeORM"
-  - "Tailwind CSS"
-  - "Docker"
+  - "TypeScript"
 
 skillsByCategory:
   languages:
     - "TypeScript"
     - "JavaScript"
-    - "Python"
+    - "Dart"
     - "SQL"
+    - "Python"
   frameworks:
-    - "NestJS"
-    - "Next.js"
-    - "React"
-    - "Express"
-    - "Tailwind CSS"
+    - "Vue.js (v3)"
+    - "Quasar Framework"
+    - "Flutter"
+    - "Pinia"
   cloudInfra:
-    - "PostgreSQL"
-    - "MongoDB"
+    - "Supabase (PostgreSQL, Realtime, RLS)"
     - "Docker"
-    - "GitHub Actions"
+    - "Git"
+    - "Cloudflare Pages"
   practices:
-    - "Layered Architecture"
-    - "Type-Safe Contracts"
-    - "REST API Engineering"
-    - "Test-Driven Development (TDD)"
+    - "Proprietary Software Engineering"
+    - "Offline-First Mobile Architecture"
+    - "Double-Entry Accounting"
+    - "Row-Level Security (RLS)"
 ---
 
-## Engineering Highlights & Independent Research
+## Role Overview & Software Products
 
-Focused on system architecture, database optimization, and modern web application development with full-stack TypeScript technologies.
+Developing proprietary software products and custom client solutions. Engineering the TradeflowBD wholesale ERP (my own software developed to modernize and automate wholesale commerce workflows) and developing Smart Hisab (my own mobile Canteen POS & billing app in Flutter and Supabase for a separate client).
+
+
+
+

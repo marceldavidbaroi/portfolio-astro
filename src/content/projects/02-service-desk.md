@@ -14,10 +14,20 @@ timeline: "2026 — Present"
 status: "Active Production"
 classification: "🔒 Proprietary Enterprise IP"
 
+stack:
+  - "PHP"
+  - "Blade"
+  - "Quasar"
+  - "Knockout.js"
+  - "IMAP"
+  - "MySQL"
+
 techStack:
   frontend:
-    - "Vue 3"
     - "Quasar Framework (v2)"
+    - "Blade Templates"
+    - "Knockout.js"
+    - "Vue 3"
     - "TypeScript"
     - "Vue Router 4"
     - "Modular Composable Architecture"

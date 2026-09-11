@@ -1,0 +1,125 @@
+---
+import { getAllAlbums, type Album } from '../../lib/gallery';
+import AlbumPhotoStack from '../gallery/AlbumPhotoStack.astro';
+
+const allAlbums = await getAllAlbums();
+
+// Feature 3 curated albums representing Work, Civic, and Education
+const FEATURED_ALBUM_IDS = [
+	'proficient-engineering-team',
+	'civic-movement-2018',
+	'group-13-brotherhood'
+];
+
+const featuredAlbums: Album[] = FEATURED_ALBUM_IDS
+	.map((id) => allAlbums.find((a) => a.id === id))
+	.filter(Boolean) as Album[];
+---
+
+<section class="about-section about-gallery-section" id="gallery" aria-labelledby="gallery-heading">
+	<div class="section-kicker">
+		<h2 id="gallery-heading" class="label font-mono">Albums &amp; Stories</h2>
+		<a class="section-link font-mono" href="/gallery">All {allAlbums.length} albums →</a>
+	</div>
+
+	<div class="about-gallery-rail">
+		{featuredAlbums.map((album) => (
+			<a class="about-rail-row about-gallery-row" href={`/gallery/${album.id}`}>
+				<div class="about-rail-when font-mono">
+					<p class="gallery-row-period">{album.period || 'Preserved'}</p>
+					<span class="gallery-row-count">{album.photoCount} photos</span>
+				</div>
+
+				<div class="about-gallery-body">
+					<p class="about-rail-tag font-mono">{album.tag}</p>
+					<h3 class="about-rail-title">{album.title}</h3>
+					{album.story ? (
+						<p class="about-rail-sub">{album.story}</p>
+					) : album.description ? (
+						<p class="about-rail-sub">{album.description}</p>
+					) : null}
+					<div class="about-gallery-meta font-mono">
+						{album.location && <span>{album.location}</span>}
+						{album.location && <span class="meta-sep">·</span>}
+						<span class="section-link">Open album →</span>
+					</div>
+				</div>
+
+				{album.previewThumbs.length > 0 && (
+					<AlbumPhotoStack
+						thumbs={album.previewThumbs}
+						photoCount={album.photoCount}
+						altTitle={album.title}
+					/>
+				)}
+			</a>
+		))}
+	</div>
+</section>
+
+<style>
+	.about-gallery-rail {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.about-gallery-row {
+		display: grid;
+		grid-template-columns: 7.4rem minmax(0, 1fr) 8.5rem;
+		gap: 1.25rem 1.5rem;
+		align-items: center;
+		padding: 1.35rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.about-gallery-row:first-child {
+		border-top: 0;
+	}
+
+	.about-gallery-row:hover .about-rail-title {
+		color: var(--accent);
+	}
+
+	.gallery-row-period {
+		margin: 0.15rem 0 0.2rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+		line-height: 1.35;
+	}
+
+	.gallery-row-count {
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		opacity: 0.8;
+	}
+
+	.about-gallery-body {
+		display: flex;
+		flex-direction: column;
+		min-width: 0;
+	}
+
+	.about-gallery-meta {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		margin-top: 0.5rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.about-gallery-meta .meta-sep {
+		opacity: 0.4;
+	}
+
+	@media (max-width: 768px) {
+		.about-gallery-row {
+			grid-template-columns: 1fr;
+			gap: 0.75rem;
+			align-items: start;
+		}
+	}
+</style>

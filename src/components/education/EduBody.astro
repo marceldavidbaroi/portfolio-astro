@@ -37,12 +37,24 @@ const hscClubs = [
 			</ol>
 		</section>
 
-		<section class="edu-section">
-			<h2 class="edu-section-title">Thesis</h2>
-			<a class="edu-hairline-row" href="/research/01-bangla-hwcr-ekush">
-				<p class="edu-row-primary">Bangla Handwritten Character Recognition · DenseNet 97.93%</p>
-				<span class="section-link font-mono">Paper →</span>
-			</a>
+		<section class="edu-section" id="varsity-activities">
+			<h2 class="edu-section-title">Varsity Activities &amp; Research</h2>
+			{bscCseProgram.formativeMilestones && (
+				bscCseProgram.formativeMilestones.map((m) => {
+					const Tag = m.url ? 'a' : 'div';
+					return (
+						<Tag href={m.url} class:list={['about-rail-row edu-milestone-row', { 'is-link': m.url }]}>
+							<p class="about-rail-when font-mono">{m.period}</p>
+							<div>
+								<p class="about-rail-tag font-mono">{m.tag}</p>
+								<h3 class="about-rail-title">{m.title}</h3>
+								<p class="about-rail-sub">{m.description}</p>
+								{m.impact && <p class="edu-milestone-impact font-mono">{m.impact}</p>}
+							</div>
+						</Tag>
+					);
+				})
+			)}
 		</section>
 
 		<section class="edu-section edu-slot">

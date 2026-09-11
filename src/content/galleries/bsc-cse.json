@@ -1,6 +1,40 @@
 {
 	"id": "bsc-cse",
 	"owner": "education-bsc",
-	"title": "Daffodil International University — Gallery",
-	"albums": []
+	"title": "Daffodil International University — Campus & Academic Albums",
+	"albums": [
+		{
+			"id": "diu-undergraduate-years",
+			"tag": "ACADEMIC & RESEARCH // 2020 — 2024",
+			"category": "education",
+			"title": "B.Sc. in Computer Science & Engineering",
+			"period": "2020 — 2024",
+			"location": "Ashulia Campus & Green Grounds",
+			"description": "Undergraduate research in computer vision, lab projects, and campus memories at Daffodil International University.",
+			"story": "Completed 148 credits with a 3.91/4.00 CGPA, leading undergraduate thesis research evaluating 16 Deep CNN models on the Ekush Bangla dataset.",
+			"photos": [
+				{
+					"id": "edu-diu-card-1",
+					"title": "Academic Research & Thesis Defense",
+					"caption": "Finalizing the Ekush Bangla Handwritten Character Recognition benchmark experiments.",
+					"story": "Benchmarking DenseNet, ResNet, and MobileNet architectures across 367,000+ handwritten images.",
+					"span": "wide"
+				},
+				{
+					"id": "edu-diu-card-2",
+					"title": "Campus Grounds & Innovation Lab",
+					"caption": "Campus innovation facilities and software engineering lab sessions.",
+					"story": "Collaborating on database management systems, algorithms, and distributed computing coursework.",
+					"span": "normal"
+				},
+				{
+					"id": "edu-diu-card-3",
+					"title": "Convocation & Graduation Milestones",
+					"caption": "Graduation milestones celebrating academic excellence and Dean's List honors.",
+					"story": "Concluding the 4-year undergraduate degree with multiple academic scholarships and top honors.",
+					"span": "normal"
+				}
+			]
+		}
+	]
 }
