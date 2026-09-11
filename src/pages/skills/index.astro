@@ -1,73 +1,15 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { skillCategories } from '../../data/aboutData';
 
-const skillCategories = [
-	{
-		id: 'engineering-workflow',
-		category: 'Engineering Workflow & Architecture',
-		tag: 'SYSTEM SYNTHESIS',
-		icon: '⚡',
-		description: 'Core architectural methodologies and engineering processes applied across production ecosystems.',
-		items: [
-			{ name: 'Architecture-First AI Synthesis', desc: 'Pre-planning schemas, dependency trees, and specs before code generation (Cursor Agentic, Copilot).' },
-			{ name: 'Relational Data Modeling', desc: 'Third Normal Form (3NF) relational design, explicit constraints, foreign key cascades, and complex indexing.' },
-			{ name: 'Systematic Code Validation', desc: 'Rigorous regression testing, type checking, edge-case validation, and clean code hygiene.' },
-			{ name: 'Modular Infrastructure', desc: 'Extracting reusable enterprise logic into private npm packages governed by SemVer.' },
-			{ name: 'Rapid MVP Scaffolding', desc: 'Accelerated development of production-ready SaaS foundations and end-to-end prototypes.' }
-		]
-	},
-	{
-		id: 'backend-cloud',
-		category: 'Backend & Cloud Services',
-		tag: 'DATA & APIS',
-		icon: '⚙️',
-		description: 'Server architectures, secure data access layers, relational database engines, and cloud persistence.',
-		items: [
-			{ name: 'PHP (Core & MVC Architecture)', desc: 'Enterprise business logic, custom MVC engines, ERP costing routines, and legacy migration.' },
-			{ name: 'PostgreSQL & Database Optimization', desc: 'Relational schema design, complex JOINs, query indexing, execution plans, and views.' },
-			{ name: 'Supabase (Realtime & RLS)', desc: 'Multi-tenant tenant isolation, Row-Level Security (RLS) policies, and Realtime event subscriptions.' },
-			{ name: 'NestJS & Node.js', desc: 'Enterprise modular backend structures, dependency injection, and scalable microservice APIs.' },
-			{ name: 'Express & RESTful APIs', desc: 'Lightweight API endpoints, JWT token authentication, middleware pipelines, and CORS governance.' },
-			{ name: 'TypeORM & Prisma ORM', desc: 'Type-safe database migrations, entity relationships, query builders, and database seeds.' },
-			{ name: 'MongoDB', desc: 'Document data modeling, schema indexing, aggregation pipelines, and flexible datastores.' }
-		]
-	},
-	{
-		id: 'frontend-mobile',
-		category: 'Frontend & Mobile Ecosystem',
-		tag: 'USER INTERFACES',
-		icon: '💻',
-		description: 'Modern reactive component frameworks, type-safe interfaces, state stores, and cross-platform apps.',
-		items: [
-			{ name: 'Vue.js (v2 / v3 Composition API)', desc: 'Reactive component architectures, custom hooks, reusable directives, and high-performance render trees.' },
-			{ name: 'Quasar Framework', desc: 'Enterprise SPA/PWA application suites, table data virtualization, and responsive layouts.' },
-			{ name: 'TypeScript & JavaScript (ES6+)', desc: 'Strict compile-time type safety, generic interfaces, utility types, and asynchronous concurrency.' },
-			{ name: 'React & Next.js (App Router)', desc: 'Server-side rendering, React Server Components (RSC), dynamic routing, and performant state.' },
-			{ name: 'React Native & Mobile Development', desc: 'Cross-platform mobile applications, native bridges, offline persistence, and touch ergonomics.' },
-			{ name: 'Pinia & Vuex State Management', desc: 'Centralized reactive store design, persistent state plugins, action dispatchers, and modular state.' }
-		]
-	},
-	{
-		id: 'devops-infra',
-		category: 'Architecture, Versioning & DevOps',
-		tag: 'INFRASTRUCTURE',
-		icon: '🛡️',
-		description: 'Enterprise repository governance, packaging, containerization, and multi-tenant security.',
-		items: [
-			{ name: 'Multi-Tenant SaaS Security', desc: 'Strict organizational data segregation, tenant context injection, and role-based access control (RBAC).' },
-			{ name: 'Private Git Registries & SemVer', desc: 'Deploying versioned enterprise packages across private GitLab/GitHub registries with strict SemVer.' },
-			{ name: 'Git Submodules & Monorepos', desc: 'Coordinated multi-repository synchronization and shared library infrastructure.' },
-			{ name: 'Tailwind CSS & ShadCN UI', desc: 'Utility-first modern design systems, accessible UI primitives, and glassmorphism styling.' },
-			{ name: 'Figma to Code Implementation', desc: 'Translating high-fidelity Figma visual designs into pixel-perfect, accessible HTML/CSS components.' },
-			{ name: 'Docker & Containerization', desc: 'Consistent local development environments, containerized services, and CI/CD pipelines.' }
-		]
-	}
-];
+const totalCount = skillCategories.reduce((acc, cat) => acc + cat.items.length, 0);
+const primaryCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((i) => i.tier === 'primary').length, 0);
+const secondaryCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((i) => i.tier === 'secondary').length, 0);
 ---
 
 <BaseLayout
 	title="Technical Capabilities & Skill Matrix | Marcel David Baroi"
-	description="Comprehensive breakdown of technologies, frameworks, relational database architectures, and engineering workflow tools mastered by Marcel David Baroi."
+	description="Comprehensive breakdown of primary production technologies, relational database architectures, and secondary exposure tools mastered by Marcel David Baroi."
 	isWide={true}
 >
 	<div class="skills-page-container">
@@ -84,29 +26,91 @@ const skillCategories = [
 		<header class="skills-hero card">
 			<div class="hero-top-meta">
 				<span class="section-tag font-dot">02 // CAPABILITIES MATRIX</span>
-				<span class="badge-status success font-mono">Production Verified</span>
+				<div class="hero-badges font-mono">
+					<span class="badge-status success font-mono">Production Verified</span>
+					<span class="badge-status triage font-mono">Recruiter Triage Ready</span>
+				</div>
 			</div>
 
 			<h1 class="skills-title font-dot">Technical Capabilities & Skill Matrix</h1>
-			<p class="skills-subtitle font-dot">Full-Stack System Architecture • Reactive Frontends • Secure Data Stores</p>
+			<p class="skills-subtitle font-dot">Primary Production Stack • Secondary Exposure • Enterprise Architectural Depth</p>
 
 			<p class="skills-intro">
-				A comprehensive directory of technologies, architectures, and engineering methodologies refined across enterprise platforms, multi-tenant SaaS systems, and high-performance applications.
+				A rigorous directory of engineering methodologies, reactive frameworks, database architectures, and infrastructure tooling categorized by <strong>Primary Production Drivers</strong> (active focus for immediate hire) versus <strong>Secondary Exposure</strong> (prior systems & legacy migration competencies).
 			</p>
 
-			<div class="skills-quick-jump font-mono">
-				<span class="jump-lbl font-mono">JUMP TO:</span>
-				<a href="#engineering-workflow" class="j-btn">Workflow & Synthesis</a>
-				<a href="#backend-cloud" class="j-btn">Backend & Cloud</a>
-				<a href="#frontend-mobile" class="j-btn">Frontend & Mobile</a>
-				<a href="#devops-infra" class="j-btn">DevOps & Architecture</a>
+			<!-- Recruiter Triage Tiering Callout -->
+			<div class="triage-callout-grid">
+				<div class="triage-card primary-triage">
+					<div class="triage-header">
+						<span class="triage-indicator primary-indicator"></span>
+						<h2 class="triage-title font-dot">Primary Production Stack</h2>
+						<span class="triage-badge font-mono">HIRE ME FOR THIS TODAY</span>
+					</div>
+					<p class="triage-desc">
+						Active daily production drivers with deep architectural ownership. Proven in live enterprise SaaS, multi-tenant PostgreSQL RLS architectures, reactive Vue 3 / Next.js suites, and private SemVer package ecosystems.
+					</p>
+					<div class="triage-stack-pills font-mono">
+						<span class="t-pill">TypeScript</span>
+						<span class="t-pill">Vue 3 / Composition API</span>
+						<span class="t-pill">Quasar Framework</span>
+						<span class="t-pill">React / Next.js</span>
+						<span class="t-pill">PostgreSQL & RLS</span>
+						<span class="t-pill">Supabase Realtime</span>
+						<span class="t-pill">NestJS / Node.js</span>
+						<span class="t-pill">Docker</span>
+					</div>
+				</div>
+
+				<div class="triage-card secondary-triage">
+					<div class="triage-header">
+						<span class="triage-indicator secondary-indicator"></span>
+						<h2 class="triage-title font-dot">Secondary Exposure & Prior Systems</h2>
+						<span class="triage-badge secondary font-mono">PRIOR TOOLS & MIGRATION</span>
+					</div>
+					<p class="triage-desc">
+						Prior production ecosystems, legacy ERP maintenance, and auxiliary tools. Experienced in refactoring legacy procedural/MVC architectures, migrating data models, and cross-platform mobile development.
+					</p>
+					<div class="triage-stack-pills font-mono">
+						<span class="t-pill sec">PHP Core & MVC</span>
+						<span class="t-pill sec">Vue 2 / Vuex</span>
+						<span class="t-pill sec">MongoDB</span>
+						<span class="t-pill sec">React Native</span>
+						<span class="t-pill sec">TypeORM / Prisma</span>
+					</div>
+				</div>
+			</div>
+
+			<!-- Interactive Filter & Navigation Bar -->
+			<div class="filter-and-nav-bar">
+				<div class="filter-tabs-group" role="tablist" aria-label="Filter skills by tier">
+					<button class="filter-tab active font-mono" data-tier-filter="all" role="tab" aria-selected="true">
+						All Capabilities <span class="tab-count font-mono">({totalCount})</span>
+					</button>
+					<button class="filter-tab font-mono" data-tier-filter="primary" role="tab" aria-selected="false">
+						<span class="btn-dot primary"></span>
+						Primary Production Stack <span class="tab-count font-mono">({primaryCount})</span>
+					</button>
+					<button class="filter-tab font-mono" data-tier-filter="secondary" role="tab" aria-selected="false">
+						<span class="btn-dot secondary"></span>
+						Secondary Exposure <span class="tab-count font-mono">({secondaryCount})</span>
+					</button>
+				</div>
+
+				<div class="skills-quick-jump font-mono">
+					<span class="jump-lbl font-mono">JUMP TO:</span>
+					<a href="#engineering-workflow" class="j-btn">⚡ Workflow & AI</a>
+					<a href="#backend-cloud" class="j-btn">⚙️ Backend & Cloud</a>
+					<a href="#frontend-mobile" class="j-btn">💻 Frontend & Mobile</a>
+					<a href="#devops-infra" class="j-btn">🛡️ DevOps & Infra</a>
+				</div>
 			</div>
 		</header>
 
 		<!-- Skill Categories Deep Dive -->
-		<div class="categories-container">
+		<div class="categories-container" id="categories-container">
 			{skillCategories.map((cat, idx) => (
-				<section class="cat-section card" id={cat.id}>
+				<section class="cat-section card" id={cat.id} data-cat-id={cat.id}>
 					<div class="cat-header">
 						<div class="cat-title-wrap">
 							<span class="cat-num font-mono">{`0${idx + 1}`} // {cat.tag}</span>
@@ -119,10 +123,21 @@ const skillCategories = [
 
 					<div class="cat-items-grid">
 						{cat.items.map((item) => (
-							<div class="cat-item-card card">
+							<div
+								class:list={['cat-item-card card', { 'item-primary': item.tier === 'primary', 'item-secondary': item.tier === 'secondary' }]}
+								data-skill-tier={item.tier}
+							>
 								<div class="item-top">
-									<span class="item-dot"></span>
-									<h3 class="item-name">{item.name}</h3>
+									<div class="item-title-row">
+										<span class:list={['item-dot', { 'dot-primary': item.tier === 'primary', 'dot-secondary': item.tier === 'secondary' }]}></span>
+										<h3 class="item-name">{item.name}</h3>
+									</div>
+									<span class:list={['tier-badge font-mono', { 'badge-primary': item.tier === 'primary', 'badge-secondary': item.tier === 'secondary' }]}>
+										{item.tier === 'primary' ? '🟢 PRIMARY PRODUCTION' : '⚪ SECONDARY / PRIOR'}
+									</span>
+								</div>
+								<div class="item-context font-mono">
+									{item.tier === 'primary' ? 'Active Production Driver • Primary Hiring Focus' : 'Prior Production & Legacy Migration Experience'}
 								</div>
 								<p class="item-desc">{item.desc}</p>
 							</div>
@@ -149,6 +164,56 @@ const skillCategories = [
 		</div>
 	</div>
 </BaseLayout>
+
+<script>
+	function setupSkillFilters() {
+		const filterButtons = document.querySelectorAll<HTMLButtonElement>('[data-tier-filter]');
+		const skillCards = document.querySelectorAll<HTMLElement>('[data-skill-tier]');
+		const categorySections = document.querySelectorAll<HTMLElement>('[data-cat-id]');
+
+		filterButtons.forEach((btn) => {
+			btn.addEventListener('click', () => {
+				const selectedTier = btn.getAttribute('data-tier-filter');
+
+				// Update active tab states
+				filterButtons.forEach((b) => {
+					b.classList.remove('active');
+					b.setAttribute('aria-selected', 'false');
+				});
+				btn.classList.add('active');
+				btn.setAttribute('aria-selected', 'true');
+
+				// Filter skill cards
+				skillCards.forEach((card) => {
+					const cardTier = card.getAttribute('data-skill-tier');
+					if (selectedTier === 'all' || cardTier === selectedTier) {
+						card.style.display = 'flex';
+					} else {
+						card.style.display = 'none';
+					}
+				});
+
+				// Check category visibility (hide sections that have 0 visible cards)
+				categorySections.forEach((sec) => {
+					const visibleCards = sec.querySelectorAll<HTMLElement>('[data-skill-tier]:not([style*="display: none"])');
+					if (visibleCards.length === 0) {
+						sec.style.display = 'none';
+					} else {
+						sec.style.display = 'flex';
+					}
+				});
+			});
+		});
+	}
+
+	// Initialize on page load and view transitions
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', setupSkillFilters);
+	} else {
+		setupSkillFilters();
+	}
+	document.addEventListener('astro:page-load', setupSkillFilters);
+</script>
 
 <style>
 	.skills-page-container {
@@ -195,7 +260,7 @@ const skillCategories = [
 		border-radius: 16px;
 		display: flex;
 		flex-direction: column;
-		gap: 1.15rem;
+		gap: 1.35rem;
 		background: linear-gradient(135deg, var(--card-bg) 0%, rgba(180, 33, 53, 0.03) 100%);
 		border: 1px solid rgba(180, 33, 53, 0.2);
 	}
@@ -208,6 +273,13 @@ const skillCategories = [
 		flex-wrap: wrap;
 	}
 
+	.hero-badges {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
 	.badge-status.success {
 		font-size: 0.72rem;
 		padding: 0.2rem 0.65rem;
@@ -215,6 +287,16 @@ const skillCategories = [
 		background: rgba(46, 125, 50, 0.12);
 		color: #2e7d32;
 		border: 1px solid rgba(46, 125, 50, 0.25);
+		font-weight: 700;
+	}
+
+	.badge-status.triage {
+		font-size: 0.72rem;
+		padding: 0.2rem 0.65rem;
+		border-radius: 9999px;
+		background: rgba(180, 33, 53, 0.08);
+		color: var(--accent);
+		border: 1px solid rgba(180, 33, 53, 0.25);
 		font-weight: 700;
 	}
 
@@ -234,7 +316,188 @@ const skillCategories = [
 		font-size: 0.92rem;
 		line-height: 1.65;
 		color: var(--text-muted);
-		max-width: 860px;
+		max-width: 920px;
+	}
+
+	/* Recruiter Triage Callout Cards */
+	.triage-callout-grid {
+		display: grid;
+		grid-template-columns: repeat(2, 1fr);
+		gap: 1.25rem;
+		margin-top: 0.5rem;
+	}
+
+	@media (max-width: 768px) {
+		.triage-callout-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	.triage-card {
+		padding: 1.35rem 1.5rem;
+		border-radius: 12px;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		transition: all 0.2s ease;
+	}
+
+	.triage-card.primary-triage {
+		background: rgba(46, 125, 50, 0.05);
+		border: 1px solid rgba(46, 125, 50, 0.25);
+	}
+
+	.triage-card.primary-triage:hover {
+		border-color: rgba(46, 125, 50, 0.45);
+		box-shadow: 0 4px 12px rgba(46, 125, 50, 0.08);
+	}
+
+	.triage-card.secondary-triage {
+		background: rgba(95, 80, 56, 0.04);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+	}
+
+	.triage-card.secondary-triage:hover {
+		border-color: rgba(95, 80, 56, 0.3);
+	}
+
+	.triage-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.triage-indicator {
+		width: 8px;
+		height: 8px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+
+	.triage-indicator.primary-indicator {
+		background: #2e7d32;
+		box-shadow: 0 0 6px rgba(46, 125, 50, 0.5);
+	}
+
+	.triage-indicator.secondary-indicator {
+		background: #8c8273;
+	}
+
+	.triage-title {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: var(--text-main);
+		flex: 1;
+	}
+
+	.triage-badge {
+		font-size: 0.65rem;
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		background: rgba(46, 125, 50, 0.12);
+		color: #2e7d32;
+		border: 1px solid rgba(46, 125, 50, 0.25);
+	}
+
+	.triage-badge.secondary {
+		background: rgba(95, 80, 56, 0.08);
+		color: var(--text-muted);
+		border: 1px solid rgba(95, 80, 56, 0.15);
+	}
+
+	.triage-desc {
+		font-size: 0.84rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	.triage-stack-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem;
+		margin-top: 0.25rem;
+	}
+
+	.t-pill {
+		font-size: 0.72rem;
+		padding: 0.2rem 0.55rem;
+		border-radius: 6px;
+		background: rgba(46, 125, 50, 0.08);
+		color: #2e7d32;
+		border: 1px solid rgba(46, 125, 50, 0.2);
+		font-weight: 600;
+	}
+
+	.t-pill.sec {
+		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-muted);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	/* Filter and Navigation Bar */
+	.filter-and-nav-bar {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		padding-top: 1rem;
+		border-top: 1px dashed rgba(95, 80, 56, 0.15);
+	}
+
+	.filter-tabs-group {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.filter-tab {
+		font-family: inherit;
+		font-size: 0.8rem;
+		padding: 0.45rem 0.9rem;
+		border-radius: 8px;
+		background: rgba(95, 80, 56, 0.06);
+		color: var(--text-muted);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		transition: all 0.15s ease;
+		font-weight: 600;
+	}
+
+	.filter-tab:hover {
+		background: rgba(95, 80, 56, 0.1);
+		color: var(--text-main);
+	}
+
+	.filter-tab.active {
+		background: var(--text-main);
+		color: #fffdfa;
+		border-color: var(--text-main);
+	}
+
+	.tab-count {
+		opacity: 0.8;
+		font-size: 0.75rem;
+	}
+
+	.btn-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+	}
+
+	.btn-dot.primary {
+		background: #2e7d32;
+	}
+
+	.btn-dot.secondary {
+		background: #8c8273;
 	}
 
 	.skills-quick-jump {
@@ -242,8 +505,6 @@ const skillCategories = [
 		align-items: center;
 		gap: 0.5rem;
 		flex-wrap: wrap;
-		padding-top: 0.85rem;
-		border-top: 1px dashed rgba(95, 80, 56, 0.15);
 	}
 
 	.jump-lbl {
@@ -283,6 +544,7 @@ const skillCategories = [
 		gap: 1.25rem;
 		background: var(--card-bg);
 		border: 1px solid var(--card-border);
+		scroll-margin-top: 5rem;
 	}
 
 	.cat-header {
@@ -338,33 +600,67 @@ const skillCategories = [
 	}
 
 	.cat-item-card {
-		padding: 1.25rem 1.4rem;
+		padding: 1.35rem 1.45rem;
 		border-radius: 12px;
 		background: var(--card-bg);
 		border: 1px solid var(--card-border);
 		display: flex;
 		flex-direction: column;
-		gap: 0.5rem;
-		transition: all 0.15s ease;
+		gap: 0.6rem;
+		transition: all 0.2s ease;
 	}
 
-	.cat-item-card:hover {
-		border-color: rgba(180, 33, 53, 0.4);
+	.cat-item-card.item-primary {
+		background: rgba(46, 125, 50, 0.03);
+		border-color: rgba(46, 125, 50, 0.2);
+	}
+
+	.cat-item-card.item-primary:hover {
+		border-color: rgba(46, 125, 50, 0.5);
+		box-shadow: 0 4px 12px rgba(46, 125, 50, 0.08);
+		transform: translateY(-2px);
+	}
+
+	.cat-item-card.item-secondary {
+		background: rgba(95, 80, 56, 0.02);
+		border-color: rgba(95, 80, 56, 0.12);
+		opacity: 0.92;
+	}
+
+	.cat-item-card.item-secondary:hover {
+		border-color: rgba(95, 80, 56, 0.3);
+		opacity: 1;
 		transform: translateY(-2px);
 	}
 
 	.item-top {
 		display: flex;
 		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		flex-wrap: wrap;
+	}
+
+	.item-title-row {
+		display: flex;
+		align-items: center;
 		gap: 0.5rem;
 	}
 
 	.item-dot {
-		width: 6px;
-		height: 6px;
+		width: 7px;
+		height: 7px;
 		border-radius: 50%;
-		background: var(--accent);
 		flex-shrink: 0;
+	}
+
+	.item-dot.dot-primary {
+		background: #2e7d32;
+		box-shadow: 0 0 5px rgba(46, 125, 50, 0.5);
+	}
+
+	.item-dot.dot-secondary {
+		background: #8c8273;
 	}
 
 	.item-name {
@@ -373,8 +669,34 @@ const skillCategories = [
 		color: var(--text-main);
 	}
 
+	.tier-badge {
+		font-size: 0.65rem;
+		padding: 0.15rem 0.45rem;
+		border-radius: 4px;
+		font-weight: 700;
+		letter-spacing: 0.03em;
+	}
+
+	.tier-badge.badge-primary {
+		color: #2e7d32;
+		background: rgba(46, 125, 50, 0.1);
+		border: 1px solid rgba(46, 125, 50, 0.22);
+	}
+
+	.tier-badge.badge-secondary {
+		color: #746855;
+		background: rgba(95, 80, 56, 0.06);
+		border: 1px solid rgba(95, 80, 56, 0.14);
+	}
+
+	.item-context {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		opacity: 0.9;
+	}
+
 	.item-desc {
-		font-size: 0.82rem;
+		font-size: 0.83rem;
 		line-height: 1.55;
 		color: var(--text-muted);
 	}

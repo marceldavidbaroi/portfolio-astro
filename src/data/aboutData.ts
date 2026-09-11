@@ -12,11 +12,21 @@ export interface PrincipleItem {
 	desc: string;
 }
 
+export interface SkillItem {
+	name: string;
+	desc: string;
+	tier: 'primary' | 'secondary'; // 'primary' = Primary Production Stack ("Hire me for this today"), 'secondary' = Secondary Exposure ("Prior tools & migration")
+	badge?: string;
+}
+
 export interface SkillCategoryGroup {
+	id: string;
 	category: string;
 	tag: string;
 	iconType: 'zap' | 'database' | 'layout' | 'shield';
-	items: string[];
+	icon?: string;
+	description: string;
+	items: SkillItem[];
 }
 
 export interface CompactCertItem {
@@ -76,55 +86,193 @@ export const principles: PrincipleItem[] = [
 
 export const skillCategories: SkillCategoryGroup[] = [
 	{
+		id: 'engineering-workflow',
 		category: 'Architecture, Synthesis & AI Workflows',
 		tag: 'CORE ENGINE',
 		iconType: 'zap',
+		icon: '⚡',
+		description: 'Core architectural methodologies and engineering processes applied across production ecosystems.',
 		items: [
-			'Autonomous Agent Architecture & Synthesis Workflows',
-			'Enterprise System Architecture & Microservices',
-			'Relational Data Modeling & Multi-Tenant Database Design',
-			'State Management & Event-Driven Reactive Flows',
-			'High-Fidelity UI/UX & Responsive Spatial Systems'
+			{
+				name: 'Architecture-First AI Synthesis',
+				desc: 'Pre-planning schemas, dependency trees, and API contracts before code generation (Cursor Agentic, Copilot Blueprints).',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Relational Data Modeling & 3NF',
+				desc: 'Third Normal Form (3NF) relational design, explicit constraints, foreign key cascades, and complex indexing.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Multi-Tenant SaaS Security & RLS',
+				desc: 'Strict organizational data segregation, tenant context injection, and role-based access control (RBAC).',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Modular Enterprise Package Architecture',
+				desc: 'Extracting reusable enterprise domain logic into versioned private npm packages governed by SemVer.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Systematic Code Validation & Testing',
+				desc: 'Rigorous regression testing, compile-time type verification, edge-case validation, and clean code hygiene.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Rapid MVP Scaffolding & Prototyping',
+				desc: 'Accelerated delivery of production-ready SaaS foundations and end-to-end interactive prototypes.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			}
 		]
 	},
 	{
-		category: 'Backend & Cloud Services',
+		id: 'backend-cloud',
+		category: 'Backend, Database & Cloud Services',
 		tag: 'DATA & APIS',
 		iconType: 'database',
+		icon: '⚙️',
+		description: 'Server architectures, secure data access layers, relational database engines, and cloud persistence.',
 		items: [
-			'PHP (Core & MVC Architecture)',
-			'PostgreSQL & Complex Query Optimization',
-			'Supabase (Row-Level Security & Realtime)',
-			'NestJS & Node.js Microservices',
-			'Express & RESTful API Gateways',
-			'TypeORM, Prisma & Relational Migrations',
-			'MongoDB Document Stores'
+			{
+				name: 'PostgreSQL & Database Optimization',
+				desc: 'Relational schema design, complex JOINs, query indexing, execution plans, and composite indexes.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Supabase (Realtime & Row-Level Security)',
+				desc: 'Multi-tenant data isolation, strict PostgreSQL RLS policies, Auth workflows, and Realtime event streaming.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'NestJS & Node.js Microservices',
+				desc: 'Enterprise modular backend architectures, dependency injection, middleware filters, and REST gateways.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Express & RESTful API Gateways',
+				desc: 'Lightweight API endpoints, JWT token authentication, route guard middleware, and CORS governance.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'PHP (Core & MVC Architecture)',
+				desc: 'Enterprise business logic, custom MVC engines, ERP costing routines, and legacy codebase migration.',
+				tier: 'secondary',
+				badge: 'Prior / Migration'
+			},
+			{
+				name: 'TypeORM & Prisma ORM',
+				desc: 'Type-safe database migrations, entity relationships, query builders, and database seeding routines.',
+				tier: 'secondary',
+				badge: 'Prior Tooling'
+			},
+			{
+				name: 'MongoDB Document Stores',
+				desc: 'Document data modeling, schema indexing, aggregation pipelines, and flexible JSON datastores.',
+				tier: 'secondary',
+				badge: 'Prior Tooling'
+			}
 		]
 	},
 	{
+		id: 'frontend-mobile',
 		category: 'Frontend & Mobile Ecosystem',
 		tag: 'USER INTERFACES',
 		iconType: 'layout',
+		icon: '💻',
+		description: 'Modern reactive component frameworks, strict type-safe interfaces, state stores, and cross-platform apps.',
 		items: [
-			'Vue.js (v2 / v3 Composition API)',
-			'Quasar Framework (SPA / PWA Suites)',
-			'TypeScript & Strict Compile-Time Contracts',
-			'React & Next.js (App Router & SSR)',
-			'React Native Cross-Platform Mobile',
-			'Pinia & Vuex Centralized Reactive Stores'
+			{
+				name: 'TypeScript & JavaScript (ES6+)',
+				desc: 'Strict compile-time type safety, generic interfaces, utility types, and asynchronous concurrency.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Vue 3 (Composition API & Script Setup)',
+				desc: 'Reactive component architectures, custom composables, reusable directives, and high-performance render trees.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Quasar Framework (SPA / PWA Suites)',
+				desc: 'Enterprise SPA/PWA application suites, table data virtualization, tree shaking, and responsive layouts.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'React & Next.js (App Router & SSR)',
+				desc: 'Server-side rendering, React Server Components (RSC), dynamic routing, and performant state orchestration.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Tailwind CSS & Modern Design Systems',
+				desc: 'Utility-first modern design systems, accessible UI primitives, design tokens, and glassmorphism styling.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Pinia Reactive State Management',
+				desc: 'Centralized reactive store design, persistent state plugins, action dispatchers, and modular state trees.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Vue.js 2 & Vuex (Legacy Maintenance)',
+				desc: 'Legacy codebase maintenance, legacy ERP UI support, and modernization paths to Vue 3 Composition API.',
+				tier: 'secondary',
+				badge: 'Prior / Migration'
+			},
+			{
+				name: 'React Native & Mobile Development',
+				desc: 'Cross-platform mobile applications, native bridges, offline persistence, and touch ergonomics.',
+				tier: 'secondary',
+				badge: 'Secondary Exposure'
+			}
 		]
 	},
 	{
+		id: 'devops-infra',
 		category: 'Architecture, Versioning & DevOps',
 		tag: 'INFRASTRUCTURE',
 		iconType: 'shield',
+		icon: '🛡️',
+		description: 'Enterprise repository governance, versioned packaging, containerization, and multi-tenant security.',
 		items: [
-			'Multi-Tenant SaaS Data Segregation (RLS)',
-			'Private Git Registries & Semantic Versioning (SemVer)',
-			'Git Submodules & Multi-Repo Orchestration',
-			'Tailwind CSS & Modern Utility UI Primitives',
-			'Figma-to-Code Accessible Component Translation',
-			'Docker Containerization & Dev Environments'
+			{
+				name: 'Private Git Registries & SemVer Governance',
+				desc: 'Deploying versioned enterprise packages across private GitLab/GitHub registries with strict SemVer.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Docker & Containerization',
+				desc: 'Consistent local development environments, containerized multi-tier services, and CI/CD pipelines.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Git Submodules & Multi-Repo Orchestration',
+				desc: 'Coordinated multi-repository synchronization, mono-repo architectures, and shared core library infrastructure.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			},
+			{
+				name: 'Figma-to-Code Accessible Translation',
+				desc: 'Translating high-fidelity Figma visual designs into pixel-perfect, accessible HTML/CSS components.',
+				tier: 'primary',
+				badge: 'Core Driver'
+			}
 		]
 	}
 ];
