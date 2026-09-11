@@ -1,0 +1,21 @@
+---
+description: UI and redesign work — load system tokens plus one page spec only
+globs:
+  - src/pages/**/*.astro
+  - src/layouts/**/*.astro
+  - src/components/**/*.astro
+  - redesign/**/*.md
+alwaysApply: false
+---
+
+# UI work
+
+Read [redesign/system.md](redesign/system.md) and **only** the page spec that matches the file being edited:
+
+- Home → `redesign/home.md`
+- Work list / case study chrome → `redesign/work.md`
+- Header / nav / command menu → `redesign/header.md`
+- About → `redesign/about.md`
+
+Do not load all redesign specs for a single-page change.
+Do not open case-study markdown or project-standards unless the task is about content.

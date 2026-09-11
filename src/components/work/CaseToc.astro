@@ -1,0 +1,84 @@
+---
+interface TocItem {
+	id: string;
+	text: string;
+}
+
+interface Props {
+	items: TocItem[];
+}
+
+const { items } = Astro.props;
+---
+
+<aside class="toc" aria-label="On this page">
+	<p class="mini font-mono">On this page</p>
+	<ul>
+		{items.map((item) => (
+			<li>
+				<a class="font-mono" href={`#${item.id}`}>{item.text}</a>
+			</li>
+		))}
+	</ul>
+</aside>
+
+<script>
+	function initToc() {
+		const links = document.querySelectorAll<HTMLAnchorElement>('.toc a[href^="#"]');
+		if (links.length === 0) return;
+		const ids = [...links].map((a) => a.getAttribute('href')!.slice(1));
+		const obs = new IntersectionObserver(
+			(entries) => {
+				const vis = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+				if (!vis) return;
+				links.forEach((a) => a.classList.toggle('is-on', a.getAttribute('href') === `#${vis.target.id}`));
+			},
+			{ rootMargin: '0px 0px -70% 0px', threshold: [0, 0.2, 0.6] }
+		);
+		ids.forEach((id) => {
+			const el = document.getElementById(id);
+			if (el) obs.observe(el);
+		});
+	}
+
+	initToc();
+</script>
+
+<style>
+	.toc {
+		position: sticky;
+		top: 0.75rem;
+		z-index: 30;
+		padding-top: 0.2rem;
+	}
+
+	.toc ul {
+		list-style: none;
+		margin: 0.45rem 0 0;
+		padding: 0;
+		border-left: 1px solid rgba(95, 80, 56, 0.14);
+	}
+
+	.toc a {
+		display: block;
+		padding: 0.28rem 0 0.28rem 0.75rem;
+		font-size: var(--type-kicker);
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-left: 2px solid transparent;
+		margin-left: -1px;
+	}
+
+	.toc a.is-on,
+	.toc a:hover {
+		color: var(--accent);
+		border-left-color: var(--accent);
+	}
+
+	@media (max-width: 1200px) {
+		.toc {
+			display: none;
+		}
+	}
+</style>

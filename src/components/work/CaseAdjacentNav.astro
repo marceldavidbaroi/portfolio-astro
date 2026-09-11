@@ -1,0 +1,80 @@
+---
+import { site } from '../../data/site';
+
+interface Neighbor {
+	id: string;
+	data: { title: string };
+}
+
+interface Props {
+	prevProject: Neighbor | null;
+	nextProject: Neighbor | null;
+}
+
+const { prevProject, nextProject } = Astro.props;
+---
+
+<nav class="adjacent">
+	{prevProject ? (
+		<a href={`/work/${prevProject.id}`}>
+			<span class="mini font-mono">Previous</span>
+			<span>{prevProject.data.title}</span>
+		</a>
+	) : <span></span>}
+	{nextProject ? (
+		<a href={`/work/${nextProject.id}`} class="next">
+			<span class="mini font-mono">Next</span>
+			<span>{nextProject.data.title}</span>
+		</a>
+	) : <span></span>}
+</nav>
+
+<section class="close" aria-label="Contact">
+	<p class="close-kicker font-mono">Case closed</p>
+	<p class="close-title">More work.</p>
+	<div class="hero-actions">
+		<a class="text-link font-mono" href="/work">All work →</a>
+		<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email me</a>
+	</div>
+</section>
+
+<style>
+	.adjacent {
+		display: grid;
+		grid-template-columns: 1fr 1fr;
+		gap: 1rem;
+		margin-top: 2.5rem;
+		padding-top: 1.15rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.adjacent a {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		text-decoration: none;
+		color: inherit;
+		min-width: 0;
+	}
+
+	.adjacent .next {
+		text-align: right;
+	}
+
+	.adjacent a:hover span:last-child {
+		color: var(--accent);
+	}
+
+	.hero-actions {
+		margin-top: 1rem;
+	}
+
+	@media (max-width: 900px) {
+		.adjacent {
+			grid-template-columns: 1fr;
+		}
+		.adjacent .next {
+			text-align: left;
+		}
+	}
+</style>

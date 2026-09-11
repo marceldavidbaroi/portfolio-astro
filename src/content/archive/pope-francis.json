@@ -1,0 +1,159 @@
+{
+	"id": "pope-francis",
+	"order": 2,
+	"kind": "memoir",
+	"tag": "HISTORIC EVENT // DEC 2, 2017",
+	"title": "Pope Francis Apostolic Visit & International Security Protocol Force",
+	"subtitle": "Selected as Core Volunteer for 100,000-Attendee Papal Mass & 10,000-Youth NDC Gathering",
+	"icon": "🕊️",
+	"body": "During Pope Francis's historic apostolic journey to Myanmar and Bangladesh in late 2017 (themed \"Harmony and Peace\"), I was given the rare honor of being selected as a primary student volunteer. One afternoon, Father Susanto called me and 19 peers using the famed college pink slips to invite us to serve as official volunteers for the 10,000-youth gathering hosted right on the Notre Dame College campus. \n\nShortly after, Father Susanto selected 6 of us from that group into the core volunteer force for the main Papal Mass at Ramna Race Course, attended by over 100,000 people. To prepare for this massive global event, we underwent intensive seminars and training sessions over multiple weeks, coordinating with international security details and learning large-scale protocol management. Witnessing global diplomacy, inter-faith harmony, and international event coordination firsthand was one of the most formative milestones of my college life.",
+	"btnText": "Read Diplomatic & Protocol Memoir →",
+	"dedicatedUrl": "/archive/pope-francis-visit-2017",
+	"slug": "pope-francis-visit-2017",
+	"thumbnailId": "pope-francis-ndc-stage",
+	"stats": [
+		{
+			"value": "100,000+",
+			"label": "Papal Mass Assembly",
+			"sub": "Suhrawardy Udyan (Ramna)"
+		},
+		{
+			"value": "10,000",
+			"label": "Interfaith Youth",
+			"sub": "Notre Dame College Grounds"
+		},
+		{
+			"value": "16 Priests",
+			"label": "Ordained at Ramna",
+			"sub": "5 Holy Cross Fathers"
+		},
+		{
+			"value": "6 of 20",
+			"label": "Selected Core Force",
+			"sub": "NDC Student Protocol Unit"
+		}
+	],
+	"phases": [
+		{
+			"phaseTag": "PROLOGUE // 26 — 30 NOVEMBER 2017",
+			"phaseTitle": "The Apostolic Journey to Myanmar & Bangladesh",
+			"headline": "Messenger of Peace: \"Shompreeti o Shanti\" (Harmony and Peace)",
+			"subtitle": "The Second Papal Visit in Bangladesh’s History Following Pope John Paul II in 1986",
+			"icon": "🕊️",
+			"storyParagraphs": [
+				"On 26 November 2017, Pope Francis departed Rome on an apostolic pilgrimage across South Asia to Myanmar and Bangladesh as a global messenger of peace. Carrying the official Bengali theme \"Harmony and Peace\" (সম্প্রীতি ও শান্তি / Shompreeti o Shanti), the historic voyage marked only the second time in history that a Bishop of Rome stepped onto Bangladeshi soil, following the historic visit of Pope John Paul II in 1986.",
+				"For Bangladesh—a pluralistic nation where the Christian community represents under one percent of the population—the visit carried monumental diplomatic, moral, and inter-religious significance. The world’s gaze was fixed on Dhaka as Pope Francis arrived to champion interfaith solidarity, social justice, and humanitarian empathy during a critical geopolitical juncture."
+			],
+			"reflectionQuote": "\"Carrying the theme 'Harmony and Peace' (Shompreeti o Shanti), Pope Francis arrived as a messenger of unity in only the second papal visit in Bangladesh's history.\"",
+			"imageId": "pope-francis-logo-2017",
+			"imageCaption": "Official Visit Emblem: The dove of peace bearing the cross and national lotus in flag colors (\"সম্প্রীতি ও শান্তি\").",
+			"isEmblem": true
+		},
+		{
+			"phaseTag": "THE SELECTION // NOVEMBER 2017",
+			"phaseTitle": "The Pink Slip Summons & Multi-Agency Protocol Training",
+			"headline": "The Call of Father Susanto & The Elite 6-Member Core Force",
+			"subtitle": "Vetted by Holy Cross Leadership for Joint Operations with Vatican & State Security",
+			"icon": "📜",
+			"storyParagraphs": [
+				"At Notre Dame College, the legendary \"pink slips\" were historically known as disciplinary summons that sent chills down any student’s spine. But on one memorable November afternoon, a pink slip arrived with a life-changing purpose. Father Susanto, CSC, summoned 20 of us to his office. Standing before the administration, we learned we had been handpicked to serve as official student volunteers for the upcoming youth gathering on our campus grounds.",
+				"A few days later, Father Susanto called 6 of us back into his room. He presented an astonishing assignment: we had been chosen to join the elite core volunteer force for the main Papal Mass at Suhrawardy Udyan (Ramna). Many hundreds had applied across parishes and institutions nationwide, yet 6 second-year college students from Notre Dame College were entrusted with direct accreditation at the state level. The emotion and gravity of that moment cannot be expressed in words.",
+				"To prepare for such monumental responsibility, we underwent multi-week intensive training seminars and briefings. We coordinated alongside Bangladesh’s Special Security Force (SSF), the Presidential Guard Regiment (PGR), the Dhaka Metropolitan Police (DMP), and the Vatican Gendarmerie / Swiss Guard command. We mastered crowd bottleneck mitigation, ID verification protocols, dog-squad sanitization procedures, and emergency humanitarian corridors."
+			],
+			"reflectionQuote": "\"One day Father Susanto called 20 of us with the pink slip and asked if we would volunteer. After some days, he called 6 of us to join the main mass volunteer force. I was shocked and profoundly honored.\""
+		},
+		{
+			"phaseTag": "DECEMBER 01, 2017 // HISTORIC RAMNA MASS",
+			"phaseTitle": "The 100,000-Attendee Papal Mass at Suhrawardy Udyan",
+			"headline": "Public Mass & Historic Priesthood Ordination at Ramna",
+			"subtitle": "Gathering at the Landmark Grounds of Bangladesh’s Independence & March 7 Heritage",
+			"icon": "⛪",
+			"storyParagraphs": [
+				"On the brisk morning of Friday, 1 December 2017, our duties commenced before dawn at Suhrawardy Udyan (historically the Ramna Race Course). The venue possessed profound historical weight—it was the sacred ground where Bangabandhu Sheikh Mujibur Rahman delivered the historic March 7 speech in 1971 and where the instrument of surrender was signed.",
+				"Over 100,000 faithful, international diplomats, dignitaries, and cardinals converged from all eight Catholic dioceses of Bangladesh. During the solemn liturgy, Pope Francis conducted a rare public ordination outside the Vatican, ordaining 16 new priests—including 5 from the Congregation of Holy Cross.",
+				"As part of the core student protocol unit stationed inside the inner perimeter, we managed crowd access, credentialed gates, and emergency corridors. Later that evening at the Archbishop's House in Kakrail during an interfaith assembly, Pope Francis met and embraced a delegation of Rohingya refugees, publicly uttering the name \"Rohingya\" for the first time in a defining moment of global moral solidarity."
+			],
+			"reflectionQuote": "\"More than 100,000 people attended the meeting at Ramna Race Course. Witnessing the ordination of sixteen priests and maintaining security corridors gave me a rare masterclass in large-scale systems execution.\"",
+			"imageId": "pope-francis-popemobile",
+			"imageCaption": "Pope Francis greeting thousands of faithful and youth from the Popemobile during the historic public assembly."
+		},
+		{
+			"phaseTag": "DECEMBER 02, 2017 // NOTRE DAME COLLEGE",
+			"phaseTitle": "The 10,000-Youth Interreligious Gathering on NDC Grounds",
+			"headline": "Pope Francis on the Notre Dame College Campus",
+			"subtitle": "Catholic, Muslim, Hindu & Indigenous Youth Celebrating Under One Sky",
+			"icon": "🏛️",
+			"storyParagraphs": [
+				"On Saturday, 2 December 2017, the pinnacle of the pastoral visit occurred directly on the sports ground of Notre Dame College. Over 10,000 young people from across Bangladesh assembled under a magnificent blue-and-white canopy. Uniquely, the audience represented a true reflection of the nation: Catholic youth celebrating shoulder-to-shoulder with Muslim, Hindu, and indigenous peers from colleges and universities nationwide.",
+				"When Pope Francis stepped onto the stage accompanied by Cardinal Patrick D'Rozario and security officers, the college erupted in jubilant cheers and traditional cultural melodies. Our student volunteer force stood vigilant along the main access stage and aisles, ensuring security cordons remained intact while allowing the Holy Father to interact warmly with students.",
+				"In his historic address, Pope Francis famously urged the youth not to become \"couch potatoes\" wandering aimlessly through life. He reminded students that God embedded a spiritual \"software\" inside every human soul that requires continuous updates through prayer, service, and dialogue with parents and grandparents. During the event, the Pope also blessed the foundation cornerstones of both Notre Dame College and the newly established Notre Dame University Bangladesh (NDUB)."
+			],
+			"reflectionQuote": "\"Pope Francis reminded us that God placed a spiritual 'software' inside us that requires regular updates through good deeds and dialogue across generations. Standing on our own campus grounds, it was an unforgettable privilege.\"",
+			"imageId": "pope-francis-ndc-stage",
+			"imageCaption": "Pope Francis on the Notre Dame College stage with Cardinal Patrick D’Rozario, Vatican Swiss Guards, and Bangladesh SSF officers."
+		}
+	],
+	"pillars": [
+		{
+			"title": "International Protocol & High-Stakes Coordination",
+			"tag": "DISCIPLINE & PROTOCOL",
+			"icon": "🛡️",
+			"desc": "Working directly alongside joint commands of the Vatican Gendarmerie, Bangladesh Special Security Force (SSF), and Presidential Guard Regiment taught me the rigor of meticulous preparation, absolute composure under high pressure, and strict adherence to protocol."
+		},
+		{
+			"title": "Pluralism & Authentic Social Harmony",
+			"tag": "INTERFAITH BRIDGES",
+			"icon": "🤝",
+			"desc": "Witnessing 10,000 Muslim, Hindu, Buddhist, and Christian youth celebrating united on the Notre Dame College grounds proved that diversity is a source of collective strength, and that empathy and mutual respect build lasting harmony across communities."
+		},
+		{
+			"title": "The Nobility of Silent Stewardship",
+			"tag": "SERVANT LEADERSHIP",
+			"icon": "⭐",
+			"desc": "Being chosen as 1 of 6 core students out of thousands of applicants instilled profound humility and moral responsibility. True leadership is not seeking the spotlight, but faithfully serving with integrity and quietly safeguarding the mission."
+		}
+	],
+	"pageTitle": "Pope Francis Apostolic Visit 2017 Memoir | Marcel David Baroi",
+	"pageDescription": "Official historical memoir of serving on the 6-member core student protocol volunteer force during Pope Francis's historic 2017 Apostolic Visit to Bangladesh.",
+	"heroTag": "01 // DIPLOMATIC & CAMPUS MEMOIR",
+	"heroBadge": "26 Nov — 02 Dec 2017",
+	"memoirTitle": "Pope Francis Apostolic Visit & International Protocol Force",
+	"memoirSubtitle": "\"Harmony and Peace\" (Shompreeti o Shanti): Serving on the 6-Member Core Student Protocol Force for the 100,000-Attendee Ramna Mass & 10,000-Youth NDC Gathering",
+	"breadcrumbLabel": "Pope Francis Apostolic Visit 2017",
+	"executiveQuote": "“Many people applied to work for the Pope where 20 of us were invited by Father Susanto, and later 6 of us were appointed to the main mass volunteer force. Coordinating with international security details and witnessing steps to organize such a mass gave me an experience that cannot be expressed in words.”",
+	"reflectionsTag": "02 // FORMATIVE LESSONS & MORAL REFLECTIONS",
+	"reflectionsTitle": "Enduring Impact on Character, Discipline & Moral Conviction",
+	"reflectionsDesc": "Serving at the center of this historic papal visit fundamentally shaped my moral perspective on servant leadership, inter-faith harmony, and international protocol discipline.",
+	"authorMeta": [
+		{
+			"label": "VOLUNTEER & NARRATOR:",
+			"value": "Marcel David Baroi",
+			"role": "HSC Batch '19, Notre Dame College"
+		},
+		{
+			"label": "SELECTION:",
+			"value": "Handpicked by Fr. Susanto, CSC (6 Core Force)"
+		},
+		{
+			"label": "VENUES:",
+			"value": "Suhrawardy Udyan (Ramna) • Notre Dame College"
+		}
+	],
+	"crossNav": [
+		{
+			"lbl": "HISTORIC CONTEMPORARY",
+			"href": "/archive/road-safety-movement-2018",
+			"text": "2018 Student Road Safety Movement →"
+		},
+		{
+			"lbl": "PARENT ARCHIVE",
+			"href": "/archive",
+			"text": "← Return to All Personal Archives"
+		},
+		{
+			"lbl": "ACADEMIC FOUNDATION",
+			"href": "/education/hsc-science",
+			"text": "Notre Dame College (HSC Science) →"
+		}
+	]
+}

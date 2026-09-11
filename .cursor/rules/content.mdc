@@ -1,0 +1,16 @@
+---
+description: Content and data collections — do not rewrite unless asked
+globs:
+  - src/content/**
+  - src/data/**
+  - src/content.config.ts
+alwaysApply: false
+---
+
+# Content work
+
+Do not rewrite portfolio content, case studies, or data files unless the user explicitly asks.
+
+When editing projects under `src/content/projects/`, follow [.agents/rules/project-standards.md](.agents/rules/project-standards.md).
+
+Do not load all redesign page specs for content-only edits.

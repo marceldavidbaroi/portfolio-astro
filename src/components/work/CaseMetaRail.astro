@@ -1,0 +1,60 @@
+---
+interface Props {
+	role?: string;
+	timeline?: string;
+	classLabel: string;
+}
+
+const { role, timeline, classLabel } = Astro.props;
+---
+
+<dl class="meta-rail">
+	{role && (
+		<div>
+			<dt class="font-mono">Role</dt>
+			<dd>{role}</dd>
+		</div>
+	)}
+	{timeline && (
+		<div>
+			<dt class="font-mono">Timeline</dt>
+			<dd>{timeline}</dd>
+		</div>
+	)}
+	<div>
+		<dt class="font-mono">Class</dt>
+		<dd>{classLabel}</dd>
+	</div>
+</dl>
+
+<style>
+	.meta-rail {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 1rem 1.5rem;
+		margin: 1.75rem 0 0;
+		padding: 1.1rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.meta-rail dt {
+		font-size: var(--type-caption);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		margin: 0 0 0.3rem;
+	}
+
+	.meta-rail dd {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.4;
+	}
+
+	@media (max-width: 900px) {
+		.meta-rail {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

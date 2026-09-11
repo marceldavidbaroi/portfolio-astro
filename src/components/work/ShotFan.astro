@@ -1,0 +1,99 @@
+---
+interface Props {
+	images?: string[];
+	phone?: boolean;
+	size?: 'row' | 'hero';
+}
+
+const { images = [], phone = false, size = 'row' } = Astro.props;
+const thumbs = images.filter((img) => img && !img.includes('thumb-') && !img.includes('dummy')).slice(0, 3);
+const layers = thumbs.length > 0 ? thumbs : [null];
+---
+
+<div class:list={['shot-stack', { 'is-phone': phone, 'is-hero': size === 'hero' }]} aria-hidden="true">
+	{layers.map((src, i) => (
+		<span class:list={['shot-layer', { 'is-empty': !src }]} style={`--i: ${i}`}>
+			{src && <img src={src} alt="" loading={size === 'hero' ? 'eager' : 'lazy'} />}
+		</span>
+	))}
+</div>
+
+<style>
+	.shot-stack {
+		--w: 86px;
+		--h: 56px;
+		position: relative;
+		width: calc(var(--w) + 20px);
+		height: calc(var(--h) + 14px);
+		justify-self: end;
+		isolation: isolate;
+		flex-shrink: 0;
+	}
+
+	.shot-stack.is-phone {
+		--w: 40px;
+		--h: 70px;
+		width: calc(var(--w) + 28px);
+		height: calc(var(--h) + 10px);
+	}
+
+	.shot-stack.is-hero {
+		--w: 220px;
+		--h: 138px;
+		width: calc(var(--w) + 48px);
+		height: calc(var(--h) + 28px);
+		justify-self: start;
+	}
+
+	.shot-stack.is-hero.is-phone {
+		--w: 92px;
+		--h: 168px;
+		width: calc(var(--w) + 64px);
+		height: calc(var(--h) + 20px);
+	}
+
+	.shot-layer {
+		position: absolute;
+		right: calc(var(--i) * 7px);
+		bottom: calc(var(--i) * 5px);
+		width: var(--w);
+		height: var(--h);
+		border-radius: 7px;
+		border: 1px solid rgba(95, 80, 56, 0.2);
+		background: #fffdfa;
+		box-shadow: 0 8px 16px rgba(95, 80, 56, 0.12);
+		overflow: hidden;
+		transform: rotate(calc(-11deg + var(--i) * 5deg));
+		z-index: calc(4 - var(--i));
+		transition: transform var(--dur-ui) var(--ease-out);
+	}
+
+	.shot-stack.is-hero .shot-layer {
+		right: calc(var(--i) * 14px);
+		bottom: calc(var(--i) * 8px);
+		border-radius: 10px;
+	}
+
+	.shot-stack.is-phone .shot-layer {
+		border-radius: 9px;
+	}
+
+	.shot-layer.is-empty {
+		border-style: dashed;
+		background: var(--card-bg);
+	}
+
+	.shot-layer img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.shot-layer {
+			transition: none;
+		}
+	}
+</style>

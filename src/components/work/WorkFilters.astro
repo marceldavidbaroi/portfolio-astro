@@ -1,0 +1,284 @@
+---
+interface Tab {
+	id: string;
+	label: string;
+	count: number;
+}
+
+interface StackLink {
+	label: string;
+	query: string;
+}
+
+interface Props {
+	tabs: Tab[];
+	stackLinks: StackLink[];
+	workCount: number;
+}
+
+const { tabs, stackLinks, workCount } = Astro.props;
+---
+
+<div class="filters" id="work-filters">
+	<div class="tabs" role="tablist" aria-label="Project categories">
+		{tabs.map((tab, i) => (
+			<button
+				class:list={['tab', { active: i === 0 }]}
+				data-category={tab.id}
+				role="tab"
+				aria-selected={i === 0 ? 'true' : 'false'}
+				type="button"
+			>
+				{tab.label} <span class="tab-count font-mono">{tab.count}</span>
+			</button>
+		))}
+		<label class="search-wrap">
+			<span class="sr-only">Search work</span>
+			<input
+				type="search"
+				id="work-search"
+				class="search font-sans"
+				placeholder="Vue, PostgreSQL, role…"
+				autocomplete="off"
+				spellcheck="false"
+			/>
+		</label>
+	</div>
+	<p class="stack-line font-mono" id="stack-links">
+		{stackLinks.map((link) => (
+			<button type="button" class="stack-link" data-tech-query={link.query}>{link.label}</button>
+		))}
+		<button type="button" class="stack-link is-reset" id="filter-reset">Reset</button>
+	</p>
+	<p class="status-line font-mono" id="filter-status" hidden>
+		<span id="results-count">Showing {workCount} of {workCount}</span>
+		<button type="button" class="stack-link" id="status-clear">Clear</button>
+	</p>
+</div>
+
+<script>
+	const filters = document.getElementById('work-filters');
+	const header = document.getElementById('site-header');
+	const searchInput = document.getElementById('work-search') as HTMLInputElement | null;
+	const status = document.getElementById('filter-status');
+	const resultsCount = document.getElementById('results-count');
+	const empty = document.getElementById('work-empty');
+	const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
+	const stackBtns = document.querySelectorAll<HTMLButtonElement>('[data-tech-query]');
+	const items = document.querySelectorAll<HTMLAnchorElement>('.work-item');
+	const total = items.length;
+
+	let category = 'all';
+	let query = '';
+
+	const pinFilters = () => {
+		filters?.classList.toggle('is-pinned', Boolean(header?.classList.contains('is-hidden')));
+	};
+	const headerWatch = new MutationObserver(pinFilters);
+	if (header) headerWatch.observe(header, { attributes: true, attributeFilter: ['class'] });
+	pinFilters();
+
+	function apply() {
+		const q = query.trim().toLowerCase();
+		let visible = 0;
+		items.forEach((el) => {
+			const cats = (el.dataset.categories || '').split(' ');
+			const hay = (el.dataset.searchContent || '').toLowerCase();
+			const matchCat = category === 'all' || cats.includes(category);
+			const matchQ = !q || hay.includes(q);
+			const show = matchCat && matchQ;
+			el.hidden = !show;
+			if (show) visible++;
+		});
+
+		const filtered = category !== 'all' || q.length > 0;
+		if (status) status.hidden = !filtered;
+		if (resultsCount) resultsCount.textContent = `Showing ${visible} of ${total}`;
+		if (empty) empty.hidden = visible !== 0;
+
+		stackBtns.forEach((btn) => {
+			btn.classList.toggle('is-on', Boolean(btn.dataset.techQuery) && q === (btn.dataset.techQuery || ''));
+		});
+	}
+
+	tabs.forEach((tab) => {
+		tab.addEventListener('click', () => {
+			tabs.forEach((t) => {
+				t.classList.toggle('active', t === tab);
+				t.setAttribute('aria-selected', t === tab ? 'true' : 'false');
+			});
+			category = tab.dataset.category || 'all';
+			apply();
+		});
+	});
+
+	searchInput?.addEventListener('input', () => {
+		query = searchInput.value;
+		apply();
+	});
+
+	stackBtns.forEach((btn) => {
+		btn.addEventListener('click', () => {
+			const tech = btn.dataset.techQuery || '';
+			if (!searchInput) return;
+			if (query.toLowerCase() === tech) {
+				searchInput.value = '';
+				query = '';
+			} else {
+				searchInput.value = tech;
+				query = tech;
+			}
+			apply();
+		});
+	});
+
+	function resetAll() {
+		category = 'all';
+		query = '';
+		if (searchInput) searchInput.value = '';
+		tabs.forEach((t) => {
+			const on = t.dataset.category === 'all';
+			t.classList.toggle('active', on);
+			t.setAttribute('aria-selected', on ? 'true' : 'false');
+		});
+		apply();
+	}
+
+	document.getElementById('filter-reset')?.addEventListener('click', resetAll);
+	document.getElementById('status-clear')?.addEventListener('click', resetAll);
+	document.getElementById('empty-clear')?.addEventListener('click', resetAll);
+</script>
+
+<style>
+	.filters {
+		position: sticky;
+		top: 0;
+		z-index: 40;
+		padding: 0.35rem 0 0.85rem;
+		margin: 0 -0.25rem 0.5rem;
+		background: transparent;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.filters.is-pinned {
+		background: rgba(255, 253, 250, 0.82);
+		backdrop-filter: blur(14px);
+		-webkit-backdrop-filter: blur(14px);
+		box-shadow: 0 1px 0 rgba(95, 80, 56, 0.08);
+		margin-inline: -1.5rem;
+		padding-inline: 1.5rem;
+	}
+
+	.tabs {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.85rem 1.15rem;
+	}
+
+	.tab {
+		appearance: none;
+		border: 0;
+		background: none;
+		padding: 0.2rem 0 0.35rem;
+		margin: 0;
+		font: inherit;
+		font-size: var(--type-tab);
+		font-weight: 500;
+		color: var(--text-muted);
+		cursor: pointer;
+		border-bottom: 2px solid transparent;
+	}
+
+	.tab.active,
+	.tab:hover {
+		color: var(--accent);
+	}
+
+	.tab.active {
+		border-bottom-color: var(--accent);
+	}
+
+	.tab-count {
+		font-size: var(--type-caption);
+		margin-left: 0.2rem;
+	}
+
+	.search-wrap {
+		margin-left: auto;
+		min-width: 12rem;
+		flex: 1 1 12rem;
+		max-width: 18rem;
+	}
+
+	.search {
+		width: 100%;
+		border: 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.22);
+		background: transparent;
+		padding: 0.35rem 0;
+		font-size: 0.92rem;
+		color: var(--text-main);
+		outline: none;
+	}
+
+	.search:focus {
+		border-bottom-color: var(--accent);
+	}
+
+	.stack-line,
+	.status-line {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.35rem 0.85rem;
+		margin: 0.65rem 0 0;
+		font-size: var(--type-meta);
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+	}
+
+	.stack-link {
+		appearance: none;
+		border: 0;
+		background: none;
+		padding: 0;
+		margin: 0;
+		font: inherit;
+		color: var(--text-muted);
+		cursor: pointer;
+		text-transform: none;
+		letter-spacing: inherit;
+	}
+
+	.stack-link:hover,
+	.stack-link.is-on {
+		color: var(--accent);
+	}
+
+	.stack-link.is-reset {
+		margin-left: 0.25rem;
+	}
+
+	.status-line[hidden] {
+		display: none !important;
+	}
+
+	@media (max-width: 900px) {
+		.search-wrap {
+			margin-left: 0;
+			max-width: none;
+			flex-basis: 100%;
+		}
+		.tabs {
+			flex-wrap: nowrap;
+			overflow-x: auto;
+			padding-bottom: 0.15rem;
+			-webkit-overflow-scrolling: touch;
+		}
+		.filters.is-pinned {
+			margin-inline: -1rem;
+			padding-inline: 1rem;
+		}
+	}
+</style>

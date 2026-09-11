@@ -1,0 +1,103 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+interface Photo {
+	src: string;
+	caption: string;
+}
+
+interface Props {
+	title: string;
+	backHref: string;
+	backLabel: string;
+	tag: string;
+	description: string;
+	photos: Photo[];
+	emptyHint: string;
+}
+
+const { title, backHref, backLabel, tag, description, photos, emptyHint } = Astro.props;
+---
+
+<BaseLayout title={`Marcel David Baroi | ${title}`}>
+	<section class="gallery-page">
+		<a href={backHref} class="back-link font-mono">← {backLabel}</a>
+		<header class="gallery-header">
+			<span class="gallery-tag font-mono">{tag}</span>
+			<h1 class="gallery-title font-dot">{title}</h1>
+			<p class="gallery-desc">{description}</p>
+		</header>
+
+		{photos.length > 0 ? (
+			<div class="gallery-grid">
+				{photos.map((photo) => (
+					<figure class="gallery-item">
+						<img src={photo.src} alt={photo.caption} loading="lazy" />
+						<figcaption class="font-mono">{photo.caption}</figcaption>
+					</figure>
+				))}
+			</div>
+		) : (
+			<p class="gallery-empty font-mono" set:html={emptyHint} />
+		)}
+	</section>
+</BaseLayout>
+
+<style>
+	.gallery-page {
+		max-width: 960px;
+		margin: 0 auto;
+		padding: 2.5rem 1.25rem 4rem;
+	}
+	.back-link {
+		display: inline-block;
+		font-size: 0.75rem;
+		font-weight: 700;
+		color: var(--accent);
+		text-decoration: none;
+		margin-bottom: 1.25rem;
+	}
+	.gallery-tag {
+		font-size: 0.7rem;
+		font-weight: 700;
+		color: var(--accent);
+		letter-spacing: 0.06em;
+	}
+	.gallery-title {
+		font-size: clamp(1.5rem, 3vw, 2rem);
+		font-weight: 700;
+		margin: 0.35rem 0 0.5rem;
+	}
+	.gallery-desc {
+		color: var(--text-muted);
+		font-size: 0.95rem;
+	}
+	.gallery-empty {
+		margin-top: 2rem;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+	.gallery-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+		gap: 1rem;
+		margin-top: 1.5rem;
+	}
+	.gallery-item {
+		margin: 0;
+		border-radius: 10px;
+		overflow: hidden;
+		border: 1px solid var(--card-border);
+	}
+	.gallery-item img {
+		width: 100%;
+		display: block;
+		aspect-ratio: 4/3;
+		object-fit: cover;
+	}
+	.gallery-item figcaption {
+		padding: 0.5rem 0.65rem;
+		font-size: 0.7rem;
+		color: var(--text-muted);
+	}
+</style>

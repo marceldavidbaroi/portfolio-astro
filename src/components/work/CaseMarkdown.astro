@@ -1,0 +1,85 @@
+---
+---
+
+<section class="markdown-article">
+	<slot />
+</section>
+
+<script>
+	async function initMermaid() {
+		try {
+			const codeBlocks = Array.from(document.querySelectorAll('pre, pre code'));
+			const targets: { pre: HTMLElement; code: string }[] = [];
+			for (const el of codeBlocks) {
+				const text = el.textContent?.trim() || '';
+				const isMermaid =
+					el.classList.contains('language-mermaid') ||
+					el.parentElement?.classList.contains('language-mermaid') ||
+					text.startsWith('flowchart') ||
+					text.startsWith('sequenceDiagram') ||
+					text.startsWith('graph');
+				if (!isMermaid) continue;
+				const pre = (el.tagName.toLowerCase() === 'pre' ? el : el.closest('pre')) as HTMLElement | null;
+				if (pre && !pre.dataset.processed) {
+					pre.dataset.processed = 'true';
+					targets.push({ pre, code: text });
+				}
+			}
+			if (targets.length === 0) return;
+			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+			mermaid.initialize({
+				startOnLoad: false,
+				theme: 'base',
+				themeVariables: {
+					primaryColor: '#f4f0e7',
+					primaryTextColor: '#2b251e',
+					primaryBorderColor: '#5f5038',
+					lineColor: '#5f5038',
+					fontFamily: 'NType 82 Mono, monospace'
+				},
+				securityLevel: 'loose'
+			});
+			for (const { pre, code } of targets) {
+				const diagramDiv = document.createElement('div');
+				diagramDiv.className = 'mermaid';
+				diagramDiv.textContent = code;
+				pre.replaceWith(diagramDiv);
+			}
+			await mermaid.run();
+		} catch (err) {
+			console.error('Mermaid render error:', err);
+		}
+	}
+
+	initMermaid();
+</script>
+
+<style>
+	.markdown-article {
+		margin-top: 2.5rem;
+		max-width: 42rem;
+		font-size: 1.02rem;
+		line-height: 1.65;
+		scroll-margin-top: 1rem;
+	}
+
+	.markdown-article :global(h2) {
+		margin: 2rem 0 0.7rem;
+		font-size: 1.25rem;
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		scroll-margin-top: 1rem;
+	}
+
+	.markdown-article :global(p) {
+		margin: 0.7rem 0;
+	}
+
+	.markdown-article :global(.mermaid) {
+		margin: 1.25rem 0;
+		background: var(--card-bg);
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		padding: 1rem;
+		overflow-x: auto;
+	}
+</style>

@@ -1,0 +1,233 @@
+---
+interface Decision {
+	challenge: string;
+	decision: string;
+	outcome?: string;
+}
+
+interface ValueItem {
+	painTitle: string;
+	painDescription: string;
+	gainTitle: string;
+	gainDescription: string;
+}
+
+interface ValueProposition {
+	targetCustomer?: string;
+	items: ValueItem[];
+}
+
+interface StackRow {
+	label: string;
+	items?: string[];
+}
+
+interface Props {
+	executiveOverview?: string;
+	problemStatement?: string;
+	keyDecisions?: Decision[];
+	valueProposition?: ValueProposition;
+	stackRows: StackRow[];
+	securityReliability?: string[];
+	futureRoadmap?: string[];
+}
+
+const {
+	executiveOverview,
+	problemStatement,
+	keyDecisions,
+	valueProposition,
+	stackRows,
+	securityReliability,
+	futureRoadmap
+} = Astro.props;
+---
+
+{executiveOverview && (
+	<section id="overview">
+		<p class="label font-mono">Overview</p>
+		<p class="overview">{executiveOverview}</p>
+	</section>
+)}
+
+{(problemStatement || (keyDecisions && keyDecisions.length > 0)) && (
+	<section id="decisions">
+		<p class="label font-mono">Decisions</p>
+		{problemStatement && <p class="overview">{problemStatement}</p>}
+		{keyDecisions && keyDecisions.length > 0 && (
+			<div class="decision-list">
+				{keyDecisions.map((item) => (
+					<div class="decision-row">
+						<div>
+							<p class="mini font-mono">Challenge</p>
+							<p>{item.challenge}</p>
+						</div>
+						<div>
+							<p class="mini font-mono">Decision</p>
+							<p>{item.decision}</p>
+						</div>
+						<div>
+							<p class="mini font-mono">Outcome</p>
+							<p>{item.outcome || '—'}</p>
+						</div>
+					</div>
+				))}
+			</div>
+		)}
+	</section>
+)}
+
+{valueProposition && (
+	<section id="before-after">
+		<p class="label font-mono">Before → after</p>
+		{valueProposition.targetCustomer && (
+			<p class="target font-mono">{valueProposition.targetCustomer}</p>
+		)}
+		<div class="ba-list">
+			{valueProposition.items.map((item) => (
+				<div class="ba-row">
+					<div>
+						<p class="mini font-mono">Before</p>
+						<strong>{item.painTitle}</strong>
+						<p>{item.painDescription}</p>
+					</div>
+					<div>
+						<p class="mini font-mono">After</p>
+						<strong>{item.gainTitle}</strong>
+						<p>{item.gainDescription}</p>
+					</div>
+				</div>
+			))}
+		</div>
+	</section>
+)}
+
+{stackRows.length > 0 && (
+	<section id="stack">
+		<p class="label font-mono">Stack</p>
+		<div class="stack-block">
+			{stackRows.map((row) => (
+				<p class="stack-line">
+					<span class="stack-kicker font-mono">{row.label}</span>
+					{row.items!.map((name) => (
+						<span>{name}</span>
+					))}
+				</p>
+			))}
+		</div>
+	</section>
+)}
+
+{((securityReliability && securityReliability.length > 0) || (futureRoadmap && futureRoadmap.length > 0)) && (
+	<section id="security-roadmap" class="notes">
+		{securityReliability && securityReliability.length > 0 && (
+			<div>
+				<p class="label font-mono">Security</p>
+				<ul>
+					{securityReliability.map((item) => (
+						<li>{item}</li>
+					))}
+				</ul>
+			</div>
+		)}
+		{futureRoadmap && futureRoadmap.length > 0 && (
+			<div>
+				<p class="label font-mono">Roadmap</p>
+				<ul>
+					{futureRoadmap.map((item) => (
+						<li>{item}</li>
+					))}
+				</ul>
+			</div>
+		)}
+	</section>
+)}
+
+<style>
+	section {
+		margin-top: 2.35rem;
+		scroll-margin-top: 1rem;
+	}
+
+	.overview {
+		margin: 0.85rem 0 0;
+		font-size: var(--type-body);
+		line-height: 1.55;
+		color: var(--text-main);
+		max-width: 42rem;
+	}
+
+	.target {
+		margin: 0.45rem 0 0;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.decision-row,
+	.ba-row {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem 1.5rem;
+		padding: 1rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.decision-row {
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+	}
+
+	.decision-row p,
+	.ba-row p {
+		margin: 0.25rem 0 0;
+		font-size: 0.95rem;
+		line-height: 1.5;
+	}
+
+	.stack-line {
+		margin: 0.35rem 0 0;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		row-gap: 0.2rem;
+		font-size: 0.98rem;
+	}
+
+	.stack-kicker {
+		margin-right: 0.75rem;
+		font-size: var(--type-kicker);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--accent);
+		flex: 0 0 5.5rem;
+	}
+
+	.stack-line span:not(.stack-kicker):not(:nth-child(2))::before {
+		content: '·';
+		margin-right: 0.4rem;
+		color: var(--accent);
+	}
+
+	.notes {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.5rem;
+	}
+
+	.notes ul {
+		margin: 0.45rem 0 0;
+		padding-left: 1.1rem;
+		font-size: 0.95rem;
+		line-height: 1.55;
+	}
+
+	@media (max-width: 900px) {
+		.decision-row,
+		.ba-row,
+		.notes {
+			grid-template-columns: 1fr;
+		}
+		.stack-kicker {
+			flex-basis: 100%;
+		}
+	}
+</style>

@@ -1,95 +1,24 @@
 ---
-import BaseLayout from '../../../layouts/BaseLayout.astro';
+import GalleryPage from '../../../components/GalleryPage.astro';
+import { getCollection, getEntry } from 'astro:content';
+import { mediaMap, resolveAssets } from '../../../lib/media';
 
-const title = 'Freelance & Client Work — Gallery';
-const photos: { src: string; caption: string }[] = [];
+const gallery = await getEntry('galleries', 'freelance');
+const title = gallery?.data.title || 'Freelance & Client Work — Gallery';
+const map = mediaMap(await getCollection('media'));
+const photoIds = (gallery?.data.albums || []).flatMap((a) => a.photos.map((p) => p.id));
+const photos =
+	photoIds.length > 0
+		? resolveAssets(photoIds, map).map((a) => ({ src: a.src, caption: a.caption || a.alt }))
+		: [];
 ---
 
-<BaseLayout title={`Marcel David Baroi | ${title}`}>
-	<section class="gallery-page">
-		<a href="/#experience" class="back-link font-mono">← Work Experience</a>
-		<header class="gallery-header">
-			<span class="gallery-tag font-mono">02 // WORKPLACE</span>
-			<h1 class="gallery-title font-dot">{title}</h1>
-			<p class="gallery-desc">Photo gallery for freelance and contract work. Add images anytime.</p>
-		</header>
-
-		{photos.length > 0 ? (
-			<div class="gallery-grid">
-				{photos.map((photo) => (
-					<figure class="gallery-item">
-						<img src={photo.src} alt={photo.caption} loading="lazy" />
-						<figcaption class="font-mono">{photo.caption}</figcaption>
-					</figure>
-				))}
-			</div>
-		) : (
-			<p class="gallery-empty font-mono">Photos coming soon — drop files in <code>public/images/experience/</code>.</p>
-		)}
-	</section>
-</BaseLayout>
-
-<style>
-	.gallery-page {
-		max-width: 960px;
-		margin: 0 auto;
-		padding: 2.5rem 1.25rem 4rem;
-	}
-	.back-link {
-		display: inline-block;
-		font-size: 0.75rem;
-		font-weight: 700;
-		color: var(--accent);
-		text-decoration: none;
-		margin-bottom: 1.25rem;
-	}
-	.gallery-tag {
-		font-size: 0.7rem;
-		letter-spacing: 0.08em;
-		color: var(--accent);
-		font-weight: 700;
-	}
-	.gallery-title {
-		font-size: clamp(1.6rem, 3vw, 2.2rem);
-		font-weight: 800;
-		letter-spacing: -0.03em;
-		margin: 0.35rem 0 0.5rem;
-	}
-	.gallery-desc {
-		color: var(--text-muted);
-		font-size: 0.9rem;
-		max-width: 36rem;
-	}
-	.gallery-empty {
-		margin-top: 2rem;
-		padding: 1.25rem;
-		border: 1px dashed rgba(95, 80, 56, 0.28);
-		border-radius: 12px;
-		font-size: 0.8rem;
-		color: var(--text-muted);
-	}
-	.gallery-grid {
-		margin-top: 2rem;
-		display: grid;
-		grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-		gap: 1rem;
-	}
-	.gallery-item {
-		margin: 0;
-		border-radius: 12px;
-		overflow: hidden;
-		border: 1px solid var(--card-border);
-		background: var(--card-bg);
-	}
-	.gallery-item img {
-		width: 100%;
-		aspect-ratio: 4 / 3;
-		object-fit: cover;
-		display: block;
-	}
-	.gallery-item figcaption {
-		padding: 0.55rem 0.7rem;
-		font-size: 0.68rem;
-		color: var(--text-muted);
-	}
-</style>
+<GalleryPage
+	title={title}
+	backHref="/#experience"
+	backLabel="Work Experience"
+	tag="02 // WORKPLACE"
+	description="Photo gallery for freelance and contract work. Add images anytime."
+	photos={photos}
+	emptyHint='Photos coming soon — drop files in <code>public/images/experience/</code>.'
+/>

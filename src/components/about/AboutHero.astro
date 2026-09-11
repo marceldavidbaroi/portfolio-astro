@@ -1,7 +1,15 @@
 ---
-import { bscCseProgram } from '../../data/education';
-import { finalYearThesisResearch } from '../../data/research';
+import { getEntry } from 'astro:content';
+import { site } from '../../data/site';
 import CopyEmailButton from '../CopyEmailButton.astro';
+
+const bscEntry = await getEntry('education', 'bsc-cse');
+const researchEntry = await getEntry('research', '01-bangla-hwcr-ekush');
+const bscCseProgram = bscEntry?.data;
+const finalYearThesisResearch = researchEntry?.data;
+if (!bscCseProgram || !finalYearThesisResearch) {
+	throw new Error('Missing education or research content for AboutHero');
+}
 ---
 
 <section class="about-hero" id="profile">
@@ -40,7 +48,7 @@ import CopyEmailButton from '../CopyEmailButton.astro';
 
 	<!-- Action Links & Contact Pills -->
 	<div class="hero-actions">
-		<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-accent font-mono" title="Download Resume (PDF)">
+		<a href={site.resumePdf} target="_blank" rel="noopener noreferrer" class="btn btn-accent font-mono" title="Download Resume (PDF)">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
 				<polyline points="7 10 12 15 17 10"></polyline>
@@ -48,10 +56,10 @@ import CopyEmailButton from '../CopyEmailButton.astro';
 			</svg>
 			Download Resume (PDF)
 		</a>
-		<a href="/resume.txt" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono" title="ATS plain-text CV">
+		<a href={site.resumeTxt} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono" title="ATS plain-text CV">
 			ATS Text CV
 		</a>
-		<a href="mailto:marceldavidbaroi@gmail.com" class="btn btn-primary font-mono">
+		<a href={`mailto:${site.email}`} class="btn btn-primary font-mono">
 			<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 				<rect width="20" height="16" x="2" y="4" rx="2"></rect>
 				<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -59,10 +67,10 @@ import CopyEmailButton from '../CopyEmailButton.astro';
 			Email Me
 		</a>
 		<CopyEmailButton variant="button" label="Copy Email" />
-		<a href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+		<a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
 			LinkedIn
 		</a>
-		<a href="https://github.com/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+		<a href={site.github} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
 			GitHub
 		</a>
 	</div>

@@ -1,0 +1,35 @@
+---
+interface Props {
+	title: string;
+	readingTimeText: string;
+}
+
+const { title, readingTimeText } = Astro.props;
+---
+
+<div class="crumb font-mono">
+	<a href="/work">Work</a>
+	<span aria-hidden="true"> / </span>
+	<span>{title}</span>
+	<span class="crumb-time">{readingTimeText}</span>
+</div>
+
+<style>
+	.crumb {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.25rem;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+		margin-bottom: 1.15rem;
+	}
+
+	.crumb a {
+		color: var(--accent);
+	}
+
+	.crumb-time {
+		margin-left: auto;
+	}
+</style>

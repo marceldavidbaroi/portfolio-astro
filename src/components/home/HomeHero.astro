@@ -1,0 +1,328 @@
+---
+import { site } from '../../data/site';
+
+interface Props {
+	portraitSrc: string | null;
+	proof: Array<{ value: string; label: string }>;
+}
+
+const { portraitSrc, proof } = Astro.props;
+---
+
+<section class="hero" aria-label="Introduction">
+	<div class="hero-grid">
+		<p class="status font-mono">
+			<span class="status-dot" aria-hidden="true"></span>
+			Available · Remote / relocation · Dhaka · US/EU overlap
+		</p>
+		<h1 class="name font-dot">Marcel David Baroi</h1>
+		<p class="role">Full-Stack Engineer — multi-tenant SaaS &amp; enterprise systems</p>
+		<p class="bio">
+			I design and ship Vue / Quasar systems on PostgreSQL — wholesale ERP, support desks, and operations tools used in production.
+		</p>
+		<ul class="proof">
+			{proof.map((m) => (
+				<li>
+					<strong>{m.value}</strong>
+					<span>{m.label}</span>
+				</li>
+			))}
+		</ul>
+		<div class="hero-actions">
+			<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email me</a>
+			<a class="btn-ghost font-mono" href={site.resumePdf} target="_blank" rel="noopener noreferrer">Resume</a>
+			<a class="text-link font-mono" href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+			<a class="text-link font-mono" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+		</div>
+
+		<figure class="hero-portrait">
+			{portraitSrc ? (
+				<img
+					src={portraitSrc}
+					alt="Portrait of Marcel David Baroi"
+					width="640"
+					height="854"
+				/>
+			) : (
+				<div class="portrait-slot" role="img" aria-label="Portrait placeholder. Add public/images/portrait.webp">
+					<span class="portrait-initials font-dot">MDB</span>
+					<span class="portrait-hint font-mono">Add public/images/portrait.webp</span>
+				</div>
+			)}
+			<figcaption class="portrait-caption font-mono">Marcel David Baroi</figcaption>
+		</figure>
+	</div>
+</section>
+
+<style>
+	.hero {
+		padding-bottom: 4.5rem;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.hero-grid {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
+		grid-template-areas:
+			'status portrait'
+			'name portrait'
+			'role portrait'
+			'bio portrait'
+			'proof portrait'
+			'actions portrait';
+		column-gap: 2.75rem;
+		row-gap: 0.7rem;
+		align-items: start;
+	}
+
+	.status { grid-area: status; }
+	.name { grid-area: name; }
+	.role { grid-area: role; }
+	.bio { grid-area: bio; }
+	.proof { grid-area: proof; }
+	.hero-actions { grid-area: actions; }
+	.hero-portrait { grid-area: portrait; }
+
+	.status {
+		display: inline-flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+		font-size: var(--type-meta);
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		margin: 0;
+		line-height: 1.45;
+	}
+
+	.status-dot {
+		width: 7px;
+		height: 7px;
+		border-radius: 50%;
+		background: #3f7d4e;
+		flex-shrink: 0;
+	}
+
+	.name {
+		font-size: clamp(1.85rem, 6vw, 3.35rem);
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		line-height: 1.05;
+		color: var(--text-main);
+		margin: 0;
+		text-transform: none;
+		-webkit-text-stroke: 0.3px currentColor;
+		overflow-wrap: break-word;
+	}
+
+	.role {
+		margin: 0;
+		font-size: 1.02rem;
+		font-weight: 500;
+		letter-spacing: -0.01em;
+		color: var(--text-muted);
+		line-height: 1.35;
+		max-width: 28rem;
+	}
+
+	.bio {
+		margin: 0.15rem 0 0;
+		font-size: var(--type-body);
+		line-height: 1.55;
+		color: var(--text-main);
+		max-width: 34rem;
+	}
+
+	.proof {
+		list-style: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 1.35rem 1.75rem;
+		margin: 0.55rem 0 0.15rem;
+		padding: 0.85rem 0 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.proof li {
+		display: flex;
+		flex-direction: column;
+		gap: 0.12rem;
+	}
+
+	.proof strong {
+		font-size: 1.35rem;
+		letter-spacing: -0.03em;
+		line-height: 1;
+		color: var(--text-main);
+	}
+
+	.proof span {
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+	}
+
+	.hero-portrait {
+		justify-self: end;
+		width: 100%;
+		max-width: 300px;
+		margin: 0;
+		background: #fffdfa;
+		padding: 0.45rem 0.45rem 1.2rem;
+		border: 1px solid rgba(95, 80, 56, 0.14);
+		box-shadow: 0 18px 40px rgba(95, 80, 56, 0.14);
+		transform: rotate(-1.1deg);
+	}
+
+	.hero-portrait img,
+	.portrait-slot {
+		display: block;
+		width: 100%;
+		aspect-ratio: 3 / 4;
+		object-fit: cover;
+		object-position: center top;
+		background: var(--card-bg);
+	}
+
+	.portrait-slot {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 0.7rem;
+		border: 1px dashed rgba(95, 80, 56, 0.28);
+		background: linear-gradient(180deg, #f4f0e7 0%, #ebe6d8 100%);
+	}
+
+	.portrait-initials {
+		font-size: 2.1rem;
+		letter-spacing: 0.08em;
+		color: var(--text-main);
+		-webkit-text-stroke: 0.3px currentColor;
+	}
+
+	.portrait-hint {
+		font-size: var(--type-caption);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+		text-align: center;
+		max-width: 12rem;
+		line-height: 1.4;
+	}
+
+	.portrait-caption {
+		display: block;
+		margin-top: 0.65rem;
+		padding: 0 0.15rem;
+		font-size: var(--type-caption);
+		letter-spacing: 0.12em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	@media (prefers-reduced-motion: no-preference) {
+		.hero-portrait {
+			animation: rise var(--dur-enter) var(--ease-out) both;
+		}
+	}
+
+	@keyframes rise {
+		from {
+			opacity: 0;
+			transform: rotate(-1.1deg) translateY(18px);
+		}
+		to {
+			opacity: 1;
+			transform: rotate(-1.1deg) translateY(0);
+		}
+	}
+
+	@media (max-width: 900px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) 128px;
+			grid-template-areas:
+				'status status'
+				'name portrait'
+				'role role'
+				'bio bio'
+				'proof proof'
+				'actions actions';
+			column-gap: 0.9rem;
+			row-gap: 0.55rem;
+		}
+
+		.hero-portrait {
+			justify-self: end;
+			align-self: start;
+			max-width: 128px;
+			transform: none;
+			padding: 0.28rem 0.28rem 0.55rem;
+			box-shadow: 0 10px 22px rgba(95, 80, 56, 0.12);
+		}
+
+		.portrait-caption,
+		.portrait-hint {
+			display: none;
+		}
+
+		.portrait-initials {
+			font-size: 1.25rem;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.hero {
+			padding-bottom: 2.25rem;
+		}
+
+		.status {
+			font-size: var(--type-meta);
+			letter-spacing: 0.04em;
+			max-width: 100%;
+		}
+
+		.role,
+		.bio {
+			font-size: 0.95rem;
+			max-width: none;
+		}
+
+		.proof {
+			width: 100%;
+			justify-content: space-between;
+			gap: 0.75rem 0.5rem;
+			padding-top: 0.7rem;
+		}
+
+		.proof li {
+			flex: 1 1 0;
+			min-width: 0;
+		}
+
+		.proof strong {
+			font-size: 1.15rem;
+		}
+
+		.proof span {
+			font-size: var(--type-caption);
+			line-height: 1.25;
+		}
+
+		.hero-actions {
+			width: 100%;
+			gap: 0.55rem 0.7rem;
+		}
+	}
+
+	@media (max-width: 420px) {
+		.hero-grid {
+			grid-template-columns: minmax(0, 1fr) 104px;
+		}
+
+		.hero-portrait {
+			max-width: 104px;
+		}
+	}
+</style>

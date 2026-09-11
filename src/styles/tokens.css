@@ -1,0 +1,131 @@
+/* Design tokens — redesign/system.md */
+
+@font-face {
+	font-family: 'NType 82 Mono';
+	src:
+		url('/fonts/NType82Mono-Regular.woff2') format('woff2'),
+		url('/fonts/NType82Mono-Regular.otf') format('opentype');
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+@font-face {
+	font-family: 'NDot 55';
+	src:
+		url('/fonts/Ndot55-Regular.woff2') format('woff2'),
+		url('/fonts/Ndot55-Regular.otf') format('opentype');
+	font-weight: 400 700;
+	font-style: normal;
+	font-display: swap;
+}
+
+:root {
+	--bg-color: #fffdfa;
+	--card-bg: #f4f0e7;
+	--card-border: rgba(95, 80, 56, 0.12);
+	/* Legacy brown — do not use; buttons use --accent */
+	--btn-primary: #5f5038;
+	--btn-primary-hover: #4d402c;
+	--accent: #b42135;
+	--accent-hover: #96192a;
+	--text-main: #2b251e;
+	--text-muted: #746855;
+	--font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-mono: 'NType 82 Mono', monospace;
+	--font-dot: 'NDot 55', monospace;
+
+	/* Semantic aliases (redesign/system.md) */
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+
+	/* Type scale */
+	--type-body: 1.05rem;
+	--type-xyz: 1rem;
+	--type-kicker: 0.75rem;
+	--type-caption: 0.6875rem;
+	--type-meta: 0.75rem;
+	--type-cta: 0.8125rem;
+	--type-tab: 0.9375rem;
+
+	/* Motion (low-cost; redesign/system.md) */
+	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+	--ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
+	--dur-fast: 150ms;
+	--dur-ui: 220ms;
+	--dur-enter: 900ms;
+	--dur-chrome: 320ms;
+}
+
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	font-family: var(--font-sans);
+	background-color: var(--bg-color);
+	color: var(--text-main);
+	min-height: 100vh;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	text-rendering: optimizeLegibility;
+}
+
+a {
+	text-decoration: none;
+	color: inherit;
+}
+
+.font-sans {
+	font-family: var(--font-sans);
+}
+
+.font-dot {
+	font-family: var(--font-dot);
+	font-weight: 700;
+	letter-spacing: 0.04em;
+	-webkit-text-stroke: 0.35px currentColor;
+	text-rendering: optimizeLegibility;
+}
+
+.font-mono {
+	font-family: var(--font-mono);
+}
+
+pre,
+pre.astro-code,
+pre.shiki {
+	background-color: #f4f0e7 !important;
+	border: 1px solid rgba(95, 80, 56, 0.16) !important;
+	border-radius: 16px !important;
+	padding: 1.25rem 1.5rem !important;
+	color: #2b251e !important;
+	font-family: var(--font-mono) !important;
+	font-size: 0.875rem !important;
+	line-height: 1.65 !important;
+	overflow-x: auto;
+	box-shadow: 0 4px 20px rgba(95, 80, 56, 0.04);
+}
+
+pre code,
+pre.astro-code code,
+pre span {
+	color: #2b251e !important;
+	font-family: inherit !important;
+	background: transparent !important;
+}
+
+:not(pre) > code {
+	background: rgba(95, 80, 56, 0.08) !important;
+	color: var(--accent) !important;
+	padding: 0.2rem 0.45rem !important;
+	border-radius: 6px !important;
+	font-size: 0.875em !important;
+	font-family: var(--font-mono) !important;
+	border: 1px solid rgba(95, 80, 56, 0.12) !important;
+}

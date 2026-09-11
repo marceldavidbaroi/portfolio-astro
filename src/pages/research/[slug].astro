@@ -1,11 +1,12 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { finalYearThesisResearch, allResearchPublications } from '../../data/research';
+import { getCollection } from 'astro:content';
 
 export async function getStaticPaths() {
-	return allResearchPublications.map((pub) => ({
-		params: { slug: pub.slug },
-		props: { publication: pub }
+	const entries = await getCollection('research');
+	return entries.map((entry) => ({
+		params: { slug: entry.data.slug || entry.id },
+		props: { publication: entry.data }
 	}));
 }
 

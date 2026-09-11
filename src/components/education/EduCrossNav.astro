@@ -1,0 +1,33 @@
+---
+interface Props {
+	isBsc: boolean;
+}
+
+const { isBsc } = Astro.props;
+---
+
+<div class="edu-cross-nav card">
+	<div class="cross-nav-left">
+		<span class="cross-nav-label font-mono">ACADEMIC DIRECTORY</span>
+		<a href="/about#academic-curriculum" class="cross-nav-link">
+			← Return to About & Full Profile
+		</a>
+	</div>
+	{isBsc && (
+		<div class="cross-nav-mid">
+			<span class="cross-nav-label font-mono">FINAL YEAR THESIS</span>
+			<a href="/research/01-bangla-hwcr-ekush" class="cross-nav-link highlight">
+				Bangla OCR Research Paper (DIU #26095) ↗
+			</a>
+		</div>
+	)}
+	<div class="cross-nav-right">
+		<span class="cross-nav-label font-mono">{isBsc ? 'APPLIED RESEARCH' : 'HIGHER EDUCATION'}</span>
+		<a
+			href={isBsc ? '/research/01-bangla-hwcr-ekush' : '/education/bsc-cse'}
+			class="cross-nav-link"
+		>
+			{isBsc ? 'Bangla HWCR Thesis & Benchmarks →' : 'B.Sc. in CSE (Daffodil Intl University) →'}
+		</a>
+	</div>
+</div>

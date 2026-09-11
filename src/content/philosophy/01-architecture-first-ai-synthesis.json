@@ -1,0 +1,22 @@
+{
+	"id": "01-architecture-first-ai-synthesis",
+	"order": 1,
+	"num": "01",
+	"tag": "SPECIFICATION & MODELING",
+	"title": "Architecture-First AI Synthesis",
+	"subtitle": "Structuring Systems Before Generating Code",
+	"icon": "🏗️",
+	"pullQuote": "AI synthesizes the blueprint — it does not invent the architecture.",
+	"desc": "I do not use AI tools (Cursor Agentic, Copilot) to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.",
+	"mermaid": "flowchart LR\n  Spec[\"Schema & Contracts\"] --> Graph[\"Dependency Graph\"]\n  Graph --> AI[\"AI Synthesis\"]\n  AI --> Code[\"Production Code\"]",
+	"proofLinks": [
+		{
+			"href": "/work/05-modular-packaging",
+			"label": "Modular Packaging"
+		},
+		{
+			"href": "/work/01-tradeflowbd",
+			"label": "TradeflowBD ERP"
+		}
+	]
+}

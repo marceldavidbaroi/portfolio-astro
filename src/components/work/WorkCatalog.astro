@@ -1,0 +1,144 @@
+---
+import ShotFan from './ShotFan.astro';
+
+interface Metric {
+	value: string;
+	label: string;
+}
+
+interface Project {
+	slug: string;
+	categories: string[];
+	searchString: string;
+	thumbs: string[];
+	chip?: string;
+	title: string;
+	description?: string;
+	impactMetrics?: Metric[];
+	platformType?: string;
+}
+
+interface Props {
+	projects: Project[];
+}
+
+const { projects } = Astro.props;
+---
+
+<section class="directory" aria-label="Case studies">
+	<div class="catalog" id="catalog-list">
+		{projects.map((project) => (
+			<a
+				class="work-item"
+				href={`/work/${project.slug}`}
+				data-categories={project.categories.join(' ')}
+				data-search-content={project.searchString}
+			>
+				<div class="work-copy">
+					<p class="kicker font-mono">{project.chip}</p>
+					<h2 class="feature-title">{project.title}</h2>
+					<p class="feature-desc">{project.description}</p>
+					<div class="band-foot">
+						<ul class="metric-row font-mono">
+							{(project.impactMetrics || []).slice(0, 3).map((m) => (
+								<li>
+									<b>{m.value}</b>
+									<span>{m.label}</span>
+								</li>
+							))}
+						</ul>
+						<span class="inline-cta font-mono">Read case study →</span>
+					</div>
+				</div>
+				<ShotFan images={project.thumbs} phone={project.platformType === 'mobile'} />
+			</a>
+		))}
+	</div>
+
+	<p class="empty font-mono" id="work-empty" hidden>
+		No matching case studies. <button type="button" class="stack-link" id="empty-clear">Clear</button>
+	</p>
+</section>
+
+<style>
+	.empty[hidden],
+	.work-item[hidden] {
+		display: none !important;
+	}
+
+	.work-item:hover .feature-title {
+		color: var(--accent);
+	}
+
+	.band-foot {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: end;
+		justify-content: space-between;
+		gap: 0.85rem 1.5rem;
+		margin-top: 0.15rem;
+	}
+
+	.catalog {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.work-item {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) 7.4rem;
+		align-items: end;
+		gap: 1.15rem 1.5rem;
+		padding: 1.5rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+		min-width: 0;
+	}
+
+	.work-item:hover :global(.shot-layer) {
+		transform: rotate(calc(-7deg + var(--i) * 4deg)) translateY(-3px);
+	}
+
+	.work-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.empty {
+		margin: 1.5rem 0 0;
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+	}
+
+	.stack-link {
+		appearance: none;
+		border: 0;
+		background: none;
+		padding: 0;
+		margin: 0;
+		font: inherit;
+		color: var(--text-muted);
+		cursor: pointer;
+		text-transform: none;
+		letter-spacing: inherit;
+	}
+
+	.stack-link:hover {
+		color: var(--accent);
+	}
+
+	@media (max-width: 640px) {
+		.work-item {
+			grid-template-columns: minmax(0, 1fr) 6.2rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.work-item:hover :global(.shot-layer) {
+			transform: rotate(calc(-11deg + var(--i) * 5deg));
+		}
+	}
+</style>

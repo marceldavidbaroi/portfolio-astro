@@ -1,72 +1,10 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
 
-const principles = [
-	{
-		num: '01',
-		tag: 'SPECIFICATION & MODELING',
-		title: 'Architecture-First AI Synthesis',
-		subtitle: 'Structuring Systems Before Generating Code',
-		icon: '🏗️',
-		pullQuote: 'AI synthesizes the blueprint — it does not invent the architecture.',
-		desc: 'I do not use AI tools (Cursor Agentic, Copilot) to blindly guess implementation code. Instead, I design relational data schemas, map dependency graphs, and define strict API contracts beforehand. AI serves as a high-speed synthesizer executing a pre-architected blueprint, eliminating hallucinated abstractions and architectural debt.',
-		mermaid: `flowchart LR
-  Spec["Schema & Contracts"] --> Graph["Dependency Graph"]
-  Graph --> AI["AI Synthesis"]
-  AI --> Code["Production Code"]`,
-		proofLinks: [
-			{ href: '/work/05-modular-packaging', label: 'Modular Packaging' },
-			{ href: '/work/01-tradeflowbd', label: 'TradeflowBD ERP' }
-		]
-	},
-	{
-		num: '02',
-		tag: 'DEFENSIVE DATA LAYERS',
-		title: 'Strict Data & Type Safety',
-		subtitle: 'Row-Level Security, Strong Typing & Schema Invariants',
-		icon: '🛡️',
-		pullQuote: 'Security that lives only in application middleware can be bypassed. Enforce it at the database engine.',
-		desc: 'I enforce integrity at the lowest layer: PostgreSQL database constraints, CHECK rules, foreign key cascades, and Supabase Row-Level Security (RLS) policies. On the application layer, end-to-end TypeScript interfaces ensure backend Data Transfer Objects (DTOs) match frontend reactive state contracts without runtime coercion.',
-		mermaid: `flowchart TB
-  App["Vue / Nest Client"] --> API["API Layer"]
-  API --> RLS["PostgreSQL RLS"]
-  RLS --> Data["Tenant-Isolated Data"]`,
-		proofLinks: [
-			{ href: '/work/01-tradeflowbd', label: 'TradeflowBD · 100% RLS' }
-		]
-	},
-	{
-		num: '03',
-		tag: 'CODEBASE SUSTAINABILITY',
-		title: 'Modular Infrastructure & Monorepo Packages',
-		subtitle: 'Decoupling Monoliths into Versioned Assets',
-		icon: '📦',
-		pullQuote: 'Shared business logic belongs in SemVer packages — not copy-pasted across repos.',
-		desc: 'I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.',
-		mermaid: `flowchart LR
-  Core["@org/core SemVer"] --> AppA["ERP App"]
-  Core --> AppB["POS App"]
-  Core --> AppC["Mobile Suite"]`,
-		proofLinks: [
-			{ href: '/work/05-modular-packaging', label: 'Private Package Architecture' }
-		]
-	},
-	{
-		num: '04',
-		tag: 'OUTCOME MEASUREMENT',
-		title: 'Measurable Impact (Google XYZ Framework)',
-		subtitle: 'Quantifying Every Engineering Decision',
-		icon: '📈',
-		pullQuote: 'Accomplished [X], as measured by [Y], by doing [Z].',
-		desc: 'Engineering is only as good as its measurable outcomes. Every feature or refactor is framed using the Google XYZ format: "Accomplished [X], as measured by [Y], by doing [Z]". Whether cutting ticket approval latency by 85%, reducing bundle load time by 48%, or maintaining zero security leaks across multi-tenant SaaS platforms.',
-		mermaid: `flowchart LR
-  X["X · Capability"] --> Y["Y · Metric"]
-  Y --> Z["Z · Method"]`,
-		proofLinks: [
-			{ href: '/work/02-service-desk', label: 'Service Desk · Latency Impact' }
-		]
-	}
-];
+const principles = (await getCollection('philosophy'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((e) => e.data);
 ---
 
 <BaseLayout

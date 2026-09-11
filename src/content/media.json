@@ -1,0 +1,626 @@
+{
+	"ndc-batch-19-group-13": {
+		"id": "ndc-batch-19-group-13",
+		"src": "/images/education/ndc-batch-19-group-13.webp",
+		"alt": "Group 13 Aerial Numeral Formation",
+		"caption": "Lawn formation on the NDC field: Group 13 classmates forming \"13\" with \"NDC 19\" bag art.",
+		"title": "Group 13 Aerial Numeral Formation",
+		"group": "ndc-campus"
+	},
+	"road-safety-shapla-aerial": {
+		"id": "road-safety-shapla-aerial",
+		"src": "/images/archive/road-safety/03-shapla-chottor-blockade-aerial.webp",
+		"alt": "High school students completely surrounding and blockading Shapla Chottor",
+		"caption": "Thousands of high school students peacefully holding the Shapla Chottor intersection in Motijheel.",
+		"title": "Shapla Chottor Aerial Blockade",
+		"group": "road-safety"
+	},
+	"road-safety-ndc-chanting": {
+		"id": "road-safety-ndc-chanting",
+		"src": "/images/archive/road-safety/05-ndc-students-chanting-slogans.webp",
+		"alt": "Notre Dame College students chanting slogans and holding handwritten placards",
+		"caption": "Uniform-clad students raising slogans and holding handwritten placards for road safety.",
+		"title": "NDC Students Chanting Slogans",
+		"group": "road-safety"
+	},
+	"road-safety-overbridge": {
+		"id": "road-safety-overbridge",
+		"src": "/images/archive/road-safety/01-overbridge-crowd-gathering.webp",
+		"alt": "Students assembling across foot-overbridges and thoroughfares in Arambagh",
+		"caption": "Students assembling across foot-overbridges and thoroughfares around Arambagh.",
+		"title": "Arambagh Foot-Overbridge Assembly",
+		"group": "road-safety"
+	},
+	"road-safety-street-march": {
+		"id": "road-safety-street-march",
+		"src": "/images/archive/road-safety/02-street-march-bus-halt.webp",
+		"alt": "Students marching through city avenues and checking bus operations",
+		"caption": "Marching through avenues to inspect driver licenses and ensure reckless buses were halted.",
+		"title": "Avenue March & Bus Inspection",
+		"group": "road-safety"
+	},
+	"road-safety-placards": {
+		"id": "road-safety-placards",
+		"src": "/images/archive/road-safety/04-placard-writing-on-asphalt.webp",
+		"alt": "Students sitting on the street pavement writing hand-drawn placards and safety guidelines",
+		"caption": "Students sitting on the street asphalt writing Bengali placards: \"উই ওয়ান্ট জাস্টিস\".",
+		"title": "Handwritten Placards on Asphalt",
+		"group": "road-safety"
+	},
+	"pope-francis-ndc-stage": {
+		"id": "pope-francis-ndc-stage",
+		"src": "/images/archive/pope-francis/pope-francis-notre-dame-college-stage.webp",
+		"alt": "Pope Francis addressing the youth gathering on the Notre Dame College sports ground",
+		"caption": "Pope Francis addressing 10,000 youth on the Notre Dame College sports ground alongside Cardinal Patrick D’Rozario and SSF officers.",
+		"title": "Pope Francis on the NDC Stage",
+		"group": "pope-francis"
+	},
+	"pope-francis-popemobile": {
+		"id": "pope-francis-popemobile",
+		"src": "/images/archive/pope-francis/pope-francis-popemobile-ramna.webp",
+		"alt": "Pope Francis smiling and greeting the assembly from the Popemobile",
+		"caption": "Pope Francis greeting thousands of faithful with floral garlands from the Popemobile at Ramna.",
+		"title": "The Popemobile at Suhrawardy Udyan",
+		"group": "pope-francis"
+	},
+	"pope-francis-logo-2017": {
+		"id": "pope-francis-logo-2017",
+		"src": "/images/archive/pope-francis/pope-francis-logo-2017.webp",
+		"alt": "Official Logo of Pope Francis Bangladesh Apostolic Visit 2017 - Harmony and Peace",
+		"caption": "Official emblem representing harmony, peace, the cross, and the national lotus in Bangladesh colors.",
+		"title": "Official Visit Emblem (\"সম্প্রীতি ও শান্তি\")",
+		"group": "pope-francis"
+	},
+	"ndc-visit-img_20181218_140117": {
+		"id": "ndc-visit-img_20181218_140117",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_140117.webp",
+		"alt": "Entering College Grounds",
+		"caption": "Walking into the campus grounds on a pleasant winter afternoon (18 Dec 2018).",
+		"title": "Entering College Grounds",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142525": {
+		"id": "ndc-visit-img_20181218_142525",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142525.webp",
+		"alt": "Friends by Ganguly Building",
+		"caption": "Catching up with peers and classmates near the iconic red-brick architecture.",
+		"title": "Friends by Ganguly Building",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142654": {
+		"id": "ndc-visit-img_20181218_142654",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142654.webp",
+		"alt": "Campus Walkway & Hallways",
+		"caption": "Walking through the collegiate pathways connecting Harrington and Timm halls.",
+		"title": "Campus Walkway & Hallways",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142705": {
+		"id": "ndc-visit-img_20181218_142705",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142705.webp",
+		"alt": "College Friends Portrait",
+		"caption": "Group portrait of college friends gathered together in high spirits.",
+		"title": "College Friends Portrait",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142851": {
+		"id": "ndc-visit-img_20181218_142851",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142851.webp",
+		"alt": "Priceless Campus Moments",
+		"caption": "Conversations and laughter between classes across the campus courtyards.",
+		"title": "Priceless Campus Moments",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142908": {
+		"id": "ndc-visit-img_20181218_142908",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142908.webp",
+		"alt": "College Brotherhood",
+		"caption": "Cherished memories and brotherhood among classmates.",
+		"title": "College Brotherhood",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_142941": {
+		"id": "ndc-visit-img_20181218_142941",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_142941.webp",
+		"alt": "Group Snapshot with Friends",
+		"caption": "Smiling with good friends under the shaded collegiate corridors.",
+		"title": "Group Snapshot with Friends",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_143013": {
+		"id": "ndc-visit-img_20181218_143013",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_143013.webp",
+		"alt": "Campus Courtyard Gathering",
+		"caption": "Classmates standing together amidst the vibrant green campus lawn.",
+		"title": "Campus Courtyard Gathering",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_143019": {
+		"id": "ndc-visit-img_20181218_143019",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_143019.webp",
+		"alt": "Friends by the Corridor",
+		"caption": "Walking past familiar lecture halls and corridors.",
+		"title": "Friends by the Corridor",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_143133": {
+		"id": "ndc-visit-img_20181218_143133",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_143133.webp",
+		"alt": "Classroom & Bench Memoirs",
+		"caption": "Revisiting the familiar student benches and memories.",
+		"title": "Classroom & Bench Memoirs",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_143530": {
+		"id": "ndc-visit-img_20181218_143530",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_143530.webp",
+		"alt": "Courtyard View",
+		"caption": "Serene view of Notre Dame College’s green field and tranquil collegiate grounds.",
+		"title": "Courtyard View",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_145243": {
+		"id": "ndc-visit-img_20181218_145243",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_145243.webp",
+		"alt": "Lawn & Field Promenade",
+		"caption": "Students gathered along the sports field perimeter in conversation.",
+		"title": "Lawn & Field Promenade",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_150939": {
+		"id": "ndc-visit-img_20181218_150939",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_150939.webp",
+		"alt": "Classmates Gathering",
+		"caption": "Good times and memories with friends during the visit.",
+		"title": "Classmates Gathering",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_151505": {
+		"id": "ndc-visit-img_20181218_151505",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_151505.webp",
+		"alt": "College Lawn Candid",
+		"caption": "Sharing laughs and stories on the expansive lawn of NDC.",
+		"title": "College Lawn Candid",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_152040": {
+		"id": "ndc-visit-img_20181218_152040",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_152040.webp",
+		"alt": "Corridor & Pillars Snapshot",
+		"caption": "Posing alongside the historic pillars of Notre Dame College.",
+		"title": "Corridor & Pillars Snapshot",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_152743": {
+		"id": "ndc-visit-img_20181218_152743",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_152743.webp",
+		"alt": "Friends Gathering",
+		"caption": "Classmates sharing a warm afternoon together on campus.",
+		"title": "Friends Gathering",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_152752": {
+		"id": "ndc-visit-img_20181218_152752",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_152752.webp",
+		"alt": "Afternoon Sunlight on Campus",
+		"caption": "Warm winter afternoon light falling over the college buildings.",
+		"title": "Afternoon Sunlight on Campus",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_154751": {
+		"id": "ndc-visit-img_20181218_154751",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_154751.webp",
+		"alt": "Brothers in Uniform & Style",
+		"caption": "A memorable snapshot capturing youthful collegiate energy.",
+		"title": "Brothers in Uniform & Style",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155335": {
+		"id": "ndc-visit-img_20181218_155335",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155335.webp",
+		"alt": "Lush Campus Grounds",
+		"caption": "The picturesque green trees and open grounds of Notre Dame College.",
+		"title": "Lush Campus Grounds",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155401": {
+		"id": "ndc-visit-img_20181218_155401",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155401.webp",
+		"alt": "Friendship & Camaraderie",
+		"caption": "Everlasting friendship formed during our high school years.",
+		"title": "Friendship & Camaraderie",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155424": {
+		"id": "ndc-visit-img_20181218_155424",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155424.webp",
+		"alt": "College Stairways & Halls",
+		"caption": "Gathering on the staircases where thousands of Notredamians walked.",
+		"title": "College Stairways & Halls",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155433": {
+		"id": "ndc-visit-img_20181218_155433",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155433.webp",
+		"alt": "Lawn Portrait with Friends",
+		"caption": "A cherished portrait on the lush grass of the sports pavilion.",
+		"title": "Lawn Portrait with Friends",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155456": {
+		"id": "ndc-visit-img_20181218_155456",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155456.webp",
+		"alt": "Joyful Moments on Campus",
+		"caption": "Candid smiles and unforgettable student brotherhood.",
+		"title": "Joyful Moments on Campus",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155550": {
+		"id": "ndc-visit-img_20181218_155550",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155550.webp",
+		"alt": "NDC Heritage & Youth",
+		"caption": "Standing together proud of our Notredamian heritage.",
+		"title": "NDC Heritage & Youth",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155554": {
+		"id": "ndc-visit-img_20181218_155554",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155554.webp",
+		"alt": "Walking the Campus Path",
+		"caption": "Strolling through the campus grounds surrounded by greenery.",
+		"title": "Walking the Campus Path",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155622": {
+		"id": "ndc-visit-img_20181218_155622",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155622.webp",
+		"alt": "Friends by the Green Field",
+		"caption": "Capturing memories that will last a lifetime.",
+		"title": "Friends by the Green Field",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155624": {
+		"id": "ndc-visit-img_20181218_155624",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155624.webp",
+		"alt": "Campus Afternoon Smiles",
+		"caption": "Bright smiles with close friends after classes.",
+		"title": "Campus Afternoon Smiles",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155657": {
+		"id": "ndc-visit-img_20181218_155657",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155657.webp",
+		"alt": "Notre Dame College Brotherhood",
+		"caption": "Batchmates standing together with unity and shared dreams.",
+		"title": "Notre Dame College Brotherhood",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155933": {
+		"id": "ndc-visit-img_20181218_155933",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155933.webp",
+		"alt": "Winter Campus Light",
+		"caption": "Golden hour sunlight over the historic college campus.",
+		"title": "Winter Campus Light",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155946": {
+		"id": "ndc-visit-img_20181218_155946",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155946.webp",
+		"alt": "Evening Gathering",
+		"caption": "Wrapping up a wonderful visit with dear classmates.",
+		"title": "Evening Gathering",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_155955": {
+		"id": "ndc-visit-img_20181218_155955",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_155955.webp",
+		"alt": "Friends by College Arch",
+		"caption": "Group photo by the collegiate archway.",
+		"title": "Friends by College Arch",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_160532": {
+		"id": "ndc-visit-img_20181218_160532",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_160532.webp",
+		"alt": "Sunset on Notre Dame College",
+		"caption": "Late afternoon serenity and peaceful campus landscape.",
+		"title": "Sunset on Notre Dame College",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-visit-img_20181218_160547": {
+		"id": "ndc-visit-img_20181218_160547",
+		"src": "/images/education/ndc-visit-2018/IMG_20181218_160547.webp",
+		"alt": "Closing Moments of the Visit",
+		"caption": "Final evening photograph marking a heartwarming return to our alma mater.",
+		"title": "Closing Moments of the Visit",
+		"group": "ndc-visit-2018"
+	},
+	"ndc-mem-fb-img-1534393215216": {
+		"id": "ndc-mem-fb-img-1534393215216",
+		"src": "/images/education/college-memories/FB_IMG_1534393215216.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537385542": {
+		"id": "ndc-mem-fb-img-1539537385542",
+		"src": "/images/education/college-memories/FB_IMG_1539537385542.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537387787": {
+		"id": "ndc-mem-fb-img-1539537387787",
+		"src": "/images/education/college-memories/FB_IMG_1539537387787.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537390463": {
+		"id": "ndc-mem-fb-img-1539537390463",
+		"src": "/images/education/college-memories/FB_IMG_1539537390463.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537393943": {
+		"id": "ndc-mem-fb-img-1539537393943",
+		"src": "/images/education/college-memories/FB_IMG_1539537393943.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537397144": {
+		"id": "ndc-mem-fb-img-1539537397144",
+		"src": "/images/education/college-memories/FB_IMG_1539537397144.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537399836": {
+		"id": "ndc-mem-fb-img-1539537399836",
+		"src": "/images/education/college-memories/FB_IMG_1539537399836.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537402721": {
+		"id": "ndc-mem-fb-img-1539537402721",
+		"src": "/images/education/college-memories/FB_IMG_1539537402721.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537405427": {
+		"id": "ndc-mem-fb-img-1539537405427",
+		"src": "/images/education/college-memories/FB_IMG_1539537405427.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537408484": {
+		"id": "ndc-mem-fb-img-1539537408484",
+		"src": "/images/education/college-memories/FB_IMG_1539537408484.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539537411097": {
+		"id": "ndc-mem-fb-img-1539537411097",
+		"src": "/images/education/college-memories/FB_IMG_1539537411097.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615941686": {
+		"id": "ndc-mem-fb-img-1539615941686",
+		"src": "/images/education/college-memories/FB_IMG_1539615941686.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615947834": {
+		"id": "ndc-mem-fb-img-1539615947834",
+		"src": "/images/education/college-memories/FB_IMG_1539615947834.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615950978": {
+		"id": "ndc-mem-fb-img-1539615950978",
+		"src": "/images/education/college-memories/FB_IMG_1539615950978.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615959874": {
+		"id": "ndc-mem-fb-img-1539615959874",
+		"src": "/images/education/college-memories/FB_IMG_1539615959874.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615971474": {
+		"id": "ndc-mem-fb-img-1539615971474",
+		"src": "/images/education/college-memories/FB_IMG_1539615971474.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615976384": {
+		"id": "ndc-mem-fb-img-1539615976384",
+		"src": "/images/education/college-memories/FB_IMG_1539615976384.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615979598": {
+		"id": "ndc-mem-fb-img-1539615979598",
+		"src": "/images/education/college-memories/FB_IMG_1539615979598.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615982430": {
+		"id": "ndc-mem-fb-img-1539615982430",
+		"src": "/images/education/college-memories/FB_IMG_1539615982430.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615989982": {
+		"id": "ndc-mem-fb-img-1539615989982",
+		"src": "/images/education/college-memories/FB_IMG_1539615989982.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615994689": {
+		"id": "ndc-mem-fb-img-1539615994689",
+		"src": "/images/education/college-memories/FB_IMG_1539615994689.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539615997945": {
+		"id": "ndc-mem-fb-img-1539615997945",
+		"src": "/images/education/college-memories/FB_IMG_1539615997945.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616000447": {
+		"id": "ndc-mem-fb-img-1539616000447",
+		"src": "/images/education/college-memories/FB_IMG_1539616000447.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616002794": {
+		"id": "ndc-mem-fb-img-1539616002794",
+		"src": "/images/education/college-memories/FB_IMG_1539616002794.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616007571": {
+		"id": "ndc-mem-fb-img-1539616007571",
+		"src": "/images/education/college-memories/FB_IMG_1539616007571.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616012357": {
+		"id": "ndc-mem-fb-img-1539616012357",
+		"src": "/images/education/college-memories/FB_IMG_1539616012357.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616017331": {
+		"id": "ndc-mem-fb-img-1539616017331",
+		"src": "/images/education/college-memories/FB_IMG_1539616017331.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539616020125": {
+		"id": "ndc-mem-fb-img-1539616020125",
+		"src": "/images/education/college-memories/FB_IMG_1539616020125.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539695355547": {
+		"id": "ndc-mem-fb-img-1539695355547",
+		"src": "/images/education/college-memories/FB_IMG_1539695355547.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-fb-img-1539695648383": {
+		"id": "ndc-mem-fb-img-1539695648383",
+		"src": "/images/education/college-memories/FB_IMG_1539695648383.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-img-20181015-wa0001": {
+		"id": "ndc-mem-img-20181015-wa0001",
+		"src": "/images/education/college-memories/IMG-20181015-WA0001.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-img-20181015-wa0002": {
+		"id": "ndc-mem-img-20181015-wa0002",
+		"src": "/images/education/college-memories/IMG-20181015-WA0002.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-img-20190103-091811": {
+		"id": "ndc-mem-img-20190103-091811",
+		"src": "/images/education/college-memories/IMG_20190103_091811.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-img-20190103-091842": {
+		"id": "ndc-mem-img-20190103-091842",
+		"src": "/images/education/college-memories/IMG_20190103_091842.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-img-20190103-091947": {
+		"id": "ndc-mem-img-20190103-091947",
+		"src": "/images/education/college-memories/IMG_20190103_091947.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-screenshot-2018-10-16-12-07-02-118-com-facebook-katana": {
+		"id": "ndc-mem-screenshot-2018-10-16-12-07-02-118-com-facebook-katana",
+		"src": "/images/education/college-memories/Screenshot_2018-10-16-12-07-02-118_com.facebook.katana.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"ndc-mem-received-466877903801730": {
+		"id": "ndc-mem-received-466877903801730",
+		"src": "/images/education/college-memories/received_466877903801730.webp",
+		"alt": "Notre Dame College student life memory",
+		"group": "ndc-campus"
+	},
+	"exp-proficient-card-1": {
+		"id": "exp-proficient-card-1",
+		"src": "/images/experience/proficient-card-1.png",
+		"alt": "Proficient workplace photo",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-card-2": {
+		"id": "exp-proficient-card-2",
+		"src": "/images/experience/proficient-card-2.png",
+		"alt": "Proficient workplace photo",
+		"group": "experience-proficient"
+	},
+	"exp-proficient-card-3": {
+		"id": "exp-proficient-card-3",
+		"src": "/images/experience/proficient-card-3.png",
+		"alt": "Proficient workplace photo",
+		"group": "experience-proficient"
+	},
+	"exp-freelance-card-1": {
+		"id": "exp-freelance-card-1",
+		"src": "/images/experience/freelance-card-1.png",
+		"alt": "Freelance / engineering labs photo",
+		"group": "experience-freelance"
+	},
+	"exp-freelance-card-2": {
+		"id": "exp-freelance-card-2",
+		"src": "/images/experience/freelance-card-2.png",
+		"alt": "Freelance / engineering labs photo",
+		"group": "experience-freelance"
+	},
+	"exp-freelance-card-3": {
+		"id": "exp-freelance-card-3",
+		"src": "/images/experience/freelance-card-3.png",
+		"alt": "Freelance / engineering labs photo",
+		"group": "experience-freelance"
+	},
+	"edu-daffodil-logo": {
+		"id": "edu-daffodil-logo",
+		"src": "/images/education/daffodil-logo.webp",
+		"alt": "Daffodil International University logo",
+		"group": "education-diu"
+	},
+	"edu-ndc-logo": {
+		"id": "edu-ndc-logo",
+		"src": "/images/education/ndc-logo.webp",
+		"alt": "Notre Dame College logo",
+		"group": "education-ndc"
+	},
+	"edu-diu-card-1": {
+		"id": "edu-diu-card-1",
+		"src": "/images/education/diu-card-1.png",
+		"alt": "DIU campus photo",
+		"group": "education-diu"
+	},
+	"edu-diu-card-2": {
+		"id": "edu-diu-card-2",
+		"src": "/images/education/diu-card-2.png",
+		"alt": "DIU campus photo",
+		"group": "education-diu"
+	},
+	"edu-diu-card-3": {
+		"id": "edu-diu-card-3",
+		"src": "/images/education/diu-card-3.png",
+		"alt": "DIU campus photo",
+		"group": "education-diu"
+	}
+}

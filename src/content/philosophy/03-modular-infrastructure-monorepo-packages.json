@@ -1,0 +1,18 @@
+{
+	"id": "03-modular-infrastructure-monorepo-packages",
+	"order": 3,
+	"num": "03",
+	"tag": "CODEBASE SUSTAINABILITY",
+	"title": "Modular Infrastructure & Monorepo Packages",
+	"subtitle": "Decoupling Monoliths into Versioned Assets",
+	"icon": "📦",
+	"pullQuote": "Shared business logic belongs in SemVer packages — not copy-pasted across repos.",
+	"desc": "I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.",
+	"mermaid": "flowchart LR\n  Core[\"@org/core SemVer\"] --> AppA[\"ERP App\"]\n  Core --> AppB[\"POS App\"]\n  Core --> AppC[\"Mobile Suite\"]",
+	"proofLinks": [
+		{
+			"href": "/work/05-modular-packaging",
+			"label": "Private Package Architecture"
+		}
+	]
+}

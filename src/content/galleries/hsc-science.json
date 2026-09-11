@@ -1,0 +1,366 @@
+{
+	"id": "hsc-science",
+	"owner": "education-hsc",
+	"title": "Notre Dame College Photo Gallery & Campus Memoirs",
+	"albums": [
+		{
+			"id": "group-13-brotherhood",
+			"tag": "BATCH '19 // GROUP 13",
+			"title": "Group 13 & Room 304 Brotherhood",
+			"description": "The iconic lawn formation where Group 13 classmates formed the numeral \"13\" and arranged transparent college bags into \"NDC 19\".",
+			"photos": [
+				{
+					"id": "ndc-batch-19-group-13",
+					"span": "full"
+				}
+			]
+		},
+		{
+			"id": "civic-movement-2018",
+			"tag": "CIVIC SOLIDARITY // JULY — AUGUST 2018",
+			"title": "2018 Student Road Safety Movement",
+			"description": "Historic moments when Notre Dame College students mobilized from Arambagh to Shapla Chottor demanding transport reform and creating the emergency lane.",
+			"memoirHref": "/archive/road-safety-movement-2018",
+			"photos": [
+				{
+					"id": "road-safety-shapla-aerial",
+					"span": "wide"
+				},
+				{
+					"id": "road-safety-ndc-chanting",
+					"span": "normal"
+				},
+				{
+					"id": "road-safety-overbridge",
+					"span": "normal"
+				},
+				{
+					"id": "road-safety-street-march",
+					"span": "normal"
+				},
+				{
+					"id": "road-safety-placards",
+					"span": "normal"
+				}
+			]
+		},
+		{
+			"id": "pope-francis-2017",
+			"tag": "HISTORIC EVENT // 2017",
+			"title": "Pope Francis Apostolic Visit & Protocol Volunteer Force",
+			"description": "Selected by Father Susanto into the 6-member core volunteer protocol detail for the 100,000-attendee Ramna Mass and 10,000-youth NDC campus gathering.",
+			"memoirHref": "/archive/pope-francis-visit-2017",
+			"photos": [
+				{
+					"id": "pope-francis-ndc-stage",
+					"span": "wide"
+				},
+				{
+					"id": "pope-francis-popemobile",
+					"span": "normal"
+				},
+				{
+					"id": "pope-francis-logo-2017",
+					"span": "normal",
+					"isEmblem": true
+				}
+			]
+		},
+		{
+			"id": "ndc-visit-dec-2018",
+			"tag": "CAMPUS REVISIT // 18 DECEMBER 2018",
+			"title": "Notre Dame College Campus & Friends Revisit (18 Dec 2018)",
+			"description": "A preserved photo album capturing friends, classrooms, lush greens, corridors, and campus moments on 18 December 2018.",
+			"photos": [
+				{
+					"id": "ndc-visit-img_20181218_140117",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142525",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142654",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142705",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142851",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142908",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_142941",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_143013",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_143019",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_143133",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_143530",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_145243",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_150939",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_151505",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_152040",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_152743",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_152752",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_154751",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155335",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155401",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155424",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155433",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155456",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155550",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155554",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155622",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155624",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155657",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155933",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155946",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_155955",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_160532",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-visit-img_20181218_160547",
+					"span": "normal"
+				}
+			]
+		},
+		{
+			"id": "ndc-college-memories",
+			"tag": "CAMPUS LIFE & FRIENDSHIPS // 2018 — 2019",
+			"title": "Notre Dame College Student Life & Memories",
+			"description": "A visual archive of friendships, candid moments, college uniform days, and brotherhood across campus.",
+			"photos": [
+				{
+					"id": "ndc-mem-fb-img-1534393215216",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537385542",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537387787",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537390463",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537393943",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537397144",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537399836",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537402721",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537405427",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537408484",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539537411097",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615941686",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615947834",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615950978",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615959874",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615971474",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615976384",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615979598",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615982430",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615989982",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615994689",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539615997945",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616000447",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616002794",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616007571",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616012357",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616017331",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539616020125",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539695355547",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-fb-img-1539695648383",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-img-20181015-wa0001",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-img-20181015-wa0002",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-img-20190103-091811",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-img-20190103-091842",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-img-20190103-091947",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-screenshot-2018-10-16-12-07-02-118-com-facebook-katana",
+					"span": "normal"
+				},
+				{
+					"id": "ndc-mem-received-466877903801730",
+					"span": "normal"
+				}
+			]
+		}
+	]
+}

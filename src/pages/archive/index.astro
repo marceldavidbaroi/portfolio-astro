@@ -1,78 +1,35 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { compactPursuits } from '../../data/aboutData';
+import { mediaMap, resolveAsset } from '../../lib/media';
 
-const collegeStories = [
-	{
-		id: 'nobin-boron',
-		tag: 'ORIENTATION // 2017',
-		title: 'Nobin Boron (College Orientation Day)',
-		subtitle: 'A Sea of 3,000 Notredamians, Raining Skies, and the Commanding Voice of Tetas Sir',
-		icon: '🌱',
-		body: `The Nobin Boron (orientation) at Notre Dame College was a mesmerizing, goosebump-inducing introduction to collegiate life. It was pouring rain that morning, and many of us assumed the program would surely start late. But at sharp 9:00 AM on the dot, the commanding, resonant voice of Tetas Sir (Prof. Tetas, Head of the Department of Physics) boomed through the speakers, instantly capturing the absolute silence of over 6,000 attendees.
+const map = mediaMap(await getCollection('media'));
+const archiveEntries = (await getCollection('archive')).sort((a, b) => a.data.order - b.data.order);
 
-Standing among 3,000 freshmen, all dressed in the pristine new college uniform with matching transparent college bags and holding flowers, I was left utterly speechless. The choreographic precision, clockwork punctuality, and grand organizational discipline of that morning were unlike anything I had ever witnessed. It was the unforgettable moment I realized what it truly meant to be a Notredamian—a shared memory every alumnus carries with pride.`
-	},
-	{
-		id: 'pope-francis',
-		tag: 'HISTORIC EVENT // DEC 2, 2017',
-		title: 'Pope Francis Apostolic Visit & International Security Protocol Force',
-		subtitle: 'Selected as Core Volunteer for 100,000-Attendee Papal Mass & 10,000-Youth NDC Gathering',
-		icon: '🕊️',
-		dedicatedUrl: '/archive/pope-francis-visit-2017',
-		btnText: 'Read Diplomatic & Protocol Memoir →',
-		thumbnail: '/images/archive/pope-francis/pope-francis-notre-dame-college-stage.webp',
-		body: `During Pope Francis's historic apostolic journey to Myanmar and Bangladesh in late 2017 (themed "Harmony and Peace"), I was given the rare honor of being selected as a primary student volunteer. One afternoon, Father Susanto called me and 19 peers using the famed college pink slips to invite us to serve as official volunteers for the 10,000-youth gathering hosted right on the Notre Dame College campus. 
+const collegeStories = archiveEntries.map((entry) => {
+	const d = entry.data;
+	const thumbnail = d.thumbnailId ? resolveAsset(d.thumbnailId, map).src : undefined;
+	return {
+		id: d.id === 'road-safety' ? 'student-movement' : d.id,
+		tag: d.tag,
+		title: d.title,
+		subtitle: d.subtitle,
+		icon: d.icon,
+		body: d.body,
+		dedicatedUrl: d.dedicatedUrl,
+		btnText: d.btnText,
+		thumbnail
+	};
+});
 
-Shortly after, Father Susanto selected 6 of us from that group into the core volunteer force for the main Papal Mass at Ramna Race Course, attended by over 100,000 people. To prepare for this massive global event, we underwent intensive seminars and training sessions over multiple weeks, coordinating with international security details and learning large-scale protocol management. Witnessing global diplomacy, inter-faith harmony, and international event coordination firsthand was one of the most formative milestones of my college life.`
-	},
-	{
-		id: 'student-movement',
-		tag: 'CIVIC ENGAGEMENT // JULY 2018',
-		title: 'Student-Led Road Safety & Civic Movement',
-		subtitle: 'Standing in Solidarity for Transport Reform & Civic Discipline',
-		icon: '✊',
-		dedicatedUrl: '/archive/road-safety-movement-2018',
-		btnText: 'Read Day-by-Day Historical Memoir →',
-		thumbnail: '/images/archive/road-safety/03-shapla-chottor-blockade-aerial.webp',
-		body: `On July 29, 2018, following the tragic road incident on Airport Road that took the lives of students Mim and Rajib, students from Notre Dame College, Shaheed Ramiz Uddin, and colleges across Dhaka took to the streets in a peaceful, self-organized movement. Students created dedicated emergency vehicle lanes, verified vehicle licenses, and advocated for strict public transit safety governance. This formative experience ingrained a deep sense of civic duty, ethical accountability, and systemic discipline.`
-	},
-	{
-		id: 'rag-day',
-		tag: 'CAMPUS HERITAGE // 2019',
-		title: 'Noterdamian Traditions & Bittersweet Farewell',
-		subtitle: 'The 8:10 AM Gate Rule, Room 304, and Campus Brotherhood',
-		icon: '🏛️',
-		body: `Notre Dame College was defined by its legendary discipline—the strict 8:10 AM gate closure, short hair, uniform inspections, and the brotherhood of Batch '19 (Group 13, Room 304) navigating the labyrinth of Harrington Building, Ganguly Building, Father Timm Building, and Fr. Peixotto Building. On the final day, classes concluded not with celebratory chaos, but with heartfelt parting speeches from our mentors and teachers. Leaving Room 304 and stepping through the college gates marked the transition to adulthood and engineering.`
-	}
-];
-
-const personalPursuits = [
-	{
-		title: 'Classical Percussion (Tabla)',
-		tag: '2015 — 2017 • 3 YEARS FORMAL TRAINING',
-		icon: '🥁',
-		desc: 'Completed 3 years of classical Tabla training (2015–2017). Mastering classical Indian rhythm cycles (Taal), mathematical subdivisions, tempo accelerations, and polyrhythms instilled structural cadence, timing precision, and deep focus.'
-	},
-	{
-		title: 'Drawing, Fine Arts & Competitions',
-		tag: '2014 — 2015 • MULTI-COMPETITION WINNER',
-		icon: '🎨',
-		desc: 'Formal fine arts and drawing education (2014–2015), winning multiple art and drawing competitions. Mastery of freehand illustration, proportion geometry, and spatial composition directly informs frontend component hierarchy and UI ergonomics.'
-	},
-	{
-		title: 'Role-Play Acting & Community Theatre',
-		tag: 'COMMUNITY & CHURCH DRAMA',
-		icon: '🎭',
-		desc: 'Active participant in numerous role-play acting performances, dramas, and community productions in church programs. Cultivated deep empathetic communication, public vocal presence, and collaborative stage confidence.'
-	},
-	{
-		title: 'Cinema & Screenplay Narrative Structure',
-		tag: 'CINEPHILE & NARRATIVE DESIGN',
-		icon: '🎬',
-		desc: 'Avid cinephile analyzing global cinema, cinematography, and narrative pacing—drawing parallels between screenwriting structural coherence, systemic invariants, and enterprise domain stability.',
-		url: 'https://www.imdb.com/user/p.bk6ud655mqlvdqktibh2swwdzm?ref_=ext_shr_lnk'
-	}
-];
+const personalPursuits = compactPursuits.map((c) => ({
+	title: c.title,
+	tag: c.tag,
+	desc: c.desc,
+	url: c.url,
+	icon: c.iconType === 'music' ? '🥁' : c.iconType === 'pen' ? '🎨' : c.iconType === 'theater' ? '🎭' : '🎬'
+}));
 ---
 
 <BaseLayout

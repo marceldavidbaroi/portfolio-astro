@@ -1,0 +1,36 @@
+---
+interface Props {
+	workCount: number;
+}
+
+const { workCount } = Astro.props;
+---
+
+<section class="masthead">
+	<p class="label font-mono">Work · {workCount} case studies</p>
+	<h1 class="page-title">Selected work</h1>
+	<p class="lead">Production SaaS, ERP, mobile, and internal tools.</p>
+</section>
+
+<style>
+	.masthead {
+		padding-bottom: 1.75rem;
+	}
+
+	.page-title {
+		margin: 0.35rem 0 0;
+		font-size: clamp(1.85rem, 5vw, 2.6rem);
+		font-weight: 800;
+		letter-spacing: -0.04em;
+		line-height: 1.1;
+		color: var(--text-main);
+	}
+
+	.lead {
+		margin: 0.55rem 0 0;
+		font-size: var(--type-body);
+		line-height: 1.5;
+		color: var(--text-main);
+		max-width: 34rem;
+	}
+</style>

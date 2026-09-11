@@ -1,5 +1,22 @@
 import { defineCollection, z } from 'astro:content';
-import { glob } from 'astro/loaders';
+import { file, glob } from 'astro/loaders';
+
+/**
+ * ----------------------------------------------------------------------
+ * 0. MEDIA CATALOG (unique photos — one src, one id)
+ * ----------------------------------------------------------------------
+ */
+const media = defineCollection({
+	loader: file('src/content/media.json'),
+	schema: z.object({
+		id: z.string(),
+		src: z.string(),
+		alt: z.string(),
+		caption: z.string().optional(),
+		title: z.string().optional(),
+		group: z.string().optional()
+	})
+});
 
 /**
  * ----------------------------------------------------------------------
@@ -202,6 +219,9 @@ const education = defineCollection({
 		institutionShort: z.string().optional(),
 		institutionUrl: z.string().optional(),
 		logo: z.string().optional(),
+		/** Media catalog ids for homepage card stacks. */
+		cardImages: z.array(z.string()).default([]),
+		galleryHref: z.string().optional(),
 		location: z.string().optional(),
 		duration: z.string().optional(),
 		period: z.string(),
@@ -341,11 +361,182 @@ const research = defineCollection({
 	})
 });
 
+/**
+ * ----------------------------------------------------------------------
+ * 5. GALLERY ALBUMS (reference media ids — no duplicated paths)
+ * ----------------------------------------------------------------------
+ */
+const galleryAlbumSchema = z.object({
+	id: z.string(),
+	tag: z.string(),
+	title: z.string(),
+	description: z.string().optional(),
+	memoirHref: z.string().optional(),
+	photos: z
+		.array(
+			z.object({
+				id: z.string(),
+				span: z.enum(['full', 'wide', 'normal']).optional(),
+				isEmblem: z.boolean().optional()
+			})
+		)
+		.default([])
+});
+
+const galleries = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/galleries' }),
+	schema: z.object({
+		id: z.string(),
+		owner: z.enum([
+			'education-hsc',
+			'education-bsc',
+			'experience-proficient',
+			'experience-freelance'
+		]),
+		title: z.string().optional(),
+		albums: z.array(galleryAlbumSchema).default([])
+	})
+});
+
+/**
+ * ----------------------------------------------------------------------
+ * 6. ARCHIVE (civic / pre-career stories & memoirs)
+ * ----------------------------------------------------------------------
+ */
+const archive = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/archive' }),
+	schema: z.object({
+		id: z.string(),
+		slug: z.string().optional(),
+		order: z.number().default(0),
+		kind: z.enum(['index-story', 'memoir']),
+		tag: z.string(),
+		title: z.string(),
+		subtitle: z.string().optional(),
+		icon: z.string().optional(),
+		body: z.string().optional(),
+		btnText: z.string().optional(),
+		thumbnailId: z.string().optional(),
+		dedicatedUrl: z.string().optional(),
+		stats: z
+			.array(
+				z.object({
+					value: z.string(),
+					label: z.string(),
+					sub: z.string().optional()
+				})
+			)
+			.optional(),
+		phases: z
+			.array(
+				z.object({
+					phaseTag: z.string(),
+					phaseTitle: z.string(),
+					headline: z.string(),
+					subtitle: z.string().optional(),
+					icon: z.string().optional(),
+					imageId: z.string().optional(),
+					imageCaption: z.string().optional(),
+					isEmblem: z.boolean().optional(),
+					storyParagraphs: z.array(z.string()).default([]),
+					reflectionQuote: z.string().optional()
+				})
+			)
+			.optional(),
+		days: z
+			.array(
+				z.object({
+					dateTag: z.string(),
+					dateTitle: z.string(),
+					headline: z.string(),
+					subtitle: z.string().optional(),
+					icon: z.string().optional(),
+					imageIds: z.array(z.string()).default([]),
+					storyParagraphs: z.array(z.string()).default([]),
+					reflectionQuote: z.string().optional()
+				})
+			)
+			.optional(),
+		pillars: z
+			.array(
+				z.object({
+					title: z.string(),
+					tag: z.string(),
+					icon: z.string().optional(),
+					desc: z.string()
+				})
+			)
+			.optional(),
+		pageTitle: z.string().optional(),
+		pageDescription: z.string().optional(),
+		heroTag: z.string().optional(),
+		heroBadge: z.string().optional(),
+		memoirTitle: z.string().optional(),
+		memoirSubtitle: z.string().optional(),
+		breadcrumbLabel: z.string().optional(),
+		executiveQuote: z.string().optional(),
+		reflectionsTag: z.string().optional(),
+		reflectionsTitle: z.string().optional(),
+		reflectionsDesc: z.string().optional(),
+		authorMeta: z
+			.array(
+				z.object({
+					label: z.string(),
+					value: z.string(),
+					role: z.string().optional()
+				})
+			)
+			.optional(),
+		crossNav: z
+			.array(
+				z.object({
+					lbl: z.string(),
+					href: z.string(),
+					text: z.string()
+				})
+			)
+			.optional()
+	})
+});
+
+/**
+ * ----------------------------------------------------------------------
+ * 7. PHILOSOPHY PRINCIPLES
+ * ----------------------------------------------------------------------
+ */
+const philosophy = defineCollection({
+	loader: glob({ pattern: '**/*.json', base: './src/content/philosophy' }),
+	schema: z.object({
+		id: z.string(),
+		num: z.string(),
+		tag: z.string(),
+		title: z.string(),
+		subtitle: z.string().optional(),
+		icon: z.string().optional(),
+		pullQuote: z.string().optional(),
+		desc: z.string(),
+		mermaid: z.string().optional(),
+		proofLinks: z
+			.array(
+				z.object({
+					href: z.string(),
+					label: z.string()
+				})
+			)
+			.default([]),
+		order: z.number().default(0)
+	})
+});
+
 export const collections = {
+	media,
 	projects,
 	experience,
 	education,
-	research
+	research,
+	galleries,
+	archive,
+	philosophy
 };
 
 

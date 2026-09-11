@@ -1,0 +1,334 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import AcademicTranscript from '../AcademicTranscript.astro';
+
+type EduData = CollectionEntry<'education'>['data'];
+
+interface Props {
+	isBsc: boolean;
+	bscCseProgram: EduData;
+	hscScienceProgram: EduData;
+}
+
+const { isBsc, bscCseProgram, hscScienceProgram } = Astro.props;
+---
+
+{isBsc ? (
+	/* =========================================================================
+	   BSC IN COMPUTER SCIENCE & ENGINEERING DETAILS
+	   ========================================================================= */
+	<div class="edu-detail-body">
+		<!-- 1. Executive Program Overview & Scope -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">01 // CURRICULUM ARCHITECTURE</span>
+				<h2 class="section-h2 font-dot">Degree Overview & Academic Scope</h2>
+			</div>
+			<p class="section-paragraph">
+				{bscCseProgram.summary}
+			</p>
+
+			<div class="key-highlights-box">
+				<h3 class="highlights-title">Key Academic Milestones:</h3>
+				<ul class="highlights-list">
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Academic Batch & Department:</strong> Proud alumnus of <strong>CSE Batch 55</strong>, Department of Computer Science & Engineering.
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>High Academic Standing:</strong> Achieved a <strong>3.91 / 4.00 CGPA</strong> under the standardized UGC Uniform Grading System, ranking among top academic achievers.
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>100% Software Projects Excellence:</strong> Scored <strong>Grade A+ (4.00)</strong> in all 6 consecutive hands-on software development practicums (Software Project I through VI).
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Core Systems & Architecture Mastery:</strong> Comprehensive coursework across Distributed Operating Systems, Compiler Design, Database Management Systems, Computer Networks, and Computer Architecture.
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<div>
+							<strong>Final Year Thesis Defense:</strong> Researched and defended <em>"CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement"</em> (DIU Project #26095) with <strong>97.93% Vowel</strong> and <strong>95.99% Consonant</strong> accuracy on DenseNet. <a href="/research/01-bangla-hwcr-ekush" class="inline-thesis-link">Read Research Paper & Benchmarks →</a>
+						</div>
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Artificial Intelligence & Applied Data Science:</strong> Specialized coursework and laboratory defense in Artificial Intelligence, Machine Learning, Big Data & IoT, Computer Vision, and Robotics.
+					</li>
+				</ul>
+			</div>
+		</section>
+
+		<!-- 2. Academic Core Competency Matrix -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">02 // DOMAIN CLUSTERS</span>
+				<h2 class="section-h2 font-dot">Computer Science Specializations</h2>
+			</div>
+
+			<div class="competencies-grid">
+				{bscCseProgram.keyFocusAreas.map((area, idx) => (
+					<div class="comp-card">
+						<div class="comp-number font-mono">{`0${idx + 1}`}</div>
+						<h4 class="comp-title">{area}</h4>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- 3. Final Year Undergraduate Thesis Highlight -->
+		<section class="detail-section card thesis-highlight-card">
+			<div class="section-heading-group">
+				<span class="subtag">03 // FINAL YEAR THESIS & RESEARCH DEFENSE</span>
+				<h2 class="section-h2 font-dot">CNN-Based Bangla Handwritten Character Recognition</h2>
+				<p class="section-subtext">
+					Independent final year thesis research exploring the benchmark Ekush dataset (80,000 images, 50 character classes) and evaluating 16 deep learning and classical machine learning models.
+				</p>
+			</div>
+
+			<div class="thesis-preview-grid font-mono">
+				<div class="thesis-metric-box">
+					<span class="t-val font-dot">97.93%</span>
+					<span class="t-lbl">Peak Vowel Accuracy (DenseNet)</span>
+				</div>
+				<div class="thesis-metric-box">
+					<span class="t-val font-dot">95.99%</span>
+					<span class="t-lbl">Peak Consonant Accuracy (DenseNet)</span>
+				</div>
+				<div class="thesis-metric-box">
+					<span class="t-val font-dot">16 Models</span>
+					<span class="t-lbl">Empirical Benchmarks</span>
+				</div>
+				<div class="thesis-metric-box">
+					<span class="t-val font-dot">#26095</span>
+					<span class="t-lbl">DIU Project Archive ID</span>
+				</div>
+			</div>
+
+			<div class="thesis-cta-row">
+				<a href="/research/01-bangla-hwcr-ekush" class="thesis-btn-primary font-mono">
+					<span>Read Full Research Paper & 16-Model Benchmarks</span>
+					<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+						<line x1="5" y1="12" x2="19" y2="12"></line>
+						<polyline points="12 5 19 12 12 19"></polyline>
+					</svg>
+				</a>
+
+				<a
+					href="https://internship.daffodilvarsity.edu.bd/?app=home&cmd=reportsViewPDFskin&project_number=26095"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="thesis-btn-secondary font-mono"
+				>
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path>
+						<polyline points="15 3 21 3 21 9"></polyline>
+						<line x1="10" y1="14" x2="21" y2="3"></line>
+					</svg>
+					<span>DIU Archive Listing</span>
+				</a>
+
+				<a
+					href="/documents/bangla-ocr-thesis-26095.pdf"
+					target="_blank"
+					download="Bangla-HWCR-Ekush-Thesis-MarcelDavidBaroi.pdf"
+					class="thesis-btn-secondary font-mono"
+				>
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+						<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+						<polyline points="7 10 12 15 17 10"></polyline>
+						<line x1="12" y1="15" x2="12" y2="3"></line>
+					</svg>
+					<span>Download PDF (5.4 MB)</span>
+				</a>
+			</div>
+		</section>
+
+		<!-- 4. Complete Interactive 11-Semester Transcript Component -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">04 // TRANSCRIPT DIRECTORY</span>
+				<h2 class="section-h2 font-dot">Official Undergraduate Transcript</h2>
+				<p class="section-subtext">
+					Explore course-by-course performance across all 11 semesters, filter by domain cluster, or search specific course codes (e.g. <code>CSE311</code>, <code>CSE414</code>).
+				</p>
+			</div>
+
+			<AcademicTranscript />
+		</section>
+	</div>
+) : (
+	/* =========================================================================
+	   NOTRE DAME COLLEGE HSC SCIENCE DETAILS
+	   ========================================================================= */
+	<div class="edu-detail-body">
+		<!-- 1. Academic Overview & Pedigree -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">01 // PEDIGREE & OVERVIEW</span>
+				<h2 class="section-h2 font-dot">Higher Secondary Academic Overview</h2>
+			</div>
+			<p class="section-paragraph">
+				{hscScienceProgram.summary}
+			</p>
+
+			<div class="key-highlights-box">
+				<h3 class="highlights-title">Academic Profile Highlights:</h3>
+				<ul class="highlights-list">
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Academic Result:</strong> Achieved <strong>GPA 4.67 / 5.00</strong> in the Science group examination under the Dhaka Education Board.
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Notre Dame College Identity:</strong> Proud alumnus of <strong>Batch '19, Group 13</strong> (Room 304).
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Institution:</strong> Notre Dame College (Dhaka), established in 1949, renowned for academic excellence and holistic character formation.
+					</li>
+					<li>
+						<span class="bullet-accent font-mono">›</span>
+						<strong>Curriculum:</strong> Full science curriculum covering Physics, Chemistry, Higher Mathematics, Biology, ICT, English, and Bangla.
+					</li>
+				</ul>
+			</div>
+
+			<!-- Group 13 Aerial Formation Display -->
+			<div class="group-photo-showcase">
+				<div class="group-photo-frame card">
+					<img
+						src="/images/education/ndc-batch-19-group-13.webp"
+						alt="Notre Dame College Batch '19 Group 13 Formation Display"
+						class="group-aerial-img"
+						loading="lazy"
+					/>
+					<div class="group-photo-caption">
+						<div class="caption-header font-mono">
+							<span class="c-tag">CAMPUS BROTHERHOOD</span>
+							<span class="c-sep">•</span>
+							<span class="c-batch">BATCH '19 // GROUP 13 // ROOM 304</span>
+						</div>
+						<p class="caption-text">
+							Aerial lawn formation of <strong>Group 13 (Batch '19)</strong> creating the iconic "13" numeral with classmates and spelling out "NDC 19" using transparent college bags on the Notre Dame College field.
+						</p>
+						<div class="caption-action-row">
+							<a href="/education/hsc-science/gallery" class="view-gallery-btn font-mono">
+								<span>Explore Full NDC Photo Gallery & Campus Memoirs →</span>
+							</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<!-- 2. Subjects Studied -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">02 // CURRICULUM</span>
+				<h2 class="section-h2 font-dot">Subjects Studied (Science Group)</h2>
+				<p class="section-subtext">Standard Higher Secondary Certificate science curriculum for science college students.</p>
+			</div>
+
+			<div class="hsc-subjects-grid">
+				{hscScienceProgram.keyCourses.map((subject) => (
+					<div class="hsc-subject-card card">
+						<div class="hsc-sub-left">
+							<span class="hsc-dot"></span>
+							<span class="hsc-sub-name">{subject}</span>
+						</div>
+						<span class="hsc-sub-badge font-mono">HSC Science</span>
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- 3. Co-Curricular & Club Activities -->
+		<section class="detail-section card">
+			<div class="section-heading-group">
+				<span class="subtag">03 // CO-CURRICULAR ACTIVITIES</span>
+				<h2 class="section-h2 font-dot">Clubs & Activities</h2>
+				<p class="section-subtext">Active participation in student clubs and extracurricular initiatives at Notre Dame College.</p>
+			</div>
+
+			<div class="clubs-grid">
+				<div class="club-card card">
+					<div class="club-header">
+						<div class="club-icon-wrap">
+							<span class="club-icon font-mono">∑</span>
+						</div>
+						<div>
+							<h3 class="club-title">Notre Dame Math Club (NDMC)</h3>
+							<span class="club-role font-mono">Club Member & Participant</span>
+						</div>
+					</div>
+					<p class="club-desc">
+						Engaged in mathematical problem solving, analytical logic workshops, and club activities promoting competitive mathematics and reasoning.
+					</p>
+				</div>
+
+				<div class="club-card card">
+					<div class="club-header">
+						<div class="club-icon-wrap">
+							<span class="club-icon font-mono">🎭</span>
+						</div>
+						<div>
+							<h3 class="club-title">Notre Dame Cultural Club (NDCC)</h3>
+							<span class="club-role font-mono">Club Member & Participant</span>
+						</div>
+					</div>
+					<p class="club-desc">
+						Participated in collegiate cultural events, creative festivals, and student collaborative programs organized by Notre Dame Cultural Club.
+					</p>
+				</div>
+			</div>
+		</section>
+
+		<!-- 4. Formative Milestones & Civic Leadership -->
+		{hscScienceProgram.formativeMilestones && (
+			<section class="detail-section card">
+				<div class="section-heading-group">
+					<span class="subtag">04 // FORMATIVE MILESTONES & CIVIC ENGAGEMENT</span>
+					<h2 class="section-h2 font-dot">Campus Legacy & Civic Leadership</h2>
+					<p class="section-subtext">Defining historical events, student leadership, and cultural heritage experienced during the Notre Dame College years.</p>
+				</div>
+
+				<div class="milestones-grid">
+					{hscScienceProgram.formativeMilestones.map((m) => {
+						const Tag = m.url ? 'a' : 'div';
+						return (
+							<Tag
+								href={m.url}
+								class={`milestone-card card ${m.url ? 'is-clickable' : ''}`}
+								title={m.url ? `Read full chronicle in Personal Archive ↗` : undefined}
+							>
+								<div class="m-top-row">
+									<span class="m-tag font-mono">{m.tag}</span>
+									<span class="m-period font-mono">{m.period}</span>
+								</div>
+								<h3 class="m-title">
+									{m.title}
+									{m.url && <span class="m-ext-arrow font-mono">↗</span>}
+								</h3>
+								<p class="m-desc">{m.description}</p>
+								{m.impact && (
+									<div class="m-impact font-mono">
+										<span class="m-impact-lbl font-mono">Takeaway:</span>
+										<span class="m-impact-val">{m.impact}</span>
+									</div>
+								)}
+								{m.url && (
+									<div class="m-read-more font-mono">
+										<span>Read Full Chronicle in Personal Archive →</span>
+									</div>
+								)}
+							</Tag>
+						);
+					})}
+				</div>
+			</section>
+		)}
+	</div>
+)}

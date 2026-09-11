@@ -1,0 +1,138 @@
+---
+interface EducationProgram {
+	logo?: string;
+	shortDegree?: string;
+	institutionShort: string;
+	cgpa?: number;
+	gpa?: number;
+	maxGpa: number;
+}
+
+interface Props {
+	bscCseProgram: EducationProgram;
+	hscScienceProgram: EducationProgram;
+}
+
+const { bscCseProgram, hscScienceProgram } = Astro.props;
+---
+
+<section class="education" aria-label="Education">
+	<p class="label font-mono">Education</p>
+	<div class="edu-list">
+		<a class="edu-row" href="/education/bsc-cse">
+			{bscCseProgram.logo && (
+				<img src={bscCseProgram.logo} alt="" class="edu-logo" width="28" height="28" />
+			)}
+			<p class="edu-copy">
+				<strong>{bscCseProgram.shortDegree}</strong>
+				<span class="edu-sep">·</span>
+				{bscCseProgram.institutionShort}
+				<span class="edu-sep">·</span>
+				CGPA {(bscCseProgram.cgpa ?? 0).toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}
+			</p>
+			<span class="section-link font-mono">Transcript →</span>
+		</a>
+		<a class="edu-row" href="/education/hsc-science">
+			{hscScienceProgram.logo && (
+				<img src={hscScienceProgram.logo} alt="" class="edu-logo edu-logo-wide" width="40" height="24" />
+			)}
+			<p class="edu-copy">
+				<strong>HSC Science</strong>
+				<span class="edu-sep">·</span>
+				{hscScienceProgram.institutionShort}
+				<span class="edu-sep">·</span>
+				GPA {(hscScienceProgram.gpa ?? 0).toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}
+			</p>
+			<span class="section-link font-mono">Details →</span>
+		</a>
+	</div>
+</section>
+
+<style>
+	.education {
+		padding: 1.65rem 0;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	.education .label {
+		margin-bottom: 0.55rem;
+	}
+
+	.edu-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.edu-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem 1rem;
+		padding: 0.7rem 0;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.edu-row:last-child {
+		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	}
+
+	.edu-row:hover .edu-copy strong {
+		color: var(--accent);
+	}
+
+	.edu-logo {
+		width: 28px;
+		height: 28px;
+		object-fit: contain;
+		border-radius: 6px;
+		background: #fffdfa;
+		border: 1px solid rgba(95, 80, 56, 0.12);
+		padding: 2px;
+		flex-shrink: 0;
+	}
+
+	.edu-logo-wide {
+		width: 40px;
+		height: 24px;
+		padding: 2px 4px;
+	}
+
+	.edu-copy {
+		margin: 0;
+		flex: 1 1 16rem;
+		font-size: 0.95rem;
+		line-height: 1.4;
+		color: var(--text-main);
+	}
+
+	.edu-sep {
+		margin: 0 0.35rem;
+		color: var(--text-muted);
+	}
+
+	@media (max-width: 640px) {
+		.education {
+			padding: 1.2rem 0;
+		}
+
+		.edu-row {
+			display: grid;
+			grid-template-columns: auto minmax(0, 1fr);
+			gap: 0.4rem 0.7rem;
+			align-items: center;
+		}
+
+		.edu-row .section-link {
+			grid-column: 2;
+			justify-self: start;
+		}
+
+		.edu-copy {
+			flex: none;
+			min-width: 0;
+			font-size: 0.88rem;
+		}
+	}
+</style>

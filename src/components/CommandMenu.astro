@@ -1,4 +1,6 @@
 ---
+import { site } from '../data/site';
+
 const commands = [
 	{ id: 'home', label: 'Home', keywords: 'home index', href: '/', type: 'nav' },
 	{ id: 'work', label: 'Work / Case Studies', keywords: 'work projects case studies portfolio', href: '/work', type: 'nav' },
@@ -7,11 +9,11 @@ const commands = [
 	{ id: 'credentials', label: 'Credentials', keywords: 'credentials certifications certs', href: '/credentials', type: 'nav' },
 	{ id: 'philosophy', label: 'Engineering Philosophy', keywords: 'philosophy architecture principles', href: '/philosophy', type: 'nav' },
 	{ id: 'archive', label: 'Civic Leadership Archive', keywords: 'archive leadership memoirs', href: '/archive', type: 'nav' },
-	{ id: 'resume', label: 'Download Resume (PDF)', keywords: 'resume cv pdf download', href: '/resume.pdf', type: 'action', external: true },
-	{ id: 'resume-txt', label: 'ATS Text CV', keywords: 'ats resume text plain cv', href: '/resume.txt', type: 'action', external: true },
+	{ id: 'resume', label: 'Download Resume (PDF)', keywords: 'resume cv pdf download', href: site.resumePdf, type: 'action', external: true },
+	{ id: 'resume-txt', label: 'ATS Text CV', keywords: 'ats resume text plain cv', href: site.resumeTxt, type: 'action', external: true },
 	{ id: 'email', label: 'Copy Email', keywords: 'email copy contact mail', href: '#copy-email', type: 'copy-email' },
-	{ id: 'linkedin', label: 'LinkedIn', keywords: 'linkedin social', href: 'https://linkedin.com/in/marceldavidbaroi', type: 'action', external: true },
-	{ id: 'github', label: 'GitHub', keywords: 'github code repos', href: 'https://github.com/marceldavidbaroi', type: 'action', external: true },
+	{ id: 'linkedin', label: 'LinkedIn', keywords: 'linkedin social', href: site.linkedin, type: 'action', external: true },
+	{ id: 'github', label: 'GitHub', keywords: 'github code repos', href: site.github, type: 'action', external: true },
 ];
 ---
 
@@ -67,9 +69,7 @@ const commands = [
 	</div>
 </div>
 
-<script>
-	const EMAIL = 'marceldavidbaroi@gmail.com';
-
+<script define:vars={{ EMAIL: site.email }}>
 	function initCommandMenu() {
 		const root = document.getElementById('command-menu');
 		const input = document.getElementById('cmdk-input') as HTMLInputElement | null;
@@ -138,12 +138,17 @@ const commands = [
 			}
 		}
 
+		function emitMenu(open: boolean) {
+			document.dispatchEvent(new CustomEvent('command-menu:change', { detail: { open } }));
+		}
+
 		function openMenu() {
 			root.hidden = false;
 			root.setAttribute('aria-hidden', 'false');
 			document.body.style.overflow = 'hidden';
 			input.value = '';
 			filterList('');
+			emitMenu(true);
 			window.setTimeout(() => input.focus(), 10);
 		}
 
@@ -151,6 +156,7 @@ const commands = [
 			root.hidden = true;
 			root.setAttribute('aria-hidden', 'true');
 			document.body.style.overflow = '';
+			emitMenu(false);
 		}
 
 		document.addEventListener('keydown', (e) => {

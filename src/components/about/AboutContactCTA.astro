@@ -1,5 +1,6 @@
 ---
 import CopyEmailButton from '../CopyEmailButton.astro';
+import { site } from '../../data/site';
 ---
 
 <section class="about-section" id="collaboration">
@@ -10,7 +11,7 @@ import CopyEmailButton from '../CopyEmailButton.astro';
 			Available for full-stack engineering roles, system architecture design, and high-impact SaaS development.
 		</p>
 		<div class="cta-buttons">
-			<a href="mailto:marceldavidbaroi@gmail.com" class="btn btn-accent font-mono">
+			<a href={`mailto:${site.email}`} class="btn btn-accent font-mono">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<rect width="20" height="16" x="2" y="4" rx="2"></rect>
 					<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
@@ -18,10 +19,10 @@ import CopyEmailButton from '../CopyEmailButton.astro';
 				Email Me Directly
 			</a>
 			<CopyEmailButton variant="button" label="Copy Email" />
-			<a href="https://linkedin.com/in/marceldavidbaroi" target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono">
+			<a href={site.linkedin} target="_blank" rel="noopener noreferrer" class="btn btn-primary font-mono">
 				Connect on LinkedIn
 			</a>
-			<a href="/resume.pdf" target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
+			<a href={site.resumePdf} target="_blank" rel="noopener noreferrer" class="btn btn-secondary font-mono">
 				<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 					<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
 					<polyline points="7 10 12 15 17 10"></polyline>

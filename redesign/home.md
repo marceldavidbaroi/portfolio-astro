@@ -1,7 +1,9 @@
 # Home — design source
 
+Tokens, type, buttons, motion: [system.md](./system.md). This file is page layout only.
+
 Live page: `/` (`src/pages/index.astro`).  
-This file is the design contract for Home. Work, About, and Header should borrow from here, not copy the old card grid.
+This file is the design contract for Home. Sibling contracts: [header.md](./header.md), [work.md](./work.md), [about.md](./about.md). Those pages borrow tokens, type roles, and layout grammar from the system — they do not copy the old card grid.
 
 ## Concept
 
