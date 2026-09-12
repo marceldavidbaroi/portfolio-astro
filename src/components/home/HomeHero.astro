@@ -12,7 +12,7 @@ const { portraitSrc } = Astro.props;
 	<div class="hero-grid">
 		<p class="status font-mono">Available · Remote / relocation · Dhaka · US/EU overlap</p>
 		<h1 class="name font-sans">{site.name}</h1>
-		<p class="role">Full-Stack &amp; Mobile Engineer — SaaS &amp; enterprise systems</p>
+		<p class="role">Software Engineer</p>
 		<p class="bio">
 			I design and ship full-stack web and cross-platform applications across Next.js, Vue / Quasar, NestJS, Flutter, and PostgreSQL — from wholesale ERP and support desks to mobile field apps.
 		</p>
@@ -133,7 +133,9 @@ const { portraitSrc } = Astro.props;
 		object-fit: contain;
 		object-position: top center;
 		background: transparent;
-		border-radius: 2px;
+		-webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+		mask-image: linear-gradient(to bottom, #000 70%, transparent 100%);
+		filter: contrast(1.08) saturate(1.04);
 	}
 
 	.portrait-slot {

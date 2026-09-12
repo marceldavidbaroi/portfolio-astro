@@ -1,146 +1,94 @@
 MARCEL DAVID BAROI
-Full-Stack & Enterprise Systems Engineer
-Dhaka, Bangladesh (UTC+6) · US/EU Overlap
-Available for Full-Time · Remote / Relocation
-
-Email: marceldavidbaroi@gmail.com
-LinkedIn: https://linkedin.com/in/marceldavidbaroi
-GitHub: https://github.com/marceldavidbaroi
-Portfolio: /
-Resume PDF: /resume.pdf
+Software Engineer
+Dhaka, Bangladesh | Open to on-site and hybrid roles in Dhaka
+marceldavidbaroi@gmail.com | linkedin.com/in/marcel-david-baroi | github.com/marceldavidbaroi
 
 ========================================================================
 SUMMARY
 ========================================================================
-Full-Stack & Enterprise Systems Engineer specializing in multi-tenant SaaS,
-relational PostgreSQL/Supabase architectures with Row-Level Security (RLS),
-Vue 3 / Quasar application suites, and architecture-first delivery.
-
-Primary stack: Vue 3, Quasar, TypeScript, PostgreSQL, Supabase (RLS),
-Pinia, NestJS, PHP (MVC), Docker, SemVer private npm packages.
+Software Engineer with production experience in PHP (Laravel/MVC),
+Vue 3, Quasar, TypeScript, PostgreSQL, MySQL, and Flutter. Builds full-stack
+ERP, helpdesk, and mobile POS systems used in live operations. Increased
+reusable frontend packages by 60% using private npm/SemVer. Notre Dame
+College (HSC) and B.Sc. CSE, CGPA 3.91.
 
 ========================================================================
-IMPACT HIGHLIGHTS
+TECHNICAL SKILLS
 ========================================================================
-- 10+ platforms shipped (enterprise ERP, multi-tenant SaaS, mobile)
-- 100% RLS tenant data isolation on multi-tenant systems
-- +60% code reusability via private SemVer package architectures
-- B.Sc. CSE CGPA 3.91 / 4.00 (Daffodil International University, Batch 55)
+Languages: PHP, JavaScript, TypeScript, Dart, SQL, Python
+Frontend: Vue 3, Quasar, Pinia, React, Next.js, HTML, CSS, Tailwind CSS
+Backend: Laravel, REST APIs, NestJS, Node.js, Supabase (Auth, RLS, Realtime)
+Database: PostgreSQL, MySQL, MongoDB, Firebase Firestore, SQLite
+Mobile: Flutter, Dart, Capacitor (Android), offline-first SQLite
+Tools: Git, Docker, Vite, npm/SemVer packages, Linux
 
 ========================================================================
 EXPERIENCE
 ========================================================================
 
-Software Engineer
+Junior Software Engineer
 Proficient Information Systems — Dhaka, Bangladesh (Hybrid)
-November 2024 — Present
+November 2024 – Present
 
-Architected multi-tenant SaaS systems and private package infrastructures
-that increased cross-project code reusability by 60% and accelerated MVP
-delivery cycles by 50% by designing decoupled Quasar component registries,
-implementing strict Supabase RLS policies, and driving architecture-first
-AI-assisted synthesis workflows.
+Grew from Vue 3/Quasar UI work into full-stack delivery on PHP (Laravel/MVC),
+PostgreSQL/Supabase, and MySQL. Built modular frontend packages that raised
+cross-project reuse by 60%.
 
-Highlights:
-- Architecture-first AI development workflows (Cursor Agentic)
-- Private Quasar package infrastructure (+60% reusability)
-- Full-stack migrations React/Firebase → Quasar + Supabase RLS
-- TypeScript hardening of legacy JavaScript codebases
-
-Associated case studies: TradeflowBD ERP, Enterprise Service Desk,
-Modular Packaging Infrastructure
-
-------------------------------------------------------------------------
-
-Software Developer (Proprietary Solutions)
-Software Services & Client Solutions — Dhaka, Bangladesh
-Q3 2025 — Present
-
-Designing and developing proprietary software solutions — engineering the
-TradeflowBD wholesale ERP (my own software tailored to automate commercial trade
-workflows) and Smart Hisab (my own mobile Canteen POS & billing app built with
-Flutter and Supabase for a separate client).
-
-Highlights:
-- Wholesale ERP platform (TradeflowBD): multi-tenant stock and landed costing
-- Smart Hisab Canteen POS app: offline-first SQLite queue in Flutter + Supabase
-- Double-entry PostgreSQL ledgers, shift cashbook vaults, and atomic RPCs
-- Direct client delivery and continuous software feature evolution
-
-Associated case studies: TradeflowBD ERP, Smart Hisab Canteen ERP,
-BrandWala Retail Platform
+- Delivered core modules for a multi-tenant wholesale ERP: landed-cost engine,
+  double-entry ledger, and virtual stock allocation (Vue 3, Quasar, PHP,
+  PostgreSQL, Supabase RLS).
+- Built customer support workflows for a multi-channel helpdesk: Quasar agent
+  UI, Laravel BFF, IMAP email ticketing, MongoDB tickets + MySQL RBAC
+  (4 workbenches, 3 intake channels, 30+ REST APIs).
+- Split shared Quasar UI into versioned private npm packages (Vite library
+  mode, SemVer), reused across client apps.
+- Shipped accounting and operations screens (PennyPerfect, SuperCards) on
+  Vue 3/Quasar with Laravel Sanctum multi-tenant APIs.
+- Represented the company at the 25th Textech Bangladesh International Expo
+  2026 with 4 days of live ERP demos for garment buyers.
 
 ------------------------------------------------------------------------
 
-Operations & Data Specialist
-BrandWala (Import-Export Trading) — Dhaka, Bangladesh
-2025 — Present
+Software Developer (Own Products and Client Work)
+Dhaka, Bangladesh | Parallel with full-time role
+July 2025 – Present
 
-Employed at a small import-export business managing daily operational data,
-product file records, and accounts calculations using Excel. Handled landed-cost
-calculations, supplier reconciliation, and warehouse stock tracking.
-
-Highlights:
-- Operational file records, commercial data, and accounts calculations in Excel
-- Landed-cost calculation (freight, duties, and item margins per import batch)
-- Supplier invoice reconciliation, customer payment ledgers, and stock sheets
-- Practical trade domain insights that directly ground software architectures
-
-------------------------------------------------------------------------
-
-Private STEM & Academic Tutor
-Independent Academic Mentorship — Dhaka, Bangladesh
-2020 — Q1 2025
-
-Conducted specialized academic mentorship in Higher Mathematics, Physics,
-and ICT for SSC and HSC candidates from Dhaka's most reputed schools and
-colleges (including Notre Dame College cohorts). Mentored ~24 talented
-students to outstanding GPA-5.00 board examination distinctions.
-
-Highlights:
-- 5 years of rigorous STEM problem-solving and conceptual pedagogy
-- 24 talented students guided to top board exam results and engineering admissions
-- Formative pedagogical communication and diagnostic analytical frameworks
+- TradeflowBD (own product): multi-tenant wholesale ERP for inventory, landed
+  costing, and invoicing (Vue 3, Quasar, PostgreSQL, Supabase RLS, 17+ modules).
+- Smart Hisab (client): offline-first Flutter canteen POS with SQLite queue,
+  Bluetooth thermal print, and Supabase double-entry ledgers; sub-1.2s checkout,
+  500+ meals per rush, 0.0% shift cash variance.
+- BrandWala Retail: React 19 storefront and Python catalog pipeline for 40+
+  K-Beauty brands; cut Firestore read cost about 60%.
+  github.com/david-git-2/brand-wala-retail
 
 ========================================================================
-EDUCATION & RESEARCH
+EDUCATION
 ========================================================================
-B.Sc. in Computer Science & Engineering
-Daffodil International University — CSE Batch 55
-CGPA 3.91 / 4.00 · 142 credits · 6 consecutive A+ software practicums
+B.Sc. in Computer Science and Engineering
+Daffodil International University, Dhaka | 2020 – 2024
+CGPA 3.91 / 4.00 | 142 credits
 
-Final Year Thesis (Sole Researcher):
-CNN-Based Bangla Handwritten Character Recognition on Ekush Dataset
-DenseNet-201 peak accuracy 97.93% · 16 benchmarked deep learning models
-PDF: /documents/bangla-ocr-thesis-26095.pdf
-
-========================================================================
-CORE TECHNICAL SKILLS (PRIMARY PRODUCTION)
-========================================================================
-Architecture: Architecture-First AI Synthesis, Multi-Tenant RLS Schemas,
-  SemVer Packaging, Relational Data Modeling (3NF)
-Backend: PostgreSQL, Supabase, Node.js / NestJS, PHP (MVC), REST APIs
-Frontend: Vue 3 (Composition API), Quasar, React / Next.js, TypeScript, Pinia
-DevOps: Docker, Git Submodules / Monorepos, Cloudflare Pages
+Higher Secondary Certificate (HSC), Science
+Notre Dame College, Dhaka | 2017 – 2019
+GPA 4.67 / 5.00 | Dhaka Board | Batch 2019
 
 ========================================================================
-SELECTED CREDENTIALS
+ADDITIONAL
 ========================================================================
-- Responsible AI: Applying AI Principles with Google Cloud (Google Cloud)
-- Prompt Design in Vertex AI (Google Cloud)
-- Python Essentials 2 (Cisco Networking Academy)
-- JavaScript Essentials 2 (Cisco Networking Academy)
-- Career Essentials in Generative AI (Microsoft & LinkedIn)
-- Responsive Web Design (freeCodeCamp)
-
-Full directory: /credentials
+Operations support at BrandWala (import-export, 2025 – Present): Excel
+landed-cost, supplier bills, and stock sheets. This trade work is what the
+ERP costing features are based on.
 
 ========================================================================
-LINKS
+CERTIFICATIONS
 ========================================================================
-Work portfolio: /work
-About: /about
-Skills: /skills
-Philosophy: /philosophy
-ATS text CV: /resume.txt
-PDF resume: /resume.pdf
+Google Cloud: Prompt Design in Vertex AI; Responsible AI (2025)
+Cisco Networking Academy: Python Essentials 2 (2025); JavaScript Essentials 2 (2024)
+freeCodeCamp: Responsive Web Design (2025)
+HackerRank: JavaScript (Basic), React (Basic), Python (Basic)
+
+========================================================================
+LANGUAGES
+========================================================================
+English, Bengali

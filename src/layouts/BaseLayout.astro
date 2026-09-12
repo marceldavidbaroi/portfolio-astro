@@ -13,8 +13,8 @@ interface Props {
 }
 
 const {
-	title = `${site.name} | Full-Stack & Mobile Engineer`,
-	description = `Portfolio & Case Studies of ${site.name}, Full-Stack & Mobile Engineer specializing in Next.js, Vue/Quasar, NestJS, Flutter, PostgreSQL, and architecture-first systems.`,
+	title = `${site.name} | Software Engineer`,
+	description = `Portfolio & Case Studies of ${site.name}, Software Engineer specializing in Next.js, Vue/Quasar, NestJS, Flutter, PostgreSQL, and architecture-first systems.`,
 	isWide = false,
 	alignStart = false,
 } = Astro.props;
@@ -35,7 +35,7 @@ const personJsonLd = {
 	'@context': 'https://schema.org',
 	'@type': 'Person',
 	name: site.name,
-	jobTitle: 'Full-Stack Engineer',
+	jobTitle: 'Software Engineer',
 	email: `mailto:${site.email}`,
 	url: canonicalUrl,
 	address: {

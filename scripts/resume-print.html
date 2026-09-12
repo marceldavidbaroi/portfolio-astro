@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Marcel David Baroi — Resume</title>
+  <style>
+    @page { size: A4; margin: 8mm 10mm; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { background: #fff; }
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 10pt;
+      line-height: 1.34;
+      color: #111;
+    }
+
+    header {
+      margin-bottom: 7px;
+      padding-bottom: 7px;
+      border-bottom: 1.5px solid #111;
+    }
+    h1 {
+      font-family: Palatino, "Palatino Linotype", "Times New Roman", Georgia, serif;
+      font-size: 20.5pt;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.08;
+      color: #111;
+    }
+    .role {
+      font-size: 10pt;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #111;
+      margin: 3px 0 5px;
+    }
+    .where {
+      font-size: 9.4pt;
+      color: #111;
+      margin-bottom: 2px;
+    }
+    .contacts {
+      font-size: 9.4pt;
+      color: #111;
+    }
+    .contacts a {
+      color: #111;
+      text-decoration: none;
+      font-weight: 700;
+    }
+    .sep { color: #111; padding: 0 0.4em; font-weight: 400; }
+
+    h2 {
+      font-size: 8.8pt;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #111;
+      border-bottom: 1px solid #111;
+      margin: 6px 0 4px;
+      padding-bottom: 2px;
+    }
+
+    p { margin: 0 0 3px; }
+
+    .skills {
+      padding: 0;
+    }
+    .skill-row {
+      display: flex;
+      gap: 10px;
+      font-size: 9.4pt;
+      line-height: 1.36;
+      margin: 0 0 1.5px;
+    }
+    .skill-row .k {
+      flex: 0 0 5.6rem;
+      font-weight: 700;
+      color: #111;
+    }
+    .skill-row .v { color: #111; }
+
+    .job { margin-bottom: 5px; }
+    .job-top { overflow: hidden; }
+    .job-title {
+      font-weight: 700;
+      font-size: 10.6pt;
+      color: #111;
+    }
+    .job-dates {
+      float: right;
+      font-size: 9.2pt;
+      font-weight: 700;
+      color: #111;
+      padding-top: 1px;
+    }
+    .job-sub {
+      font-size: 9.5pt;
+      color: #111;
+      margin: 1px 0 3px;
+      clear: both;
+    }
+    ul { margin: 2px 0 0 1.1rem; }
+    li { margin: 0 0 2px; }
+    li::marker { color: #111; }
+
+    .edu-row { margin-bottom: 4px; overflow: hidden; }
+    .edu-school { font-size: 9.6pt; color: #111; }
+
+    .foot-row {
+      display: flex;
+      gap: 10px;
+      font-size: 9.4pt;
+      line-height: 1.36;
+      margin: 0 0 2px;
+    }
+    .foot-row .k {
+      flex: 0 0 6.4rem;
+      font-weight: 700;
+      color: #111;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Marcel David Baroi</h1>
+    <p class="role">Software Engineer</p>
+    <p class="where">Dhaka, Bangladesh · Open to on-site and hybrid roles</p>
+    <p class="contacts">
+      <a href="mailto:marceldavidbaroi@gmail.com">marceldavidbaroi@gmail.com</a><span class="sep">·</span><a href="https://www.linkedin.com/in/marcel-david-baroi/">linkedin.com/in/marcel-david-baroi</a><span class="sep">·</span><a href="https://github.com/marceldavidbaroi">github.com/marceldavidbaroi</a>
+    </p>
+  </header>
+
+  <h2>Summary</h2>
+  <p>Software Engineer with production experience in PHP (Laravel/MVC), Vue 3, Quasar, TypeScript, PostgreSQL, MySQL, and Flutter. Builds full-stack ERP, helpdesk, and mobile POS systems used in live operations. Increased reusable frontend packages by 60% using private npm/SemVer. Notre Dame College (HSC) and B.Sc. CSE, CGPA 3.91.</p>
+
+  <h2>Technical Skills</h2>
+  <div class="skills">
+    <div class="skill-row"><span class="k">Languages</span><span class="v">PHP, JavaScript, TypeScript, Dart, SQL, Python</span></div>
+    <div class="skill-row"><span class="k">Frontend</span><span class="v">Vue 3, Quasar, Pinia, React, Next.js, HTML, CSS, Tailwind CSS</span></div>
+    <div class="skill-row"><span class="k">Backend</span><span class="v">Laravel, REST APIs, NestJS, Node.js, Supabase (Auth, RLS, Realtime)</span></div>
+    <div class="skill-row"><span class="k">Database</span><span class="v">PostgreSQL, MySQL, MongoDB, Firebase Firestore, SQLite</span></div>
+    <div class="skill-row"><span class="k">Mobile</span><span class="v">Flutter, Dart, Capacitor (Android), offline-first SQLite</span></div>
+    <div class="skill-row"><span class="k">Tools</span><span class="v">Git, Docker, Vite, npm/SemVer packages, Linux</span></div>
+  </div>
+
+  <h2>Experience</h2>
+  <div class="job">
+    <p class="job-top"><span class="job-title">Junior Software Engineer</span><span class="job-dates">November 2024 – Present</span></p>
+    <p class="job-sub">Proficient Information Systems — Dhaka, Bangladesh (Hybrid)</p>
+    <p>Grew from Vue 3/Quasar UI work into full-stack delivery on PHP (Laravel/MVC), PostgreSQL/Supabase, and MySQL. Built modular frontend packages that raised cross-project reuse by 60%.</p>
+    <ul>
+      <li>Delivered core modules for a multi-tenant wholesale ERP: landed-cost engine, double-entry ledger, and virtual stock allocation (Vue 3, Quasar, PHP, PostgreSQL, Supabase RLS).</li>
+      <li>Built customer support workflows for a multi-channel helpdesk: Quasar agent UI, Laravel BFF, IMAP email ticketing, MongoDB tickets + MySQL RBAC (4 workbenches, 3 intake channels, 30+ REST APIs).</li>
+      <li>Split shared Quasar UI into versioned private npm packages (Vite library mode, SemVer), reused across client apps.</li>
+      <li>Shipped accounting and operations screens (PennyPerfect, SuperCards) on Vue 3/Quasar with Laravel Sanctum multi-tenant APIs.</li>
+      <li>Represented the company at the 25th Textech Bangladesh International Expo 2026 with 4 days of live ERP demos for garment buyers.</li>
+    </ul>
+  </div>
+  <div class="job">
+    <p class="job-top"><span class="job-title">Software Developer (Own Products and Client Work)</span><span class="job-dates">July 2025 – Present</span></p>
+    <p class="job-sub">Dhaka, Bangladesh | Parallel with full-time role</p>
+    <ul>
+      <li><strong>TradeflowBD</strong> (own product): multi-tenant wholesale ERP for inventory, landed costing, and invoicing (Vue 3, Quasar, PostgreSQL, Supabase RLS, 17+ modules).</li>
+      <li><strong>Smart Hisab</strong> (client): offline-first Flutter canteen POS with SQLite queue, Bluetooth thermal print, and Supabase double-entry ledgers; sub-1.2s checkout, 500+ meals per rush, 0.0% shift cash variance.</li>
+      <li><strong>BrandWala Retail:</strong> React 19 storefront and Python catalog pipeline for 40+ K-Beauty brands; cut Firestore read cost about 60%. github.com/david-git-2/brand-wala-retail</li>
+    </ul>
+  </div>
+
+  <h2>Education</h2>
+  <div class="edu-row">
+    <p class="job-top"><span class="job-title">B.Sc. in Computer Science and Engineering</span><span class="job-dates">2020 – 2024</span></p>
+    <p class="edu-school">Daffodil International University, Dhaka | CGPA 3.91 / 4.00 | 142 credits</p>
+  </div>
+  <div class="edu-row">
+    <p class="job-top"><span class="job-title">Higher Secondary Certificate (HSC), Science</span><span class="job-dates">2017 – 2019</span></p>
+    <p class="edu-school">Notre Dame College, Dhaka | GPA 4.67 / 5.00 | Dhaka Board | Batch 2019</p>
+  </div>
+
+  <h2>More</h2>
+  <div class="foot-row"><span class="k">Languages</span><span>English, Bengali</span></div>
+  <div class="foot-row"><span class="k">Additional</span><span>BrandWala import-export (2025 – Present): Excel landed-cost, supplier bills, and stock sheets — the trade work behind the ERP costing features.</span></div>
+  <div class="foot-row"><span class="k">Certifications</span><span>Google Cloud: Prompt Design in Vertex AI; Responsible AI (2025). Cisco: Python Essentials 2 (2025); JavaScript Essentials 2 (2024). freeCodeCamp: Responsive Web Design. HackerRank: JavaScript, React, Python (Basic).</span></div>
+</body>
+</html>
