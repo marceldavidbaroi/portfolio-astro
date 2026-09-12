@@ -66,6 +66,18 @@
 	max-width: 42rem;
 }
 
+.about-hero-signature {
+	margin: 1.25rem 0 0.5rem;
+}
+
+.about-signature-img {
+	height: 38px;
+	width: auto;
+	display: block;
+	opacity: 0.9;
+	filter: contrast(1.05);
+}
+
 /* KPI grid — research / archive sections only (not About hero) */
 .about-hero-proof {
 	list-style: none;

@@ -53,6 +53,29 @@
 	min-width: 0;
 }
 
+.header-logo-link {
+	display: inline-flex;
+	align-items: center;
+	padding: 0.15rem 0.65rem 0.15rem 0;
+	margin-right: 0.25rem;
+	transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+
+.header-logo-img {
+	height: 24px;
+	width: auto;
+	display: block;
+	transition: opacity var(--dur-fast) ease;
+}
+
+.header-logo-link:hover .header-logo-img {
+	opacity: 0.85;
+}
+
+.header-logo-link:hover {
+	transform: scale(1.05);
+}
+
 .nav-link {
 	color: var(--text-muted);
 	font-size: 0.94rem;
@@ -229,6 +252,26 @@
 	letter-spacing: 0.03em;
 	color: var(--text-muted);
 	text-align: center;
+}
+
+.footer-brand {
+	display: inline-flex;
+	align-items: center;
+	margin-right: 0.5rem;
+	opacity: 0.85;
+	transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
+}
+
+.footer-brand:hover {
+	opacity: 1;
+	transform: scale(1.05);
+}
+
+.footer-signature-img {
+	height: 26px;
+	width: auto;
+	display: block;
+	filter: contrast(1.05);
 }
 
 .footer-pill-accent {

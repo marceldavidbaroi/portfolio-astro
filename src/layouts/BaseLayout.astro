@@ -59,6 +59,7 @@ const personJsonLd = {
 		<meta name="description" content={description} />
 		<link rel="canonical" href={canonicalUrl} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -87,6 +88,9 @@ const personJsonLd = {
 			<header id="site-header" class="header">
 				<div class="header-container">
 					<nav class="nav" aria-label="Primary">
+						<a href="/" class="header-logo-link" aria-label="Home">
+							<img src="/images/logo.svg" alt="Marcel David Baroi" class="header-logo-img" />
+						</a>
 						<a href="/" class:list={['nav-link', { active: isHome }]}>Home</a>
 						<a href="/work" class:list={['nav-link', { active: isWork }]}>Work</a>
 						<a href="/about" class:list={['nav-link', { active: isAbout }]}>About</a>
@@ -113,6 +117,9 @@ const personJsonLd = {
 
 			<footer class="site-footer">
 				<div class="footer-inner font-mono">
+					<a href="/" class="footer-brand" aria-label="Marcel David Baroi" title="Marcel David Baroi">
+						<img src="/images/signature.png" alt="Marcel David Baroi signature" class="footer-signature-img" />
+					</a>
 					<span class="footer-pill">Based in Dhaka (UTC+6) · 4–5 hrs overlap with US East &amp; EU CET</span>
 					<span class="footer-sep" aria-hidden="true">·</span>
 					<span class="footer-pill footer-pill-accent">Available for Full-Time · Remote / Relocation</span>

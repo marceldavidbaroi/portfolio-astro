@@ -9,12 +9,13 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "deploy": "astro build && wrangler pages deploy dist --project-name=marceldavidbaroi --commit-dirty=true"
   },
   "dependencies": {
     "astro": "^7.2.9"
   },
-  "allowScripts": {
-    "esbuild": true
+  "devDependencies": {
+    "wrangler": "^4.131.1"
   }
 }
