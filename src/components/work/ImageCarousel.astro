@@ -161,7 +161,7 @@ const getMetadata = (src: string, index: number) => {
 		justify-content: space-between;
 		gap: 0.75rem 1rem;
 		padding-bottom: 0.6rem;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		border-bottom: 1px solid var(--card-border);
 		width: 100%;
 		box-sizing: border-box;
 	}
@@ -182,8 +182,8 @@ const getMetadata = (src: string, index: number) => {
 		letter-spacing: 0.08em;
 		font-weight: 700;
 		color: var(--accent);
-		background: rgba(243, 186, 107, 0.1);
-		border: 1px solid rgba(243, 186, 107, 0.22);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border-hover);
 		padding: 0.25rem 0.65rem;
 		border-radius: var(--radius-sm);
 	}
@@ -216,15 +216,15 @@ const getMetadata = (src: string, index: number) => {
 		width: 38px;
 		height: 38px;
 		border-radius: var(--radius-sm);
-		background: #1e1c19;
-		border: 1px solid rgba(243, 186, 107, 0.22);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		color: var(--accent);
 		cursor: pointer;
 		transition: all var(--dur-fast) ease;
 	}
 
 	.carousel-btn:hover {
-		background: rgba(243, 186, 107, 0.16);
+		background: var(--accent-subtle);
 		border-color: var(--accent);
 		color: var(--accent-hover);
 		transform: scale(1.05);
@@ -260,11 +260,11 @@ const getMetadata = (src: string, index: number) => {
 	.carousel-slide-card {
 		flex: 0 0 min(840px, 86vw);
 		scroll-snap-align: center;
-		background: #11100f;
-		border: 1px solid rgba(243, 186, 107, 0.18);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		border-radius: var(--radius-lg);
 		overflow: hidden;
-		box-shadow: 0 16px 44px -10px rgba(0, 0, 0, 0.85);
+		box-shadow: 0 16px 44px -10px rgba(0, 0, 0, 0.15);
 		display: flex;
 		flex-direction: column;
 		box-sizing: border-box;
@@ -273,8 +273,8 @@ const getMetadata = (src: string, index: number) => {
 	}
 
 	.carousel-slide-card:hover {
-		border-color: rgba(243, 186, 107, 0.4);
-		box-shadow: 0 20px 52px -8px rgba(0, 0, 0, 0.95);
+		border-color: var(--card-border-hover);
+		box-shadow: 0 20px 52px -8px rgba(0, 0, 0, 0.2);
 	}
 
 	.carousel-slide-card.is-phone-device {
@@ -286,8 +286,8 @@ const getMetadata = (src: string, index: number) => {
 		align-items: center;
 		justify-content: space-between;
 		padding: 0.65rem 1rem;
-		background: #1a1816;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.1);
+		background: var(--card-bg-elevated);
+		border-bottom: 1px solid var(--card-border);
 		min-width: 0;
 	}
 
@@ -310,7 +310,7 @@ const getMetadata = (src: string, index: number) => {
 		font-size: 0.72rem;
 		color: var(--text-muted);
 		letter-spacing: 0.02em;
-		background: rgba(0, 0, 0, 0.35);
+		background: var(--card-bg);
 		padding: 0.15rem 0.65rem;
 		border-radius: 4px;
 		max-width: 50%;
@@ -329,7 +329,7 @@ const getMetadata = (src: string, index: number) => {
 		position: relative;
 		width: 100%;
 		aspect-ratio: 16 / 10;
-		background: #151413;
+		background: var(--card-bg);
 		overflow: hidden;
 	}
 
@@ -361,7 +361,7 @@ const getMetadata = (src: string, index: number) => {
 		display: flex;
 		flex-direction: column;
 		gap: 0.35rem;
-		border-top: 1px solid rgba(243, 186, 107, 0.14);
+		border-top: 1px solid rgba(255, 255, 255, 0.1);
 		backdrop-filter: blur(8px);
 		z-index: 10;
 	}

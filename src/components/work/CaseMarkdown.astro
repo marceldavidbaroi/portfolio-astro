@@ -45,39 +45,40 @@
 
 			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
 
+			const isDark = document.documentElement.dataset.theme !== 'light';
 			mermaid.initialize({
 				startOnLoad: false,
 				theme: 'base',
 				themeVariables: {
-					darkMode: true,
-					background: '#151413',
-					primaryColor: '#22201c',
-					primaryTextColor: '#ffffff',
-					primaryBorderColor: '#ffffff',
-					lineColor: '#ffffff',
-					secondaryColor: '#1c1a17',
-					tertiaryColor: '#282521',
-					mainBkg: '#1c1a17',
-					secondBkg: '#161513',
-					nodeBorder: '#ffffff',
-					clusterBkg: 'rgba(255, 255, 255, 0.03)',
-					clusterBorder: 'rgba(255, 255, 255, 0.45)',
-					defaultLinkColor: '#ffffff',
-					titleColor: '#ffffff',
-					edgeLabelBackground: '#191715',
-					actorBorder: '#ffffff',
-					actorBkg: '#22201c',
-					actorTextColor: '#ffffff',
-					actorLineColor: '#ffffff',
-					signalColor: '#ffffff',
-					signalTextColor: '#ffffff',
-					labelBoxBkgColor: '#22201c',
-					labelBoxBorderColor: '#ffffff',
-					labelTextColor: '#ffffff',
-					loopTextColor: '#ffffff',
-					noteBorderColor: '#ffffff',
-					noteBkgColor: '#25221e',
-					noteTextColor: '#ffffff',
+					darkMode: isDark,
+					background: isDark ? '#151413' : '#fbf9f5',
+					primaryColor: isDark ? '#22201c' : '#f2ede4',
+					primaryTextColor: isDark ? '#ffffff' : '#211f1d',
+					primaryBorderColor: isDark ? '#ffffff' : '#211f1d',
+					lineColor: isDark ? '#ffffff' : '#211f1d',
+					secondaryColor: isDark ? '#1c1a17' : '#e8e2d8',
+					tertiaryColor: isDark ? '#282521' : '#ded7cc',
+					mainBkg: isDark ? '#1c1a17' : '#ffffff',
+					secondBkg: isDark ? '#161513' : '#f2ede4',
+					nodeBorder: isDark ? '#ffffff' : '#211f1d',
+					clusterBkg: isDark ? 'rgba(255, 255, 255, 0.03)' : 'rgba(0, 0, 0, 0.03)',
+					clusterBorder: isDark ? 'rgba(255, 255, 255, 0.45)' : 'rgba(0, 0, 0, 0.3)',
+					defaultLinkColor: isDark ? '#ffffff' : '#211f1d',
+					titleColor: isDark ? '#ffffff' : '#211f1d',
+					edgeLabelBackground: isDark ? '#191715' : '#ffffff',
+					actorBorder: isDark ? '#ffffff' : '#211f1d',
+					actorBkg: isDark ? '#22201c' : '#f2ede4',
+					actorTextColor: isDark ? '#ffffff' : '#211f1d',
+					actorLineColor: isDark ? '#ffffff' : '#211f1d',
+					signalColor: isDark ? '#ffffff' : '#211f1d',
+					signalTextColor: isDark ? '#ffffff' : '#211f1d',
+					labelBoxBkgColor: isDark ? '#22201c' : '#ffffff',
+					labelBoxBorderColor: isDark ? '#ffffff' : '#211f1d',
+					labelTextColor: isDark ? '#ffffff' : '#211f1d',
+					loopTextColor: isDark ? '#ffffff' : '#211f1d',
+					noteBorderColor: isDark ? '#ffffff' : '#211f1d',
+					noteBkgColor: isDark ? '#25221e' : '#fef3c7',
+					noteTextColor: isDark ? '#ffffff' : '#211f1d',
 					fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
 					fontSize: '14px'
 				},
@@ -214,10 +215,10 @@
 <style>
 	:global(.mermaid-visualizer-container) {
 		margin: 1.5rem 0 2rem;
-		background: #151413;
-		border: 1px solid rgba(243, 186, 107, 0.18);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		border-radius: var(--radius-lg);
-		box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.75);
+		box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.15);
 		overflow: hidden;
 		width: 100%;
 		box-sizing: border-box;
@@ -226,7 +227,7 @@
 	}
 
 	:global(.mermaid-visualizer-container:hover) {
-		border-color: rgba(243, 186, 107, 0.35);
+		border-color: var(--card-border-hover);
 	}
 
 	:global(.visualizer-header) {
@@ -236,8 +237,8 @@
 		justify-content: space-between;
 		gap: 0.65rem 1rem;
 		padding: 0.75rem 1.15rem;
-		background: #1a1816;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		background: var(--card-bg-elevated);
+		border-bottom: 1px solid var(--card-border);
 		width: 100%;
 		box-sizing: border-box;
 	}
@@ -251,8 +252,8 @@
 		letter-spacing: 0.08em;
 		font-weight: 700;
 		color: var(--accent);
-		background: rgba(243, 186, 107, 0.1);
-		border: 1px solid rgba(243, 186, 107, 0.2);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border-hover);
 		padding: 0.2rem 0.55rem;
 		border-radius: 4px;
 	}
@@ -284,8 +285,8 @@
 		gap: 0.35rem;
 		height: 32px;
 		padding: 0 0.65rem;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(243, 186, 107, 0.15);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		border-radius: 4px;
 		color: var(--text-muted);
 		font-size: 0.72rem;
@@ -297,7 +298,7 @@
 	:global(.ctrl-btn:hover) {
 		color: var(--accent);
 		border-color: var(--accent);
-		background: rgba(243, 186, 107, 0.1);
+		background: var(--accent-subtle);
 	}
 
 	:global(.visualizer-viewport) {
@@ -311,7 +312,7 @@
 		scrollbar-width: thin;
 		padding: 1.5rem 1.25rem;
 		box-sizing: border-box;
-		background: radial-gradient(circle at center, #1e1c19 0%, #151413 100%);
+		background: var(--card-bg);
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -331,7 +332,7 @@
 		max-width: 100% !important;
 		height: auto !important;
 		display: block;
-		filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+		filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.15));
 		overflow: visible !important;
 	}
 
@@ -344,8 +345,8 @@
 		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 		font-size: 13.5px !important;
 		font-weight: 600 !important;
-		fill: #f5f2ec !important;
-		color: #f5f2ec !important;
+		fill: var(--text-main) !important;
+		color: var(--text-main) !important;
 		letter-spacing: -0.01em !important;
 		line-height: 1.4 !important;
 		-webkit-text-stroke: 0 !important;
@@ -355,22 +356,22 @@
 	:global(.mermaid-target svg .node rect),
 	:global(.mermaid-target svg .node polygon),
 	:global(.mermaid-target svg .node path) {
-		fill: #22201c !important;
-		stroke: #ffffff !important;
+		fill: var(--card-bg-elevated) !important;
+		stroke: var(--text-main) !important;
 		stroke-width: 1.5px !important;
 		rx: 8px !important;
 		ry: 8px !important;
 	}
 
 	:global(.mermaid-target svg .node circle) {
-		fill: #22201c !important;
-		stroke: #ffffff !important;
+		fill: var(--card-bg-elevated) !important;
+		stroke: var(--text-main) !important;
 		stroke-width: 1.5px !important;
 	}
 
 	:global(.mermaid-target svg .cluster rect) {
-		fill: rgba(255, 255, 255, 0.03) !important;
-		stroke: rgba(255, 255, 255, 0.45) !important;
+		fill: var(--accent-subtle) !important;
+		stroke: var(--card-border-hover) !important;
 		stroke-width: 1.5px !important;
 		stroke-dasharray: 4, 4 !important;
 		rx: 12px !important;
@@ -378,8 +379,8 @@
 	}
 
 	:global(.mermaid-target svg .actor) {
-		fill: #22201c !important;
-		stroke: #ffffff !important;
+		fill: var(--card-bg-elevated) !important;
+		stroke: var(--text-main) !important;
 		stroke-width: 1.5px !important;
 		rx: 8px !important;
 		ry: 8px !important;
@@ -387,13 +388,13 @@
 
 	:global(.mermaid-target svg .edgePath .path),
 	:global(.mermaid-target svg .flowchart-link) {
-		stroke: #ffffff !important;
+		stroke: var(--text-main) !important;
 		stroke-width: 1.75px !important;
 	}
 
 	:global(.mermaid-target svg .marker) {
-		fill: #ffffff !important;
-		stroke: #ffffff !important;
+		fill: var(--text-main) !important;
+		stroke: var(--text-main) !important;
 	}
 
 	:global(.mermaid-target svg foreignObject) {
@@ -406,7 +407,7 @@
 		justify-content: center !important;
 		text-align: center !important;
 		line-height: 1.4 !important;
-		color: #f5f2ec !important;
+		color: var(--text-main) !important;
 		font-weight: 600 !important;
 		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
 		font-size: 13.5px !important;
@@ -417,8 +418,8 @@
 		align-items: center;
 		justify-content: space-between;
 		padding: 0.45rem 1.15rem;
-		background: #11100f;
-		border-top: 1px solid rgba(243, 186, 107, 0.08);
+		background: var(--card-bg-elevated);
+		border-top: 1px solid var(--card-border);
 		font-size: 0.68rem;
 		color: var(--text-muted);
 		letter-spacing: 0.04em;

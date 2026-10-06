@@ -3,6 +3,7 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseBreadcrumb from '../../components/work/CaseBreadcrumb.astro';
 import CaseHero from '../../components/work/CaseHero.astro';
+import CaseJumpNav from '../../components/work/CaseJumpNav.astro';
 import CaseImpactMetrics from '../../components/work/CaseImpactMetrics.astro';
 import ImageCarousel from '../../components/work/ImageCarousel.astro';
 import CaseArticle from '../../components/work/CaseArticle.astro';
@@ -92,6 +93,8 @@ const hasMarkdownBody = rawBody.trim().length > 0;
 		<article class="case">
 			<CaseBreadcrumb title={data.title} readingTimeText={readingTimeText} />
 			
+			<div id="case-top"></div>
+
 			<CaseHero
 				title={data.title}
 				subtitle={data.subtitle}
@@ -110,6 +113,15 @@ const hasMarkdownBody = rawBody.trim().length > 0;
 				ghBack={ghBack}
 				docs={docs}
 				stack={data.stack}
+			/>
+
+			<CaseJumpNav
+				hasMetrics={Boolean(data.impactMetrics && data.impactMetrics.length > 0)}
+				hasValueCanvas={Boolean(data.valueProposition?.items && data.valueProposition.items.length > 0)}
+				hasDecisions={Boolean(data.keyDecisions && data.keyDecisions.length > 0)}
+				hasStack={Boolean(stackRows.length > 0)}
+				hasGovernance={Boolean((data.securityReliability && data.securityReliability.length > 0) || (data.futureRoadmap && data.futureRoadmap.length > 0))}
+				hasDeepDive={hasMarkdownBody}
 			/>
 
 			{data.impactMetrics && data.impactMetrics.length > 0 && (

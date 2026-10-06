@@ -47,10 +47,10 @@
 	margin-left: auto;
 	font-size: 0.72rem;
 	color: var(--accent);
-	background: rgba(243, 186, 107, 0.08);
+	background: var(--accent-subtle);
 	padding: 0.15rem 0.45rem;
 	border-radius: 4px;
-	border: 1px solid rgba(243, 186, 107, 0.15);
+	border: 1px solid var(--card-border);
 }
 
 /* —— Structured article sections —— */
@@ -95,7 +95,7 @@
 	scroll-margin-top: 1.5rem;
 	line-height: 1.3;
 	color: var(--text-main);
-	border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+	border-bottom: 1px solid var(--card-border);
 	padding-bottom: 0.4rem;
 }
 
@@ -138,7 +138,7 @@
 .markdown-article p:has(> img:only-child) {
 	margin: 0.85rem 0 1.35rem;
 	padding: 0.5rem;
-	border: 1px solid rgba(243, 186, 107, 0.16);
+	border: 1px solid var(--card-border);
 	background: var(--card-bg);
 	border-radius: var(--radius-md);
 	box-sizing: border-box;
@@ -167,7 +167,7 @@
 	touch-action: pan-x;
 	scrollbar-width: thin;
 	box-sizing: border-box;
-	border: 1px solid rgba(243, 186, 107, 0.12);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-sm);
 }
 
@@ -182,7 +182,7 @@
 	padding: 0.65rem 0.85rem;
 	text-align: left;
 	vertical-align: top;
-	border-bottom: 1px solid rgba(243, 186, 107, 0.1);
+	border-bottom: 1px solid var(--card-border);
 	min-width: 120px;
 }
 
@@ -193,12 +193,13 @@
 	letter-spacing: 0.08em;
 	text-transform: uppercase;
 	color: var(--accent);
-	background: #141312;
+	background: var(--card-bg);
 	white-space: nowrap;
 }
 
 .markdown-article td {
-	background: #181614;
+	background: var(--card-bg-elevated);
+	color: var(--text-main);
 }
 
 /* Preformatted code blocks */
@@ -212,8 +213,8 @@
 	-webkit-overflow-scrolling: touch;
 	touch-action: pan-x;
 	scrollbar-width: thin;
-	background: #11100f;
-	border: 1px solid rgba(243, 186, 107, 0.14);
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-sm);
 	font-size: 0.84rem;
 	line-height: 1.55;
@@ -227,8 +228,8 @@
 
 .markdown-article :not(pre) > code {
 	padding: 0.15em 0.4em;
-	background: rgba(243, 186, 107, 0.1);
-	border: 1px solid rgba(243, 186, 107, 0.18);
+	background: var(--accent-subtle);
+	border: 1px solid var(--card-border);
 	border-radius: 4px;
 	color: var(--accent);
 	word-break: break-word;
@@ -237,14 +238,14 @@
 .markdown-article hr {
 	margin: 1.75rem 0;
 	border: 0;
-	border-top: 1px solid rgba(243, 186, 107, 0.14);
+	border-top: 1px solid var(--card-border);
 }
 
 .markdown-article blockquote {
 	margin: 1.15rem 0;
 	padding: 0.65rem 1rem;
 	border-left: 3px solid var(--accent);
-	background: rgba(243, 186, 107, 0.04);
+	background: var(--accent-subtle);
 	border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
 	color: var(--text-main);
 	font-style: italic;
@@ -253,8 +254,8 @@
 
 .markdown-article .mermaid {
 	margin: 1.35rem 0;
-	background: #11100f;
-	border: 1px solid rgba(243, 186, 107, 0.14);
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-md);
 	padding: 1.15rem;
 	width: 100%;
@@ -274,7 +275,7 @@
 	gap: 1rem;
 	margin-top: 2.75rem;
 	padding-top: 1.25rem;
-	border-top: 1px solid rgba(243, 186, 107, 0.14);
+	border-top: 1px solid var(--card-border);
 	width: 100%;
 	box-sizing: border-box;
 }
@@ -288,8 +289,8 @@
 	color: inherit;
 	min-width: 0;
 	padding: 0.85rem 1rem;
-	background: #181614;
-	border: 1px solid rgba(243, 186, 107, 0.12);
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-md);
 	min-height: 44px; /* Accessible mobile touch target */
 	box-sizing: border-box;
@@ -302,7 +303,7 @@
 	position: absolute;
 	inset: -1px;
 	border-radius: inherit;
-	box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-subtle);
+	box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.15), 0 0 20px var(--accent-subtle);
 	opacity: 0;
 	pointer-events: none;
 	transition: opacity var(--dur-fast) ease;
@@ -310,7 +311,7 @@
 
 .adjacent a:hover {
 	border-color: var(--accent);
-	background: rgba(243, 186, 107, 0.06);
+	background: var(--accent-subtle);
 	transform: translateY(-4px);
 }
 
@@ -333,8 +334,8 @@
 .case .close {
 	margin-top: 2.5rem;
 	padding: 1.5rem 1.25rem;
-	background: #181614;
-	border: 1px solid rgba(243, 186, 107, 0.14);
+	background: var(--card-bg);
+	border: 1px solid var(--card-border);
 	border-radius: var(--radius-lg);
 	box-sizing: border-box;
 	width: 100%;

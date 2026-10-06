@@ -1,0 +1,201 @@
+---
+interface JumpItem {
+	id: string;
+	label: string;
+	icon?: string;
+}
+
+interface Props {
+	hasMetrics?: boolean;
+	hasValueCanvas?: boolean;
+	hasDecisions?: boolean;
+	hasStack?: boolean;
+	hasGovernance?: boolean;
+	hasDeepDive?: boolean;
+}
+
+const {
+	hasMetrics = false,
+	hasValueCanvas = false,
+	hasDecisions = false,
+	hasStack = false,
+	hasGovernance = false,
+	hasDeepDive = false,
+} = Astro.props;
+
+const jumpItems: JumpItem[] = [
+	{ id: 'case-top', label: 'Overview' },
+	...(hasMetrics ? [{ id: 'impact-metrics', label: 'Impact' }] : []),
+	...(hasValueCanvas ? [{ id: 'value-canvas', label: 'Value & Pain' }] : []),
+	...(hasDecisions ? [{ id: 'engineering-decisions', label: 'Decisions' }] : []),
+	...(hasStack ? [{ id: 'tech-breakdown', label: 'Tech Stack' }] : []),
+	...(hasGovernance ? [{ id: 'security-roadmap', label: 'Security & Roadmap' }] : []),
+	...(hasDeepDive ? [{ id: 'deep-dive', label: 'Deep Dive' }] : []),
+];
+---
+
+{jumpItems.length > 2 && (
+	<nav class="case-jump-nav font-mono" aria-label="Quick jump through case study sections">
+		<div class="jump-track">
+			{jumpItems.map((item) => (
+				<a href={`#${item.id}`} class="jump-pill" data-jump-id={item.id}>
+					<span>{item.label}</span>
+				</a>
+			))}
+		</div>
+	</nav>
+)}
+
+<style>
+	.case-jump-nav {
+		position: sticky;
+		top: calc(3.4rem + env(safe-area-inset-top, 0px));
+		z-index: 40;
+		width: 100%;
+		margin: 0.85rem 0 1.25rem;
+		padding: 0.35rem 0;
+		background: var(--bg-color);
+		backdrop-filter: blur(12px);
+		border-top: 1px solid var(--card-border);
+		border-bottom: 1px solid var(--card-border);
+		box-sizing: border-box;
+	}
+
+	.jump-track {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: none;
+		padding: 0.15rem 0.25rem;
+		scroll-behavior: smooth;
+	}
+
+	.jump-track::-webkit-scrollbar {
+		display: none;
+	}
+
+	.jump-pill {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.3rem 0.65rem;
+		min-height: 32px;
+		font-size: 0.72rem;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		font-weight: 600;
+		color: var(--text-muted);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-full);
+		white-space: nowrap;
+		text-decoration: none;
+		flex-shrink: 0;
+		transition: all var(--dur-fast) ease;
+	}
+
+	.jump-pill:hover {
+		color: var(--accent);
+		border-color: var(--card-border-hover);
+		background: var(--accent-subtle);
+	}
+
+	.jump-pill.is-active {
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border-color: var(--accent);
+		font-weight: 700;
+	}
+
+	@media (min-width: 1024px) {
+		/* On large desktop screens where everything fits naturally, keep it minimal or slim */
+		.case-jump-nav {
+			top: calc(4.2rem + env(safe-area-inset-top, 0px));
+		}
+	}
+
+	@media (max-width: 640px) {
+		.case-jump-nav {
+			top: calc(2.85rem + env(safe-area-inset-top, 0px));
+			margin: 0.5rem 0 1rem;
+			padding: 0.25rem 0;
+		}
+
+		.jump-pill {
+			min-height: 30px;
+			font-size: 0.68rem;
+			padding: 0.25rem 0.55rem;
+		}
+	}
+</style>
+
+<script>
+	function setupCaseJumpNav() {
+		const nav = document.querySelector('.case-jump-nav');
+		if (!nav) return;
+
+		const track = nav.querySelector<HTMLElement>('.jump-track');
+		const pills = nav.querySelectorAll<HTMLAnchorElement>('.jump-pill');
+		if (pills.length === 0) return;
+
+		const targets = Array.from(pills)
+			.map((pill) => {
+				const id = pill.getAttribute('data-jump-id');
+				return id ? { pill, el: document.getElementById(id) } : null;
+			})
+			.filter((item): item is { pill: HTMLAnchorElement; el: HTMLElement } => Boolean(item && item.el));
+
+		if (targets.length === 0) return;
+
+		// Smooth pill click scroll with offset for sticky header
+		pills.forEach((pill) => {
+			pill.addEventListener('click', (e) => {
+				const targetId = pill.getAttribute('data-jump-id');
+				if (!targetId) return;
+				const targetEl = document.getElementById(targetId);
+				if (!targetEl) return;
+
+				e.preventDefault();
+				const offset = 80;
+				const elementPosition = targetEl.getBoundingClientRect().top;
+				const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+				window.scrollTo({
+					top: offsetPosition,
+					behavior: 'smooth'
+				});
+			});
+		});
+
+		let isObserving = true;
+		const observer = new IntersectionObserver(
+			(entries) => {
+				if (!isObserving) return;
+				const visible = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+				if (!visible) return;
+
+				targets.forEach(({ pill, el }) => {
+					const isActive = el === visible.target;
+					pill.classList.toggle('is-active', isActive);
+					if (isActive && track) {
+						// Scroll only the horizontal track container, NOT the window
+						const pillOffset = pill.offsetLeft - track.offsetLeft;
+						const trackCenter = track.clientWidth / 2 - pill.clientWidth / 2;
+						track.scrollTo({
+							left: pillOffset - trackCenter,
+							behavior: 'smooth'
+						});
+					}
+				});
+			},
+			{ rootMargin: '-15% 0px -55% 0px', threshold: [0, 0.15, 0.5] }
+		);
+
+		targets.forEach(({ el }) => observer.observe(el));
+	}
+
+	setupCaseJumpNav();
+	document.addEventListener('astro:page-load', setupCaseJumpNav);
+</script>

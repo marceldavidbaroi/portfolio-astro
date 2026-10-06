@@ -101,34 +101,11 @@ const { focused, supporting = [], workCount } = Astro.props;
 		color: inherit;
 		padding: 2.75rem 0;
 		border-top: 1px solid var(--card-border);
-		will-change: transform;
-		transition: transform var(--dur-fast) var(--ease-out);
-	}
-
-	.feature-band::after {
-		content: '';
-		position: absolute;
-		inset: -0.5rem -1rem;
-		border-radius: var(--radius-lg);
-		background: var(--card-bg-elevated);
-		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.16), 0 0 20px var(--accent-subtle);
-		opacity: 0;
-		pointer-events: none;
-		z-index: -1;
-		transition: opacity var(--dur-fast) ease;
 	}
 
 	.focus-list .feature-band:first-child {
 		border-top: 0;
 		padding-top: 0.5rem;
-	}
-
-	.feature-band:hover {
-		transform: translateY(-4px);
-	}
-
-	.feature-band:hover::after {
-		opacity: 1;
 	}
 
 	.feature-band:hover .feature-title {
@@ -137,7 +114,6 @@ const { focused, supporting = [], workCount } = Astro.props;
 
 	.feature-band:hover .inline-cta {
 		color: var(--accent);
-		transform: translateX(4px);
 	}
 
 	.feature-band:hover :global(.shot-still-frame) {

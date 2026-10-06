@@ -157,22 +157,26 @@ const {
 	}
 
 	.badge-chip {
-		background: rgba(243, 186, 107, 0.12);
+		background: var(--accent-subtle);
 		color: var(--accent);
-		border: 1px solid rgba(243, 186, 107, 0.25);
+		border: 1px solid var(--card-border-hover);
 		font-weight: 700;
 	}
 
 	.badge-status {
-		background: rgba(34, 197, 94, 0.1);
+		background: rgba(34, 197, 94, 0.12);
+		color: #16a34a;
+		border: 1px solid rgba(34, 197, 94, 0.25);
+	}
+
+	:root[data-theme="dark"] .badge-status {
 		color: #4ade80;
-		border: 1px solid rgba(34, 197, 94, 0.2);
 	}
 
 	.badge-class {
-		background: rgba(255, 255, 255, 0.04);
+		background: var(--card-bg);
 		color: var(--text-muted);
-		border: 1px solid rgba(255, 255, 255, 0.08);
+		border: 1px solid var(--card-border);
 	}
 
 	.case-title {
@@ -237,8 +241,8 @@ const {
 		font-size: var(--type-meta);
 		letter-spacing: 0.03em;
 		color: var(--text-main);
-		background: rgba(243, 186, 107, 0.07);
-		border: 1px solid rgba(243, 186, 107, 0.16);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		border-radius: 4px;
 		white-space: nowrap;
 		line-height: 1.25;
@@ -249,17 +253,17 @@ const {
 
 	.stack-badge:hover {
 		border-color: var(--accent);
-		background: rgba(243, 186, 107, 0.12);
+		background: var(--accent-subtle);
 	}
 
 	.xyz-box {
 		margin-top: 0.35rem;
 		padding: 1rem 1.2rem;
-		background: rgba(243, 186, 107, 0.05);
+		background: var(--accent-subtle);
 		border-left: 3px solid var(--accent);
-		border-top: 1px solid rgba(243, 186, 107, 0.12);
-		border-right: 1px solid rgba(243, 186, 107, 0.12);
-		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		border-top: 1px solid var(--card-border);
+		border-right: 1px solid var(--card-border);
+		border-bottom: 1px solid var(--card-border);
 		border-radius: 0 var(--radius-md) var(--radius-md) 0;
 		max-width: 50rem;
 		box-sizing: border-box;

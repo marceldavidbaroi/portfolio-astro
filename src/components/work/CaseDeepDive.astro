@@ -44,10 +44,10 @@ const { defaultExpanded = true } = Astro.props;
 	}
 
 	.disclosure-card {
-		background: #181614;
-		border: 1px solid rgba(243, 186, 107, 0.16);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		border-radius: var(--radius-lg);
-		box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.08);
 		overflow: hidden;
 		transition: border-color var(--dur-ui) ease;
 		width: 100%;
@@ -55,7 +55,7 @@ const { defaultExpanded = true } = Astro.props;
 	}
 
 	.disclosure-card:hover {
-		border-color: rgba(243, 186, 107, 0.28);
+		border-color: var(--card-border-hover);
 	}
 
 	.disclosure-header {
@@ -65,8 +65,8 @@ const { defaultExpanded = true } = Astro.props;
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 1.25rem 1.5rem;
-		background: #1c1a17;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		background: var(--card-bg-elevated);
+		border-bottom: 1px solid var(--card-border);
 		width: 100%;
 		box-sizing: border-box;
 	}
@@ -84,8 +84,8 @@ const { defaultExpanded = true } = Astro.props;
 		letter-spacing: 0.08em;
 		font-weight: 700;
 		color: var(--accent);
-		background: rgba(243, 186, 107, 0.1);
-		border: 1px solid rgba(243, 186, 107, 0.2);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border-hover);
 		padding: 0.15rem 0.5rem;
 		border-radius: 4px;
 		align-self: flex-start;
@@ -110,8 +110,8 @@ const { defaultExpanded = true } = Astro.props;
 		gap: 0.5rem;
 		min-height: 44px; /* Accessible 44px mobile touch target */
 		padding: 0.55rem 1.15rem;
-		background: rgba(243, 186, 107, 0.08);
-		border: 1px solid rgba(243, 186, 107, 0.22);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border-hover);
 		border-radius: var(--radius-sm);
 		color: var(--accent);
 		font-size: var(--type-cta);
@@ -123,7 +123,7 @@ const { defaultExpanded = true } = Astro.props;
 	}
 
 	.disclosure-toggle-btn:hover {
-		background: rgba(243, 186, 107, 0.16);
+		background: var(--accent-subtle);
 		border-color: var(--accent);
 		color: var(--accent-hover);
 	}
@@ -142,8 +142,8 @@ const { defaultExpanded = true } = Astro.props;
 		align-items: center;
 		gap: 0.5rem 0.75rem;
 		padding: 0.75rem 1.25rem;
-		background: #141312;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.08);
+		background: var(--card-bg);
+		border-bottom: 1px solid var(--card-border);
 		font-size: var(--type-caption);
 		width: 100%;
 		box-sizing: border-box;
@@ -173,8 +173,8 @@ const { defaultExpanded = true } = Astro.props;
 		align-items: center;
 		padding: 0.35rem 0.65rem;
 		min-height: 32px;
-		background: rgba(255, 255, 255, 0.03);
-		border: 1px solid rgba(243, 186, 107, 0.14);
+		background: var(--card-bg-elevated);
+		border: 1px solid var(--card-border);
 		border-radius: 4px;
 		color: var(--text-muted);
 		text-decoration: none;
@@ -188,8 +188,8 @@ const { defaultExpanded = true } = Astro.props;
 
 	:global(.deep-dive-pill:hover) {
 		color: var(--accent);
-		background: rgba(243, 186, 107, 0.1);
-		border-color: rgba(243, 186, 107, 0.3);
+		background: var(--accent-subtle);
+		border-color: var(--accent);
 	}
 
 	.disclosure-body {

@@ -538,10 +538,14 @@
 		font-size: 0.75rem;
 	}
 	.main-content,
-	.main-content.wide-container,
 	.main-content.align-start {
 		padding-left: 0.25rem;
 		padding-right: 0.25rem;
+		padding-top: 0.25rem;
+	}
+	.main-content.wide-container {
+		padding-left: 2px;
+		padding-right: 2px;
 		padding-top: 0.25rem;
 	}
 }
@@ -556,10 +560,13 @@
 		font-size: 0.7rem;
 	}
 	.main-content,
-	.main-content.wide-container,
 	.main-content.align-start {
 		padding-left: 0;
 		padding-right: 0;
+	}
+	.main-content.wide-container {
+		padding-left: 2px;
+		padding-right: 2px;
 	}
 }
 
