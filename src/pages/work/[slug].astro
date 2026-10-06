@@ -3,11 +3,12 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseBreadcrumb from '../../components/work/CaseBreadcrumb.astro';
 import CaseHero from '../../components/work/CaseHero.astro';
-import CaseMetaRail from '../../components/work/CaseMetaRail.astro';
+import CaseImpactMetrics from '../../components/work/CaseImpactMetrics.astro';
+import ImageCarousel from '../../components/work/ImageCarousel.astro';
 import CaseArticle from '../../components/work/CaseArticle.astro';
+import CaseDeepDive from '../../components/work/CaseDeepDive.astro';
 import CaseMarkdown from '../../components/work/CaseMarkdown.astro';
 import CaseAdjacentNav from '../../components/work/CaseAdjacentNav.astro';
-import CaseToc from '../../components/work/CaseToc.astro';
 import { ipLabel, isRealUrl, shots } from '../../lib/work';
 import '../../styles/case.css';
 
@@ -35,6 +36,7 @@ const { Content } = await render(project);
 const rawBody = project.body || '';
 const structuredWords = [
 	data.title || '',
+	data.subtitle || '',
 	data.description || '',
 	data.executiveOverview || '',
 	data.problemStatement || '',
@@ -42,15 +44,7 @@ const structuredWords = [
 	...(data.keyDecisions?.map((k) => `${k.challenge} ${k.decision} ${k.outcome || ''}`) || [])
 ].join(' ');
 const totalWordCount = (rawBody + ' ' + structuredWords).replace(/[#*`_~[\]()]/g, ' ').trim().split(/\s+/).filter(Boolean).length;
-const readingTimeText = `${Math.max(1, Math.ceil(totalWordCount / 200))} min`;
-
-const tocItems: { id: string; text: string }[] = [];
-if (data.executiveOverview) tocItems.push({ id: 'overview', text: 'Overview' });
-if (data.keyDecisions?.length || data.problemStatement) tocItems.push({ id: 'decisions', text: 'Decisions' });
-if (data.valueProposition) tocItems.push({ id: 'before-after', text: 'Before → after' });
-if (data.techStack) tocItems.push({ id: 'stack', text: 'Stack' });
-if (data.securityReliability?.length || data.futureRoadmap?.length) tocItems.push({ id: 'security-roadmap', text: 'Security' });
-const showToc = tocItems.length >= 4;
+const readingTimeText = `${Math.max(1, Math.ceil(totalWordCount / 200))} min scan`;
 
 const classLabel = ipLabel(data.classification);
 const live = isRealUrl(data.links?.liveDemo);
@@ -61,27 +55,46 @@ const ghBack = isRealUrl(data.links?.githubBackend);
 const docs = isRealUrl(data.links?.docs);
 const hasActions = live || parent || github || ghFront || ghBack || docs;
 
-const realImages = shots(data.images);
-const heroMockup = data.visualAssets?.heroMockup;
-const heroImage =
-	(heroMockup && !heroMockup.includes('dummy') ? heroMockup : null) || realImages[0] || null;
+const sanitize = (src?: string) => {
+	if (!src) return null;
+	if (src.includes('dummy') || src.includes('thumb-')) return null;
+	return src;
+};
+
+// Gather all unique images for the single carousel
+const allProjectImages = Array.from(
+	new Set(
+		[
+			data.visualAssets?.heroMockup,
+			...(data.images || []),
+			...(data.visualAssets?.screenshots || [])
+		]
+			.map(sanitize)
+			.filter((img): img is string => Boolean(img))
+	)
+);
+
 const isPhone = data.platformType === 'mobile';
 
 const stackRows = [
 	{ label: 'Frontend', items: data.techStack?.frontend },
-	{ label: 'Mobile', items: data.techStack?.mobile_hardware },
+	{ label: 'Mobile & Hardware', items: data.techStack?.mobile_hardware },
 	{ label: 'Backend', items: data.techStack?.backend },
 	{ label: 'Database', items: data.techStack?.database },
-	{ label: 'DevOps', items: data.techStack?.devops }
+	{ label: 'DevOps & Infra', items: data.techStack?.devops }
 ].filter((row) => row.items && row.items.length > 0);
+
+const hasMarkdownBody = rawBody.trim().length > 0;
 ---
 
 <BaseLayout title={`${data.title} | Case Study`} description={data.description} isWide alignStart>
-	<div class:list={['case-shell', { 'has-toc': showToc }]}>
+	<div class="case-shell">
 		<article class="case">
 			<CaseBreadcrumb title={data.title} readingTimeText={readingTimeText} />
+			
 			<CaseHero
 				title={data.title}
+				subtitle={data.subtitle}
 				chip={data.chip}
 				status={data.status}
 				classLabel={classLabel}
@@ -96,11 +109,19 @@ const stackRows = [
 				ghFront={ghFront}
 				ghBack={ghBack}
 				docs={docs}
-				heroImage={heroImage}
-				isPhone={isPhone}
 				stack={data.stack}
 			/>
-			<CaseMetaRail role={data.role} timeline={data.timeline} classLabel={classLabel} />
+
+			{data.impactMetrics && data.impactMetrics.length > 0 && (
+				<CaseImpactMetrics metrics={data.impactMetrics} />
+			)}
+
+			<ImageCarousel
+				title={data.title}
+				images={allProjectImages}
+				isPhone={isPhone}
+			/>
+
 			<CaseArticle
 				executiveOverview={data.executiveOverview}
 				problemStatement={data.problemStatement}
@@ -110,12 +131,16 @@ const stackRows = [
 				securityReliability={data.securityReliability}
 				futureRoadmap={data.futureRoadmap}
 			/>
-			<CaseMarkdown>
-				<Content />
-			</CaseMarkdown>
+
+			{hasMarkdownBody && (
+				<CaseDeepDive defaultExpanded={true}>
+					<CaseMarkdown>
+						<Content />
+					</CaseMarkdown>
+				</CaseDeepDive>
+			)}
+
 			<CaseAdjacentNav prevProject={prevProject} nextProject={nextProject} />
 		</article>
-
-		{showToc && <CaseToc items={tocItems} />}
 	</div>
 </BaseLayout>

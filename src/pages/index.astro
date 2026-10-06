@@ -1,6 +1,4 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
 import HomeHowIWork from '../components/home/HomeHowIWork.astro';
@@ -35,15 +33,12 @@ const experience = (await getCollection('experience'))
 		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src)
 	}));
 
-const portraitFile = ['portrait.webp', 'portrait.jpg', 'portrait.jpeg', 'portrait.png']
-	.find((name) => fs.existsSync(path.join(process.cwd(), 'public/images', name)));
-const portraitSrc = portraitFile ? `/images/${portraitFile}` : null;
 const skills = ['Next.js', 'Vue 3', 'NestJS', 'Flutter', 'TypeScript', 'PostgreSQL', 'Supabase', 'Docker'];
 const workCount = projectEntries.length;
 ---
 
 <BaseLayout isWide alignStart>
-	<HomeHero portraitSrc={portraitSrc} />
+	<HomeHero />
 	<HomeHowIWork />
 
 	{featured && (

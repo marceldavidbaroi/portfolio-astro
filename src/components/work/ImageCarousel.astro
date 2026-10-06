@@ -1,0 +1,487 @@
+---
+interface CarouselItem {
+	src: string;
+	badge?: string;
+	title?: string;
+	description?: string;
+}
+
+interface Props {
+	title: string;
+	images?: string[];
+	heroMockup?: string;
+	isPhone?: boolean;
+	items?: CarouselItem[];
+}
+
+const { title, images = [], heroMockup, isPhone = false, items } = Astro.props;
+
+// Filter out dummy/placeholder images
+const sanitize = (src?: string) => {
+	if (!src) return null;
+	if (src.includes('dummy') || src.includes('thumb-')) return null;
+	return src;
+};
+
+const imagePool = [
+	heroMockup,
+	...(images || [])
+].map(sanitize).filter((img): img is string => Boolean(img));
+
+// Deduplicate
+const cleanImages = Array.from(new Set(imagePool));
+const hasImages = cleanImages.length > 0;
+
+// Derive descriptive overlay labels based on file names or index
+const getMetadata = (src: string, index: number) => {
+	if (items && items[index]) {
+		return {
+			badge: items[index].badge || `Module 0${index + 1}`,
+			title: items[index].title || 'Interactive Interface',
+			description: items[index].description || 'Production system screen and workflow.'
+		};
+	}
+
+	const lower = src.toLowerCase();
+	if (lower.includes('dashboard') || index === 0) {
+		return {
+			badge: 'System Workbench',
+			title: 'Executive Overview & Live Telemetry',
+			description: 'Real-time operational metrics, multi-tenant state and executive telemetry.'
+		};
+	}
+	if (lower.includes('shipment') || lower.includes('inbox') || lower.includes('register') || lower.includes('ticket')) {
+		return {
+			badge: 'Transaction Flow',
+			title: 'Core Processing & Ingestion Engine',
+			description: 'Structured intake workflows, audit trails, and transactional state machines.'
+		};
+	}
+	if (lower.includes('costing') || lower.includes('form') || lower.includes('scanner') || lower.includes('template')) {
+		return {
+			badge: 'Engine Specification',
+			title: 'Algorithmic Rules & Pricing Model',
+			description: 'Deterministic calculations, formula apportionment, and automated rules.'
+		};
+	}
+	return {
+		badge: `Module View 0${index + 1}`,
+		title: 'Interactive Application Interface',
+		description: 'High-throughput desktop and mobile interface components.'
+	};
+};
+---
+
+{hasImages && (
+	<section id="image-carousel" class="image-carousel-component w-full max-w-full" aria-label="System Image Carousel">
+		<div class="carousel-topbar">
+			<div class="topbar-left">
+				<span class="carousel-pill font-mono">
+					<span class="live-dot"></span>
+					Visual Showcase
+				</span>
+				<span class="carousel-counter font-mono">{cleanImages.length} Screenshots</span>
+			</div>
+			
+			<div class="topbar-controls font-mono">
+				<button type="button" class="carousel-btn prev-slide-btn" aria-label="Previous screenshot" title="Previous screenshot">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+				</button>
+				<button type="button" class="carousel-btn next-slide-btn" aria-label="Next screenshot" title="Next screenshot">
+					<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Smooth Touch Scrollable Viewport -->
+		<div class="carousel-viewport">
+			<div class="carousel-track" id="imageCarouselTrack">
+				{cleanImages.map((src, index) => {
+					const meta = getMetadata(src, index);
+					return (
+						<article class:list={['carousel-slide-card', { 'is-phone-device': isPhone }]}>
+							<div class="slide-browser-chrome" aria-hidden="true">
+								<div class="chrome-traffic-lights">
+									<span class="dot red"></span>
+									<span class="dot yellow"></span>
+									<span class="dot green"></span>
+								</div>
+								<span class="chrome-url font-mono">{title.toLowerCase().replace(/[^a-z0-9]+/g, '-')} · preview-0{index + 1}</span>
+								<span class="chrome-counter font-mono">0{index + 1} / 0{cleanImages.length}</span>
+							</div>
+
+							<div class="slide-media-frame">
+								<img
+									src={src}
+									alt={`${title} interface preview ${index + 1}`}
+									loading={index < 2 ? 'eager' : 'lazy'}
+									class="slide-img"
+								/>
+								
+								{/* Important Information Overlay */}
+								<div class="slide-overlay">
+									<div class="overlay-top">
+										<span class="overlay-badge font-mono">
+											<span class="accent-pulse"></span>
+											{meta.badge}
+										</span>
+										<span class="overlay-index font-mono">SLIDE 0{index + 1}</span>
+									</div>
+									<h3 class="overlay-heading font-sans">{meta.title}</h3>
+									<p class="overlay-caption font-sans">{meta.description}</p>
+								</div>
+							</div>
+						</article>
+					);
+				})}
+			</div>
+		</div>
+
+		<div class="carousel-bottombar font-mono">
+			<span class="scroll-instruction">← Swipe or use arrow keys to navigate interface workbenches →</span>
+		</div>
+	</section>
+)}
+
+<style>
+	.image-carousel-component {
+		margin-top: 2rem;
+		margin-bottom: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.carousel-topbar {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem 1rem;
+		padding-bottom: 0.6rem;
+		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.topbar-left {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.carousel-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(243, 186, 107, 0.1);
+		border: 1px solid rgba(243, 186, 107, 0.22);
+		padding: 0.25rem 0.65rem;
+		border-radius: var(--radius-sm);
+	}
+
+	.live-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: #22c55e;
+		box-shadow: 0 0 8px #22c55e;
+	}
+
+	.carousel-counter {
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
+	}
+
+	.topbar-controls {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.carousel-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 38px;
+		height: 38px;
+		border-radius: var(--radius-sm);
+		background: #1e1c19;
+		border: 1px solid rgba(243, 186, 107, 0.22);
+		color: var(--accent);
+		cursor: pointer;
+		transition: all var(--dur-fast) ease;
+	}
+
+	.carousel-btn:hover {
+		background: rgba(243, 186, 107, 0.16);
+		border-color: var(--accent);
+		color: var(--accent-hover);
+		transform: scale(1.05);
+	}
+
+	.carousel-btn:active {
+		transform: scale(0.95);
+	}
+
+	/* Viewport & Track */
+	.carousel-viewport {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		overflow: hidden;
+		border-radius: var(--radius-lg);
+	}
+
+	.carousel-track {
+		display: flex;
+		gap: 1.5rem;
+		overflow-x: auto;
+		overflow-y: hidden;
+		scroll-snap-type: x mandatory;
+		scroll-behavior: smooth;
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-x;
+		padding: 0.5rem 0 1rem;
+		scrollbar-width: thin;
+		box-sizing: border-box;
+	}
+
+	.carousel-slide-card {
+		flex: 0 0 min(840px, 86vw);
+		scroll-snap-align: center;
+		background: #11100f;
+		border: 1px solid rgba(243, 186, 107, 0.18);
+		border-radius: var(--radius-lg);
+		overflow: hidden;
+		box-shadow: 0 16px 44px -10px rgba(0, 0, 0, 0.85);
+		display: flex;
+		flex-direction: column;
+		box-sizing: border-box;
+		position: relative;
+		transition: border-color var(--dur-ui) ease, box-shadow var(--dur-ui) ease;
+	}
+
+	.carousel-slide-card:hover {
+		border-color: rgba(243, 186, 107, 0.4);
+		box-shadow: 0 20px 52px -8px rgba(0, 0, 0, 0.95);
+	}
+
+	.carousel-slide-card.is-phone-device {
+		flex: 0 0 min(340px, 75vw);
+	}
+
+	.slide-browser-chrome {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.65rem 1rem;
+		background: #1a1816;
+		border-bottom: 1px solid rgba(243, 186, 107, 0.1);
+		min-width: 0;
+	}
+
+	.chrome-traffic-lights {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.chrome-traffic-lights .dot {
+		width: 9px;
+		height: 9px;
+		border-radius: 50%;
+	}
+	.chrome-traffic-lights .dot.red { background: rgba(239, 68, 68, 0.7); }
+	.chrome-traffic-lights .dot.yellow { background: rgba(234, 179, 8, 0.7); }
+	.chrome-traffic-lights .dot.green { background: rgba(34, 197, 94, 0.7); }
+
+	.chrome-url {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		letter-spacing: 0.02em;
+		background: rgba(0, 0, 0, 0.35);
+		padding: 0.15rem 0.65rem;
+		border-radius: 4px;
+		max-width: 50%;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	.chrome-counter {
+		font-size: 0.7rem;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.slide-media-frame {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 16 / 10;
+		background: #151413;
+		overflow: hidden;
+	}
+
+	.carousel-slide-card.is-phone-device .slide-media-frame {
+		aspect-ratio: 9 / 16;
+	}
+
+	.slide-img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+		transition: transform var(--dur-ui) var(--ease-out);
+	}
+
+	.carousel-slide-card:hover .slide-img {
+		transform: scale(1.02);
+	}
+
+	/* High-Contrast Message Overlay */
+	.slide-overlay {
+		position: absolute;
+		bottom: 0;
+		left: 0;
+		right: 0;
+		padding: 1.25rem 1.4rem;
+		background: linear-gradient(180deg, transparent 0%, rgba(12, 11, 10, 0.88) 35%, rgba(12, 11, 10, 0.98) 100%);
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		border-top: 1px solid rgba(243, 186, 107, 0.14);
+		backdrop-filter: blur(8px);
+		z-index: 10;
+	}
+
+	.overlay-top {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.overlay-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(243, 186, 107, 0.12);
+		border: 1px solid rgba(243, 186, 107, 0.25);
+		padding: 0.2rem 0.55rem;
+		border-radius: 4px;
+	}
+
+	.accent-pulse {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 6px var(--accent);
+	}
+
+	.overlay-index {
+		font-size: 0.68rem;
+		color: var(--text-muted);
+		letter-spacing: 0.08em;
+		font-weight: 700;
+	}
+
+	.overlay-heading {
+		margin: 0.15rem 0 0;
+		font-size: clamp(1.02rem, 2.5vw, 1.2rem);
+		font-weight: 700;
+		color: #ffffff;
+		line-height: 1.3;
+	}
+
+	.overlay-caption {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.45;
+		color: #d1cbc1;
+	}
+
+	.carousel-bottombar {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		padding: 0.25rem 0;
+	}
+
+	.scroll-instruction {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	@media (max-width: 640px) {
+		.carousel-slide-card {
+			flex: 0 0 92vw;
+			border-radius: var(--radius-md);
+		}
+
+		.carousel-slide-card.is-phone-device {
+			flex: 0 0 82vw;
+		}
+
+		.slide-browser-chrome {
+			padding: 0.5rem 0.75rem;
+		}
+
+		.slide-overlay {
+			padding: 0.95rem 1rem;
+		}
+
+		.overlay-heading {
+			font-size: 1rem;
+		}
+
+		.overlay-caption {
+			font-size: 0.82rem;
+		}
+	}
+</style>
+
+<script>
+	function setupImageCarousel() {
+		const track = document.getElementById('imageCarouselTrack');
+		const prevBtn = document.querySelector('.prev-slide-btn');
+		const nextBtn = document.querySelector('.next-slide-btn');
+
+		if (!track || !prevBtn || !nextBtn) return;
+
+		const getStep = () => {
+			const firstCard = track.querySelector<HTMLElement>('.carousel-slide-card');
+			return firstCard ? firstCard.offsetWidth + 24 : 600;
+		};
+
+		prevBtn.addEventListener('click', () => {
+			track.scrollBy({ left: -getStep(), behavior: 'smooth' });
+		});
+
+		nextBtn.addEventListener('click', () => {
+			track.scrollBy({ left: getStep(), behavior: 'smooth' });
+		});
+	}
+
+	setupImageCarousel();
+	document.addEventListener('astro:page-load', setupImageCarousel);
+</script>

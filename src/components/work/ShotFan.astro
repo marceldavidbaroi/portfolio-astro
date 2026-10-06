@@ -156,7 +156,7 @@ const isRowStill = size === 'row-still';
 		background: #090a0d;
 		overflow: hidden;
 		box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.5);
-		transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease;
+		transition: transform var(--dur-fast) var(--ease-out), border-color var(--dur-fast) ease;
 	}
 
 	.shot-still-frame.is-empty,
@@ -173,6 +173,25 @@ const isRowStill = size === 'row-still';
 		height: 100%;
 		object-fit: cover;
 		object-position: top center;
+		will-change: transform;
+		transition: transform var(--dur-fast) var(--ease-out);
+	}
+
+	:global(.work-item:hover) .shot-still-frame img,
+	:global(.catalog-item:hover) .shot-still-frame img,
+	:global(.feature-band:hover) .shot-still-frame img {
+		transform: scale(1.03);
+	}
+
+	:global(.feature-band:hover) .collage-main img,
+	:global(.feature-band:hover) .collage-sub img {
+		transform: scale(1.03);
+	}
+
+	.collage-main img,
+	.collage-sub img {
+		will-change: transform;
+		transition: transform var(--dur-fast) var(--ease-out);
 	}
 
 	.shot-stack {
@@ -271,9 +290,13 @@ const isRowStill = size === 'row-still';
 	@media (prefers-reduced-motion: reduce) {
 		.shot-layer,
 		.shot-still-frame,
+		.shot-still-frame img,
 		.collage-main,
-		.collage-sub {
-			transition: none;
+		.collage-main img,
+		.collage-sub,
+		.collage-sub img {
+			transition: none !important;
+			transform: none !important;
 		}
 	}
 </style>

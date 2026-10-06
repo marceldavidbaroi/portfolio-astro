@@ -1,54 +1,30 @@
 ---
 import { site } from '../../data/site';
-
-interface Props {
-	portraitSrc: string | null;
-}
-
-const { portraitSrc } = Astro.props;
 ---
 
 <section class="hero" aria-label="Introduction">
-	<div class="hero-grid">
-		<figure class:list={['hero-portrait', { 'is-photo': portraitSrc }]}>
-			{portraitSrc ? (
-				<img
-					src={portraitSrc}
-					alt="Portrait of Marcel David Baroi"
-					width="720"
-					height="960"
-				/>
-			) : (
-				<div class="portrait-slot" role="img" aria-label="Portrait placeholder. Add public/images/portrait.webp">
-					<span class="portrait-initials font-sans">{site.nameMark}</span>
-					<span class="portrait-hint font-mono">Add public/images/portrait.webp</span>
-				</div>
-			)}
-		</figure>
+	<div class="hero-content">
+		<h1 class="headline font-sans">
+			Software engineer designing and building cross-platform applications.
+		</h1>
 
-		<div class="hero-content">
-			<h1 class="headline font-sans">
-				Software engineer designing and building cross-platform applications.
-			</h1>
+		<p class="bio">
+			I design and build full-stack web and mobile systems across Next.js, Vue, NestJS, Flutter, and PostgreSQL — turning complex business workflows into fast, intuitive products that scale.
+		</p>
 
-			<p class="bio">
-				I design and build full-stack web and mobile systems across Next.js, Vue, NestJS, Flutter, and PostgreSQL — turning complex business workflows into fast, intuitive products that scale.
-			</p>
-
-			<div class="hero-actions">
-				<a class="action-item font-sans is-primary" href={`mailto:${site.email}`}>
-					Get in touch <span class="action-arrow" aria-hidden="true">›</span>
-				</a>
-				<a class="action-item font-sans" href={site.resumePdf} target="_blank" rel="noopener noreferrer">
-					Resume <span class="action-arrow" aria-hidden="true">›</span>
-				</a>
-				<a class="action-item font-sans" href={site.linkedin} target="_blank" rel="noopener noreferrer">
-					LinkedIn <span class="action-arrow" aria-hidden="true">›</span>
-				</a>
-				<a class="action-item font-sans" href={site.github} target="_blank" rel="noopener noreferrer">
-					GitHub <span class="action-arrow" aria-hidden="true">›</span>
-				</a>
-			</div>
+		<div class="hero-actions">
+			<a class="action-item font-sans is-primary" href={`mailto:${site.email}`}>
+				Get in touch <span class="action-arrow" aria-hidden="true">›</span>
+			</a>
+			<a class="action-item font-sans" href={site.resumePdf} target="_blank" rel="noopener noreferrer">
+				Resume <span class="action-arrow" aria-hidden="true">›</span>
+			</a>
+			<a class="action-item font-sans" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+				LinkedIn <span class="action-arrow" aria-hidden="true">›</span>
+			</a>
+			<a class="action-item font-sans" href={site.github} target="_blank" rel="noopener noreferrer">
+				GitHub <span class="action-arrow" aria-hidden="true">›</span>
+			</a>
 		</div>
 	</div>
 </section>
@@ -58,67 +34,6 @@ const { portraitSrc } = Astro.props;
 		padding-top: 1.5rem;
 		padding-bottom: 4.5rem;
 		border-bottom: 1px solid var(--card-border);
-	}
-
-	.hero-grid {
-		display: grid;
-		grid-template-columns: 210px minmax(0, 1fr);
-		column-gap: 3rem;
-		row-gap: 2rem;
-		align-items: center;
-	}
-
-	.hero-portrait {
-		margin: 0;
-		width: 100%;
-		max-width: 210px;
-		aspect-ratio: 4 / 5;
-		border-radius: 18px;
-		overflow: hidden;
-		background: radial-gradient(circle at 50% 35%, #22252e 0%, #111317 100%);
-		border: 1px solid rgba(255, 255, 255, 0.12);
-		box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.65);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.hero-portrait.is-photo img {
-		display: block;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		object-position: top center;
-		border-radius: 18px;
-		filter: contrast(1.04) brightness(0.98);
-	}
-
-	.portrait-slot {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		justify-content: center;
-		gap: 0.6rem;
-		width: 100%;
-		height: 100%;
-		border-radius: 18px;
-	}
-
-	.portrait-initials {
-		font-size: 2rem;
-		font-weight: 800;
-		letter-spacing: 0.04em;
-		color: var(--text-main);
-	}
-
-	.portrait-hint {
-		font-size: var(--type-caption);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--text-muted);
-		text-align: center;
-		max-width: 10rem;
-		line-height: 1.35;
 	}
 
 	.hero-content {
@@ -134,8 +49,9 @@ const { portraitSrc } = Astro.props;
 		font-weight: 600;
 		letter-spacing: -0.035em;
 		line-height: 1.22;
-		color: #ffffff;
+		color: var(--text-main);
 		text-wrap: balance;
+		animation: heroFadeUp 0.6s var(--ease-out) 0ms backwards;
 	}
 
 	.bio {
@@ -143,9 +59,10 @@ const { portraitSrc } = Astro.props;
 		font-size: 1.05rem;
 		font-weight: 400;
 		line-height: 1.65;
-		color: #a1a1aa;
+		color: var(--text-muted);
 		text-wrap: pretty;
 		max-width: 38rem;
+		animation: heroFadeUp 0.6s var(--ease-out) 60ms backwards;
 	}
 
 	.hero-actions {
@@ -154,6 +71,18 @@ const { portraitSrc } = Astro.props;
 		align-items: center;
 		gap: 1.35rem 1.75rem;
 		margin-top: 0.25rem;
+		animation: heroFadeUp 0.6s var(--ease-out) 120ms backwards;
+	}
+
+	@keyframes heroFadeUp {
+		from {
+			opacity: 0;
+			transform: translateY(12px);
+		}
+		to {
+			opacity: 1;
+			transform: translateY(0);
+		}
 	}
 
 	.action-item {
@@ -163,18 +92,18 @@ const { portraitSrc } = Astro.props;
 		font-size: 0.95rem;
 		font-weight: 400;
 		letter-spacing: -0.01em;
-		color: #8e8e93;
+		color: var(--text-muted);
 		text-decoration: none;
 		transition: color var(--dur-fast) ease, opacity var(--dur-fast) ease;
 	}
 
 	.action-item.is-primary {
-		color: #ffffff;
+		color: var(--text-main);
 		font-weight: 500;
 	}
 
 	.action-item:hover {
-		color: #ffffff;
+		color: var(--accent);
 	}
 
 	.action-arrow {
@@ -187,37 +116,10 @@ const { portraitSrc } = Astro.props;
 		transform: translateX(2px);
 	}
 
-	@media (prefers-reduced-motion: no-preference) {
-		.hero-portrait {
-			animation: rise var(--dur-enter) var(--ease-out) both;
-		}
-	}
-
-	@keyframes rise {
-		from {
-			opacity: 0;
-			transform: translateY(12px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
-	}
-
 	@media (max-width: 900px) {
 		.hero {
 			padding-top: 0.75rem;
 			padding-bottom: 3.5rem;
-		}
-
-		.hero-grid {
-			grid-template-columns: 1fr;
-			row-gap: 1.75rem;
-			align-items: start;
-		}
-
-		.hero-portrait {
-			max-width: 160px;
 		}
 
 		.headline {
@@ -231,16 +133,6 @@ const { portraitSrc } = Astro.props;
 			padding-bottom: 2.75rem;
 		}
 
-		.hero-portrait {
-			max-width: 100%;
-			aspect-ratio: 4 / 5;
-			max-height: 420px;
-		}
-
-		.hero-portrait.is-photo img {
-			object-position: center 20%;
-		}
-
 		.bio {
 			font-size: 0.96rem;
 			line-height: 1.6;
@@ -248,6 +140,19 @@ const { portraitSrc } = Astro.props;
 
 		.hero-actions {
 			gap: 0.9rem 1.35rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.headline,
+		.bio,
+		.hero-actions {
+			animation: none !important;
+		}
+		.action-arrow,
+		.action-item {
+			transition: none !important;
+			transform: none !important;
 		}
 	}
 </style>

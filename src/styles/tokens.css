@@ -21,25 +21,10 @@
 }
 
 :root {
-	--bg-color: #151413; /* warm dark obsidian background */
-	--card-bg: #1e1c1a; /* warm dark carbon card surface */
-	--card-border: rgba(243, 186, 107, 0.12); /* subtle warm-tinted line */
-	--accent: #f3ba6b; /* soft toasted honey / warm golden apricot */
-	--accent-rgb: 243, 186, 107;
-	--accent-hover: #facb87;
-	--accent-secondary: #d49557;
-	--text-main: #f5f2ec; /* soft warm ivory */
-	--text-muted: #8f887d; /* warm slate-sand */
+	/* Typography */
 	--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 	--font-mono: 'NType 82 Mono', 'SF Mono', Menlo, Consolas, monospace;
 	--font-dot: 'NDot 55', monospace;
-
-	/* Semantic aliases (redesign/system.md) */
-	--paper: var(--bg-color);
-	--slot: var(--card-bg);
-	--ink: var(--text-main);
-	--muted: var(--text-muted);
-	--line: var(--card-border);
 
 	/* Type scale */
 	--type-body: 1.05rem;
@@ -57,13 +42,104 @@
 	--radius-xl: 20px;
 	--radius-full: 9999px;
 
-	/* Motion (low-cost; redesign/system.md) */
+	/* Motion */
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 	--ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
 	--dur-fast: 150ms;
 	--dur-ui: 220ms;
 	--dur-enter: 900ms;
 	--dur-chrome: 320ms;
+
+	/* Default Theme (Light Mode: Warm Linen / Editorial) */
+	--bg-color: #fbf9f5;
+	--card-bg: #f2ede4;
+	--card-bg-elevated: #ffffff;
+	--text-main: #211f1d;
+	--text-muted: #6e675f;
+	--accent: #b86e1e;
+	--accent-rgb: 184, 110, 30;
+	--accent-hover: #9c5c16;
+	--accent-secondary: #c98032;
+	--accent-subtle: #f8ede0;
+	--card-border: rgba(33, 31, 29, 0.08);
+	--card-border-hover: rgba(184, 110, 30, 0.25);
+
+	/* Semantic aliases */
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* Explicit Light Mode */
+:root[data-theme="light"],
+[data-theme="light"] {
+	--bg-color: #fbf9f5;
+	--card-bg: #f2ede4;
+	--card-bg-elevated: #ffffff;
+	--text-main: #211f1d;
+	--text-muted: #6e675f;
+	--accent: #b86e1e;
+	--accent-rgb: 184, 110, 30;
+	--accent-hover: #9c5c16;
+	--accent-secondary: #c98032;
+	--accent-subtle: #f8ede0;
+	--card-border: rgba(33, 31, 29, 0.08);
+	--card-border-hover: rgba(184, 110, 30, 0.25);
+
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* Dark Mode: Warm Obsidian / Anti-Halation */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+	--bg-color: #171615;
+	--card-bg: #201e1c;
+	--card-bg-elevated: #282623;
+	--text-main: #e3ded6;
+	--text-muted: #9c9589;
+	--accent: #e8a855;
+	--accent-rgb: 232, 168, 85;
+	--accent-hover: #f3ba6b;
+	--accent-secondary: #c98442;
+	--accent-subtle: rgba(232, 168, 85, 0.12);
+	--card-border: rgba(227, 222, 214, 0.09);
+	--card-border-hover: rgba(232, 168, 85, 0.3);
+
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* System preference fallback when data-theme is not explicitly set */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg-color: #171615;
+		--card-bg: #201e1c;
+		--card-bg-elevated: #282623;
+		--text-main: #e3ded6;
+		--text-muted: #9c9589;
+		--accent: #e8a855;
+		--accent-rgb: 232, 168, 85;
+		--accent-hover: #f3ba6b;
+		--accent-secondary: #c98442;
+		--accent-subtle: rgba(232, 168, 85, 0.12);
+		--card-border: rgba(227, 222, 214, 0.09);
+		--card-border-hover: rgba(232, 168, 85, 0.3);
+
+		--paper: var(--bg-color);
+		--slot: var(--card-bg);
+		--ink: var(--text-main);
+		--muted: var(--text-muted);
+		--line: var(--card-border);
+	}
 }
 
 * {
@@ -106,11 +182,11 @@ a {
 pre,
 pre.astro-code,
 pre.shiki {
-	background-color: #14171f !important;
-	border: 1px solid rgba(121, 184, 255, 0.15) !important;
+	background-color: var(--card-bg) !important;
+	border: 1px solid var(--card-border) !important;
 	border-radius: 6px !important;
 	padding: 1.25rem 1.5rem !important;
-	color: #f0f6fc !important;
+	color: var(--text-main) !important;
 	font-family: var(--font-mono) !important;
 	font-size: 0.875rem !important;
 	line-height: 1.65 !important;
@@ -120,17 +196,48 @@ pre.shiki {
 pre code,
 pre.astro-code code,
 pre span {
-	color: #f0f6fc !important;
+	color: inherit !important;
 	font-family: inherit !important;
 	background: transparent !important;
 }
 
 :not(pre) > code {
-	background: rgba(88, 166, 255, 0.1) !important;
-	color: #79c0ff !important;
+	background: var(--accent-subtle) !important;
+	color: var(--accent) !important;
 	padding: 0.2rem 0.45rem !important;
 	border-radius: 6px !important;
 	font-size: 0.875em !important;
 	font-family: var(--font-mono) !important;
-	border: 1px solid rgba(121, 184, 255, 0.18) !important;
+	border: 1px solid var(--card-border) !important;
 }
+
+/* Disable element-level CSS transitions during view transitions to avoid double animation / flicker */
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+	transition: none !important;
+}
+
+/* Theme toggle ripple setup */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+html.theme-transitioning::view-transition-old(root) {
+	z-index: 1;
+}
+
+html.theme-transitioning::view-transition-new(root) {
+	z-index: 9999;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(root),
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none !important;
+	}
+}
+

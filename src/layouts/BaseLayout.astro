@@ -1,5 +1,7 @@
 ---
 import CommandMenu from '../components/CommandMenu.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
+import { ClientRouter } from 'astro:transitions';
 import { site } from '../data/site';
 import '../styles/tokens.css';
 import '../styles/chrome.css';
@@ -67,6 +69,20 @@ const personJsonLd = {
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
+		<!-- Zero-Flash Theme Initializer -->
+		<script is:inline>
+			(function () {
+				const storedTheme = localStorage.getItem('theme');
+				if (storedTheme === 'dark' || storedTheme === 'light') {
+					document.documentElement.dataset.theme = storedTheme;
+				} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					document.documentElement.dataset.theme = 'dark';
+				} else {
+					document.documentElement.dataset.theme = 'light';
+				}
+			})();
+		</script>
+
 		<!-- Open Graph -->
 		<meta property="og:type" content="website" />
 		<meta property="og:title" content={title} />
@@ -83,6 +99,7 @@ const personJsonLd = {
 		<meta name="twitter:image" content={ogImageUrl} />
 
 		<script type="application/ld+json" set:html={JSON.stringify(personJsonLd)} />
+		<ClientRouter />
 	</head>
 	<body>
 		<div class="layout-wrapper">
@@ -110,6 +127,8 @@ const personJsonLd = {
 							>
 								<span>More</span>
 							</button>
+
+							<ThemeToggle />
 						</div>
 					</nav>
 				</div>

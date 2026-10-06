@@ -35,65 +35,61 @@ interface Props {
 const {
 	executiveOverview,
 	problemStatement,
-	keyDecisions,
+	keyDecisions = [],
 	valueProposition,
-	stackRows,
-	securityReliability,
-	futureRoadmap
+	stackRows = [],
+	securityReliability = [],
+	futureRoadmap = []
 } = Astro.props;
 ---
 
 {executiveOverview && (
-	<section id="overview">
-		<p class="label font-mono">Overview</p>
-		<p class="overview">{executiveOverview}</p>
+	<section id="executive-summary" class="case-section w-full max-w-full">
+		<div class="section-title-wrap">
+			<h2 class="label font-mono">Executive Summary & High-Level Scope</h2>
+		</div>
+		<div class="overview-box">
+			<p class="overview-text">{executiveOverview}</p>
+		</div>
 	</section>
 )}
 
-{(problemStatement || (keyDecisions && keyDecisions.length > 0)) && (
-	<section id="decisions">
-		<p class="label font-mono">Decisions</p>
-		{problemStatement && <p class="overview">{problemStatement}</p>}
-		{keyDecisions && keyDecisions.length > 0 && (
-			<div class="decision-list">
-				{keyDecisions.map((item) => (
-					<div class="decision-card">
-						<h3 class="decision-title">{item.challenge}</h3>
-						<div class="decision-body">
-							<div class="decision-col">
-								<p class="mini font-mono">Decision</p>
-								<p>{item.decision}</p>
-							</div>
-							<div class="decision-col decision-col-outcome">
-								<p class="mini font-mono">Outcome</p>
-								<p>{item.outcome || '—'}</p>
-							</div>
-						</div>
-					</div>
-				))}
-			</div>
-		)}
-	</section>
-)}
+{valueProposition && valueProposition.items && valueProposition.items.length > 0 && (
+	<section id="value-canvas" class="case-section w-full max-w-full">
+		<div class="section-title-wrap">
+			<h2 class="label font-mono">Value Proposition & Architecture Contrast</h2>
+			{valueProposition.targetCustomer && (
+				<span class="target-badge font-mono">Target: {valueProposition.targetCustomer}</span>
+			)}
+		</div>
 
-{valueProposition && (
-	<section id="before-after">
-		<p class="label font-mono">Before → after</p>
-		{valueProposition.targetCustomer && (
-			<p class="target font-mono">{valueProposition.targetCustomer}</p>
-		)}
-		<div class="ba-list">
+		<div class="contrast-grid">
 			{valueProposition.items.map((item) => (
-				<div class="ba-row">
-					<div>
-						<p class="mini font-mono">Before</p>
-						<strong>{item.painTitle}</strong>
-						<p>{item.painDescription}</p>
+				<div class="contrast-card">
+					<div class="contrast-pane pain-pane">
+						<div class="pane-header font-mono">
+							<span class="pane-badge pain-badge">
+								<span class="pane-indicator pain-dot"></span>
+								<span class="pane-title">Friction & Problem (Before)</span>
+							</span>
+						</div>
+						<h3 class="item-title font-sans">{item.painTitle}</h3>
+						<p class="item-desc">{item.painDescription}</p>
 					</div>
-					<div>
-						<p class="mini font-mono">After</p>
-						<strong>{item.gainTitle}</strong>
-						<p>{item.gainDescription}</p>
+
+					<div class="contrast-arrow" aria-hidden="true">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+					</div>
+
+					<div class="contrast-pane gain-pane">
+						<div class="pane-header font-mono">
+							<span class="pane-badge gain-badge">
+								<span class="pane-indicator gain-dot"></span>
+								<span class="pane-title">Architectural Solution (After)</span>
+							</span>
+						</div>
+						<h3 class="item-title font-sans">{item.gainTitle}</h3>
+						<p class="item-desc">{item.gainDescription}</p>
 					</div>
 				</div>
 			))}
@@ -101,43 +97,620 @@ const {
 	</section>
 )}
 
+{(problemStatement || keyDecisions.length > 0) && (
+	<section id="engineering-decisions" class="case-section w-full max-w-full">
+		<div class="section-title-wrap">
+			<h2 class="label font-mono">Key Engineering Decisions & Trade-Offs</h2>
+			<span class="count-badge font-mono">{keyDecisions.length} Decisions Logged</span>
+		</div>
+
+		{problemStatement && (
+			<div class="problem-statement-box">
+				<span class="sub-kicker font-mono">Core Architectural Challenge</span>
+				<p>{problemStatement}</p>
+			</div>
+		)}
+
+		{keyDecisions.length > 0 && (
+			<div class="decisions-grid">
+				{keyDecisions.map((item, idx) => (
+					<article class="decision-card">
+						<div class="decision-header">
+							<span class="decision-idx font-mono">{String(idx + 1).padStart(2, '0')}</span>
+							<h3 class="decision-challenge font-sans">{item.challenge}</h3>
+						</div>
+
+						<div class="decision-body">
+							<div class="decision-tier decision-choice">
+								<span class="tier-label choice-label font-mono">Engineering Decision</span>
+								<p>{item.decision}</p>
+							</div>
+
+							<div class="decision-tier decision-outcome">
+								<span class="tier-label outcome-label font-mono">Measurable Impact</span>
+								<p>{item.outcome || 'Production stability and operational compliance achieved.'}</p>
+							</div>
+						</div>
+					</article>
+				))}
+			</div>
+		)}
+	</section>
+)}
+
 {stackRows.length > 0 && (
-	<section id="stack">
-		<p class="label font-mono">Stack</p>
-		<div class="stack-block">
+	<section id="tech-breakdown" class="case-section w-full max-w-full">
+		<div class="section-title-wrap">
+			<h2 class="label font-mono">Categorized Technology Stack</h2>
+		</div>
+
+		<div class="stack-grid">
 			{stackRows.map((row) => (
-				<p class="stack-line">
-					<span class="stack-kicker font-mono">{row.label}</span>
-					{row.items!.map((name) => (
-						<span>{name}</span>
-					))}
-				</p>
+				<div class="stack-category-card">
+					<h3 class="category-name font-mono">{row.label}</h3>
+					<ul class="category-pills font-mono">
+						{row.items!.map((name) => (
+							<li>{name}</li>
+						))}
+					</ul>
+				</div>
 			))}
 		</div>
 	</section>
 )}
 
-{((securityReliability && securityReliability.length > 0) || (futureRoadmap && futureRoadmap.length > 0)) && (
-	<section id="security-roadmap" class="notes">
-		{securityReliability && securityReliability.length > 0 && (
-			<div>
-				<p class="label font-mono">Security</p>
-				<ul>
-					{securityReliability.map((item) => (
-						<li>{item}</li>
-					))}
-				</ul>
-			</div>
-		)}
-		{futureRoadmap && futureRoadmap.length > 0 && (
-			<div>
-				<p class="label font-mono">Roadmap</p>
-				<ul>
-					{futureRoadmap.map((item) => (
-						<li>{item}</li>
-					))}
-				</ul>
-			</div>
-		)}
+{(securityReliability.length > 0 || futureRoadmap.length > 0) && (
+	<section id="security-roadmap" class="case-section w-full max-w-full">
+		<div class="security-roadmap-grid">
+			{securityReliability.length > 0 && (
+				<div class="governance-card">
+					<div class="governance-header">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+						<h3 class="label font-mono">Security, Compliance & Reliability</h3>
+					</div>
+					<ul class="governance-list">
+						{securityReliability.map((item) => (
+							<li>
+								<span class="check-icon font-mono">✓</span>
+								<span>{item}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+
+			{futureRoadmap.length > 0 && (
+				<div class="governance-card">
+					<div class="governance-header">
+						<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 14 14"></polyline></svg>
+						<h3 class="label font-mono">Architectural Roadmap & Next Milestones</h3>
+					</div>
+					<ul class="governance-list">
+						{futureRoadmap.map((item) => (
+							<li>
+								<span class="roadmap-bullet font-mono">→</span>
+								<span>{item}</span>
+							</li>
+						))}
+					</ul>
+				</div>
+			)}
+		</div>
 	</section>
 )}
+
+<style>
+	.case-section {
+		margin-top: 2.5rem;
+		scroll-margin-top: 1.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.section-title-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 0.75rem;
+		margin-bottom: 1.15rem;
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.target-badge,
+	.count-badge {
+		font-size: 0.75rem;
+		color: #e2e8f0;
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		padding: 0.25rem 0.65rem;
+		border-radius: var(--radius-sm);
+		overflow-wrap: break-word;
+	}
+
+	.overview-box {
+		padding: 1.35rem 1.5rem;
+		background: #18181b;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: var(--radius-md);
+		box-shadow: 0 4px 20px -5px rgba(0, 0, 0, 0.5);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.overview-text {
+		margin: 0;
+		font-size: clamp(0.95rem, 2.5vw, 1.05rem);
+		line-height: 1.65;
+		color: #e4e4e7;
+		overflow-wrap: break-word;
+	}
+
+	.problem-statement-box {
+		margin-bottom: 1.5rem;
+		padding: 1.25rem 1.4rem;
+		background: rgba(244, 63, 94, 0.06);
+		border-left: 3px solid #f43f5e;
+		border-top: 1px solid rgba(244, 63, 94, 0.18);
+		border-right: 1px solid rgba(244, 63, 94, 0.18);
+		border-bottom: 1px solid rgba(244, 63, 94, 0.18);
+		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.sub-kicker {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.2rem 0.55rem;
+		margin-bottom: 0.5rem;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: #fda4af;
+		background: rgba(244, 63, 94, 0.12);
+		border: 1px solid rgba(244, 63, 94, 0.25);
+		border-radius: 4px;
+	}
+
+	.problem-statement-box p {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.6;
+		color: #e4e4e7;
+		overflow-wrap: break-word;
+	}
+
+	/* Value Canvas / Contrast Grid */
+	.contrast-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.contrast-card {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+		align-items: stretch;
+		background: #18181b;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: var(--radius-md);
+		overflow: hidden;
+		box-shadow: 0 4px 16px -4px rgba(0, 0, 0, 0.4);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.contrast-pane {
+		padding: 1.35rem 1.45rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.6rem;
+		min-width: 0;
+		box-sizing: border-box;
+	}
+
+	.pain-pane {
+		background: rgba(244, 63, 94, 0.03);
+		border-right: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.gain-pane {
+		background: rgba(16, 185, 129, 0.03);
+	}
+
+	.contrast-arrow {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0 0.6rem;
+		color: #a1a1aa;
+		background: #141417;
+		border-left: 1px solid rgba(255, 255, 255, 0.06);
+		border-right: 1px solid rgba(255, 255, 255, 0.06);
+	}
+
+	.pane-header {
+		display: flex;
+		align-items: center;
+	}
+
+	.pane-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		padding: 0.25rem 0.6rem;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-weight: 700;
+		border-radius: 4px;
+	}
+
+	.pain-badge {
+		background: rgba(244, 63, 94, 0.12);
+		color: #fda4af;
+		border: 1px solid rgba(244, 63, 94, 0.25);
+	}
+
+	.gain-badge {
+		background: rgba(16, 185, 129, 0.12);
+		color: #6ee7b7;
+		border: 1px solid rgba(16, 185, 129, 0.25);
+	}
+
+	.pane-indicator {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		flex-shrink: 0;
+	}
+
+	.pain-dot {
+		background: #f43f5e;
+		box-shadow: 0 0 6px rgba(244, 63, 94, 0.4);
+	}
+
+	.gain-dot {
+		background: #10b981;
+		box-shadow: 0 0 6px rgba(16, 185, 129, 0.4);
+	}
+
+	.item-title {
+		margin: 0.15rem 0 0;
+		font-size: 1.02rem;
+		font-weight: 700;
+		line-height: 1.35;
+		color: #f4f4f5;
+		overflow-wrap: break-word;
+	}
+
+	.item-desc {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.6;
+		color: #d4d4d8;
+		overflow-wrap: break-word;
+	}
+
+	/* Decisions Grid */
+	.decisions-grid {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.decision-card {
+		position: relative;
+		background: #18181b;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: var(--radius-md);
+		padding: 1.35rem 1.45rem;
+		will-change: transform;
+		transition: border-color var(--dur-fast) ease, transform var(--dur-fast) var(--ease-out);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.decision-card::after {
+		content: '';
+		position: absolute;
+		inset: -1px;
+		border-radius: inherit;
+		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.5), 0 0 20px var(--accent-subtle);
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity var(--dur-fast) ease;
+	}
+
+	.decision-card:hover {
+		border-color: rgba(255, 255, 255, 0.22);
+		transform: translateY(-4px);
+	}
+
+	.decision-card:hover::after {
+		opacity: 1;
+	}
+
+	.decision-header {
+		display: flex;
+		align-items: baseline;
+		gap: 0.75rem;
+		margin-bottom: 1rem;
+		padding-bottom: 0.8rem;
+		border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.decision-idx {
+		font-size: 0.78rem;
+		font-weight: 700;
+		color: #fde68a;
+		background: rgba(245, 158, 11, 0.14);
+		border: 1px solid rgba(245, 158, 11, 0.28);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		flex-shrink: 0;
+	}
+
+	.decision-challenge {
+		margin: 0;
+		font-size: clamp(0.98rem, 2.5vw, 1.1rem);
+		font-weight: 700;
+		color: #f4f4f5;
+		line-height: 1.35;
+		overflow-wrap: break-word;
+	}
+
+	.decision-body {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1.25rem 1.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.decision-tier {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.choice-label {
+		display: inline-flex;
+		align-items: center;
+		align-self: flex-start;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-weight: 700;
+		color: #fde68a;
+		background: rgba(245, 158, 11, 0.12);
+		border: 1px solid rgba(245, 158, 11, 0.22);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+	}
+
+	.outcome-label {
+		display: inline-flex;
+		align-items: center;
+		align-self: flex-start;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-weight: 700;
+		color: #6ee7b7;
+		background: rgba(16, 185, 129, 0.12);
+		border: 1px solid rgba(16, 185, 129, 0.22);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+	}
+
+	.decision-tier p {
+		margin: 0;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: #d4d4d8;
+		overflow-wrap: break-word;
+	}
+
+	.decision-outcome {
+		background: rgba(16, 185, 129, 0.05);
+		padding: 0.85rem 1rem;
+		border-radius: var(--radius-sm);
+		border-left: 3px solid #10b981;
+		border-top: 1px solid rgba(16, 185, 129, 0.15);
+		border-right: 1px solid rgba(16, 185, 129, 0.15);
+		border-bottom: 1px solid rgba(16, 185, 129, 0.15);
+		box-sizing: border-box;
+	}
+
+	/* Categorized Stack Grid */
+	.stack-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.stack-category-card {
+		background: #18181b;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: var(--radius-md);
+		padding: 1.15rem 1.25rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+		min-width: 0;
+		box-sizing: border-box;
+	}
+
+	.category-name {
+		margin: 0;
+		font-size: 0.76rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: #fde68a;
+		background: rgba(245, 158, 11, 0.1);
+		border: 1px solid rgba(245, 158, 11, 0.2);
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+		align-self: flex-start;
+	}
+
+	.category-pills {
+		list-style: none;
+		padding: 0;
+		margin: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.category-pills li {
+		font-size: 0.78rem;
+		padding: 0.3rem 0.6rem;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		border-radius: 4px;
+		color: #e4e4e7;
+		line-height: 1.3;
+		white-space: nowrap;
+	}
+
+	/* Governance & Roadmap */
+	.security-roadmap-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+		gap: 1.25rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.governance-card {
+		background: #18181b;
+		border: 1px solid rgba(255, 255, 255, 0.08);
+		border-radius: var(--radius-md);
+		padding: 1.35rem 1.45rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1.15rem;
+		min-width: 0;
+		box-sizing: border-box;
+	}
+
+	.governance-header {
+		display: flex;
+		align-items: center;
+		gap: 0.65rem;
+		color: #cbd5e1;
+	}
+
+	.governance-header svg {
+		color: #94a3b8;
+	}
+
+	.governance-header h3 {
+		font-size: 0.95rem;
+		margin: 0;
+		color: #f4f4f5;
+		overflow-wrap: break-word;
+	}
+
+	.governance-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.75rem;
+	}
+
+	.governance-list li {
+		display: flex;
+		align-items: flex-start;
+		gap: 0.65rem;
+		font-size: 0.92rem;
+		line-height: 1.6;
+		color: #d4d4d8;
+		overflow-wrap: break-word;
+	}
+
+	.check-icon {
+		color: #34d399;
+		font-weight: 700;
+		font-size: 0.9rem;
+		flex-shrink: 0;
+		margin-top: 0.05rem;
+	}
+
+	.roadmap-bullet {
+		color: #94a3b8;
+		font-weight: 700;
+		font-size: 0.9rem;
+		flex-shrink: 0;
+		margin-top: 0.05rem;
+	}
+
+	@media (max-width: 800px) {
+		.contrast-card {
+			grid-template-columns: 1fr;
+		}
+
+		.pain-pane {
+			border-right: 0;
+			border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+		}
+
+		.contrast-arrow {
+			display: none;
+		}
+
+		.decision-body {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.security-roadmap-grid {
+			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.case-section {
+			margin-top: 2rem;
+		}
+
+		.overview-box,
+		.problem-statement-box,
+		.decision-card,
+		.governance-card,
+		.stack-category-card {
+			padding: 1.1rem 1rem;
+		}
+
+		.contrast-pane {
+			padding: 1.1rem 1rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.decision-card,
+		.decision-card::after {
+			transition: none !important;
+			transform: none !important;
+		}
+	}
+</style>

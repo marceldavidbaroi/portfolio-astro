@@ -1,0 +1,129 @@
+---
+interface Metric {
+	label: string;
+	value: string;
+	detail?: string;
+}
+
+interface Props {
+	metrics?: Metric[];
+}
+
+const { metrics = [] } = Astro.props;
+---
+
+{metrics.length > 0 && (
+	<section id="impact-metrics" class="metrics-bar w-full max-w-full" aria-label="Executive Impact Metrics">
+		<div class="metrics-grid">
+			{metrics.map((item) => (
+				<div class="metric-card">
+					<span class="metric-value font-mono">{item.value}</span>
+					<span class="metric-label font-mono">{item.label}</span>
+					{item.detail && <p class="metric-detail">{item.detail}</p>}
+				</div>
+			))}
+		</div>
+	</section>
+)}
+
+<style>
+	.metrics-bar {
+		margin-top: 1.5rem;
+		margin-bottom: 0.5rem;
+		padding: 1.25rem;
+		background: #181614;
+		border: 1px solid rgba(243, 186, 107, 0.16);
+		border-radius: var(--radius-lg);
+		position: relative;
+		overflow: hidden;
+		box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+		box-sizing: border-box;
+	}
+
+	.metrics-bar::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+		height: 2px;
+		background: linear-gradient(90deg, transparent, var(--accent), transparent);
+		opacity: 0.8;
+	}
+
+	.metrics-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+		gap: 1.25rem 1.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.metric-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 0;
+		overflow-wrap: break-word;
+	}
+
+	.metric-value {
+		font-size: clamp(1.35rem, 4vw, 1.85rem);
+		font-weight: 800;
+		line-height: 1.15;
+		letter-spacing: -0.02em;
+		color: var(--accent);
+		overflow-wrap: break-word;
+		word-break: break-word;
+	}
+
+	.metric-label {
+		font-size: 0.72rem;
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+	}
+
+	.metric-detail {
+		margin: 0.15rem 0 0;
+		font-size: 0.82rem;
+		line-height: 1.45;
+		color: var(--text-muted);
+		overflow-wrap: break-word;
+	}
+
+	@media (max-width: 768px) {
+		.metrics-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1rem;
+		}
+
+		.metrics-bar {
+			padding: 1rem;
+			border-radius: var(--radius-md);
+		}
+	}
+
+	@media (max-width: 440px) {
+		.metrics-grid {
+			grid-template-columns: 1fr;
+			gap: 0.9rem;
+		}
+
+		.metrics-bar {
+			padding: 0.9rem 0.85rem;
+		}
+
+		.metric-card {
+			padding-bottom: 0.75rem;
+			border-bottom: 1px dashed rgba(243, 186, 107, 0.12);
+		}
+
+		.metric-card:last-child {
+			padding-bottom: 0;
+			border-bottom: none;
+		}
+	}
+</style>

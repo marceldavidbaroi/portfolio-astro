@@ -10,6 +10,7 @@ interface Links {
 
 interface Props {
 	title: string;
+	subtitle?: string;
 	chip?: string;
 	status?: string;
 	classLabel: string;
@@ -24,13 +25,12 @@ interface Props {
 	ghFront: boolean;
 	ghBack: boolean;
 	docs: boolean;
-	heroImage?: string | null;
-	isPhone: boolean;
 	stack?: string[];
 }
 
 const {
 	title,
+	subtitle,
 	chip,
 	status,
 	classLabel,
@@ -45,58 +45,281 @@ const {
 	ghFront,
 	ghBack,
 	docs,
-	heroImage,
-	isPhone,
-	stack
+	stack = []
 } = Astro.props;
-
-const showActions = hasActions;
 ---
 
-<p class="kicker font-mono">
-	{chip}
-	{status && <> · {status}</>}
-	<span> · {classLabel}</span>
-</p>
-<h1 class="case-title font-sans">{title}</h1>
-<p class="case-meta">
-	{role && <span>{role}</span>}
-	{timeline && <span>{timeline}</span>}
-</p>
-{(stack || []).length > 0 && (
-	<div class="case-hero-stack font-mono">
-		{stack!.map((tech) => (
-			<span class="stack-badge">{tech}</span>
-		))}
+<header class="case-header w-full max-w-full">
+	<div class="kicker-row font-mono">
+		{chip && <span class="badge badge-chip">{chip}</span>}
+		{status && <span class="badge badge-status">{status}</span>}
+		<span class="badge badge-class">{classLabel}</span>
 	</div>
-)}
-{description && <p class="xyz">{description}</p>}
 
-{showActions && (
-	<div class="hero-actions">
-		{live && (
-			<a class="btn-solid font-mono" href={links!.liveDemo} target="_blank" rel="noopener noreferrer">Live</a>
-		)}
-		{parent && (
-			<a class="btn-ghost font-mono" href={links!.parentPlatform} target="_blank" rel="noopener noreferrer">Parent</a>
-		)}
-		{github && (
-			<a class="text-link font-mono" href={links!.github} target="_blank" rel="noopener noreferrer">Repository</a>
-		)}
-		{ghFront && (
-			<a class="text-link font-mono" href={links!.githubFrontend} target="_blank" rel="noopener noreferrer">Frontend</a>
-		)}
-		{ghBack && (
-			<a class="text-link font-mono" href={links!.githubBackend} target="_blank" rel="noopener noreferrer">Backend</a>
-		)}
-		{docs && (
-			<a class="text-link font-mono" href={links!.docs} target="_blank" rel="noopener noreferrer">Docs</a>
-		)}
-	</div>
-)}
+	<h1 class="case-title font-sans">{title}</h1>
+	{subtitle && <p class="case-subtitle">{subtitle}</p>}
 
-{heroImage && (
-	<div class:list={['hero-well', { 'is-phone': isPhone }]}>
-		<img src={heroImage} alt={`${title} interface`} width={isPhone ? 400 : 1280} height={isPhone ? 720 : 800} loading="eager" />
+	<div class="case-meta font-mono">
+		{role && (
+			<div class="meta-pill">
+				<span class="meta-label">Role:</span>
+				<span class="meta-val">{role}</span>
+			</div>
+		)}
+		{timeline && (
+			<div class="meta-pill">
+				<span class="meta-label">Timeline:</span>
+				<span class="meta-val">{timeline}</span>
+			</div>
+		)}
 	</div>
-)}
+
+	{stack.length > 0 && (
+		<div class="case-hero-stack font-mono" aria-label="Core Technologies">
+			{stack.map((tech) => (
+				<span class="stack-badge">{tech}</span>
+			))}
+		</div>
+	)}
+
+	{description && (
+		<div class="xyz-box">
+			<div class="xyz-tag font-mono">Executive Accomplishment (XYZ)</div>
+			<p class="xyz-text">{description}</p>
+		</div>
+	)}
+
+	{hasActions && (
+		<div class="hero-actions">
+			{live && links?.liveDemo && (
+				<a class="btn-action btn-solid font-mono" href={links.liveDemo} target="_blank" rel="noopener noreferrer">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+					<span>Live Demo</span>
+				</a>
+			)}
+			{parent && links?.parentPlatform && (
+				<a class="btn-action btn-ghost font-mono" href={links.parentPlatform} target="_blank" rel="noopener noreferrer">
+					<span>Parent Platform</span>
+				</a>
+			)}
+			{github && links?.github && (
+				<a class="btn-action text-link font-mono" href={links.github} target="_blank" rel="noopener noreferrer">
+					<span>Repository</span>
+				</a>
+			)}
+			{ghFront && links?.githubFrontend && (
+				<a class="btn-action text-link font-mono" href={links.githubFrontend} target="_blank" rel="noopener noreferrer">
+					<span>Frontend Repo</span>
+				</a>
+			)}
+			{ghBack && links?.githubBackend && (
+				<a class="btn-action text-link font-mono" href={links.githubBackend} target="_blank" rel="noopener noreferrer">
+					<span>Backend Repo</span>
+				</a>
+			)}
+			{docs && links?.docs && (
+				<a class="btn-action text-link font-mono" href={links.docs} target="_blank" rel="noopener noreferrer">
+					<span>Documentation</span>
+				</a>
+			)}
+		</div>
+	)}
+</header>
+
+<style>
+	.case-header {
+		display: flex;
+		flex-direction: column;
+		gap: 0.95rem;
+		margin-bottom: 0.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.kicker-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.45rem;
+		width: 100%;
+	}
+
+	.badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.6rem;
+		font-size: var(--type-meta);
+		letter-spacing: 0.04em;
+		border-radius: var(--radius-sm);
+		line-height: 1.25;
+		min-height: 26px;
+		box-sizing: border-box;
+	}
+
+	.badge-chip {
+		background: rgba(243, 186, 107, 0.12);
+		color: var(--accent);
+		border: 1px solid rgba(243, 186, 107, 0.25);
+		font-weight: 700;
+	}
+
+	.badge-status {
+		background: rgba(34, 197, 94, 0.1);
+		color: #4ade80;
+		border: 1px solid rgba(34, 197, 94, 0.2);
+	}
+
+	.badge-class {
+		background: rgba(255, 255, 255, 0.04);
+		color: var(--text-muted);
+		border: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.case-title {
+		margin: 0.15rem 0 0;
+		font-size: clamp(1.65rem, 5vw, 3.15rem);
+		font-weight: 800;
+		letter-spacing: -0.035em;
+		line-height: 1.12;
+		color: var(--text-main);
+		overflow-wrap: break-word;
+		word-break: break-word;
+	}
+
+	.case-subtitle {
+		margin: 0;
+		font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+		line-height: 1.5;
+		color: var(--text-muted);
+		font-weight: 450;
+		max-width: 50rem;
+		overflow-wrap: break-word;
+	}
+
+	.case-meta {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem 1.25rem;
+		font-size: var(--type-meta);
+		width: 100%;
+	}
+
+	.meta-pill {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.4rem;
+		color: var(--text-muted);
+		overflow-wrap: break-word;
+	}
+
+	.meta-label {
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		font-weight: 600;
+		color: var(--accent);
+	}
+
+	.meta-val {
+		color: var(--text-main);
+	}
+
+	.case-hero-stack {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.4rem 0.5rem;
+		width: 100%;
+	}
+
+	.stack-badge {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.25rem 0.65rem;
+		font-size: var(--type-meta);
+		letter-spacing: 0.03em;
+		color: var(--text-main);
+		background: rgba(243, 186, 107, 0.07);
+		border: 1px solid rgba(243, 186, 107, 0.16);
+		border-radius: 4px;
+		white-space: nowrap;
+		line-height: 1.25;
+		min-height: 28px;
+		box-sizing: border-box;
+		transition: border-color var(--dur-fast) ease, background var(--dur-fast) ease;
+	}
+
+	.stack-badge:hover {
+		border-color: var(--accent);
+		background: rgba(243, 186, 107, 0.12);
+	}
+
+	.xyz-box {
+		margin-top: 0.35rem;
+		padding: 1rem 1.2rem;
+		background: rgba(243, 186, 107, 0.05);
+		border-left: 3px solid var(--accent);
+		border-top: 1px solid rgba(243, 186, 107, 0.12);
+		border-right: 1px solid rgba(243, 186, 107, 0.12);
+		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		border-radius: 0 var(--radius-md) var(--radius-md) 0;
+		max-width: 50rem;
+		box-sizing: border-box;
+		width: 100%;
+	}
+
+	.xyz-tag {
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.1em;
+		font-weight: 700;
+		color: var(--accent);
+		margin-bottom: 0.35rem;
+	}
+
+	.xyz-text {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--text-main);
+		overflow-wrap: break-word;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem 0.85rem;
+		margin-top: 0.5rem;
+		width: 100%;
+	}
+
+	.btn-action {
+		min-height: 44px; /* Accessible 44px mobile touch target */
+		padding: 0.65rem 1.15rem;
+		box-sizing: border-box;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.btn-solid svg {
+		margin-right: 0.4rem;
+		flex-shrink: 0;
+	}
+
+	@media (max-width: 640px) {
+		.hero-actions {
+			display: grid;
+			grid-template-columns: 1fr;
+			gap: 0.55rem;
+		}
+
+		.btn-action {
+			width: 100%;
+			text-align: center;
+		}
+
+		.xyz-box {
+			padding: 0.85rem 1rem;
+		}
+	}
+</style>

@@ -1,0 +1,287 @@
+---
+interface Props {
+	defaultExpanded?: boolean;
+}
+
+const { defaultExpanded = true } = Astro.props;
+---
+
+<section id="deep-dive" class="deep-dive-section w-full max-w-full">
+	<div class="disclosure-card">
+		<div class="disclosure-header">
+			<div class="title-meta">
+				<span class="badge font-mono">Progressive Disclosure</span>
+				<h2 class="label font-mono">Architectural Deep-Dive, Schemas & Workflows</h2>
+			</div>
+			<div class="disclosure-actions font-mono">
+				<button type="button" class="disclosure-toggle-btn" id="deepDiveToggleBtn" aria-expanded={defaultExpanded ? "true" : "false"}>
+					<span class="btn-text">{defaultExpanded ? "Collapse Specs" : "Expand Technical Specs"}</span>
+					<svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>
+				</button>
+			</div>
+		</div>
+
+		<!-- Navigation Pills for Fast Jumping Inside Deep-Dive with Horizontal Scrollable Rail on Mobile -->
+		<div class="deep-dive-nav font-mono" id="deepDiveNav" aria-label="Quick jump within architecture deep-dive">
+			<span class="nav-label">Jump:</span>
+			<div class="nav-pills" id="deepDivePills"></div>
+		</div>
+
+		<div class="disclosure-body" id="deepDiveBody">
+			<div class="markdown-article w-full max-w-full">
+				<slot />
+			</div>
+		</div>
+	</div>
+</section>
+
+<style>
+	.deep-dive-section {
+		margin-top: 2.75rem;
+		scroll-margin-top: 1.5rem;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.disclosure-card {
+		background: #181614;
+		border: 1px solid rgba(243, 186, 107, 0.16);
+		border-radius: var(--radius-lg);
+		box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+		overflow: hidden;
+		transition: border-color var(--dur-ui) ease;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.disclosure-card:hover {
+		border-color: rgba(243, 186, 107, 0.28);
+	}
+
+	.disclosure-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1.25rem 1.5rem;
+		background: #1c1a17;
+		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.title-meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		min-width: 0;
+	}
+
+	.badge {
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(243, 186, 107, 0.1);
+		border: 1px solid rgba(243, 186, 107, 0.2);
+		padding: 0.15rem 0.5rem;
+		border-radius: 4px;
+		align-self: flex-start;
+	}
+
+	.title-meta h2 {
+		margin: 0;
+		font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+		color: var(--text-main);
+		overflow-wrap: break-word;
+	}
+
+	.disclosure-actions {
+		display: flex;
+		align-items: center;
+	}
+
+	.disclosure-toggle-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.5rem;
+		min-height: 44px; /* Accessible 44px mobile touch target */
+		padding: 0.55rem 1.15rem;
+		background: rgba(243, 186, 107, 0.08);
+		border: 1px solid rgba(243, 186, 107, 0.22);
+		border-radius: var(--radius-sm);
+		color: var(--accent);
+		font-size: var(--type-cta);
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		cursor: pointer;
+		box-sizing: border-box;
+		transition: all var(--dur-fast) ease;
+	}
+
+	.disclosure-toggle-btn:hover {
+		background: rgba(243, 186, 107, 0.16);
+		border-color: var(--accent);
+		color: var(--accent-hover);
+	}
+
+	.disclosure-toggle-btn .chevron {
+		transition: transform var(--dur-ui) var(--ease-out);
+		flex-shrink: 0;
+	}
+
+	.disclosure-toggle-btn[aria-expanded="true"] .chevron {
+		transform: rotate(180deg);
+	}
+
+	.deep-dive-nav {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem 0.75rem;
+		padding: 0.75rem 1.25rem;
+		background: #141312;
+		border-bottom: 1px solid rgba(243, 186, 107, 0.08);
+		font-size: var(--type-caption);
+		width: 100%;
+		box-sizing: border-box;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		scrollbar-width: thin;
+	}
+
+	.nav-label {
+		color: var(--text-muted);
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		flex-shrink: 0;
+	}
+
+	.nav-pills {
+		display: flex;
+		flex-wrap: nowrap;
+		gap: 0.4rem;
+		overflow-x: auto;
+		-webkit-overflow-scrolling: touch;
+		padding-bottom: 2px;
+	}
+
+	:global(.deep-dive-pill) {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.35rem 0.65rem;
+		min-height: 32px;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(243, 186, 107, 0.14);
+		border-radius: 4px;
+		color: var(--text-muted);
+		text-decoration: none;
+		font-size: 0.72rem;
+		letter-spacing: 0.02em;
+		white-space: nowrap;
+		flex-shrink: 0;
+		box-sizing: border-box;
+		transition: all var(--dur-fast) ease;
+	}
+
+	:global(.deep-dive-pill:hover) {
+		color: var(--accent);
+		background: rgba(243, 186, 107, 0.1);
+		border-color: rgba(243, 186, 107, 0.3);
+	}
+
+	.disclosure-body {
+		padding: 1.5rem 1.75rem;
+		width: 100%;
+		max-width: 100%;
+		box-sizing: border-box;
+		overflow-x: hidden;
+		transition: max-height var(--dur-ui) var(--ease-ui), opacity var(--dur-ui) ease;
+	}
+
+	.disclosure-card.is-collapsed .disclosure-body,
+	.disclosure-card.is-collapsed .deep-dive-nav {
+		display: none;
+	}
+
+	@media (max-width: 640px) {
+		.disclosure-header {
+			flex-direction: column;
+			align-items: stretch;
+			padding: 0.75rem 0.5rem;
+		}
+
+		.disclosure-actions {
+			width: 100%;
+		}
+
+		.disclosure-toggle-btn {
+			width: 100%;
+		}
+
+		.deep-dive-nav {
+			padding: 0.5rem 0.5rem;
+		}
+
+		.disclosure-body {
+			padding: 0.75rem 0.35rem;
+		}
+	}
+</style>
+
+<script>
+	function setupDeepDive() {
+		const toggleBtn = document.getElementById('deepDiveToggleBtn');
+		const card = document.querySelector('.disclosure-card');
+		const body = document.getElementById('deepDiveBody');
+		const pillsContainer = document.getElementById('deepDivePills');
+
+		if (!toggleBtn || !card || !body) return;
+
+		// Build quick jumping pills from markdown H2 headings
+		if (pillsContainer) {
+			const headings = body.querySelectorAll('h2');
+			pillsContainer.innerHTML = '';
+			headings.forEach((h2, index) => {
+				const text = h2.textContent?.trim() || `Section ${index + 1}`;
+				if (!h2.id) {
+					h2.id = `spec-${text.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '')}`;
+				}
+				const a = document.createElement('a');
+				a.href = `#${h2.id}`;
+				a.className = 'deep-dive-pill';
+				a.textContent = text;
+				a.addEventListener('click', () => {
+					// Ensure card is expanded if collapsed
+					if (card.classList.contains('is-collapsed')) {
+						toggleExpansion();
+					}
+				});
+				pillsContainer.appendChild(a);
+			});
+
+			if (headings.length === 0) {
+				const navEl = document.getElementById('deepDiveNav');
+				if (navEl) navEl.style.display = 'none';
+			}
+		}
+
+		function toggleExpansion() {
+			const isExpanded = toggleBtn?.getAttribute('aria-expanded') === 'true';
+			const nextState = !isExpanded;
+			toggleBtn?.setAttribute('aria-expanded', String(nextState));
+			const btnText = toggleBtn?.querySelector('.btn-text');
+			if (btnText) {
+				btnText.textContent = nextState ? 'Collapse Specs' : 'Expand Technical Specs';
+			}
+			card?.classList.toggle('is-collapsed', !nextState);
+		}
+
+		toggleBtn.addEventListener('click', toggleExpansion);
+	}
+
+	setupDeepDive();
+	document.addEventListener('astro:page-load', setupDeepDive);
+</script>

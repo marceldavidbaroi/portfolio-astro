@@ -81,6 +81,7 @@ const { projects } = Astro.props;
 	}
 
 	.feature-band {
+		position: relative;
 		display: grid;
 		grid-template-columns: minmax(0, 1.25fr) minmax(320px, 1fr);
 		gap: 2.5rem 3.5rem;
@@ -89,7 +90,21 @@ const { projects } = Astro.props;
 		color: inherit;
 		padding: 2.75rem 0;
 		border-top: 1px solid rgba(255, 255, 255, 0.09);
-		transition: transform var(--dur-ui) var(--ease-out);
+		will-change: transform;
+		transition: transform var(--dur-fast) var(--ease-out);
+	}
+
+	.feature-band::after {
+		content: '';
+		position: absolute;
+		inset: -0.5rem -1rem;
+		border-radius: var(--radius-lg);
+		background: var(--card-bg-elevated);
+		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.25), 0 0 20px var(--accent-subtle);
+		opacity: 0;
+		pointer-events: none;
+		z-index: -1;
+		transition: opacity var(--dur-fast) ease;
 	}
 
 	.focus-list .feature-band:first-child {
@@ -97,10 +112,16 @@ const { projects } = Astro.props;
 		padding-top: 0.5rem;
 	}
 
+	.feature-band:hover {
+		transform: translateY(-4px);
+	}
+
+	.feature-band:hover::after {
+		opacity: 1;
+	}
+
 	.feature-band:hover .feature-title {
 		color: #ffffff;
-		text-decoration: underline;
-		text-underline-offset: 4px;
 	}
 
 	.feature-band:hover .inline-cta {
@@ -250,9 +271,12 @@ const { projects } = Astro.props;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.inline-cta,
-		.feature-title {
-			transition: none;
+		.feature-band,
+		.feature-band::after,
+		.feature-title,
+		.inline-cta {
+			transition: none !important;
+			transform: none !important;
 		}
 	}
 </style>

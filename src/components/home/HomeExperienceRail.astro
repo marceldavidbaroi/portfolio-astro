@@ -62,7 +62,7 @@ const { experience, heading = 'visible' } = Astro.props;
 <style>
 	.experience {
 		padding: 3.25rem 0 2.75rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		border-bottom: 1px solid var(--card-border);
 	}
 
 	.rail {
@@ -79,12 +79,12 @@ const { experience, heading = 'visible' } = Astro.props;
 		grid-template-columns: 11.5rem minmax(0, 1fr);
 		gap: 1.5rem;
 		padding: 1.15rem 0;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		border-top: 1px solid var(--card-border);
 		transition: background 0.18s ease;
 	}
 
 	.rail-row:last-child {
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		border-bottom: 1px solid var(--card-border);
 	}
 
 	.rail-row:hover .rail-role a {
@@ -138,7 +138,8 @@ const { experience, heading = 'visible' } = Astro.props;
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
 		color: var(--accent);
-		border: 1px solid rgba(132, 53, 63, 0.28);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
 		padding: 0.12rem 0.4rem;
 		border-radius: 9999px;
 	}
@@ -154,7 +155,7 @@ const { experience, heading = 'visible' } = Astro.props;
 		margin: 0.45rem 0 0;
 		font-size: var(--type-xyz);
 		line-height: 1.55;
-		color: var(--text-main);
+		color: var(--text-muted);
 		max-width: 42rem;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
@@ -177,7 +178,7 @@ const { experience, heading = 'visible' } = Astro.props;
 		letter-spacing: 0.03em;
 		color: var(--text-main);
 		text-decoration: none;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.28);
+		border-bottom: 1px solid var(--card-border);
 		transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
 	}
 

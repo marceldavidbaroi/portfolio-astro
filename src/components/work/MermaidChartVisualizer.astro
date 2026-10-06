@@ -1,0 +1,452 @@
+---
+interface Props {
+	code?: string;
+	title?: string;
+	type?: string;
+	showControls?: boolean;
+}
+
+const { code = '', title, type, showControls = true } = Astro.props;
+---
+
+<div class="mermaid-visualizer-container w-full max-w-full">
+	<div class="visualizer-header">
+		<div class="header-left">
+			<span class="visualizer-badge font-mono">
+				<span class="pulse-dot"></span>
+				<span class="chart-type-text">{type || 'Mermaid Diagram'}</span>
+			</span>
+			{title && <span class="chart-title font-sans">{title}</span>}
+		</div>
+
+		{showControls && (
+			<div class="header-actions font-mono">
+				<button type="button" class="ctrl-btn zoom-in-btn" aria-label="Zoom in diagram" title="Zoom in">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="11" y1="8" x2="11" y2="14"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+				</button>
+				<button type="button" class="ctrl-btn zoom-out-btn" aria-label="Zoom out diagram" title="Zoom out">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line><line x1="8" y1="11" x2="14" y2="11"></line></svg>
+				</button>
+				<button type="button" class="ctrl-btn reset-zoom-btn" aria-label="Reset zoom" title="Reset zoom">
+					<span>100%</span>
+				</button>
+				<button type="button" class="ctrl-btn copy-code-btn" aria-label="Copy Mermaid syntax" title="Copy Mermaid Syntax">
+					<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+					<span class="copy-status">Copy</span>
+				</button>
+			</div>
+		)}
+	</div>
+
+	<div class="visualizer-viewport">
+		<div class="mermaid-target" data-code={code}>
+			{code ? code : <slot />}
+		</div>
+	</div>
+
+	<div class="visualizer-footer font-mono">
+		<span class="footer-hint">Touch pan / scroll horizontally to inspect nodes</span>
+	</div>
+</div>
+
+<style>
+	.mermaid-visualizer-container {
+		margin: 1.5rem 0 2rem;
+		background: #151413;
+		border: 1px solid rgba(243, 186, 107, 0.18);
+		border-radius: var(--radius-lg);
+		box-shadow: 0 12px 36px -10px rgba(0, 0, 0, 0.75);
+		overflow: hidden;
+		width: 100%;
+		box-sizing: border-box;
+		position: relative;
+		transition: border-color var(--dur-ui) ease;
+	}
+
+	.mermaid-visualizer-container:hover {
+		border-color: rgba(243, 186, 107, 0.35);
+	}
+
+	.visualizer-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.65rem 1rem;
+		padding: 0.75rem 1.15rem;
+		background: #1a1816;
+		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.header-left {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.65rem;
+		min-width: 0;
+	}
+
+	.visualizer-badge {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.45rem;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		font-weight: 700;
+		color: var(--accent);
+		background: rgba(243, 186, 107, 0.1);
+		border: 1px solid rgba(243, 186, 107, 0.2);
+		padding: 0.2rem 0.55rem;
+		border-radius: 4px;
+	}
+
+	.pulse-dot {
+		width: 6px;
+		height: 6px;
+		border-radius: 50%;
+		background: var(--accent);
+		box-shadow: 0 0 8px var(--accent);
+		animation: pulseGlow 2s infinite ease-in-out;
+	}
+
+	@keyframes pulseGlow {
+		0%, 100% { opacity: 0.5; transform: scale(0.9); }
+		50% { opacity: 1; transform: scale(1.15); }
+	}
+
+	.chart-title {
+		font-size: 0.95rem;
+		font-weight: 600;
+		color: var(--text-main);
+		overflow-wrap: break-word;
+	}
+
+	.header-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.ctrl-btn {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: 0.35rem;
+		height: 32px;
+		padding: 0 0.65rem;
+		background: rgba(255, 255, 255, 0.03);
+		border: 1px solid rgba(243, 186, 107, 0.15);
+		border-radius: 4px;
+		color: var(--text-muted);
+		font-size: 0.72rem;
+		cursor: pointer;
+		box-sizing: border-box;
+		transition: all var(--dur-fast) ease;
+	}
+
+	.ctrl-btn:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+		background: rgba(243, 186, 107, 0.1);
+	}
+
+	.visualizer-viewport {
+		position: relative;
+		width: 100%;
+		max-width: 100%;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		touch-action: pan-x;
+		scrollbar-width: thin;
+		padding: 1.5rem 1.25rem;
+		box-sizing: border-box;
+		background: radial-gradient(circle at center, #1e1c19 0%, #151413 100%);
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		min-height: 180px;
+	}
+
+	.mermaid-target {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transform-origin: center center;
+		transition: transform var(--dur-fast) ease;
+	}
+
+	:global(.mermaid-target svg) {
+		max-width: 100% !important;
+		height: auto !important;
+		display: block;
+		filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.45));
+		overflow: visible !important;
+	}
+
+	:global(.mermaid-target svg text),
+	:global(.mermaid-target svg .nodeLabel),
+	:global(.mermaid-target svg .label),
+	:global(.mermaid-target svg .edgeLabel),
+	:global(.mermaid-target svg .labelText) {
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+		font-size: 13.5px !important;
+		font-weight: 600 !important;
+		fill: #f5f2ec !important;
+		color: #f5f2ec !important;
+		letter-spacing: -0.01em !important;
+		line-height: 1.4 !important;
+		-webkit-text-stroke: 0 !important;
+		text-rendering: geometricPrecision !important;
+	}
+
+	:global(.mermaid-target svg .node rect),
+	:global(.mermaid-target svg .node circle),
+	:global(.mermaid-target svg .node polygon),
+	:global(.mermaid-target svg .node path) {
+		fill: #22201c !important;
+		stroke: #ffffff !important;
+		stroke-width: 1.5px !important;
+		rx: 8px !important;
+		ry: 8px !important;
+	}
+
+	:global(.mermaid-target svg .cluster rect) {
+		fill: rgba(255, 255, 255, 0.03) !important;
+		stroke: rgba(255, 255, 255, 0.45) !important;
+		stroke-width: 1.5px !important;
+		stroke-dasharray: 4, 4 !important;
+		rx: 12px !important;
+		ry: 12px !important;
+	}
+
+	:global(.mermaid-target svg .actor) {
+		fill: #22201c !important;
+		stroke: #ffffff !important;
+		stroke-width: 1.5px !important;
+		rx: 8px !important;
+		ry: 8px !important;
+	}
+
+	:global(.mermaid-target svg .edgePath .path),
+	:global(.mermaid-target svg .flowchart-link) {
+		stroke: #ffffff !important;
+		stroke-width: 1.75px !important;
+	}
+
+	:global(.mermaid-target svg .marker) {
+		fill: #ffffff !important;
+		stroke: #ffffff !important;
+	}
+
+	:global(.mermaid-target svg foreignObject) {
+		overflow: visible !important;
+	}
+
+	:global(.mermaid-target svg foreignObject div) {
+		display: flex !important;
+		align-items: center !important;
+		justify-content: center !important;
+		text-align: center !important;
+		line-height: 1.4 !important;
+		color: #f5f2ec !important;
+		font-weight: 600 !important;
+		font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important;
+		font-size: 13.5px !important;
+	}
+
+	.visualizer-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		padding: 0.45rem 1.15rem;
+		background: #11100f;
+		border-top: 1px solid rgba(243, 186, 107, 0.08);
+		font-size: 0.68rem;
+		color: var(--text-muted);
+		letter-spacing: 0.04em;
+	}
+
+	@media (max-width: 640px) {
+		.mermaid-visualizer-container {
+			margin: 1rem 0 1.25rem;
+			border-radius: var(--radius-md);
+		}
+
+		.visualizer-header {
+			padding: 0.5rem 0.5rem;
+		}
+
+		.visualizer-viewport {
+			padding: 0.75rem 0.25rem;
+		}
+
+		.ctrl-btn {
+			height: 30px;
+			padding: 0 0.45rem;
+		}
+
+		.visualizer-footer {
+			padding: 0.35rem 0.5rem;
+		}
+	}
+</style>
+
+<script>
+	async function initAllMermaidVisualizers() {
+		try {
+			const visualizers = document.querySelectorAll<HTMLElement>('.mermaid-visualizer-container');
+			if (visualizers.length === 0) return;
+
+			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+
+			mermaid.initialize({
+				startOnLoad: false,
+				theme: 'base',
+				themeVariables: {
+					darkMode: true,
+					background: '#151413',
+					primaryColor: '#22201c',
+					primaryTextColor: '#ffffff',
+					primaryBorderColor: '#ffffff',
+					lineColor: '#ffffff',
+					secondaryColor: '#1c1a17',
+					tertiaryColor: '#282521',
+					mainBkg: '#1c1a17',
+					secondBkg: '#161513',
+					nodeBorder: '#ffffff',
+					clusterBkg: 'rgba(255, 255, 255, 0.03)',
+					clusterBorder: 'rgba(255, 255, 255, 0.45)',
+					defaultLinkColor: '#ffffff',
+					titleColor: '#ffffff',
+					edgeLabelBackground: '#191715',
+					actorBorder: '#ffffff',
+					actorBkg: '#22201c',
+					actorTextColor: '#ffffff',
+					actorLineColor: '#ffffff',
+					signalColor: '#ffffff',
+					signalTextColor: '#ffffff',
+					labelBoxBkgColor: '#22201c',
+					labelBoxBorderColor: '#ffffff',
+					labelTextColor: '#ffffff',
+					loopTextColor: '#ffffff',
+					noteBorderColor: '#ffffff',
+					noteBkgColor: '#25221e',
+					noteTextColor: '#ffffff',
+					fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif',
+					fontSize: '14px'
+				},
+				flowchart: {
+					htmlLabels: true,
+					curve: 'basis',
+					padding: 18,
+					nodeSpacing: 50,
+					rankSpacing: 50
+				},
+				sequence: {
+					actorMargin: 50,
+					boxMargin: 10,
+					boxTextMargin: 5,
+					noteMargin: 10,
+					messageMargin: 35
+				},
+				securityLevel: 'loose'
+			});
+
+			let idCounter = 0;
+
+			for (const container of visualizers) {
+				if (container.dataset.rendered === 'true') continue;
+				container.dataset.rendered = 'true';
+
+				const target = container.querySelector<HTMLElement>('.mermaid-target');
+				if (!target) continue;
+
+				const rawCode = target.dataset.code || target.textContent?.trim() || '';
+				if (!rawCode) continue;
+
+				// Detect type for badge
+				const badge = container.querySelector('.chart-type-text');
+				if (badge) {
+					if (rawCode.includes('erDiagram')) badge.textContent = 'Database ERD';
+					else if (rawCode.includes('sequenceDiagram')) badge.textContent = 'Sequence Workflow';
+					else if (rawCode.includes('flowchart') || rawCode.includes('graph')) badge.textContent = 'Architecture Flow';
+					else if (rawCode.includes('classDiagram')) badge.textContent = 'Class Schema';
+					else if (rawCode.includes('stateDiagram')) badge.textContent = 'State Machine';
+					else if (rawCode.includes('mindmap')) badge.textContent = 'System Mindmap';
+					else badge.textContent = 'System Blueprint';
+				}
+
+				const uniqueId = `mermaid-vis-${Date.now()}-${++idCounter}`;
+				try {
+					const { svg } = await mermaid.render(uniqueId, rawCode);
+					target.innerHTML = svg;
+
+					// Ensure SVG rects get rounded corners in the DOM
+					target.querySelectorAll<SVGRectElement>('.node rect, .node polygon, .actor').forEach((rect) => {
+						rect.setAttribute('rx', '8');
+						rect.setAttribute('ry', '8');
+					});
+					target.querySelectorAll<SVGRectElement>('.cluster rect').forEach((cluster) => {
+						cluster.setAttribute('rx', '12');
+						cluster.setAttribute('ry', '12');
+					});
+				} catch (err) {
+					console.warn('Failed rendering diagram:', err);
+					target.innerHTML = `<pre style="color: #f87171; font-size: 12px; padding: 12px;">Diagram parsing error. Raw syntax:\n\n${rawCode}</pre>`;
+				}
+
+				// Zoom Controls Logic
+				let scale = 1;
+				const zoomInBtn = container.querySelector('.zoom-in-btn');
+				const zoomOutBtn = container.querySelector('.zoom-out-btn');
+				const resetBtn = container.querySelector('.reset-zoom-btn');
+				const copyBtn = container.querySelector('.copy-code-btn');
+
+				const applyZoom = () => {
+					target.style.transform = `scale(${scale})`;
+					if (resetBtn) resetBtn.querySelector('span')!.textContent = `${Math.round(scale * 100)}%`;
+				};
+
+				zoomInBtn?.addEventListener('click', () => {
+					scale = Math.min(scale + 0.15, 2.2);
+					applyZoom();
+				});
+
+				zoomOutBtn?.addEventListener('click', () => {
+					scale = Math.max(scale - 0.15, 0.5);
+					applyZoom();
+				});
+
+				resetBtn?.addEventListener('click', () => {
+					scale = 1;
+					applyZoom();
+				});
+
+				copyBtn?.addEventListener('click', async () => {
+					try {
+						await navigator.clipboard.writeText(rawCode);
+						const status = copyBtn.querySelector('.copy-status');
+						if (status) {
+							status.textContent = 'Copied!';
+							setTimeout(() => {
+								status.textContent = 'Copy';
+							}, 2000);
+						}
+					} catch (e) {
+						console.error('Copy failed', e);
+					}
+				});
+			}
+		} catch (error) {
+			console.error('Mermaid Visualizer global error:', error);
+		}
+	}
+
+	initAllMermaidVisualizers();
+	document.addEventListener('astro:page-load', initAllMermaidVisualizers);
+</script>

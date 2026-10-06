@@ -1,0 +1,198 @@
+---
+// src/components/ThemeToggle.astro
+---
+
+<button
+	id="theme-toggle"
+	type="button"
+	class="theme-toggle"
+	aria-label="Toggle color theme"
+	aria-live="polite"
+>
+	<!-- Sun Icon (shown in dark mode to switch to light) -->
+	<svg
+		class="theme-icon sun-icon"
+		viewBox="0 0 24 24"
+		width="18"
+		height="18"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<circle cx="12" cy="12" r="4"></circle>
+		<path d="M12 2v2"></path>
+		<path d="M12 20v2"></path>
+		<path d="m4.93 4.93 1.41 1.41"></path>
+		<path d="m17.66 17.66 1.41 1.41"></path>
+		<path d="M2 12h2"></path>
+		<path d="M20 12h2"></path>
+		<path d="m6.34 17.66-1.41 1.41"></path>
+		<path d="m19.07 4.93-1.41 1.41"></path>
+	</svg>
+
+	<!-- Moon Icon (shown in light mode to switch to dark) -->
+	<svg
+		class="theme-icon moon-icon"
+		viewBox="0 0 24 24"
+		width="18"
+		height="18"
+		fill="none"
+		stroke="currentColor"
+		stroke-width="2"
+		stroke-linecap="round"
+		stroke-linejoin="round"
+		aria-hidden="true"
+	>
+		<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+	</svg>
+</button>
+
+<style>
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 36px;
+		height: 36px;
+		border-radius: var(--radius-md, 10px);
+		background: transparent;
+		border: 1px solid var(--card-border);
+		color: var(--text-muted);
+		cursor: pointer;
+		position: relative;
+		overflow: hidden;
+		transition:
+			color var(--dur-fast, 150ms) ease,
+			background-color var(--dur-fast, 150ms) ease,
+			border-color var(--dur-fast, 150ms) ease,
+			transform var(--dur-fast, 150ms) ease;
+		padding: 0;
+	}
+
+	.theme-toggle:hover {
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
+		transform: translateY(-1px);
+	}
+
+	.theme-toggle:focus-visible {
+		outline: 2px solid var(--accent);
+		outline-offset: 2px;
+	}
+
+	.theme-toggle:active {
+		transform: translateY(0);
+	}
+
+	.theme-icon {
+		position: absolute;
+		transition:
+			transform 0.4s var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+			opacity 0.3s ease;
+	}
+
+	/* Light mode default: Show moon icon, hide sun icon */
+	:root:not([data-theme='dark']) .sun-icon,
+	:root[data-theme='light'] .sun-icon {
+		transform: rotate(90deg) scale(0);
+		opacity: 0;
+	}
+
+	:root:not([data-theme='dark']) .moon-icon,
+	:root[data-theme='light'] .moon-icon {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
+
+	/* Dark mode: Show sun icon, hide moon icon */
+	:root[data-theme='dark'] .sun-icon {
+		transform: rotate(0deg) scale(1);
+		opacity: 1;
+	}
+
+	:root[data-theme='dark'] .moon-icon {
+		transform: rotate(-90deg) scale(0);
+		opacity: 0;
+	}
+</style>
+
+<script>
+	function setupThemeToggle() {
+		const toggleBtn = document.getElementById('theme-toggle');
+		if (!toggleBtn || toggleBtn.dataset.bound) return;
+		toggleBtn.dataset.bound = 'true';
+
+		const getCurrentTheme = () => {
+			const activeTheme = document.documentElement.dataset.theme;
+			if (activeTheme) return activeTheme;
+			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+		};
+
+		toggleBtn.addEventListener('click', async (event: MouseEvent) => {
+			const currentTheme = getCurrentTheme();
+			const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+
+			const updateTheme = () => {
+				document.documentElement.dataset.theme = nextTheme;
+				localStorage.setItem('theme', nextTheme);
+			};
+
+			// Fallback if View Transitions not supported or user prefers reduced motion
+			const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!document.startViewTransition || isReducedMotion) {
+				updateTheme();
+				return;
+			}
+
+			// View Transitions Circular Ripple Animation
+			const rect = toggleBtn.getBoundingClientRect();
+			const x = event.clientX || (rect.left + rect.width / 2);
+			const y = event.clientY || (rect.top + rect.height / 2);
+			const maxRadius = Math.hypot(
+				Math.max(x, window.innerWidth - x),
+				Math.max(y, window.innerHeight - y)
+			);
+
+			document.documentElement.classList.add('theme-transitioning');
+			const transition = document.startViewTransition(() => {
+				updateTheme();
+			});
+
+			transition.ready.then(() => {
+				const clipPath = [
+					`circle(0px at ${x}px ${y}px)`,
+					`circle(${maxRadius}px at ${x}px ${y}px)`
+				];
+
+				const anim = document.documentElement.animate(
+					{
+						clipPath: clipPath
+					},
+					{
+						duration: 400,
+						easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+						pseudoElement: '::view-transition-new(root)'
+					}
+				);
+
+				anim.finished.finally(() => {
+					document.documentElement.classList.remove('theme-transitioning');
+				});
+			}).catch(() => {
+				document.documentElement.classList.remove('theme-transitioning');
+			});
+
+			transition.finished.finally(() => {
+				document.documentElement.classList.remove('theme-transitioning');
+			});
+		});
+	}
+
+	setupThemeToggle();
+	document.addEventListener('astro:after-swap', setupThemeToggle);
+	document.addEventListener('astro:page-load', setupThemeToggle);
+</script>
