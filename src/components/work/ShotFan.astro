@@ -8,16 +8,36 @@ interface Props {
 const { images = [], phone = false, size = 'row' } = Astro.props;
 const thumbs = images.filter((img) => img && !img.includes('thumb-') && !img.includes('dummy')).slice(0, 3);
 const layers = thumbs.length > 0 ? thumbs : [null];
-const featureStill = thumbs[0] ?? null;
 const eager = size === 'hero' || size === 'feature';
-const isStill = size === 'feature' || size === 'row-still';
+const isFeatureCollage = size === 'feature';
+const isRowStill = size === 'row-still';
 ---
 
-{isStill ? (
-	<div class:list={['shot-still', { 'is-row': size === 'row-still' }]} aria-hidden="true">
-		<span class:list={['shot-still-frame', { 'is-empty': !featureStill }]}>
-			{featureStill && <img src={featureStill} alt="" loading={eager ? 'eager' : 'lazy'} />}
-		</span>
+{isFeatureCollage ? (
+	<div class="shot-collage" aria-hidden="true">
+		<div class="collage-main">
+			{thumbs[0] ? (
+				<img src={thumbs[0]} alt="" loading={eager ? 'eager' : 'lazy'} />
+			) : (
+				<div class="collage-empty"></div>
+			)}
+		</div>
+		{thumbs[1] && (
+			<div class="collage-sub collage-sub-1">
+				<img src={thumbs[1]} alt="" loading={eager ? 'eager' : 'lazy'} />
+			</div>
+		)}
+		{thumbs[2] && (
+			<div class="collage-sub collage-sub-2">
+				<img src={thumbs[2]} alt="" loading={eager ? 'eager' : 'lazy'} />
+			</div>
+		)}
+	</div>
+) : isRowStill ? (
+	<div class="shot-still is-row" aria-hidden="true">
+		<div class:list={['shot-still-frame', { 'is-empty': !thumbs[0] }]}>
+			{thumbs[0] && <img src={thumbs[0]} alt="" loading="lazy Rund" />}
+		</div>
 	</div>
 ) : (
 	<div class:list={['shot-stack', { 'is-phone': phone, 'is-hero': size === 'hero' }]} aria-hidden="true">
@@ -30,28 +50,121 @@ const isStill = size === 'feature' || size === 'row-still';
 )}
 
 <style>
+	/* Multi-image collage / mosaic for featured projects */
+	.shot-collage {
+		position: relative;
+		width: 100%;
+		max-width: 520px;
+		aspect-ratio: 16 / 11;
+		justify-self: center;
+		isolation: isolate;
+	}
+
+	.collage-main {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 82%;
+		height: 78%;
+		border-radius: var(--radius-lg);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: #0d0e12;
+		overflow: hidden;
+		box-shadow: 0 16px 36px -10px rgba(0, 0, 0, 0.75);
+		z-index: 1;
+		transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease, box-shadow var(--dur-ui) ease;
+	}
+
+	.collage-main img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+	}
+
+	.collage-sub {
+		position: absolute;
+		border-radius: var(--radius-md);
+		border: 1px solid rgba(255, 255, 255, 0.16);
+		background: #111318;
+		overflow: hidden;
+		box-shadow: 0 14px 28px -6px rgba(0, 0, 0, 0.85);
+		transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease, box-shadow var(--dur-ui) ease;
+	}
+
+	.collage-sub img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+	}
+
+	.collage-sub-1 {
+		right: 0;
+		bottom: 4%;
+		width: 56%;
+		height: 58%;
+		z-index: 2;
+	}
+
+	.collage-sub-2 {
+		right: 8%;
+		top: 6%;
+		width: 42%;
+		height: 44%;
+		z-index: 3;
+		opacity: 0.95;
+	}
+
+	/* Hover interaction on parent item */
+	:global(.feature-band:hover) .collage-main {
+		transform: translateY(-3px) scale(1.01);
+		border-color: rgba(255, 255, 255, 0.25);
+		box-shadow: 0 20px 44px -8px rgba(0, 0, 0, 0.9);
+	}
+
+	:global(.feature-band:hover) .collage-sub-1 {
+		transform: translate(3px, -2px);
+		border-color: rgba(255, 255, 255, 0.28);
+	}
+
+	:global(.feature-band:hover) .collage-sub-2 {
+		transform: translate(-3px, -3px);
+		border-color: rgba(255, 255, 255, 0.3);
+	}
+
 	.shot-still {
 		width: 100%;
 		max-width: none;
-		justify-self: end;
+		display: flex;
+		justify-content: center;
 	}
 
 	.shot-still.is-row {
 		max-width: 11rem;
+		justify-self: end;
 	}
 
 	.shot-still-frame {
-		display: block;
+		position: relative;
 		width: 100%;
 		aspect-ratio: 16 / 10;
-		border-radius: 2px;
-		border: 1px solid rgba(95, 80, 56, 0.18);
-		background: var(--card-bg);
+		border-radius: var(--radius-md);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: #090a0d;
 		overflow: hidden;
+		box-shadow: 0 6px 16px -4px rgba(0, 0, 0, 0.5);
+		transition: transform var(--dur-ui) var(--ease-out), border-color var(--dur-ui) ease;
 	}
 
-	.shot-still-frame.is-empty {
+	.shot-still-frame.is-empty,
+	.collage-empty {
 		border-style: dashed;
+		background: var(--card-bg);
+		width: 100%;
+		height: 100%;
 	}
 
 	.shot-still-frame img {
@@ -102,9 +215,9 @@ const isStill = size === 'feature' || size === 'row-still';
 		width: var(--w);
 		height: var(--h);
 		border-radius: 7px;
-		border: 1px solid rgba(95, 80, 56, 0.2);
-		background: var(--paper);
-		box-shadow: 0 8px 16px rgba(95, 80, 56, 0.12);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		background: var(--card-bg);
+		box-shadow: 0 8px 16px rgba(0, 0, 0, 0.45);
 		overflow: hidden;
 		transform: rotate(calc(-6deg + var(--i) * 3deg));
 		z-index: calc(4 - var(--i));
@@ -134,8 +247,32 @@ const isStill = size === 'feature' || size === 'row-still';
 		object-position: top center;
 	}
 
+	@media (max-width: 640px) {
+		.shot-collage {
+			max-width: 100%;
+			aspect-ratio: 16 / 10;
+		}
+
+		.collage-main {
+			width: 86%;
+			height: 82%;
+		}
+
+		.collage-sub-1 {
+			width: 54%;
+			height: 54%;
+		}
+
+		.collage-sub-2 {
+			display: none;
+		}
+	}
+
 	@media (prefers-reduced-motion: reduce) {
-		.shot-layer {
+		.shot-layer,
+		.shot-still-frame,
+		.collage-main,
+		.collage-sub {
 			transition: none;
 		}
 	}

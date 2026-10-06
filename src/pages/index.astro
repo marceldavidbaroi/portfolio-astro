@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
+import HomeHowIWork from '../components/home/HomeHowIWork.astro';
 import HomeFeaturedWork from '../components/home/HomeFeaturedWork.astro';
 import HomeExperienceRail from '../components/home/HomeExperienceRail.astro';
 import HomeEducationStrip from '../components/home/HomeEducationStrip.astro';
@@ -21,19 +22,10 @@ const hscScienceProgram = hscEntry.data;
 const projectEntries = await getCollection('projects');
 const byId = Object.fromEntries(projectEntries.map((entry) => [entry.id, { slug: entry.id, ...entry.data }]));
 
-const focused = ['01-tradeflowbd', '02-service-desk']
+const focused = ['01-tradeflowbd', '02-service-desk', '07-pennyperfect']
 	.map((id) => byId[id])
 	.filter(Boolean);
 const featured = focused[0];
-const supporting = [
-	'07-pennyperfect',
-	'03-thrift-inventory',
-	'14-microfinance-loan-app',
-	'11-quizzes-streaming',
-	'08-docstach'
-]
-	.map((id) => byId[id])
-	.filter(Boolean);
 
 const experience = (await getCollection('experience'))
 	.sort((a, b) => a.data.order - b.data.order)
@@ -52,9 +44,10 @@ const workCount = projectEntries.length;
 
 <BaseLayout isWide alignStart>
 	<HomeHero portraitSrc={portraitSrc} />
+	<HomeHowIWork />
 
 	{featured && (
-		<HomeFeaturedWork focused={focused} supporting={supporting} workCount={workCount} />
+		<HomeFeaturedWork focused={focused} workCount={workCount} />
 	)}
 
 	<HomeExperienceRail experience={experience} />

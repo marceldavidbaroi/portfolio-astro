@@ -18,13 +18,17 @@
 	font-size: var(--type-kicker);
 	letter-spacing: 0.12em;
 	text-transform: uppercase;
-	color: var(--accent);
-	font-weight: 700;
+	color: var(--text-muted);
+	font-weight: 600;
 	margin: 0;
 }
 
 .label {
-	letter-spacing: 0.16em;
+	letter-spacing: -0.01em;
+	font-size: 1.25rem;
+	font-weight: 700;
+	color: #ffffff;
+	font-family: var(--font-sans);
 }
 
 .mini {
@@ -37,26 +41,27 @@
 	align-items: baseline;
 	justify-content: space-between;
 	gap: 1rem;
-	margin-bottom: 1rem;
+	margin-bottom: 1.25rem;
 }
 
 .section-link,
 .text-link,
 .inline-cta {
 	font-size: var(--type-cta);
-	font-weight: 700;
-	letter-spacing: 0.04em;
-	color: var(--text-main);
+	font-weight: 500;
+	letter-spacing: 0.02em;
+	color: var(--text-muted);
 	text-decoration: none;
 	white-space: nowrap;
-	transition: color var(--dur-fast) ease;
+	transition: color var(--dur-fast) ease, opacity var(--dur-fast) ease;
 }
 
 .section-link:hover,
 .text-link:hover,
 .inline-cta:hover {
 	color: var(--text-main);
-	text-decoration: underline;
+	text-decoration: none;
+	opacity: 0.75;
 }
 
 .hero-actions {
@@ -72,8 +77,8 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	padding: 0.62rem 1.15rem;
-	border-radius: 2px;
+	padding: 0.65rem 1.25rem;
+	border-radius: var(--radius-full);
 	font-size: var(--type-cta);
 	font-weight: 700;
 	letter-spacing: 0.08em;
@@ -82,27 +87,31 @@
 	transition:
 		background-color var(--dur-ui) ease,
 		border-color var(--dur-ui) ease,
-		color var(--dur-ui) ease;
+		color var(--dur-ui) ease,
+		transform var(--dur-fast) ease;
 }
 
 .btn-solid {
 	background: var(--accent);
-	color: var(--paper);
+	color: #0b0c10;
+	font-weight: 700;
 }
 
 .btn-solid:hover {
 	background: var(--accent-hover);
+	box-shadow: 0 0 16px rgba(88, 166, 255, 0.28);
 }
 
 .btn-ghost {
-	background: transparent;
+	background: rgba(255, 255, 255, 0.02);
 	color: var(--text-main);
-	border: 1px solid rgba(95, 80, 56, 0.28);
+	border: 1px solid rgba(121, 184, 255, 0.22);
 }
 
 .btn-ghost:hover {
-	border-color: rgba(95, 80, 56, 0.42);
-	color: var(--text-main);
+	border-color: var(--accent);
+	color: var(--accent-hover);
+	background: rgba(88, 166, 255, 0.06);
 }
 
 .metric-row {

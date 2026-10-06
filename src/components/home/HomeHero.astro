@@ -10,19 +10,6 @@ const { portraitSrc } = Astro.props;
 
 <section class="hero" aria-label="Introduction">
 	<div class="hero-grid">
-		<p class="status font-mono">Available · Remote / relocation · Dhaka · US/EU overlap</p>
-		<h1 class="name font-sans">{site.name}</h1>
-		<p class="role">Software Engineer</p>
-		<p class="bio">
-			I design and ship full-stack web and cross-platform applications across Next.js, Vue / Quasar, NestJS, Flutter, and PostgreSQL — from wholesale ERP and support desks to mobile field apps.
-		</p>
-		<div class="hero-actions">
-			<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email me</a>
-			<a class="btn-ghost font-mono" href={site.resumePdf} target="_blank" rel="noopener noreferrer">Resume</a>
-			<a class="text-link font-mono" href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-			<a class="text-link font-mono" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-		</div>
-
 		<figure class:list={['hero-portrait', { 'is-photo': portraitSrc }]}>
 			{portraitSrc ? (
 				<img
@@ -38,112 +25,72 @@ const { portraitSrc } = Astro.props;
 				</div>
 			)}
 		</figure>
+
+		<div class="hero-content">
+			<h1 class="headline font-sans">
+				Software engineer designing and building cross-platform applications.
+			</h1>
+
+			<p class="bio">
+				I design and build full-stack web and mobile systems across Next.js, Vue, NestJS, Flutter, and PostgreSQL — turning complex business workflows into fast, intuitive products that scale.
+			</p>
+
+			<div class="hero-actions">
+				<a class="action-item font-sans is-primary" href={`mailto:${site.email}`}>
+					Get in touch <span class="action-arrow" aria-hidden="true">›</span>
+				</a>
+				<a class="action-item font-sans" href={site.resumePdf} target="_blank" rel="noopener noreferrer">
+					Resume <span class="action-arrow" aria-hidden="true">›</span>
+				</a>
+				<a class="action-item font-sans" href={site.linkedin} target="_blank" rel="noopener noreferrer">
+					LinkedIn <span class="action-arrow" aria-hidden="true">›</span>
+				</a>
+				<a class="action-item font-sans" href={site.github} target="_blank" rel="noopener noreferrer">
+					GitHub <span class="action-arrow" aria-hidden="true">›</span>
+				</a>
+			</div>
+		</div>
 	</div>
 </section>
 
 <style>
 	.hero {
+		padding-top: 1.5rem;
 		padding-bottom: 4.5rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		border-bottom: 1px solid var(--card-border);
 	}
 
 	.hero-grid {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-		grid-template-areas:
-			'status portrait'
-			'name portrait'
-			'role portrait'
-			'bio portrait'
-			'actions portrait';
-		column-gap: 2.75rem;
-		row-gap: 0.7rem;
-		align-items: start;
-	}
-
-	.status { grid-area: status; }
-	.name { grid-area: name; }
-	.role { grid-area: role; }
-	.bio { grid-area: bio; }
-	.hero-actions { grid-area: actions; }
-	.hero-portrait { grid-area: portrait; }
-
-	.status {
-		display: inline-flex;
+		grid-template-columns: 210px minmax(0, 1fr);
+		column-gap: 3rem;
+		row-gap: 2rem;
 		align-items: center;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-		font-size: var(--type-meta);
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--text-muted);
-		margin: 0;
-		line-height: 1.45;
-	}
-
-	.name {
-		margin: 0;
-		font-size: clamp(1.85rem, 6vw, 3.35rem);
-		font-weight: 800;
-		letter-spacing: -0.035em;
-		line-height: 1.05;
-		color: var(--text-main);
-		text-transform: none;
-		overflow-wrap: break-word;
-	}
-
-	.role {
-		margin: 0;
-		font-size: 1.02rem;
-		font-weight: 500;
-		letter-spacing: -0.01em;
-		color: var(--text-muted);
-		line-height: 1.35;
-		max-width: none;
-	}
-
-	.bio {
-		margin: 0.15rem 0 0;
-		font-size: var(--type-body);
-		line-height: 1.55;
-		color: var(--text-main);
-		max-width: 34rem;
-	}
-
-	.hero-actions {
-		margin-top: 0.35rem;
 	}
 
 	.hero-portrait {
-		justify-self: end;
-		width: 100%;
-		max-width: 280px;
 		margin: 0;
-		background: transparent;
-		padding: 0;
-		border: 0;
-		box-shadow: none;
+		width: 100%;
+		max-width: 210px;
+		aspect-ratio: 4 / 5;
+		border-radius: 18px;
+		overflow: hidden;
+		background: radial-gradient(circle at 50% 35%, #22252e 0%, #111317 100%);
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		box-shadow: 0 12px 32px -8px rgba(0, 0, 0, 0.65);
+		display: flex;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.hero-portrait.is-photo img {
 		display: block;
 		width: 100%;
-		height: auto;
-		aspect-ratio: 3 / 4;
-		object-fit: contain;
-		object-position: top center;
-		background: transparent;
-		filter: contrast(1.08) saturate(1.04);
-	}
-
-	.portrait-slot {
-		display: block;
-		width: 100%;
-		height: auto;
-		aspect-ratio: 3 / 4;
+		height: 100%;
 		object-fit: cover;
-		object-position: center 18%;
-		background: var(--card-bg);
+		object-position: top center;
+		border-radius: 18px;
+		filter: contrast(1.04) brightness(0.98);
 	}
 
 	.portrait-slot {
@@ -151,15 +98,16 @@ const { portraitSrc } = Astro.props;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
-		gap: 0.7rem;
-		border: 1px dashed rgba(95, 80, 56, 0.28);
-		background: linear-gradient(180deg, #f4f0e7 0%, #ebe6d8 100%);
+		gap: 0.6rem;
+		width: 100%;
+		height: 100%;
+		border-radius: 18px;
 	}
 
 	.portrait-initials {
-		font-size: 2.1rem;
+		font-size: 2rem;
 		font-weight: 800;
-		letter-spacing: 0.06em;
+		letter-spacing: 0.04em;
 		color: var(--text-main);
 	}
 
@@ -169,8 +117,74 @@ const { portraitSrc } = Astro.props;
 		text-transform: uppercase;
 		color: var(--text-muted);
 		text-align: center;
-		max-width: 12rem;
-		line-height: 1.4;
+		max-width: 10rem;
+		line-height: 1.35;
+	}
+
+	.hero-content {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		max-width: 44rem;
+	}
+
+	.headline {
+		margin: 0;
+		font-size: clamp(1.85rem, 3.2vw, 2.65rem);
+		font-weight: 600;
+		letter-spacing: -0.035em;
+		line-height: 1.22;
+		color: #ffffff;
+		text-wrap: balance;
+	}
+
+	.bio {
+		margin: 0;
+		font-size: 1.05rem;
+		font-weight: 400;
+		line-height: 1.65;
+		color: #a1a1aa;
+		text-wrap: pretty;
+		max-width: 38rem;
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 1.35rem 1.75rem;
+		margin-top: 0.25rem;
+	}
+
+	.action-item {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.3rem;
+		font-size: 0.95rem;
+		font-weight: 400;
+		letter-spacing: -0.01em;
+		color: #8e8e93;
+		text-decoration: none;
+		transition: color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+	}
+
+	.action-item.is-primary {
+		color: #ffffff;
+		font-weight: 500;
+	}
+
+	.action-item:hover {
+		color: #ffffff;
+	}
+
+	.action-arrow {
+		font-size: 1.15rem;
+		line-height: 1;
+		transition: transform var(--dur-fast) ease;
+	}
+
+	.action-item:hover .action-arrow {
+		transform: translateX(2px);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
@@ -191,63 +205,49 @@ const { portraitSrc } = Astro.props;
 	}
 
 	@media (max-width: 900px) {
+		.hero {
+			padding-top: 0.75rem;
+			padding-bottom: 3.5rem;
+		}
+
 		.hero-grid {
-			grid-template-columns: minmax(0, 1fr) 128px;
-			grid-template-areas:
-				'status status'
-				'name portrait'
-				'role role'
-				'bio bio'
-				'actions actions';
-			column-gap: 0.9rem;
-			row-gap: 0.55rem;
+			grid-template-columns: 1fr;
+			row-gap: 1.75rem;
+			align-items: start;
 		}
 
 		.hero-portrait {
-			justify-self: end;
-			align-self: start;
-			max-width: 128px;
+			max-width: 160px;
 		}
 
-		.portrait-hint {
-			display: none;
-		}
-
-		.portrait-initials {
-			font-size: 1.25rem;
+		.headline {
+			font-size: 1.85rem;
 		}
 	}
 
 	@media (max-width: 640px) {
 		.hero {
-			padding-bottom: 2.25rem;
-		}
-
-		.status {
-			font-size: var(--type-meta);
-			letter-spacing: 0.04em;
-			max-width: 100%;
-		}
-
-		.role,
-		.bio {
-			font-size: 0.95rem;
-			max-width: none;
-		}
-
-		.hero-actions {
-			width: 100%;
-			gap: 0.55rem 0.7rem;
-		}
-	}
-
-	@media (max-width: 420px) {
-		.hero-grid {
-			grid-template-columns: minmax(0, 1fr) 104px;
+			padding-top: 0.5rem;
+			padding-bottom: 2.75rem;
 		}
 
 		.hero-portrait {
-			max-width: 104px;
+			max-width: 100%;
+			aspect-ratio: 4 / 5;
+			max-height: 420px;
+		}
+
+		.hero-portrait.is-photo img {
+			object-position: center 20%;
+		}
+
+		.bio {
+			font-size: 0.96rem;
+			line-height: 1.6;
+		}
+
+		.hero-actions {
+			gap: 0.9rem 1.35rem;
 		}
 	}
 </style>

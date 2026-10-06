@@ -57,18 +57,17 @@ const {
 		{keyDecisions && keyDecisions.length > 0 && (
 			<div class="decision-list">
 				{keyDecisions.map((item) => (
-					<div class="decision-row">
-						<div>
-							<p class="mini font-mono">Challenge</p>
-							<p>{item.challenge}</p>
-						</div>
-						<div>
-							<p class="mini font-mono">Decision</p>
-							<p>{item.decision}</p>
-						</div>
-						<div>
-							<p class="mini font-mono">Outcome</p>
-							<p>{item.outcome || '—'}</p>
+					<div class="decision-card">
+						<h3 class="decision-title">{item.challenge}</h3>
+						<div class="decision-body">
+							<div class="decision-col">
+								<p class="mini font-mono">Decision</p>
+								<p>{item.decision}</p>
+							</div>
+							<div class="decision-col decision-col-outcome">
+								<p class="mini font-mono">Outcome</p>
+								<p>{item.outcome || '—'}</p>
+							</div>
 						</div>
 					</div>
 				))}

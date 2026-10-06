@@ -1,11 +1,21 @@
 ---
 interface EducationProgram {
 	logo?: string;
+	degree?: string;
 	shortDegree?: string;
+	institution: string;
 	institutionShort: string;
+	institutionUrl?: string;
+	location?: string;
+	period?: string;
+	badge?: string;
 	cgpa?: number;
 	gpa?: number;
 	maxGpa: number;
+	totalCredits?: number;
+	summary?: string;
+	keyFocusAreas?: string[];
+	keyCourses?: string[];
 }
 
 interface Props {
@@ -14,125 +24,428 @@ interface Props {
 }
 
 const { bscCseProgram, hscScienceProgram } = Astro.props;
+
+const items = [
+	{
+		slug: 'bsc-cse',
+		href: '/education/bsc-cse',
+		degree: bscCseProgram.degree || 'Bachelor of Science in Computer Science & Engineering',
+		shortDegree: bscCseProgram.shortDegree || 'B.Sc. in CSE (Batch 55)',
+		institution: bscCseProgram.institution,
+		institutionShort: bscCseProgram.institutionShort,
+		institutionUrl: bscCseProgram.institutionUrl,
+		period: bscCseProgram.period || '2020 — 2024',
+		badge: bscCseProgram.badge || 'CSE Batch 55',
+		scoreLabel: 'CGPA',
+		scoreValue: `${(bscCseProgram.cgpa ?? 0).toFixed(2)} / ${bscCseProgram.maxGpa.toFixed(2)}`,
+		summary: 'Rigorous 142-credit undergraduate curriculum encompassing core algorithms, distributed systems architecture, database management, and AI research under the UGC Uniform Grading System.',
+		logo: bscCseProgram.logo || '/images/education/daffodil-logo.webp',
+		logoAlt: 'Daffodil International University Emblem',
+		isWideLogo: false,
+		highlights: [
+			{ label: 'Academic Transcript', href: '/education/bsc-cse' },
+			{ label: 'Campus Gallery', href: '/education/bsc-cse/gallery' },
+			{ label: 'Undergrad Thesis', href: '/research/01-bangla-hwcr-ekush' }
+		]
+	},
+	{
+		slug: 'hsc-science',
+		href: '/education/hsc-science',
+		degree: 'Higher Secondary Certificate (HSC) — Science',
+		shortDegree: 'HSC Science (Batch \'19, Group 13)',
+		institution: hscScienceProgram.institution,
+		institutionShort: hscScienceProgram.institutionShort,
+		institutionUrl: hscScienceProgram.institutionUrl,
+		period: hscScienceProgram.period || '2017 — 2019',
+		badge: hscScienceProgram.badge || "Batch '19 // Group 13",
+		scoreLabel: 'GPA',
+		scoreValue: `${(hscScienceProgram.gpa ?? 0).toFixed(2)} / ${hscScienceProgram.maxGpa.toFixed(2)}`,
+		summary: 'Completed Higher Secondary Certificate in Science from Notre Dame College, Dhaka with GPA 4.67 / 5.00 covering Higher Mathematics, Physics, Chemistry, and ICT.',
+		logo: hscScienceProgram.logo || '/images/education/ndc-logo.webp',
+		logoAlt: 'Notre Dame College Crest',
+		isWideLogo: true,
+		highlights: [
+			{ label: 'Credentials & Story', href: '/education/hsc-science' },
+			{ label: 'Group 13 Gallery', href: '/education/hsc-science/gallery' },
+			{ label: 'Papal Protocol Memoir', href: '/archive/pope-francis-visit-2017' }
+		]
+	}
+];
 ---
 
-<section class="education" aria-label="Education">
-	<p class="label font-mono">Education</p>
-	<div class="edu-list">
-		<a class="edu-row" href="/education/bsc-cse">
-			{bscCseProgram.logo && (
-				<img src={bscCseProgram.logo} alt="" class="edu-logo" width="28" height="28" />
-			)}
-			<p class="edu-copy">
-				<strong>{bscCseProgram.shortDegree}</strong>
-				<span class="edu-sep">·</span>
-				{bscCseProgram.institutionShort}
-				<span class="edu-sep">·</span>
-				CGPA {(bscCseProgram.cgpa ?? 0).toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}
-			</p>
-			<span class="section-link font-mono">Transcript →</span>
-		</a>
-		<a class="edu-row" href="/education/hsc-science">
-			{hscScienceProgram.logo && (
-				<img src={hscScienceProgram.logo} alt="" class="edu-logo edu-logo-wide" width="40" height="24" />
-			)}
-			<p class="edu-copy">
-				<strong>HSC Science</strong>
-				<span class="edu-sep">·</span>
-				{hscScienceProgram.institutionShort}
-				<span class="edu-sep">·</span>
-				GPA {(hscScienceProgram.gpa ?? 0).toFixed(2)} / {hscScienceProgram.maxGpa.toFixed(2)}
-			</p>
-			<span class="section-link font-mono">Details →</span>
-		</a>
+<section class="education" aria-labelledby="edu-heading">
+	<div class="section-kicker">
+		<p class="label font-mono">Education</p>
+		<a class="section-link font-mono" href="/education/bsc-cse">Academic matrix →</a>
+	</div>
+	<h2 id="edu-heading" class="sr-only">Education and Academic Background</h2>
+
+	<div class="edu-cards-grid">
+		{items.map((item) => (
+			<article class="edu-card">
+				<!-- Left: Institution Logo Showcase Box -->
+				<div class="edu-card-left">
+					<a href={item.href} class="edu-logo-frame" aria-label={`${item.degree} at ${item.institutionShort}`}>
+						{item.logo ? (
+							<img
+								src={item.logo}
+								alt={item.logoAlt}
+								class:list={['edu-logo-img', { 'edu-logo-img--wide': item.isWideLogo }]}
+								loading="lazy"
+							/>
+						) : (
+							<span class="edu-logo-fallback font-mono">{item.institutionShort.slice(0, 3)}</span>
+						)}
+					</a>
+				</div>
+
+				<!-- Right: Academic Text Content -->
+				<div class="edu-card-right">
+					<div class="edu-card-header">
+						<div class="edu-title-wrap">
+							<h3 class="edu-card-title">
+								<a href={item.href} class="edu-title-link">
+									{item.degree}
+								</a>
+							</h3>
+							{item.badge && <span class="edu-card-badge font-mono">{item.badge}</span>}
+						</div>
+
+						<div class="edu-card-meta font-mono">
+							<span class="edu-card-period">{item.period}</span>
+							<span class="edu-meta-sep">·</span>
+							<span class="edu-score-tag">
+								<span class="score-lbl">{item.scoreLabel}</span>
+								<strong class="score-val">{item.scoreValue}</strong>
+							</span>
+						</div>
+					</div>
+
+					<p class="edu-card-institution">
+						{item.institution}
+					</p>
+
+					<p class="edu-card-desc">
+						{item.summary}
+					</p>
+
+					{item.highlights && item.highlights.length > 0 && (
+						<div class="edu-card-links font-mono">
+							{item.highlights.map((hl) => (
+								<a href={hl.href} class="edu-sublink">
+									{hl.label} <span aria-hidden="true" class="sublink-arrow">→</span>
+								</a>
+							))}
+						</div>
+					)}
+				</div>
+			</article>
+		))}
 	</div>
 </section>
 
 <style>
 	.education {
-		padding: 1.65rem 0;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		padding: 3.25rem 0 2.75rem;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 	}
 
-	.education .label {
-		margin-bottom: 0.55rem;
+	.section-kicker {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
 	}
 
-	.edu-list {
+	.section-kicker .label {
+		margin: 0;
+	}
+
+	.section-kicker .section-link {
+		font-size: var(--type-cta, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted, #8e8e93);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.section-kicker .section-link:hover {
+		color: var(--accent, #ffffff);
+		border-color: var(--accent, #ffffff);
+	}
+
+	/* Card Grid */
+	.edu-cards-grid {
 		display: flex;
 		flex-direction: column;
+		gap: 1.25rem;
 	}
 
-	.edu-row {
+	.edu-card {
+		display: grid;
+		grid-template-columns: 5.5rem minmax(0, 1fr);
+		gap: 1.75rem;
+		align-items: flex-start;
+		padding: 1.75rem 1.65rem;
+		background: var(--card-bg, #111111);
+		border: 1px solid var(--card-border, rgba(255, 255, 255, 0.1));
+		border-radius: var(--radius-lg, 16px);
+		transition: border-color var(--dur-fast, 150ms) ease, transform var(--dur-ui, 220ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)), background-color var(--dur-fast, 150ms) ease;
+	}
+
+	.edu-card:hover {
+		border-color: rgba(255, 255, 255, 0.22);
+		background: #151515;
+	}
+
+	/* Left Logo Box */
+	.edu-card-left {
+		display: flex;
+		justify-content: center;
+		padding-top: 0.15rem;
+	}
+
+	.edu-logo-frame {
+		width: 5.5rem;
+		height: 5.5rem;
+		border-radius: var(--radius-md, 10px);
+		background: #0d0d0d;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.65rem;
+		flex-shrink: 0;
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+		text-decoration: none;
+		transition: transform var(--dur-ui, 220ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)), border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.edu-card:hover .edu-logo-frame {
+		transform: translateY(-2px) scale(1.02);
+		border-color: rgba(255, 255, 255, 0.3);
+	}
+
+	.edu-logo-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+		filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.5));
+	}
+
+	.edu-logo-img--wide {
+		width: 100%;
+		height: auto;
+		max-height: 100%;
+	}
+
+	.edu-logo-fallback {
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-muted, #8e8e93);
+		text-transform: uppercase;
+	}
+
+	/* Right Content Box */
+	.edu-card-right {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+	}
+
+	.edu-card-header {
 		display: flex;
 		flex-wrap: wrap;
-		align-items: center;
-		gap: 0.65rem 1rem;
-		padding: 0.7rem 0;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
-		text-decoration: none;
-		color: inherit;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 1rem;
 	}
 
-	.edu-row:last-child {
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+	.edu-title-wrap {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.5rem 0.75rem;
 	}
 
-	.edu-row:hover .edu-copy strong {
-		color: var(--text-main);
-	}
-
-	.edu-logo {
-		width: 28px;
-		height: 28px;
-		object-fit: contain;
-		border-radius: 6px;
-		background: var(--paper);
-		border: 1px solid rgba(95, 80, 56, 0.12);
-		padding: 2px;
-		flex-shrink: 0;
-	}
-
-	.edu-logo-wide {
-		width: 40px;
-		height: 24px;
-		padding: 2px 4px;
-	}
-
-	.edu-copy {
+	.edu-card-title {
 		margin: 0;
-		flex: 1 1 16rem;
-		font-size: 0.95rem;
-		line-height: 1.4;
-		color: var(--text-main);
+		font-size: 1.22rem;
+		font-weight: 800;
+		letter-spacing: -0.025em;
+		line-height: 1.3;
+		color: var(--text-main, #f4f4f5);
 	}
 
-	.edu-sep {
-		margin: 0 0.35rem;
-		color: var(--text-muted);
+	.edu-title-link {
+		color: inherit;
+		text-decoration: none;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.edu-card:hover .edu-title-link {
+		color: var(--accent, #ffffff);
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.edu-card-badge {
+		font-size: var(--type-caption, 0.75rem);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--accent, #ffffff);
+		background: rgba(255, 255, 255, 0.06);
+		border: 1px solid rgba(255, 255, 255, 0.18);
+		padding: 0.15rem 0.5rem;
+		border-radius: 9999px;
+		white-space: nowrap;
+	}
+
+	.edu-card-meta {
+		display: flex;
+		align-items: baseline;
+		gap: 0.5rem;
+		font-size: var(--type-meta, 0.75rem);
+		color: var(--text-muted, #8e8e93);
+		white-space: nowrap;
+	}
+
+	.edu-meta-sep {
+		color: rgba(255, 255, 255, 0.2);
+	}
+
+	.edu-score-tag {
+		display: inline-flex;
+		align-items: baseline;
+		gap: 0.35rem;
+		background: #0d0d0d;
+		border: 1px solid rgba(255, 255, 255, 0.12);
+		padding: 0.2rem 0.55rem;
+		border-radius: var(--radius-sm, 6px);
+	}
+
+	.score-lbl {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.08em;
+		color: var(--text-muted, #8e8e93);
+	}
+
+	.score-val {
+		font-weight: 700;
+		color: var(--accent, #ffffff);
+	}
+
+	.edu-card-institution {
+		margin: 0;
+		font-size: 0.98rem;
+		color: var(--accent, #ffffff);
+		font-weight: 600;
+		line-height: 1.4;
+	}
+
+	.edu-card-desc {
+		margin: 0.25rem 0 0;
+		font-size: var(--type-xyz, 1rem);
+		line-height: 1.55;
+		color: var(--text-muted, #8e8e93);
+		max-width: 48rem;
+		text-wrap: pretty;
+	}
+
+	.edu-card-links {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem 1.35rem;
+		margin-top: 0.75rem;
+		padding-top: 0.75rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.edu-sublink {
+		font-size: var(--type-meta, 0.75rem);
+		font-weight: 700;
+		letter-spacing: 0.02em;
+		color: var(--text-main, #f4f4f5);
+		text-decoration: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.25);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.edu-sublink:hover {
+		color: var(--accent, #ffffff);
+		border-color: var(--accent, #ffffff);
+	}
+
+	.sublink-arrow {
+		transition: transform var(--dur-fast, 150ms) ease;
+	}
+
+	.edu-sublink:hover .sublink-arrow {
+		transform: translateX(2px);
+	}
+
+	@media (max-width: 768px) {
+		.edu-card {
+			grid-template-columns: 4.25rem minmax(0, 1fr);
+			gap: 1.25rem;
+			padding: 1.35rem 1.25rem;
+		}
+
+		.edu-logo-frame {
+			width: 4.25rem;
+			height: 4.25rem;
+			padding: 0.45rem;
+		}
+
+		.edu-card-title {
+			font-size: 1.1rem;
+		}
+
+		.edu-card-header {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.35rem;
+		}
 	}
 
 	@media (max-width: 640px) {
 		.education {
-			padding: 1.2rem 0;
+			padding: 2rem 0 1.75rem;
 		}
 
-		.edu-row {
-			display: grid;
-			grid-template-columns: auto minmax(0, 1fr);
-			gap: 0.4rem 0.7rem;
-			align-items: center;
+		.edu-card {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+			padding: 1.25rem 1rem;
 		}
 
-		.edu-row .section-link {
-			grid-column: 2;
-			justify-self: start;
+		.edu-card-left {
+			justify-content: flex-start;
 		}
 
-		.edu-copy {
-			flex: none;
-			min-width: 0;
-			font-size: 0.88rem;
+		.edu-logo-frame {
+			width: 3.5rem;
+			height: 3.5rem;
+			padding: 0.35rem;
+		}
+
+		.edu-card-title {
+			font-size: 1.05rem;
+		}
+
+		.edu-card-desc {
+			font-size: 0.92rem;
 		}
 	}
 </style>
+
+
+

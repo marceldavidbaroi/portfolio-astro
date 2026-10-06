@@ -33,8 +33,21 @@ const facts = isBsc
 
 <header class="edu-masthead">
 	<div class="edu-masthead-copy">
-		<p class="label font-mono">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
-		<h1 class="edu-doc-title">{program.degree}</h1>
+		<div class="edu-masthead-header">
+			{program.logo && (
+				<div class="edu-masthead-logo-box">
+					<img
+						src={program.logo}
+						alt={`${program.institutionShort} emblem`}
+						class:list={['edu-masthead-logo-img', { 'edu-masthead-logo-img--wide': !isBsc }]}
+					/>
+				</div>
+			)}
+			<div class="edu-masthead-headings">
+				<p class="label font-mono">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
+				<h1 class="edu-doc-title">{program.degree}</h1>
+			</div>
+		</div>
 		<p class="edu-doc-inst">
 			<a href={program.institutionUrl} target="_blank" rel="noopener noreferrer">{program.institution}</a>
 			<span> · {program.location}</span>
@@ -50,3 +63,4 @@ const facts = isBsc
 		))}
 	</dl>
 </header>
+

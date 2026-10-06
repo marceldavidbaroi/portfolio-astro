@@ -14,11 +14,11 @@ interface Project {
 
 interface Props {
 	focused: Project[];
-	supporting: Project[];
+	supporting?: Project[];
 	workCount: number;
 }
 
-const { focused, supporting, workCount } = Astro.props;
+const { focused, supporting = [], workCount } = Astro.props;
 ---
 
 <section class="featured" aria-labelledby="work-heading">
@@ -32,7 +32,6 @@ const { focused, supporting, workCount } = Astro.props;
 		{focused.map((project) => (
 			<a class="feature-band" href={`/work/${project.slug}`}>
 				<div class="feature-copy">
-					<p class="kicker font-mono">{project.chip}</p>
 					<h3 class="feature-title">{project.title}</h3>
 					<p class="feature-desc">{project.description}</p>
 					{(project.stack || []).length > 0 && (
@@ -49,24 +48,25 @@ const { focused, supporting, workCount } = Astro.props;
 		))}
 	</div>
 
-	<div class="work-list">
-		{supporting.map((project) => (
-			<a class="work-item" href={`/work/${project.slug}`}>
-				<div class="work-copy">
-					<p class="kicker font-mono">{project.chip}</p>
-					<h3 class="support-title">{project.title}</h3>
-					{(project.stack || []).length > 0 && (
-						<div class="support-stack font-mono">
-							{project.stack!.slice(0, 3).map((tech) => (
-								<span class="stack-badge">{tech}</span>
-							))}
-						</div>
-					)}
-				</div>
-				<ShotFan images={project.images} phone={project.platformType === 'mobile'} />
-			</a>
-		))}
-	</div>
+	{supporting.length > 0 && (
+		<div class="work-list">
+			{supporting.map((project) => (
+				<a class="work-item" href={`/work/${project.slug}`}>
+					<div class="work-copy">
+						<h3 class="support-title">{project.title}</h3>
+						{(project.stack || []).length > 0 && (
+							<div class="support-stack font-mono">
+								{project.stack!.slice(0, 3).map((tech) => (
+									<span class="stack-badge">{tech}</span>
+								))}
+							</div>
+						)}
+					</div>
+					<ShotFan images={project.images} phone={project.platformType === 'mobile'} />
+				</a>
+			))}
+		</div>
+	)}
 
 	<div class="work-exit">
 		<a class="work-index" href="/work">
@@ -82,138 +82,159 @@ const { focused, supporting, workCount } = Astro.props;
 
 <style>
 	.featured {
-		padding: 3.75rem 0 3.5rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+		padding: 3.5rem 0 3rem;
+		border-bottom: 1px solid var(--card-border);
 	}
 
 	.focus-list {
-		margin-bottom: 0.35rem;
+		display: flex;
+		flex-direction: column;
 	}
 
 	.feature-band {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(280px, 42%);
-		gap: 1.5rem 2rem;
+		grid-template-columns: minmax(0, 1.25fr) minmax(320px, 1fr);
+		gap: 2.5rem 3.5rem;
 		align-items: center;
 		text-decoration: none;
 		color: inherit;
-		padding: 1.5rem 0;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.1);
+		padding: 2.75rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.09);
+		transition: transform var(--dur-ui) var(--ease-out);
 	}
 
 	.focus-list .feature-band:first-child {
-		padding-top: 0;
+		border-top: 0;
+		padding-top: 0.5rem;
 	}
 
 	.feature-band:hover .feature-title {
-		color: var(--accent);
+		color: #ffffff;
+		text-decoration: underline;
+		text-underline-offset: 4px;
+	}
+
+	.feature-band:hover .inline-cta {
+		color: #ffffff;
+		transform: translateX(4px);
+	}
+
+	.feature-band:hover :global(.shot-still-frame) {
+		border-color: rgba(255, 255, 255, 0.28);
+		transform: scale(1.015);
+		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.85);
 	}
 
 	.feature-copy {
 		display: flex;
 		flex-direction: column;
-		gap: 0.45rem;
+		gap: 0.75rem;
 		min-width: 0;
+	}
+
+	.feature-title {
+		margin: 0;
+		font-size: clamp(1.35rem, 2.3vw, 1.75rem);
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		line-height: 1.22;
+		color: #ffffff;
+		transition: color var(--dur-fast) ease;
+	}
+
+	.feature-desc {
+		margin: 0;
+		font-size: 0.98rem;
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 44rem;
+		text-wrap: pretty;
 	}
 
 	.card-stack,
 	.support-stack {
 		display: flex;
 		flex-wrap: wrap;
-		gap: 0.35rem 0.45rem;
-		margin-top: 0.15rem;
+		gap: 0.4rem 0.5rem;
+		margin-top: 0.25rem;
 	}
 
 	.stack-badge {
 		display: inline-flex;
 		align-items: center;
-		padding: 0.15rem 0.5rem;
+		padding: 0.22rem 0.65rem;
 		font-size: 0.72rem;
 		letter-spacing: 0.02em;
-		color: var(--text-muted);
-		background: rgba(95, 80, 56, 0.08);
-		border: 1px solid rgba(95, 80, 56, 0.12);
-		border-radius: 3px;
+		color: #a1a1aa;
+		background: rgba(255, 255, 255, 0.05);
+		border: 1px solid rgba(255, 255, 255, 0.09);
+		border-radius: var(--radius-full);
 		white-space: nowrap;
 		line-height: 1.25;
+		transition: background var(--dur-fast) ease, border-color var(--dur-fast) ease, color var(--dur-fast) ease;
 	}
 
-	.work-item .kicker {
-		color: var(--text-muted);
+	.feature-band:hover .stack-badge {
+		color: #e4e4e7;
+		background: rgba(255, 255, 255, 0.08);
+		border-color: rgba(255, 255, 255, 0.15);
+	}
+
+	.inline-cta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: var(--type-cta);
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: #d4d4d8;
+		margin-top: 0.5rem;
+		transition: color var(--dur-fast) ease, transform var(--dur-fast) ease;
 	}
 
 	.work-list {
 		display: grid;
-		grid-template-columns: 1fr 1fr;
-		column-gap: 2.25rem;
-	}
-
-	.work-exit {
-		display: flex;
-		align-items: flex-end;
-		justify-content: space-between;
-		gap: 1rem 1.5rem;
-		margin-top: 0.35rem;
-		padding-top: 1.15rem;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
-	}
-
-	.work-index {
-		flex: 1;
-		min-width: 0;
-		margin-top: 0;
-		padding: 0;
-		border-top: 0;
-	}
-
-	.work-archive-exit {
-		flex-shrink: 0;
-		font-size: var(--type-meta);
-		letter-spacing: 0.04em;
-		color: var(--text-muted);
-		text-decoration: none;
-		padding-bottom: 0.15rem;
-		transition: color var(--dur-fast) ease;
-	}
-
-	.work-archive-exit:hover {
-		color: var(--text-main);
-		text-decoration: underline;
+		grid-template-columns: repeat(2, 1fr);
+		column-gap: 3rem;
+		margin-top: 0.5rem;
 	}
 
 	.work-item {
 		display: grid;
-		grid-template-columns: minmax(0, 1fr) 8.5rem;
+		grid-template-columns: minmax(0, 1fr) auto;
 		align-items: center;
-		gap: 0.7rem 0.85rem;
-		padding: 0.85rem 0;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		gap: 1.25rem;
+		padding: 1.25rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
 		text-decoration: none;
 		color: inherit;
 		min-width: 0;
 	}
 
 	.work-item:hover .support-title {
-		color: var(--accent);
+		color: #ffffff;
+		text-decoration: underline;
+		text-underline-offset: 3px;
 	}
 
 	.work-copy {
 		display: flex;
 		flex-direction: column;
-		gap: 0.28rem;
+		gap: 0.35rem;
 		min-width: 0;
 	}
 
 	.work-item:hover :global(.shot-layer) {
-		transform: rotate(calc(-4deg + var(--i) * 2deg)) translateY(-2px);
+		transform: rotate(calc(-4deg + var(--i) * 2deg)) translateY(-3px);
 	}
 
 	.support-title {
 		margin: 0;
-		font-size: 1.08rem;
+		font-size: 1.05rem;
 		font-weight: 700;
 		letter-spacing: -0.02em;
 		line-height: 1.3;
+		color: #ffffff;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
 		-webkit-box-orient: vertical;
@@ -221,56 +242,102 @@ const { focused, supporting, workCount } = Astro.props;
 		transition: color var(--dur-fast) ease;
 	}
 
-	@media (max-width: 900px) {
+	.work-exit {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem 1.5rem;
+		margin-top: 2rem;
+		padding-top: 1.5rem;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.work-index {
+		display: flex;
+		align-items: center;
+		gap: 1.25rem;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.work-index-copy {
+		display: flex;
+		flex-direction: column;
+		gap: 0.15rem;
+	}
+
+	.work-index-title {
+		font-size: 1.05rem;
+		font-weight: 700;
+		color: #ffffff;
+		letter-spacing: -0.02em;
+	}
+
+	.work-index-meta {
+		font-size: var(--type-meta);
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+	}
+
+	.work-archive-exit {
+		font-size: var(--type-meta);
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		transition: color var(--dur-fast) ease;
+	}
+
+	.work-archive-exit:hover {
+		color: #ffffff;
+		text-decoration: underline;
+	}
+
+	@media (max-width: 860px) {
 		.feature-band {
 			grid-template-columns: 1fr;
-			gap: 0.85rem;
-			padding: 1.2rem 0;
-		}
-
-		.feature-band :global(.shot-still) {
-			justify-self: start;
-			max-width: 100%;
+			gap: 1.5rem;
+			padding: 2rem 0;
 		}
 
 		.work-list {
 			grid-template-columns: 1fr;
-		}
-
-		.work-exit {
-			flex-direction: column;
-			align-items: flex-start;
+			column-gap: 0;
 		}
 	}
 
 	@media (max-width: 640px) {
 		.featured {
-			padding: 2rem 0 2.15rem;
+			padding: 2.25rem 0 2rem;
+		}
+
+		.feature-band {
+			padding: 1.5rem 0;
+			gap: 1.25rem;
+		}
+
+		.feature-title {
+			font-size: 1.2rem;
 		}
 
 		.feature-desc {
-			-webkit-line-clamp: 3;
-			font-size: var(--type-xyz);
+			font-size: 0.9rem;
+			line-height: 1.55;
 		}
 
-		.work-index {
-			flex-wrap: wrap;
-			gap: 0.35rem 1rem;
-			min-height: 2.85rem;
+		.stack-badge {
+			font-size: 0.68rem;
+			padding: 0.18rem 0.55rem;
 		}
 
-		.work-index-title {
-			font-size: 0.98rem;
-		}
-	}
-
-	@media (max-width: 420px) {
-		.work-item {
-			grid-template-columns: minmax(0, 1fr) 7.5rem;
+		.work-exit {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 1rem;
 		}
 	}
 
 	@media (prefers-reduced-motion: reduce) {
+		.inline-cta,
 		.support-title {
 			transition: none;
 		}

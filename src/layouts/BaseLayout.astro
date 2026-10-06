@@ -22,6 +22,7 @@ const {
 const currentPath = Astro.url.pathname;
 const isHome = currentPath === '/';
 const isWork = currentPath === '/work' || currentPath.startsWith('/work/');
+const isNotes = currentPath === '/notes' || currentPath.startsWith('/notes/');
 const isAbout =
 	currentPath === '/about' ||
 	currentPath.startsWith('/about/') ||
@@ -62,7 +63,7 @@ const personJsonLd = {
 		<link rel="icon" href="/favicon.ico" sizes="any" />
 		<link rel="preconnect" href="https://fonts.googleapis.com" />
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-		<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+		<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 
@@ -87,27 +88,30 @@ const personJsonLd = {
 		<div class="layout-wrapper">
 			<header id="site-header" class="header">
 				<div class="header-container">
-					<nav class="nav" aria-label="Primary">
-						<a href="/" class="header-logo-link" aria-label="Home">
-							<img src="/images/logo.svg" alt="Marcel David Baroi" class="header-logo-img" />
-						</a>
-						<a href="/" class:list={['nav-link', { active: isHome }]}>Home</a>
-						<a href="/work" class:list={['nav-link', { active: isWork }]}>Work</a>
-						<a href="/about" class:list={['nav-link', { active: isAbout }]}>About</a>
-					</nav>
+					<a href="/" class="header-brand" aria-label="Marcel David - Home">
+						<span class="header-brand-name">Marcel David</span>
+					</a>
 
-					<button
-						type="button"
-						class="header-menu font-mono"
-						id="cmdk-hint-btn"
-						aria-haspopup="dialog"
-						aria-expanded="false"
-						aria-controls="command-menu"
-						title="Open menu (⌘K / Ctrl+K)"
-					>
-						<span class="header-menu-label">Menu</span>
-						<kbd class="header-menu-keys" data-shortcut>⌘K</kbd>
-					</button>
+					<nav class="nav" aria-label="Primary">
+						<div class="nav-links">
+							{isHome ? (
+								<a href="/work" class="nav-link">Work</a>
+							) : (
+								<a href="/" class="nav-link">Home</a>
+							)}
+
+							<button
+								id="header-more-btn"
+								type="button"
+								class="nav-more-btn"
+								aria-label="More navigation links"
+								aria-expanded="false"
+								aria-haspopup="true"
+							>
+								<span>More</span>
+							</button>
+						</div>
+					</nav>
 				</div>
 			</header>
 
@@ -127,77 +131,175 @@ const personJsonLd = {
 			</footer>
 		</div>
 
+		<!-- Independent Floating Menu for Scrolled State -->
+		<div id="floating-menu-container" class="floating-menu-container">
+			<button
+				id="floating-menu-btn"
+				type="button"
+				class="floating-menu-btn"
+				aria-label="Toggle navigation menu"
+				aria-expanded="false"
+				aria-haspopup="true"
+			>
+				<span class="floating-menu-icon" aria-hidden="true">
+					<span class="icon-line top-line"></span>
+					<span class="icon-line bottom-line"></span>
+				</span>
+			</button>
+
+			<div id="floating-dropdown" class="floating-dropdown" role="menu" hidden aria-hidden="true">
+				<a href="/" role="menuitem" class:list={['floating-dropdown-item', { active: isHome }]}>
+					<span>Home</span>
+				</a>
+				<a href="/work" role="menuitem" class:list={['floating-dropdown-item', { active: isWork }]}>
+					<span>Work</span>
+				</a>
+				<a href="/about" role="menuitem" class:list={['floating-dropdown-item', { active: isAbout }]}>
+					<span>About</span>
+				</a>
+				<a href="/skills" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/skills') }]}>
+					<span>Skills</span>
+				</a>
+				<a href="/credentials" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/credentials') }]}>
+					<span>Credentials</span>
+				</a>
+				<a href="/philosophy" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/philosophy') }]}>
+					<span>Philosophy</span>
+				</a>
+				<a href="/archive" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/archive') }]}>
+					<span>Archive</span>
+				</a>
+			</div>
+		</div>
+
 		<CommandMenu />
 
 		<script>
-			const header = document.getElementById('site-header');
-			const menuBtn = document.getElementById('cmdk-hint-btn');
-			const shortcut = menuBtn?.querySelector<HTMLElement>('[data-shortcut]');
+			function initHeader() {
+				const header = document.getElementById('site-header');
+				const floatingContainer = document.getElementById('floating-menu-container');
+				const menuBtn = document.getElementById('floating-menu-btn');
+				const dropdown = document.getElementById('floating-dropdown');
+				const moreBtn = document.getElementById('header-more-btn');
 
-			const isApple = /Mac|iPhone|iPad|iPod/i.test(navigator.platform) || /Mac|iPhone|iPad|iPod/i.test(navigator.userAgent);
-			if (shortcut) shortcut.textContent = isApple ? '⌘K' : 'Ctrl K';
-			if (menuBtn) {
-				menuBtn.title = isApple ? 'Open menu (⌘K)' : 'Open menu (Ctrl+K)';
+				let lastY = window.scrollY;
+				let hidden = false;
+				let ticking = false;
+
+				const isMenuOpen = () => Boolean(dropdown && !dropdown.hidden);
+
+				const closeMenu = () => {
+					if (!dropdown || !menuBtn) return;
+					dropdown.hidden = true;
+					dropdown.setAttribute('aria-hidden', 'true');
+					menuBtn.setAttribute('aria-expanded', 'false');
+					menuBtn.classList.remove('is-open');
+					header?.classList.remove('is-menu-open');
+					floatingContainer?.classList.remove('is-menu-open');
+					moreBtn?.setAttribute('aria-expanded', 'false');
+				};
+
+				const openMenu = () => {
+					if (!dropdown || !menuBtn) return;
+					dropdown.hidden = false;
+					dropdown.setAttribute('aria-hidden', 'false');
+					menuBtn.setAttribute('aria-expanded', 'true');
+					menuBtn.classList.add('is-open');
+					header?.classList.add('is-menu-open');
+					floatingContainer?.classList.add('is-menu-open');
+					moreBtn?.setAttribute('aria-expanded', 'true');
+				};
+
+				const toggleMenu = (e: MouseEvent) => {
+					e.stopPropagation();
+					if (isMenuOpen()) closeMenu();
+					else openMenu();
+				};
+
+				menuBtn?.addEventListener('click', toggleMenu);
+				moreBtn?.addEventListener('click', (e) => {
+					e.stopPropagation();
+					openMenu();
+				});
+
+				document.addEventListener('click', (e) => {
+					const target = e.target as HTMLElement | null;
+					if (isMenuOpen() && target && !dropdown?.contains(target) && !menuBtn?.contains(target) && !moreBtn?.contains(target)) {
+						closeMenu();
+					}
+				});
+
+				document.addEventListener('keydown', (e) => {
+					if (e.key === 'Escape' && isMenuOpen()) {
+						closeMenu();
+						if (window.scrollY > 20) menuBtn?.focus();
+						else moreBtn?.focus();
+					}
+				});
+
+				const cmdkIsOpen = () => {
+					const root = document.getElementById('command-menu');
+					return Boolean(root && !root.hidden);
+				};
+
+				const setHidden = (next: boolean) => {
+					hidden = next;
+					header?.classList.toggle('is-hidden', hidden);
+					if (hidden) {
+						header?.setAttribute('inert', '');
+						closeMenu();
+					} else {
+						header?.removeAttribute('inert');
+					}
+				};
+
+				const syncHeader = () => {
+					if (!header) return;
+					const y = window.scrollY;
+					const delta = y - lastY;
+					const isScrolled = y > 20;
+					header.classList.toggle('is-scrolled', isScrolled);
+					floatingContainer?.classList.toggle('is-scrolled', isScrolled);
+
+					const hold =
+						cmdkIsOpen() ||
+						isMenuOpen() ||
+						header.contains(document.activeElement) ||
+						y < 40;
+
+					if (hold) {
+						setHidden(false);
+					} else if (delta > 6 && y > 72) {
+						setHidden(true);
+					} else if (delta < -6) {
+						setHidden(false);
+					}
+
+					lastY = y;
+				};
+
+				const onScroll = () => {
+					if (ticking) return;
+					ticking = true;
+					requestAnimationFrame(() => {
+						syncHeader();
+						ticking = false;
+					});
+				};
+
+				window.addEventListener('scroll', onScroll, { passive: true });
+				syncHeader();
+
+				document.addEventListener('command-menu:change', ((e: CustomEvent<{ open: boolean }>) => {
+					if (e.detail.open) {
+						setHidden(false);
+						closeMenu();
+					}
+				}) as EventListener);
 			}
 
-			menuBtn?.addEventListener('click', () => {
-				(window as any).__openCommandMenu?.();
-			});
-
-			let lastY = window.scrollY;
-			let hidden = false;
-			let ticking = false;
-
-			const menuIsOpen = () => {
-				const root = document.getElementById('command-menu');
-				return Boolean(root && !root.hidden);
-			};
-
-			const setHidden = (next: boolean) => {
-				hidden = next;
-				header?.classList.toggle('is-hidden', hidden);
-				if (hidden) header?.setAttribute('inert', '');
-				else header?.removeAttribute('inert');
-			};
-
-			const syncHeader = () => {
-				if (!header) return;
-				const y = window.scrollY;
-				const delta = y - lastY;
-				header.classList.toggle('is-scrolled', y > 8);
-
-				const hold =
-					menuIsOpen() ||
-					header.contains(document.activeElement) ||
-					y < 40;
-
-				if (hold) {
-					setHidden(false);
-				} else if (delta > 6 && y > 72) {
-					setHidden(true);
-				} else if (delta < -6) {
-					setHidden(false);
-				}
-
-				lastY = y;
-			};
-
-			const onScroll = () => {
-				if (ticking) return;
-				ticking = true;
-				requestAnimationFrame(() => {
-					syncHeader();
-					ticking = false;
-				});
-			};
-
-			window.addEventListener('scroll', onScroll, { passive: true });
-			syncHeader();
-
-			document.addEventListener('command-menu:change', ((e: CustomEvent<{ open: boolean }>) => {
-				menuBtn?.setAttribute('aria-expanded', e.detail.open ? 'true' : 'false');
-				if (e.detail.open) setHidden(false);
-			}) as EventListener);
+			initHeader();
+			document.addEventListener('astro:page-load', initHeader);
 		</script>
 	</body>
 </html>

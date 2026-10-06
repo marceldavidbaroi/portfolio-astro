@@ -151,7 +151,9 @@
 .hero-well {
 	margin: 1.75rem 0 0;
 	background: var(--card-bg);
-	border: 1px solid rgba(95, 80, 56, 0.12);
+	border: 1px solid var(--card-border);
+	border-radius: var(--radius-lg);
+	overflow: hidden;
 	display: flex;
 	justify-content: center;
 	padding: 0;
@@ -166,6 +168,7 @@
 	object-fit: contain;
 	object-position: top center;
 	background: var(--card-bg);
+	border-radius: var(--radius-lg);
 }
 
 .hero-well.is-phone > img {
@@ -240,7 +243,55 @@
 	color: var(--text-muted);
 }
 
-.decision-row,
+.decision-list {
+	display: flex;
+	flex-direction: column;
+	gap: 1.25rem;
+	margin-top: 1rem;
+}
+
+.decision-card {
+	background: var(--surface-2, rgba(95, 80, 56, 0.03));
+	border: 1px solid rgba(95, 80, 56, 0.12);
+	border-radius: var(--radius, 8px);
+	padding: 1.25rem 1.35rem;
+	transition: border-color var(--transition-fast, 0.15s ease);
+}
+
+.decision-card:hover {
+	border-color: rgba(95, 80, 56, 0.22);
+}
+
+.decision-title {
+	margin: 0 0 0.85rem;
+	font-size: 1.05rem;
+	font-weight: 600;
+	line-height: 1.4;
+	color: var(--text-main);
+	letter-spacing: -0.01em;
+}
+
+.decision-body {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem 1.5rem;
+	padding-top: 0.85rem;
+	border-top: 1px dashed rgba(95, 80, 56, 0.12);
+}
+
+.decision-col p,
+.ba-row p {
+	margin: 0.25rem 0 0;
+	font-size: 0.93rem;
+	line-height: 1.55;
+	color: var(--text-main);
+	overflow-wrap: break-word;
+}
+
+.decision-col-outcome p:not(.mini) {
+	color: var(--text-main);
+}
+
 .ba-row {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -249,20 +300,6 @@
 	border-bottom: 1px solid rgba(95, 80, 56, 0.1);
 }
 
-.decision-row {
-	grid-template-columns: repeat(3, minmax(0, 1fr));
-}
-
-.decision-row p,
-.ba-row p {
-	margin: 0.25rem 0 0;
-	font-size: 0.95rem;
-	line-height: 1.5;
-	color: var(--text-main);
-	overflow-wrap: break-word;
-}
-
-.decision-row strong,
 .ba-row strong {
 	display: block;
 	margin-top: 0.25rem;
@@ -386,8 +423,9 @@
 	max-width: 100%;
 	height: auto;
 	margin: 1rem 0 1.35rem;
-	border: 1px solid rgba(95, 80, 56, 0.12);
+	border: 1px solid var(--card-border);
 	background: var(--card-bg);
+	border-radius: var(--radius-md);
 	object-fit: contain;
 	object-position: top left;
 }
@@ -400,8 +438,9 @@
 .markdown-article p:has(> img:only-child) {
 	margin: 0.85rem 0 1.35rem;
 	padding: 0.65rem;
-	border: 1px solid rgba(95, 80, 56, 0.12);
+	border: 1px solid var(--card-border);
 	background: var(--card-bg);
+	border-radius: var(--radius-md);
 }
 
 .markdown-article p:has(> img:only-child) img {
@@ -527,10 +566,14 @@
 
 @media (max-width: 900px) {
 	.meta-rail,
-	.decision-row,
+	.decision-body,
 	.ba-row,
 	.notes {
 		grid-template-columns: 1fr;
+	}
+
+	.decision-card {
+		padding: 1rem 1.1rem;
 	}
 
 	.stack-kicker {

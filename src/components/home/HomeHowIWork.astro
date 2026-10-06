@@ -1,0 +1,196 @@
+---
+import { getCollection } from 'astro:content';
+
+const rawPrinciples = await getCollection('philosophy');
+const principles = rawPrinciples
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((e) => e.data);
+
+// Concise summary descriptions tailored for compact home scanning
+const briefDescriptions: Record<string, string> = {
+	'01': 'Pre-planning schemas, dependency graphs, and strict API contracts before generating code — preventing AI hallucinated debt.',
+	'02': 'Enforcing integrity at the database engine with PostgreSQL RLS, foreign keys, cascades, and end-to-end type safety.',
+	'03': 'Decoupling monolithic platforms into isolated SemVer npm packages, cutting redundant codebases by over 60%.',
+	'04': 'Framing every feature with measurable Google XYZ outcomes — cutting latency, boosting throughput, and eliminating vulnerabilities.'
+};
+---
+
+<section class="how-i-work" aria-labelledby="how-i-work-heading">
+	<div class="section-kicker">
+		<h2 id="how-i-work-heading" class="label font-mono">How I work</h2>
+		<a href="/philosophy" class="section-link font-mono">All principles →</a>
+	</div>
+
+	<ol class="principles-list">
+		{principles.map((p) => {
+			const shortDesc = briefDescriptions[p.num] || p.desc;
+			return (
+				<li class="principle-row">
+					<div class="principle-meta">
+						<span class="principle-num font-mono">{p.num}</span>
+					</div>
+					<div class="principle-body">
+						<h3 class="principle-title font-sans">
+							<a href={`/philosophy#principle-${p.num}`} class="principle-title-link">
+								{p.title}
+							</a>
+						</h3>
+						<p class="principle-desc">{shortDesc}</p>
+						{p.proofLinks && p.proofLinks.length > 0 && (
+							<div class="principle-proofs font-mono">
+								{p.proofLinks.map((link) => (
+									<a href={link.href} class="principle-link">
+										{link.label} <span aria-hidden="true">→</span>
+									</a>
+								))}
+							</div>
+						)}
+					</div>
+				</li>
+			);
+		})}
+	</ol>
+</section>
+
+<style>
+	.how-i-work {
+		padding: 3.25rem 0 2.75rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.principles-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.principle-row {
+		display: grid;
+		grid-template-columns: 5.5rem minmax(0, 1fr);
+		gap: 1.5rem;
+		padding: 1.5rem 0;
+		border-top: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.principle-row:last-child {
+		border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+	}
+
+	.principle-meta {
+		display: flex;
+		align-items: flex-start;
+		padding-top: 0.15rem;
+	}
+
+	.principle-num {
+		font-size: 2.25rem;
+		font-weight: 800;
+		color: #ffffff;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		opacity: 0.95;
+	}
+
+	.principle-body {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.principle-title {
+		margin: 0;
+		font-size: 1.25rem;
+		font-weight: 700;
+		letter-spacing: -0.025em;
+		line-height: 1.3;
+		color: #ffffff;
+	}
+
+	.principle-title-link {
+		color: inherit;
+		text-decoration: none;
+		transition: color var(--dur-fast) ease;
+	}
+
+	.principle-row:hover .principle-title-link {
+		color: #ffffff;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.principle-desc {
+		margin: 0;
+		font-size: 0.95rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+		max-width: 44rem;
+		text-wrap: pretty;
+	}
+
+	.principle-proofs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem 1.25rem;
+		margin-top: 0.45rem;
+	}
+
+	.principle-link {
+		font-size: var(--type-meta);
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: var(--text-main);
+		text-decoration: none;
+		border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+	}
+
+	.principle-link:hover {
+		color: #ffffff;
+		border-color: #ffffff;
+	}
+
+	@media (max-width: 768px) {
+		.principle-row {
+			grid-template-columns: 4.25rem minmax(0, 1fr);
+			gap: 1rem;
+			padding: 1.25rem 0;
+		}
+
+		.principle-num {
+			font-size: 1.85rem;
+		}
+
+		.principle-title {
+			font-size: 1.15rem;
+		}
+	}
+
+	@media (max-width: 640px) {
+		.how-i-work {
+			padding: 2rem 0 1.75rem;
+		}
+
+		.principle-row {
+			grid-template-columns: 3.5rem minmax(0, 1fr);
+			gap: 0.85rem;
+		}
+
+		.principle-num {
+			font-size: 1.65rem;
+		}
+
+		.principle-title {
+			font-size: 1.05rem;
+		}
+
+		.principle-desc {
+			font-size: 0.9rem;
+		}
+	}
+</style>
