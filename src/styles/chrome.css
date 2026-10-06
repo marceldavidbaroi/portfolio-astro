@@ -8,32 +8,13 @@
 }
 
 .header {
-	position: sticky;
-	top: 0;
-	z-index: 50;
+	position: relative;
 	width: 100%;
 	display: flex;
 	justify-content: center;
-	padding: calc(0.95rem + env(safe-area-inset-top, 0px)) 2rem 0.95rem;
+	padding: calc(1rem + env(safe-area-inset-top, 0px)) 2rem 1rem;
 	background: transparent;
 	border-bottom: 1px solid transparent;
-	transform: translateY(0);
-	transition:
-		transform var(--dur-chrome) var(--ease-ui),
-		background-color var(--dur-ui) ease,
-		border-color var(--dur-ui) ease,
-		padding var(--dur-ui) ease;
-}
-
-.header.is-scrolled {
-	background: var(--bg-color);
-	border-bottom-color: var(--card-border);
-	padding: calc(0.7rem + env(safe-area-inset-top, 0px)) 2rem 0.7rem;
-}
-
-.header.is-hidden {
-	transform: translate3d(0, calc(-100% - 12px), 0);
-	pointer-events: none;
 }
 
 .header-container {
@@ -56,7 +37,6 @@
 	display: flex;
 	align-items: center;
 	gap: 1.25rem;
-	transition: opacity var(--dur-ui) ease, transform var(--dur-ui) ease, visibility var(--dur-ui);
 }
 
 .nav-more-container {
@@ -89,9 +69,9 @@
 
 .nav-dropdown-menu {
 	position: absolute;
-	top: calc(100% + 12px);
+	top: calc(100% + 8px);
 	right: 0;
-	min-width: 200px;
+	min-width: 180px;
 	background: var(--card-bg-elevated);
 	border: 1px solid var(--card-border);
 	border-radius: var(--radius-md);
@@ -132,17 +112,18 @@
 	font-weight: 600;
 }
 
-.header.is-scrolled .nav-links,
-.header.is-menu-open .nav-links {
-	opacity: 0;
-	transform: translateX(8px) scale(0.95);
-	pointer-events: none;
-	visibility: hidden;
-	position: absolute;
-	right: 0;
+@keyframes dropdownFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(-6px) scale(0.96);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0) scale(1);
+	}
 }
 
-/* Floating Independent Menu Button */
+/* Floating Independent Menu Button (Appears when scrolled) */
 .floating-menu-container {
 	position: fixed;
 	top: calc(0.95rem + env(safe-area-inset-top, 0px));
@@ -283,17 +264,6 @@
 	font-weight: 600;
 }
 
-@keyframes dropdownFadeIn {
-	from {
-		opacity: 0;
-		transform: translateY(-6px) scale(0.96);
-	}
-	to {
-		opacity: 1;
-		transform: translateY(0) scale(1);
-	}
-}
-
 .header-brand {
 	display: inline-flex;
 	align-items: center;
@@ -304,9 +274,9 @@
 }
 
 .header-brand-name {
-	font-size: 1.05rem;
-	font-weight: 700;
-	letter-spacing: -0.02em;
+	font-size: 1.25rem;
+	font-weight: 750;
+	letter-spacing: -0.025em;
 	color: var(--text-main);
 	white-space: nowrap;
 }
@@ -433,10 +403,6 @@
 		padding-left: 1.25rem;
 		padding-right: 1.25rem;
 	}
-	.header.is-scrolled {
-		padding-left: 1.25rem;
-		padding-right: 1.25rem;
-	}
 	.floating-menu-container {
 		right: 1.25rem;
 	}
@@ -453,31 +419,24 @@
 
 @media (max-width: 768px) {
 	.header {
-		padding: calc(0.5rem + env(safe-area-inset-top, 0px)) 0.5rem 0.5rem;
-	}
-	.header.is-scrolled {
-		padding: calc(0.4rem + env(safe-area-inset-top, 0px)) 0.5rem 0.4rem;
-	}
-	.header-container {
-		gap: 0.5rem;
-	}
-	.header-brand-name {
-		font-size: 0.95rem;
-	}
-	.nav-links {
-		display: none !important;
+		padding: calc(0.75rem + env(safe-area-inset-top, 0px)) 1rem 0.75rem;
 	}
 	.floating-menu-container {
-		top: calc(0.5rem + env(safe-area-inset-top, 0px));
-		right: 0.5rem;
-		pointer-events: auto;
+		top: calc(0.6rem + env(safe-area-inset-top, 0px));
+		right: 0.75rem;
 	}
 	.floating-menu-container .floating-menu-btn {
-		opacity: 1;
-		pointer-events: auto;
-		transform: scale(1) translateY(0);
 		width: 38px;
 		height: 38px;
+	}
+	.header-container {
+		gap: 0.75rem;
+	}
+	.header-brand-name {
+		font-size: 1.1rem;
+	}
+	.nav-links {
+		gap: 0.75rem;
 	}
 	.header-menu,
 	.header-menu-link {
@@ -518,19 +477,13 @@
 
 @media (max-width: 480px) {
 	.header {
-		padding-left: 0.25rem;
-		padding-right: 0.25rem;
+		padding: calc(0.6rem + env(safe-area-inset-top, 0px)) 0.75rem 0.6rem;
 	}
 	.header-brand-name {
-		font-size: 0.9rem;
+		font-size: 1rem;
 	}
-	.floating-menu-container {
-		top: calc(0.45rem + env(safe-area-inset-top, 0px));
-		right: 0.45rem;
-	}
-	.floating-menu-container .floating-menu-btn {
-		width: 36px;
-		height: 36px;
+	.nav-links {
+		gap: 0.65rem;
 	}
 	.header-menu,
 	.header-menu-link {
@@ -551,8 +504,9 @@
 }
 
 @media (max-width: 380px) {
-	.floating-menu-container {
-		right: 0.35rem;
+	.header {
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
 	}
 	.header-menu,
 	.header-menu-link {

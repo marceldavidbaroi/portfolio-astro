@@ -105,8 +105,8 @@ const personJsonLd = {
 		<div class="layout-wrapper">
 			<header id="site-header" class="header">
 				<div class="header-container">
-					<a href="/" class="header-brand" aria-label="Marcel David - Home">
-						<span class="header-brand-name">Marcel David</span>
+					<a href="/" class="header-brand" aria-label="Marcel David Baroi - Home">
+						<span class="header-brand-name">Marcel David Baroi</span>
 					</a>
 
 					<nav class="nav" aria-label="Primary">
@@ -117,16 +117,36 @@ const personJsonLd = {
 								<a href="/" class="nav-link">Home</a>
 							)}
 
-							<button
-								id="header-more-btn"
-								type="button"
-								class="nav-more-btn"
-								aria-label="More navigation links"
-								aria-expanded="false"
-								aria-haspopup="true"
-							>
-								<span>More</span>
-							</button>
+							<div class="nav-more-container">
+								<button
+									id="header-more-btn"
+									type="button"
+									class="nav-more-btn"
+									aria-label="More navigation links"
+									aria-expanded="false"
+									aria-haspopup="true"
+								>
+									<span>More</span>
+								</button>
+
+								<div id="header-more-dropdown" class="nav-dropdown-menu" role="menu" hidden aria-hidden="true">
+									<a href="/about" role="menuitem" class:list={['nav-dropdown-item', { active: isAbout }]}>
+										<span>About</span>
+									</a>
+									<a href="/skills" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/skills') }]}>
+										<span>Skills</span>
+									</a>
+									<a href="/credentials" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/credentials') }]}>
+										<span>Credentials</span>
+									</a>
+									<a href="/philosophy" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/philosophy') }]}>
+										<span>Philosophy</span>
+									</a>
+									<a href="/archive" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/archive') }]}>
+										<span>Archive</span>
+									</a>
+								</div>
+							</div>
 
 							<ThemeToggle />
 						</div>
@@ -150,7 +170,7 @@ const personJsonLd = {
 			</footer>
 		</div>
 
-		<!-- Independent Floating Menu for Scrolled State -->
+		<!-- Floating Navigation Menu (Appears when scrolled) -->
 		<div id="floating-menu-container" class="floating-menu-container">
 			<button
 				id="floating-menu-btn"
@@ -195,124 +215,109 @@ const personJsonLd = {
 
 		<script>
 			function initHeader() {
-				const header = document.getElementById('site-header');
-				const floatingContainer = document.getElementById('floating-menu-container');
-				const menuBtn = document.getElementById('floating-menu-btn');
-				const dropdown = document.getElementById('floating-dropdown');
 				const moreBtn = document.getElementById('header-more-btn');
+				const headerDropdown = document.getElementById('header-more-dropdown');
+				const floatingContainer = document.getElementById('floating-menu-container');
+				const floatingBtn = document.getElementById('floating-menu-btn');
+				const floatingDropdown = document.getElementById('floating-dropdown');
 
-				let lastY = window.scrollY;
-				let hidden = false;
 				let ticking = false;
 
-				const isMenuOpen = () => Boolean(dropdown && !dropdown.hidden);
+				const isHeaderMenuOpen = () => Boolean(headerDropdown && !headerDropdown.hidden);
+				const isFloatingMenuOpen = () => Boolean(floatingDropdown && !floatingDropdown.hidden);
 
-				const closeMenu = () => {
-					if (!dropdown || !menuBtn) return;
-					dropdown.hidden = true;
-					dropdown.setAttribute('aria-hidden', 'true');
-					menuBtn.setAttribute('aria-expanded', 'false');
-					menuBtn.classList.remove('is-open');
-					header?.classList.remove('is-menu-open');
+				const closeHeaderMenu = () => {
+					if (!headerDropdown || !moreBtn) return;
+					headerDropdown.hidden = true;
+					headerDropdown.setAttribute('aria-hidden', 'true');
+					moreBtn.setAttribute('aria-expanded', 'false');
+					moreBtn.classList.remove('is-open');
+				};
+
+				const openHeaderMenu = () => {
+					if (!headerDropdown || !moreBtn) return;
+					closeFloatingMenu();
+					headerDropdown.hidden = false;
+					headerDropdown.setAttribute('aria-hidden', 'false');
+					moreBtn.setAttribute('aria-expanded', 'true');
+					moreBtn.classList.add('is-open');
+				};
+
+				const closeFloatingMenu = () => {
+					if (!floatingDropdown || !floatingBtn) return;
+					floatingDropdown.hidden = true;
+					floatingDropdown.setAttribute('aria-hidden', 'true');
+					floatingBtn.setAttribute('aria-expanded', 'false');
+					floatingBtn.classList.remove('is-open');
 					floatingContainer?.classList.remove('is-menu-open');
-					moreBtn?.setAttribute('aria-expanded', 'false');
 				};
 
-				const openMenu = () => {
-					if (!dropdown || !menuBtn) return;
-					dropdown.hidden = false;
-					dropdown.setAttribute('aria-hidden', 'false');
-					menuBtn.setAttribute('aria-expanded', 'true');
-					menuBtn.classList.add('is-open');
-					header?.classList.add('is-menu-open');
+				const openFloatingMenu = () => {
+					if (!floatingDropdown || !floatingBtn) return;
+					closeHeaderMenu();
+					floatingDropdown.hidden = false;
+					floatingDropdown.setAttribute('aria-hidden', 'false');
+					floatingBtn.setAttribute('aria-expanded', 'true');
+					floatingBtn.classList.add('is-open');
 					floatingContainer?.classList.add('is-menu-open');
-					moreBtn?.setAttribute('aria-expanded', 'true');
 				};
 
-				const toggleMenu = (e: MouseEvent) => {
-					e.stopPropagation();
-					if (isMenuOpen()) closeMenu();
-					else openMenu();
-				};
-
-				menuBtn?.addEventListener('click', toggleMenu);
 				moreBtn?.addEventListener('click', (e) => {
 					e.stopPropagation();
-					openMenu();
+					if (isHeaderMenuOpen()) closeHeaderMenu();
+					else openHeaderMenu();
+				});
+
+				floatingBtn?.addEventListener('click', (e) => {
+					e.stopPropagation();
+					if (isFloatingMenuOpen()) closeFloatingMenu();
+					else openFloatingMenu();
 				});
 
 				document.addEventListener('click', (e) => {
 					const target = e.target as HTMLElement | null;
-					if (isMenuOpen() && target && !dropdown?.contains(target) && !menuBtn?.contains(target) && !moreBtn?.contains(target)) {
-						closeMenu();
+					if (isHeaderMenuOpen() && target && !headerDropdown?.contains(target) && !moreBtn?.contains(target)) {
+						closeHeaderMenu();
+					}
+					if (isFloatingMenuOpen() && target && !floatingDropdown?.contains(target) && !floatingBtn?.contains(target)) {
+						closeFloatingMenu();
 					}
 				});
 
 				document.addEventListener('keydown', (e) => {
-					if (e.key === 'Escape' && isMenuOpen()) {
-						closeMenu();
-						if (window.scrollY > 20) menuBtn?.focus();
-						else moreBtn?.focus();
+					if (e.key === 'Escape') {
+						if (isHeaderMenuOpen()) {
+							closeHeaderMenu();
+							moreBtn?.focus();
+						}
+						if (isFloatingMenuOpen()) {
+							closeFloatingMenu();
+							floatingBtn?.focus();
+						}
 					}
 				});
 
-				const cmdkIsOpen = () => {
-					const root = document.getElementById('command-menu');
-					return Boolean(root && !root.hidden);
-				};
-
-				const setHidden = (next: boolean) => {
-					hidden = next;
-					header?.classList.toggle('is-hidden', hidden);
-					if (hidden) {
-						header?.setAttribute('inert', '');
-						closeMenu();
-					} else {
-						header?.removeAttribute('inert');
-					}
-				};
-
-				const syncHeader = () => {
-					if (!header) return;
-					const y = window.scrollY;
-					const delta = y - lastY;
-					const isScrolled = y > 20;
-					header.classList.toggle('is-scrolled', isScrolled);
+				const syncScroll = () => {
+					const isScrolled = window.scrollY > 60;
 					floatingContainer?.classList.toggle('is-scrolled', isScrolled);
-
-					const hold =
-						cmdkIsOpen() ||
-						isMenuOpen() ||
-						header.contains(document.activeElement) ||
-						y < 40;
-
-					if (hold) {
-						setHidden(false);
-					} else if (delta > 6 && y > 72) {
-						setHidden(true);
-					} else if (delta < -6) {
-						setHidden(false);
-					}
-
-					lastY = y;
 				};
 
 				const onScroll = () => {
 					if (ticking) return;
 					ticking = true;
 					requestAnimationFrame(() => {
-						syncHeader();
+						syncScroll();
 						ticking = false;
 					});
 				};
 
 				window.addEventListener('scroll', onScroll, { passive: true });
-				syncHeader();
+				syncScroll();
 
 				document.addEventListener('command-menu:change', ((e: CustomEvent<{ open: boolean }>) => {
 					if (e.detail.open) {
-						setHidden(false);
-						closeMenu();
+						closeHeaderMenu();
+						closeFloatingMenu();
 					}
 				}) as EventListener);
 			}
