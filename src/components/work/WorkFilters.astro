@@ -81,7 +81,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 	const stackBtns = document.querySelectorAll<HTMLButtonElement>('[data-tech-query]');
 	const items = document.querySelectorAll<HTMLAnchorElement>('.catalog-item');
 	const focusList = document.getElementById('focus-list');
-	const focusSection = document.querySelector('.focus-section');
+	const focusSection = document.querySelector<HTMLElement>('.focus-section');
 	const total = items.length;
 
 	let category = 'all';
