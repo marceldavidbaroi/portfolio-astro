@@ -1,18 +1,18 @@
 {
-	"id": "04-measurable-impact-google-xyz-framework",
+	"id": "04-ui-ux-implementation",
 	"order": 4,
 	"num": "04",
-	"tag": "OUTCOME MEASUREMENT",
-	"title": "Measurable Impact (Google XYZ Framework)",
-	"subtitle": "Quantifying Every Engineering Decision",
-	"icon": "📈",
-	"pullQuote": "Accomplished [X], as measured by [Y], by doing [Z].",
-	"desc": "Engineering is only as good as its measurable outcomes. Every feature or refactor is framed using the Google XYZ format: \"Accomplished [X], as measured by [Y], by doing [Z]\". Whether cutting ticket approval latency by 85%, reducing bundle load time by 48%, or maintaining zero security leaks across multi-tenant SaaS platforms.",
-	"mermaid": "flowchart LR\n  X[\"X · Capability\"] --> Y[\"Y · Metric\"]\n  Y --> Z[\"Z · Method\"]",
+	"tag": "DESIGN & IMPLEMENTATION",
+	"title": "UI/UX Design & Implementation",
+	"subtitle": "Crafting Interfaces & Shipping Fast Software",
+	"icon": "✨",
+	"pullQuote": "Seamless user experience paired with robust, production-ready code.",
+	"desc": "I design intuitive user journeys and responsive interfaces in UI/UX, then translate them into performant, production-ready frontend and backend code tested against real-world user flows.",
+	"mermaid": "flowchart LR\n  UX[\"UI / UX Flows\"] --> Proto[\"Component Systems\"]\n  Proto --> Code[\"Full-stack Code\"]\n  Code --> Ship[\"Production Launch\"]",
 	"proofLinks": [
 		{
 			"href": "/work/02-service-desk",
-			"label": "Service Desk · Latency Impact"
+			"label": "Service Desk UI"
 		}
 	]
 }

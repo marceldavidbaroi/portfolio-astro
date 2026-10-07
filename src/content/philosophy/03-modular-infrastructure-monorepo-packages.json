@@ -1,18 +1,18 @@
 {
-	"id": "03-modular-infrastructure-monorepo-packages",
+	"id": "03-solution-data-modeling",
 	"order": 3,
 	"num": "03",
-	"tag": "CODEBASE SUSTAINABILITY",
-	"title": "Modular Infrastructure & Monorepo Packages",
-	"subtitle": "Decoupling Monoliths into Versioned Assets",
-	"icon": "📦",
-	"pullQuote": "Shared business logic belongs in SemVer packages — not copy-pasted across repos.",
-	"desc": "I decouple monolithic corporate codebases into isolated, autonomous proprietary npm packages governed by strict Semantic Versioning (SemVer) and private Git registries. Core business calculations (such as complex ERP costing algorithms) are maintained in single-source-of-truth packages consumed across multiple platforms.",
-	"mermaid": "flowchart LR\n  Core[\"@org/core SemVer\"] --> AppA[\"ERP App\"]\n  Core --> AppB[\"POS App\"]\n  Core --> AppC[\"Mobile Suite\"]",
+	"tag": "SYSTEMS & DATA ARCHITECTURE",
+	"title": "Design the Solution & Data Model",
+	"subtitle": "Structuring Relationships & Entity Schemas",
+	"icon": "📐",
+	"pullQuote": "A solid data model prevents weeks of tech debt down the line.",
+	"desc": "Before writing application logic, I architect the full solution: designing the database schemas, entity relationships, integrity constraints, and API contracts that back the system.",
+	"mermaid": "flowchart LR\n  Sol[\"Solution Design\"] --> Schema[\"Data Model & Schemas\"]\n  Schema --> Contracts[\"API Contracts\"]\n  Contracts --> Foundation[\"Scalable Core\"]",
 	"proofLinks": [
 		{
 			"href": "/work/05-modular-packaging",
-			"label": "Private Package Architecture"
+			"label": "Modular Architecture"
 		}
 	]
 }

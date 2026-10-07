@@ -1,11 +1,10 @@
 ---
-import type { PrincipleItem } from '../../data/aboutData';
+import { getCollection } from 'astro:content';
 
-interface Props {
-	principles: PrincipleItem[];
-}
-
-const { principles } = Astro.props;
+const rawPrinciples = await getCollection('philosophy');
+const principles = rawPrinciples
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((e) => e.data);
 ---
 
 <section class="about-section" id="how-i-work" aria-labelledby="how-i-work-heading">
@@ -14,16 +13,173 @@ const { principles } = Astro.props;
 		<a href="/philosophy" class="section-link font-mono">Full philosophy →</a>
 	</div>
 
-	{principles.map((p) => (
-		<article class="about-principle-row">
-			<p class="about-principle-num font-mono">{p.num}</p>
-			<div>
-				<h3 class="about-principle-title font-sans">{p.title}</h3>
-				<p class="about-principle-body">{p.desc}</p>
-				{p.proofHref && p.proofLabel && (
-					<a href={p.proofHref} class="about-principle-proof font-mono">{p.proofLabel}</a>
-				)}
-			</div>
-		</article>
-	))}
+	<div class="about-principles-list">
+		{principles.map((p) => (
+			<article class="about-principle-row">
+				<div class="about-principle-meta">
+					<span class="about-principle-num font-mono">{p.num}</span>
+				</div>
+				<div class="about-principle-content">
+					<div class="about-principle-header">
+						<h3 class="about-principle-title font-sans">{p.title}</h3>
+						{p.tag && <span class="about-principle-tag font-mono">{p.tag}</span>}
+					</div>
+					{p.subtitle && <p class="about-principle-sub font-mono">{p.subtitle}</p>}
+					<p class="about-principle-body">{p.desc}</p>
+					{p.proofLinks && p.proofLinks.length > 0 && (
+						<div class="about-principle-proofs font-mono">
+							{p.proofLinks.map((link) => (
+								<a href={link.href} class="about-principle-link">
+									{link.label} <span aria-hidden="true">→</span>
+								</a>
+							))}
+						</div>
+					)}
+				</div>
+			</article>
+		))}
+	</div>
 </section>
+
+<style>
+	.about-principles-list {
+		display: flex;
+		flex-direction: column;
+	}
+
+	.about-principle-row {
+		display: grid;
+		grid-template-columns: 4rem minmax(0, 1fr);
+		gap: 1.25rem 1.75rem;
+		padding: 1.75rem 0;
+		border-top: 1px solid var(--card-border, rgba(95, 80, 56, 0.1));
+		transition: border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.about-principle-row:first-child {
+		border-top: 0;
+		padding-top: 0.75rem;
+	}
+
+	.about-principle-meta {
+		display: flex;
+		align-items: flex-start;
+		padding-top: 0.1rem;
+	}
+
+	.about-principle-num {
+		font-size: 1.85rem;
+		font-weight: 800;
+		color: var(--text-main);
+		letter-spacing: -0.04em;
+		line-height: 1;
+		opacity: 0.9;
+	}
+
+	.about-principle-content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+		min-width: 0;
+	}
+
+	.about-principle-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem 1rem;
+	}
+
+	.about-principle-title {
+		margin: 0;
+		font-size: clamp(1.15rem, 2vw, 1.3rem);
+		font-weight: 750;
+		letter-spacing: -0.025em;
+		line-height: 1.25;
+		color: var(--text-main);
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.about-principle-row:hover .about-principle-title {
+		color: var(--accent);
+	}
+
+	.about-principle-tag {
+		font-size: 0.7rem;
+		letter-spacing: 0.08em;
+		color: var(--text-muted);
+		background: var(--card-bg, #f2ede4);
+		border: 1px solid var(--card-border, rgba(33, 31, 29, 0.08));
+		padding: 0.15rem 0.5rem;
+		border-radius: var(--radius-sm, 6px);
+		text-transform: uppercase;
+		white-space: nowrap;
+	}
+
+	.about-principle-sub {
+		margin: 0;
+		font-size: var(--type-meta, 0.75rem);
+		color: var(--accent);
+		font-weight: 500;
+		letter-spacing: 0.01em;
+	}
+
+	.about-principle-body {
+		margin: 0.25rem 0 0;
+		font-size: var(--type-body, 1.05rem);
+		line-height: 1.6;
+		color: var(--text-muted);
+		max-width: 44rem;
+	}
+
+	.about-principle-proofs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.85rem 1.25rem;
+		margin-top: 0.5rem;
+	}
+
+	.about-principle-link {
+		font-size: var(--type-meta, 0.75rem);
+		font-weight: 600;
+		letter-spacing: 0.02em;
+		color: var(--text-main);
+		text-decoration: none;
+		border-bottom: 1px solid var(--card-border, rgba(95, 80, 56, 0.2));
+		display: inline-flex;
+		align-items: center;
+		gap: 0.25rem;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.about-principle-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	@media (max-width: 640px) {
+		.about-principle-row {
+			grid-template-columns: 3rem minmax(0, 1fr);
+			gap: 0.85rem;
+			padding: 1.35rem 0;
+		}
+
+		.about-principle-num {
+			font-size: 1.5rem;
+		}
+
+		.about-principle-title {
+			font-size: 1.1rem;
+		}
+
+		.about-principle-body {
+			font-size: 0.95rem;
+		}
+
+		.about-principle-header {
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	}
+</style>

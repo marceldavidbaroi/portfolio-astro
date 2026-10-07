@@ -8,10 +8,10 @@ const principles = rawPrinciples
 
 // Concise summary descriptions tailored for compact home scanning
 const briefDescriptions: Record<string, string> = {
-	'01': 'Pre-planning schemas, dependency graphs, and strict API contracts before generating code — preventing AI hallucinated debt.',
-	'02': 'Enforcing integrity at the database engine with PostgreSQL RLS, foreign keys, cascades, and end-to-end type safety.',
-	'03': 'Decoupling monolithic platforms into isolated SemVer npm packages, cutting redundant codebases by over 60%.',
-	'04': 'Framing every feature with measurable Google XYZ outcomes — cutting latency, boosting throughput, and eliminating vulnerabilities.'
+	'01': 'Identify the exact market problem, user pain points, and define what success looks like upfront.',
+	'02': 'Analyze existing competitor solutions to pinpoint strengths, weaknesses, and underserved market gaps.',
+	'03': 'Architect the full system, database schemas, entity relationships, and strict API contracts.',
+	'04': 'Design intuitive UI/UX interaction flows, build full-stack code, and ship performant software.'
 };
 ---
 
@@ -22,10 +22,10 @@ const briefDescriptions: Record<string, string> = {
 	</div>
 
 	<ol class="principles-list">
-		{principles.map((p) => {
+		{principles.map((p, index) => {
 			const shortDesc = briefDescriptions[p.num] || p.desc;
 			return (
-				<li class="principle-row">
+				<li class="principle-row how-i-work-row" style={`--row-delay: ${index * 140}ms;`}>
 					<div class="principle-meta">
 						<span class="principle-num font-mono">{p.num}</span>
 					</div>
@@ -50,6 +50,32 @@ const briefDescriptions: Record<string, string> = {
 	</ol>
 </section>
 
+<script>
+	function initHowIWorkReveal() {
+		const rows = document.querySelectorAll('.how-i-work-row');
+		if (!rows.length) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-revealed');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.1,
+			rootMargin: '0px 0px -30px 0px'
+		});
+
+		rows.forEach((row) => {
+			observer.observe(row);
+		});
+	}
+
+	initHowIWorkReveal();
+	document.addEventListener('astro:page-load', initHowIWorkReveal);
+</script>
+
 <style>
 	.how-i-work {
 		padding: 3.25rem 0 2.75rem;
@@ -70,6 +96,16 @@ const briefDescriptions: Record<string, string> = {
 		gap: 1.5rem;
 		padding: 1.5rem 0;
 		border-top: 1px solid var(--card-border);
+		opacity: 0;
+		transform: translateY(24px);
+		transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+		transition-delay: var(--row-delay, 0ms);
+		will-change: opacity, transform;
+	}
+
+	.principle-row.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.principle-row:last-child {

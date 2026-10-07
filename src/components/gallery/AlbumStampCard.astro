@@ -1,0 +1,350 @@
+---
+import type { Album } from '../../lib/gallery';
+
+interface Props {
+	album: Album;
+	class?: string;
+}
+
+const { album, class: className = '' } = Astro.props;
+
+// Up to 2-3 stamps for the tilted stack effect
+const photos = album.photos.slice(0, 3);
+const photoCount = album.photoCount || album.photos.length;
+const primaryPhoto = photos[0];
+const secondaryPhoto = photos[1] || photos[0];
+const tertiaryPhoto = photos[2];
+---
+
+<a class:list={['album-stamp-card', className]} href={`/gallery/${album.id}`}>
+	{/* Upper rounded display deck */}
+	<div class="stamp-stage">
+		<div class="stamp-stack">
+			{/* Tertiary card if available */}
+			{tertiaryPhoto && (
+				<div class="postage-stamp stamp-back">
+					<div class="stamp-inner">
+						<img src={tertiaryPhoto.src} alt="" loading="lazy" />
+					</div>
+				</div>
+			)}
+			{/* Secondary card / back layer */}
+			{secondaryPhoto && (
+				<div class="postage-stamp stamp-mid">
+					<div class="stamp-inner">
+						<img src={secondaryPhoto.src} alt="" loading="lazy" />
+					</div>
+				</div>
+			)}
+			{/* Primary foreground card */}
+			{primaryPhoto && (
+				<div class="postage-stamp stamp-front">
+					<div class="stamp-inner">
+						<img src={primaryPhoto.src} alt={primaryPhoto.alt || album.title} loading="lazy" />
+					</div>
+				</div>
+			)}
+		</div>
+
+		{/* Count badge in bottom-right corner of the stage */}
+		{photoCount > 0 && (
+			<span class="stamp-count-badge font-sans">
+				{photoCount}
+			</span>
+		)}
+	</div>
+
+	{/* Meta / title row */}
+	<div class="stamp-info">
+		<div class="stamp-title-row">
+			<h3 class="stamp-title">{album.title}</h3>
+			<button
+				type="button"
+				class="stamp-menu-btn"
+				aria-label="Album options"
+				tabindex="-1"
+				onclick="event.preventDefault();"
+			>
+				<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+					<circle cx="5" cy="12" r="2" />
+					<circle cx="12" cy="12" r="2" />
+					<circle cx="19" cy="12" r="2" />
+				</svg>
+			</button>
+		</div>
+		<p class="stamp-subtitle">{album.period || album.location || 'Preserved'}</p>
+	</div>
+</a>
+
+<style>
+	.album-stamp-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		text-decoration: none;
+		color: inherit;
+		position: relative;
+		user-select: none;
+		-webkit-tap-highlight-color: transparent;
+		min-width: 0;
+	}
+
+	/* Stage container (squircle / super-rounded box) */
+	.stamp-stage {
+		position: relative;
+		width: 100%;
+		aspect-ratio: 1 / 1;
+		background: var(--card-bg, #f2ede4);
+		border: 1px solid var(--card-border, rgba(33, 31, 29, 0.08));
+		border-radius: 22px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		overflow: hidden;
+		transition: background-color var(--dur-ui, 200ms) ease, border-color var(--dur-ui, 200ms) ease, transform var(--dur-ui, 200ms) var(--ease-out, ease-out), box-shadow var(--dur-ui, 200ms) ease;
+		box-shadow: 0 2px 8px rgba(33, 31, 29, 0.04);
+	}
+
+	@media (max-width: 640px) {
+		.stamp-stage {
+			border-radius: 18px;
+		}
+	}
+
+	:global([data-theme='dark']) .stamp-stage {
+		background: var(--card-bg, #201e1c);
+		border-color: var(--card-border, rgba(227, 222, 214, 0.09));
+		box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .stamp-stage {
+			background: var(--card-bg, #201e1c);
+			border-color: var(--card-border, rgba(227, 222, 214, 0.09));
+			box-shadow: 0 2px 10px rgba(0, 0, 0, 0.35);
+		}
+	}
+
+	.album-stamp-card:hover .stamp-stage {
+		transform: translateY(-3px);
+		background: color-mix(in srgb, var(--card-bg, #f2ede4) 75%, var(--accent-subtle, #f8ede0));
+		border-color: var(--card-border-hover, rgba(184, 110, 30, 0.25));
+		box-shadow: 0 10px 24px rgba(33, 31, 29, 0.09);
+	}
+
+	:global([data-theme='dark']) .album-stamp-card:hover .stamp-stage {
+		background: color-mix(in srgb, var(--card-bg, #201e1c) 80%, var(--card-bg-elevated, #282623));
+		border-color: var(--card-border-hover, rgba(232, 168, 85, 0.3));
+		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .album-stamp-card:hover .stamp-stage {
+			background: color-mix(in srgb, var(--card-bg, #201e1c) 80%, var(--card-bg-elevated, #282623));
+			border-color: var(--card-border-hover, rgba(232, 168, 85, 0.3));
+			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+		}
+	}
+
+	/* Stamp Stack & Positioning */
+	.stamp-stack {
+		position: relative;
+		width: 62%;
+		aspect-ratio: 0.85 / 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	/* Individual Stamp with perforated border and white photo frame */
+	.postage-stamp {
+		position: absolute;
+		width: 82%;
+		aspect-ratio: 0.82 / 1;
+		padding: 5px 5px 12px 5px;
+		background: #ffffff;
+		box-sizing: border-box;
+		border-radius: 2px;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.16);
+		transition: transform var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.2, 0.8, 0.2, 1)), box-shadow var(--dur-ui, 220ms) ease;
+		transform-origin: center center;
+		outline: 1px dashed rgba(0, 0, 0, 0.15);
+		outline-offset: -2px;
+	}
+
+	.stamp-inner {
+		width: 100%;
+		height: 100%;
+		background: var(--slot, #e2e0dc);
+		overflow: hidden;
+		position: relative;
+		border-radius: 1px;
+	}
+
+	.stamp-inner img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		transition: transform 300ms ease;
+	}
+
+	/* Natural Tilted Placement */
+	.stamp-back {
+		z-index: 1;
+		transform: rotate(-13deg) translate(-10px, -4px) scale(0.92);
+		opacity: 0.9;
+	}
+
+	.stamp-mid {
+		z-index: 2;
+		transform: rotate(-8deg) translate(-6px, -3px);
+		opacity: 0.96;
+	}
+
+	.stamp-front {
+		z-index: 3;
+		transform: rotate(7deg) translate(6px, 4px);
+	}
+
+	/* Interactive fanning out on card hover */
+	.album-stamp-card:hover .stamp-back {
+		transform: rotate(-17deg) translate(-15px, -6px) scale(0.94);
+	}
+
+	.album-stamp-card:hover .stamp-mid {
+		transform: rotate(-12deg) translate(-10px, -5px);
+		filter: drop-shadow(0 5px 11px rgba(0, 0, 0, 0.18));
+	}
+
+	.album-stamp-card:hover .stamp-front {
+		transform: rotate(9.5deg) translate(9px, 5px) scale(1.03);
+		filter: drop-shadow(0 6px 14px rgba(0, 0, 0, 0.22));
+	}
+
+	.album-stamp-card:hover .stamp-front .stamp-inner img {
+		transform: scale(1.05);
+	}
+
+	/* Number badge in the bottom-right corner */
+	.stamp-count-badge {
+		position: absolute;
+		right: 0.85rem;
+		bottom: 0.75rem;
+		font-size: 0.75rem;
+		font-weight: 500;
+		color: var(--text-muted, #6e675f);
+		letter-spacing: 0.01em;
+		pointer-events: none;
+		user-select: none;
+		z-index: 4;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	@media (max-width: 640px) {
+		.stamp-count-badge {
+			right: 0.65rem;
+			bottom: 0.55rem;
+			font-size: 0.7rem;
+		}
+	}
+
+	:global([data-theme='dark']) .stamp-count-badge {
+		color: var(--text-muted, #9c9589);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .stamp-count-badge {
+			color: var(--text-muted, #9c9589);
+		}
+	}
+
+	.album-stamp-card:hover .stamp-count-badge {
+		color: var(--accent, #b86e1e);
+	}
+
+	/* Text Details Below Card */
+	.stamp-info {
+		display: flex;
+		flex-direction: column;
+		gap: 0.1rem;
+		padding: 0 0.15rem;
+		min-width: 0;
+	}
+
+	.stamp-title-row {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.35rem;
+		min-width: 0;
+	}
+
+	.stamp-title {
+		margin: 0;
+		font-size: 0.92rem;
+		font-weight: 650;
+		letter-spacing: -0.015em;
+		color: var(--text-main, #211f1d);
+		line-height: 1.25;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.album-stamp-card:hover .stamp-title {
+		color: var(--accent, #b86e1e);
+	}
+
+	.stamp-menu-btn {
+		background: none;
+		border: none;
+		padding: 0;
+		margin: 0;
+		color: var(--text-muted, #6e675f);
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 4px;
+		opacity: 0.75;
+		transition: opacity var(--dur-fast, 150ms) ease, color var(--dur-fast, 150ms) ease;
+		flex-shrink: 0;
+	}
+
+	.album-stamp-card:hover .stamp-menu-btn {
+		opacity: 1;
+		color: var(--text-main, #211f1d);
+	}
+
+	.stamp-subtitle {
+		margin: 0;
+		font-size: 0.78rem;
+		font-weight: 400;
+		color: var(--text-muted, #6e675f);
+		line-height: 1.35;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	:global([data-theme='dark']) .stamp-subtitle {
+		color: var(--text-muted, #9c9589);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(:root:not([data-theme='light'])) .stamp-subtitle {
+			color: var(--text-muted, #9c9589);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.stamp-stage,
+		.postage-stamp,
+		.stamp-inner img {
+			transition: none !important;
+		}
+	}
+</style>

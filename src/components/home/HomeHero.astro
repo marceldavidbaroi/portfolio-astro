@@ -5,30 +5,22 @@ import { site } from '../../data/site';
 <section id="hero-section" class="hero-section" aria-label="Introduction">
 	<div class="face-container" id="face-container">
 		
-		<!-- Designer Half Link & Details (Left) -->
-		<a href="/work" class="identity-side designer" id="designer-side" aria-label="Designer portfolio">
+		<!-- Designer Details (Left Column) -->
+		<a href="/about" class="identity-col designer" id="designer-side" aria-label="About Designer details">
 			<div class="description" id="designer-desc">
 				<h1 class="identity-title">designer</h1>
 				<p class="identity-bio">Product designer specialising in UI design and design systems.</p>
 			</div>
 		</a>
 
-		<!-- Coder Half Link & Details (Right) -->
-		<a href="/about" class="identity-side coder" id="coder-side" aria-label="Coder details">
-			<div class="description" id="coder-desc">
-				<h1 class="identity-title"><span class="chevron-left">&lt;</span>coder<span class="chevron-right">&gt;</span></h1>
-				<p class="identity-bio">Front end developer who writes clean, elegant and efficient code.</p>
-			</div>
-		</a>
-
-		<!-- Interactive Face Layer Container -->
-		<div class="face-stage" id="face-stage">
+		<!-- Interactive Face Stage (Center Column) -->
+		<a href="/about" class="face-stage" id="face-stage" aria-label="About Marcel David Baroi">
 			<!-- Static fallback / base face composite -->
 			<img 
 				id="face-base" 
 				class="face-base" 
 				src="/images/portrait-split-half.webp" 
-				alt="Marcel David Baroi - Designer & Coder" 
+				alt="Marcel David Baroi - Designer & Engineer" 
 				width="1024" 
 				height="1024" 
 				loading="eager"
@@ -46,7 +38,7 @@ import { site } from '../../data/site';
 				/>
 			</div>
 
-			<!-- Coder Half Image Layer (Right ink line sketch) with code backdrop decoration -->
+			<!-- Engineer Half Image Layer (Right ink line sketch) with code backdrop decoration -->
 			<div class="face-layer coder-layer" id="coder-layer">
 				<!-- Ambient code snippets in background matching Adham Dannaway's signature right side -->
 				<div class="code-bg-deco font-mono" aria-hidden="true">
@@ -59,7 +51,7 @@ import { site } from '../../data/site';
 				</div>
 				<img 
 					src="/images/portrait-coder.webp" 
-					alt="Coder Portrait" 
+					alt="Engineer Portrait" 
 					class="face-img" 
 					width="1024" 
 					height="1024" 
@@ -69,7 +61,15 @@ import { site } from '../../data/site';
 
 			<!-- Vertical Split Indicator Line (Subtle guide like Adham's seam) -->
 			<div class="face-split-line" id="face-split-line" aria-hidden="true"></div>
-		</div>
+		</a>
+
+		<!-- Engineer Details (Right Column) -->
+		<a href="/about" class="identity-col coder" id="coder-side" aria-label="About Engineer details">
+			<div class="description" id="coder-desc">
+				<h1 class="identity-title"><span class="chevron-left">&lt;</span>engineer<span class="chevron-right">&gt;</span></h1>
+				<p class="identity-bio">Full-stack engineer building scalable backends, robust APIs, and modern web apps.</p>
+			</div>
+		</a>
 
 	</div>
 </section>
@@ -113,13 +113,6 @@ import { site } from '../../data/site';
 		}
 
 		function applyVisuals(pct: number) {
-			// pct: 0 = far left (designer), 100 = far right (coder)
-			// At left (pct -> 0): Designer image should EXPAND across the face (seam moves right -> split pct goes up towards 85%)
-			// At right (pct -> 100): Coder image should EXPAND across the face (seam moves left -> split pct goes down towards 15%)
-			// Split position (where the dividing line is located from left edge):
-			// When cursor is at left (pct = 0) -> split is at ~85% (showing 85% Designer on left)
-			// When cursor is at center (pct = 50) -> split is at 50%
-			// When cursor is at right (pct = 100) -> split is at ~15% (showing 85% Coder on right)
 			const splitPos = Math.max(12, Math.min(88, 100 - pct));
 
 			designerLayer.style.clipPath = `polygon(0 0, ${splitPos}% 0, ${splitPos}% 100%, 0 100%)`;
@@ -129,8 +122,6 @@ import { site } from '../../data/site';
 				splitLine.style.left = `${splitPos}%`;
 			}
 
-			// When hovering on Designer (pct < 50), designerDesc is 1.0, coderDesc dims
-			// When hovering on Coder (pct > 50), coderDesc is 1.0, designerDesc dims
 			const designerOpacity = Math.min(1, Math.max(0.35, (100 - pct) / 50));
 			const coderOpacity = Math.min(1, Math.max(0.35, pct / 50));
 
@@ -139,7 +130,6 @@ import { site } from '../../data/site';
 		}
 
 		const handleMouseMove = (e: MouseEvent) => {
-			if (window.innerWidth < 800) return;
 			const rect = section.getBoundingClientRect();
 			mouseX = e.clientX - rect.left;
 			relMouseX = (mouseX / rect.width) * 100;
@@ -150,7 +140,6 @@ import { site } from '../../data/site';
 		};
 
 		const handleMouseEnter = () => {
-			if (window.innerWidth < 800) return;
 			isHovered = true;
 			if (!animId) {
 				animId = requestAnimationFrame(updatePositions);
@@ -196,81 +185,81 @@ import { site } from '../../data/site';
 <style>
 	.hero-section {
 		width: 100%;
+		min-height: calc(100svh - 4.5rem);
 		position: relative;
 		overflow: hidden;
-		padding: 2.5rem 0 3.5rem;
+		padding: clamp(1.5rem, 3vw, 3rem) 0;
 		border-bottom: 1px solid var(--card-border);
 		background-color: var(--bg-color);
 		display: flex;
 		justify-content: center;
+		align-items: center;
 		user-select: none;
 	}
 
-	/* Main face stage width matching Adham Dannaway's exact proportion */
+	/* 3-Column fluid container that scales down naturally on any screen */
 	.face-container {
 		width: 100%;
-		max-width: 1080px;
-		min-height: 540px;
-		position: relative;
+		max-width: 1140px;
 		display: flex;
 		align-items: center;
-		justify-content: center;
+		justify-content: space-between;
+		gap: clamp(0.5rem, 2vw, 2rem);
 		margin: 0 auto;
+		padding: 0 clamp(0.5rem, 1.5vw, 1.5rem);
+		box-sizing: border-box;
 	}
 
-	/* Clickable Identity Wings (Left = Designer, Right = Coder) */
-	.identity-side {
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		width: 50%;
-		z-index: 20;
+	/* Clickable Identity Columns */
+	.identity-col {
+		flex: 1 1 0;
+		min-width: 0;
 		display: flex;
 		align-items: center;
 		text-decoration: none;
 		color: inherit;
 		cursor: pointer;
+		z-index: 20;
 	}
 
-	.identity-side.designer {
-		left: 0;
-		justify-content: flex-start;
-		padding-left: 1rem;
-	}
-
-	.identity-side.coder {
-		right: 0;
+	.identity-col.designer {
 		justify-content: flex-end;
-		padding-right: 1rem;
+		text-align: left;
+	}
+
+	.identity-col.coder {
+		justify-content: flex-start;
 		text-align: right;
 	}
 
 	.description {
-		max-width: 295px;
+		width: 100%;
+		max-width: clamp(140px, 25vw, 290px);
 		transition: transform 0.3s ease, opacity 0.3s ease;
 	}
 
-	.identity-side:hover .description {
+	.identity-col:hover .description {
 		transform: translateY(-2px);
 	}
 
-	/* Typographic Headlines identical to Adham Dannaway's font styling */
+	/* Typographic Headlines with fluid clamp */
 	.identity-title {
-		margin: 0 0 0.85rem;
+		margin: 0 0 0.5rem;
 		font-family: var(--font-sans);
-		font-size: clamp(2.8rem, 5.2vw, 4.75rem);
+		font-size: clamp(1.4rem, 3.2vw, 3.2rem);
 		font-weight: 800;
 		letter-spacing: -0.04em;
 		line-height: 1;
+		white-space: nowrap;
 		color: var(--text-main);
 		transition: color var(--dur-fast) ease;
 	}
 
-	.identity-side.designer:hover .identity-title {
+	.identity-col.designer:hover .identity-title {
 		color: var(--accent);
 	}
 
-	.identity-side.coder:hover .identity-title {
+	.identity-col.coder:hover .identity-title {
 		color: var(--text-main);
 	}
 
@@ -286,25 +275,32 @@ import { site } from '../../data/site';
 	.identity-bio {
 		margin: 0;
 		font-family: var(--font-sans);
-		font-size: 1.05rem;
-		line-height: 1.5;
+		font-size: clamp(0.72rem, 1.05vw, 1.02rem);
+		line-height: 1.45;
 		color: var(--text-muted);
 		text-wrap: pretty;
 	}
 
 	/* Central Face Stage */
 	.face-stage {
+		flex: 0 0 clamp(220px, 34vw, 480px);
+		width: clamp(220px, 34vw, 480px);
+		height: clamp(220px, 34vw, 480px);
 		position: relative;
-		width: 520px;
-		height: 520px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		z-index: 10;
-		pointer-events: none;
+		cursor: pointer;
+		text-decoration: none;
+		color: inherit;
 		border-radius: 50%;
 		overflow: hidden;
-		transition: background-color var(--dur-normal, 250ms) ease, box-shadow var(--dur-normal, 250ms) ease, border-color var(--dur-normal, 250ms) ease;
+		transition: background-color var(--dur-normal, 250ms) ease, box-shadow var(--dur-normal, 250ms) ease, border-color var(--dur-normal, 250ms) ease, transform 0.25s ease;
+	}
+
+	.face-stage:hover {
+		transform: scale(1.015);
 	}
 
 	/* Dark mode: Editorial circular spotlight that naturally frames the positive artwork */
@@ -378,7 +374,7 @@ import { site } from '../../data/site';
 		display: flex;
 		flex-direction: column;
 		gap: 0.2rem;
-		font-size: 0.85rem;
+		font-size: clamp(0.65rem, 0.9vw, 0.85rem);
 		color: var(--text-muted);
 		opacity: 0.28;
 		pointer-events: none;
@@ -392,11 +388,11 @@ import { site } from '../../data/site';
 	}
 
 	.code-line.indent {
-		padding-left: 1rem;
+		padding-left: 0.75rem;
 	}
 
 	.code-line.big {
-		font-size: 1.35rem;
+		font-size: clamp(0.95rem, 1.4vw, 1.35rem);
 		font-weight: 700;
 		letter-spacing: -0.02em;
 	}
@@ -436,71 +432,48 @@ import { site } from '../../data/site';
 		);
 	}
 
-	/* Responsive design */
-	@media (max-width: 1040px) {
-		.face-container {
-			min-height: 460px;
-		}
-
-		.face-stage {
-			width: 440px;
-			height: 440px;
-		}
-
-		.description {
-			max-width: 240px;
+	/* Responsive: Hide description text on small screens & scale titles smaller */
+	@media (max-width: 768px) {
+		.identity-bio {
+			display: none;
 		}
 
 		.identity-title {
-			font-size: 3.2rem;
+			font-size: clamp(0.85rem, 3vw, 1.45rem);
+			margin: 0;
 		}
 
-		.identity-bio {
-			font-size: 0.95rem;
+		.face-container {
+			gap: clamp(0.2rem, 1.2vw, 0.75rem);
+			padding: 0 0.25rem;
+		}
+
+		.face-stage {
+			flex: 0 0 clamp(150px, 44vw, 240px);
+			width: clamp(150px, 44vw, 240px);
+			height: clamp(150px, 44vw, 240px);
+		}
+
+		.description {
+			max-width: none;
 		}
 	}
 
-	@media (max-width: 820px) {
-		.hero-section {
-			padding: 2rem 0;
-		}
-
-		.face-container {
-			flex-direction: column;
-			min-height: auto;
-			gap: 1.25rem;
-		}
-
-		.identity-side {
-			position: static;
-			width: 100%;
-			justify-content: center;
-			text-align: center;
-			padding: 0;
-		}
-
-		.identity-side.coder {
-			text-align: center;
-			justify-content: center;
-		}
-
-		.description {
-			max-width: 100%;
-		}
-
+	@media (max-width: 480px) {
 		.identity-title {
-			font-size: 2.75rem;
-			margin-bottom: 0.4rem;
+			font-size: clamp(0.72rem, 3.2vw, 1rem);
 		}
 
 		.face-stage {
-			width: 320px;
-			height: 320px;
-			margin: 0.5rem auto;
+			flex: 0 0 clamp(135px, 44vw, 185px);
+			width: clamp(135px, 44vw, 185px);
+			height: clamp(135px, 44vw, 185px);
 		}
+	}
 
-		.code-bg-deco {
-			display: none;
+	@media (max-width: 360px) {
+		.identity-title {
+			font-size: clamp(0.65rem, 2.9vw, 0.85rem);
 		}
 	}
 

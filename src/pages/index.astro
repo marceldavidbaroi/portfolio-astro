@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
+import HomeActionsBar from '../components/home/HomeActionsBar.astro';
 import HomeHowIWork from '../components/home/HomeHowIWork.astro';
 import HomeFeaturedWork from '../components/home/HomeFeaturedWork.astro';
 import HomeExperienceRail from '../components/home/HomeExperienceRail.astro';
@@ -35,18 +36,93 @@ const experience = (await getCollection('experience'))
 
 const skills = ['Next.js', 'Vue 3', 'NestJS', 'Flutter', 'TypeScript', 'PostgreSQL', 'Supabase', 'Docker'];
 const workCount = projectEntries.length;
+
+import '../styles/about.css';
 ---
 
 <BaseLayout isWide alignStart>
 	<HomeHero />
-	<HomeHowIWork />
+	<HomeActionsBar />
 
-	{featured && (
-		<HomeFeaturedWork focused={focused} workCount={workCount} />
-	)}
+	<div class="home-scroll-flow" id="home-scroll-flow">
+		<div class="reveal-section">
+			<HomeHowIWork />
+		</div>
 
-	<HomeExperienceRail experience={experience} />
-	<HomeEducationStrip bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
-	<HomeSkillsStrip skills={skills} />
-	<HomeContactClose />
+		{featured && (
+			<div class="reveal-section">
+				<HomeFeaturedWork focused={focused} workCount={workCount} />
+			</div>
+		)}
+
+		<div class="reveal-section">
+			<HomeExperienceRail experience={experience} />
+		</div>
+
+		<div class="reveal-section">
+			<HomeEducationStrip bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
+		</div>
+
+		<div class="reveal-section">
+			<HomeSkillsStrip />
+		</div>
+
+		<div class="reveal-section">
+			<HomeContactClose />
+		</div>
+	</div>
 </BaseLayout>
+
+<script>
+	function initHomeScrollReveal() {
+		const sections = document.querySelectorAll('.reveal-section');
+		if (!sections.length) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-revealed');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.05,
+			rootMargin: '0px 0px -40px 0px'
+		});
+
+		sections.forEach((section) => {
+			observer.observe(section);
+		});
+	}
+
+	initHomeScrollReveal();
+	document.addEventListener('astro:page-load', initHomeScrollReveal);
+</script>
+
+<style>
+	.home-scroll-flow {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.reveal-section {
+		opacity: 0;
+		transform: translateY(28px);
+		transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+		will-change: opacity, transform;
+	}
+
+	.reveal-section.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reveal-section {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
+</style>
