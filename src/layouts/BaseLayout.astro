@@ -71,7 +71,7 @@ const personJsonLd = {
 
 		<!-- Zero-Flash Theme Initializer -->
 		<script is:inline>
-			(function () {
+			function applyTheme() {
 				const storedTheme = localStorage.getItem('theme');
 				if (storedTheme === 'dark' || storedTheme === 'light') {
 					document.documentElement.dataset.theme = storedTheme;
@@ -80,7 +80,9 @@ const personJsonLd = {
 				} else {
 					document.documentElement.dataset.theme = 'light';
 				}
-			})();
+			}
+			applyTheme();
+			document.addEventListener('astro:after-swap', applyTheme);
 		</script>
 
 		<!-- Open Graph -->

@@ -168,7 +168,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		padding: 0.6rem 0 1rem;
 		margin: 0 0 1.5rem;
 		background: transparent;
-		border-bottom: 1px solid rgba(243, 186, 107, 0.12);
+		border-bottom: 1px solid var(--card-border);
 	}
 
 	.filters-main {
@@ -222,13 +222,13 @@ const { tabs, stackLinks, workCount } = Astro.props;
 
 	.tab:hover {
 		color: var(--text-main);
-		background: rgba(243, 186, 107, 0.06);
+		background: var(--accent-subtle);
 	}
 
 	.tab.active {
 		color: var(--accent);
-		background: rgba(243, 186, 107, 0.12);
-		border-color: rgba(243, 186, 107, 0.28);
+		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
 		font-weight: 600;
 	}
 
@@ -236,13 +236,15 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		font-size: 0.7rem;
 		padding: 0.05rem 0.35rem;
 		border-radius: 999px;
-		background: rgba(255, 255, 255, 0.05);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
 		color: inherit;
 		opacity: 0.85;
 	}
 
 	.tab.active .tab-count {
-		background: rgba(243, 186, 107, 0.2);
+		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
 		opacity: 1;
 	}
 
@@ -266,9 +268,9 @@ const { tabs, stackLinks, workCount } = Astro.props;
 
 	.search {
 		width: 100%;
-		border: 1px solid rgba(243, 186, 107, 0.14);
+		border: 1px solid var(--card-border);
 		border-radius: var(--radius-full);
-		background: rgba(255, 255, 255, 0.03);
+		background: var(--card-bg-elevated);
 		padding: 0.38rem 0.85rem 0.38rem 2rem;
 		font-size: 0.84rem;
 		color: var(--text-main);
@@ -283,8 +285,8 @@ const { tabs, stackLinks, workCount } = Astro.props;
 
 	.search:focus {
 		border-color: var(--accent);
-		background: rgba(255, 255, 255, 0.06);
-		box-shadow: 0 0 0 3px rgba(243, 186, 107, 0.12);
+		background: var(--card-bg-elevated);
+		box-shadow: 0 0 0 3px var(--accent-subtle);
 	}
 
 	.search-wrap:focus-within .search-icon {
@@ -327,8 +329,8 @@ const { tabs, stackLinks, workCount } = Astro.props;
 
 	.stack-chip {
 		appearance: none;
-		border: 1px solid rgba(243, 186, 107, 0.1);
-		background: rgba(255, 255, 255, 0.02);
+		border: 1px solid var(--card-border);
+		background: var(--card-bg-elevated);
 		padding: 0.2rem 0.55rem;
 		margin: 0;
 		font: inherit;
@@ -341,13 +343,13 @@ const { tabs, stackLinks, workCount } = Astro.props;
 	}
 
 	.stack-chip:hover {
-		color: var(--text-main);
-		background: rgba(255, 255, 255, 0.06);
-		border-color: rgba(243, 186, 107, 0.25);
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
 	}
 
 	.stack-chip.is-on {
-		color: #0b0c10;
+		color: #ffffff;
 		background: var(--accent);
 		border-color: var(--accent);
 		font-weight: 700;
@@ -355,7 +357,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 
 	.stack-chip.is-reset {
 		border-style: dashed;
-		border-color: rgba(243, 186, 107, 0.2);
+		border-color: var(--card-border);
 		opacity: 0.75;
 	}
 
@@ -363,6 +365,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		opacity: 1;
 		border-style: solid;
 		color: var(--accent);
+		border-color: var(--card-border-hover);
 	}
 
 	/* Status line */
@@ -373,8 +376,8 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		gap: 0.75rem;
 		margin: 0.65rem 0 0;
 		padding: 0.35rem 0.65rem;
-		background: rgba(243, 186, 107, 0.06);
-		border: 1px dashed rgba(243, 186, 107, 0.2);
+		background: var(--accent-subtle);
+		border: 1px dashed var(--card-border-hover);
 		border-radius: var(--radius-sm);
 		font-size: 0.75rem;
 		letter-spacing: 0.02em;

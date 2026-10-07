@@ -89,7 +89,7 @@ const { projects } = Astro.props;
 		text-decoration: none;
 		color: inherit;
 		padding: 2.75rem 0;
-		border-top: 1px solid rgba(255, 255, 255, 0.09);
+		border-top: 1px solid var(--card-border);
 	}
 
 	.focus-list .feature-band:first-child {
@@ -98,17 +98,17 @@ const { projects } = Astro.props;
 	}
 
 	.feature-band:hover .feature-title {
-		color: #ffffff;
+		color: var(--accent);
 	}
 
 	.feature-band:hover .inline-cta {
-		color: #ffffff;
+		color: var(--accent);
 	}
 
 	.feature-band:hover :global(.shot-still-frame) {
-		border-color: rgba(255, 255, 255, 0.28);
+		border-color: var(--card-border-hover);
 		transform: scale(1.015);
-		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.85);
+		box-shadow: 0 16px 36px -8px rgba(0, 0, 0, 0.25);
 	}
 
 	.feature-copy {
@@ -132,7 +132,7 @@ const { projects } = Astro.props;
 		font-weight: 700;
 		letter-spacing: -0.03em;
 		line-height: 1.22;
-		color: #ffffff;
+		color: var(--text-main);
 		transition: color var(--dur-fast) ease;
 	}
 
@@ -158,9 +158,9 @@ const { projects } = Astro.props;
 		padding: 0.22rem 0.65rem;
 		font-size: 0.72rem;
 		letter-spacing: 0.02em;
-		color: #a1a1aa;
-		background: rgba(255, 255, 255, 0.05);
-		border: 1px solid rgba(255, 255, 255, 0.09);
+		color: var(--text-muted);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
 		border-radius: var(--radius-full);
 		white-space: nowrap;
 		line-height: 1.25;
@@ -168,9 +168,9 @@ const { projects } = Astro.props;
 	}
 
 	.feature-band:hover .stack-badge {
-		color: #e4e4e7;
-		background: rgba(255, 255, 255, 0.08);
-		border-color: rgba(255, 255, 255, 0.15);
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
 	}
 
 	.feature-metrics {
@@ -187,7 +187,7 @@ const { projects } = Astro.props;
 		font-size: var(--type-cta);
 		font-weight: 600;
 		letter-spacing: 0.02em;
-		color: #d4d4d8;
+		color: var(--text-muted);
 		margin-top: 0.5rem;
 		transition: color var(--dur-fast) ease, transform var(--dur-fast) ease;
 	}

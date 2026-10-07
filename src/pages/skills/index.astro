@@ -38,20 +38,37 @@ const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((
 		</button>
 	</div>
 
-	<div id="skills-categories">
+	<div id="skills-categories" class="skills-categories-wrapper">
 		{skillCategories.map((cat) => (
-			<section class="about-section about-stack-block" id={cat.id} data-category={cat.id}>
-				<h2 class="about-stack-category font-mono">{cat.category}</h2>
-				{cat.items.map((skill) => (
-					<div
-						class="about-skill-row"
-						data-tier={skill.tier === 'secondary' ? 'prior' : 'primary'}
-						data-category={cat.id}
-					>
-						<p class:list={['about-skill-name', { 'is-prior': skill.tier === 'secondary' }]}>{skill.name}</p>
-						{skill.desc && <p class="about-skill-desc">{skill.desc}</p>}
+			<section class="about-section about-stack-block skills-category-section" id={cat.id} data-category={cat.id}>
+				<div class="skills-category-header">
+					<div class="skills-category-title-group">
+						<div>
+							<h2 class="skills-category-title">{cat.category}</h2>
+							<p class="skills-category-desc">{cat.description}</p>
+						</div>
 					</div>
-				))}
+					<span class="skills-category-tag font-mono">{cat.tag}</span>
+				</div>
+
+				<div class="skills-grid">
+					{cat.items.map((skill) => (
+						<div
+							class:list={['skill-item', { 'is-prior-item': skill.tier === 'secondary' }]}
+							data-tier={skill.tier === 'secondary' ? 'prior' : 'primary'}
+							data-category={cat.id}
+						>
+							<div class="skill-item-media">
+								{skill.logo ? (
+									<img src={skill.logo} alt="" class="skill-item-logo" loading="lazy" aria-hidden="true" />
+								) : (
+									<span class="skill-item-icon" aria-hidden="true">{skill.icon || '•'}</span>
+								)}
+							</div>
+							<p class="skill-item-name">{skill.name}</p>
+						</div>
+					))}
+				</div>
 			</section>
 		))}
 	</div>
@@ -61,20 +78,20 @@ const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((
 
 <script>
 	const tabs = document.querySelectorAll<HTMLButtonElement>('.about-tab[data-tier]');
-	const rows = document.querySelectorAll<HTMLElement>('.about-skill-row');
+	const items = document.querySelectorAll<HTMLElement>('.skill-item');
 	const sections = document.querySelectorAll<HTMLElement>('[data-category]');
 
 	let tier = 'all';
 
 	function applyFilter() {
-		rows.forEach((row) => {
-			const rowTier = row.dataset.tier || 'primary';
-			const show = tier === 'all' || rowTier === tier;
-			row.hidden = !show;
+		items.forEach((item) => {
+			const itemTier = item.dataset.tier || 'primary';
+			const show = tier === 'all' || itemTier === tier;
+			item.hidden = !show;
 		});
 
 		sections.forEach((section) => {
-			const visible = section.querySelectorAll('.about-skill-row:not([hidden])').length > 0;
+			const visible = section.querySelectorAll('.skill-item:not([hidden])').length > 0;
 			section.hidden = !visible;
 		});
 	}

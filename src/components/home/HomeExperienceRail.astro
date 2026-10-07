@@ -24,7 +24,7 @@ const { experience, heading = 'visible' } = Astro.props;
 <section class="experience" aria-labelledby={heading === 'visible' ? 'exp-heading' : undefined}>
 	{heading === 'visible' && (
 		<div class="section-kicker">
-			<p class="label font-mono">Experience</p>
+			<p class="label font-sans">Experience</p>
 		</div>
 	)}
 	{heading === 'visible' && <h2 id="exp-heading" class="sr-only">Work experience</h2>}
@@ -33,7 +33,7 @@ const { experience, heading = 'visible' } = Astro.props;
 			const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
 			return (
 				<li class="rail-row">
-					<p class="rail-when font-mono">{item.period}</p>
+					<p class="rail-when">{item.period}</p>
 					<div class="rail-body">
 						<div class="rail-head">
 							<h3 class="rail-role">
@@ -41,12 +41,12 @@ const { experience, heading = 'visible' } = Astro.props;
 									{item.role}
 								</a>
 							</h3>
-							{item.badge && <span class="rail-badge font-mono">{item.badge}</span>}
+							{item.badge && <span class="rail-badge">{item.badge}</span>}
 						</div>
 						<p class="rail-company">{item.company}</p>
 						<p class="rail-line">{line}</p>
 						{item.relatedProjects && item.relatedProjects.length > 0 && (
-							<p class="rail-links font-mono">
+							<p class="rail-links">
 								{item.relatedProjects.slice(0, 2).map((rp) => (
 									<a href={`/work/${rp.slug}`}>{rp.label}</a>
 								))}

@@ -95,21 +95,19 @@
 			opacity 0.3s ease;
 	}
 
-	/* Light mode default: Show moon icon, hide sun icon */
-	:root:not([data-theme='dark']) .sun-icon,
-	:root[data-theme='light'] .sun-icon {
+	/* Sun icon (shows in dark mode) */
+	.sun-icon {
 		transform: rotate(90deg) scale(0);
 		opacity: 0;
 	}
 
-	:root:not([data-theme='dark']) .moon-icon,
-	:root[data-theme='light'] .moon-icon {
+	:root[data-theme='dark'] .sun-icon {
 		transform: rotate(0deg) scale(1);
 		opacity: 1;
 	}
 
-	/* Dark mode: Show sun icon, hide moon icon */
-	:root[data-theme='dark'] .sun-icon {
+	/* Moon icon (shows in light mode) */
+	.moon-icon {
 		transform: rotate(0deg) scale(1);
 		opacity: 1;
 	}
@@ -128,7 +126,9 @@
 
 		const getCurrentTheme = () => {
 			const activeTheme = document.documentElement.dataset.theme;
-			if (activeTheme) return activeTheme;
+			if (activeTheme === 'dark' || activeTheme === 'light') return activeTheme;
+			const stored = localStorage.getItem('theme');
+			if (stored === 'dark' || stored === 'light') return stored;
 			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 		};
 

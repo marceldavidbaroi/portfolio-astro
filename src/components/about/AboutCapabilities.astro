@@ -1,11 +1,24 @@
 ---
-import type { SkillCategoryGroup } from '../../data/aboutData';
+import type { SkillCategoryGroup, SkillItem } from '../../data/aboutData';
 
 interface Props {
 	skillCategories: SkillCategoryGroup[];
 }
 
 const { skillCategories } = Astro.props;
+
+// Flatten skills across all categories and deduplicate by name
+const seen = new Set<string>();
+const allSkills: SkillItem[] = [];
+
+for (const group of skillCategories) {
+	for (const item of group.items) {
+		if (!seen.has(item.name)) {
+			seen.add(item.name);
+			allSkills.push(item);
+		}
+	}
+}
 ---
 
 <section class="about-section" id="stack" aria-labelledby="stack-heading">
@@ -14,16 +27,40 @@ const { skillCategories } = Astro.props;
 		<a href="/skills" class="section-link font-mono">Full matrix →</a>
 	</div>
 
-	<p class="about-stack-legend font-mono">Primary = ink · Prior = muted · Descriptions on /skills</p>
-
-	{skillCategories.map((group) => (
-		<div class="about-stack-block">
-			<h3 class="about-stack-category font-mono">{group.category}</h3>
-			<ul class="about-stack-names">
-				{group.items.map((skill) => (
-					<li class:list={[{ 'is-prior': skill.tier === 'secondary' }]}>{skill.name}</li>
+	<div class="about-stack-marquee-wrapper" tabindex="0" aria-label="Technical skills marquee">
+		<div class="about-stack-marquee-track">
+			<div class="about-stack-marquee-group">
+				{allSkills.map((skill) => (
+					<div class:list={['skill-pill', 'skill-pill-mono', { 'is-prior': skill.tier === 'secondary' }]}>
+						<div class="skill-pill-media">
+							{skill.logo ? (
+								<img src={skill.logo} alt="" class="skill-pill-logo" loading="lazy" aria-hidden="true" />
+							) : (
+								<span class="skill-pill-icon" aria-hidden="true">{skill.icon || '•'}</span>
+							)}
+						</div>
+						<span class="skill-pill-name">{skill.name}</span>
+					</div>
 				))}
-			</ul>
+			</div>
+			{/* Duplicated group for seamless endless auto-scroll loop */}
+			<div class="about-stack-marquee-group" aria-hidden="true">
+				{allSkills.map((skill) => (
+					<div class:list={['skill-pill', 'skill-pill-mono', { 'is-prior': skill.tier === 'secondary' }]}>
+						<div class="skill-pill-media">
+							{skill.logo ? (
+								<img src={skill.logo} alt="" class="skill-pill-logo" loading="lazy" aria-hidden="true" />
+							) : (
+								<span class="skill-pill-icon" aria-hidden="true">{skill.icon || '•'}</span>
+							)}
+						</div>
+						<span class="skill-pill-name">{skill.name}</span>
+					</div>
+				))}
+			</div>
 		</div>
-	))}
+	</div>
 </section>
+
+
+
