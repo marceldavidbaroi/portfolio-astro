@@ -1,0 +1,71 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
+import HomeExperienceRail from '../../components/home/HomeExperienceRail.astro';
+import { getCollection } from 'astro:content';
+import { mediaMap, resolveAssets } from '../../lib/media';
+import '../../styles/about.css';
+
+const media = mediaMap(await getCollection('media'));
+const rawExperience = (await getCollection('experience'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((entry) => ({
+		slug: entry.id,
+		...entry.data,
+		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src),
+	}));
+
+const experience = rawExperience.map((item) => {
+	const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
+	return {
+		...item,
+		summary: line ?? '',
+		highlights: item.highlights?.length ? item.highlights : line ? [line] : [],
+	};
+});
+
+const totalRoles = experience.length;
+---
+
+<BaseLayout
+	title="Career Experience & Milestones | Marcel David Baroi"
+	description="Comprehensive career history, engineering roles, and operational milestones of Marcel David Baroi."
+	isWide
+	alignStart
+>
+	<AtticBreadcrumb current="Career" />
+
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">Career</p>
+		<h1 class="about-attic-title">Experience &amp; milestones</h1>
+		<p class="about-attic-lead">
+			Chronological breakdown of engineering roles, software development practice, and commercial operations across {totalRoles} positions. Click any role to explore its detailed scope, responsibilities, technical accomplishments, and preserved visual documentaries.
+		</p>
+	</header>
+
+	<section class="about-section about-career-index" aria-label="Career experience rail">
+		<HomeExperienceRail experience={experience} heading="none" />
+	</section>
+
+	<nav class="about-philo-exits font-mono" aria-label="Related pages">
+		<a href="/about" class="text-link">← About</a>
+		<a href="/work" class="text-link">Work →</a>
+		<a href="/education" class="text-link">School &amp; University →</a>
+	</nav>
+</BaseLayout>
+
+<style>
+	.about-career-index {
+		padding: 0 0 2rem;
+		border-bottom: 0;
+	}
+
+	.about-career-index :global(.experience) {
+		padding: 0;
+		border-bottom: 0;
+	}
+
+	.about-career-index :global(.experience .section-kicker) {
+		display: none;
+	}
+</style>

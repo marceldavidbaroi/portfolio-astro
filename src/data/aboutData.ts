@@ -59,6 +59,19 @@ export interface CareerHighlightItem {
 	caseStudyLabel?: string;
 }
 
+export interface OnlineProfileItem {
+	platform: string;
+	handle: string;
+	url: string;
+	highlight: string;
+	description?: string;
+	category: 'problem-solving' | 'code' | 'community' | 'writing' | 'credentials';
+	badgeTag?: string;
+	platformId: 'github' | 'linkedin' | 'leetcode' | 'codeforces' | 'hackerrank' | 'slideshare' | 'google-cloud' | 'credly' | 'medium';
+	stat?: string;
+	brandIcon?: string;
+}
+
 export const metrics: MetricItem[] = [
 	{ value: '3.91', label: 'B.Sc. in CSE CGPA', sub: 'Daffodil Int. University (Batch 55)' },
 	{ value: '+60%', label: 'Code Reusability', sub: 'Via Private Package Architectures' },
@@ -724,3 +737,103 @@ export const compactPursuits: CompactPursuitItem[] = [
 		url: 'https://www.imdb.com/user/p.bk6ud655mqlvdqktibh2swwdzm?ref_=ext_shr_lnk'
 	}
 ];
+
+export const onlineProfiles: OnlineProfileItem[] = [
+	{
+		platform: 'Github',
+		platformId: 'github',
+		handle: 'marceldavidbaroi',
+		url: 'https://github.com/marceldavidbaroi',
+		highlight: 'Open Source & Package Systems',
+		description: 'github.com/marceldavidbaroi',
+		category: 'code',
+		badgeTag: 'Link',
+		stat: 'Public Repositories & Packages',
+		brandIcon: '/images/tech/github.svg'
+	},
+	{
+		platform: 'LinkedIn',
+		platformId: 'linkedin',
+		handle: 'marcel-david-baroi',
+		url: 'https://www.linkedin.com/in/marcel-david-baroi/',
+		highlight: 'Software Engineer',
+		description: 'linkedin.com/in/marcel-david-baroi',
+		category: 'community',
+		badgeTag: 'Link',
+		stat: 'Professional Profile & Endorsements',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linkedin/linkedin-original.svg'
+	},
+	{
+		platform: 'LeetCode',
+		platformId: 'leetcode',
+		handle: 'marceldavidbaroi',
+		url: 'https://leetcode.com/u/marceldavidbaroi/',
+		highlight: 'Algorithms & Data Structures',
+		description: 'leetcode.com/u/marceldavidbaroi',
+		category: 'problem-solving',
+		badgeTag: 'Link',
+		stat: 'Problem Solving & Contests',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/walkccc/LeetCode@master/images/LeetCode_Logo.png'
+	},
+	{
+		platform: 'HackerRank',
+		platformId: 'hackerrank',
+		handle: 'marcel15_3421',
+		url: 'https://www.hackerrank.com/profile/marcel15_3421',
+		highlight: 'Problem Solving & SQL',
+		description: 'hackerrank.com/profile/marcel15_3421',
+		category: 'problem-solving',
+		badgeTag: 'Link',
+		stat: 'Domain Proficiency Badges',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg'
+	},
+	{
+		platform: 'SlideShare',
+		platformId: 'slideshare',
+		handle: 'marceldavidbaroi',
+		url: 'https://www.slideshare.net/marceldavidbaroi',
+		highlight: 'Tech Presentations & Decks',
+		description: 'slideshare.net/marceldavidbaroi',
+		category: 'writing',
+		badgeTag: 'Link',
+		stat: 'Slide Decks & Technical Talks',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/canva/canva-original.svg'
+	},
+	{
+		platform: 'Google Cloud Skills',
+		platformId: 'google-cloud',
+		handle: 'marcel-david-baroi',
+		url: 'https://www.skills.google/public_profiles/2c7e1de9-096d-4df9-8fc6-c832b77bdc77',
+		highlight: 'AI & Cloud Skill Badges',
+		description: 'skills.google/public_profiles',
+		category: 'credentials',
+		badgeTag: 'Link',
+		stat: 'Google Cloud Boost Badges',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/googlecloud/googlecloud-original.svg'
+	},
+	{
+		platform: 'Credly',
+		platformId: 'credly',
+		handle: 'marcel-david-baroi',
+		url: 'https://www.credly.com/users/marcel-david-baroi/badges/credly',
+		highlight: 'Verified Tech Credentials',
+		description: 'credly.com/users/marcel-david-baroi',
+		category: 'credentials',
+		badgeTag: 'Link',
+		stat: 'Cisco & Tech Certifications',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/framermotion/framermotion-original.svg'
+	},
+	{
+		platform: 'Medium',
+		platformId: 'medium',
+		handle: '@marceldavidbaroi',
+		url: 'https://medium.com/@marceldavidbaroi',
+		highlight: 'Engineering & Tech Articles',
+		description: 'medium.com/@marceldavidbaroi',
+		category: 'writing',
+		badgeTag: 'Link',
+		stat: 'Software Architecture Articles',
+		brandIcon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/markdown/markdown-original.svg'
+	}
+];
+

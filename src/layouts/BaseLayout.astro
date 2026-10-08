@@ -28,7 +28,7 @@ const isNotes = currentPath === '/notes' || currentPath.startsWith('/notes/');
 const isAbout =
 	currentPath === '/about' ||
 	currentPath.startsWith('/about/') ||
-	['/skills', '/credentials', '/philosophy', '/archive', '/education', '/research', '/memories', '/gallery'].some(
+	['/experience', '/skills', '/credentials', '/philosophy', '/archive', '/education', '/research', '/memories', '/gallery'].some(
 		(root) => currentPath === root || currentPath.startsWith(`${root}/`)
 	);
 const canonicalUrl = new URL(Astro.url.pathname, Astro.site ?? Astro.url.origin).href;
@@ -132,8 +132,14 @@ const personJsonLd = {
 								</button>
 
 								<div id="header-more-dropdown" class="nav-dropdown-menu" role="menu" hidden aria-hidden="true">
-									<a href="/about" role="menuitem" class:list={['nav-dropdown-item', { active: isAbout }]}>
+									<a href="/about" role="menuitem" class:list={['nav-dropdown-item', { active: isAbout && currentPath === '/about' }]}>
 										<span>About</span>
+									</a>
+									<a href="/experience" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/experience') }]}>
+										<span>Career</span>
+									</a>
+									<a href="/education" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/education') }]}>
+										<span>School &amp; University</span>
 									</a>
 									<a href="/skills" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/skills') }]}>
 										<span>Skills</span>
@@ -144,8 +150,8 @@ const personJsonLd = {
 									<a href="/philosophy" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/philosophy') }]}>
 										<span>Philosophy</span>
 									</a>
-									<a href="/archive" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/archive') }]}>
-										<span>Archive</span>
+									<a href="/gallery" role="menuitem" class:list={['nav-dropdown-item', { active: currentPath.startsWith('/gallery') }]}>
+										<span>Albums &amp; Stories</span>
 									</a>
 								</div>
 							</div>
@@ -195,8 +201,14 @@ const personJsonLd = {
 				<a href="/work" role="menuitem" class:list={['floating-dropdown-item', { active: isWork }]}>
 					<span>Work</span>
 				</a>
-				<a href="/about" role="menuitem" class:list={['floating-dropdown-item', { active: isAbout }]}>
+				<a href="/about" role="menuitem" class:list={['floating-dropdown-item', { active: isAbout && currentPath === '/about' }]}>
 					<span>About</span>
+				</a>
+				<a href="/experience" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/experience') }]}>
+					<span>Career</span>
+				</a>
+				<a href="/education" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/education') }]}>
+					<span>School &amp; University</span>
 				</a>
 				<a href="/skills" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/skills') }]}>
 					<span>Skills</span>
@@ -207,8 +219,8 @@ const personJsonLd = {
 				<a href="/philosophy" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/philosophy') }]}>
 					<span>Philosophy</span>
 				</a>
-				<a href="/archive" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/archive') }]}>
-					<span>Archive</span>
+				<a href="/gallery" role="menuitem" class:list={['floating-dropdown-item', { active: currentPath.startsWith('/gallery') }]}>
+					<span>Albums &amp; Stories</span>
 				</a>
 			</div>
 		</div>
@@ -223,13 +235,16 @@ const personJsonLd = {
 				const floatingBtn = document.getElementById('floating-menu-btn');
 				const floatingDropdown = document.getElementById('floating-dropdown');
 
+				if (!moreBtn || !headerDropdown) return;
+				if (moreBtn.dataset.bound) return;
+				moreBtn.dataset.bound = 'true';
+
 				let ticking = false;
 
-				const isHeaderMenuOpen = () => Boolean(headerDropdown && !headerDropdown.hidden);
-				const isFloatingMenuOpen = () => Boolean(floatingDropdown && !floatingDropdown.hidden);
+				const isHeaderMenuOpen = () => !headerDropdown.hasAttribute('hidden') && headerDropdown.style.display !== 'none';
+				const isFloatingMenuOpen = () => Boolean(floatingDropdown && !floatingDropdown.hasAttribute('hidden') && floatingDropdown.style.display !== 'none');
 
 				const closeHeaderMenu = () => {
-					if (!headerDropdown || !moreBtn) return;
 					headerDropdown.hidden = true;
 					headerDropdown.setAttribute('aria-hidden', 'true');
 					moreBtn.setAttribute('aria-expanded', 'false');
@@ -237,9 +252,9 @@ const personJsonLd = {
 				};
 
 				const openHeaderMenu = () => {
-					if (!headerDropdown || !moreBtn) return;
 					closeFloatingMenu();
 					headerDropdown.hidden = false;
+					headerDropdown.removeAttribute('hidden');
 					headerDropdown.setAttribute('aria-hidden', 'false');
 					moreBtn.setAttribute('aria-expanded', 'true');
 					moreBtn.classList.add('is-open');
@@ -258,27 +273,36 @@ const personJsonLd = {
 					if (!floatingDropdown || !floatingBtn) return;
 					closeHeaderMenu();
 					floatingDropdown.hidden = false;
+					floatingDropdown.removeAttribute('hidden');
 					floatingDropdown.setAttribute('aria-hidden', 'false');
 					floatingBtn.setAttribute('aria-expanded', 'true');
 					floatingBtn.classList.add('is-open');
 					floatingContainer?.classList.add('is-menu-open');
 				};
 
-				moreBtn?.addEventListener('click', (e) => {
+				moreBtn.addEventListener('click', (e) => {
+					e.preventDefault();
 					e.stopPropagation();
-					if (isHeaderMenuOpen()) closeHeaderMenu();
-					else openHeaderMenu();
+					if (isHeaderMenuOpen()) {
+						closeHeaderMenu();
+					} else {
+						openHeaderMenu();
+					}
 				});
 
 				floatingBtn?.addEventListener('click', (e) => {
+					e.preventDefault();
 					e.stopPropagation();
-					if (isFloatingMenuOpen()) closeFloatingMenu();
-					else openFloatingMenu();
+					if (isFloatingMenuOpen()) {
+						closeFloatingMenu();
+					} else {
+						openFloatingMenu();
+					}
 				});
 
 				document.addEventListener('click', (e) => {
 					const target = e.target as HTMLElement | null;
-					if (isHeaderMenuOpen() && target && !headerDropdown?.contains(target) && !moreBtn?.contains(target)) {
+					if (isHeaderMenuOpen() && target && !headerDropdown.contains(target) && !moreBtn.contains(target)) {
 						closeHeaderMenu();
 					}
 					if (isFloatingMenuOpen() && target && !floatingDropdown?.contains(target) && !floatingBtn?.contains(target)) {
@@ -290,7 +314,7 @@ const personJsonLd = {
 					if (e.key === 'Escape') {
 						if (isHeaderMenuOpen()) {
 							closeHeaderMenu();
-							moreBtn?.focus();
+							moreBtn.focus();
 						}
 						if (isFloatingMenuOpen()) {
 							closeFloatingMenu();

@@ -1,0 +1,211 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
+import { getEntry } from 'astro:content';
+import '../../styles/about.css';
+
+const bscEntry = await getEntry('education', 'bsc-cse');
+const hscEntry = await getEntry('education', 'hsc-science');
+const researchEntry = await getEntry('research', '01-bangla-hwcr-ekush');
+
+if (!bscEntry || !hscEntry) {
+	throw new Error('Missing education content for Education index page');
+}
+
+const bsc = bscEntry.data;
+const hsc = hscEntry.data;
+const thesis = researchEntry?.data;
+
+const bscPrimary = `${bsc.degree} · ${bsc.institutionShort}`;
+const bscSub = `CGPA ${bsc.cgpa?.toFixed(2)} / ${bsc.maxGpa?.toFixed(2)} · ${bsc.totalCredits} Credits · Batch 55 (${bsc.period})`;
+
+const hscPrimary = `${hsc.degree} · ${hsc.institutionShort}`;
+const hscSub = `GPA ${hsc.gpa?.toFixed(2)} / ${hsc.maxGpa?.toFixed(2)} · ${hsc.field} (${hsc.period})`;
+
+const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().includes('vowel'));
+---
+
+<BaseLayout
+	title="School & University | Marcel David Baroi"
+	description="Academic background, university curriculum, 11-semester transcript, thesis research, and collegiate disciplines of Marcel David Baroi."
+	isWide
+	alignStart
+>
+	<AtticBreadcrumb current="Education" />
+
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">Education</p>
+		<h1 class="about-attic-title">School &amp; University</h1>
+		<p class="about-attic-lead">
+			Academic foundations, degree transcripts, undergraduate thesis research, and formative collegiate disciplines from Notre Dame College to Daffodil International University.
+		</p>
+	</header>
+
+	<!-- University (Varsity) Block -->
+	<div class="edu-index-list">
+		<div class="about-school-block edu-index-card">
+			<a class="about-school-row edu-index-row" href="/education/bsc-cse">
+				{bsc.logo ? (
+					<img src={bsc.logo} alt="" class="about-school-logo edu-card-logo" width="48" height="48" loading="lazy" />
+				) : (
+					<span class="about-school-logo edu-card-logo" aria-hidden="true"></span>
+				)}
+				<div class="about-school-lines">
+					<div class="edu-card-head">
+						<span class="label font-mono">{bsc.shortDegree ?? 'B.Sc. CSE'}</span>
+						<span class="edu-period-badge font-mono">{bsc.period}</span>
+					</div>
+					<h2 class="edu-card-title">{bsc.degree}</h2>
+					<p class="edu-card-inst">{bsc.institution} · {bsc.location}</p>
+					<p class="about-school-secondary font-mono">{bscSub}</p>
+					{bsc.summary && <p class="edu-card-summary">{bsc.summary}</p>}
+				</div>
+				<span class="section-link font-mono edu-view-btn">Transcript →</span>
+			</a>
+
+			{thesis && (
+				<div class="about-school-activity font-mono edu-index-activity">
+					<span class="activity-kicker">Undergraduate Thesis</span>
+					<a class="activity-link" href={`/research/${thesis.slug}`}>
+						<span>{thesis.title} ({thesisMetric?.value ?? '97.93% Accuracy'})</span>
+						<span class="section-link">Paper →</span>
+					</a>
+				</div>
+			)}
+		</div>
+
+		<!-- College / School Block -->
+		<div class="about-school-block edu-index-card">
+			<a class="about-school-row edu-index-row" href="/education/hsc-science">
+				{hsc.logo ? (
+					<img src={hsc.logo} alt="" class="about-school-logo edu-card-logo" width="48" height="48" loading="lazy" />
+				) : (
+					<span class="about-school-logo edu-card-logo" aria-hidden="true"></span>
+				)}
+				<div class="about-school-lines">
+					<div class="edu-card-head">
+						<span class="label font-mono">HSC Science</span>
+						<span class="edu-period-badge font-mono">{hsc.period}</span>
+					</div>
+					<h2 class="edu-card-title">{hsc.degree}</h2>
+					<p class="edu-card-inst">{hsc.institution} · {hsc.location}</p>
+					<p class="about-school-secondary font-mono">{hscSub}</p>
+					{hsc.summary && <p class="edu-card-summary">{hsc.summary}</p>}
+				</div>
+				<span class="section-link font-mono edu-view-btn">Details →</span>
+			</a>
+		</div>
+	</div>
+
+	<nav class="about-philo-exits font-mono" aria-label="Related pages">
+		<a href="/about" class="text-link">← About</a>
+		<a href="/experience" class="text-link">Career Experience →</a>
+		<a href="/credentials" class="text-link">Credentials →</a>
+	</nav>
+</BaseLayout>
+
+<style>
+	.edu-index-list {
+		display: flex;
+		flex-direction: column;
+		gap: 1.75rem;
+		margin-bottom: 2.5rem;
+	}
+
+	.edu-index-card {
+		background: var(--card-bg, #f4f0e7);
+		border: 1px solid var(--card-border, rgba(95, 80, 56, 0.12));
+		border-radius: var(--radius-md, 10px);
+		padding: 1.75rem 1.75rem 1.5rem;
+		transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+	}
+
+	.edu-index-card:hover {
+		border-color: rgba(95, 80, 56, 0.28);
+		box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+	}
+
+	.edu-index-row {
+		display: grid;
+		grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+		gap: 1.25rem 1.5rem;
+		align-items: start;
+		padding: 0;
+		border-top: 0;
+		text-decoration: none;
+		color: inherit;
+	}
+
+	.edu-card-logo {
+		width: 3.25rem;
+		height: 3.25rem;
+		border-radius: var(--radius-sm, 6px);
+		background: #ffffff;
+		padding: 0.35rem;
+		border: 1px solid var(--card-border, rgba(95, 80, 56, 0.12));
+	}
+
+	.edu-card-head {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+		margin-bottom: 0.25rem;
+	}
+
+	.edu-period-badge {
+		font-size: var(--type-caption);
+		color: var(--text-muted);
+	}
+
+	.edu-card-title {
+		margin: 0 0 0.25rem;
+		font-size: clamp(1.2rem, 2.2vw, 1.45rem);
+		font-weight: 800;
+		letter-spacing: -0.025em;
+		color: var(--text-main);
+		line-height: 1.2;
+		transition: color var(--dur-fast) ease;
+	}
+
+	.edu-index-row:hover .edu-card-title {
+		color: var(--accent);
+	}
+
+	.edu-card-inst {
+		margin: 0 0 0.35rem;
+		font-size: var(--type-body);
+		font-weight: 500;
+		color: var(--text-muted);
+	}
+
+	.edu-card-summary {
+		margin: 0.65rem 0 0;
+		font-size: var(--type-xyz);
+		line-height: 1.55;
+		color: var(--text-main);
+		max-width: 46rem;
+	}
+
+	.edu-view-btn {
+		margin-top: 0.25rem;
+		white-space: nowrap;
+	}
+
+	.edu-index-activity {
+		margin-top: 1rem;
+		padding-top: 1rem;
+		border-top: 1px solid rgba(95, 80, 56, 0.1);
+		padding-left: 4.75rem;
+	}
+
+	@media (max-width: 768px) {
+		.edu-index-row {
+			grid-template-columns: 1fr;
+			gap: 1rem;
+		}
+
+		.edu-index-activity {
+			padding-left: 0;
+		}
+	}
+</style>

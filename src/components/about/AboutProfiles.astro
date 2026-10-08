@@ -1,0 +1,56 @@
+---
+import type { OnlineProfileItem } from '../../data/aboutData';
+
+interface Props {
+	profiles: OnlineProfileItem[];
+}
+
+const { profiles } = Astro.props;
+---
+
+<section class="about-section" id="profiles" aria-labelledby="profiles-heading">
+	<div class="section-kicker">
+		<h2 id="profiles-heading" class="label font-mono">Profiles</h2>
+		<span class="section-link font-mono text-muted">Problem Solving & Accounts ↗</span>
+	</div>
+
+	<div class="about-linkcards-grid">
+		{profiles.map((profile) => {
+			const previewUrl = `https://api.microlink.io/?url=${encodeURIComponent(profile.url)}&screenshot=true&meta=false&embed=screenshot.url`;
+
+			return (
+				<a
+					href={profile.url}
+					target="_blank"
+					rel="noopener noreferrer"
+					class={`about-linkcard platform-${profile.platformId}`}
+					title={`Open ${profile.platform} profile (${profile.handle})`}
+				>
+					{/* Top label matching screenshot */}
+					<div class="about-linkcard-top">
+						<span class="about-linkcard-tag font-mono">{profile.badgeTag || 'Link'}</span>
+						<span class="about-linkcard-arrow font-mono" aria-hidden="true">↗</span>
+					</div>
+
+					{/* Real webpage screenshot preview with theme-aware shading */}
+					<div class="about-linkcard-media">
+						<img
+							src={previewUrl}
+							alt={`${profile.platform} live webpage preview`}
+							class="about-linkcard-img"
+							loading="lazy"
+							decoding="async"
+						/>
+						<div class="preview-theme-overlay" aria-hidden="true"></div>
+					</div>
+
+					{/* Bottom card details matching screenshot */}
+					<div class="about-linkcard-bottom">
+						<p class="about-linkcard-title font-sans">{profile.platform}</p>
+						<p class="about-linkcard-subtitle font-mono">{profile.platform}</p>
+					</div>
+				</a>
+			);
+		})}
+	</div>
+</section>

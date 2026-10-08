@@ -37,7 +37,7 @@ const { album, prev, next } = Astro.props;
 	alignStart
 >
 	<!-- Breadcrumb -->
-	<nav class="attic-crumb font-mono" aria-label="Breadcrumb">
+	<nav class="attic-crumb font-sans" aria-label="Breadcrumb">
 		<a href="/about" class="attic-crumb-link">About</a>
 		<span class="attic-crumb-sep" aria-hidden="true">/</span>
 		<a href="/gallery" class="attic-crumb-link">Gallery</a>
@@ -47,20 +47,20 @@ const { album, prev, next } = Astro.props;
 
 	<!-- Editorial Story Masthead -->
 	<header class="story-masthead">
-		<div class="story-header-meta font-mono">
-			<span class="label">{album.tag}</span>
-			{album.period && <span class="story-header-period">· {album.period}</span>}
+		<div class="story-header-meta font-sans">
+			<span class="label font-sans">{album.tag}</span>
+			{album.period && <span class="story-header-period font-sans">· {album.period}</span>}
 		</div>
 
-		<h1 class="story-main-title">{album.title}</h1>
+		<h1 class="story-main-title font-sans">{album.title}</h1>
 
 		{album.story && (
 			<div class="story-prologue">
-				<p class="story-prologue-text">{album.story}</p>
+				<p class="story-prologue-text font-sans">{album.story}</p>
 			</div>
 		)}
 
-		<dl class="edu-facts-rail font-mono story-facts-rail">
+		<dl class="edu-facts-rail font-sans story-facts-rail">
 			{album.period && (
 				<div class="edu-fact">
 					<dt>Timeline</dt>
@@ -80,95 +80,175 @@ const { album, prev, next } = Astro.props;
 			{album.memoirHref && (
 				<div class="edu-fact">
 					<dt>Documentary</dt>
-					<dd><a href={album.memoirHref} class="text-link">Dedicated memoir essay →</a></dd>
+					<dd><a href={album.memoirHref} class="text-link font-sans">Dedicated memoir essay →</a></dd>
 				</div>
 			)}
 		</dl>
 	</header>
 
-	<!-- Visual Narrative Stream -->
-	<main class="story-stream" aria-label="Visual narrative stream">
-		{album.photos.map((photo, idx) => {
-			const isCinematic = photo.span === 'wide' || photo.span === 'full' || album.photos.length === 1;
-			const isReversed = !isCinematic && idx % 2 === 1;
+	<!-- Pure Visual Grid (Masonry / Bento Style) -->
+	<main class="album-grid-container" aria-label="Photo collection grid">
+		<div class="album-photo-grid">
+			{album.photos.map((photo, idx) => {
+				const isPortrait = photo.orientation === 'portrait';
+				const isPanoramic = photo.aspectRatio && photo.aspectRatio > 2.2;
+				const isExtraTall = photo.aspectRatio && photo.aspectRatio < 0.55;
 
-			return (
-				<section
-					class:list={[
-						'story-scene',
-						isCinematic ? 'scene-cinematic' : 'scene-split',
-						{ 'is-reversed': isReversed }
-					]}
-					id={`scene-${photo.id}`}
-				>
-					<div class="scene-visual">
-						<figure class="scene-plate">
-							<div class="scene-photo-wrap">
-								<img
-									src={photo.src}
-									alt={photo.alt || photo.title || `${album.title} record ${idx + 1}`}
-									loading={idx < 2 ? 'eager' : 'lazy'}
-								/>
+				const layoutClass =
+					photo.span === 'full' || isPanoramic
+						? 'is-span-full'
+						: photo.span === 'wide'
+						? 'is-span-wide'
+						: isExtraTall
+						? 'is-portrait-tall'
+						: isPortrait
+						? 'is-portrait'
+						: (idx % 8 === 0 && album.photos.length > 4)
+						? 'is-featured-landscape'
+						: 'is-landscape';
+
+				return (
+					<figure
+						class:list={['album-photo-item', layoutClass]}
+						data-spotlight-src={photo.src}
+						data-spotlight-title={photo.title || `${album.title} — Record ${idx + 1}`}
+						data-spotlight-caption={photo.caption || photo.story || ''}
+					>
+						<button
+							type="button"
+							class="album-photo-btn"
+							aria-label={`View photo ${idx + 1}: ${photo.title || album.title}`}
+						>
+							<img
+								src={photo.src}
+								alt={photo.alt || photo.title || `${album.title} photo ${idx + 1}`}
+								class="album-photo-img"
+								loading={idx < 4 ? 'eager' : 'lazy'}
+							/>
+							<div class="album-photo-overlay" aria-hidden="true">
+								<span class="overlay-expand-icon">⤢</span>
 							</div>
-							<figcaption class="scene-plate-caption font-mono">
-								<span class="plate-num">REC // {String(idx + 1).padStart(2, '0')}</span>
-								{photo.date && <span class="plate-date">{photo.date}</span>}
-								{photo.location && <span class="plate-loc">{photo.location}</span>}
-							</figcaption>
-						</figure>
-					</div>
-
-					<div class="scene-content">
-						<div class="scene-kicker-line font-mono">
-							<span class="scene-number">SCENE {String(idx + 1).padStart(2, '0')}</span>
-							<span class="scene-total">/ {String(album.photos.length).padStart(2, '0')}</span>
-						</div>
-
-						{photo.title && <h2 class="scene-title">{photo.title}</h2>}
-
-						{photo.story && <p class="scene-story-p">{photo.story}</p>}
-
-						{photo.caption && photo.caption !== photo.story && (
-							<div class="scene-field-note font-mono">
-								<span class="field-note-tag">FIELD NOTE</span>
-								<p class="field-note-text">{photo.caption}</p>
-							</div>
-						)}
-					</div>
-				</section>
-			);
-		})}
+						</button>
+					</figure>
+				);
+			})}
+		</div>
 	</main>
 
+	<!-- Spotlight / Lightbox Modal -->
+	<div id="gallery-spotlight-modal" class="gallery-spotlight" aria-hidden="true" role="dialog">
+		<div class="gallery-spotlight-backdrop" id="spotlight-backdrop"></div>
+		<div class="gallery-spotlight-panel font-sans">
+			<button class="gallery-spotlight-close font-sans" id="spotlight-close" type="button" aria-label="Close">Close ✕</button>
+			<button class="gallery-spotlight-nav prev font-sans" id="spotlight-prev" type="button" aria-label="Previous photo">←</button>
+			<div class="gallery-spotlight-stage">
+				<img id="spotlight-img" src="" alt="" class="gallery-spotlight-img" />
+				<div class="gallery-spotlight-meta">
+					<div>
+						<h3 id="spotlight-title" class="gallery-spotlight-title font-sans"></h3>
+						<p id="spotlight-desc" class="gallery-spotlight-caption font-sans"></p>
+					</div>
+					<span id="spotlight-counter" class="gallery-spotlight-counter font-sans"></span>
+				</div>
+			</div>
+			<button class="gallery-spotlight-nav next font-sans" id="spotlight-next" type="button" aria-label="Next photo">→</button>
+		</div>
+	</div>
+
 	<!-- Sequential Storytelling Cross-Nav -->
-	<footer class="story-nav font-mono" aria-label="Story sequential navigation">
+	<footer class="story-nav font-sans" aria-label="Story sequential navigation">
 		<div class="story-nav-prev">
 			{prev && (
-				<a href={`/gallery/${prev.id}`} class="text-link">
+				<a href={`/gallery/${prev.id}`} class="text-link font-sans">
 					← Previous: {prev.title}
 				</a>
 			)}
 		</div>
 
-		<a href="/gallery" class="text-link story-nav-index">
-			↑ All preserved stories
+		<a href="/gallery" class="text-link font-sans story-nav-index">
+			↑ All preserved albums
 		</a>
 
 		<div class="story-nav-next">
 			{next && (
-				<a href={`/gallery/${next.id}`} class="text-link">
+				<a href={`/gallery/${next.id}`} class="text-link font-sans">
 					Next: {next.title} →
 				</a>
 			)}
 		</div>
 	</footer>
+
+	<script>
+		function initSpotlight() {
+			const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-spotlight-src]'));
+			const modal = document.getElementById('gallery-spotlight-modal');
+			const backdrop = document.getElementById('spotlight-backdrop');
+			const closeBtn = document.getElementById('spotlight-close');
+			const prevBtn = document.getElementById('spotlight-prev');
+			const nextBtn = document.getElementById('spotlight-next');
+			const spotImg = document.getElementById('spotlight-img') as HTMLImageElement | null;
+			const spotTitle = document.getElementById('spotlight-title');
+			const spotDesc = document.getElementById('spotlight-desc');
+			const spotCounter = document.getElementById('spotlight-counter');
+
+			if (!modal || !spotImg || cards.length === 0) return;
+
+			let currentIndex = 0;
+
+			function openSpotlight(index: number) {
+				currentIndex = (index + cards.length) % cards.length;
+				const card = cards[currentIndex];
+				const src = card.dataset.spotlightSrc || '';
+				const title = card.dataset.spotlightTitle || '';
+				const caption = card.dataset.spotlightCaption || '';
+
+				spotImg.src = src;
+				spotImg.alt = title || caption || 'Gallery photo';
+				if (spotTitle) spotTitle.textContent = title;
+				if (spotDesc) spotDesc.textContent = caption;
+				if (spotCounter) spotCounter.textContent = `${currentIndex + 1} / ${cards.length}`;
+
+				modal.classList.add('is-open');
+				modal.setAttribute('aria-hidden', 'false');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeSpotlight() {
+				modal.classList.remove('is-open');
+				modal.setAttribute('aria-hidden', 'true');
+				document.body.style.overflow = '';
+			}
+
+			cards.forEach((card, index) => {
+				const btn = card.querySelector('button');
+				if (btn) {
+					btn.addEventListener('click', () => openSpotlight(index));
+				}
+			});
+
+			closeBtn?.addEventListener('click', closeSpotlight);
+			backdrop?.addEventListener('click', closeSpotlight);
+			prevBtn?.addEventListener('click', () => openSpotlight(currentIndex - 1));
+			nextBtn?.addEventListener('click', () => openSpotlight(currentIndex + 1));
+
+			window.addEventListener('keydown', (e) => {
+				if (!modal.classList.contains('is-open')) return;
+				if (e.key === 'Escape') closeSpotlight();
+				if (e.key === 'ArrowRight') openSpotlight(currentIndex + 1);
+				if (e.key === 'ArrowLeft') openSpotlight(currentIndex - 1);
+			});
+		}
+
+		initSpotlight();
+		document.addEventListener('astro:page-load', initSpotlight);
+	</script>
 </BaseLayout>
 
 <style>
 	.story-masthead {
-		padding-bottom: 2.75rem;
+		padding-bottom: 2.5rem;
 		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
-		margin-bottom: 3.5rem;
+		margin-bottom: 2.5rem;
 	}
 
 	.story-header-meta {
@@ -211,180 +291,252 @@ const { album, prev, next } = Astro.props;
 		margin-top: 2rem;
 	}
 
-	/* Story Scenes Stream */
-	.story-stream {
-		display: flex;
-		flex-direction: column;
-		gap: 4.5rem;
-		margin-bottom: 4.5rem;
+	/* Photo Grid Container */
+	.album-grid-container {
+		width: 100%;
+		margin-bottom: 4rem;
 	}
 
-	.story-scene {
-		position: relative;
-		padding-top: 1.5rem;
-	}
-
-	/* Cinematic Wide Layout */
-	.scene-cinematic {
-		display: flex;
-		flex-direction: column;
-		gap: 1.75rem;
-	}
-
-	.scene-cinematic .scene-visual {
+	/* Dynamic Seamless Masonry/Bento Grid */
+	.album-photo-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		grid-auto-flow: dense;
+		gap: 0.5rem;
 		width: 100%;
 	}
 
-	.scene-cinematic .scene-photo-wrap {
-		width: 100%;
-		max-height: 640px;
-	}
-
-	.scene-cinematic .scene-content {
-		display: grid;
-		grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
-		gap: 1.5rem 2.5rem;
-		align-items: start;
-		padding-top: 0.5rem;
-	}
-
-	/* Split Alternating Layout */
-	.scene-split {
-		display: grid;
-		grid-template-columns: minmax(0, 1.35fr) minmax(0, 1fr);
-		gap: 2.25rem 3rem;
-		align-items: start;
-	}
-
-	.scene-split.is-reversed {
-		grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-	}
-
-	.scene-split.is-reversed .scene-visual {
-		order: 2;
-	}
-
-	.scene-split.is-reversed .scene-content {
-		order: 1;
-	}
-
-	/* Scene Plate (Archival Matting) */
-	.scene-plate {
+	.album-photo-item {
 		margin: 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.45rem;
+		position: relative;
+		overflow: hidden;
+		background: var(--card-bg);
+		border-radius: var(--radius-md, 10px);
+		aspect-ratio: 4 / 3;
+		transition: transform 0.25s var(--ease-ui), box-shadow 0.25s var(--ease-ui);
 	}
 
-	.scene-photo-wrap {
+	.album-photo-item.is-landscape {
+		aspect-ratio: 4 / 3;
+	}
+
+	.album-photo-item.is-portrait {
+		grid-row: span 2;
+		aspect-ratio: 3 / 4;
+	}
+
+	.album-photo-item.is-portrait-tall {
+		grid-row: span 3;
+		aspect-ratio: 9 / 16;
+	}
+
+	.album-photo-item.is-featured-landscape {
+		grid-column: span 2;
+		grid-row: span 2;
+		aspect-ratio: 16 / 10;
+	}
+
+	.album-photo-item.is-span-wide {
+		grid-column: span 2;
+		aspect-ratio: 16 / 9;
+	}
+
+	.album-photo-item.is-span-full {
+		grid-column: 1 / -1;
+		aspect-ratio: 21 / 9;
+	}
+
+	.album-photo-btn {
+		display: block;
 		width: 100%;
-		border-radius: 2px;
-		border: 1px solid rgba(95, 80, 56, 0.16);
-		background: var(--card-bg);
-		overflow: hidden;
+		height: 100%;
+		padding: 0;
+		margin: 0;
+		border: 0;
+		background: transparent;
+		cursor: pointer;
+		position: relative;
+		text-align: left;
+	}
+
+	.album-photo-img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: center;
+		transition: transform 0.4s var(--ease-out), filter 0.3s ease;
+	}
+
+	.album-photo-overlay {
+		position: absolute;
+		inset: 0;
+		background: rgba(15, 13, 11, 0.35);
+		opacity: 0;
+		transition: opacity 0.25s ease;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
-	.scene-photo-wrap img {
-		display: block;
+	.overlay-expand-icon {
+		color: #ffffff;
+		font-size: 1.5rem;
+		filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+		transform: scale(0.85);
+		transition: transform 0.25s var(--ease-out);
+	}
+
+	.album-photo-item:hover {
+		z-index: 2;
+		box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+	}
+
+	.album-photo-item:hover .album-photo-img {
+		transform: scale(1.03);
+	}
+
+	.album-photo-item:hover .album-photo-overlay {
+		opacity: 1;
+	}
+
+	.album-photo-item:hover .overlay-expand-icon {
+		transform: scale(1);
+	}
+
+	/* Spotlight Modal */
+	.gallery-spotlight {
+		position: fixed;
+		inset: 0;
+		z-index: 9999;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		opacity: 0;
+		pointer-events: none;
+		transition: opacity 0.25s var(--ease-ui);
+	}
+
+	.gallery-spotlight.is-open {
+		opacity: 1;
+		pointer-events: auto;
+	}
+
+	.gallery-spotlight-backdrop {
+		position: absolute;
+		inset: 0;
+		background: rgba(20, 18, 15, 0.92);
+		backdrop-filter: blur(8px);
+		-webkit-backdrop-filter: blur(8px);
+	}
+
+	.gallery-spotlight-panel {
+		position: relative;
+		z-index: 2;
+		width: min(94vw, 1200px);
+		max-height: 92vh;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		padding: 1.5rem 1rem 1rem;
+		box-sizing: border-box;
+	}
+
+	.gallery-spotlight-close {
+		position: absolute;
+		top: -0.5rem;
+		right: 0.5rem;
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		color: #ffffff;
+		padding: 0.4rem 0.85rem;
+		border-radius: 9999px;
+		cursor: pointer;
+		font-size: var(--type-caption);
+		letter-spacing: 0.05em;
+		transition: background 0.2s, color 0.2s;
+	}
+
+	.gallery-spotlight-close:hover {
+		background: var(--accent);
+		color: #ffffff;
+	}
+
+	.gallery-spotlight-nav {
+		position: absolute;
+		top: 50%;
+		transform: translateY(-50%);
+		background: rgba(255, 255, 255, 0.08);
+		border: 1px solid rgba(255, 255, 255, 0.15);
+		color: #ffffff;
+		font-size: 1.25rem;
+		width: 44px;
+		height: 44px;
+		border-radius: 50%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		cursor: pointer;
+		transition: background 0.2s, transform 0.2s;
+	}
+
+	.gallery-spotlight-nav:hover {
+		background: var(--accent);
+		transform: translateY(-50%) scale(1.08);
+	}
+
+	.gallery-spotlight-nav.prev {
+		left: -0.5rem;
+	}
+
+	.gallery-spotlight-nav.next {
+		right: -0.5rem;
+	}
+
+	.gallery-spotlight-stage {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
 		width: 100%;
-		height: auto;
-		max-height: 540px;
+		max-width: 1000px;
+	}
+
+	.gallery-spotlight-img {
+		max-width: 100%;
+		max-height: 72vh;
 		object-fit: contain;
-		background: transparent;
+		border-radius: 4px;
+		box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
 	}
 
-	.scene-plate-caption {
+	.gallery-spotlight-meta {
 		display: flex;
-		align-items: baseline;
-		flex-wrap: wrap;
-		gap: 0.6rem;
-		font-size: var(--type-caption);
-		color: var(--text-muted);
-		padding: 0.2rem 0.1rem 0;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.5rem;
+		width: 100%;
+		color: #f8f6f0;
 	}
 
-	.plate-num {
-		color: var(--accent);
-		font-weight: 700;
-		letter-spacing: 0.08em;
-	}
-
-	.plate-date,
-	.plate-loc {
-		opacity: 0.85;
-	}
-
-	/* Scene Narrative */
-	.scene-content {
-		display: flex;
-		flex-direction: column;
-		min-width: 0;
-	}
-
-	.scene-kicker-line {
-		display: flex;
-		align-items: baseline;
-		gap: 0.35rem;
-		font-size: var(--type-caption);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		margin-bottom: 0.35rem;
-	}
-
-	.scene-number {
-		color: var(--accent);
-		font-weight: 700;
-	}
-
-	.scene-total {
-		color: var(--text-muted);
-		opacity: 0.7;
-	}
-
-	.scene-title {
-		margin: 0 0 0.85rem;
-		font-size: clamp(1.25rem, 2.3vw, 1.6rem);
-		font-weight: 800;
-		line-height: 1.2;
-		letter-spacing: -0.025em;
-		color: var(--text-main);
-	}
-
-	.scene-story-p {
-		margin: 0 0 1rem;
-		font-size: var(--type-body);
-		line-height: 1.68;
-		color: var(--text-main);
-		max-width: 40rem;
-	}
-
-	.scene-field-note {
-		margin-top: 0.35rem;
-		padding: 0.75rem 1rem;
-		background: var(--card-bg);
-		border-left: 2px solid rgba(95, 80, 56, 0.25);
-		border-radius: 0 2px 2px 0;
-		display: flex;
-		flex-direction: column;
-		gap: 0.25rem;
-		max-width: 38rem;
-	}
-
-	.field-note-tag {
-		font-size: 0.68rem;
-		color: var(--accent);
-		font-weight: 700;
-		letter-spacing: 0.08em;
-	}
-
-	.field-note-text {
+	.gallery-spotlight-title {
 		margin: 0;
-		font-size: var(--type-meta);
-		line-height: 1.5;
-		color: var(--text-muted);
+		font-size: 1rem;
+		font-weight: 700;
+	}
+
+	.gallery-spotlight-caption {
+		margin: 0.25rem 0 0;
+		font-size: var(--type-caption);
+		color: rgba(248, 246, 240, 0.7);
+		max-width: 45rem;
+	}
+
+	.gallery-spotlight-counter {
+		flex-shrink: 0;
+		font-size: var(--type-caption);
+		color: var(--accent);
+		font-weight: 700;
 	}
 
 	/* Sequential Navigation Footer */
@@ -410,28 +562,24 @@ const { album, prev, next } = Astro.props;
 		text-align: right;
 	}
 
-	@media (max-width: 820px) {
-		.story-stream {
-			gap: 3.5rem;
+	@media (max-width: 1024px) {
+		.album-photo-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+	}
+
+	@media (max-width: 768px) {
+		.album-photo-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 0.35rem;
 		}
 
-		.scene-cinematic .scene-content {
-			grid-template-columns: 1fr;
-			gap: 1rem;
+		.gallery-spotlight-nav.prev {
+			left: 0.25rem;
 		}
 
-		.scene-split,
-		.scene-split.is-reversed {
-			grid-template-columns: 1fr;
-			gap: 1.25rem;
-		}
-
-		.scene-split.is-reversed .scene-visual {
-			order: 1;
-		}
-
-		.scene-split.is-reversed .scene-content {
-			order: 2;
+		.gallery-spotlight-nav.next {
+			right: 0.25rem;
 		}
 
 		.story-nav {
@@ -443,6 +591,21 @@ const { album, prev, next } = Astro.props;
 		.story-nav-prev,
 		.story-nav-next {
 			text-align: center;
+		}
+	}
+
+	@media (max-width: 480px) {
+		.album-photo-grid {
+			grid-template-columns: 1fr;
+		}
+
+		.album-photo-item.pattern-portrait-tall,
+		.album-photo-item.pattern-landscape-wide,
+		.album-photo-item.pattern-wide,
+		.album-photo-item.pattern-full {
+			grid-column: auto;
+			grid-row: auto;
+			aspect-ratio: 4 / 3;
 		}
 	}
 </style>

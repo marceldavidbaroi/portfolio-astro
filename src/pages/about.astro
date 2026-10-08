@@ -8,6 +8,7 @@ import AboutPhilosophy from '../components/about/AboutPhilosophy.astro';
 import AboutEducationResearch from '../components/about/AboutEducationResearch.astro';
 import AboutGallery from '../components/about/AboutGallery.astro';
 import AboutCredentials from '../components/about/AboutCredentials.astro';
+import AboutProfiles from '../components/about/AboutProfiles.astro';
 import AboutBeyondTerminal from '../components/about/AboutBeyondTerminal.astro';
 import HomeContactClose from '../components/home/HomeContactClose.astro';
 import { getCollection } from 'astro:content';
@@ -17,7 +18,8 @@ import {
 	principles,
 	skillCategories,
 	compactCerts,
-	compactPursuits
+	compactPursuits,
+	onlineProfiles
 } from '../data/aboutData';
 
 import '../styles/about.css';
@@ -48,6 +50,7 @@ const experience = (await getCollection('experience'))
 	<AboutEducationResearch />
 	<AboutGallery />
 	<AboutCredentials compactCerts={compactCerts} />
+	<AboutProfiles profiles={onlineProfiles} />
 	<AboutBeyondTerminal compactPursuits={compactPursuits} />
 	<HomeContactClose />
 </BaseLayout>

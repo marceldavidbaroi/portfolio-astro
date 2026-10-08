@@ -44,17 +44,17 @@ const facts = isBsc
 				</div>
 			)}
 			<div class="edu-masthead-headings">
-				<p class="label font-mono">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
-				<h1 class="edu-doc-title">{program.degree}</h1>
+				<p class="label font-sans">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
+				<h1 class="edu-doc-title font-sans">{program.degree}</h1>
 			</div>
 		</div>
-		<p class="edu-doc-inst">
+		<p class="edu-doc-inst font-sans">
 			<a href={program.institutionUrl} target="_blank" rel="noopener noreferrer">{program.institution}</a>
 			<span> · {program.location}</span>
 		</p>
-		{program.summary && <p class="edu-doc-lead">{program.summary}</p>}
+		{program.summary && <p class="edu-doc-lead font-sans">{program.summary}</p>}
 	</div>
-	<dl class="edu-facts-rail font-mono">
+	<dl class="edu-facts-rail font-sans">
 		{facts.map((fact) => (
 			<div class="edu-fact">
 				<dt>{fact.label}</dt>

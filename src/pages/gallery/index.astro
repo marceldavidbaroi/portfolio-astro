@@ -1,7 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
-import AlbumPhotoStack from '../../components/gallery/AlbumPhotoStack.astro';
+import AlbumStampCard from '../../components/gallery/AlbumStampCard.astro';
 import { getAllAlbums } from '../../lib/gallery';
 import '../../styles/about.css';
 
@@ -33,9 +33,9 @@ const filterTabs = [
 	<AtticBreadcrumb current="Gallery" />
 
 	<header class="about-attic-head">
-		<p class="label font-mono about-attic-kicker">Gallery</p>
-		<h1 class="about-attic-title">Photo albums &amp; memoirs</h1>
-		<p class="about-attic-lead">
+		<p class="label font-sans about-attic-kicker">Gallery</p>
+		<h1 class="about-attic-title font-sans">Photo albums &amp; memoirs</h1>
+		<p class="about-attic-lead font-sans">
 			Preserved photography collections across engineering workbenches, academic thesis defenses, collegiate discipline, and historic civic operations. Each photo collection carries its narrative story.
 		</p>
 	</header>
@@ -46,66 +46,36 @@ const filterTabs = [
 			{filterTabs.map((tab, idx) => (
 				<button
 					type="button"
-					class:list={['tab', { active: idx === 0 }]}
+					class:list={['tab', 'font-sans', { active: idx === 0 }]}
 					data-category={tab.id}
 					role="tab"
 					aria-selected={idx === 0 ? 'true' : 'false'}
 				>
-					{tab.label} <span class="tab-count font-mono">({tab.count})</span>
+					{tab.label} <span class="tab-count font-sans">({tab.count})</span>
 				</button>
 			))}
 		</div>
 	</div>
 
-	<!-- Albums Editorial Rail -->
-	<div class="gallery-catalog" id="gallery-catalog">
+	<!-- Albums Stamp Grid -->
+	<div class="gallery-stamp-grid" id="gallery-catalog">
 		{allAlbums.map((album) => (
-			<a
-				class="about-rail-row gallery-catalog-row"
-				href={`/gallery/${album.id}`}
-				data-album-category={album.category}
-			>
-				<div class="about-rail-when font-mono">
-					<p class="gallery-row-period">{album.period || 'Preserved'}</p>
-					<span class="gallery-row-count">{album.photoCount} photos</span>
-				</div>
-
-				<div class="gallery-row-body">
-					<p class="about-rail-tag font-mono">{album.tag}</p>
-					<h2 class="about-rail-title">{album.title}</h2>
-					{album.story ? (
-						<p class="about-rail-sub">{album.story}</p>
-					) : album.description ? (
-						<p class="about-rail-sub">{album.description}</p>
-					) : null}
-					<div class="gallery-row-meta font-mono">
-						{album.location && <span>{album.location}</span>}
-						{album.location && <span class="meta-sep">·</span>}
-						<span class="section-link">Open album →</span>
-					</div>
-				</div>
-
-				{album.previewThumbs.length > 0 && (
-					<AlbumPhotoStack
-						thumbs={album.previewThumbs}
-						photoCount={album.photoCount}
-						altTitle={album.title}
-					/>
-				)}
-			</a>
+			<div class="gallery-card-wrapper" data-album-category={album.category}>
+				<AlbumStampCard album={album} />
+			</div>
 		))}
 	</div>
 
-	<p class="empty font-mono" id="gallery-empty" hidden>
+	<p class="empty font-sans" id="gallery-empty" hidden>
 		No albums found in this category.
 	</p>
 
-	<a href="/about" class="about-return font-mono">← About</a>
+	<a href="/about" class="about-return font-sans">← About</a>
 </BaseLayout>
 
 <script>
 	const tabs = document.querySelectorAll<HTMLButtonElement>('.filters .tab');
-	const rows = document.querySelectorAll<HTMLElement>('.gallery-catalog-row');
+	const cards = document.querySelectorAll<HTMLElement>('.gallery-card-wrapper');
 	const emptyMsg = document.getElementById('gallery-empty');
 
 	tabs.forEach((tab) => {
@@ -119,10 +89,10 @@ const filterTabs = [
 			});
 
 			let visibleCount = 0;
-			rows.forEach((row) => {
-				const rowCat = row.dataset.albumCategory;
-				const shouldShow = cat === 'all' || rowCat === cat;
-				row.style.display = shouldShow ? 'grid' : 'none';
+			cards.forEach((card) => {
+				const cardCat = card.dataset.albumCategory;
+				const shouldShow = cat === 'all' || cardCat === cat;
+				card.style.display = shouldShow ? 'block' : 'none';
 				if (shouldShow) visibleCount++;
 			});
 
@@ -135,7 +105,7 @@ const filterTabs = [
 
 <style>
 	.filters {
-		margin: 0 0 1.5rem;
+		margin: 0 0 2rem;
 		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
 	}
 
@@ -176,62 +146,16 @@ const filterTabs = [
 		opacity: 0.8;
 	}
 
-	.gallery-catalog {
-		display: flex;
-		flex-direction: column;
+	.gallery-stamp-grid {
+		display: grid;
+		grid-template-columns: repeat(4, minmax(0, 1fr));
+		gap: 2rem 1.5rem;
 		margin-bottom: 3.5rem;
 	}
 
-	.gallery-catalog-row {
-		display: grid;
-		grid-template-columns: 7.4rem minmax(0, 1fr) 8.5rem;
-		gap: 1.25rem 1.5rem;
-		align-items: center;
-		padding: 1.35rem 0;
-		border-top: 1px solid rgba(95, 80, 56, 0.1);
-		text-decoration: none;
-		color: inherit;
-	}
-
-	.gallery-catalog-row:first-child {
-		border-top: 0;
-	}
-
-	.gallery-catalog-row:hover .about-rail-title {
-		color: var(--accent);
-	}
-
-	.gallery-row-period {
-		margin: 0.15rem 0 0.2rem;
-		font-size: var(--type-meta);
-		color: var(--text-muted);
-		line-height: 1.35;
-	}
-
-	.gallery-row-count {
-		font-size: var(--type-caption);
-		color: var(--text-muted);
-		opacity: 0.8;
-	}
-
-	.gallery-row-body {
-		display: flex;
-		flex-direction: column;
+	.gallery-card-wrapper {
+		display: block;
 		min-width: 0;
-	}
-
-	.gallery-row-meta {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-		margin-top: 0.5rem;
-		font-size: var(--type-meta);
-		color: var(--text-muted);
-	}
-
-	.gallery-row-meta .meta-sep {
-		opacity: 0.4;
 	}
 
 	.empty {
@@ -244,11 +168,25 @@ const filterTabs = [
 		display: none !important;
 	}
 
-	@media (max-width: 768px) {
-		.gallery-catalog-row {
+	@media (max-width: 960px) {
+		.gallery-stamp-grid {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+			gap: 1.75rem 1.25rem;
+		}
+	}
+
+	@media (max-width: 680px) {
+		.gallery-stamp-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: 1.5rem 1rem;
+		}
+	}
+
+	@media (max-width: 400px) {
+		.gallery-stamp-grid {
 			grid-template-columns: 1fr;
-			gap: 0.75rem;
-			align-items: start;
+			gap: 1.25rem;
 		}
 	}
 </style>
+

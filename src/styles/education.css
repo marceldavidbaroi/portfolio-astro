@@ -7,6 +7,12 @@
 	gap: 2rem;
 	padding: 2rem 0 4rem;
 	margin: 0;
+	font-family: var(--font-sans);
+}
+
+.edu-detail-container,
+.edu-detail-container * {
+	font-family: var(--font-sans) !important;
 }
 
 .edu-masthead {

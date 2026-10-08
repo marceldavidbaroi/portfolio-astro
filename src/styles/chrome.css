@@ -15,6 +15,7 @@
 	padding: calc(1rem + env(safe-area-inset-top, 0px)) 2rem 1rem;
 	background: transparent;
 	border-bottom: 1px solid transparent;
+	z-index: 50;
 }
 
 .header-container {
@@ -25,6 +26,7 @@
 	justify-content: space-between;
 	gap: 1.25rem;
 	min-width: 0;
+	position: relative;
 }
 
 .nav {
@@ -59,6 +61,7 @@
 	cursor: pointer;
 	white-space: nowrap;
 	transition: color var(--dur-fast) ease;
+	user-select: none;
 }
 
 .nav-more-btn:hover,
@@ -71,16 +74,16 @@
 	position: absolute;
 	top: calc(100% + 8px);
 	right: 0;
-	min-width: 180px;
+	min-width: 200px;
 	background: var(--card-bg-elevated);
 	border: 1px solid var(--card-border);
 	border-radius: var(--radius-md);
 	padding: 0.45rem;
-	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.15), 0 0 0 1px var(--card-border);
+	box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18), 0 0 0 1px var(--card-border);
 	display: flex;
 	flex-direction: column;
 	gap: 0.2rem;
-	z-index: 60;
+	z-index: 999;
 	backdrop-filter: blur(12px);
 	animation: dropdownFadeIn 0.18s var(--ease-out);
 }

@@ -5,6 +5,10 @@ export type MediaAsset = {
 	caption?: string;
 	title?: string;
 	group?: string;
+	orientation?: 'portrait' | 'landscape' | 'square';
+	width?: number;
+	height?: number;
+	aspectRatio?: number;
 };
 
 type MediaEntry = { id: string; data: MediaAsset };
