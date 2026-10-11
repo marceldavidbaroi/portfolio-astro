@@ -102,6 +102,43 @@ const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().incl
 		<a href="/experience" class="text-link">Career Experience →</a>
 		<a href="/credentials" class="text-link">Credentials →</a>
 	</nav>
+	<script>
+		function setupEduIndexAnimations() {
+			const cards = document.querySelectorAll<HTMLElement>('.edu-index-card');
+			if (!cards.length) return;
+
+			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+				cards.forEach((c) => c.classList.add('is-revealed'));
+				return;
+			}
+
+			// Staggered reveal observer
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-revealed');
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					root: null,
+					rootMargin: '0px 0px -30px 0px',
+					threshold: 0.05
+				}
+			);
+
+			cards.forEach((c) => {
+				if (!c.classList.contains('is-revealed')) {
+					observer.observe(c);
+				}
+			});
+		}
+
+		setupEduIndexAnimations();
+		document.addEventListener('astro:page-load', setupEduIndexAnimations);
+	</script>
 </BaseLayout>
 
 <style>
@@ -117,7 +154,23 @@ const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().incl
 		border: 1px solid var(--card-border, rgba(95, 80, 56, 0.12));
 		border-radius: var(--radius-md, 10px);
 		padding: 1.75rem 1.75rem 1.5rem;
-		transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+		opacity: 0;
+		transform: translateY(14px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out),
+			border-color var(--dur-fast) ease,
+			box-shadow var(--dur-fast) ease;
+		will-change: opacity, transform;
+	}
+
+	.edu-index-card.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.edu-index-card:nth-child(2) {
+		transition-delay: 90ms;
 	}
 
 	.edu-index-card:hover {
@@ -143,6 +196,12 @@ const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().incl
 		background: #ffffff;
 		padding: 0.35rem;
 		border: 1px solid var(--card-border, rgba(95, 80, 56, 0.12));
+		transition: transform var(--dur-ui, 220ms) var(--ease-out);
+		will-change: transform;
+	}
+
+	.edu-index-row:hover .edu-card-logo {
+		transform: scale(1.03) translateY(-1px);
 	}
 
 	.edu-card-head {
@@ -196,6 +255,11 @@ const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().incl
 		padding-top: 1rem;
 		border-top: 1px solid rgba(95, 80, 56, 0.1);
 		padding-left: 4.75rem;
+		transition: border-color var(--dur-fast) ease;
+	}
+
+	.edu-index-card:hover .edu-index-activity {
+		border-top-color: rgba(95, 80, 56, 0.2);
 	}
 
 	@media (max-width: 768px) {
@@ -206,6 +270,15 @@ const thesisMetric = thesis?.keyMetrics?.find((m) => m.label?.toLowerCase().incl
 
 		.edu-index-activity {
 			padding-left: 0;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.edu-index-card,
+		.edu-card-logo {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
 		}
 	}
 </style>

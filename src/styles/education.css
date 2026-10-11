@@ -813,3 +813,38 @@
 	transform: translateX(2px);
 }
 
+/* Education Scroll Reveals */
+.edu-section,
+.edu-masthead,
+.semester-accordion,
+.edu-cross-nav {
+	opacity: 0;
+	transform: translateY(16px);
+	transition:
+		opacity var(--dur-enter, 600ms) var(--ease-out),
+		transform var(--dur-enter, 600ms) var(--ease-out);
+	will-change: opacity, transform;
+}
+
+.edu-section.is-revealed,
+.edu-masthead.is-revealed,
+.semester-accordion.is-revealed,
+.edu-cross-nav.is-revealed {
+	opacity: 1;
+	transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.edu-section,
+	.edu-masthead,
+	.semester-accordion,
+	.edu-cross-nav,
+	.cross-nav-link,
+	.view-gallery-btn,
+	.breadcrumb-link {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+	}
+}
+

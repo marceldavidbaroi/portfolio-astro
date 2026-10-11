@@ -16,15 +16,15 @@ const facts = isBsc
 	? [
 			{ label: 'Program', value: program.degree },
 			{ label: 'Institution', value: program.institutionShort },
-			{ label: 'CGPA', value: `${program.cgpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
-			{ label: 'Credits', value: String(program.totalCredits ?? '') },
+			{ label: 'CGPA', value: `${program.cgpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}`, rawNumber: program.cgpa, format: 'float', suffix: ` / ${program.maxGpa.toFixed(2)}` },
+			{ label: 'Credits', value: String(program.totalCredits ?? ''), rawNumber: program.totalCredits, format: 'int', suffix: '' },
 			{ label: 'Period', value: program.period },
 			{ label: 'Status', value: program.status ?? 'Completed' },
 		]
 	: [
 			{ label: 'Program', value: program.degree },
 			{ label: 'Institution', value: program.institutionShort },
-			{ label: 'GPA', value: `${program.gpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
+			{ label: 'GPA', value: `${program.gpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}`, rawNumber: program.gpa, format: 'float', suffix: ` / ${program.maxGpa.toFixed(2)}` },
 			{ label: 'Period', value: program.period },
 			{ label: 'Location', value: program.location },
 			{ label: 'Status', value: program.status ?? 'Completed' },
@@ -55,12 +55,20 @@ const facts = isBsc
 		{program.summary && <p class="edu-doc-lead font-sans">{program.summary}</p>}
 	</div>
 	<dl class="edu-facts-rail font-sans">
-		{facts.map((fact) => (
-			<div class="edu-fact">
-				<dt>{fact.label}</dt>
-				<dd>{fact.value}</dd>
-			</div>
-		))}
+		{facts.map((fact) => {
+			const isTicker = (fact.label === 'CGPA' || fact.label === 'GPA' || fact.label === 'Credits') && typeof fact.rawNumber === 'number';
+			return (
+				<div class="edu-fact">
+					<dt>{fact.label}</dt>
+					<dd
+						class:list={[{ 'edu-stat-ticker': isTicker }]}
+						data-target={isTicker ? fact.rawNumber : undefined}
+						data-format={isTicker ? fact.format : undefined}
+						data-suffix={isTicker ? fact.suffix : undefined}
+					>{fact.value}</dd>
+				</div>
+			);
+		})}
 	</dl>
 </header>
 

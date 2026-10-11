@@ -105,6 +105,11 @@
 .semester-accordion {
 	border: 1px solid rgba(95, 80, 56, 0.1);
 	background: var(--card-bg);
+	transition: border-color var(--dur-fast, 150ms) ease, box-shadow var(--dur-fast, 150ms) ease;
+}
+
+.semester-accordion:hover {
+	border-color: rgba(95, 80, 56, 0.22);
 }
 
 .semester-summary {
@@ -205,10 +210,11 @@
 	padding: 0.55rem 0.75rem;
 	border-bottom: 1px solid rgba(95, 80, 56, 0.06);
 	vertical-align: middle;
+	transition: background-color 120ms var(--ease-ui, ease);
 }
 
 .course-row:hover td {
-	background: rgba(95, 80, 56, 0.03);
+	background: var(--slot, rgba(95, 80, 56, 0.05));
 }
 
 .code-pill {
@@ -499,5 +505,13 @@
 
 	.transcript-toolbar-actions {
 		width: 100%;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.sem-chevron,
+	.courses-table td,
+	.semester-accordion {
+		transition: none !important;
 	}
 }

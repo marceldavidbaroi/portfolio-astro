@@ -310,8 +310,8 @@ const hasSkills = data.skillsByCategory && Object.keys(data.skillsByCategory).le
 	<footer class="story-nav font-mono exp-cross-nav" aria-label="Career sequential navigation">
 		<div class="story-nav-prev">
 			{prev && (
-				<a href={`/experience/${prev.id}`} class="text-link">
-					← Previous: {prev.company}
+				<a href={`/experience/${prev.id}`} class="text-link exp-nav-prev-link">
+					<span class="nav-arrow nav-arrow-prev">←</span> Previous: {prev.company}
 				</a>
 			)}
 		</div>
@@ -322,8 +322,8 @@ const hasSkills = data.skillsByCategory && Object.keys(data.skillsByCategory).le
 
 		<div class="story-nav-next">
 			{next && (
-				<a href={`/experience/${next.id}`} class="text-link">
-					Next: {next.company} →
+				<a href={`/experience/${next.id}`} class="text-link exp-nav-next-link">
+					Next: {next.company} <span class="nav-arrow nav-arrow-next">→</span>
 				</a>
 			)}
 		</div>
@@ -823,4 +823,127 @@ const hasSkills = data.skillsByCategory && Object.keys(data.skillsByCategory).le
 			order: 2;
 		}
 	}
+
+	/* —— Case Study Scroll-In Animations & KPI Number Pulse —— */
+	.case-reveal {
+		opacity: 0;
+		transform: translateY(20px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.case-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	/* Executive KPI Card Pulse */
+	.exp-facts-rail .edu-fact {
+		transition: transform var(--dur-enter, 600ms) var(--ease-out), border-color var(--dur-fast) ease;
+	}
+
+	.exp-facts-rail .edu-fact.pulse-kpi {
+		animation: kpiPulse 0.6s var(--ease-out) forwards;
+	}
+
+	@keyframes kpiPulse {
+		0% {
+			transform: scale(1.04);
+		}
+		100% {
+			transform: scale(1);
+		}
+	}
+
+	/* Previous / Next Role Arrow Hover Glide */
+	.nav-arrow {
+		display: inline-block;
+		transition: transform var(--dur-ui, 220ms) var(--ease-out);
+		will-change: transform;
+	}
+
+	.exp-nav-prev-link:hover .nav-arrow-prev {
+		transform: translateX(-3px);
+	}
+
+	.exp-nav-next-link:hover .nav-arrow-next {
+		transform: translateX(3px);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.case-reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.exp-facts-rail .edu-fact.pulse-kpi {
+			animation: none !important;
+			transform: none !important;
+		}
+
+		.nav-arrow {
+			transform: none !important;
+			transition: none !important;
+		}
+	}
 </style>
+
+<script>
+	function setupExpCaseStudyReveal() {
+		const revealElements = document.querySelectorAll<HTMLElement>(
+			'.exp-masthead, .exp-executive-box, .exp-block, .exp-prose, .exp-side-card, .exp-gallery-section, .story-scene, .exp-cross-nav'
+		);
+		if (!revealElements.length) return;
+
+		revealElements.forEach((el) => {
+			if (!el.classList.contains('case-reveal')) {
+				el.classList.add('case-reveal');
+			}
+		});
+
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReduced || !('IntersectionObserver' in window)) {
+			revealElements.forEach((el) => el.classList.add('is-revealed'));
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+
+						// Trigger KPI pulse when masthead or facts rail appears
+						if (entry.target.classList.contains('exp-masthead')) {
+							const facts = entry.target.querySelectorAll('.exp-facts-rail .edu-fact');
+							facts.forEach((fact, i) => {
+								setTimeout(() => {
+									fact.classList.add('pulse-kpi');
+								}, i * 60);
+							});
+						}
+
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				rootMargin: '0px 0px -40px 0px',
+				threshold: 0.08
+			}
+		);
+
+		revealElements.forEach((el) => {
+			if (!el.classList.contains('is-revealed')) {
+				observer.observe(el);
+			}
+		});
+	}
+
+	setupExpCaseStudyReveal();
+	document.addEventListener('astro:page-load', setupExpCaseStudyReveal);
+</script>

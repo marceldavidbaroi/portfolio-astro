@@ -20,11 +20,11 @@ const categories = Object.keys(courseCategoryLabels) as CourseCategory[];
 <div class="transcript-wrapper">
 	<ul class="transcript-stats">
 		<li>
-			<strong>{stats.cgpa.toFixed(2)}</strong>
+			<strong class="edu-stat-ticker" data-target={stats.cgpa} data-format="float" data-suffix="">{stats.cgpa.toFixed(2)}</strong>
 			<span>CGPA / 4.00</span>
 		</li>
 		<li>
-			<strong>{stats.totalCredits.toFixed(1)}</strong>
+			<strong class="edu-stat-ticker" data-target={stats.totalCredits} data-format="float" data-suffix="">{stats.totalCredits.toFixed(1)}</strong>
 			<span>Total credits</span>
 		</li>
 		<li>
