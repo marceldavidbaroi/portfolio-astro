@@ -155,4 +155,50 @@ const hasMarkdownBody = rawBody.trim().length > 0;
 			<CaseAdjacentNav prevProject={prevProject} nextProject={nextProject} />
 		</article>
 	</div>
+
+	<script>
+		function setupCaseStudyReveal() {
+			const revealElements = document.querySelectorAll<HTMLElement>(
+				'.case > section, .case-header, .case-jump-nav, .deep-dive-section, .adjacent, .case .close'
+			);
+			if (!revealElements.length) return;
+
+			// Add case-reveal class to eligible elements
+			revealElements.forEach((el) => {
+				if (!el.classList.contains('case-reveal')) {
+					el.classList.add('case-reveal');
+				}
+			});
+
+			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+				revealElements.forEach((el) => el.classList.add('is-revealed'));
+				return;
+			}
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-revealed');
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					root: null,
+					rootMargin: '0px 0px -40px 0px',
+					threshold: 0.08
+				}
+			);
+
+			revealElements.forEach((el) => {
+				if (!el.classList.contains('is-revealed')) {
+					observer.observe(el);
+				}
+			});
+		}
+
+		setupCaseStudyReveal();
+		document.addEventListener('astro:page-load', setupCaseStudyReveal);
+	</script>
 </BaseLayout>

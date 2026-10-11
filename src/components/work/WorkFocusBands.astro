@@ -64,6 +64,51 @@ const { projects } = Astro.props;
 	</div>
 </section>
 
+<script>
+	function setupScrollReveal() {
+		const items = document.querySelectorAll<HTMLElement>('.feature-band');
+		if (!items.length) return;
+
+		// Respect prefers-reduced-motion
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+			items.forEach((item) => item.classList.add('is-revealed'));
+			return;
+		}
+
+		if (!('IntersectionObserver' in window)) {
+			items.forEach((item) => item.classList.add('is-revealed'));
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				rootMargin: '0px 0px -60px 0px',
+				threshold: 0.12
+			}
+		);
+
+		items.forEach((item) => {
+			if (!item.classList.contains('is-revealed')) {
+				observer.observe(item);
+			}
+		});
+	}
+
+	// Run on initial load and view transitions
+	setupScrollReveal();
+	document.addEventListener('astro:page-load', setupScrollReveal);
+	document.addEventListener('work:filter-applied', setupScrollReveal);
+</script>
+
 <style>
 	.focus-section {
 		padding: 0.5rem 0 1.5rem;
@@ -90,6 +135,18 @@ const { projects } = Astro.props;
 		color: inherit;
 		padding: 2.75rem 0;
 		border-top: 1px solid var(--card-border);
+		opacity: 0;
+		transform: translateY(24px);
+		transition:
+			opacity 0.65s var(--ease-out),
+			transform 0.65s var(--ease-out),
+			border-color var(--dur-fast) ease;
+		will-change: opacity, transform;
+	}
+
+	.feature-band.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.focus-list .feature-band:first-child {
@@ -247,7 +304,12 @@ const { projects } = Astro.props;
 	}
 
 	@media (prefers-reduced-motion: reduce) {
-		.feature-band,
+		.feature-band {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
 		.feature-band::after,
 		.feature-title,
 		.inline-cta {

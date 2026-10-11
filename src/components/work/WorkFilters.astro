@@ -112,6 +112,9 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		stackBtns.forEach((btn) => {
 			btn.classList.toggle('is-on', Boolean(btn.dataset.techQuery) && q === (btn.dataset.techQuery || ''));
 		});
+
+		// Trigger re-check for scroll reveal on newly visible elements
+		document.dispatchEvent(new CustomEvent('work:filter-applied'));
 	}
 
 	tabs.forEach((tab) => {

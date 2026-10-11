@@ -408,4 +408,26 @@
 		transition: none !important;
 		transform: none !important;
 	}
+
+	.case-reveal {
+		opacity: 1 !important;
+		transform: none !important;
+		transition: none !important;
+	}
 }
+
+/* —— Case Study Scroll-In Animations —— */
+.case-reveal {
+	opacity: 0;
+	transform: translateY(22px);
+	transition:
+		opacity 0.62s var(--ease-out),
+		transform 0.62s var(--ease-out);
+	will-change: opacity, transform;
+}
+
+.case-reveal.is-revealed {
+	opacity: 1;
+	transform: translateY(0);
+}
+
