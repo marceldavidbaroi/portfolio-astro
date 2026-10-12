@@ -86,6 +86,12 @@ import { site } from '../../data/site';
 
 		if (!section || !stage || !designerLayer || !coderLayer || !designerDesc || !coderDesc) return;
 
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReduced) {
+			applyVisuals(50);
+			return;
+		}
+
 		let mouseX = 0;
 		let relMouseX = 50; // percentage
 		let currentXp = 50; // smoothed percentage (Zeno's paradox / lerp)

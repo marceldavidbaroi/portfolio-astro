@@ -56,10 +56,14 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 
 		{actionHref && (
 			<div class="hero-actions">
-				<a class="btn-solid font-mono" href={actionHref} target="_blank" rel="noopener noreferrer">{actionLabel}</a>
+				<a class="btn-solid font-mono research-action-btn" href={actionHref} target="_blank" rel="noopener noreferrer">{actionLabel}</a>
 				{publication.pdfDownloadUrl && publication.officialRepositoryUrl && (
 					<a class="btn-ghost font-mono" href={publication.pdfDownloadUrl} target="_blank" rel="noopener noreferrer">Download PDF</a>
 				)}
+				<button type="button" class="btn-ghost font-mono copy-citation-btn" id="copy-citation-btn" data-citation={`${publication.author}. (${publication.completionDate || publication.period}). ${publication.title}. ${publication.type}, ${publication.institution}.`}>
+					<span class="citation-btn-text">Copy Citation</span>
+					<span class="citation-btn-check" aria-hidden="true">✓ Copied</span>
+				</button>
 			</div>
 		)}
 	</header>
@@ -80,12 +84,33 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 		<section class="about-section">
 			<h2 class="about-section-title">Key metrics</h2>
 			<dl class="edu-facts-rail font-mono">
-				{publication.keyMetrics.map((m) => (
-					<div class="edu-fact">
-						<dt>{m.label}</dt>
-						<dd>{m.value}</dd>
-					</div>
-				))}
+				{publication.keyMetrics.map((m) => {
+					const numMatch = m.value.match(/^([\d.,]+)(.*)$/);
+					const rawVal = numMatch ? parseFloat(numMatch[1].replace(/,/g, '')) : NaN;
+					const suffix = numMatch ? numMatch[2] : '';
+					const isFloat = numMatch && numMatch[1].includes('.');
+					const isNumeric = !isNaN(rawVal) && rawVal > 0;
+
+					return (
+						<div class="edu-fact">
+							<dt>{m.label}</dt>
+							<dd>
+								{isNumeric ? (
+									<span
+										class="metric-count-up"
+										data-target={rawVal}
+										data-suffix={suffix}
+										data-format={isFloat ? 'float' : 'int'}
+									>
+										{m.value}
+									</span>
+								) : (
+									m.value
+								)}
+							</dd>
+						</div>
+					);
+				})}
 			</dl>
 		</section>
 	)}
@@ -122,8 +147,26 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 						{publication.benchmarks.map((row) => (
 							<tr>
 								<td>{row.modelName}</td>
-								<td>{row.vowelAccuracy}%</td>
-								<td>{row.consonantAccuracy}%</td>
+								<td>
+									<span
+										class="metric-count-up"
+										data-target={row.vowelAccuracy}
+										data-suffix="%"
+										data-format="float"
+									>
+										{row.vowelAccuracy}%
+									</span>
+								</td>
+								<td>
+									<span
+										class="metric-count-up"
+										data-target={row.consonantAccuracy}
+										data-suffix="%"
+										data-format="float"
+									>
+										{row.consonantAccuracy}%
+									</span>
+								</td>
 							</tr>
 						))}
 					</tbody>
@@ -143,6 +186,87 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 
 	<a href="/about#school" class="about-return font-mono">← School</a>
 </BaseLayout>
+
+<script>
+	function initResearchInteractions() {
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+		// 1. Benchmark Metric Count-Up
+		const metricElements = document.querySelectorAll<HTMLElement>('.metric-count-up');
+		metricElements.forEach((el) => {
+			const target = parseFloat(el.getAttribute('data-target') || '0');
+			const suffix = el.getAttribute('data-suffix') || '';
+			const format = el.getAttribute('data-format') || 'int';
+
+			if (prefersReduced || isNaN(target) || target <= 0) {
+				el.textContent = format === 'float' ? `${target.toFixed(2)}${suffix}` : `${Math.round(target).toLocaleString()}${suffix}`;
+				return;
+			}
+
+			let startTime: number | null = null;
+			const duration = 800; // ms
+
+			const step = (timestamp: number) => {
+				if (!startTime) startTime = timestamp;
+				const progress = Math.min((timestamp - startTime) / duration, 1);
+				// Ease out cubic
+				const eased = 1 - Math.pow(1 - progress, 3);
+				const current = target * eased;
+
+				el.textContent = format === 'float'
+					? `${current.toFixed(2)}${suffix}`
+					: `${Math.round(current).toLocaleString()}${suffix}`;
+
+				if (progress < 1) {
+					requestAnimationFrame(step);
+				} else {
+					el.textContent = format === 'float'
+						? `${target.toFixed(2)}${suffix}`
+						: `${Math.round(target).toLocaleString()}${suffix}`;
+				}
+			};
+
+			if ('IntersectionObserver' in window) {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								requestAnimationFrame(step);
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.15 }
+				);
+				observer.observe(el);
+			} else {
+				el.textContent = format === 'float' ? `${target.toFixed(2)}${suffix}` : `${Math.round(target).toLocaleString()}${suffix}`;
+			}
+		});
+
+		// 2. Tactile Citation Copy Feedback
+		const copyBtn = document.getElementById('copy-citation-btn');
+		if (copyBtn) {
+			copyBtn.addEventListener('click', async () => {
+				const citationText = copyBtn.getAttribute('data-citation') || '';
+				try {
+					if (navigator.clipboard) {
+						await navigator.clipboard.writeText(citationText);
+					}
+					copyBtn.classList.add('is-copied');
+					setTimeout(() => {
+						copyBtn.classList.remove('is-copied');
+					}, 2000);
+				} catch (err) {
+					console.error('Failed to copy citation:', err);
+				}
+			});
+		}
+	}
+
+	initResearchInteractions();
+	document.addEventListener('astro:page-load', initResearchInteractions);
+</script>
 
 <style>
 	.research-head {
@@ -190,5 +314,84 @@ const actionLabel = publication.officialRepositoryUrl ? 'View repository ↗' : 
 		font-size: var(--type-caption);
 		color: var(--text-muted);
 		text-transform: uppercase;
+	}
+
+	/* 3. Repository Action Button Dried-Ink Hover */
+	.research-action-btn {
+		transition:
+			background-color var(--dur-ui, 220ms) var(--ease-ui),
+			color var(--dur-ui, 220ms) var(--ease-ui),
+			transform var(--dur-fast, 150ms) var(--ease-out),
+			box-shadow var(--dur-ui, 220ms) ease;
+	}
+
+	.research-action-btn:hover {
+		background-color: var(--accent-hover);
+		transform: translateY(-1px);
+	}
+
+	/* 2. Tactile Citation Copy Feedback */
+	.copy-citation-btn {
+		position: relative;
+		cursor: pointer;
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.45rem 0.95rem;
+		transition:
+			transform var(--dur-fast, 150ms) var(--ease-out),
+			border-color var(--dur-fast, 150ms) ease,
+			color var(--dur-fast, 150ms) ease,
+			background-color var(--dur-fast, 150ms) ease;
+		will-change: transform;
+	}
+
+	.copy-citation-btn:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.copy-citation-btn:active,
+	.copy-citation-btn.is-copied {
+		transform: scale(0.96);
+		transition-duration: 80ms;
+	}
+
+	.citation-btn-check {
+		display: none;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.copy-citation-btn.is-copied .citation-btn-text {
+		display: none;
+	}
+
+	.copy-citation-btn.is-copied .citation-btn-check {
+		display: inline;
+		animation: checkmarkFadeIn 200ms var(--ease-out) forwards;
+	}
+
+	@keyframes checkmarkFadeIn {
+		from {
+			opacity: 0;
+			transform: scale(0.9);
+		}
+		to {
+			opacity: 1;
+			transform: scale(1);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.research-action-btn,
+		.copy-citation-btn {
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.citation-btn-check {
+			animation: none !important;
+		}
 	}
 </style>

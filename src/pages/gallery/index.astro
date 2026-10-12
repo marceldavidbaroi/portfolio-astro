@@ -42,7 +42,7 @@ const filterTabs = [
 
 	<!-- Category Filter Bar (Standard Stationery Underline Tabs) -->
 	<div class="filters" id="gallery-filters">
-		<div class="tabs" role="tablist" aria-label="Filter albums by category">
+		<div class="tabs" role="tablist" aria-label="Filter albums by category" id="gallery-tabs">
 			{filterTabs.map((tab, idx) => (
 				<button
 					type="button"
@@ -54,6 +54,7 @@ const filterTabs = [
 					{tab.label} <span class="tab-count font-sans">({tab.count})</span>
 				</button>
 			))}
+			<span class="gallery-tab-indicator" id="gallery-tab-indicator" aria-hidden="true"></span>
 		</div>
 	</div>
 
@@ -74,33 +75,135 @@ const filterTabs = [
 </BaseLayout>
 
 <script>
-	const tabs = document.querySelectorAll<HTMLButtonElement>('.filters .tab');
-	const cards = document.querySelectorAll<HTMLElement>('.gallery-card-wrapper');
-	const emptyMsg = document.getElementById('gallery-empty');
+	function initGalleryFilter() {
+		const tabsWrap = document.getElementById('gallery-tabs');
+		const indicator = document.getElementById('gallery-tab-indicator');
+		const tabs = document.querySelectorAll<HTMLButtonElement>('#gallery-tabs .tab');
+		const cards = document.querySelectorAll<HTMLElement>('.gallery-card-wrapper');
+		const emptyMsg = document.getElementById('gallery-empty');
 
-	tabs.forEach((tab) => {
-		tab.addEventListener('click', () => {
-			const cat = tab.dataset.category || 'all';
+		if (!tabsWrap || !tabs.length) return;
 
-			tabs.forEach((t) => {
-				const isActive = t === tab;
-				t.classList.toggle('active', isActive);
-				t.setAttribute('aria-selected', isActive ? 'true' : 'false');
-			});
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let currentCat = 'all';
 
-			let visibleCount = 0;
+		function updateIndicator(activeTab: HTMLElement) {
+			if (!indicator || prefersReduced) return;
+			const wrapRect = tabsWrap!.getBoundingClientRect();
+			const tabRect = activeTab.getBoundingClientRect();
+			const left = tabRect.left - wrapRect.left;
+			const width = tabRect.width;
+
+			indicator.style.transform = `translateX(${left}px)`;
+			indicator.style.width = `${width}px`;
+			indicator.style.opacity = '1';
+		}
+
+		const initialActive = document.querySelector<HTMLButtonElement>('#gallery-tabs .tab.active') || tabs[0];
+		if (initialActive) {
+			updateIndicator(initialActive);
+		}
+
+		function applyFilter(cat: string) {
+			currentCat = cat;
+
+			if (prefersReduced) {
+				let visibleCount = 0;
+				cards.forEach((card) => {
+					const cardCat = card.dataset.albumCategory;
+					const shouldShow = cat === 'all' || cardCat === cat;
+					card.style.display = shouldShow ? 'block' : 'none';
+					card.classList.remove('is-fading-out', 'is-settling-in');
+					if (shouldShow) visibleCount++;
+				});
+
+				if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
+				return;
+			}
+
+			// Smooth cross-dissolve
+			const departing: HTMLElement[] = [];
+			const arriving: HTMLElement[] = [];
+
 			cards.forEach((card) => {
 				const cardCat = card.dataset.albumCategory;
-				const shouldShow = cat === 'all' || cardCat === cat;
-				card.style.display = shouldShow ? 'block' : 'none';
-				if (shouldShow) visibleCount++;
+				const willBeVisible = cat === 'all' || cardCat === cat;
+				const isCurrentlyVisible = card.style.display !== 'none';
+
+				if (isCurrentlyVisible && !willBeVisible) {
+					departing.push(card);
+				} else if (!isCurrentlyVisible && willBeVisible) {
+					arriving.push(card);
+				}
 			});
 
-			if (emptyMsg) {
-				emptyMsg.hidden = visibleCount > 0;
+			if (departing.length > 0) {
+				departing.forEach((c) => c.classList.add('is-fading-out'));
+
+				setTimeout(() => {
+					departing.forEach((c) => {
+						c.style.display = 'none';
+						c.classList.remove('is-fading-out');
+					});
+
+					let visibleCount = 0;
+					cards.forEach((c) => {
+						const cardCat = c.dataset.albumCategory;
+						const shouldShow = cat === 'all' || cardCat === cat;
+						if (shouldShow) visibleCount++;
+					});
+
+					arriving.forEach((c) => {
+						c.style.display = 'block';
+						c.classList.add('is-settling-in');
+						requestAnimationFrame(() => {
+							c.classList.remove('is-settling-in');
+						});
+					});
+
+					if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
+				}, 150);
+			} else {
+				let visibleCount = 0;
+				cards.forEach((c) => {
+					const cardCat = c.dataset.albumCategory;
+					const shouldShow = cat === 'all' || cardCat === cat;
+					if (shouldShow) visibleCount++;
+				});
+
+				arriving.forEach((c) => {
+					c.style.display = 'block';
+					c.classList.add('is-settling-in');
+					requestAnimationFrame(() => {
+						c.classList.remove('is-settling-in');
+					});
+				});
+
+				if (emptyMsg) emptyMsg.hidden = visibleCount > 0;
 			}
+		}
+
+		tabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				const cat = tab.dataset.category || 'all';
+				tabs.forEach((t) => {
+					const isActive = t === tab;
+					t.classList.toggle('active', isActive);
+					t.setAttribute('aria-selected', isActive ? 'true' : 'false');
+				});
+				updateIndicator(tab);
+				applyFilter(cat);
+			});
 		});
-	});
+
+		window.addEventListener('resize', () => {
+			const activeTab = document.querySelector<HTMLButtonElement>('#gallery-tabs .tab.active');
+			if (activeTab) updateIndicator(activeTab);
+		}, { passive: true });
+	}
+
+	initGalleryFilter();
+	document.addEventListener('astro:page-load', initGalleryFilter);
 </script>
 
 <style>
@@ -110,6 +213,7 @@ const filterTabs = [
 	}
 
 	.tabs {
+		position: relative;
 		display: flex;
 		flex-wrap: wrap;
 		align-items: baseline;
@@ -127,8 +231,8 @@ const filterTabs = [
 		font-weight: 500;
 		color: var(--text-muted);
 		cursor: pointer;
-		border-bottom: 2px solid transparent;
-		transition: color var(--dur-fast) ease, border-color var(--dur-fast) ease;
+		border-bottom: 2px solid transparent !important;
+		transition: color var(--dur-fast) ease;
 	}
 
 	.tab.active,
@@ -136,8 +240,19 @@ const filterTabs = [
 		color: var(--accent);
 	}
 
-	.tab.active {
-		border-bottom-color: var(--accent);
+	.gallery-tab-indicator {
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		height: 2px;
+		background: var(--accent);
+		opacity: 0;
+		transition:
+			transform var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.22, 1, 0.36, 1)),
+			width var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.22, 1, 0.36, 1)),
+			opacity var(--dur-fast, 150ms) ease;
+		pointer-events: none;
+		will-change: transform, width;
 	}
 
 	.tab-count {
@@ -156,6 +271,18 @@ const filterTabs = [
 	.gallery-card-wrapper {
 		display: block;
 		min-width: 0;
+		transition: opacity 160ms var(--ease-out), transform 160ms var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.gallery-card-wrapper.is-fading-out {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+
+	.gallery-card-wrapper.is-settling-in {
+		opacity: 0;
+		transform: scale(0.97);
 	}
 
 	.empty {
@@ -186,6 +313,22 @@ const filterTabs = [
 		.gallery-stamp-grid {
 			grid-template-columns: 1fr;
 			gap: 1.25rem;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.gallery-tab-indicator {
+			display: none;
+		}
+
+		.tab.active {
+			border-bottom-color: var(--accent) !important;
+		}
+
+		.gallery-card-wrapper {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
 		}
 	}
 </style>

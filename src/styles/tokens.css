@@ -163,6 +163,11 @@ a {
 	color: inherit;
 }
 
+button {
+	font-family: inherit;
+	color: inherit;
+}
+
 .font-sans {
 	font-family: var(--font-sans);
 }

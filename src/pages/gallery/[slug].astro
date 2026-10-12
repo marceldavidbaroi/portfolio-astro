@@ -46,7 +46,7 @@ const { album, prev, next } = Astro.props;
 	</nav>
 
 	<!-- Editorial Story Masthead -->
-	<header class="story-masthead">
+	<header class="story-masthead prologue-reveal">
 		<div class="story-header-meta font-sans">
 			<span class="label font-sans">{album.tag}</span>
 			{album.period && <span class="story-header-period font-sans">· {album.period}</span>}
@@ -109,7 +109,7 @@ const { album, prev, next } = Astro.props;
 
 				return (
 					<figure
-						class:list={['album-photo-item', layoutClass]}
+						class:list={['album-photo-item', 'album-reveal', layoutClass]}
 						data-spotlight-src={photo.src}
 						data-spotlight-title={photo.title || `${album.title} — Record ${idx + 1}`}
 						data-spotlight-caption={photo.caption || photo.story || ''}
@@ -239,12 +239,70 @@ const { album, prev, next } = Astro.props;
 			});
 		}
 
-		initSpotlight();
-		document.addEventListener('astro:page-load', initSpotlight);
+		function initGalleryStoryReveal() {
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const prologue = document.querySelector<HTMLElement>('.prologue-reveal');
+			const photoItems = document.querySelectorAll<HTMLElement>('.album-reveal');
+
+			if (prefersReduced || !('IntersectionObserver' in window)) {
+				if (prologue) prologue.classList.add('is-revealed');
+				photoItems.forEach((el) => el.classList.add('is-revealed'));
+				return;
+			}
+
+			if (prologue) {
+				requestAnimationFrame(() => {
+					prologue.classList.add('is-revealed');
+				});
+			}
+
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-revealed');
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					root: null,
+					rootMargin: '0px 0px -40px 0px',
+					threshold: 0.08,
+				}
+			);
+
+			photoItems.forEach((item) => {
+				observer.observe(item);
+			});
+		}
+
+		function setupPage() {
+			initSpotlight();
+			initGalleryStoryReveal();
+		}
+
+		setupPage();
+		document.addEventListener('astro:page-load', setupPage);
 	</script>
 </BaseLayout>
 
 <style>
+	/* 1. Prologue Reading Fade-In */
+	.prologue-reveal {
+		opacity: 0;
+		transform: translateY(16px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.prologue-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
 	.story-masthead {
 		padding-bottom: 2.5rem;
 		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
@@ -313,7 +371,23 @@ const { album, prev, next } = Astro.props;
 		background: var(--card-bg);
 		border-radius: var(--radius-md, 10px);
 		aspect-ratio: 4 / 3;
-		transition: transform 0.25s var(--ease-ui), box-shadow 0.25s var(--ease-ui);
+		transition: transform 0.25s var(--ease-ui), box-shadow 0.25s var(--ease-ui), opacity 0.45s var(--ease-out);
+		will-change: transform, opacity;
+	}
+
+	/* 2. Masonry Progressive Scroll Reveal */
+	.album-photo-item.album-reveal {
+		opacity: 0;
+		transform: translateY(18px);
+		transition:
+			opacity 500ms var(--ease-out),
+			transform 500ms var(--ease-out),
+			box-shadow 0.25s var(--ease-ui);
+	}
+
+	.album-photo-item.album-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.album-photo-item.is-landscape {
@@ -502,12 +576,20 @@ const { album, prev, next } = Astro.props;
 		max-width: 1000px;
 	}
 
+	/* 3. Interactive Lightbox Zoom */
 	.gallery-spotlight-img {
 		max-width: 100%;
 		max-height: 72vh;
 		object-fit: contain;
 		border-radius: 4px;
 		box-shadow: 0 12px 36px rgba(0, 0, 0, 0.4);
+		transform: scale(0.95);
+		transition: transform 0.3s var(--ease-out);
+		will-change: transform;
+	}
+
+	.gallery-spotlight.is-open .gallery-spotlight-img {
+		transform: scale(1);
 	}
 
 	.gallery-spotlight-meta {
@@ -606,6 +688,24 @@ const { album, prev, next } = Astro.props;
 			grid-column: auto;
 			grid-row: auto;
 			aspect-ratio: 4 / 3;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.prologue-reveal,
+		.album-photo-item.album-reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.gallery-spotlight-img {
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.gallery-spotlight {
+			transition: none !important;
 		}
 	}
 </style>

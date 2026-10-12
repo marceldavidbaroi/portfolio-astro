@@ -126,23 +126,23 @@ const tertiaryPhoto = photos[2];
 	}
 
 	.album-stamp-card:hover .stamp-stage {
-		transform: translateY(-3px);
+		transform: translateY(-5px);
 		background: color-mix(in srgb, var(--card-bg, #f2ede4) 75%, var(--accent-subtle, #f8ede0));
 		border-color: var(--card-border-hover, rgba(184, 110, 30, 0.25));
-		box-shadow: 0 10px 24px rgba(33, 31, 29, 0.09);
+		box-shadow: 0 12px 28px rgba(33, 31, 29, 0.1);
 	}
 
 	:global([data-theme='dark']) .album-stamp-card:hover .stamp-stage {
 		background: color-mix(in srgb, var(--card-bg, #201e1c) 80%, var(--card-bg-elevated, #282623));
 		border-color: var(--card-border-hover, rgba(232, 168, 85, 0.3));
-		box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+		box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
 	}
 
 	@media (prefers-color-scheme: dark) {
 		:global(:root:not([data-theme='light'])) .album-stamp-card:hover .stamp-stage {
 			background: color-mix(in srgb, var(--card-bg, #201e1c) 80%, var(--card-bg-elevated, #282623));
 			border-color: var(--card-border-hover, rgba(232, 168, 85, 0.3));
-			box-shadow: 0 10px 24px rgba(0, 0, 0, 0.5);
+			box-shadow: 0 12px 28px rgba(0, 0, 0, 0.55);
 		}
 	}
 
@@ -239,7 +239,9 @@ const tertiaryPhoto = photos[2];
 		pointer-events: none;
 		user-select: none;
 		z-index: 4;
-		transition: color var(--dur-fast, 150ms) ease;
+		transition: color var(--dur-fast, 150ms) ease, transform var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.22, 1, 0.36, 1));
+		transform-origin: bottom right;
+		will-change: transform;
 	}
 
 	@media (max-width: 640px) {
@@ -262,6 +264,7 @@ const tertiaryPhoto = photos[2];
 
 	.album-stamp-card:hover .stamp-count-badge {
 		color: var(--accent, #b86e1e);
+		transform: scale(1.12);
 	}
 
 	/* Text Details Below Card */
@@ -343,8 +346,10 @@ const tertiaryPhoto = photos[2];
 	@media (prefers-reduced-motion: reduce) {
 		.stamp-stage,
 		.postage-stamp,
-		.stamp-inner img {
+		.stamp-inner img,
+		.stamp-count-badge {
 			transition: none !important;
+			transform: none !important;
 		}
 	}
 </style>

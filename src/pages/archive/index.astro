@@ -39,9 +39,12 @@ const railEntries = (await getCollection('archive'))
 		</p>
 	</header>
 
-	<div class="about-archive-rail">
+	<div class="about-archive-rail" id="archive-rail-container">
+		<div class="archive-track-rail" id="archive-track-rail" aria-hidden="true">
+			<div class="archive-track-line" id="archive-track-line"></div>
+		</div>
 		{railEntries.map((entry) => (
-			<a class="about-rail-row about-archive-row" href={entry.href}>
+			<a class="about-rail-row about-archive-row archive-row-reveal" href={entry.href}>
 				<p class="about-rail-when font-mono">{entry.date}</p>
 				<div>
 					<p class="about-rail-tag font-mono">{entry.tag}</p>
@@ -64,19 +67,130 @@ const railEntries = (await getCollection('archive'))
 	<a href="/about" class="about-return font-mono">← About</a>
 </BaseLayout>
 
+<script>
+	function initArchiveTimelineMotion() {
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const rows = document.querySelectorAll<HTMLElement>('.archive-row-reveal');
+		const trackLine = document.getElementById('archive-track-line');
+		const trackContainer = document.getElementById('archive-rail-container');
+
+		if (prefersReduced) {
+			rows.forEach((r) => r.classList.add('is-revealed'));
+			if (trackLine) trackLine.style.transform = 'scaleY(1)';
+			return;
+		}
+
+		// 1. Row reveal intersection observer
+		if ('IntersectionObserver' in window && rows.length) {
+			const observer = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-revealed');
+							observer.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					rootMargin: '0px 0px -40px 0px',
+					threshold: 0.1,
+				}
+			);
+
+			rows.forEach((row) => observer.observe(row));
+		} else {
+			rows.forEach((r) => r.classList.add('is-revealed'));
+		}
+
+		// 2. Archival timeline vertical draw down
+		if (trackLine && trackContainer) {
+			const updateTrack = () => {
+				const rect = trackContainer.getBoundingClientRect();
+				const windowH = window.innerHeight;
+				const start = windowH * 0.85;
+				const totalH = rect.height;
+
+				if (rect.top > start) {
+					trackLine.style.transform = 'scaleY(0)';
+				} else {
+					const progress = Math.min(Math.max((start - rect.top) / totalH, 0), 1);
+					trackLine.style.transform = `scaleY(${progress})`;
+				}
+			};
+
+			window.addEventListener('scroll', updateTrack, { passive: true });
+			updateTrack();
+		}
+	}
+
+	initArchiveTimelineMotion();
+	document.addEventListener('astro:page-load', initArchiveTimelineMotion);
+</script>
+
 <style>
 	.about-archive-rail {
+		position: relative;
 		display: flex;
 		flex-direction: column;
 	}
 
+	/* 1. Archival Timeline Line-Draw */
+	.archive-track-rail {
+		position: absolute;
+		left: 0;
+		top: 1.25rem;
+		bottom: 1.25rem;
+		width: 1px;
+		background: rgba(95, 80, 56, 0.12);
+		z-index: 0;
+		overflow: hidden;
+	}
+
+	.archive-track-line {
+		position: absolute;
+		inset: 0;
+		background: var(--accent);
+		transform-origin: top;
+		transform: scaleY(0);
+		transition: transform 120ms ease-out;
+		will-change: transform;
+	}
+
+	/* 2. Document Row Hover Warmth & Row Reveal */
 	.about-archive-row {
 		text-decoration: none;
 		color: inherit;
+		border-radius: var(--radius-sm, 6px);
+		padding: 1.15rem 0.85rem;
+		margin: 0 -0.85rem;
+		transition:
+			background-color var(--dur-ui, 220ms) var(--ease-ui),
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out);
+		will-change: background-color, opacity, transform;
+	}
+
+	.about-archive-row.archive-row-reveal {
+		opacity: 0;
+		transform: translateY(14px);
+	}
+
+	.about-archive-row.archive-row-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.about-archive-row:hover {
+		background-color: var(--slot, #f4f0e7);
+	}
+
+	:root[data-theme="dark"] .about-archive-row:hover,
+	[data-theme="dark"] .about-archive-row:hover {
+		background-color: var(--card-bg, #282623);
 	}
 
 	.about-archive-row:hover .about-rail-title {
-		color: var(--text-main);
+		color: var(--accent);
 	}
 
 	.about-shot-fan {
@@ -91,6 +205,18 @@ const railEntries = (await getCollection('archive'))
 		object-fit: cover;
 		border: 1px solid rgba(95, 80, 56, 0.14);
 		transform: rotate(-1.5deg);
+		filter: brightness(0.94) saturate(0.95);
+		transition:
+			transform var(--dur-ui, 220ms) var(--ease-ui),
+			filter var(--dur-ui, 220ms) ease,
+			box-shadow var(--dur-ui, 220ms) ease;
+		will-change: transform, filter, box-shadow;
+	}
+
+	.about-archive-row:hover .about-shot-fan-img {
+		transform: rotate(0deg) scale(1.03);
+		filter: brightness(1) saturate(1);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 	}
 
 	.about-archive-beyond {
@@ -107,5 +233,23 @@ const railEntries = (await getCollection('archive'))
 
 	.about-archive-beyond a:hover {
 		text-decoration: underline;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.archive-track-rail {
+			display: none;
+		}
+
+		.about-archive-row {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.about-shot-fan-img {
+			transform: none !important;
+			transition: none !important;
+			filter: none !important;
+		}
 	}
 </style>

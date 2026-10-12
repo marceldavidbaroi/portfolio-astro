@@ -69,6 +69,23 @@
 	padding-bottom: 0.75rem;
 }
 
+.transcript-toolbar-actions button.text-link {
+	appearance: none;
+	background: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	cursor: pointer;
+	color: var(--text-muted);
+	font-size: var(--type-cta);
+	transition: color var(--dur-fast) ease, opacity var(--dur-fast) ease;
+}
+
+.transcript-toolbar-actions button.text-link:hover {
+	color: var(--text-main);
+	opacity: 0.85;
+}
+
 .transcript-search-wrap {
 	display: block;
 	min-width: min(100%, 14rem);
