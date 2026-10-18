@@ -22,6 +22,8 @@
 					text.startsWith('classDiagram') ||
 					text.startsWith('stateDiagram') ||
 					text.startsWith('mindmap') ||
+					text.startsWith('timeline') ||
+					text.startsWith('pie') ||
 					text.startsWith('graph');
 
 				if (!isMermaid) continue;
@@ -36,6 +38,8 @@
 					else if (text.startsWith('mindmap')) type = 'Domain Mindmap';
 					else if (text.startsWith('classDiagram')) type = 'Data Schema';
 					else if (text.startsWith('stateDiagram')) type = 'State Machine';
+					else if (text.startsWith('timeline')) type = 'Architecture Roadmap';
+					else if (text.startsWith('pie')) type = 'Metrics Chart';
 
 					targets.push({ pre, code: text, type });
 				}
@@ -43,7 +47,8 @@
 
 			if (targets.length === 0) return;
 
-			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+			const mermaidModule = await import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs' as any);
+			const mermaid = mermaidModule.default;
 
 			const isDark = document.documentElement.dataset.theme !== 'light';
 			mermaid.initialize({

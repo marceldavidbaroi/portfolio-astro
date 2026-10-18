@@ -120,9 +120,8 @@
 
 <script>
 	function setupThemeToggle() {
-		const toggleBtn = document.getElementById('theme-toggle');
-		if (!toggleBtn || toggleBtn.dataset.bound) return;
-		toggleBtn.dataset.bound = 'true';
+		const toggleButtons = document.querySelectorAll<HTMLButtonElement>('#theme-toggle, #floating-theme-toggle');
+		if (toggleButtons.length === 0) return;
 
 		const getCurrentTheme = () => {
 			const activeTheme = document.documentElement.dataset.theme;
@@ -132,62 +131,67 @@
 			return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
 		};
 
-		toggleBtn.addEventListener('click', async (event: MouseEvent) => {
-			const currentTheme = getCurrentTheme();
-			const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+		toggleButtons.forEach((btn) => {
+			if (btn.dataset.bound) return;
+			btn.dataset.bound = 'true';
 
-			const updateTheme = () => {
-				document.documentElement.dataset.theme = nextTheme;
-				localStorage.setItem('theme', nextTheme);
-			};
+			btn.addEventListener('click', async (event: MouseEvent) => {
+				const currentTheme = getCurrentTheme();
+				const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
 
-			// Fallback if View Transitions not supported or user prefers reduced motion
-			const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-			if (!document.startViewTransition || isReducedMotion) {
-				updateTheme();
-				return;
-			}
+				const updateTheme = () => {
+					document.documentElement.dataset.theme = nextTheme;
+					localStorage.setItem('theme', nextTheme);
+				};
 
-			// View Transitions Circular Ripple Animation
-			const rect = toggleBtn.getBoundingClientRect();
-			const x = event.clientX || (rect.left + rect.width / 2);
-			const y = event.clientY || (rect.top + rect.height / 2);
-			const maxRadius = Math.hypot(
-				Math.max(x, window.innerWidth - x),
-				Math.max(y, window.innerHeight - y)
-			);
+				// Fallback if View Transitions not supported or user prefers reduced motion
+				const isReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+				if (!document.startViewTransition || isReducedMotion) {
+					updateTheme();
+					return;
+				}
 
-			document.documentElement.classList.add('theme-transitioning');
-			const transition = document.startViewTransition(() => {
-				updateTheme();
-			});
-
-			transition.ready.then(() => {
-				const clipPath = [
-					`circle(0px at ${x}px ${y}px)`,
-					`circle(${maxRadius}px at ${x}px ${y}px)`
-				];
-
-				const anim = document.documentElement.animate(
-					{
-						clipPath: clipPath
-					},
-					{
-						duration: 400,
-						easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
-						pseudoElement: '::view-transition-new(root)'
-					}
+				// View Transitions Circular Ripple Animation
+				const rect = btn.getBoundingClientRect();
+				const x = event.clientX || (rect.left + rect.width / 2);
+				const y = event.clientY || (rect.top + rect.height / 2);
+				const maxRadius = Math.hypot(
+					Math.max(x, window.innerWidth - x),
+					Math.max(y, window.innerHeight - y)
 				);
 
-				anim.finished.finally(() => {
+				document.documentElement.classList.add('theme-transitioning');
+				const transition = document.startViewTransition(() => {
+					updateTheme();
+				});
+
+				transition.ready.then(() => {
+					const clipPath = [
+						`circle(0px at ${x}px ${y}px)`,
+						`circle(${maxRadius}px at ${x}px ${y}px)`
+					];
+
+					const anim = document.documentElement.animate(
+						{
+							clipPath: clipPath
+						},
+						{
+							duration: 400,
+							easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+							pseudoElement: '::view-transition-new(root)'
+						}
+					);
+
+					anim.finished.finally(() => {
+						document.documentElement.classList.remove('theme-transitioning');
+					});
+				}).catch(() => {
 					document.documentElement.classList.remove('theme-transitioning');
 				});
-			}).catch(() => {
-				document.documentElement.classList.remove('theme-transitioning');
-			});
 
-			transition.finished.finally(() => {
-				document.documentElement.classList.remove('theme-transitioning');
+				transition.finished.finally(() => {
+					document.documentElement.classList.remove('theme-transitioning');
+				});
 			});
 		});
 	}

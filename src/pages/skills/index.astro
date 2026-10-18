@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
 import { skillCategories } from '../../data/aboutData';
+import { isMonochromeLogo } from '../../lib/skills';
 import '../../styles/about.css';
 
 const totalCount = skillCategories.reduce((acc, cat) => acc + cat.items.length, 0);
@@ -63,7 +64,13 @@ const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((
 						>
 							<div class="skill-item-media">
 								{skill.logo ? (
-									<img src={skill.logo} alt="" class="skill-item-logo" loading="lazy" aria-hidden="true" />
+									<img
+										src={skill.logo}
+										alt=""
+										class:list={['skill-item-logo', { 'is-mono-logo': isMonochromeLogo(skill.logo) }]}
+										loading="lazy"
+										aria-hidden="true"
+									/>
 								) : (
 									<span class="skill-item-icon" aria-hidden="true">{skill.icon || '•'}</span>
 								)}

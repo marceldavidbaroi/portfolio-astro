@@ -1,5 +1,6 @@
 ---
 import type { SkillCategoryGroup, SkillItem } from '../../data/aboutData';
+import { isMonochromeLogo } from '../../lib/skills';
 
 interface Props {
 	skillCategories: SkillCategoryGroup[];
@@ -31,10 +32,16 @@ for (const group of skillCategories) {
 		<div class="about-stack-marquee-track">
 			<div class="about-stack-marquee-group">
 				{allSkills.map((skill) => (
-					<div class:list={['skill-pill', 'skill-pill-mono', { 'is-prior': skill.tier === 'secondary' }]}>
+					<div class:list={['skill-pill', { 'is-prior': skill.tier === 'secondary' }]}>
 						<div class="skill-pill-media">
 							{skill.logo ? (
-								<img src={skill.logo} alt="" class="skill-pill-logo" loading="lazy" aria-hidden="true" />
+								<img
+									src={skill.logo}
+									alt=""
+									class:list={['skill-pill-logo', { 'is-mono-logo': isMonochromeLogo(skill.logo) }]}
+									loading="lazy"
+									aria-hidden="true"
+								/>
 							) : (
 								<span class="skill-pill-icon" aria-hidden="true">{skill.icon || '•'}</span>
 							)}
@@ -46,10 +53,16 @@ for (const group of skillCategories) {
 			{/* Duplicated group for seamless endless auto-scroll loop */}
 			<div class="about-stack-marquee-group" aria-hidden="true">
 				{allSkills.map((skill) => (
-					<div class:list={['skill-pill', 'skill-pill-mono', { 'is-prior': skill.tier === 'secondary' }]}>
+					<div class:list={['skill-pill', { 'is-prior': skill.tier === 'secondary' }]}>
 						<div class="skill-pill-media">
 							{skill.logo ? (
-								<img src={skill.logo} alt="" class="skill-pill-logo" loading="lazy" aria-hidden="true" />
+								<img
+									src={skill.logo}
+									alt=""
+									class:list={['skill-pill-logo', { 'is-mono-logo': isMonochromeLogo(skill.logo) }]}
+									loading="lazy"
+									aria-hidden="true"
+								/>
 							) : (
 								<span class="skill-pill-icon" aria-hidden="true">{skill.icon || '•'}</span>
 							)}

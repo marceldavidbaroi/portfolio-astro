@@ -180,6 +180,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			let currentIndex = 0;
 
 			function openSpotlight(index: number) {
+				if (!modal || !spotImg) return;
 				currentIndex = (index + cards.length) % cards.length;
 				const card = cards[currentIndex];
 				const src = card.dataset.spotlightSrc || '';
@@ -198,6 +199,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			}
 
 			function closeSpotlight() {
+				if (!modal || !spotImg) return;
 				modal.classList.remove('is-open');
 				modal.setAttribute('aria-hidden', 'true');
 				document.body.style.overflow = '';

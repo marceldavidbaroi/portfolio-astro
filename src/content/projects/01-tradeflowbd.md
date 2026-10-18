@@ -1,24 +1,26 @@
 ---
 id: "01"
-title: "Enterprise Wholesale ERP – Multi-Tenant Commerce Platform"
-subtitle: "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation, landed cost engine, and universal double-entry wallet."
+title: "TradeflowBD – Multi-Tenant Wholesale ERP"
+subtitle: "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation, landed cost engine, and universal double-entry money kernel."
 # CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules and 4 application scopes via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions."
+description: "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules, 4 application scopes, and 1,330+ migrations via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions."
 chip: "Enterprise ERP & SaaS"
 order: 1
 featured: true
 platformType: "desktop"
 
 role: "Lead Framework & Migration Engineer"
-timeline: "2026 — Present"
+timeline: "2025 — Present"
+status: "Active Production"
 classification: "🔒 Proprietary Enterprise IP"
 
 stack:
   - "Vue 3"
   - "Quasar"
   - "Supabase"
-  - "Capacitor (Android)"
+  - "TypeScript"
   - "PostgreSQL"
+  - "Capacitor (Android)"
 
 techStack:
   frontend:
@@ -28,6 +30,9 @@ techStack:
     - "Pinia"
     - "TanStack Query"
     - "Vue Router 5"
+    - "Phosphor Icons Web"
+    - "ApexCharts & Chart.js"
+    - "ExcelJS & Mermaid"
   mobile_hardware:
     - "Capacitor (Android Build)"
   backend:
@@ -36,16 +41,18 @@ techStack:
     - "Atomic RPCs (300+ Functions)"
     - "Supabase Realtime Channels"
     - "Google OAuth"
+    - "Firebase Cloud Messaging"
   database:
     - "PostgreSQL 15+"
-    - "Universal Double-Entry Wallet"
+    - "Universal Bills & Pays Money Kernel"
     - "Landed Cost Apportionment Engine"
-    - "980+ Versioned Migrations"
+    - "1,330+ Versioned Migrations"
+    - "Declarative Domain Schemas (Split)"
   devops:
     - "Cloudflare Pages"
-    - "Docker Local Supabase"
+    - "Docker Local Supabase Replay"
     - "Python ETL Pipelines"
-    - "Capacitor Android"
+    - "Vite CSS Splitting & Chunking"
     - "Cloudinary CDN"
 
 links:
@@ -55,43 +62,45 @@ links:
   docs: ""
 
 images:
-  - "/images/projects/tradeflowbd/shipments-list.webp"
-  - "/images/projects/tradeflowbd/shipment-details.webp"
-  - "/images/projects/tradeflowbd/product-costing.webp"
   - "/images/projects/tradeflowbd/dashboard.webp"
+  - "/images/projects/tradeflowbd/shipment-details.webp"
+  - "/images/projects/tradeflowbd/shop-catalog-config.webp"
+  - "/images/projects/tradeflowbd/dropship-dossier.webp"
+  - "/images/projects/tradeflowbd/shop-mobile-storefront.webp"
 
 visualAssets:
-  heroMockup: "/images/projects/tradeflowbd/shipments-list.webp"
-  architectureDiagram: "/images/projects/tradeflowbd/shipments-list.webp"
-  databaseErd: "/images/projects/tradeflowbd/shipment-details.webp"
+  heroMockup: "/images/projects/tradeflowbd/dashboard.webp"
+  architectureDiagram: "/images/projects/tradeflowbd/shipment-details.webp"
+  databaseErd: "/images/projects/tradeflowbd/dropship-dossier.webp"
   screenshots:
     - "/images/projects/tradeflowbd/dashboard.webp"
-    - "/images/projects/tradeflowbd/shipments-list.webp"
     - "/images/projects/tradeflowbd/shipment-details.webp"
-    - "/images/projects/tradeflowbd/product-costing.webp"
+    - "/images/projects/tradeflowbd/shop-catalog-config.webp"
+    - "/images/projects/tradeflowbd/dropship-dossier.webp"
+    - "/images/projects/tradeflowbd/shop-mobile-storefront.webp"
 
 # Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Architected a plug-and-play multi-tenant SaaS ERP platform that enabled parent wholesale corporations and child sales desks to dynamically toggle business modules based on subscription tiers [X], achieving 100% database-enforced tenant data isolation and zero inventory overselling across 17+ domain modules and 4 application scopes [Y] by designing recursive PostgreSQL Row-Level Security policies, parent-pooled virtual stock allocation algorithms, and atomic PostgreSQL RPC transactions [Z]."
+executiveOverview: "Architected a plug-and-play multi-tenant SaaS ERP platform that unified parent wholesale operations and child sales desks across 4 distinct business models [X], achieving 100% database-enforced tenant isolation, zero inventory overselling, and a 67% first-paint CSS reduction across 17+ domain modules and 1,330+ migrations [Y] by designing recursive PostgreSQL Row-Level Security policies, Available-to-Promise algorithms, atomic PostgreSQL RPC transactions, and route-based bundle splitting [Z]."
 
 impactMetrics:
   - label: "Tenant Data Isolation"
     value: "100%"
     detail: "Enforced at database engine level via 200+ RLS policies"
+  - label: "Database Migrations"
+    value: "1,330+"
+    detail: "Versioned schema with clean Docker replay & diff checks"
   - label: "Domain Modules"
     value: "17+"
     detail: "Procurement, Commerce, Finance, Verticals, Capital"
   - label: "Application Scopes"
     value: "4 Surfaces"
     detail: "Platform Admin, Parent ERP, B2B Shop, Investor Portal"
-  - label: "Inventory Overselling"
-    value: "Eliminated"
-    detail: "Single ATP source of truth via parent-pooled allocations"
   - label: "Atomic RPCs"
     value: "300+"
-    detail: "All complex financial writes server-side & ACID compliant"
-  - label: "Landed Cost Engine"
-    value: "Automated"
-    detail: "Deterministic freight and duty apportionment per SKU"
+    detail: "Server-side transactional financial writes & ACID compliance"
+  - label: "First-Load CSS Drop"
+    value: "67% Cut"
+    detail: "Route-level splitting from 857 KiB to 281 KiB on initial paint"
 
 valueProposition:
   targetCustomer: "Wholesale Import Conglomerates, Parent Corporations & Sister Sales Desks"
@@ -112,13 +121,13 @@ valueProposition:
       gainDescription: "200+ PostgreSQL RLS policies evaluate session claims at the database engine level, eliminating application-layer leaks."
 
     - painTitle: "Unreconciled Invoices & Shadow Excel Accounting"
-      painDescription: "Multi-desk payments, dropship margins, and credit lines maintained in unlinked ledgers resulted in unreconciled balances."
-      gainTitle: "Universal Double-Entry Multi-Currency Wallet"
-      gainDescription: "Atomic database RPCs settle buyer payments, partner payouts, and platform fee splits with audit-trailed journal entries."
+      painDescription: "Multi-desk payments, dropship margins, courier COD remittances, and credit lines maintained in unlinked ledgers resulted in unreconciled balances."
+      gainTitle: "Universal Bills & Pays Money Kernel"
+      gainDescription: "Unified Profile · Bill · Pay · Alloc · Cashbook engine handling AR, AP, and courier remittances with immutable journal entries."
 
 problemStatement: "Wholesale import enterprises operated through fragmented spreadsheets for costing, manual shipment logs, isolated stock counts per desk, and shadow accounting in Excel. This caused frequent overselling, unreconciled financial balances, and massive risk of cross-tenant data leakage between competing sister concerns."
 
-architectureSummary: "Single unified codebase serving 4 distinct application scopes (Platform, App, Shop, Investor) built on Vue 3 / Quasar SPA, TanStack Query server-state cache, and Supabase PostgreSQL with 200+ RLS policies and 300+ atomic RPCs."
+architectureSummary: "Single unified codebase serving 4 distinct application scopes (Platform, App, Shop, Investor) built on Vue 3 / Quasar SPA, TanStack Query server-state cache, and Supabase PostgreSQL with declarative domain schemas, 200+ RLS policies, and 300+ atomic RPCs."
 
 keyDecisions:
   - challenge: "Database-Level Isolation vs App-Level Filtering"
@@ -127,31 +136,31 @@ keyDecisions:
   - challenge: "Parent–Child Shared Stock & Allocation"
     decision: "Physical stock rows exist strictly on the parent company. Sister concerns receive virtual allocation slices (global_stock_allocations) for sales desks."
     outcome: "Single source of truth for Available-to-Promise (ATP) stock; eliminated overselling across wholesale POS, storefronts, and dropship desks."
-  - challenge: "Atomic Financial Transactions & Invoice Issuance"
-    decision: "Replaced multi-step client-side database writes with SECURITY DEFINER PostgreSQL RPCs executing within atomic BEGIN...COMMIT blocks."
-    outcome: "Zero data corruption on concurrent invoice creation, dropship settlement, or shipment finalization."
-  - challenge: "Fragmented Ledgers & Shadow Accounting"
-    decision: "Architected a Universal Wallet rule with one ledger per (parent_tenant_id, entity_type, entity_id, currency), deriving P&L from immutable landed cost snapshots."
-    outcome: "Consolidated treasury on parent books with operating tenant audit tags and zero shadow ledgers."
+  - challenge: "Ad-Hoc Wallets vs Unified Money Kernel"
+    decision: "Replaced disconnected wallet tables with a unified Money Kernel (Profile · Bill · Pay · Alloc · Cashbook). Single bills table with polymorphic document kinds (standard, credit_note, debit_note) for AR and AP."
+    outcome: "Eliminated shadow ledgers; deterministic settlement for wholesale trade, dropship courier remittances, and inbound shipment AP."
+  - challenge: "Monolithic 10,000+ Line SQL Schema"
+    decision: "Split schema into declarative domain folders (procurement/, shop_order/, bills_pays/, notifications/) with isolated types, tables, RPCs, and RLS scripts verified via supabase db diff."
+    outcome: "Enabled parallel domain evolution and reliable local Docker migration replay (1,330+ migrations) before production deploys."
   - challenge: "Redundant API Fetching & Stale Client UI"
     decision: "Integrated TanStack Query (@tanstack/vue-query) with query key factories, optimistic mutations, and targeted cache patches."
-    outcome: "Cart mutations and shipment costing updates reflect instantly without full dataset refetches."
-  - challenge: "Monolithic 10,000+ Line SQL Schema"
-    decision: "Split schema into domain-modular folders (procurement/, shop_order/, sales_invoice/, etc.) with isolated tables, RPCs, and RLS scripts."
-    outcome: "Enabled parallel domain evolution and reliable local Docker migration validation before production deploys."
+    outcome: "Cart mutations and shipment costing updates reflect instantly without full dataset refetches or N+1 queries."
+  - challenge: "Massive SPA Bundle & First-Paint Latency"
+    decision: "Implemented route-level CSS splitting (cssCodeSplit: true), dynamic imports for heavy diagramming (Elk/Mermaid) and Excel export (ExcelJS), and vendor chunking."
+    outcome: "First-load CSS slashed from 857 KiB to 281 KiB (-67%), isolating Firebase and Chart.js into lazy route chunks."
 
 securityReliability:
   - "PostgreSQL Row-Level Security (RLS) on all tenant tables with membership_has_module_action() policy checks."
-  - "Atomic RPC transactions for invoices, dropship settlements, shipment finalizations, and wallet transfers."
+  - "Atomic RPC transactions for bills, dropship settlements, shipment finalizations, and cashbook transfers."
   - "Four scoped login surfaces with Google OAuth via Supabase Auth and automatic token refresh."
   - "End-to-end type safety with database.types.ts generated automatically after every migration."
   - "Archive-first governance for shipment batches — financial audit trails preserved with no accidental hard deletes."
   - "Soft-delete trash system with 30-day retention and tenant-scoped purge engines."
-  - "Local-first development workflow using Docker Supabase with full 980+ migration replay before production deployment."
+  - "Local-first development workflow using Docker Supabase with full 1,330+ migration replay before production deployment."
+  - "Declarative schema diff verification (backend:schema:diff) guarding against drifting migrations."
 
 futureRoadmap:
-  - "Wallet Parent-Books Migration: Consolidate all ledger writers onto the unified parent books model."
-  - "Schema Domain Split: wallet, thrift, investor, and permissions modules."
+  - "Schema Domain Extraction: Finalize remaining schema stubs (customer, products, reporting, thrift, investor)."
   - "Customs Documentation Generator: Automated regional compliance rules and export document generation."
   - "Maritime Tracking APIs: Real-time container telemetry and vessel arrival tracking."
   - "Investor Portal v2: Capital withdrawal and allocation request workflows beyond read-only reporting."
@@ -162,136 +171,82 @@ futureRoadmap:
 
 | | |
 |---|---|
-| **What it is** | Multi-tenant wholesale ERP and commerce platform |
-| **Who it's for** | Import/wholesale businesses with parent companies and sister concerns |
-| **Core problem** | Run procurement, stock, sales, storefronts, dropship, and treasury in one system — without data leaking between tenants |
-| **How it's built** | Vue 3 / Quasar SPA → Supabase PostgreSQL with RLS + atomic RPCs |
-| **Scale** | 17+ domain modules · 980+ migrations · 470+ Vue components · 4 application scopes |
+| **What it is** | Multi-tenant enterprise wholesale ERP and commerce platform |
+| **Who it's for** | Import/wholesale conglomerates with parent companies, child sales desks, and sister concerns |
+| **Core problem** | Run procurement, stock, wholesale sales, B2B storefronts, dropship networks, and multi-currency treasury in one system — with zero overselling and 100% database-enforced tenant data isolation |
+| **How it's built** | Vue 3.5 / Quasar 2 SPA → Supabase PostgreSQL 15+ with declarative domain schemas, 200+ RLS policies, and 300+ atomic RPCs |
+| **Scale** | 17+ domain modules · 1,330+ migrations · 470+ Vue components · 4 application scopes · 4 business models |
 
 ---
 
 ## The Problem
 
-Wholesale import businesses in Bangladesh and similar markets run complex operations across multiple legal entities:
+Wholesale import businesses in Bangladesh and emerging trade hubs operate across complex, distributed legal and commercial boundaries:
 
-- A **parent company** handles international procurement, customs clearance, and warehouse stock
-- **Sister concerns (child tenants)** run wholesale desks, B2B storefronts, and dropship reseller networks
-- **External investors** fund shipment batches and need yield visibility
-- **B2B customers** order through branded storefronts with their own wallets and credit limits
+- A **parent company** manages international supplier procurement, maritime freight, customs clearance, and central warehouse stock.
+- **Sister concerns (child tenants)** operate independent wholesale sales desks, branded B2B storefronts, and dropship reseller networks.
+- **External investors** fund high-capital shipment batches and require real-time yield visibility without accessing operational tenant data.
+- **B2B customers** purchase through branded storefronts, carry credit limits, and require instant invoice reconciliation.
 
-### Pain points before TradeflowBD
+### Operational Friction Prior to TradeflowBD
 
 ```mermaid
 flowchart TD
     subgraph Before ["Before: Fragmented Operations"]
-        A["Spreadsheets for costing & demand"] --> B["Manual shipment tracking"]
-        B --> C["Separate stock counts per desk"]
-        C --> D["Shadow accounting in Excel"]
-        D --> E["No single view of AR / payables"]
-        E --> F["Data leakage risk across tenants"]
+        A["Spreadsheets for Costing & FX Tariffs"] --> B["Manual Inbound Shipment Tracking"]
+        B --> C["Siloed Stock Counts Per Sales Desk"]
+        C --> D["Frequent Out-of-Stock Overselling"]
+        D --> E["Shadow Accounting & Manual Ledgers in Excel"]
+        E --> F["Zero Reconciliation of Dropship Courier COD"]
+        F --> G["Severe Tenant Data Leakage Risk Across Desks"]
     end
 ```
 
-| Pain Point | Business Impact |
+| Operational Friction | Business & Technical Consequence |
 |---|---|
-| **No shared stock pool** | Same physical inventory counted separately per sister concern — overselling and reconciliation nightmares |
-| **Fragmented finance** | Margins calculated in spreadsheets; no single ledger for vendors, couriers, customers, and investors |
-| **Tenant data leakage risk** | Application-level filtering is not enough when competing businesses share one database |
-| **Rigid feature tiers** | Enabling dropship or investor capital for one tenant required code changes, not configuration |
-| **Slow onboarding** | New sister concern = days of manual setup, stock duplication, and permission wiring |
-| **No customer-facing commerce** | Wholesale desks had no B2B storefront; orders came through phone and WhatsApp |
-
-### The core question
-
-> How do you build one SaaS platform where a parent company pools physical stock, multiple child desks sell from allocations, customers shop online, investors see yield — and **no tenant can ever see another tenant's data**?
+| **No Centralized Stock Pool** | Same physical inventory counted independently per sister concern — leading to catastrophic overselling and multi-week stock reconciliation disputes. |
+| **Pricing Guesswork** | International freight, customs duties, and fluctuating FX rates calculated in static spreadsheets; unit landed costs were inaccurate, causing margin bleed. |
+| **Tenant Data Leakage** | Competing sales desks operated on shared servers; application-level filtering (`WHERE tenant_id = ?`) frequently leaked client lists, margin sheets, and sales volume. |
+| **Unreconciled Cash & COD** | Courier cash-on-delivery remittances, dropshipper commission payouts, and wholesale dues were managed in disconnected ledgers with zero audit trail. |
+| **Monolithic Code & SQL Drift** | 10,000+ lines of unstructured SQL migrations created deploy paralysis, regression bugs, and schema divergence between local and production databases. |
 
 ---
 
-## The Solution
+## System Architecture & Domain Scope
 
-TradeflowBD is a **plug-and-play multi-tenant ERP** that covers the full wholesale lifecycle:
-
-```text
-Pre-Order Costing → Inbound Shipment & Landed Cost → Warehouse Pooling
-    → Multi-Desk Selling (Wholesale / Storefront / Dropship)
-        → Universal Wallet Settlement → Treasury & Investor Reporting
-```
-
-![TradeflowBD Executive Dashboard — Live Sellable Stock, Valuation & Batches](/images/projects/tradeflowbd/dashboard.webp)
-
-One platform. Four login surfaces. Database-enforced isolation. Configuration-driven modules.
-
-```mermaid
-flowchart LR
-    subgraph Input ["Demand & Procurement"]
-        PBC["Pre-Order Costing"]
-        SHIP["Inbound Shipments"]
-    end
-
-    subgraph Pool ["Parent Warehouse"]
-        STOCK["Global Stock Pool"]
-        LOC["4-Tier Bin Locations"]
-    end
-
-    subgraph Sell ["Multi-Desk Selling"]
-        WS["Wholesale POS"]
-        SHOP["B2B Storefront"]
-        DS["Dropship Desk"]
-    end
-
-    subgraph Finance ["Consolidated Finance"]
-        WALLET["Universal Wallet"]
-        TREASURY["Treasury Reports"]
-        INV["Investor Yield"]
-    end
-
-    PBC --> SHIP
-    SHIP --> STOCK
-    STOCK --> LOC
-    STOCK --> WS
-    STOCK --> SHOP
-    STOCK --> DS
-    WS --> WALLET
-    SHOP --> WALLET
-    DS --> WALLET
-    WALLET --> TREASURY
-    WALLET --> INV
-```
-
----
-
-## Architecture
-
-### High-level system design
+TradeflowBD is architected as a **unified multi-tenant commerce engine** supporting four co-existing business models, four distinct user application scopes, and a strict parent–child data isolation boundary.
 
 ```mermaid
 flowchart TB
-    subgraph Clients ["Client Surfaces"]
-        PLATFORM["Platform Scope<br/>/superadmin/*"]
-        APP["App Scope<br/>/:slug/app/*"]
-        SHOP["Shop Scope<br/>/:slug/shop/*"]
-        INVESTOR["Investor Scope<br/>/:slug/investor/*"]
+    subgraph Clients ["Four Distinct Application Scopes"]
+        PLATFORM["Platform Scope<br/>/platform/* (Superadmin)"]
+        APP["App Scope<br/>/:slug/app/* (Staff & Admin)"]
+        SHOP["Shop Scope<br/>/:slug/shop/* (B2B Buyers & Resellers)"]
+        INVESTOR["Investor Scope<br/>/:slug/investor/* (Capital Partners)"]
     end
 
-    subgraph Frontend ["Frontend — Vue 3 / Quasar SPA"]
-        ROUTER["Vue Router + Scope Guards"]
-        PERMS["Module Permission Guard"]
-        TQ["TanStack Query<br/>Server State Cache"]
-        PINIA["Pinia Stores"]
-        MODULES["20+ Domain Modules<br/>page → store → service → repository"]
+    subgraph Frontend ["Frontend Layer — Vue 3.5 / Quasar SPA"]
+        ROUTER["Vue Router 5 + Scope Guards"]
+        PERMS["Runtime Module & Action Guards"]
+        TQ["TanStack Query (Server-State Cache)"]
+        PINIA["Pinia Stores (Client State)"]
+        MODULES["17+ Domain Modules<br/>Page → Store → Service → Repository"]
+        PERF["Route-Level CSS Code Splitting<br/>& Dynamic Heavy Imports"]
     end
 
-    subgraph Backend ["Backend — Supabase"]
-        AUTH["Supabase Auth<br/>Google OAuth"]
-        RLS["Row-Level Security<br/>200+ Policies"]
-        RPC["Atomic RPCs<br/>300+ Functions"]
-        RT["Realtime Channels"]
-        DB["PostgreSQL 15+"]
+    subgraph Backend ["Backend Layer — Supabase PostgreSQL 15+"]
+        AUTH["Supabase Auth (Google OAuth + Scoped JWTs)"]
+        RLS["PostgreSQL Row-Level Security (200+ Policies)"]
+        RPC["Atomic Transactional RPCs (300+ Functions)"]
+        SCHEMAS["Declarative Domain Schemas<br/>(procurement/, shop_order/, bills_pays/, notifications/)"]
+        MIG["1,330+ Versioned Migrations"]
     end
 
-    subgraph Pipeline ["Data Pipeline"]
-        PYTHON["Python ETL<br/>Price Check / WTS Sync"]
-        EXCEL["ExcelJS Bulk Import"]
+    subgraph External ["DevOps & Data Pipelines"]
+        CF["Cloudflare Pages (SPA CDN)"]
+        DOCKER["Local Docker Supabase Replay"]
+        PYTHON["Python ETL (Catalog Scraping & Sync)"]
+        CAPACITOR["Capacitor Android Companion"]
     end
 
     PLATFORM & APP & SHOP & INVESTOR --> ROUTER
@@ -299,404 +254,79 @@ flowchart TB
     MODULES --> TQ & PINIA
     TQ --> RPC
     PINIA --> RPC
-    RPC --> RLS --> DB
+    RPC --> RLS --> SCHEMAS
     AUTH --> RLS
-    RT --> TQ
-    PYTHON --> DB
-    EXCEL --> MODULES
+    CF --> Frontend
+    DOCKER --> MIG
+    PYTHON --> SCHEMAS
+    CAPACITOR --> RPC
 ```
 
-### Deployment topology
+### 1. Four Application Scopes (Surfaces)
 
-```mermaid
-flowchart LR
-    USER["Users"] --> CF["Cloudflare Pages<br/>Quasar SPA Build"]
-    CF --> SB["Supabase Cloud<br/>PostgreSQL + Auth + Storage"]
-    DEV["Developers"] --> DOCKER["Local Supabase<br/>Docker"]
-    DOCKER --> MIGRATE["980+ Migrations<br/>Replay Before Deploy"]
-    MIGRATE --> SB
-    PYTHON["Python ETL Scripts"] --> SB
-    MOBILE["Capacitor Android<br/>Barcode Scanner"] --> CF
-```
+Rather than maintaining separate web repositories, the entire ecosystem runs from a single unified codebase partitioned into four distinct application surfaces:
 
----
+| Scope | Entry Route | Target Persona | Architectural Capabilities |
+| :--- | :--- | :--- | :--- |
+| **`platform`** | `/auth/platform/login` → `/platform/*` | Superadmin | Multi-tenant provisioning, module catalog activation, global reference data, platform telemetry. |
+| **`app`** | `/:slug/app/*` | Tenant Admin & Staff | Complete wholesale ERP backoffice: procurement, ATP inventory, bills & payments desk, costing, and reports. |
+| **`shop`** | `/:slug/shop/*` (or custom host) | B2B Buyers & Resellers | High-performance storefront: wholesale catalog browsing, customer cart, dropship ordering, and order tracking. |
+| **`investor`** | `/:slug/investor/*` | Capital Partners | Strictly read-only yield statements, shipment batch profitability, and financial performance audits (zero withdrawal access). |
 
-## Multi-Tenant Model
+### 2. Multi-Tenant Parent–Child Hierarchy
 
-The hardest design problem was **parent–child hierarchy with shared stock but isolated desks**.
+The multi-tenant isolation model is strictly **one level deep**:
 
 ```mermaid
 flowchart TD
     subgraph Platform ["Platform Superadmin"]
-        SA["Superadmin"] --> TENANTS["Tenant Registry"]
+        SA["Superadmin Console"] --> TENANTS["Tenant Registry"]
     end
 
-    subgraph Parent ["Parent Company (parent_id = NULL)"]
-        P["Parent Workspace"]
-        P --> PHYS["Physical Stock (global_stocks)"]
-        P --> SHIPMENTS["Inbound Shipments"]
-        P --> INVESTORS["Investor Capital Pools"]
-        P --> REPORTS["Consolidated Treasury"]
+    subgraph Parent ["Parent Enterprise (parent_id = NULL)"]
+        P["Parent Holding Workspace"]
+        P --> PHYS["Authoritative Physical Stock (global_stocks)"]
+        P --> SHIPMENTS["Inbound Shipments & Landed Costs"]
+        P --> INVESTORS["Capital Allocations"]
+        P --> TREASURY["Consolidated Treasury Ledger"]
     end
 
-    subgraph Children ["Sister Concerns (parent_id = parent.id)"]
-        P -->|Virtual Allocations| C1["Child A — Wholesale Desk"]
-        P -->|Virtual Allocations| C2["Child B — Storefront & Dropship"]
-        C1 --> INV1["Sales Invoices & Customers"]
-        C2 --> SHOP1["B2B Storefront Orders"]
+    subgraph Children ["Child Tenants / Sister Desks (parent_id = parent.id)"]
+        P -->|Virtual ATP Allocations| C1["Child A — Wholesale Sales Desk"]
+        P -->|Virtual ATP Allocations| C2["Child B — B2B Storefront & Dropship"]
+        C1 --> BILLS1["Wholesale Invoices & Dues"]
+        C2 --> ORDERS1["Storefront Checkouts & COD Remittances"]
     end
 
     TENANTS --> P
 ```
 
-### Ownership rules
+- **Physical Stock Ownership:** Physical warehouse inventory rows (`global_stocks`) exist strictly on the parent entity. Child sales desks consume real-time virtual slices via `global_stock_allocations`.
+- **Inbound Shipments:** Managed and owned exclusively at the parent tier.
+- **Billing & Commerce:** Child sales desks generate `bills` stamped with their `issued_by_tenant_id` for customer-facing branding, while settlement rolls into the parent consolidated ledger.
+- **Hierarchy Boundary:** A child tenant cannot spawn sub-tenants; a parent with active children cannot be nested.
 
-| Entity | Owner | Child Access |
-|---|---|---|
-| Physical stock (`global_stocks`) | Parent only | Read via `global_stock_allocations` |
-| Inbound shipments | Parent only | None |
-| Sales invoices | Parent books, child branding | Child creates via `issued_by_tenant_id` |
-| Shop orders | Child tenant | Parent sees consolidated wallet |
-| Wallet ledger | Parent books (`parent_tenant_id`) | Child tagged via `operating_tenant_id` |
+### 3. Four Co-existing Business Models
 
-**Key rule:** Hierarchy is strictly **one level deep**. A child cannot have children. A parent with children cannot be assigned a parent.
-
----
-
-## Four Application Scopes
-
-One codebase, four distinct user experiences — each with its own auth flow, layout theme, and permission model.
-
-```mermaid
-flowchart LR
-    URL["Incoming URL"] --> R1{Route Match}
-    R1 -->|"/superadmin/*"| S0["Platform<br/>Tenant provisioning"]
-    R1 -->|"/:slug/app/*"| S1["App<br/>ERP backoffice"]
-    R1 -->|"/:slug/shop/*"| S2["Shop<br/>B2B storefront"]
-    R1 -->|"/:slug/investor/*"| S3["Investor<br/>Read-only portal"]
-```
-
-| Scope | Users | Primary Capabilities |
-|---|---|---|
-| **Platform** | Superadmin | Create tenants, global reference data, platform health |
-| **App** | Admin & Staff | Procurement, stock, invoices, wallet, settings, dropship desk |
-| **Shop** | B2B Customers | Catalog browse, cart checkout, order tracking, merchant wallet |
-| **Investor** | Capital Partners | Shipment batch profitability, capital statements, yield performance |
-
----
-
-## Permission & Module Gating
-
-Features are not hardcoded per tenant. A three-layer guard decides access at runtime.
-
-```mermaid
-flowchart TD
-    REQ["User attempts action"] --> M{"1. Module enabled?<br/>(tenant_modules)"}
-    M -- No --> DENY["Access Denied"]
-    M -- Yes --> A{"2. User is admin?<br/>(memberships.role)"}
-    A -- Yes --> ALLOW["Access Granted"]
-    A -- No --> G{"3. Has action grant?<br/>(module_actions)"}
-    G -- Yes --> ALLOW
-    G -- No --> DENY
-```
-
-### Action grant hierarchy
+TradeflowBD is architected to support four distinct commercial modalities within a single tenant configuration without table cross-contamination:
 
 ```text
-view    → Read tables and detail pages
-create  → Add new records
-edit    → Modify drafts and configs
-delete  → Soft-delete to Trash
-manage  → Admin overrides, voiding, settings
-order   → Customer cart placement (shop scope only)
+Pre-Order (PBC / Catalog Negotiation)
+        ↓ demand aggregation & purchase order
+Parent Warehouse (global_stocks) → Wholesale Invoice / Stock-Backed Shop / Dropship
+
+K-beauty (koba_*)     ← Isolated UK/Korean catalog, retail carts & commission engine
+Thrift (thrift_*)     ← Isolated one-off garment intake, barcode tagging & POS
 ```
 
-Navigation menus and dashboard widgets are filtered dynamically — a tenant without the `thrift` module never sees thrift routes, even if the code exists in the bundle.
+1. **Brandwala Wholesale (BW):** The flagship in-hand inventory model. Goods land in parent warehouse `global_stocks`, receive landed cost stamps, and are sold via wholesale invoices (`bills`), stock-backed shops, and dropship channels.
+2. **Pre-Order (Product-Based Costing / PBC):** Quotes generated before goods land. Backlog auto-suggestions (`costingFile`) aggregate customer demand before international purchase orders are cut.
+3. **K-beauty (Koba):** Dedicated UK/Korean cosmetics catalog with dedicated tables (`koba_products`, `koba_orders`, `koba_carts`). Operates an isolated profit-share and commission engine without contaminating wholesale FIFO stock.
+4. **Thrift:** Second-hand garment vertical with individual garment intake boxes, unique SKU thermal barcodes, physical condition grading, dedicated thrift POS, and courier COD reconciliation.
 
 ---
 
-## Core Technical Decisions
-
-### Decision 1 — Database-level isolation, not app-level filtering
-
-| | |
-|---|---|
-| **Problem** | Competing corporate tenants share one PostgreSQL database. A bug in a `WHERE tenant_id = ?` clause leaks financial data. |
-| **Decision** | Row-Level Security (RLS) on every tenant-scoped table, evaluated from the authenticated session token — not from client-side filters. |
-| **Outcome** | Queries cannot cross tenant boundaries even under concurrent high-throughput access. Security boundary is the database, not the Vue app. |
-
-```mermaid
-flowchart LR
-    APP["Vue App"] -->|"JWT with tenant context"| SB["Supabase Client"]
-    SB --> RPC["RPC / Direct Query"]
-    RPC --> RLS["RLS Policy Check<br/>membership_has_module_action()"]
-    RLS -- Pass --> DATA["Tenant-Scoped Rows"]
-    RLS -- Fail --> EMPTY["Zero Rows Returned"]
-```
-
----
-
-### Decision 2 — Parent-owned stock, virtual child allocations
-
-| | |
-|---|---|
-| **Problem** | Sister concerns selling the same physical inventory each maintain separate stock counts — leading to overselling and reconciliation failures. |
-| **Decision** | Physical stock rows exist only on the parent tenant. Children receive virtual allocation slices (`global_stock_allocations`) for their sales desks. |
-| **Outcome** | Single source of truth for ATP (available-to-promise). Wholesale POS, storefront, and dropship all draw from the same pool without duplication. |
-
----
-
-### Decision 3 — Atomic RPCs for all complex writes
-
-| | |
-|---|---|
-| **Problem** | Invoice issuance touches stock allocation, movement logs, wallet ledger, and billing profile balance — a partial client-side write corrupts data. |
-| **Decision** | All multi-table mutations run as `SECURITY DEFINER` PostgreSQL RPCs (`create_invoice_from_payload`, `confirm_dropship_delivered`, `finalize_shipment`, etc.). |
-| **Outcome** | Every business transaction is atomic. TypeScript types are regenerated from the schema after each migration (`backend:types`). |
-
-```mermaid
-sequenceDiagram
-    participant UI as Vue Component
-    participant TQ as TanStack Query
-    participant RPC as PostgreSQL RPC
-    participant DB as Database
-
-    UI->>TQ: Mutation (place order)
-    TQ->>RPC: create_shop_order_from_cart()
-    RPC->>DB: BEGIN
-    RPC->>DB: Allocate stock (ATP check)
-    RPC->>DB: Create order + items
-    RPC->>DB: Record wallet ledger entry
-    RPC->>DB: COMMIT
-    RPC-->>TQ: Order result
-    TQ-->>UI: Optimistic cache patch
-```
-
----
-
-### Decision 4 — Universal Wallet with no shadow ledgers
-
-| | |
-|---|---|
-| **Problem** | Separate accounting tables per entity type (customer AR, vendor AP, courier COD, investor capital) create fragmented, unreconcilable finance. |
-| **Decision** | One wallet per `(parent_tenant_id, entity_type, entity_id, currency)`. P&L derived from immutable cost snapshots (`landed_cost_bdt`) — not duplicate ledger balances. |
-| **Outcome** | Consolidated treasury on parent books. Child desks tagged via `operating_tenant_id` for audit drill-down. No shadow accounting. |
-
-```mermaid
-flowchart TD
-    subgraph OneWallet ["One-Wallet Rule"]
-        KEY["(parent_tenant_id, entity_type, entity_id, currency)"]
-    end
-
-    subgraph Entities ["Entity Types"]
-        TENANT["tenant — company cash"]
-        CUSTOMER["customer — AR / store credit"]
-        VENDOR["vendor — payables"]
-        COURIER["courier — COD collections"]
-        CARGO["cargo_company — freight payables"]
-        INVESTOR["investor — capital pool"]
-    end
-
-    KEY --> TENANT & CUSTOMER & VENDOR & COURIER & CARGO & INVESTOR
-
-    subgraph PnL ["Read-Side P&L (No Shadow Ledger)"]
-        SNAP["Immutable cost snapshots<br/>on invoice lines"]
-        SNAP --> MARGIN["Invoice Margin Report"]
-        SNAP --> SHIPPNL["Shipment Batch P&L"]
-    end
-```
-
----
-
-### Decision 5 — TanStack Query for server state orchestration
-
-| | |
-|---|---|
-| **Problem** | Pinia stores refetching on every navigation caused redundant RPC calls and stale UI on complex pages (shop pricing, shipment costing). |
-| **Decision** | TanStack Query (`@tanstack/vue-query`) with query key factories, `staleTime` tuning, optimistic mutations, and targeted cache patches. |
-| **Outcome** | Add-to-cart patches the cart cache without refetching the full active-carts list. Shipment costing uses batch RPCs, never per-item loops. |
-
----
-
-### Decision 6 — Domain-modular schema split
-
-| | |
-|---|---|
-| **Problem** | A single 10,000+ line `public.sql` made every schema change high-risk and slow to review. |
-| **Decision** | Split into domain folders (`procurement/`, `shop_order/`, `sales_invoice/`) each with `02_tables.sql`, `03_rpcs.sql`, `04_rls.sql`. |
-| **Outcome** | Procurement and commerce schema can evolve independently. Local Docker replay validates migrations before production deploy. |
-
----
-
-## Domain Modules
-
-```mermaid
-mindmap
-  root((TradeflowBD))
-    Governance
-      Tenant Auth & RBAC
-      Access Control
-      Operational Data Reset
-      Soft Delete / Trash
-    Procurement
-      Inbound Shipments
-      Landed Cost Engine
-      Warehouse Locations
-      Stock Movements
-    Commerce
-      Wholesale POS
-      B2B Storefront
-      Dropship Finance Hub
-      Catalog Negotiation
-    Finance
-      Universal Wallet
-      Treasury Reports
-      Customer Dues
-      Courier COD Remittance
-    Verticals
-      Thrift (Second-Hand Retail)
-      Koba (UK Cross-Border)
-      Product-Based Costing
-    Capital
-      Investor Profiles
-      Shipment Allocations
-      Yield Reporting
-```
-
-### Module highlights
-
-| Module | What it solves |
-|---|---|
-| **Procurement & Stock** | International shipment intake, freight/customs cost entries, landed cost apportionment by weight, 4-tier bin hierarchy |
-| **Sales Invoice** | Wholesale POS with FIFO stock search, billing profiles, returns restocking, invoice paper printing |
-| **Shop & Dropship** | Three shop types (catalog, in-stock, dropship), B2B cart/checkout, 3-step Dropship Finance Hub settlement |
-| **Product-Based Costing** | Pre-order demand files with customer backlog auto-suggest → procurement demand list handoff |
-| **Universal Wallet** | Multi-currency double-entry ledger for all entity types, cash-in reports, atomic transfers |
-| **Reporting & Treasury** | Invoice margin, shipment P&L, customer dues aging, courier bulk remittance |
-| **Investor Capital** | Shipment batch cost-share allocations, read-side yield, capital ledger |
-| **Thrift** | Second-hand vertical: consignment shipments, thermal barcodes, garment measurements, POS, COD remittance |
-| **Koba** | UK catalog scraping pipeline (Python), commission pricing, cross-border order fulfillment |
-
-![Product-Based Costing V2 — Pre-Order Demand, FX Rates & Profit Margin Modeling](/images/projects/tradeflowbd/product-costing.webp)
-
-![Procurement & Inbound Shipments List — Real-Time Batch Lifecycle & Archival Tracking](/images/projects/tradeflowbd/shipments-list.webp)
-
----
-
-## Dropship Finance Hub — Example End-to-End Flow
-
-Shows how procurement, commerce, and wallet layers connect in one atomic workflow.
-
-```mermaid
-sequenceDiagram
-    participant Reseller as Dropship Reseller (Shop)
-    participant Desk as Dropship Desk (App)
-    participant RPC as PostgreSQL RPCs
-    participant Stock as Parent Stock Pool
-    participant Wallet as Universal Wallet
-
-    Reseller->>RPC: place_dropship_order()
-    RPC->>Stock: Hold stock (ATP reservation)
-    RPC->>Wallet: Record customer receivable
-    RPC-->>Reseller: Order confirmed
-
-    Desk->>RPC: confirm_dropship_delivered()
-    RPC->>Stock: Release hold, deduct quantity
-    RPC->>Wallet: Record courier COD collection
-    RPC->>Wallet: Record merchant payout
-    RPC-->>Desk: Settlement complete
-```
-
----
-
-## Landed Cost Engine
-
-Every margin report, invoice line, and investor yield calculation depends on accurate unit costs stamped at shipment finalization.
-
-![Shipment Details & Landed Cost Breakdown — Real-time Item Weight & Currency Apportionment](/images/projects/tradeflowbd/shipment-details.webp)
-
-```mermaid
-flowchart LR
-    A["Cost Entries<br/>(Goods, Freight, Customs)"] --> B["Effective FX &<br/>Weight Surcharges"]
-    B --> C["Apportion Freight<br/>by Product Weight"]
-    C --> D["Landed Unit Cost (BDT)"]
-    D --> E["Stamp landed_cost_bdt<br/>on Shipment Items"]
-    E --> F["Available for<br/>Stock Allocation & Sales"]
-```
-
-**Formula:**
-
-```text
-Landed Cost (BDT) = (Purchase Price × FX Rate) + Apportioned Cargo Charge + Customs Surcharge
-```
-
-Dual-phase design: in-memory preview in the UI; authoritative stamp written to the database only on shipment finalization.
-
----
-
-## Tech Stack
-
-| Layer | Technology | Role |
-|---|---|---|
-| **Frontend** | Vue 3.5 + Quasar 2 + TypeScript | SPA with modular domain architecture |
-| **State** | Pinia + TanStack Query | Client state + server cache orchestration |
-| **Routing** | Vue Router 5 | Scope-aware guards (platform / app / shop / investor) |
-| **Backend** | Supabase (PostgreSQL 15+) | Database, auth, storage, realtime |
-| **Security** | RLS + Security-Definer RPCs | Tenant isolation + atomic transactions |
-| **Types** | Generated `database.types.ts` | Schema → TypeScript contract on every migration |
-| **Deploy** | Cloudflare Pages | Frontend CDN with `dist/spa` output |
-| **Local Dev** | Supabase CLI + Docker | Migration replay before production push |
-| **ETL** | Python scripts | Price Check / WTS product sync to Supabase |
-| **Mobile** | Capacitor (Android) | Barcode scanning and inventory audit companion |
-| **Media** | Cloudinary | Image upload and optimization |
-
----
-
-## Impact & Results
-
-| Metric | Value | Detail |
-|---|---|---|
-| **Tenant data isolation** | 100% | RLS enforced at database level, not application level |
-| **Application scopes** | 4 | Platform, App, Shop, Investor — one codebase |
-| **Domain modules** | 17+ | Documented, module-gated, independently evolvable |
-| **Database migrations** | 980+ | Versioned schema with local Docker replay |
-| **Vue components** | 470+ | Modular page → store → service → repository pattern |
-| **Atomic RPCs** | 300+ | All complex writes server-side, type-safe |
-| **Onboarding time** | Minutes | Child tenant + module enablement via configuration, not code deploy |
-| **Stock duplication** | Eliminated | Parent pool + virtual allocations — single ATP source |
-
----
-
-## Security & Reliability
-
-- **PostgreSQL RLS** on all tenant-scoped tables with membership-based policy evaluation
-- **Atomic RPCs** for invoice creation, dropship settlement, shipment finalization, wallet transfers
-- **Four scoped login surfaces** with Google OAuth via Supabase Auth and automatic token refresh
-- **Type-safe contracts** between generated Supabase types and frontend stores/composables
-- **Archive-first governance** for shipments — financial audit trails preserved, no accidental hard deletes
-- **Soft-delete trash** with 30-day retention and tenant-scoped purge engine
-- **Local-first development** — Docker Supabase with full migration replay before any production deploy
-
----
-
-## What I Built (Personal Contributions)
-
-As Lead Framework & Migration Engineer:
-
-- Designed the **parent–child tenant hierarchy** and stock allocation model
-- Architected the **Universal Wallet** parent-books consolidation (in progress migration)
-- Built the **module permission guard** system (`tenant_modules` + `module_actions` + scope routing)
-- Led the **schema modularization** — splitting monolithic SQL into domain-scoped folders
-- Established the **page → store → service → repository** module pattern across 20+ domains
-- Implemented **TanStack Query** caching strategy with optimistic mutations and batch RPC patterns
-- Drove **980+ migrations** with local-first Supabase workflow and generated TypeScript types
-- Built specialized verticals: **Thrift** (second-hand retail), **Koba** (UK cross-border), **Dropship Finance Hub**
-
----
-
-## Visual Workflows & Architecture Wireframes
-
-### 1. Enterprise Desktop Layout — 3-Tier Navigation & Workspace Grid
+## Core Engineering Innovations
 
 ```
 +----------------------------------------------------------------------------------------------------+
@@ -713,7 +343,7 @@ As Lead Framework & Migration Engineer:
 | [>] Procurement      | | [+ Add Items] [Apportion Landed Costs] [Print Thermal Tags] [v Export]   | |
 | [*] Product Costing  | +-------------------------------------------------------------------------+ |
 | [$] Shop & Dropship  |                                                                             |
-| [&] Wallets & Ledger | +-- REAL-TIME PRODUCT APPORTIONMENT TABLE --------------------------------+ |
+| [&] Bills & Pays     | +-- REAL-TIME PRODUCT APPORTIONMENT TABLE --------------------------------+ |
 |                      | | [x] | SKU Code     | Product Name         | Qty  | Unit(£) | Landed(৳) | Margin% | |
 |                      | |-----|--------------|----------------------|------|---------|-----------|---------| |
 |                      | | [ ] | TOALP001     | Alpecin Shampoo C1   | 1200 | £4.75   | ৳1,280.00 | 18.5%   | |
@@ -724,36 +354,271 @@ As Lead Framework & Migration Engineer:
 +----------------------+-----------------------------------------------------------------------------+
 ```
 
-### 2. Multi-Tenant Stock Allocation & Landed Cost Engine Workflow
+### 1. Parent-Pooled Available-to-Promise (ATP) Stock Allocation
+
+To eliminate the classic multi-desk overselling problem, physical inventory is centralized in parent `global_stocks` while child desks receive virtual allocation slices.
 
 ```mermaid
 flowchart TD
-    subgraph S1 ["1. International Procurement & Cargo Manifest"]
-        INVOICE["Supplier Purchase Order<br/>(GBP £ / USD $)"]
-        FREIGHT["Sea / Air Freight Costs<br/>(Per kg / Per CBM)"]
-        CUSTOMS["Customs Duty, AIT & Port Handling<br/>(Regional Clearing Agents)"]
+    subgraph Central ["Parent Warehouse Physical Inventory"]
+        PHY["Physical Batch Stock (global_stocks)"]
+        HOLDS["Active Reservation Holds (shop_order_holds)"]
+        ATP["Authoritative ATP = Physical - (Committed + Holds)"]
     end
 
-    subgraph S2 ["2. Automated Landed Cost Engine"]
-        INVOICE & FREIGHT & CUSTOMS --> ENGINE["Weight & Value Apportionment Engine<br/>Effective FX Rate Multiplier"]
-        ENGINE --> STAMP["Final Landed Unit Cost Stamped<br/>(Per Single Item SKU)"]
+    subgraph Desks ["Concurrent Sales Channels"]
+        D1["Wholesale POS Desk"]
+        D2["B2B Web Storefront"]
+        D3["Dropship Reseller Network"]
     end
 
-    subgraph S3 ["3. Parent Warehouse & Pooled Virtual Stock"]
-        STAMP --> POOL["Central Parent Stock Pool<br/>Available-to-Promise (ATP) Queue"]
+    subgraph Atomic ["Pessimistic Locking RPC Execution"]
+        RPC["deduct_allocated_stock_atomic()"]
+        MUTEX["SELECT ... FOR UPDATE on Stock Rows"]
     end
 
-    subgraph S4 ["4. Multi-Tenant Sales Channels"]
-        POOL -->|"RLS Scoped Views"| DESK1["Wholesale POS Desk<br/>(Bulk Invoicing)"]
-        POOL -->|"Virtual Reservation"| DESK2["Online Storefront<br/>(B2C B2B Commerce)"]
-        POOL -->|"Atomic Holds"| DESK3["Dropship Reseller Network<br/>(3-Tier Commission Desk)"]
-    end
-
-    subgraph S5 ["5. Settlement & Treasury Ledger"]
-        DESK1 & DESK2 & DESK3 --> RPC_SETTLE["PostgreSQL Atomic RPCs<br/>(place_order, deduct_stock)"]
-        RPC_SETTLE --> WALLET["Universal Double-Entry Wallet<br/>(Parent-Books Consolidated Ledger)"]
-    end
+    D1 & D2 & D3 --> RPC
+    RPC --> MUTEX
+    MUTEX --> ATP
+    ATP -- Insufficient Stock --> REJECT["Atomic Abort (Zero Overselling)"]
+    ATP -- Stock Available --> DEDUCT["Decrement Physical & Release Holds"]
 ```
+
+- When a buyer adds a product to a cart or places an order on a child storefront, an atomic RPC calculates real-time Available-to-Promise (ATP) inventory: `ATP = Quantity Physical - (Quantity Committed + Quantity Held)`.
+- Concurrent checkouts acquire a pessimistic row lock (`SELECT FOR UPDATE`) on the target stock slice. If ATP is depleted, the transaction immediately rolls back with an authoritative `INSUFFICIENT_STOCK` error code.
+
+### 2. The Unified Bills & Pays Money Kernel
+
+The platform refactored fragmented, ad-hoc wallet tables into a unified **Money Kernel**:
+
+```text
+Layers: Profile → Bill → Pay → Allocation → Cashbook
+```
+
+```mermaid
+flowchart LR
+    subgraph Parties ["Profiles (Party)"]
+        BUYER["Wholesale Buyer"]
+        DROP["Dropshipper"]
+        VENDOR["Shipment Vendor"]
+        COURIER["Courier Service"]
+    end
+
+    subgraph Document ["Universal Bills Table"]
+        AR["AR Bills (Standard)<br/>Wholesale Take / B2B Order"]
+        AP["AP Bills (Standard)<br/>Vendor / Cargo / Local Opex"]
+        NOTES["Adjustment Notes<br/>(Credit / Debit Notes via parent_bill_id)"]
+    end
+
+    subgraph Settlement ["Pays & Instruments"]
+        PAY["Pays (Multi-Currency & FX)<br/>Collect / Payout"]
+        INST["Pay Instruments (Bank / Cash / Cheque)"]
+        ALLOC["Pay Allocations (Oldest-First Bill Match)"]
+    end
+
+    subgraph Custody ["Cashbook Engine"]
+        TCASH["Tenant Cashbook (Operating Treasury)"]
+        CCASH["Profile Cashbook (Custody / Leftover Balance)"]
+    end
+
+    Parties --> Document
+    Document --> ALLOC
+    PAY --> ALLOC
+    PAY --> INST
+    PAY --> Custody
+```
+
+- **Polymorphic Bills Engine:** A single `bills` table manages both Accounts Receivable (wholesale sales, condition sales, storefront orders) and Accounts Payable (inbound shipment vendor costs, cargo freight, and local port opex).
+- **Immutable Financial Audit Trail:** Issued bills can never be quietly mutated. If quantities or prices change post-issuance, the system mandates a `credit_note` or `debit_note` referencing the `parent_bill_id`.
+- **Dropship Remittance Mechanics:**
+  1. Customer invoice issued to dropshipper at wholesale price upon dispatch.
+  2. Courier collects retail cash-on-delivery (COD) face value into courier cashbook.
+  3. Upon delivery, courier remits net bank deposit.
+  4. System allocates remittance to settle supplier wholesale invoice; excess margin is deposited directly into the dropshipper's **Custody Cashbook** for later payout.
+
+### 3. Deterministic Landed Cost Apportionment Engine
+
+Authoritative unit landed costs are stamped directly onto inventory rows at shipment finalization, ensuring downstream invoices, FIFO COGS, and investor yields never rely on estimations:
+
+```mermaid
+flowchart TD
+    subgraph Inbound ["Inbound Shipment Batch (SH-2026-08)"]
+        PO["Supplier PO (GBP £ / USD $)"]
+        FREIGHT["Air / Sea Cargo Manifest (Per KG Tariff)"]
+        CUSTOMS["Customs Clearance & Duties (BDT ৳)"]
+        LOCAL["Local Port Transport & Stevedoring (BDT ৳)"]
+    end
+
+    subgraph Engine ["Server-Side Landed Cost RPC"]
+        FX["Dynamic Effective FX Rate Multiplier"]
+        WEIGHT["Weight-Proportional Freight Apportionment"]
+        DUTY["Ad-Valorem Tariff Surcharge Calculation"]
+    end
+
+    subgraph Stamp ["Authoritative Finalization"]
+        LOCK["Atomic Finalize RPC (finalize_shipment)"]
+        UNIT["Authoritative landed_cost_bdt Stamped Per SKU"]
+        HIST["Immutable Snapshot Locked into FIFO Inventory"]
+    end
+
+    Inbound --> Engine
+    Engine --> LOCK
+    LOCK --> UNIT --> HIST
+```
+
+$$\text{Landed Cost (BDT)} = (\text{Foreign Unit Price} \times \text{Effective FX}) + \left(\frac{\text{SKU Weight}}{\text{Total Batch Weight}} \times \text{Cargo Charges}\right) + \text{Apportioned Duty}$$
+
+- **Dual-Phase Design:** Real-time in-memory calculation previews unit landed costs and estimated gross margins in the UI. When the shipment is marked received, an atomic `SECURITY DEFINER` RPC writes the authoritative `landed_cost_bdt` snapshot onto shipment items.
+- **Outcome Variance Tracking:** Quantities received with physical defects, commercial shortages, or customs seizures are recorded as outcome adjustments, ensuring stock records reflect true physical reality.
+
+### 4. Three-Layer Runtime Module & Permission Guard
+
+Features are dynamically enabled per tenant without deploying bespoke code binaries:
+
+```mermaid
+flowchart TD
+    REQ["User Requests Action / Route"] --> M{"1. Module Enabled?<br/>(tenant_modules)"}
+    M -- No --> DENIED["403 Route Hidden / Action Blocked"]
+    M -- Yes --> R{"2. Superadmin / Tenant Admin?<br/>(memberships.role)"}
+    R -- Yes --> GRANTED["Access Granted"]
+    R -- No --> A{"3. Explicit Action Grant?<br/>(module_actions)"}
+    A -- Yes --> GRANTED
+    A -- No --> DENIED
+```
+
+- **Action Grant Hierarchy:** Granular action grants (`view`, `create`, `edit`, `delete`, `manage`, `order`) evaluated at both the UI router navigation guard and database RLS engine via `membership_has_module_action()`.
+
+---
+
+## Database Design & Concurrency
+
+### Declarative Modular Schema Split
+
+To eliminate risk across 1,330+ migrations, the monolithic database schema was decomposed into declarative domain modules in `supabase/schemas/<domain>/`:
+
+```
+supabase/schemas/
+├── _extensions.sql                  # Extensions (uuid-ossp, pgcrypto)
+├── public.sql                       # Master declarative public schema (unsplit domains)
+├── procurement/                     # SPLIT: Shipments, items, suppliers, purchase tracking
+│   ├── 01_types.sql                 # Custom enums and composite domain types
+│   ├── 02_tables.sql                # Table DDL, defaults, constraints, foreign keys, indexes
+│   ├── 03_rpcs.sql                  # Stored procedures & atomic business logic
+│   └── 04_rls.sql                   # Row Level Security engine policies
+├── shop_order/                      # SPLIT: Shops, carts, listings, orders, dropship settlement
+├── bills_pays/                      # SPLIT: Bills, lines, pays, instruments, cashbook, profiles
+└── notifications/                   # SPLIT: Inbox, preferences, push subscriptions
+```
+
+### Local-First Docker Replay & Schema Diff Verification
+
+Production data and schema migrations are safeguarded through a strict local verification workflow:
+
+1. **Declarative Modification:** Developers edit SQL definitions directly in `supabase/schemas/<domain>/`.
+2. **Schema Diffing:** Running `pnpm run backend:schema:diff` invokes `supabase db diff` to detect declarative changes and generate timestamped migration scripts.
+3. **Clean Container Replay:** Running `pnpm run backend:reset` spins up a local Docker Supabase instance, wipes the database, and replays all **1,330+ migrations** sequentially.
+4. **Automated Type Generation:** Running `pnpm run backend:types:local` emits fresh TypeScript contracts to `web/src/types/database.types.ts`.
+
+---
+
+## Performance Benchmarks & Reliability
+
+During the Q4 2026 performance optimization initiative, the application underwent rigorous bundle profiling, route code splitting, and database query analysis.
+
+### Frontend Optimization Program (Phase 1 & Phase 2 Results)
+
+```mermaid
+pie title First-Load CSS Bundle Size (KiB)
+    "Vendor Quasar CSS (Split)" : 191
+    "Index Shell CSS (Split)" : 90
+    "Eliminated from First Load" : 576
+```
+
+| Metric | Before Optimization | After Optimization | Engineering Improvement |
+| :--- | :--- | :--- | :--- |
+| **First-Load CSS Bundle** | **857 KiB** (1 monolithic bundle) | **281 KiB** (vendor-quasar 191 + index 90) | **67% reduction** via `cssCodeSplit: true` across 199 route chunks |
+| **Material Icons Web Font** | Shipped entire TTF font (~1.8 MB) | Removed completely | Replaced with `@phosphor-icons/web` tree-shaken SVG icons |
+| **Diagramming Libraries** | Synchronous app import (1.4 MiB) | Dynamic on-demand import | Mermaid & Elk loaded strictly on developer documentation routes |
+| **Excel Export Engine** | Synchronous app import (908 KiB) | Dynamic lazy import | ExcelJS loaded only when user triggers `.xlsx` export |
+| **Push Notification Client** | Preloaded on app boot | Lazy chunk (~47 KiB) | Firebase FCM isolated to notification preferences page |
+| **Scraped Static JSON** | 10+ MB in `web/public` | Extracted out of bundle | Relocated to Python ETL data storage (`python/data/uk/out`) |
+
+### Database & Server-State Performance
+
+- **Zero Slow App Queries:** Query pooler profiling confirmed zero user-facing SQL queries in the top 10 slowest database calls.
+- **TanStack Query State Orchestration:** Integrated `@tanstack/vue-query` with declarative query key factories and optimistic mutation rollbacks. Complex cart mutations and shipment landed cost adjustments reflect instantaneously without full-dataset invalidations.
+- **Pessimistic Concurrency:** High-concurrency checkout paths protected via row-level locks on stock rows, maintaining zero overselling across high-volume promotional sales events.
+
+---
+
+## Lessons Learned & Architectural Retrospective
+
+| Architectural Decision | What Worked Well | What Was Refactored / Learned |
+| :--- | :--- | :--- |
+| **PostgreSQL RLS as Security Boundary** | Evaluating permissions at the database engine eliminated cross-tenant data leaks completely. Frontend bugs could never expose another tenant's confidential margins. | Policy recursion must be carefully controlled; complex subqueries in RLS policies can cause query planner degradation if not indexed properly. |
+| **From Ad-Hoc Wallets to Money Kernel** | Moving to the unified Profile · Bill · Pay · Alloc · Cashbook model eliminated shadow Excel ledgers and unified AR, AP, and courier COD reconciliation into one schema. | Financial document updates must always use explicit credit/debit notes (`parent_bill_id`) rather than mutating issued invoices in place. |
+| **Declarative Schema Split** | Decomposing `public.sql` into domain folders (`procurement/`, `bills_pays/`, etc.) enabled clean local Docker migration validation and dramatically faster code reviews. | Schema extraction requires automated diff tooling (`supabase db diff`) to ensure declarative files never drift from historical migration scripts. |
+| **Server-State vs Client Store Separation** | Using TanStack Query for remote database state while reserving Pinia strictly for transient UI state eliminated cache synchronization bugs. | Optimistic updates on complex financial grids require bulletproof rollback handlers in case server-side RPC validation fails. |
+
+---
+
+## Visual Workflows & Architecture Wireframes
+
+### Dropship Finance Hub — End-to-End Settlement Sequence
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant Reseller as Dropship Reseller (Shop Scope)
+    participant Desk as Wholesale Dropship Desk (App Scope)
+    participant RPC as PostgreSQL RPC Engine
+    participant Stock as Central Parent Stock Pool
+    participant Kernel as Universal Money Kernel
+
+    Reseller->>RPC: place_dropship_order(cart_payload)
+    RPC->>Stock: Hold Available-to-Promise stock (ATP reservation)
+    RPC->>Kernel: Issue Customer Invoice (Wholesale Price BDT)
+    RPC-->>Reseller: Order Confirmed & Dispatch Queued
+
+    Desk->>RPC: confirm_dropship_dispatched(courier_tracking_id)
+    RPC->>Stock: Deduct physical stock & release hold
+    RPC->>Kernel: Issue Courier AP Bill (Courier Fee BDT)
+    RPC-->>Desk: Manifest Stamped
+
+    Note over Desk,Kernel: Courier delivers goods & collects COD face value
+    Desk->>RPC: record_courier_remittance(bank_deposit_bdt)
+    RPC->>Kernel: Deposit into Courier Cashbook
+    RPC->>Kernel: Allocate payment to Customer Invoice (Oldest First)
+    RPC->>Kernel: Credit excess margin to Reseller Custody Cashbook
+    RPC-->>Desk: Settlement Completed (Audited)
+```
+
+### Production Interface Showcase
+
+#### 1. Executive Operations & Live Liquidity Dashboard
+Centralized dashboard tracking multi-tenant liquid cash, gross billed turnover, active inbound consignments, real-time inventory assets (৳1.69M, 1,871 units), and courier COD remittances (Steadfast & Pathao).
+
+![TradeflowBD Multi-Tenant Executive Dashboard — Live Stock Asset Valuation & Fulfillment Pipeline](/images/projects/tradeflowbd/dashboard.webp)
+
+#### 2. Inbound Shipment Finalization & Landed Costing Breakdown
+Procurement batch inspection (`Shiplu Shipment 24`) displaying foreign invoice price (£), unit weights, package weights, duty calculations, and locked unit landed cost (BDT) stamped prior to warehouse intake.
+
+![Inbound Shipment Landed Cost Details — Real-Time Item Weight & Currency Apportionment](/images/projects/tradeflowbd/shipment-details.webp)
+
+#### 3. B2B Storefront & Multi-Currency Product Catalog Configuration
+Administrative product and storefront configuration desk displaying real-time available stock, vendor references, international list pricing (£), and customer group access rules.
+
+![B2B Storefront & Shop Catalog Configuration — Real-Time Available Stock & Multi-Currency Pricing](/images/projects/tradeflowbd/shop-catalog-config.webp)
+
+#### 4. Dropship Dispatch Dossier & Settlement Ledger
+Settlement ledger for dropship dispatch (`ORD-20261008-00860`) itemizing end-customer COD collection (৳8,900.00), packaging & print charge deductions, wholesale dossier cost (৳7,851.00), and automated estimated profit split (৳1,049.00).
+
+![Dropship Dispatch Dossier & Settlement Ledger — Direct COD Collection, Courier Surcharge & Margin Split](/images/projects/tradeflowbd/dropship-dossier.webp)
+
+#### 5. Mobile Wholesale Storefront (Shop Scope)
+B2B buyer ordering experience optimized for mobile screens, featuring direct step-quantity pickers, rapid cart mutations, and bottom tab navigation for catalog, cart, and order tracking.
+
+![B2B Wholesale Mobile Storefront (Shop Scope) — Direct Step-Quantity Ordering & Real-Time Cart](/images/projects/tradeflowbd/shop-mobile-storefront.webp)
 
 ---
 
@@ -761,13 +626,16 @@ flowchart TD
 
 ```mermaid
 timeline
-    title TradeflowBD Roadmap
+    title TradeflowBD Architectural Roadmap
+    section Completed
+        Declarative Schema Split : Decomposed procurement, shop_order, bills_pays, notifications
+        Bills & Pays Money Kernel : Unified AR, AP, and courier cashbook engine
+        Bundle Optimization : 67% first-paint CSS reduction and dynamic heavy imports
     section In Progress
-        Wallet Parent-Books Migration : Consolidate all ledger writers onto parent books model
-        Schema Domain Split : wallet, thrift, investor, permissions modules
+        Final Schema Extraction : Move customer, products, reporting, and thrift into domain folders
+        Thrift Barcode Engine : Direct thermal print integration for Capacitor Android companion
     section Planned
-        Customs Documentation Generator : Regional compliance rules automation
-        Maritime Tracking APIs : Real-time container telemetry integration
-        Investor Portal v2 : Withdrawal request workflow beyond read-only reporting
-        Capacitor iOS : Mobile inventory companion for iOS
+        Customs Compliance Automation : Automated regional export/import declaration documents
+        Maritime Telemetry APIs : Real-time container shipping and port congestion tracking
+        Investor Portal v2 : Direct capital withdrawal requests and ledger audits
 ```

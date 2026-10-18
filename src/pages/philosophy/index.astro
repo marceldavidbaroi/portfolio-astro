@@ -69,7 +69,8 @@ const principles = (await getCollection('philosophy'))
 
 		if (uniquePres.size === 0) return;
 
-		const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+		const mermaidModule = await import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs' as any);
+		const mermaid = mermaidModule.default;
 		mermaid.initialize({
 			startOnLoad: false,
 			theme: 'base',

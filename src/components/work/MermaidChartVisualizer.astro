@@ -302,7 +302,8 @@ const { code = '', title, type, showControls = true } = Astro.props;
 			const visualizers = document.querySelectorAll<HTMLElement>('.mermaid-visualizer-container');
 			if (visualizers.length === 0) return;
 
-			const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+			const mermaidModule = await import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs' as any);
+			const mermaid = mermaidModule.default;
 
 			const isDark = document.documentElement.dataset.theme !== 'light';
 			mermaid.initialize({

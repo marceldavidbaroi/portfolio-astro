@@ -714,17 +714,7 @@
 	transition: transform var(--dur-fast) ease, filter var(--dur-fast) ease;
 }
 
-/* Monochrome treatment */
-.skill-pill-mono .skill-pill-logo {
-	filter: grayscale(100%) opacity(0.75);
-}
-
-.skill-pill-mono .skill-pill-icon {
-	filter: grayscale(100%) opacity(0.75);
-}
-
-.skill-pill-mono:hover .skill-pill-logo {
-	filter: grayscale(100%) opacity(1);
+.skill-pill:hover .skill-pill-logo {
 	transform: scale(1.12);
 }
 
@@ -734,12 +724,35 @@
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	transition: transform var(--dur-fast) ease, filter var(--dur-fast) ease;
+	transition: transform var(--dur-fast) ease;
 }
 
-.skill-pill-mono:hover .skill-pill-icon {
-	filter: grayscale(100%) opacity(1);
+.skill-pill:hover .skill-pill-icon {
 	transform: scale(1.12);
+}
+
+/* Dark mode visibility & high contrast for monochrome / dark SVGs */
+:root[data-theme="dark"] .is-mono-logo,
+[data-theme="dark"] .is-mono-logo {
+	filter: invert(0.92) brightness(1.15);
+}
+
+:root[data-theme="dark"] .skill-pill:hover .is-mono-logo,
+[data-theme="dark"] .skill-pill:hover .is-mono-logo,
+:root[data-theme="dark"] .skill-item:hover .is-mono-logo,
+[data-theme="dark"] .skill-item:hover .is-mono-logo {
+	filter: invert(0.96) brightness(1.25);
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) .is-mono-logo {
+		filter: invert(0.92) brightness(1.15);
+	}
+
+	:root:not([data-theme="light"]) .skill-pill:hover .is-mono-logo,
+	:root:not([data-theme="light"]) .skill-item:hover .is-mono-logo {
+		filter: invert(0.96) brightness(1.25);
+	}
 }
 
 .skill-pill-name {
