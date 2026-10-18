@@ -11,7 +11,7 @@
     "build": "npm run sync:media && astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "deploy": "astro build && wrangler pages deploy dist --project-name=marceldavidbaroi --commit-dirty=true"
+    "deploy": "wrangler logout && wrangler login && astro build && wrangler pages deploy dist --project-name=marceldavidbaroi --commit-dirty=true"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.10",
