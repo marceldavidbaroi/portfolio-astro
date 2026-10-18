@@ -42,4 +42,92 @@ const pageDesc = isBsc
 		<EduBody isBsc={isBsc} bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
 		<EduCrossNav isBsc={isBsc} />
 	</div>
+
+	<script>
+		function setupEduDetailAnimations() {
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+			// 1. Ticker animation for CGPA and Credit stats
+			const tickerElements = document.querySelectorAll<HTMLElement>('.edu-stat-ticker');
+			tickerElements.forEach((el) => {
+				const target = parseFloat(el.getAttribute('data-target') || '0');
+				const format = el.getAttribute('data-format') || 'float';
+				const suffix = el.getAttribute('data-suffix') || '';
+
+				if (prefersReduced || isNaN(target) || target <= 0) {
+					el.textContent = format === 'float' ? `${target.toFixed(2)}${suffix}` : `${Math.round(target)}${suffix}`;
+					return;
+				}
+
+				let startTime: number | null = null;
+				const duration = 850; // ms
+
+				const step = (timestamp: number) => {
+					if (!startTime) startTime = timestamp;
+					const progress = Math.min((timestamp - startTime) / duration, 1);
+					// Ease out cubic
+					const eased = 1 - Math.pow(1 - progress, 3);
+					const current = target * eased;
+
+					el.textContent = format === 'float' ? `${current.toFixed(2)}${suffix}` : `${Math.round(current)}${suffix}`;
+
+					if (progress < 1) {
+						requestAnimationFrame(step);
+					} else {
+						el.textContent = format === 'float' ? `${target.toFixed(2)}${suffix}` : `${Math.round(target)}${suffix}`;
+					}
+				};
+
+				// Trigger ticker on first viewport intersection
+				const tickerObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								requestAnimationFrame(step);
+								tickerObserver.unobserve(entry.target);
+							}
+						});
+					},
+					{ threshold: 0.2 }
+				);
+				tickerObserver.observe(el);
+			});
+
+			// 2. Sequential scroll reveal for sections and accordions
+			const revealElements = document.querySelectorAll<HTMLElement>(
+				'.edu-masthead, .edu-section, .semester-accordion, .edu-cross-nav'
+			);
+			if (!revealElements.length) return;
+
+			if (prefersReduced || !('IntersectionObserver' in window)) {
+				revealElements.forEach((el) => el.classList.add('is-revealed'));
+				return;
+			}
+
+			const revealObserver = new IntersectionObserver(
+				(entries) => {
+					entries.forEach((entry) => {
+						if (entry.isIntersecting) {
+							entry.target.classList.add('is-revealed');
+							revealObserver.unobserve(entry.target);
+						}
+					});
+				},
+				{
+					root: null,
+					rootMargin: '0px 0px -40px 0px',
+					threshold: 0.05
+				}
+			);
+
+			revealElements.forEach((el) => {
+				if (!el.classList.contains('is-revealed')) {
+					revealObserver.observe(el);
+				}
+			});
+		}
+
+		setupEduDetailAnimations();
+		document.addEventListener('astro:page-load', setupEduDetailAnimations);
+	</script>
 </BaseLayout>

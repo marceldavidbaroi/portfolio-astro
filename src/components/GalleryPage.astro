@@ -88,27 +88,62 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 </BaseLayout>
 
 <script>
-	const grid = document.getElementById('gallery-grid');
-	if (grid) {
-		grid.addEventListener('click', (e) => {
-			const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.gallery-shot');
-			if (!btn) return;
-			const src = btn.dataset.src;
-			const alt = btn.dataset.alt || '';
-			if (!src) return;
-			const overlay = document.createElement('div');
-			overlay.className = 'gallery-spotlight';
-			overlay.innerHTML = `<button type="button" class="gallery-spotlight-close" aria-label="Close">×</button><img src="${src}" alt="${alt}" />`;
-			document.body.appendChild(overlay);
-			const close = () => overlay.remove();
-			overlay.addEventListener('click', (ev) => {
-				if (ev.target === overlay || (ev.target as HTMLElement).classList.contains('gallery-spotlight-close')) close();
+	function initGalleryPage() {
+		// 1. Cascade observer
+		const items = document.querySelectorAll<HTMLElement>('.gallery-item');
+		if (items.length) {
+			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+				items.forEach((it) => it.classList.add('is-revealed'));
+			} else {
+				const observer = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-revealed');
+								observer.unobserve(entry.target);
+							}
+						});
+					},
+					{
+						rootMargin: '0px 0px -40px 0px',
+						threshold: 0.05
+					}
+				);
+				items.forEach((it) => {
+					if (!it.classList.contains('is-revealed')) {
+						observer.observe(it);
+					}
+				});
+			}
+		}
+
+		// 2. Lightbox click handler
+		const grid = document.getElementById('gallery-grid');
+		if (grid && !(grid as any)._boundSpotlight) {
+			(grid as any)._boundSpotlight = true;
+			grid.addEventListener('click', (e) => {
+				const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('.gallery-shot');
+				if (!btn) return;
+				const src = btn.dataset.src;
+				const alt = btn.dataset.alt || '';
+				if (!src) return;
+				const overlay = document.createElement('div');
+				overlay.className = 'gallery-spotlight';
+				overlay.innerHTML = `<button type="button" class="gallery-spotlight-close" aria-label="Close">×</button><img src="${src}" alt="${alt}" />`;
+				document.body.appendChild(overlay);
+				const close = () => overlay.remove();
+				overlay.addEventListener('click', (ev) => {
+					if (ev.target === overlay || (ev.target as HTMLElement).classList.contains('gallery-spotlight-close')) close();
+				});
+				document.addEventListener('keydown', (ev) => {
+					if (ev.key === 'Escape') close();
+				}, { once: true });
 			});
-			document.addEventListener('keydown', (ev) => {
-				if (ev.key === 'Escape') close();
-			}, { once: true });
-		});
+		}
 	}
+
+	initGalleryPage();
+	document.addEventListener('astro:page-load', initGalleryPage);
 </script>
 
 <style>
@@ -171,6 +206,20 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 		margin-top: 1.5rem;
 	}
 
+	.gallery-item {
+		opacity: 0;
+		transform: translateY(14px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.gallery-item.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
 	.gallery-shot {
 		display: block;
 		width: 100%;
@@ -178,6 +227,16 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 		border: 0;
 		background: var(--card-bg);
 		cursor: pointer;
+		overflow: hidden;
+		transition:
+			transform var(--dur-ui, 220ms) var(--ease-out),
+			box-shadow var(--dur-ui, 220ms) var(--ease-out);
+		will-change: transform;
+	}
+
+	.gallery-shot:hover {
+		transform: translateY(-4px) rotate(-0.4deg);
+		box-shadow: 0 8px 24px rgba(43, 37, 30, 0.12);
 	}
 
 	.gallery-shot img {
@@ -185,6 +244,11 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 		width: 100%;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
+		transition: transform var(--dur-enter, 600ms) var(--ease-out);
+	}
+
+	.gallery-shot:hover img {
+		transform: scale(1.02);
 	}
 
 	.gallery-item figcaption {
@@ -202,12 +266,24 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 		align-items: center;
 		justify-content: center;
 		padding: 2rem;
+		animation: galleryFadeIn 0.22s var(--ease-out);
 	}
 
 	:global(.gallery-spotlight img) {
 		max-width: min(92vw, 960px);
 		max-height: 88vh;
 		object-fit: contain;
+		animation: galleryScaleIn 0.24s var(--ease-out);
+	}
+
+	@keyframes galleryFadeIn {
+		from { opacity: 0; }
+		to { opacity: 1; }
+	}
+
+	@keyframes galleryScaleIn {
+		from { transform: scale(0.97); }
+		to { transform: scale(1); }
 	}
 
 	:global(.gallery-spotlight-close) {
@@ -219,5 +295,18 @@ const atticCrumb = crumb ?? (useAtticChrome ? 'school' : undefined);
 		color: var(--paper);
 		font-size: 2rem;
 		cursor: pointer;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.gallery-item,
+		.gallery-shot,
+		.gallery-shot img,
+		:global(.gallery-spotlight),
+		:global(.gallery-spotlight img) {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+			animation: none !important;
+		}
 	}
 </style>

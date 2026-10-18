@@ -12,6 +12,10 @@ export interface GalleryPhoto {
 	isEmblem?: boolean;
 	src: string;
 	alt: string;
+	orientation?: 'portrait' | 'landscape' | 'square';
+	width?: number;
+	height?: number;
+	aspectRatio?: number;
 }
 
 export interface GalleryStoryChapter {
@@ -53,17 +57,30 @@ export async function getAllAlbums(): Promise<Album[]> {
 					let src = '';
 					let alt = '';
 					let caption = p.caption;
+					let orientation: 'portrait' | 'landscape' | 'square' | undefined = undefined;
+					let width: number | undefined = undefined;
+					let height: number | undefined = undefined;
+					let aspectRatio: number | undefined = undefined;
+
 					const asset = media.get(p.id);
 					if (asset) {
 						src = asset.src;
 						alt = asset.alt;
 						caption = caption || asset.caption;
+						orientation = asset.orientation;
+						width = asset.width;
+						height = asset.height;
+						aspectRatio = asset.aspectRatio;
 					}
 					return {
 						...p,
 						src,
 						alt,
-						caption
+						caption,
+						orientation,
+						width,
+						height,
+						aspectRatio
 					};
 				})
 				.filter((p) => Boolean(p.src));

@@ -1,10 +1,67 @@
 ---
 ---
 
-<a class="work-index" href="/archive">
+<a class="work-index teaser-reveal" href="/archive">
 	<span class="work-index-copy">
 		<span class="work-index-title">Civic archive</span>
 		<span class="work-index-meta font-mono">Leadership & pre-career</span>
 	</span>
 	<span class="section-link font-mono">View archive →</span>
 </a>
+
+<script>
+	function setupTeaserReveal() {
+		const teaser = document.querySelector<HTMLElement>('.teaser-reveal');
+		if (!teaser) return;
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+			teaser.classList.add('is-revealed');
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				threshold: 0.1
+			}
+		);
+
+		if (!teaser.classList.contains('is-revealed')) {
+			observer.observe(teaser);
+		}
+	}
+
+	setupTeaserReveal();
+	document.addEventListener('astro:page-load', setupTeaserReveal);
+</script>
+
+<style>
+	.teaser-reveal {
+		opacity: 0;
+		transform: translateY(20px);
+		transition:
+			opacity 0.65s var(--ease-out),
+			transform 0.65s var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.teaser-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.teaser-reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
+</style>

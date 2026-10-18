@@ -1,253 +1,494 @@
 ---
 import { site } from '../../data/site';
-
-interface Props {
-	portraitSrc: string | null;
-}
-
-const { portraitSrc } = Astro.props;
 ---
 
-<section class="hero" aria-label="Introduction">
-	<div class="hero-grid">
-		<p class="status font-mono">Available · Remote / relocation · Dhaka · US/EU overlap</p>
-		<h1 class="name font-sans">{site.name}</h1>
-		<p class="role">Software Engineer</p>
-		<p class="bio">
-			I design and ship full-stack web and cross-platform applications across Next.js, Vue / Quasar, NestJS, Flutter, and PostgreSQL — from wholesale ERP and support desks to mobile field apps.
-		</p>
-		<div class="hero-actions">
-			<a class="btn-solid font-mono" href={`mailto:${site.email}`}>Email me</a>
-			<a class="btn-ghost font-mono" href={site.resumePdf} target="_blank" rel="noopener noreferrer">Resume</a>
-			<a class="text-link font-mono" href={site.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
-			<a class="text-link font-mono" href={site.github} target="_blank" rel="noopener noreferrer">GitHub</a>
-		</div>
+<section id="hero-section" class="hero-section" aria-label="Introduction">
+	<div class="face-container" id="face-container">
+		
+		<!-- Designer Details (Left Column) -->
+		<a href="/about" class="identity-col designer" id="designer-side" aria-label="About Designer details">
+			<div class="description" id="designer-desc">
+				<h1 class="identity-title">designer</h1>
+				<p class="identity-bio">Product designer specialising in UI design and design systems.</p>
+			</div>
+		</a>
 
-		<figure class:list={['hero-portrait', { 'is-photo': portraitSrc }]}>
-			{portraitSrc ? (
-				<img
-					src={portraitSrc}
-					alt="Portrait of Marcel David Baroi"
-					width="720"
-					height="960"
+		<!-- Interactive Face Stage (Center Column) -->
+		<a href="/about" class="face-stage" id="face-stage" aria-label="About Marcel David Baroi">
+			<!-- Static fallback / base face composite -->
+			<img 
+				id="face-base" 
+				class="face-base" 
+				src="/images/portrait-split-half.webp" 
+				alt="Marcel David Baroi - Designer & Engineer" 
+				width="1024" 
+				height="1024" 
+				loading="eager"
+			/>
+
+			<!-- Designer Half Image Layer (Left colorful sketch) -->
+			<div class="face-layer designer-layer" id="designer-layer">
+				<img 
+					src="/images/portrait-designer.webp" 
+					alt="Designer Portrait" 
+					class="face-img" 
+					width="1024" 
+					height="1024" 
+					loading="eager"
 				/>
-			) : (
-				<div class="portrait-slot" role="img" aria-label="Portrait placeholder. Add public/images/portrait.webp">
-					<span class="portrait-initials font-sans">{site.nameMark}</span>
-					<span class="portrait-hint font-mono">Add public/images/portrait.webp</span>
+			</div>
+
+			<!-- Engineer Half Image Layer (Right ink line sketch) with code backdrop decoration -->
+			<div class="face-layer coder-layer" id="coder-layer">
+				<!-- Ambient code snippets in background matching Adham Dannaway's signature right side -->
+				<div class="code-bg-deco font-mono" aria-hidden="true">
+					<span class="code-line">&lt;html&gt;</span>
+					<span class="code-line indent">height: 100%;</span>
+					<span class="code-line indent">class="architect"</span>
+					<span class="code-line big">CSS3 <span class="dim">HTML5</span></span>
+					<span class="code-line indent">color: #2b251e;</span>
+					<span class="code-line">TypeScript</span>
 				</div>
-			)}
-		</figure>
+				<img 
+					src="/images/portrait-coder.webp" 
+					alt="Engineer Portrait" 
+					class="face-img" 
+					width="1024" 
+					height="1024" 
+					loading="eager"
+				/>
+			</div>
+
+			<!-- Vertical Split Indicator Line (Subtle guide like Adham's seam) -->
+			<div class="face-split-line" id="face-split-line" aria-hidden="true"></div>
+		</a>
+
+		<!-- Engineer Details (Right Column) -->
+		<a href="/about" class="identity-col coder" id="coder-side" aria-label="About Engineer details">
+			<div class="description" id="coder-desc">
+				<h1 class="identity-title"><span class="chevron-left">&lt;</span>engineer<span class="chevron-right">&gt;</span></h1>
+				<p class="identity-bio">Full-stack engineer building scalable backends, robust APIs, and modern web apps.</p>
+			</div>
+		</a>
+
 	</div>
 </section>
 
+<script>
+	function initAdhamHero() {
+		const section = document.getElementById('hero-section');
+		const stage = document.getElementById('face-stage');
+		const designerLayer = document.getElementById('designer-layer');
+		const coderLayer = document.getElementById('coder-layer');
+		const designerDesc = document.getElementById('designer-desc');
+		const coderDesc = document.getElementById('coder-desc');
+		const splitLine = document.getElementById('face-split-line');
+
+		if (!section || !stage || !designerLayer || !coderLayer || !designerDesc || !coderDesc) return;
+
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		if (prefersReduced) {
+			applyVisuals(50);
+			return;
+		}
+
+		let mouseX = 0;
+		let relMouseX = 50; // percentage
+		let currentXp = 50; // smoothed percentage (Zeno's paradox / lerp)
+		let animId: number | null = null;
+		let isHovered = false;
+
+		function updatePositions() {
+			if (!isHovered) {
+				// Smoothly return to 50%
+				currentXp += (50 - currentXp) * 0.08;
+				if (Math.abs(50 - currentXp) < 0.1) {
+					currentXp = 50;
+					applyVisuals(50);
+					if (animId) cancelAnimationFrame(animId);
+					animId = null;
+					return;
+				}
+			} else {
+				// Smoothly follow relative mouse position
+				currentXp += (relMouseX - currentXp) * 0.1;
+			}
+
+			applyVisuals(currentXp);
+			animId = requestAnimationFrame(updatePositions);
+		}
+
+		function applyVisuals(pct: number) {
+			const splitPos = Math.max(12, Math.min(88, 100 - pct));
+
+			designerLayer.style.clipPath = `polygon(0 0, ${splitPos}% 0, ${splitPos}% 100%, 0 100%)`;
+			coderLayer.style.clipPath = `polygon(${splitPos}% 0, 100% 0, 100% 100%, ${splitPos}% 100%)`;
+
+			if (splitLine) {
+				splitLine.style.left = `${splitPos}%`;
+			}
+
+			const designerOpacity = Math.min(1, Math.max(0.35, (100 - pct) / 50));
+			const coderOpacity = Math.min(1, Math.max(0.35, pct / 50));
+
+			designerDesc.style.opacity = `${designerOpacity}`;
+			coderDesc.style.opacity = `${coderOpacity}`;
+		}
+
+		const handleMouseMove = (e: MouseEvent) => {
+			const rect = section.getBoundingClientRect();
+			mouseX = e.clientX - rect.left;
+			relMouseX = (mouseX / rect.width) * 100;
+
+			if (!animId) {
+				animId = requestAnimationFrame(updatePositions);
+			}
+		};
+
+		const handleMouseEnter = () => {
+			isHovered = true;
+			if (!animId) {
+				animId = requestAnimationFrame(updatePositions);
+			}
+		};
+
+		const handleMouseLeave = () => {
+			isHovered = false;
+			relMouseX = 50;
+			if (!animId) {
+				animId = requestAnimationFrame(updatePositions);
+			}
+		};
+
+		section.addEventListener('mousemove', handleMouseMove);
+		section.addEventListener('mouseenter', handleMouseEnter);
+		section.addEventListener('mouseleave', handleMouseLeave);
+
+		// Touch swipe support for mobile
+		section.addEventListener('touchmove', (e: TouchEvent) => {
+			if (e.touches.length > 0) {
+				const rect = section.getBoundingClientRect();
+				const touchX = e.touches[0].clientX - rect.left;
+				relMouseX = (touchX / rect.width) * 100;
+				isHovered = true;
+				if (!animId) animId = requestAnimationFrame(updatePositions);
+			}
+		}, { passive: true });
+
+		section.addEventListener('touchend', () => {
+			isHovered = false;
+			relMouseX = 50;
+			if (!animId) animId = requestAnimationFrame(updatePositions);
+		});
+
+		applyVisuals(50);
+	}
+
+	initAdhamHero();
+	document.addEventListener('astro:page-load', initAdhamHero);
+</script>
+
 <style>
-	.hero {
-		padding-bottom: 4.5rem;
-		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
-	}
-
-	.hero-grid {
-		display: grid;
-		grid-template-columns: minmax(0, 1fr) minmax(220px, 300px);
-		grid-template-areas:
-			'status portrait'
-			'name portrait'
-			'role portrait'
-			'bio portrait'
-			'actions portrait';
-		column-gap: 2.75rem;
-		row-gap: 0.7rem;
-		align-items: start;
-	}
-
-	.status { grid-area: status; }
-	.name { grid-area: name; }
-	.role { grid-area: role; }
-	.bio { grid-area: bio; }
-	.hero-actions { grid-area: actions; }
-	.hero-portrait { grid-area: portrait; }
-
-	.status {
-		display: inline-flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: 0.45rem;
-		font-size: var(--type-meta);
-		letter-spacing: 0.06em;
-		text-transform: uppercase;
-		color: var(--text-muted);
-		margin: 0;
-		line-height: 1.45;
-	}
-
-	.name {
-		margin: 0;
-		font-size: clamp(1.85rem, 6vw, 3.35rem);
-		font-weight: 800;
-		letter-spacing: -0.035em;
-		line-height: 1.05;
-		color: var(--text-main);
-		text-transform: none;
-		overflow-wrap: break-word;
-	}
-
-	.role {
-		margin: 0;
-		font-size: 1.02rem;
-		font-weight: 500;
-		letter-spacing: -0.01em;
-		color: var(--text-muted);
-		line-height: 1.35;
-		max-width: none;
-	}
-
-	.bio {
-		margin: 0.15rem 0 0;
-		font-size: var(--type-body);
-		line-height: 1.55;
-		color: var(--text-main);
-		max-width: 34rem;
-	}
-
-	.hero-actions {
-		margin-top: 0.35rem;
-	}
-
-	.hero-portrait {
-		justify-self: end;
+	.hero-section {
 		width: 100%;
-		max-width: 280px;
-		margin: 0;
-		background: transparent;
-		padding: 0;
-		border: 0;
-		box-shadow: none;
-	}
-
-	.hero-portrait.is-photo img {
-		display: block;
-		width: 100%;
-		height: auto;
-		aspect-ratio: 3 / 4;
-		object-fit: contain;
-		object-position: top center;
-		background: transparent;
-		filter: contrast(1.08) saturate(1.04);
-	}
-
-	.portrait-slot {
-		display: block;
-		width: 100%;
-		height: auto;
-		aspect-ratio: 3 / 4;
-		object-fit: cover;
-		object-position: center 18%;
-		background: var(--card-bg);
-	}
-
-	.portrait-slot {
+		min-height: calc(100svh - 4.5rem);
+		position: relative;
+		overflow: hidden;
+		padding: clamp(1.5rem, 3vw, 3rem) 0;
+		border-bottom: 1px solid var(--card-border);
+		background-color: var(--bg-color);
 		display: flex;
-		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		user-select: none;
+	}
+
+	/* 3-Column fluid container that scales down naturally on any screen */
+	.face-container {
+		width: 100%;
+		max-width: 1140px;
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: clamp(0.5rem, 2vw, 2rem);
+		margin: 0 auto;
+		padding: 0 clamp(0.5rem, 1.5vw, 1.5rem);
+		box-sizing: border-box;
+	}
+
+	/* Clickable Identity Columns */
+	.identity-col {
+		flex: 1 1 0;
+		min-width: 0;
+		display: flex;
+		align-items: center;
+		text-decoration: none;
+		color: inherit;
+		cursor: pointer;
+		z-index: 20;
+	}
+
+	.identity-col.designer {
+		justify-content: flex-end;
+		text-align: left;
+	}
+
+	.identity-col.coder {
+		justify-content: flex-start;
+		text-align: right;
+	}
+
+	.description {
+		width: 100%;
+		max-width: clamp(140px, 25vw, 290px);
+		transition: transform 0.3s ease, opacity 0.3s ease;
+	}
+
+	.identity-col:hover .description {
+		transform: translateY(-2px);
+	}
+
+	/* Typographic Headlines with fluid clamp */
+	.identity-title {
+		margin: 0 0 0.5rem;
+		font-family: var(--font-sans);
+		font-size: clamp(1.4rem, 3.2vw, 3.2rem);
+		font-weight: 800;
+		letter-spacing: -0.04em;
+		line-height: 1;
+		white-space: nowrap;
+		color: var(--text-main);
+		transition: color var(--dur-fast) ease;
+	}
+
+	.identity-col.designer:hover .identity-title {
+		color: var(--accent);
+	}
+
+	.identity-col.coder:hover .identity-title {
+		color: var(--text-main);
+	}
+
+	/* Chevrons styling around coder */
+	.chevron-left,
+	.chevron-right {
+		font-family: var(--font-mono);
+		font-weight: 600;
+		opacity: 0.85;
+		color: var(--text-muted);
+	}
+
+	.identity-bio {
+		margin: 0;
+		font-family: var(--font-sans);
+		font-size: clamp(0.72rem, 1.05vw, 1.02rem);
+		line-height: 1.45;
+		color: var(--text-muted);
+		text-wrap: pretty;
+	}
+
+	/* Central Face Stage */
+	.face-stage {
+		flex: 0 0 clamp(220px, 34vw, 480px);
+		width: clamp(220px, 34vw, 480px);
+		height: clamp(220px, 34vw, 480px);
+		position: relative;
+		display: flex;
 		align-items: center;
 		justify-content: center;
-		gap: 0.7rem;
-		border: 1px dashed rgba(95, 80, 56, 0.28);
-		background: linear-gradient(180deg, #f4f0e7 0%, #ebe6d8 100%);
+		z-index: 10;
+		cursor: pointer;
+		text-decoration: none;
+		color: inherit;
+		border-radius: 50%;
+		overflow: hidden;
+		transition: background-color var(--dur-normal, 250ms) ease, box-shadow var(--dur-normal, 250ms) ease, border-color var(--dur-normal, 250ms) ease, transform 0.25s ease;
 	}
 
-	.portrait-initials {
-		font-size: 2.1rem;
-		font-weight: 800;
-		letter-spacing: 0.06em;
-		color: var(--text-main);
+	.face-stage:hover {
+		transform: scale(1.015);
 	}
 
-	.portrait-hint {
-		font-size: var(--type-caption);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
+	/* Dark mode: Editorial circular spotlight that naturally frames the positive artwork */
+	:root[data-theme="dark"] .face-stage {
+		background-color: #fbf9f5;
+		border: 1px solid rgba(227, 222, 214, 0.12);
+		box-shadow:
+			0 0 0 1px rgba(255, 255, 255, 0.04),
+			0 20px 48px -12px rgba(0, 0, 0, 0.65),
+			0 0 60px -15px rgba(232, 168, 85, 0.15);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:root:not([data-theme="light"]) .face-stage {
+			background-color: #fbf9f5;
+			border: 1px solid rgba(227, 222, 214, 0.12);
+			box-shadow:
+				0 0 0 1px rgba(255, 255, 255, 0.04),
+				0 20px 48px -12px rgba(0, 0, 0, 0.65),
+				0 0 60px -15px rgba(232, 168, 85, 0.15);
+		}
+	}
+
+	/* Static base composite */
+	.face-base {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center bottom;
+		display: none; /* Active dynamic layers shown on JS support */
+	}
+
+	/* Face Layer (Full head size) */
+	.face-layer {
+		position: absolute;
+		inset: 0;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		will-change: clip-path;
+	}
+
+	.face-layer.designer-layer {
+		z-index: 12;
+		clip-path: polygon(0 0, 50% 0, 50% 100%, 0 100%);
+	}
+
+	.face-layer.coder-layer {
+		z-index: 13;
+		clip-path: polygon(50% 0, 100% 0, 100% 100%, 50% 100%);
+	}
+
+	.face-img {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		object-position: center bottom;
+		display: block;
+		pointer-events: none;
+	}
+
+	/* Ambient code background watermark behind the coder half */
+	.code-bg-deco {
+		position: absolute;
+		right: 4%;
+		bottom: 18%;
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		font-size: clamp(0.65rem, 0.9vw, 0.85rem);
 		color: var(--text-muted);
-		text-align: center;
-		max-width: 12rem;
+		opacity: 0.28;
+		pointer-events: none;
 		line-height: 1.4;
+		z-index: 1;
+		text-align: left;
 	}
 
-	@media (prefers-reduced-motion: no-preference) {
-		.hero-portrait {
-			animation: rise var(--dur-enter) var(--ease-out) both;
-		}
+	:root[data-theme="dark"] .code-bg-deco {
+		opacity: 0.2;
 	}
 
-	@keyframes rise {
-		from {
-			opacity: 0;
-			transform: translateY(12px);
-		}
-		to {
-			opacity: 1;
-			transform: translateY(0);
-		}
+	.code-line.indent {
+		padding-left: 0.75rem;
 	}
 
-	@media (max-width: 900px) {
-		.hero-grid {
-			grid-template-columns: minmax(0, 1fr) 128px;
-			grid-template-areas:
-				'status status'
-				'name portrait'
-				'role role'
-				'bio bio'
-				'actions actions';
-			column-gap: 0.9rem;
-			row-gap: 0.55rem;
-		}
+	.code-line.big {
+		font-size: clamp(0.95rem, 1.4vw, 1.35rem);
+		font-weight: 700;
+		letter-spacing: -0.02em;
+	}
 
-		.hero-portrait {
-			justify-self: end;
-			align-self: start;
-			max-width: 128px;
-		}
+	.code-line .dim {
+		opacity: 0.6;
+	}
 
-		.portrait-hint {
+	/* Subtle center dividing hairline */
+	.face-split-line {
+		position: absolute;
+		top: 10%;
+		bottom: 10%;
+		left: 50%;
+		width: 1px;
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(184, 110, 30, 0.4) 30%,
+			rgba(43, 37, 30, 0.4) 70%,
+			transparent
+		);
+		z-index: 15;
+		pointer-events: none;
+		opacity: 0.6;
+		transform: translateX(-50%);
+		transition: opacity 0.3s ease;
+	}
+
+	:root[data-theme="dark"] .face-split-line {
+		background: linear-gradient(
+			to bottom,
+			transparent,
+			rgba(232, 168, 85, 0.5) 30%,
+			rgba(255, 255, 255, 0.3) 70%,
+			transparent
+		);
+	}
+
+	/* Responsive: Hide description text on small screens & scale titles smaller */
+	@media (max-width: 768px) {
+		.identity-bio {
 			display: none;
 		}
 
-		.portrait-initials {
-			font-size: 1.25rem;
-		}
-	}
-
-	@media (max-width: 640px) {
-		.hero {
-			padding-bottom: 2.25rem;
+		.identity-title {
+			font-size: clamp(0.85rem, 3vw, 1.45rem);
+			margin: 0;
 		}
 
-		.status {
-			font-size: var(--type-meta);
-			letter-spacing: 0.04em;
-			max-width: 100%;
+		.face-container {
+			gap: clamp(0.2rem, 1.2vw, 0.75rem);
+			padding: 0 0.25rem;
 		}
 
-		.role,
-		.bio {
-			font-size: 0.95rem;
+		.face-stage {
+			flex: 0 0 clamp(150px, 44vw, 240px);
+			width: clamp(150px, 44vw, 240px);
+			height: clamp(150px, 44vw, 240px);
+		}
+
+		.description {
 			max-width: none;
 		}
+	}
 
-		.hero-actions {
-			width: 100%;
-			gap: 0.55rem 0.7rem;
+	@media (max-width: 480px) {
+		.identity-title {
+			font-size: clamp(0.72rem, 3.2vw, 1rem);
+		}
+
+		.face-stage {
+			flex: 0 0 clamp(135px, 44vw, 185px);
+			width: clamp(135px, 44vw, 185px);
+			height: clamp(135px, 44vw, 185px);
 		}
 	}
 
-	@media (max-width: 420px) {
-		.hero-grid {
-			grid-template-columns: minmax(0, 1fr) 104px;
+	@media (max-width: 360px) {
+		.identity-title {
+			font-size: clamp(0.65rem, 2.9vw, 0.85rem);
 		}
+	}
 
-		.hero-portrait {
-			max-width: 104px;
+	@media (prefers-reduced-motion: reduce) {
+		.face-layer,
+		.description,
+		.face-split-line {
+			transition: none !important;
 		}
 	}
 </style>
+

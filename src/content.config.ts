@@ -14,7 +14,11 @@ const media = defineCollection({
 		alt: z.string(),
 		caption: z.string().optional(),
 		title: z.string().optional(),
-		group: z.string().optional()
+		group: z.string().optional(),
+		orientation: z.enum(['portrait', 'landscape', 'square']).optional(),
+		width: z.number().optional(),
+		height: z.number().optional(),
+		aspectRatio: z.number().optional()
 	})
 });
 

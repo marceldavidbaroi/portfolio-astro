@@ -1,8 +1,8 @@
 ---
-import fs from 'node:fs';
-import path from 'node:path';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
+import HomeActionsBar from '../components/home/HomeActionsBar.astro';
+import HomeHowIWork from '../components/home/HomeHowIWork.astro';
 import HomeFeaturedWork from '../components/home/HomeFeaturedWork.astro';
 import HomeExperienceRail from '../components/home/HomeExperienceRail.astro';
 import HomeEducationStrip from '../components/home/HomeEducationStrip.astro';
@@ -21,19 +21,10 @@ const hscScienceProgram = hscEntry.data;
 const projectEntries = await getCollection('projects');
 const byId = Object.fromEntries(projectEntries.map((entry) => [entry.id, { slug: entry.id, ...entry.data }]));
 
-const focused = ['01-tradeflowbd', '02-service-desk']
+const focused = ['01-tradeflowbd', '02-service-desk', '07-pennyperfect']
 	.map((id) => byId[id])
 	.filter(Boolean);
 const featured = focused[0];
-const supporting = [
-	'07-pennyperfect',
-	'03-thrift-inventory',
-	'14-microfinance-loan-app',
-	'11-quizzes-streaming',
-	'08-docstach'
-]
-	.map((id) => byId[id])
-	.filter(Boolean);
 
 const experience = (await getCollection('experience'))
 	.sort((a, b) => a.data.order - b.data.order)
@@ -43,22 +34,95 @@ const experience = (await getCollection('experience'))
 		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src)
 	}));
 
-const portraitFile = ['portrait.webp', 'portrait.jpg', 'portrait.jpeg', 'portrait.png']
-	.find((name) => fs.existsSync(path.join(process.cwd(), 'public/images', name)));
-const portraitSrc = portraitFile ? `/images/${portraitFile}` : null;
 const skills = ['Next.js', 'Vue 3', 'NestJS', 'Flutter', 'TypeScript', 'PostgreSQL', 'Supabase', 'Docker'];
 const workCount = projectEntries.length;
+
+import '../styles/about.css';
 ---
 
 <BaseLayout isWide alignStart>
-	<HomeHero portraitSrc={portraitSrc} />
+	<HomeHero />
+	<HomeActionsBar />
 
-	{featured && (
-		<HomeFeaturedWork focused={focused} supporting={supporting} workCount={workCount} />
-	)}
+	<div class="home-scroll-flow" id="home-scroll-flow">
+		<div class="reveal-section">
+			<HomeHowIWork />
+		</div>
 
-	<HomeExperienceRail experience={experience} />
-	<HomeEducationStrip bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
-	<HomeSkillsStrip skills={skills} />
-	<HomeContactClose />
+		{featured && (
+			<div class="reveal-section">
+				<HomeFeaturedWork focused={focused} workCount={workCount} />
+			</div>
+		)}
+
+		<div class="reveal-section">
+			<HomeExperienceRail experience={experience} />
+		</div>
+
+		<div class="reveal-section">
+			<HomeEducationStrip bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
+		</div>
+
+		<div class="reveal-section">
+			<HomeSkillsStrip />
+		</div>
+
+		<div class="reveal-section">
+			<HomeContactClose />
+		</div>
+	</div>
 </BaseLayout>
+
+<script>
+	function initHomeScrollReveal() {
+		const sections = document.querySelectorAll('.reveal-section');
+		if (!sections.length) return;
+
+		const observer = new IntersectionObserver((entries) => {
+			entries.forEach((entry) => {
+				if (entry.isIntersecting) {
+					entry.target.classList.add('is-revealed');
+					observer.unobserve(entry.target);
+				}
+			});
+		}, {
+			threshold: 0.05,
+			rootMargin: '0px 0px -40px 0px'
+		});
+
+		sections.forEach((section) => {
+			observer.observe(section);
+		});
+	}
+
+	initHomeScrollReveal();
+	document.addEventListener('astro:page-load', initHomeScrollReveal);
+</script>
+
+<style>
+	.home-scroll-flow {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.reveal-section {
+		opacity: 0;
+		transform: translateY(28px);
+		transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+		will-change: opacity, transform;
+	}
+
+	.reveal-section.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.reveal-section {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
+</style>

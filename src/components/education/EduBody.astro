@@ -29,8 +29,8 @@ const hscClubs = [
 {isBsc ? (
 	<div class="edu-detail-body">
 		<section class="edu-section">
-			<h2 class="edu-section-title">Specializations</h2>
-			<ol class="edu-name-list">
+			<h2 class="edu-section-title font-sans">Specializations</h2>
+			<ol class="edu-name-list font-sans">
 				{bscCseProgram.keyFocusAreas.map((area) => (
 					<li>{area}</li>
 				))}
@@ -38,18 +38,18 @@ const hscClubs = [
 		</section>
 
 		<section class="edu-section" id="varsity-activities">
-			<h2 class="edu-section-title">Varsity Activities &amp; Research</h2>
+			<h2 class="edu-section-title font-sans">Varsity Activities &amp; Research</h2>
 			{bscCseProgram.formativeMilestones && (
 				bscCseProgram.formativeMilestones.map((m) => {
 					const Tag = m.url ? 'a' : 'div';
 					return (
-						<Tag href={m.url} class:list={['about-rail-row edu-milestone-row', { 'is-link': m.url }]}>
-							<p class="about-rail-when font-mono">{m.period}</p>
+						<Tag href={m.url} class:list={['about-rail-row edu-milestone-row font-sans', { 'is-link': m.url }]}>
+							<p class="about-rail-when font-sans">{m.period}</p>
 							<div>
-								<p class="about-rail-tag font-mono">{m.tag}</p>
-								<h3 class="about-rail-title">{m.title}</h3>
-								<p class="about-rail-sub">{m.description}</p>
-								{m.impact && <p class="edu-milestone-impact font-mono">{m.impact}</p>}
+								<p class="about-rail-tag font-sans">{m.tag}</p>
+								<h3 class="about-rail-title font-sans">{m.title}</h3>
+								<p class="about-rail-sub font-sans">{m.description}</p>
+								{m.impact && <p class="edu-milestone-impact font-sans">{m.impact}</p>}
 							</div>
 						</Tag>
 					);
@@ -58,20 +58,20 @@ const hscClubs = [
 		</section>
 
 		<section class="edu-section edu-slot">
-			<h2 class="edu-section-title">Transcript</h2>
+			<h2 class="edu-section-title font-sans">Transcript</h2>
 			<AcademicTranscript />
 		</section>
 	</div>
 ) : (
 	<div class="edu-detail-body">
 		<section class="edu-section">
-			<h2 class="edu-section-title">Overview</h2>
-			<p class="edu-body-text">{hscScienceProgram.summary}</p>
+			<h2 class="edu-section-title font-sans">Overview</h2>
+			<p class="edu-body-text font-sans">{hscScienceProgram.summary}</p>
 		</section>
 
 		<section class="edu-section">
-			<h2 class="edu-section-title">Subjects</h2>
-			<ul class="edu-name-list edu-name-list-inline">
+			<h2 class="edu-section-title font-sans">Subjects</h2>
+			<ul class="edu-name-list edu-name-list-inline font-sans">
 				{hscScienceProgram.keyCourses.map((subject) => (
 					<li>{subject}</li>
 				))}
@@ -86,37 +86,37 @@ const hscClubs = [
 					class="edu-figure-img"
 					loading="lazy"
 				/>
-				<figcaption class="edu-figure-caption font-mono">
+				<figcaption class="edu-figure-caption font-sans">
 					Batch '19 · Group 13 · Room 304 — aerial lawn formation on the Notre Dame College field.
 				</figcaption>
 			</figure>
-			<a href="/education/hsc-science/gallery" class="section-link font-mono">Gallery →</a>
+			<a href="/education/hsc-science/gallery" class="section-link font-sans">Gallery →</a>
 		</section>
 
 		<section class="edu-section">
-			<h2 class="edu-section-title">Clubs</h2>
+			<h2 class="edu-section-title font-sans">Clubs</h2>
 			{hscClubs.map((club) => (
-				<div class="edu-beyond-row">
-					<p class="edu-beyond-term">{club.title}</p>
-					<p class="edu-beyond-meta font-mono">{club.role}</p>
-					<p class="edu-beyond-desc">{club.desc}</p>
+				<div class="edu-beyond-row font-sans">
+					<p class="edu-beyond-term font-sans">{club.title}</p>
+					<p class="edu-beyond-meta font-sans">{club.role}</p>
+					<p class="edu-beyond-desc font-sans">{club.desc}</p>
 				</div>
 			))}
 		</section>
 
 		{hscScienceProgram.formativeMilestones && (
 			<section class="edu-section">
-				<h2 class="edu-section-title">Milestones</h2>
+				<h2 class="edu-section-title font-sans">Milestones</h2>
 				{hscScienceProgram.formativeMilestones.map((m) => {
 					const Tag = m.url ? 'a' : 'div';
 					return (
-						<Tag href={m.url} class:list={['about-rail-row edu-milestone-row', { 'is-link': m.url }]}>
-							<p class="about-rail-when font-mono">{m.period}</p>
+						<Tag href={m.url} class:list={['about-rail-row edu-milestone-row font-sans', { 'is-link': m.url }]}>
+							<p class="about-rail-when font-sans">{m.period}</p>
 							<div>
-								<p class="about-rail-tag font-mono">{m.tag}</p>
-								<h3 class="about-rail-title">{m.title}</h3>
-								<p class="about-rail-sub">{m.description}</p>
-								{m.impact && <p class="edu-milestone-impact font-mono">{m.impact}</p>}
+								<p class="about-rail-tag font-sans">{m.tag}</p>
+								<h3 class="about-rail-title font-sans">{m.title}</h3>
+								<p class="about-rail-sub font-sans">{m.description}</p>
+								{m.impact && <p class="edu-milestone-impact font-sans">{m.impact}</p>}
 							</div>
 						</Tag>
 					);

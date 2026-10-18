@@ -26,7 +26,7 @@ const principles = (await getCollection('philosophy'))
 	</header>
 
 	{principles.map((p) => (
-			<section class="about-section about-philo-band" id={`principle-${p.num}`}>
+			<section class="about-section about-philo-band philo-reveal" id={`principle-${p.num}`}>
 				<article class="about-principle-row about-philo-band-head">
 					<p class="about-principle-num font-mono">{p.num}</p>
 					<div>
@@ -51,7 +51,7 @@ const principles = (await getCollection('philosophy'))
 			</section>
 		))}
 
-	<nav class="about-philo-exits font-mono" aria-label="Related pages">
+	<nav class="about-philo-exits font-mono philo-reveal" aria-label="Related pages">
 		<a href="/about" class="text-link">← About</a>
 		<a href="/skills" class="text-link">Skills →</a>
 		<a href="/work" class="text-link">Work →</a>
@@ -69,7 +69,8 @@ const principles = (await getCollection('philosophy'))
 
 		if (uniquePres.size === 0) return;
 
-		const { default: mermaid } = await import('https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs');
+		const mermaidModule = await import(/* @vite-ignore */ 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs' as any);
+		const mermaid = mermaidModule.default;
 		mermaid.initialize({
 			startOnLoad: false,
 			theme: 'base',
@@ -81,7 +82,7 @@ const principles = (await getCollection('philosophy'))
 				lineColor: '#5f5038',
 				secondaryColor: '#fffcf8',
 				tertiaryColor: '#ede7da',
-				fontFamily: 'Geist, sans-serif',
+				fontFamily: "'Plus Jakarta Sans', sans-serif",
 			},
 		});
 
@@ -96,11 +97,63 @@ const principles = (await getCollection('philosophy'))
 		await mermaid.run();
 	}
 
-	initMermaid();
-	document.addEventListener('astro:page-load', initMermaid);
+	function initPhiloReveal() {
+		const revealElements = document.querySelectorAll<HTMLElement>('.philo-reveal');
+		if (!revealElements.length) return;
+
+		if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+			revealElements.forEach((el) => el.classList.add('is-revealed'));
+			return;
+		}
+
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add('is-revealed');
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				root: null,
+				rootMargin: '0px 0px -40px 0px',
+				threshold: 0.08,
+			}
+		);
+
+		revealElements.forEach((el) => {
+			if (!el.classList.contains('is-revealed')) {
+				observer.observe(el);
+			}
+		});
+	}
+
+	function setupPage() {
+		initMermaid();
+		initPhiloReveal();
+	}
+
+	setupPage();
+	document.addEventListener('astro:page-load', setupPage);
 </script>
 
 <style>
+	/* 1. Editorial Principle Block Reveal */
+	.philo-reveal {
+		opacity: 0;
+		transform: translateY(18px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1)),
+			transform var(--dur-enter, 600ms) var(--ease-out, cubic-bezier(0.16, 1, 0.3, 1));
+		will-change: opacity, transform;
+	}
+
+	.philo-reveal.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
 	.about-philo-band-head {
 		border-top: 0;
 		padding-top: 0;
@@ -112,22 +165,62 @@ const principles = (await getCollection('philosophy'))
 		color: var(--text-muted);
 	}
 
+	/* 2. Pull-Quote Hairline Expansion */
 	.about-philo-quote {
+		position: relative;
 		margin: 0 0 0.85rem;
 		padding-left: 1rem;
-		border-left: 2px solid rgba(var(--accent-rgb), 0.35);
 		font-size: var(--type-xyz);
 		line-height: 1.55;
 		color: var(--text-main);
 		font-style: italic;
 	}
 
+	.about-philo-quote::before {
+		content: '';
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 2px;
+		height: 0;
+		background: rgba(var(--accent-rgb), 0.55);
+		transition: height 650ms var(--ease-out);
+		will-change: height;
+	}
+
+	.is-revealed .about-philo-quote::before {
+		height: 100%;
+	}
+
+	/* 3. Mermaid Diagram Gentle Illumination */
 	.about-philo-slot {
 		margin: 1rem 0;
 		padding: 1.25rem;
 		background: var(--card-bg);
 		border: 1px solid rgba(95, 80, 56, 0.12);
 		overflow-x: auto;
+		transition:
+			border-color 450ms var(--ease-out),
+			box-shadow 450ms var(--ease-out);
+	}
+
+	.is-revealed .about-philo-slot {
+		animation: philoSlotGlow 1.6s var(--ease-out) 200ms 1 normal forwards;
+	}
+
+	@keyframes philoSlotGlow {
+		0% {
+			border-color: rgba(95, 80, 56, 0.12);
+			box-shadow: 0 0 0 transparent;
+		}
+		40% {
+			border-color: rgba(var(--accent-rgb), 0.45);
+			box-shadow: 0 0 16px rgba(var(--accent-rgb), 0.12);
+		}
+		100% {
+			border-color: rgba(95, 80, 56, 0.16);
+			box-shadow: 0 0 0 transparent;
+		}
 	}
 
 	.about-philo-slot pre {
@@ -151,5 +244,22 @@ const principles = (await getCollection('philosophy'))
 		flex-wrap: wrap;
 		gap: 1rem 1.5rem;
 		margin: 2.5rem 0 1rem;
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.philo-reveal {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+
+		.about-philo-quote::before {
+			height: 100% !important;
+			transition: none !important;
+		}
+
+		.is-revealed .about-philo-slot {
+			animation: none !important;
+		}
 	}
 </style>

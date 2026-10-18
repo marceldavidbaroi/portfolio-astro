@@ -133,7 +133,37 @@ const galleries = galleryEntry.data.albums.map((album) => {
 	</div>
 
 	<script>
-		function initSpotlight() {
+		function initGalleryMotion() {
+			// 1. Grid Scroll Cascade reveal
+			const items = document.querySelectorAll<HTMLElement>('.hsc-gallery-item');
+			if (items.length) {
+				if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+					items.forEach((item) => item.classList.add('is-revealed'));
+				} else {
+					const cascadeObserver = new IntersectionObserver(
+						(entries) => {
+							entries.forEach((entry) => {
+								if (entry.isIntersecting) {
+									entry.target.classList.add('is-revealed');
+									cascadeObserver.unobserve(entry.target);
+								}
+							});
+						},
+						{
+							rootMargin: '0px 0px -40px 0px',
+							threshold: 0.05
+						}
+					);
+
+					items.forEach((item) => {
+						if (!item.classList.contains('is-revealed')) {
+							cascadeObserver.observe(item);
+						}
+					});
+				}
+			}
+
+			// 2. Spotlight Dialog Logic
 			const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-spotlight-src]'));
 			const modal = document.getElementById('gallery-spotlight-modal');
 			const backdrop = document.getElementById('spotlight-backdrop');
@@ -150,6 +180,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			let currentIndex = 0;
 
 			function openSpotlight(index: number) {
+				if (!modal || !spotImg) return;
 				currentIndex = (index + cards.length) % cards.length;
 				const card = cards[currentIndex];
 				const src = card.dataset.spotlightSrc || '';
@@ -168,6 +199,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			}
 
 			function closeSpotlight() {
+				if (!modal || !spotImg) return;
 				modal.classList.remove('is-open');
 				modal.setAttribute('aria-hidden', 'true');
 				document.body.style.overflow = '';
@@ -195,8 +227,8 @@ const galleries = galleryEntry.data.albums.map((album) => {
 			});
 		}
 
-		initSpotlight();
-		document.addEventListener('astro:page-load', initSpotlight);
+		initGalleryMotion();
+		document.addEventListener('astro:page-load', initGalleryMotion);
 	</script>
 </BaseLayout>
 
@@ -243,6 +275,17 @@ const galleries = galleryEntry.data.albums.map((album) => {
 
 	.hsc-gallery-item {
 		background: var(--paper);
+		opacity: 0;
+		transform: translateY(14px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out);
+		will-change: opacity, transform;
+	}
+
+	.hsc-gallery-item.is-revealed {
+		opacity: 1;
+		transform: translateY(0);
 	}
 
 	.hsc-gallery-shot {
@@ -254,6 +297,16 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		cursor: pointer;
 		border-radius: 0;
 		box-shadow: none;
+		overflow: hidden;
+		transition:
+			transform var(--dur-ui, 220ms) var(--ease-out),
+			box-shadow var(--dur-ui, 220ms) var(--ease-out);
+		will-change: transform;
+	}
+
+	.hsc-gallery-shot:hover {
+		transform: translateY(-4px) rotate(-0.4deg);
+		box-shadow: 0 8px 24px rgba(43, 37, 30, 0.12);
 	}
 
 	.hsc-gallery-img {
@@ -261,6 +314,11 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		width: 100%;
 		aspect-ratio: 4 / 3;
 		object-fit: cover;
+		transition: transform var(--dur-enter, 600ms) var(--ease-out);
+	}
+
+	.hsc-gallery-shot:hover .hsc-gallery-img:not(.is-emblem) {
+		transform: scale(1.02);
 	}
 
 	.hsc-gallery-img.is-emblem {
@@ -274,6 +332,7 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		flex-direction: column;
 		gap: 0.15rem;
 		margin-top: 0.35rem;
+		padding: 0 0.5rem 0.5rem;
 		font-size: var(--type-caption);
 		color: var(--text-muted);
 	}
@@ -292,12 +351,26 @@ const galleries = galleryEntry.data.albums.map((album) => {
 		justify-content: center;
 		opacity: 0;
 		pointer-events: none;
-		transition: opacity 0.2s ease;
+		transition: opacity 0.22s var(--ease-out);
 	}
 
 	.hsc-spotlight.is-open {
 		opacity: 1;
 		pointer-events: auto;
+	}
+
+	.hsc-spotlight-panel {
+		position: relative;
+		z-index: 1;
+		width: min(100%, 1100px);
+		padding: 1rem;
+		box-sizing: border-box;
+		transform: scale(0.97);
+		transition: transform 0.24s var(--ease-out);
+	}
+
+	.hsc-spotlight.is-open .hsc-spotlight-panel {
+		transform: scale(1);
 	}
 
 	.hsc-spotlight-backdrop {
@@ -389,6 +462,18 @@ const galleries = galleryEntry.data.albums.map((album) => {
 	@media (max-width: 900px) {
 		.hsc-gallery-grid {
 			grid-template-columns: 1fr;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hsc-gallery-item,
+		.hsc-gallery-shot,
+		.hsc-gallery-img,
+		.hsc-spotlight,
+		.hsc-spotlight-panel {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
 		}
 	}
 </style>

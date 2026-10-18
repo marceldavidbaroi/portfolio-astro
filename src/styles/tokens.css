@@ -21,24 +21,10 @@
 }
 
 :root {
-	--bg-color: #fffcf8; /* paper — ~1% warmer than #fffdfa */
-	--card-bg: #f4f0e7;
-	--card-border: rgba(95, 80, 56, 0.12);
-	--accent: #84353f; /* wine on paper — lower chroma than #b42135 */
-	--accent-rgb: 132, 53, 63;
-	--accent-hover: color-mix(in oklch, var(--accent) 75%, var(--text-main)); /* dried ink — recalc from accent + ink */
-	--text-main: #2b251e;
-	--text-muted: #746855;
-	--font-sans: 'Geist', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-	--font-mono: 'NType 82 Mono', monospace;
+	/* Typography */
+	--font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--font-mono: 'NType 82 Mono', 'SF Mono', Menlo, Consolas, monospace;
 	--font-dot: 'NDot 55', monospace;
-
-	/* Semantic aliases (redesign/system.md) */
-	--paper: var(--bg-color);
-	--slot: var(--card-bg);
-	--ink: var(--text-main);
-	--muted: var(--text-muted);
-	--line: var(--card-border);
 
 	/* Type scale */
 	--type-body: 1.05rem;
@@ -49,13 +35,111 @@
 	--type-cta: 0.8125rem;
 	--type-tab: 0.9375rem;
 
-	/* Motion (low-cost; redesign/system.md) */
+	/* Border radii */
+	--radius-sm: 6px;
+	--radius-md: 10px;
+	--radius-lg: 16px;
+	--radius-xl: 20px;
+	--radius-full: 9999px;
+
+	/* Motion */
 	--ease-out: cubic-bezier(0.16, 1, 0.3, 1);
 	--ease-ui: cubic-bezier(0.22, 1, 0.36, 1);
 	--dur-fast: 150ms;
 	--dur-ui: 220ms;
 	--dur-enter: 900ms;
 	--dur-chrome: 320ms;
+
+	/* Default Theme (Light Mode: Warm Linen / Editorial) */
+	--bg-color: #fbf9f5;
+	--card-bg: #f2ede4;
+	--card-bg-elevated: #ffffff;
+	--text-main: #211f1d;
+	--text-muted: #6e675f;
+	--accent: #b86e1e;
+	--accent-rgb: 184, 110, 30;
+	--accent-hover: #9c5c16;
+	--accent-secondary: #c98032;
+	--accent-subtle: #f8ede0;
+	--card-border: rgba(33, 31, 29, 0.08);
+	--card-border-hover: rgba(184, 110, 30, 0.25);
+
+	/* Semantic aliases */
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* Explicit Light Mode */
+:root[data-theme="light"],
+[data-theme="light"] {
+	--bg-color: #fbf9f5;
+	--card-bg: #f2ede4;
+	--card-bg-elevated: #ffffff;
+	--text-main: #211f1d;
+	--text-muted: #6e675f;
+	--accent: #b86e1e;
+	--accent-rgb: 184, 110, 30;
+	--accent-hover: #9c5c16;
+	--accent-secondary: #c98032;
+	--accent-subtle: #f8ede0;
+	--card-border: rgba(33, 31, 29, 0.08);
+	--card-border-hover: rgba(184, 110, 30, 0.25);
+
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* Dark Mode: Warm Obsidian / Anti-Halation */
+:root[data-theme="dark"],
+[data-theme="dark"] {
+	--bg-color: #171615;
+	--card-bg: #201e1c;
+	--card-bg-elevated: #282623;
+	--text-main: #e3ded6;
+	--text-muted: #9c9589;
+	--accent: #e8a855;
+	--accent-rgb: 232, 168, 85;
+	--accent-hover: #f3ba6b;
+	--accent-secondary: #c98442;
+	--accent-subtle: rgba(232, 168, 85, 0.12);
+	--card-border: rgba(227, 222, 214, 0.09);
+	--card-border-hover: rgba(232, 168, 85, 0.3);
+
+	--paper: var(--bg-color);
+	--slot: var(--card-bg);
+	--ink: var(--text-main);
+	--muted: var(--text-muted);
+	--line: var(--card-border);
+}
+
+/* System preference fallback when data-theme is not explicitly set */
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme="light"]) {
+		--bg-color: #171615;
+		--card-bg: #201e1c;
+		--card-bg-elevated: #282623;
+		--text-main: #e3ded6;
+		--text-muted: #9c9589;
+		--accent: #e8a855;
+		--accent-rgb: 232, 168, 85;
+		--accent-hover: #f3ba6b;
+		--accent-secondary: #c98442;
+		--accent-subtle: rgba(232, 168, 85, 0.12);
+		--card-border: rgba(227, 222, 214, 0.09);
+		--card-border-hover: rgba(232, 168, 85, 0.3);
+
+		--paper: var(--bg-color);
+		--slot: var(--card-bg);
+		--ink: var(--text-main);
+		--muted: var(--text-muted);
+		--line: var(--card-border);
+	}
 }
 
 * {
@@ -79,6 +163,11 @@ a {
 	color: inherit;
 }
 
+button {
+	font-family: inherit;
+	color: inherit;
+}
+
 .font-sans {
 	font-family: var(--font-sans);
 }
@@ -98,11 +187,11 @@ a {
 pre,
 pre.astro-code,
 pre.shiki {
-	background-color: #f4f0e7 !important;
-	border: 1px solid rgba(95, 80, 56, 0.16) !important;
+	background-color: var(--card-bg) !important;
+	border: 1px solid var(--card-border) !important;
 	border-radius: 6px !important;
 	padding: 1.25rem 1.5rem !important;
-	color: #2b251e !important;
+	color: var(--text-main) !important;
 	font-family: var(--font-mono) !important;
 	font-size: 0.875rem !important;
 	line-height: 1.65 !important;
@@ -112,17 +201,48 @@ pre.shiki {
 pre code,
 pre.astro-code code,
 pre span {
-	color: #2b251e !important;
+	color: inherit !important;
 	font-family: inherit !important;
 	background: transparent !important;
 }
 
 :not(pre) > code {
-	background: rgba(95, 80, 56, 0.08) !important;
-	color: var(--text-main) !important;
+	background: var(--accent-subtle) !important;
+	color: var(--accent) !important;
 	padding: 0.2rem 0.45rem !important;
 	border-radius: 6px !important;
 	font-size: 0.875em !important;
 	font-family: var(--font-mono) !important;
-	border: 1px solid rgba(95, 80, 56, 0.12) !important;
+	border: 1px solid var(--card-border) !important;
 }
+
+/* Disable element-level CSS transitions during view transitions to avoid double animation / flicker */
+html.theme-transitioning *,
+html.theme-transitioning *::before,
+html.theme-transitioning *::after {
+	transition: none !important;
+}
+
+/* Theme toggle ripple setup */
+::view-transition-old(root),
+::view-transition-new(root) {
+	animation: none;
+	mix-blend-mode: normal;
+}
+
+html.theme-transitioning::view-transition-old(root) {
+	z-index: 1;
+}
+
+html.theme-transitioning::view-transition-new(root) {
+	z-index: 9999;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	::view-transition-group(root),
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation: none !important;
+	}
+}
+

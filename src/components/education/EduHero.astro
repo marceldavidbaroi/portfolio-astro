@@ -16,15 +16,15 @@ const facts = isBsc
 	? [
 			{ label: 'Program', value: program.degree },
 			{ label: 'Institution', value: program.institutionShort },
-			{ label: 'CGPA', value: `${program.cgpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
-			{ label: 'Credits', value: String(program.totalCredits ?? '') },
+			{ label: 'CGPA', value: `${program.cgpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}`, rawNumber: program.cgpa, format: 'float', suffix: ` / ${program.maxGpa.toFixed(2)}` },
+			{ label: 'Credits', value: String(program.totalCredits ?? ''), rawNumber: program.totalCredits, format: 'int', suffix: '' },
 			{ label: 'Period', value: program.period },
 			{ label: 'Status', value: program.status ?? 'Completed' },
 		]
 	: [
 			{ label: 'Program', value: program.degree },
 			{ label: 'Institution', value: program.institutionShort },
-			{ label: 'GPA', value: `${program.gpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}` },
+			{ label: 'GPA', value: `${program.gpa?.toFixed(2)} / ${program.maxGpa.toFixed(2)}`, rawNumber: program.gpa, format: 'float', suffix: ` / ${program.maxGpa.toFixed(2)}` },
 			{ label: 'Period', value: program.period },
 			{ label: 'Location', value: program.location },
 			{ label: 'Status', value: program.status ?? 'Completed' },
@@ -33,20 +33,42 @@ const facts = isBsc
 
 <header class="edu-masthead">
 	<div class="edu-masthead-copy">
-		<p class="label font-mono">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
-		<h1 class="edu-doc-title">{program.degree}</h1>
-		<p class="edu-doc-inst">
+		<div class="edu-masthead-header">
+			{program.logo && (
+				<div class="edu-masthead-logo-box">
+					<img
+						src={program.logo}
+						alt={`${program.institutionShort} emblem`}
+						class:list={['edu-masthead-logo-img', { 'edu-masthead-logo-img--wide': !isBsc }]}
+					/>
+				</div>
+			)}
+			<div class="edu-masthead-headings">
+				<p class="label font-sans">{isBsc ? 'B.Sc. CSE' : 'HSC Science'}</p>
+				<h1 class="edu-doc-title font-sans">{program.degree}</h1>
+			</div>
+		</div>
+		<p class="edu-doc-inst font-sans">
 			<a href={program.institutionUrl} target="_blank" rel="noopener noreferrer">{program.institution}</a>
 			<span> · {program.location}</span>
 		</p>
-		{program.summary && <p class="edu-doc-lead">{program.summary}</p>}
+		{program.summary && <p class="edu-doc-lead font-sans">{program.summary}</p>}
 	</div>
-	<dl class="edu-facts-rail font-mono">
-		{facts.map((fact) => (
-			<div class="edu-fact">
-				<dt>{fact.label}</dt>
-				<dd>{fact.value}</dd>
-			</div>
-		))}
+	<dl class="edu-facts-rail font-sans">
+		{facts.map((fact) => {
+			const isTicker = (fact.label === 'CGPA' || fact.label === 'GPA' || fact.label === 'Credits') && typeof fact.rawNumber === 'number';
+			return (
+				<div class="edu-fact">
+					<dt>{fact.label}</dt>
+					<dd
+						class:list={[{ 'edu-stat-ticker': isTicker }]}
+						data-target={isTicker ? fact.rawNumber : undefined}
+						data-format={isTicker ? fact.format : undefined}
+						data-suffix={isTicker ? fact.suffix : undefined}
+					>{fact.value}</dd>
+				</div>
+			);
+		})}
 	</dl>
 </header>
+

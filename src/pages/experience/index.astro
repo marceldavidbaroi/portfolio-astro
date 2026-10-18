@@ -1,0 +1,198 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
+import HomeExperienceRail from '../../components/home/HomeExperienceRail.astro';
+import { getCollection } from 'astro:content';
+import { mediaMap, resolveAssets } from '../../lib/media';
+import '../../styles/about.css';
+
+const media = mediaMap(await getCollection('media'));
+const rawExperience = (await getCollection('experience'))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((entry) => ({
+		slug: entry.id,
+		...entry.data,
+		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src),
+	}));
+
+const experience = rawExperience.map((item) => {
+	const line = item.highlights?.[item.order === 1 ? 1 : 0] || item.summary;
+	return {
+		...item,
+		summary: line ?? '',
+		highlights: item.highlights?.length ? item.highlights : line ? [line] : [],
+	};
+});
+
+const totalRoles = experience.length;
+---
+
+<BaseLayout
+	title="Career Experience & Milestones | Marcel David Baroi"
+	description="Comprehensive career history, engineering roles, and operational milestones of Marcel David Baroi."
+	isWide
+	alignStart
+>
+	<AtticBreadcrumb current="Career" />
+
+	<header class="about-attic-head">
+		<p class="label font-mono about-attic-kicker">Career</p>
+		<h1 class="about-attic-title">Experience &amp; milestones</h1>
+		<p class="about-attic-lead">
+			Chronological breakdown of engineering roles, software development practice, and commercial operations across {totalRoles} positions. Click any role to explore its detailed scope, responsibilities, technical accomplishments, and preserved visual documentaries.
+		</p>
+	</header>
+
+	<section class="about-section about-career-index" aria-label="Career experience rail">
+		<div class="exp-track-container">
+			<div class="exp-track-rail" id="exp-track-rail" aria-hidden="true">
+				<div class="exp-track-line" id="exp-track-line"></div>
+			</div>
+			<HomeExperienceRail experience={experience} heading="none" showShotFan={true} />
+		</div>
+	</section>
+
+	<nav class="about-philo-exits font-mono" aria-label="Related pages">
+		<a href="/about" class="text-link">← About</a>
+		<a href="/work" class="text-link">Work →</a>
+		<a href="/education" class="text-link">School &amp; University →</a>
+	</nav>
+
+	<script>
+		function initExperiencePageMotion() {
+			const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			const rows = document.querySelectorAll<HTMLElement>('.about-career-index .rail-row');
+			const trackLine = document.getElementById('exp-track-line');
+			const trackContainer = document.querySelector<HTMLElement>('.exp-track-container');
+
+			if (prefersReduced) {
+				rows.forEach((r) => r.classList.add('is-revealed'));
+				if (trackLine) trackLine.style.transform = 'scaleY(1)';
+				return;
+			}
+
+			// 1. Role row step-in intersection observer
+			if ('IntersectionObserver' in window && rows.length) {
+				const rowObserver = new IntersectionObserver(
+					(entries) => {
+						entries.forEach((entry) => {
+							if (entry.isIntersecting) {
+								entry.target.classList.add('is-revealed');
+								rowObserver.unobserve(entry.target);
+							}
+						});
+					},
+					{
+						rootMargin: '0px 0px -40px 0px',
+						threshold: 0.1
+					}
+				);
+				rows.forEach((r) => {
+					if (!r.classList.contains('is-revealed')) {
+						rowObserver.observe(r);
+					}
+				});
+			} else {
+				rows.forEach((r) => r.classList.add('is-revealed'));
+			}
+
+			// 2. Timeline rail track draw on scroll
+			if (trackLine && trackContainer) {
+				const updateTrack = () => {
+					const rect = trackContainer.getBoundingClientRect();
+					const windowH = window.innerHeight;
+					const start = windowH * 0.8;
+					const totalH = rect.height;
+
+					if (rect.top > start) {
+						trackLine.style.transform = 'scaleY(0)';
+					} else {
+						const progress = Math.min(Math.max((start - rect.top) / totalH, 0), 1);
+						trackLine.style.transform = `scaleY(${progress})`;
+					}
+				};
+
+				window.addEventListener('scroll', updateTrack, { passive: true });
+				updateTrack();
+			}
+		}
+
+		initExperiencePageMotion();
+		document.addEventListener('astro:page-load', initExperiencePageMotion);
+	</script>
+</BaseLayout>
+
+<style>
+	.about-career-index {
+		padding: 0 0 2rem;
+		border-bottom: 0;
+	}
+
+	.exp-track-container {
+		position: relative;
+	}
+
+	.exp-track-rail {
+		position: absolute;
+		left: 3px;
+		top: 1.5rem;
+		bottom: 1.5rem;
+		width: 1px;
+		background: rgba(95, 80, 56, 0.12);
+		z-index: 0;
+		overflow: hidden;
+	}
+
+	.exp-track-line {
+		position: absolute;
+		inset: 0;
+		background: var(--accent);
+		transform-origin: top;
+		transform: scaleY(0);
+		transition: transform 120ms ease-out;
+		will-change: transform;
+	}
+
+	.about-career-index :global(.rail-row) {
+		opacity: 0;
+		transform: translateY(16px);
+		transition:
+			opacity var(--dur-enter, 600ms) var(--ease-out),
+			transform var(--dur-enter, 600ms) var(--ease-out),
+			background var(--dur-fast) ease;
+		will-change: opacity, transform;
+	}
+
+	.about-career-index :global(.rail-row.is-revealed) {
+		opacity: 1;
+		transform: translateY(0);
+	}
+
+	.about-career-index :global(.rail-row:hover) {
+		background: var(--slot, rgba(95, 80, 56, 0.03));
+	}
+
+	.about-career-index :global(.experience) {
+		padding: 0;
+		border-bottom: 0;
+	}
+
+	.about-career-index :global(.experience .section-kicker) {
+		display: none;
+	}
+
+	@media (max-width: 900px) {
+		.exp-track-rail {
+			left: 3px;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.exp-track-line,
+		.about-career-index :global(.rail-row) {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
+</style>

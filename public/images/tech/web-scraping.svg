@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="100%" height="100%" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="16">
+  <!-- Spider Web / Scraper Grid -->
+  <circle cx="128" cy="128" r="96" stroke-opacity="0.25"/>
+  <circle cx="128" cy="128" r="56" stroke-opacity="0.4"/>
+  <line x1="128" y1="32" x2="128" y2="224"/>
+  <line x1="32" y1="128" x2="224" y2="128"/>
+  <line x1="60.27" y1="60.27" x2="195.73" y2="195.73"/>
+  <line x1="60.27" y1="195.73" x2="195.73" y2="60.27"/>
+  <!-- Central Crawler Bot -->
+  <ellipse cx="128" cy="128" rx="28" ry="36" fill="currentColor"/>
+  <!-- Crawler Legs Left -->
+  <path d="M104 116 L64 96" stroke-width="18"/>
+  <path d="M100 128 L56 128" stroke-width="18"/>
+  <path d="M104 140 L64 160" stroke-width="18"/>
+  <!-- Crawler Legs Right -->
+  <path d="M152 116 L192 96" stroke-width="18"/>
+  <path d="M156 128 L200 128" stroke-width="18"/>
+  <path d="M152 140 L192 160" stroke-width="18"/>
+  <!-- Antennae / Data probe -->
+  <circle cx="118" cy="100" r="3" fill="#fff"/>
+  <circle cx="138" cy="100" r="3" fill="#fff"/>
+</svg>

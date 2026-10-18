@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import AtticBreadcrumb from '../../components/about/AtticBreadcrumb.astro';
 import { skillCategories } from '../../data/aboutData';
+import { isMonochromeLogo } from '../../lib/skills';
 import '../../styles/about.css';
 
 const totalCount = skillCategories.reduce((acc, cat) => acc + cat.items.length, 0);
@@ -26,32 +27,58 @@ const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((
 		</p>
 	</header>
 
-	<div class="about-tabs" role="tablist" aria-label="Filter skills by tier" id="skills-tabs">
-		<button class="about-tab is-active font-mono" type="button" data-tier="all" role="tab" aria-selected="true">
-			All <span class="about-tab-count">{totalCount}</span>
-		</button>
-		<button class="about-tab font-mono" type="button" data-tier="primary" role="tab" aria-selected="false">
-			Primary <span class="about-tab-count">{primaryCount}</span>
-		</button>
-		<button class="about-tab font-mono" type="button" data-tier="prior" role="tab" aria-selected="false">
-			Prior <span class="about-tab-count">{priorCount}</span>
-		</button>
+	<div class="skills-tabs-container">
+		<div class="about-tabs" role="tablist" aria-label="Filter skills by tier" id="skills-tabs">
+			<button class="about-tab is-active font-mono" type="button" data-tier="all" role="tab" aria-selected="true">
+				All <span class="about-tab-count">{totalCount}</span>
+			</button>
+			<button class="about-tab font-mono" type="button" data-tier="primary" role="tab" aria-selected="false">
+				Primary <span class="about-tab-count">{primaryCount}</span>
+			</button>
+			<button class="about-tab font-mono" type="button" data-tier="prior" role="tab" aria-selected="false">
+				Prior <span class="about-tab-count">{priorCount}</span>
+			</button>
+			<span class="skills-tab-indicator" id="skills-tab-indicator" aria-hidden="true"></span>
+		</div>
 	</div>
 
-	<div id="skills-categories">
+	<div id="skills-categories" class="skills-categories-wrapper">
 		{skillCategories.map((cat) => (
-			<section class="about-section about-stack-block" id={cat.id} data-category={cat.id}>
-				<h2 class="about-stack-category font-mono">{cat.category}</h2>
-				{cat.items.map((skill) => (
-					<div
-						class="about-skill-row"
-						data-tier={skill.tier === 'secondary' ? 'prior' : 'primary'}
-						data-category={cat.id}
-					>
-						<p class:list={['about-skill-name', { 'is-prior': skill.tier === 'secondary' }]}>{skill.name}</p>
-						{skill.desc && <p class="about-skill-desc">{skill.desc}</p>}
+			<section class="about-section about-stack-block skills-category-section" id={cat.id} data-category={cat.id}>
+				<div class="skills-category-header">
+					<div class="skills-category-title-group">
+						<div>
+							<h2 class="skills-category-title">{cat.category}</h2>
+							<p class="skills-category-desc">{cat.description}</p>
+						</div>
 					</div>
-				))}
+					<span class="skills-category-tag font-mono">{cat.tag}</span>
+				</div>
+
+				<div class="skills-grid">
+					{cat.items.map((skill) => (
+						<div
+							class:list={['skill-item', { 'is-prior-item': skill.tier === 'secondary' }]}
+							data-tier={skill.tier === 'secondary' ? 'prior' : 'primary'}
+							data-category={cat.id}
+						>
+							<div class="skill-item-media">
+								{skill.logo ? (
+									<img
+										src={skill.logo}
+										alt=""
+										class:list={['skill-item-logo', { 'is-mono-logo': isMonochromeLogo(skill.logo) }]}
+										loading="lazy"
+										aria-hidden="true"
+									/>
+								) : (
+									<span class="skill-item-icon" aria-hidden="true">{skill.icon || '•'}</span>
+								)}
+							</div>
+							<p class="skill-item-name">{skill.name}</p>
+						</div>
+					))}
+				</div>
 			</section>
 		))}
 	</div>
@@ -60,34 +87,192 @@ const priorCount = skillCategories.reduce((acc, cat) => acc + cat.items.filter((
 </BaseLayout>
 
 <script>
-	const tabs = document.querySelectorAll<HTMLButtonElement>('.about-tab[data-tier]');
-	const rows = document.querySelectorAll<HTMLElement>('.about-skill-row');
-	const sections = document.querySelectorAll<HTMLElement>('[data-category]');
+	function initSkillsFilter() {
+		const tabsWrap = document.getElementById('skills-tabs');
+		const indicator = document.getElementById('skills-tab-indicator');
+		const tabs = document.querySelectorAll<HTMLButtonElement>('#skills-tabs .about-tab');
+		const items = document.querySelectorAll<HTMLElement>('.skill-item');
+		const sections = document.querySelectorAll<HTMLElement>('[data-category]');
+		if (!tabsWrap || !tabs.length) return;
 
-	let tier = 'all';
+		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		let currentTier = 'all';
 
-	function applyFilter() {
-		rows.forEach((row) => {
-			const rowTier = row.dataset.tier || 'primary';
-			const show = tier === 'all' || rowTier === tier;
-			row.hidden = !show;
+		// 1. Sliding Tab Indicator Positioning
+		function updateIndicator(activeTab: HTMLElement) {
+			if (!indicator || prefersReduced) return;
+			const wrapRect = tabsWrap!.getBoundingClientRect();
+			const tabRect = activeTab.getBoundingClientRect();
+			const left = tabRect.left - wrapRect.left;
+			const width = tabRect.width;
+
+			indicator.style.transform = `translateX(${left}px)`;
+			indicator.style.width = `${width}px`;
+			indicator.style.opacity = '1';
+		}
+
+		const initialActive = document.querySelector<HTMLButtonElement>('#skills-tabs .about-tab.is-active') || tabs[0];
+		if (initialActive) {
+			updateIndicator(initialActive);
+		}
+
+		// 2. Animated Cross-Fade Filter
+		function applyFilter(targetTier: string) {
+			if (prefersReduced) {
+				items.forEach((item) => {
+					const itemTier = item.dataset.tier || 'primary';
+					item.hidden = !(targetTier === 'all' || itemTier === targetTier);
+					item.classList.remove('is-fading-out');
+				});
+				sections.forEach((section) => {
+					const visible = section.querySelectorAll('.skill-item:not([hidden])').length > 0;
+					section.hidden = !visible;
+				});
+				return;
+			}
+
+			// Fade out departing items
+			const departing: HTMLElement[] = [];
+			const arriving: HTMLElement[] = [];
+
+			items.forEach((item) => {
+				const itemTier = item.dataset.tier || 'primary';
+				const willBeVisible = targetTier === 'all' || itemTier === targetTier;
+				const isCurrentlyVisible = !item.hidden;
+
+				if (isCurrentlyVisible && !willBeVisible) {
+					departing.push(item);
+				} else if (!isCurrentlyVisible && willBeVisible) {
+					arriving.push(item);
+				}
+			});
+
+			if (departing.length > 0) {
+				departing.forEach((item) => item.classList.add('is-fading-out'));
+
+				setTimeout(() => {
+					departing.forEach((item) => {
+						item.hidden = true;
+						item.classList.remove('is-fading-out');
+					});
+
+					arriving.forEach((item) => {
+						item.hidden = false;
+						item.classList.add('is-settling-in');
+						requestAnimationFrame(() => {
+							item.classList.remove('is-settling-in');
+						});
+					});
+
+					sections.forEach((section) => {
+						const visible = section.querySelectorAll('.skill-item:not([hidden])').length > 0;
+						section.hidden = !visible;
+					});
+				}, 150);
+			} else {
+				arriving.forEach((item) => {
+					item.hidden = false;
+					item.classList.add('is-settling-in');
+					requestAnimationFrame(() => {
+						item.classList.remove('is-settling-in');
+					});
+				});
+
+				sections.forEach((section) => {
+					const visible = section.querySelectorAll('.skill-item:not([hidden])').length > 0;
+					section.hidden = !visible;
+				});
+			}
+		}
+
+		tabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				currentTier = tab.dataset.tier || 'all';
+				tabs.forEach((t) => {
+					const active = t === tab;
+					t.classList.toggle('is-active', active);
+					t.setAttribute('aria-selected', active ? 'true' : 'false');
+				});
+				updateIndicator(tab);
+				applyFilter(currentTier);
+			});
 		});
 
-		sections.forEach((section) => {
-			const visible = section.querySelectorAll('.about-skill-row:not([hidden])').length > 0;
-			section.hidden = !visible;
-		});
+		window.addEventListener('resize', () => {
+			const active = document.querySelector<HTMLButtonElement>('#skills-tabs .about-tab.is-active');
+			if (active) updateIndicator(active);
+		}, { passive: true });
 	}
 
-	tabs.forEach((tab) => {
-		tab.addEventListener('click', () => {
-			tier = tab.dataset.tier || 'all';
-			tabs.forEach((t) => {
-				const active = t === tab;
-				t.classList.toggle('is-active', active);
-				t.setAttribute('aria-selected', active ? 'true' : 'false');
-			});
-			applyFilter();
-		});
-	});
+	initSkillsFilter();
+	document.addEventListener('astro:page-load', initSkillsFilter);
 </script>
+
+<style>
+	.skills-tabs-container {
+		position: relative;
+		margin-bottom: 0.5rem;
+	}
+
+	.about-tabs {
+		position: relative;
+		border-bottom: 1px solid rgba(95, 80, 56, 0.12);
+	}
+
+	/* Disable static border-bottom on active tab in favor of the animated indicator */
+	.about-tabs .about-tab {
+		border-bottom: 2px solid transparent !important;
+	}
+
+	.skills-tab-indicator {
+		position: absolute;
+		bottom: -1px;
+		left: 0;
+		height: 2px;
+		background: var(--accent);
+		opacity: 0;
+		transition:
+			transform var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.22, 1, 0.36, 1)),
+			width var(--dur-ui, 220ms) var(--ease-ui, cubic-bezier(0.22, 1, 0.36, 1)),
+			opacity var(--dur-fast, 150ms) ease;
+		pointer-events: none;
+		will-change: transform, width;
+	}
+
+	/* Category and Skill Card entrance & cross-fade states */
+	.skill-item {
+		transition:
+			opacity 150ms var(--ease-out),
+			transform 150ms var(--ease-out),
+			border-color var(--dur-fast) ease,
+			background-color var(--dur-fast) ease,
+			box-shadow var(--dur-ui) ease;
+		will-change: opacity, transform;
+	}
+
+	.skill-item.is-fading-out {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+
+	.skill-item.is-settling-in {
+		opacity: 0;
+		transform: scale(0.97);
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.skills-tab-indicator {
+			display: none;
+		}
+
+		.about-tabs .about-tab.is-active {
+			border-bottom-color: var(--accent) !important;
+		}
+
+		.skill-item {
+			opacity: 1 !important;
+			transform: none !important;
+			transition: none !important;
+		}
+	}
+</style>
