@@ -1,20 +1,10 @@
 ---
 import ShotFan from '../work/ShotFan.astro';
-
-interface Project {
-	slug: string;
-	chip?: string;
-	title: string;
-	description?: string;
-	impactMetrics?: Array<{ value: string; label: string }>;
-	images?: string[];
-	platformType?: string;
-	stack?: string[];
-}
+import type { ProjectListItem } from '../../lib/projectView';
 
 interface Props {
-	focused: Project[];
-	supporting?: Project[];
+	focused: ProjectListItem[];
+	supporting?: ProjectListItem[];
 	workCount: number;
 }
 
@@ -32,7 +22,18 @@ const { focused, supporting = [], workCount } = Astro.props;
 		{focused.map((project) => (
 			<a class="feature-band" href={`/work/${project.slug}`}>
 				<div class="feature-copy">
+					<div class="feature-kicker-row">
+						{project.chip && <p class="label font-mono card-chip">{project.chip}</p>}
+						{project.contributionBadge && (
+							<span class="contribution-badge font-mono">{project.contributionBadge}</span>
+						)}
+					</div>
 					<h3 class="feature-title">{project.title}</h3>
+					{project.listMetric && (
+						<p class="home-list-metric font-mono">
+							<b>{project.listMetric.value}</b> {project.listMetric.label}
+						</p>
+					)}
 					<p class="feature-desc">{project.description}</p>
 					{(project.stack || []).length > 0 && (
 						<div class="card-stack font-mono">
@@ -43,7 +44,7 @@ const { focused, supporting = [], workCount } = Astro.props;
 					)}
 					<span class="inline-cta font-mono">Read case study →</span>
 				</div>
-				<ShotFan images={project.images} phone={project.platformType === 'mobile'} size="feature" />
+				<ShotFan images={project.thumbs} phone={project.platformType === 'mobile'} size="feature" />
 			</a>
 		))}
 	</div>
@@ -62,7 +63,7 @@ const { focused, supporting = [], workCount } = Astro.props;
 							</div>
 						)}
 					</div>
-					<ShotFan images={project.images} phone={project.platformType === 'mobile'} />
+					<ShotFan images={project.thumbs} phone={project.platformType === 'mobile'} />
 				</a>
 			))}
 		</div>
@@ -127,6 +128,44 @@ const { focused, supporting = [], workCount } = Astro.props;
 		flex-direction: column;
 		gap: 0.75rem;
 		min-width: 0;
+	}
+
+	.feature-kicker-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 0.65rem;
+	}
+
+	.card-chip {
+		margin: 0;
+		font-size: var(--type-kicker);
+		letter-spacing: 0.1em;
+		text-transform: uppercase;
+		color: var(--text-muted);
+	}
+
+	.contribution-badge {
+		font-size: 0.68rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
+		padding: 0.15rem 0.5rem;
+		border-radius: var(--radius-sm);
+	}
+
+	.home-list-metric {
+		margin: 0;
+		font-size: 0.8rem;
+		color: var(--text-muted);
+	}
+
+	.home-list-metric b {
+		color: var(--accent);
+		font-weight: 700;
 	}
 
 	.feature-title {

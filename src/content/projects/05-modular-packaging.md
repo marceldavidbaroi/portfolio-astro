@@ -1,126 +1,124 @@
 ---
-id: "05"
-title: "Enterprise Modular Packaging System"
-subtitle: "Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing."
-chip: "Quasar & npm Architecture"
+id: '05'
+title: Enterprise Modular Packaging System
+subtitle: Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.
+description: Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.
+chip: Quasar & npm Architecture
 order: 5
 featured: false
-platformType: "desktop"
-
-role: "Frontend Implementation & POC Engineer"
-timeline: "2025 — Q1 2026"
-status: "Completed & Adopted"
-classification: "🔒 Proprietary Enterprise IP"
-
+platformType: desktop
+contribution:
+  mode: specialist
+  label: Domain specialist
+  headline: Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
+  scope:
+  - Preserving Quasar Directives & Component Styles in Isolated Packages
+  - Verifying Packaging Viability via Proof of Concept (POC)
+  - Team Implementation Workflow & Modular Domain Boundaries
+myImpact:
+- label: Code Reusability
+  value: +65%
+  attribution: personal
+  detail: Plug-and-play adoption across multiple client web applications
+- label: Package Extraction
+  value: Scoped npm
+  attribution: personal
+  detail: Decoupled monolithic components into standalone private packages
+- label: POC & Testing
+  value: 100% Passed
+  attribution: personal
+  detail: End-to-end package bundling, style extraction, and runtime validation
+- label: Release Autonomy
+  value: SemVer
+  attribution: personal
+  detail: Independent versioning without rebasing entire host monoliths
+- label: Package Rollout
+  value: <1 Hour
+  attribution: personal
+  detail: Standardized template manifests for rapid component modularization
+- label: Style Isolation
+  value: Zero Collisions
+  attribution: personal
+  detail: Vite library mode bundling with host Quasar theme consumption
+product:
+  summary: Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
+  problem: Large enterprise client applications built on Quasar were duplicating identical UI components, tables, filters, authentication flows, and business workflows by copy-pasting across repositories. When a bug was discovered or a feature was enhanced, engineers had to patch multiple monoliths manually, resulting in divergent codebases and severe maintenance overhead.
+  valueProposition:
+    targetCustomer: Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers
+    showCanvas: false
+    items:
+    - painTitle: Fragile Code Copy-Pasting Across Client Repositories
+      painDescription: Identical Quasar tables, auth flows, and form components were duplicated by copy-pasting, causing divergent bug patches across 3+ client monoliths.
+      gainTitle: Autonomous Scoped Private npm Packages
+      gainDescription: Shared domain features and UI components packaged as independently versioned npm modules with automated CI/CD publication.
+    - painTitle: CSS Style Clashes & Duplicate Runtime Bundles
+      painDescription: Packaging Quasar components traditionally bundled duplicate Vue/Quasar runtimes and caused conflicting global CSS overrides.
+      gainTitle: Vite Library Mode with Explicit Externalization
+      gainDescription: Configured Vite to externalize Vue and Quasar core while auto-injecting tree-shakeable directives and styles cleanly on package mount.
+    - painTitle: Risky Production Deployments of Unverified Packages
+      painDescription: Publishing unvalidated npm packages broke downstream client builds due to missing TypeScript declarations (.d.ts) or peer dependency mismatches.
+      gainTitle: Verdaccio & pnpm Link POC Sandbox Testbed
+      gainDescription: Engineered a local registry testbed ensuring 100% type safety and runtime validation prior to publishing packages to production registries.
+role: Frontend Implementation & POC Engineer
+timeline: 2025 — Q1 2026
+status: Completed & Adopted
+classification: 🔒 Proprietary Enterprise IP
 stack:
-  - "Vue 3"
-  - "Vite"
-  - "npm"
-  - "GitLab Registry"
-  - "SemVer"
-
+- Vue 3
+- Vite
+- npm
+- GitLab Registry
+- SemVer
 techStack:
   frontend:
-    - "Quasar Framework (v2)"
-    - "Vue.js (v3)"
-    - "TypeScript"
-    - "Vite (Library Mode / Rollup)"
-    - "Pinia (Modular Stores)"
+  - Quasar Framework (v2)
+  - Vue.js (v3)
+  - TypeScript
+  - Vite (Library Mode / Rollup)
+  - Pinia (Modular Stores)
   backend:
-    - "Private npm Registry"
-    - "GitLab / GitHub Packages"
-    - "Verdaccio (Local Registry POC)"
+  - Private npm Registry
+  - GitLab / GitHub Packages
+  - Verdaccio (Local Registry POC)
   database: []
   devops:
-    - "Semantic Versioning (SemVer)"
-    - "Automated CI/CD Package Publishing"
-    - "npm / pnpm Workspaces"
-    - "Integration & Monorepo Testing"
+  - Semantic Versioning (SemVer)
+  - Automated CI/CD Package Publishing
+  - npm / pnpm Workspaces
+  - Integration & Monorepo Testing
   mobile_hardware: []
-
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: ""
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: ''
+  docs: ''
 images:
-  - "/images/thumb-1.png"
-  - "/images/thumb-2.png"
-  - "/images/thumb-3.png"
-  - "/images/thumb-4.png"
-
+- /images/thumb-1.png
+- /images/thumb-2.png
+- /images/thumb-3.png
+- /images/thumb-4.png
 visualAssets:
-  heroMockup: "/images/dummy-project.png"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z]."
-
-impactMetrics:
-  - label: "Code Reusability"
-    value: "+65%"
-    detail: "Plug-and-play adoption across multiple client web applications"
-  - label: "Package Extraction"
-    value: "Scoped npm"
-    detail: "Decoupled monolithic components into standalone private packages"
-  - label: "POC & Testing"
-    value: "100% Passed"
-    detail: "End-to-end package bundling, style extraction, and runtime validation"
-  - label: "Release Autonomy"
-    value: "SemVer"
-    detail: "Independent versioning without rebasing entire host monoliths"
-  - label: "Package Rollout"
-    value: "<1 Hour"
-    detail: "Standardized template manifests for rapid component modularization"
-  - label: "Style Isolation"
-    value: "Zero Collisions"
-    detail: "Vite library mode bundling with host Quasar theme consumption"
-
-valueProposition:
-  targetCustomer: "Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers"
-  items:
-    - painTitle: "Fragile Code Copy-Pasting Across Client Repositories"
-      painDescription: "Identical Quasar tables, auth flows, and form components were duplicated by copy-pasting, causing divergent bug patches across 3+ client monoliths."
-      gainTitle: "Autonomous Scoped Private npm Packages"
-      gainDescription: "Shared domain features and UI components packaged as independently versioned npm modules with automated CI/CD publication."
-
-    - painTitle: "CSS Style Clashes & Duplicate Runtime Bundles"
-      painDescription: "Packaging Quasar components traditionally bundled duplicate Vue/Quasar runtimes and caused conflicting global CSS overrides."
-      gainTitle: "Vite Library Mode with Explicit Externalization"
-      gainDescription: "Configured Vite to externalize Vue and Quasar core while auto-injecting tree-shakeable directives and styles cleanly on package mount."
-
-    - painTitle: "Risky Production Deployments of Unverified Packages"
-      painDescription: "Publishing unvalidated npm packages broke downstream client builds due to missing TypeScript declarations (.d.ts) or peer dependency mismatches."
-      gainTitle: "Verdaccio & pnpm Link POC Sandbox Testbed"
-      gainDescription: "Engineered a local registry testbed ensuring 100% type safety and runtime validation prior to publishing packages to production registries."
-
-problemStatement: "Large enterprise client applications built on Quasar were duplicating identical UI components, tables, filters, authentication flows, and business workflows by copy-pasting across repositories. When a bug was discovered or a feature was enhanced, engineers had to patch multiple monoliths manually, resulting in divergent codebases and severe maintenance overhead."
-
-architectureSummary: "Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode."
-
+  heroMockup: /images/dummy-project.png
+architectureSummary: Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode.
 keyDecisions:
-  - challenge: "Preserving Quasar Directives & Component Styles in Isolated Packages"
-    decision: "Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount."
-    outcome: "Clean, tree-shakeable npm packages that consume host app Quasar styles without CSS collisions or duplicate runtime bundles."
-  - challenge: "Verifying Packaging Viability via Proof of Concept (POC)"
-    decision: "Constructed a local Verdaccio and `pnpm link` sandbox testbed to validate component lifecycle, TypeScript type declarations (.d.ts), and reactivity before publishing to private registries."
-    outcome: "Identified and resolved peer-dependency conflicts and styling leakage early in the POC phase prior to production adoption."
-  - challenge: "Team Implementation Workflow & Modular Domain Boundaries"
-    decision: "Divided responsibilities between architecture planning (Senior Architect) and core feature implementation/testing (myself and peer engineer), creating standard template manifests for all future packages."
-    outcome: "Accelerated packaging rollout, enabling any product team to turn a new feature or component into an npm package in under an hour."
-
+- challenge: Preserving Quasar Directives & Component Styles in Isolated Packages
+  decision: Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount.
+  outcome: Clean, tree-shakeable npm packages that consume host app Quasar styles without CSS collisions or duplicate runtime bundles.
+- challenge: Verifying Packaging Viability via Proof of Concept (POC)
+  decision: Constructed a local Verdaccio and `pnpm link` sandbox testbed to validate component lifecycle, TypeScript type declarations (.d.ts), and reactivity before publishing to private registries.
+  outcome: Identified and resolved peer-dependency conflicts and styling leakage early in the POC phase prior to production adoption.
+- challenge: Team Implementation Workflow & Modular Domain Boundaries
+  decision: Divided responsibilities between architecture planning (Senior Architect) and core feature implementation/testing (myself and peer engineer), creating standard template manifests for all future packages.
+  outcome: Accelerated packaging rollout, enabling any product team to turn a new feature or component into an npm package in under an hour.
 securityReliability:
-  - "Private scoped npm namespaces preventing dependency confusion attacks."
-  - "Strict Semantic Versioning (SemVer) with automated changelog generation."
-  - "CI pipeline verification ensuring all exported packages pass TypeScript compilation and lint checks before registry publication."
-  - "Peer dependency checks to prevent duplicate Vue and Quasar runtime instances."
-
+- Private scoped npm namespaces preventing dependency confusion attacks.
+- Strict Semantic Versioning (SemVer) with automated changelog generation.
+- CI pipeline verification ensuring all exported packages pass TypeScript compilation and lint checks before registry publication.
+- Peer dependency checks to prevent duplicate Vue and Quasar runtime instances.
 futureRoadmap:
-  - "Automated Changesets workflow for automated SemVer bumps on pull request merge."
-  - "Storybook integration for visual component regression testing inside isolated package repos."
-  - "Micro-frontend federation exploration for runtime package loading without build-time re-linking."
+- Automated Changesets workflow for automated SemVer bumps on pull request merge.
+- Storybook integration for visual component regression testing inside isolated package repos.
+- Micro-frontend federation exploration for runtime package loading without build-time re-linking.
 ---
 
 ## Executive Summary

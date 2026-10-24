@@ -1,4 +1,6 @@
 ---
+import ShotFan from './ShotFan.astro';
+
 interface Links {
 	liveDemo?: string;
 	parentPlatform?: string;
@@ -26,6 +28,10 @@ interface Props {
 	ghBack: boolean;
 	docs: boolean;
 	stack?: string[];
+	heroImages?: string[];
+	isPhone?: boolean;
+	outcomeLine?: string;
+	contributionLabel?: string;
 }
 
 const {
@@ -36,7 +42,6 @@ const {
 	classLabel,
 	role,
 	timeline,
-	description,
 	links,
 	hasActions,
 	live,
@@ -45,15 +50,24 @@ const {
 	ghFront,
 	ghBack,
 	docs,
-	stack = []
+	stack = [],
+	heroImages = [],
+	isPhone = false,
+	outcomeLine,
+	contributionLabel,
 } = Astro.props;
+
+const visibleStack = stack.slice(0, 5);
+const stackOverflow = stack.length - visibleStack.length;
 ---
 
+<div class="case-hero-band">
 <header class="case-header w-full max-w-full">
 	<div class="kicker-row font-mono">
 		{chip && <span class="badge badge-chip">{chip}</span>}
 		{status && <span class="badge badge-status">{status}</span>}
 		<span class="badge badge-class">{classLabel}</span>
+		{contributionLabel && <span class="badge badge-contribution">{contributionLabel}</span>}
 	</div>
 
 	<h1 class="case-title font-sans">{title}</h1>
@@ -74,20 +88,16 @@ const {
 		)}
 	</div>
 
-	{stack.length > 0 && (
+	{visibleStack.length > 0 && (
 		<div class="case-hero-stack font-mono" aria-label="Core Technologies">
-			{stack.map((tech) => (
+			{visibleStack.map((tech) => (
 				<span class="stack-badge">{tech}</span>
 			))}
+			{stackOverflow > 0 && <span class="stack-badge stack-badge--more">+{stackOverflow}</span>}
 		</div>
 	)}
 
-	{description && (
-		<div class="xyz-box">
-			<div class="xyz-tag font-mono">Executive Accomplishment (XYZ)</div>
-			<p class="xyz-text">{description}</p>
-		</div>
-	)}
+	{outcomeLine && <p class="case-outcome">{outcomeLine}</p>}
 
 	{hasActions && (
 		<div class="hero-actions">
@@ -125,6 +135,17 @@ const {
 		</div>
 	)}
 </header>
+
+{heroImages.length > 0 && (
+	<div
+		class="case-hero-band__visual"
+		data-case-lightbox-gallery={JSON.stringify(heroImages)}
+		data-case-lightbox-title={title}
+	>
+		<ShotFan images={heroImages} phone={isPhone} size="hero" lightbox imageLabel={title} />
+	</div>
+)}
+</div>
 
 <style>
 	.case-header {
@@ -177,6 +198,13 @@ const {
 		background: var(--card-bg);
 		color: var(--text-muted);
 		border: 1px solid var(--card-border);
+	}
+
+	.badge-contribution {
+		background: var(--accent-subtle);
+		color: var(--accent);
+		border: 1px solid var(--card-border-hover);
+		font-weight: 600;
 	}
 
 	.case-title {
@@ -256,35 +284,18 @@ const {
 		background: var(--accent-subtle);
 	}
 
-	.xyz-box {
-		margin-top: 0.35rem;
-		padding: 1rem 1.2rem;
-		background: var(--accent-subtle);
-		border-left: 3px solid var(--accent);
-		border-top: 1px solid var(--card-border);
-		border-right: 1px solid var(--card-border);
-		border-bottom: 1px solid var(--card-border);
-		border-radius: 0 var(--radius-md) var(--radius-md) 0;
-		max-width: 50rem;
-		box-sizing: border-box;
-		width: 100%;
-	}
-
-	.xyz-tag {
-		font-size: 0.68rem;
-		text-transform: uppercase;
-		letter-spacing: 0.1em;
-		font-weight: 700;
-		color: var(--accent);
-		margin-bottom: 0.35rem;
-	}
-
-	.xyz-text {
+	.case-outcome {
 		margin: 0;
-		font-size: 0.95rem;
-		line-height: 1.55;
+		font-size: 0.98rem;
+		line-height: 1.6;
 		color: var(--text-main);
+		max-width: 44rem;
 		overflow-wrap: break-word;
+	}
+
+	.stack-badge--more {
+		color: var(--text-muted);
+		font-weight: 600;
 	}
 
 	.hero-actions {
@@ -322,8 +333,5 @@ const {
 			text-align: center;
 		}
 
-		.xyz-box {
-			padding: 0.85rem 1rem;
-		}
 	}
 </style>

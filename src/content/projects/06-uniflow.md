@@ -1,130 +1,128 @@
 ---
-id: "06"
-title: "UNIFLOW – Interactive Class Management & Collaborative Learning Platform"
-subtitle: "Real-time collaborative academic portal built with Quasar Framework, Vue 3, Pinia, Firebase Firestore, and ApexCharts analytics."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected a real-time academic collaboration portal achieving sub-second classroom state synchronization and 4-tier institutional modeling via Firebase Firestore listeners, Quasar (Vue 3), and 8 modular Pinia stores."
-chip: "Quasar & Firebase Platform"
+id: '06'
+title: UNIFLOW – Interactive Class Management & Collaborative Learning Platform
+subtitle: Real-time collaborative academic portal built with Quasar Framework, Vue 3, Pinia, Firebase Firestore, and ApexCharts analytics.
+description: Architected a real-time academic collaboration portal achieving sub-second classroom state synchronization and 4-tier institutional modeling via Firebase Firestore listeners, Quasar (Vue 3), and 8 modular Pinia stores.
+chip: Quasar & Firebase Platform
 order: 6
 featured: false
-platformType: "desktop"
-
-role: "Lead Full-Stack Developer"
-timeline: "2024 — 2025"
-status: "Completed"
-classification: "Independent System / Platform"
-
+platformType: desktop
+contribution:
+  mode: lead
+  label: Technical lead
+  headline: Engineered UNIFLOW, a modern real-time interactive class management and group collaboration platform for university students and educators [X]. Built with Quasar Framework (Vue 3) and Firebase Firestore, the system delivers live interactive lecture sessions and sub-second classroom synchronization [Y] via a 4-tier academic hierarchy model (Faculty → Department → Course → Group), multi-criterion grading rubrics, collaborative smart notes, and 8 modular Pinia stores [Z].
+  scope:
+  - Real-Time Interactive Classroom Session Orchestration
+  - Multi-Criterion Assignment Grading Rubrics
+  - Scalable Academic Data Modeling in NoSQL
+myImpact:
+- label: State Synchronization
+  value: Sub-Second
+  attribution: personal
+  detail: Live Firestore onSnapshot listeners synchronizing classroom state
+- label: Academic Modeling
+  value: 4 Tiers
+  attribution: personal
+  detail: Faculty, Department, Course, and Group relational document hierarchy
+- label: State Architecture
+  value: 8 Stores
+  attribution: personal
+  detail: Modular Pinia domain isolation with persisted local caching
+- label: Grading Rubrics
+  value: Multi-Criteria
+  attribution: personal
+  detail: Custom evaluation criteria with peer and instructor review toggles
+- label: Visual Analytics
+  value: ApexCharts
+  attribution: personal
+  detail: Interactive student task completion and session participation rollups
+- label: Security Enforcement
+  value: Role-Based
+  attribution: personal
+  detail: Granular Firestore security rules for students, teachers, and admins
+product:
+  summary: Engineered UNIFLOW, a modern real-time interactive class management and group collaboration platform for university students and educators [X]. Built with Quasar Framework (Vue 3) and Firebase Firestore, the system delivers live interactive lecture sessions and sub-second classroom synchronization [Y] via a 4-tier academic hierarchy model (Faculty → Department → Course → Group), multi-criterion grading rubrics, collaborative smart notes, and 8 modular Pinia stores [Z].
+  problem: University classrooms often suffer from fragmented tools—scattered video links, detached discussion boards, external code playgrounds, and disconnected grading spreadsheets—leading to student disengagement and heavy administrative friction for instructors.
+  valueProposition:
+    targetCustomer: University Educators, Academic Departments & Student Study Groups
+    showCanvas: false
+    items:
+    - painTitle: Fragmented Classroom Collaboration Tools
+      painDescription: Lectures, code playgrounds, chat threads, and grading sheets were spread across 4+ disconnected web apps, causing student context-switching.
+      gainTitle: Unified Interactive Real-Time Lecture Hub
+      gainDescription: Single Quasar (Vue 3) interface synchronizing live video feeds, embedded code editors, and question queues in real-time.
+    - painTitle: Rigid & Opaque Assignment Grading Methods
+      painDescription: Traditional university portals offered only binary score inputs without transparent breakdown of grading criteria or peer evaluation.
+      gainTitle: Multi-Criterion Assignment Grading Rubrics
+      gainDescription: Customizable sub-collections allowing teachers to define multi-factor rubrics with automated score rollups and peer review.
+    - painTitle: High Database Latency on Course Roster Queries
+      painDescription: Relational SQL joins across complex university departments, faculties, and student groups slowed down dashboard loads.
+      gainTitle: 4-Tier Denormalized NoSQL Document Model
+      gainDescription: Engineered high-speed Firestore schemas with sub-50ms query reads for course rosters and student group permissions.
+role: Lead Full-Stack Developer
+timeline: 2024 — 2025
+status: Completed
+classification: Independent System / Platform
 stack:
-  - "Firebase"
-  - "Quasar"
-  - "Vue 3"
-  - "Firestore"
-  - "Pinia"
-
+- Firebase
+- Quasar
+- Vue 3
+- Firestore
+- Pinia
 techStack:
   frontend:
-    - "Quasar Framework (v2)"
-    - "Vue.js (v3)"
-    - "Pinia (v3) + PersistedState"
-    - "ApexCharts & Vue3-ApexCharts"
-    - "Chart.js"
-    - "Vue Router (v4)"
-    - "Vite (@quasar/app-vite)"
+  - Quasar Framework (v2)
+  - Vue.js (v3)
+  - Pinia (v3) + PersistedState
+  - ApexCharts & Vue3-ApexCharts
+  - Chart.js
+  - Vue Router (v4)
+  - Vite (@quasar/app-vite)
   backend:
-    - "Firebase 11 (Firestore Real-time DB)"
-    - "Firebase Authentication"
-    - "Firebase Security Rules"
-    - "bcryptjs"
+  - Firebase 11 (Firestore Real-time DB)
+  - Firebase Authentication
+  - Firebase Security Rules
+  - bcryptjs
   database:
-    - "Cloud Firestore (Document & Subcollection Model)"
-    - "Real-time Listeners (onSnapshot)"
+  - Cloud Firestore (Document & Subcollection Model)
+  - Real-time Listeners (onSnapshot)
   devops:
-    - "ESLint 9 + Prettier"
-    - "PostCSS & Autoprefixer"
-    - "Git & GitHub"
+  - ESLint 9 + Prettier
+  - PostCSS & Autoprefixer
+  - Git & GitHub
   mobile_hardware: []
-
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: "https://github.com/marceldavidbaroi/UniFlow-"
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: https://github.com/marceldavidbaroi/UniFlow-
+  docs: ''
 images:
-  - "/images/thumb-1.png"
-  - "/images/thumb-2.png"
-  - "/images/thumb-3.png"
-  - "/images/thumb-4.png"
-
+- /images/thumb-1.png
+- /images/thumb-2.png
+- /images/thumb-3.png
+- /images/thumb-4.png
 visualAssets:
-  heroMockup: "/images/dummy-project.png"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Engineered UNIFLOW, a modern real-time interactive class management and group collaboration platform for university students and educators [X]. Built with Quasar Framework (Vue 3) and Firebase Firestore, the system delivers live interactive lecture sessions and sub-second classroom synchronization [Y] via a 4-tier academic hierarchy model (Faculty → Department → Course → Group), multi-criterion grading rubrics, collaborative smart notes, and 8 modular Pinia stores [Z]."
-
-impactMetrics:
-  - label: "State Synchronization"
-    value: "Sub-Second"
-    detail: "Live Firestore onSnapshot listeners synchronizing classroom state"
-  - label: "Academic Modeling"
-    value: "4 Tiers"
-    detail: "Faculty, Department, Course, and Group relational document hierarchy"
-  - label: "State Architecture"
-    value: "8 Stores"
-    detail: "Modular Pinia domain isolation with persisted local caching"
-  - label: "Grading Rubrics"
-    value: "Multi-Criteria"
-    detail: "Custom evaluation criteria with peer and instructor review toggles"
-  - label: "Visual Analytics"
-    value: "ApexCharts"
-    detail: "Interactive student task completion and session participation rollups"
-  - label: "Security Enforcement"
-    value: "Role-Based"
-    detail: "Granular Firestore security rules for students, teachers, and admins"
-
-valueProposition:
-  targetCustomer: "University Educators, Academic Departments & Student Study Groups"
-  items:
-    - painTitle: "Fragmented Classroom Collaboration Tools"
-      painDescription: "Lectures, code playgrounds, chat threads, and grading sheets were spread across 4+ disconnected web apps, causing student context-switching."
-      gainTitle: "Unified Interactive Real-Time Lecture Hub"
-      gainDescription: "Single Quasar (Vue 3) interface synchronizing live video feeds, embedded code editors, and question queues in real-time."
-
-    - painTitle: "Rigid & Opaque Assignment Grading Methods"
-      painDescription: "Traditional university portals offered only binary score inputs without transparent breakdown of grading criteria or peer evaluation."
-      gainTitle: "Multi-Criterion Assignment Grading Rubrics"
-      gainDescription: "Customizable sub-collections allowing teachers to define multi-factor rubrics with automated score rollups and peer review."
-
-    - painTitle: "High Database Latency on Course Roster Queries"
-      painDescription: "Relational SQL joins across complex university departments, faculties, and student groups slowed down dashboard loads."
-      gainTitle: "4-Tier Denormalized NoSQL Document Model"
-      gainDescription: "Engineered high-speed Firestore schemas with sub-50ms query reads for course rosters and student group permissions."
-
-problemStatement: "University classrooms often suffer from fragmented tools—scattered video links, detached discussion boards, external code playgrounds, and disconnected grading spreadsheets—leading to student disengagement and heavy administrative friction for instructors."
-
-architectureSummary: "Single-Page Application built with Quasar Framework and Vue 3, connected to Cloud Firestore real-time NoSQL collections and Firebase Authentication, with client state managed across 8 modular Pinia stores."
-
+  heroMockup: /images/dummy-project.png
+architectureSummary: Single-Page Application built with Quasar Framework and Vue 3, connected to Cloud Firestore real-time NoSQL collections and Firebase Authentication, with client state managed across 8 modular Pinia stores.
 keyDecisions:
-  - challenge: "Real-Time Interactive Classroom Session Orchestration"
-    decision: "Designed a real-time Firestore Session document model with live listeners (`onSnapshot`) synchronizing lecture state, embedded coding playground URLs, video feeds, and question queues between teachers and participants simultaneously."
-    outcome: "Eliminated tool switching by unifying live lectures, coding environments, and interactive Q&A into a single reactive interface."
-  - challenge: "Multi-Criterion Assignment Grading Rubrics"
-    decision: "Implemented composite Firestore sub-collections for Tasks that bundle customizable grading criteria (description, max points, notes) along with instructor and peer-review toggle settings."
-    outcome: "Enabled educators to define transparent evaluation standards while automating cumulative score calculations across diverse student submissions."
-  - challenge: "Scalable Academic Data Modeling in NoSQL"
-    decision: "Modeled a 4-tier hierarchy (Faculty → Department → Course → Group) using denormalized metadata in top-level documents combined with scoped Firestore security rules for role-based authorization."
-    outcome: "Achieved sub-50ms query reads for course rosters and student group permissions without complex relational join overhead."
-
+- challenge: Real-Time Interactive Classroom Session Orchestration
+  decision: Designed a real-time Firestore Session document model with live listeners (`onSnapshot`) synchronizing lecture state, embedded coding playground URLs, video feeds, and question queues between teachers and participants simultaneously.
+  outcome: Eliminated tool switching by unifying live lectures, coding environments, and interactive Q&A into a single reactive interface.
+- challenge: Multi-Criterion Assignment Grading Rubrics
+  decision: Implemented composite Firestore sub-collections for Tasks that bundle customizable grading criteria (description, max points, notes) along with instructor and peer-review toggle settings.
+  outcome: Enabled educators to define transparent evaluation standards while automating cumulative score calculations across diverse student submissions.
+- challenge: Scalable Academic Data Modeling in NoSQL
+  decision: Modeled a 4-tier hierarchy (Faculty → Department → Course → Group) using denormalized metadata in top-level documents combined with scoped Firestore security rules for role-based authorization.
+  outcome: Achieved sub-50ms query reads for course rosters and student group permissions without complex relational join overhead.
 securityReliability:
-  - "Firebase Authentication supporting email/password and federated Google OAuth logins."
-  - "Granular Firestore Security Rules restricting document read/write access based on user role (`student`, `teacher`, `admin`)."
-  - "Local session persistence using `pinia-plugin-persistedstate` to prevent state loss across browser reloads."
-  - "Client-side form validation and schema guards across all task and session submission modals."
-
+- Firebase Authentication supporting email/password and federated Google OAuth logins.
+- Granular Firestore Security Rules restricting document read/write access based on user role (`student`, `teacher`, `admin`).
+- Local session persistence using `pinia-plugin-persistedstate` to prevent state loss across browser reloads.
+- Client-side form validation and schema guards across all task and session submission modals.
 futureRoadmap:
-  - "WebRTC integration for direct peer-to-peer audio/video streaming inside active sessions."
-  - "AI-powered automated code submission analysis and syntax feedback engine."
-  - "Automated calendar synchronization (Google Calendar / iCal export) for assignment deadlines."
+- WebRTC integration for direct peer-to-peer audio/video streaming inside active sessions.
+- AI-powered automated code submission analysis and syntax feedback engine.
+- Automated calendar synchronization (Google Calendar / iCal export) for assignment deadlines.
 ---
 
 ## Executive Summary

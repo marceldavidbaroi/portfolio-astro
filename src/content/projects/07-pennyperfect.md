@@ -1,140 +1,136 @@
 ---
-id: "07"
-title: "Finance & Accounting App – Modular Enterprise Suite"
-subtitle: "Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs."
-chip: "Fintech & Enterprise SaaS"
+id: '07'
+title: Finance & Accounting App – Modular Enterprise Suite
+subtitle: Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.
+description: Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.
+chip: Fintech & Enterprise SaaS
 order: 7
 featured: false
-platformType: "desktop"
-
-role: "Frontend Engineer (Modular Package Architecture)"
-timeline: "2025 — H1 2026"
-status: "Active Production"
-classification: "🔒 Proprietary Enterprise IP"
-
+platformType: desktop
+contribution:
+  mode: core
+  label: Core contributor
+  headline: Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
+  scope:
+  - Feature scope vs. maintainability in a monorepo with nested git repos
+  - Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
+  - Legacy branch API (/loanapp/branchs) missing in Supercards backend
+  - Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
+  - Print/PDF export without server-side rendering
+myImpact:
+- label: Modular Packages
+  value: 7 Packages
+  attribution: personal
+  detail: Six domain packages orchestrated by a meta-dependency installer
+- label: Production Surfaces
+  value: 6 Menus
+  attribution: personal
+  detail: Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings
+- label: API Surface
+  value: 15+ Endpoints
+  attribution: personal
+  detail: Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups
+- label: Integration Stability
+  value: P0 Resolved
+  attribution: personal
+  detail: Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout
+- label: Report Export Engine
+  value: A4 PDF
+  attribution: personal
+  detail: Client-side multi-page summary PDF assembly via html2canvas & jsPDF
+- label: Multi-Tenant Scoping
+  value: 100% Isolated
+  attribution: product
+  detail: Tenant context and branch routing via dynamic API interceptors
+product:
+  summary: Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
+  problem: Finance teams inside Supercards tenants needed in-app accounting—accounts, journal entries, tax-aware income/expense, and standard financial reports—without bolting on a separate ERP. Legacy PennyPerfect UIs assumed a monolithic loan-app API (e.g. /loanapp/branchs, cashbook import/export) and wrong default API hosts, causing broken branch filters, failed imports, and session logout when tax endpoints 401'd on page load.
+  valueProposition:
+    targetCustomer: Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads
+    showCanvas: false
+    items:
+    - painTitle: Monolithic Frontend Bloat Across Accounting Modules
+      painDescription: Integrating double-entry accounting into host applications traditionally bloated frontend bundles and coupled financial code with unrelated core app logic.
+      gainTitle: 7 Composable Autonomous Vue Library Packages
+      gainDescription: Decomposed the suite into independently versioned packages (@itc/pennyperfect-*) orchestrated by a meta-package with dynamic route discovery.
+    - painTitle: P0 Session Logouts from Premature Boot-Time API Calls
+      painDescription: Unauthenticated tax code fetch calls during initial application boot triggered 401 errors, inadvertently logging users out of their host session.
+      gainTitle: Lazy Dialog Loading & Safe Host Boot Handlers
+      gainDescription: Engineered configureTaxApi boot abstractions and deferred API requests until dialog mount, guaranteeing 100% boot stability.
+    - painTitle: Heavy Server-Side PDF Rendering Infrastructure
+      painDescription: Generating multi-page A4 balance sheets and monthly income statements previously required dedicated headless browser microservices.
+      gainTitle: Client-Side In-Browser A4 PDF Assembly
+      gainDescription: Engineered client-side rendering with hidden iframes, html2canvas rasterization, and jsPDF assembly for instant zero-server PDF exports.
+role: Frontend Engineer (Modular Package Architecture)
+timeline: 2025 — H1 2026
+status: Active Production
+classification: 🔒 Proprietary Enterprise IP
 stack:
-  - "Quasar"
-  - "Vue 3"
-  - "TypeScript"
-  - "Pinia"
-  - "Vite"
-
+- Quasar
+- Vue 3
+- TypeScript
+- Pinia
+- Vite
 techStack:
   frontend:
-    - "Quasar Framework (v2)"
-    - "Vue.js (v3) + TypeScript"
-    - "Pinia (+ PersistedState)"
-    - "Vue Router 4 (appPlugin Discovery)"
-    - "Vite 7 (Library Mode: ESM/CJS)"
-    - "html2canvas + jsPDF"
+  - Quasar Framework (v2)
+  - Vue.js (v3) + TypeScript
+  - Pinia (+ PersistedState)
+  - Vue Router 4 (appPlugin Discovery)
+  - 'Vite 7 (Library Mode: ESM/CJS)'
+  - html2canvas + jsPDF
   backend:
-    - "Laravel 11 API (itc/pennyperfect)"
-    - "Laravel Sanctum (auth:sanctum)"
-    - "Multi-Tenant Branch & User Scoping"
+  - Laravel 11 API (itc/pennyperfect)
+  - Laravel Sanctum (auth:sanctum)
+  - Multi-Tenant Branch & User Scoping
   database:
-    - "PostgreSQL (Double-Entry Ledgers, Tax Codes & Statements)"
+  - PostgreSQL (Double-Entry Ledgers, Tax Codes & Statements)
   devops:
-    - "pnpm Workspaces (workspace:*)"
-    - "Nested Git Submodules (.modules)"
-    - "Docker Compose Local Stack"
-    - "Vite HMR & Menu Auto-Discovery"
+  - pnpm Workspaces (workspace:*)
+  - Nested Git Submodules (.modules)
+  - Docker Compose Local Stack
+  - Vite HMR & Menu Auto-Discovery
   mobile_hardware: []
-
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: ""
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: ''
+  docs: ''
 images:
-  - "/images/projects/pennyperfect/chart-of-accounts.webp"
-  - "/images/projects/pennyperfect/transactions.webp"
-  - "/images/projects/pennyperfect/balance-sheet.webp"
-  - "/images/projects/pennyperfect/income-statement.webp"
-  - "/images/projects/pennyperfect/reports.webp"
-
+- /images/projects/pennyperfect/chart-of-accounts.webp
+- /images/projects/pennyperfect/transactions.webp
+- /images/projects/pennyperfect/balance-sheet.webp
+- /images/projects/pennyperfect/income-statement.webp
+- /images/projects/pennyperfect/reports.webp
 visualAssets:
-  heroMockup: "/images/projects/pennyperfect/chart-of-accounts.webp"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z]."
-
-impactMetrics:
-  - label: "Modular Packages"
-    value: "7 Packages"
-    detail: "Six domain packages orchestrated by a meta-dependency installer"
-  - label: "Production Surfaces"
-    value: "6 Menus"
-    detail: "Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings"
-  - label: "API Surface"
-    value: "15+ Endpoints"
-    detail: "Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups"
-  - label: "Integration Stability"
-    value: "P0 Resolved"
-    detail: "Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout"
-  - label: "Report Export Engine"
-    value: "A4 PDF"
-    detail: "Client-side multi-page summary PDF assembly via html2canvas & jsPDF"
-  - label: "Multi-Tenant Scoping"
-    value: "100% Isolated"
-    detail: "Tenant context and branch routing via dynamic API interceptors"
-
-valueProposition:
-  targetCustomer: "Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads"
-  items:
-    - painTitle: "Monolithic Frontend Bloat Across Accounting Modules"
-      painDescription: "Integrating double-entry accounting into host applications traditionally bloated frontend bundles and coupled financial code with unrelated core app logic."
-      gainTitle: "7 Composable Autonomous Vue Library Packages"
-      gainDescription: "Decomposed the suite into independently versioned packages (@itc/pennyperfect-*) orchestrated by a meta-package with dynamic route discovery."
-
-    - painTitle: "P0 Session Logouts from Premature Boot-Time API Calls"
-      painDescription: "Unauthenticated tax code fetch calls during initial application boot triggered 401 errors, inadvertently logging users out of their host session."
-      gainTitle: "Lazy Dialog Loading & Safe Host Boot Handlers"
-      gainDescription: "Engineered configureTaxApi boot abstractions and deferred API requests until dialog mount, guaranteeing 100% boot stability."
-
-    - painTitle: "Heavy Server-Side PDF Rendering Infrastructure"
-      painDescription: "Generating multi-page A4 balance sheets and monthly income statements previously required dedicated headless browser microservices."
-      gainTitle: "Client-Side In-Browser A4 PDF Assembly"
-      gainDescription: "Engineered client-side rendering with hidden iframes, html2canvas rasterization, and jsPDF assembly for instant zero-server PDF exports."
-
-problemStatement: "Finance teams inside Supercards tenants needed in-app accounting—accounts, journal entries, tax-aware income/expense, and standard financial reports—without bolting on a separate ERP. Legacy PennyPerfect UIs assumed a monolithic loan-app API (e.g. /loanapp/branchs, cashbook import/export) and wrong default API hosts, causing broken branch filters, failed imports, and session logout when tax endpoints 401'd on page load."
-
-architectureSummary: "Seven Vite-built Vue library packages expose routes, Pinia stores, and Quasar pages; the Supercards host provides apiClient, authStore, and tenantStore via boot/provide; @itc/menu-system discovers appPlugin menus; all domain HTTP flows through itc/pennyperfect on Laravel under /api/v1 with Sanctum + tenant middleware."
-
+  heroMockup: /images/projects/pennyperfect/chart-of-accounts.webp
+architectureSummary: Seven Vite-built Vue library packages expose routes, Pinia stores, and Quasar pages; the Supercards host provides apiClient, authStore, and tenantStore via boot/provide; @itc/menu-system discovers appPlugin menus; all domain HTTP flows through itc/pennyperfect on Laravel under /api/v1 with Sanctum + tenant middleware.
 keyDecisions:
-  - challenge: "Feature scope vs. maintainability in a monorepo with nested git repos"
-    decision: "Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect."
-    outcome: "Teams can version, build, and publish modules independently; host integration is boot + spread routes + discover:ci instead of a growing frontend/src tree."
-
-  - challenge: "Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)"
-    decision: "Standardized host boot files (pennyperfect-transactions, pennyperfect-settings, pennyperfect-balancesheet) calling configureTaxApi / configureSettingsApi / configureBalanceSheetApi with apiUrlBuilder + appId: pennyperfect; feature pages inject apiClient, authStore, tenantStore for Axios-interceptor packages."
-    outcome: "Single source of truth for API base URL from VITE_API_BASE_URL; Bearer + x-tenant-id headers applied consistently; tax codes load only when dialogs open."
-
-  - challenge: "Legacy branch API (/loanapp/branchs) missing in Supercards backend"
-    decision: "Migrated income statement and reports branch loaders to GET /tenants/{tenantId}/branches (itc/core-auth-accounts); made branchId nullable across transaction and settings forms to match backend validation."
-    outcome: "Branch filters populate on Income Statement and Reports; transactions save without forced branch selection."
-
-  - challenge: "Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)"
-    decision: "Unified appPlugin.routes to ./src/router/routes.ts; host imports { routes } from package entry as single source of truth."
-    outcome: "One route set for /penny-perfect/reports plus /external/reports print URLs and voucher preview routes."
-
-  - challenge: "Print/PDF export without server-side rendering"
-    decision: "Client-side PDF via hidden iframe loading /external/reports, html2canvas snapshot of .report-preview-a4, jsPDF multi-page assembly."
-    outcome: "Monthly/daily summaries export to PDF without additional backend render pipeline."
-
+- challenge: Feature scope vs. maintainability in a monorepo with nested git repos
+  decision: 'Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.'
+  outcome: Teams can version, build, and publish modules independently; host integration is boot + spread routes + discover:ci instead of a growing frontend/src tree.
+- challenge: Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
+  decision: 'Standardized host boot files (pennyperfect-transactions, pennyperfect-settings, pennyperfect-balancesheet) calling configureTaxApi / configureSettingsApi / configureBalanceSheetApi with apiUrlBuilder + appId: pennyperfect; feature pages inject apiClient, authStore, tenantStore for Axios-interceptor packages.'
+  outcome: Single source of truth for API base URL from VITE_API_BASE_URL; Bearer + x-tenant-id headers applied consistently; tax codes load only when dialogs open.
+- challenge: Legacy branch API (/loanapp/branchs) missing in Supercards backend
+  decision: Migrated income statement and reports branch loaders to GET /tenants/{tenantId}/branches (itc/core-auth-accounts); made branchId nullable across transaction and settings forms to match backend validation.
+  outcome: Branch filters populate on Income Statement and Reports; transactions save without forced branch selection.
+- challenge: Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
+  decision: Unified appPlugin.routes to ./src/router/routes.ts; host imports { routes } from package entry as single source of truth.
+  outcome: One route set for /penny-perfect/reports plus /external/reports print URLs and voucher preview routes.
+- challenge: Print/PDF export without server-side rendering
+  decision: Client-side PDF via hidden iframe loading /external/reports, html2canvas snapshot of .report-preview-a4, jsPDF multi-page assembly.
+  outcome: Monthly/daily summaries export to PDF without additional backend render pipeline.
 securityReliability:
-  - "All accounting APIs require auth:sanctum; tenant context via X-Tenant-Id from tenantStore interceptors on apiClient."
-  - "Tax and settings modules support configure*Api with shared callApiClient from host boot—no hardcoded production tokens in package source."
-  - "Pinia persisted state (reports, chart-of-accounts) retains filter preferences locally; failed fetches clear stale lists and rethrow or return empty payloads."
-  - "System accounts in chart of accounts are guarded in UI (SystemAccountWarningDialog) to prevent destructive edits on protected rows."
-
+- All accounting APIs require auth:sanctum; tenant context via X-Tenant-Id from tenantStore interceptors on apiClient.
+- Tax and settings modules support configure*Api with shared callApiClient from host boot—no hardcoded production tokens in package source.
+- Pinia persisted state (reports, chart-of-accounts) retains filter preferences locally; failed fetches clear stale lists and rethrow or return empty payloads.
+- System accounts in chart of accounts are guarded in UI (SystemAccountWarningDialog) to prevent destructive edits on protected rows.
 futureRoadmap:
-  - "Migrate cashbook import/export from legacy /loanapp/transaction/cashbook-* to itc/pennyperfect-backed endpoints."
-  - "Consolidate remaining /loanapp/* settings APIs onto core-auth-accounts + pennyperfect tax-code routes."
-  - "Add general ledger package (@itc/pennyperfect-general-ledger) to the meta-package dependency set for a seventh reporting surface."
-  - "Unify all packages on @itc/coreservice callApi instead of mixed raw Axios service layers."
+- Migrate cashbook import/export from legacy /loanapp/transaction/cashbook-* to itc/pennyperfect-backed endpoints.
+- Consolidate remaining /loanapp/* settings APIs onto core-auth-accounts + pennyperfect tax-code routes.
+- Add general ledger package (@itc/pennyperfect-general-ledger) to the meta-package dependency set for a seventh reporting surface.
+- Unify all packages on @itc/coreservice callApi instead of mixed raw Axios service layers.
 ---
 
 ## Executive Summary

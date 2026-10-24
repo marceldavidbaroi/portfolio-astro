@@ -3,15 +3,20 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseBreadcrumb from '../../components/work/CaseBreadcrumb.astro';
 import CaseHero from '../../components/work/CaseHero.astro';
-import CaseJumpNav from '../../components/work/CaseJumpNav.astro';
-import CaseImpactMetrics from '../../components/work/CaseImpactMetrics.astro';
-import ImageCarousel from '../../components/work/ImageCarousel.astro';
-import CaseArticle from '../../components/work/CaseArticle.astro';
+import CaseStudyLayout from '../../components/work/CaseStudyLayout.astro';
+import CaseContributionChapter from '../../components/work/CaseContributionChapter.astro';
+import CaseProductChapter from '../../components/work/CaseProductChapter.astro';
+import CaseProofChapter from '../../components/work/CaseProofChapter.astro';
+import CaseBuildChapter from '../../components/work/CaseBuildChapter.astro';
+import CaseTrustChapter from '../../components/work/CaseTrustChapter.astro';
 import CaseDeepDive from '../../components/work/CaseDeepDive.astro';
 import CaseMarkdown from '../../components/work/CaseMarkdown.astro';
 import CaseAdjacentNav from '../../components/work/CaseAdjacentNav.astro';
-import { ipLabel, isRealUrl, shots } from '../../lib/work';
+import CaseImageLightbox from '../../components/ui/CaseImageLightbox.astro';
+import { resolveProductForDetail, toCaseStudyView } from '../../lib/projectView';
+import { ipLabel, isRealUrl } from '../../lib/work';
 import '../../styles/case.css';
+import '../../styles/case-study.css';
 
 export async function getStaticPaths() {
 	const projects = await getCollection('projects');
@@ -35,17 +40,23 @@ const { data } = project;
 const { Content } = await render(project);
 
 const rawBody = project.body || '';
+const contribution = data.contribution;
+const product = data.product;
+const caseStory = data.caseStory;
+
 const structuredWords = [
 	data.title || '',
 	data.subtitle || '',
 	data.description || '',
-	data.executiveOverview || '',
-	data.problemStatement || '',
-	...(data.impactMetrics?.map((m) => `${m.label} ${m.value} ${m.detail || ''}`) || []),
+	contribution?.headline || '',
+	product?.summary || '',
+	product?.problem || '',
+	...(contribution?.scope || []),
+	...(data.myImpact?.map((m) => `${m.label} ${m.value} ${m.detail || ''}`) || []),
 	...(data.keyDecisions?.map((k) => `${k.challenge} ${k.decision} ${k.outcome || ''}`) || [])
 ].join(' ');
 const totalWordCount = (rawBody + ' ' + structuredWords).replace(/[#*`_~[\]()]/g, ' ').trim().split(/\s+/).filter(Boolean).length;
-const readingTimeText = `${Math.max(1, Math.ceil(totalWordCount / 200))} min scan`;
+const readingTimeText = `~${Math.max(1, Math.ceil(totalWordCount / 200))} min read`;
 
 const classLabel = ipLabel(data.classification);
 const live = isRealUrl(data.links?.liveDemo);
@@ -62,7 +73,6 @@ const sanitize = (src?: string) => {
 	return src;
 };
 
-// Gather all unique images for the single carousel
 const allProjectImages = Array.from(
 	new Set(
 		[
@@ -86,91 +96,130 @@ const stackRows = [
 ].filter((row) => row.items && row.items.length > 0);
 
 const hasMarkdownBody = rawBody.trim().length > 0;
+
+const caseView = toCaseStudyView(project, {
+	imageCount: allProjectImages.length,
+	hasMarkdownBody,
+	hasStackRows: stackRows.length > 0,
+	hasKeyDecisions: (data.keyDecisions?.length ?? 0) > 0,
+	hasStackRationale: (caseStory?.stackRationale?.length ?? 0) > 0,
+	hasSecurity: (data.securityReliability?.length ?? 0) > 0,
+	hasRoadmap: (data.futureRoadmap?.length ?? 0) > 0,
+});
+
+const outcomeLine = contribution.headline?.trim() || undefined;
+
+const productForChapter = resolveProductForDetail(data);
 ---
 
 <BaseLayout title={`${data.title} | Case Study`} description={data.description} isWide alignStart>
 	<div class="case-shell">
 		<article class="case">
 			<CaseBreadcrumb title={data.title} readingTimeText={readingTimeText} />
-			
-			<div id="case-top"></div>
 
-			<CaseHero
-				title={data.title}
-				subtitle={data.subtitle}
-				chip={data.chip}
-				status={data.status}
-				classLabel={classLabel}
-				role={data.role}
-				timeline={data.timeline}
-				description={data.description}
-				links={data.links}
-				hasActions={hasActions}
-				live={live}
-				parent={parent}
-				github={github}
-				ghFront={ghFront}
-				ghBack={ghBack}
-				docs={docs}
-				stack={data.stack}
-			/>
+			<CaseStudyLayout chapters={caseView.chapters}>
+				<section id="case-top" class="case-chapter case-chapter--hero">
+					<CaseHero
+						title={data.title}
+						subtitle={data.subtitle}
+						chip={data.chip}
+						status={data.status}
+						classLabel={classLabel}
+						role={data.role}
+						timeline={data.timeline}
+						links={data.links}
+						hasActions={hasActions}
+						live={live}
+						parent={parent}
+						github={github}
+						ghFront={ghFront}
+						ghBack={ghBack}
+						docs={docs}
+						stack={data.stack}
+						heroImages={allProjectImages}
+						isPhone={isPhone}
+						outcomeLine={outcomeLine}
+						contributionLabel={contribution.label?.trim()}
+					/>
+				</section>
 
-			<CaseJumpNav
-				hasMetrics={Boolean(data.impactMetrics && data.impactMetrics.length > 0)}
-				hasValueCanvas={Boolean(data.valueProposition?.items && data.valueProposition.items.length > 0)}
-				hasDecisions={Boolean(data.keyDecisions && data.keyDecisions.length > 0)}
-				hasStack={Boolean(stackRows.length > 0)}
-				hasGovernance={Boolean((data.securityReliability && data.securityReliability.length > 0) || (data.futureRoadmap && data.futureRoadmap.length > 0))}
-				hasDeepDive={hasMarkdownBody}
-			/>
+				{caseView.hasContributionChapter && (
+					<CaseContributionChapter contribution={contribution} />
+				)}
 
-			{data.impactMetrics && data.impactMetrics.length > 0 && (
-				<CaseImpactMetrics metrics={data.impactMetrics} />
-			)}
+				{caseView.hasProductChapter && (
+					<CaseProductChapter
+						product={productForChapter}
+						caseStory={caseStory}
+						showCaseStory={caseView.showCaseStory}
+						showVpc={caseView.showVpc}
+					/>
+				)}
 
-			<ImageCarousel
-				title={data.title}
-				images={allProjectImages}
-				isPhone={isPhone}
-			/>
+				{caseView.hasProofChapter && (
+					<CaseProofChapter
+						myImpact={data.myImpact}
+						images={allProjectImages}
+						title={data.title}
+						isPhone={isPhone}
+					/>
+				)}
 
-			<CaseArticle
-				executiveOverview={data.executiveOverview}
-				problemStatement={data.problemStatement}
-				keyDecisions={data.keyDecisions}
-				valueProposition={data.valueProposition}
-				stackRows={stackRows}
-				securityReliability={data.securityReliability}
-				futureRoadmap={data.futureRoadmap}
-			/>
+				{caseView.hasBuildChapter && (
+					<CaseBuildChapter
+						stackRationale={caseStory?.stackRationale}
+						stackRows={stackRows}
+						keyDecisions={data.keyDecisions}
+						problemStatement={product.problem}
+					/>
+				)}
 
-			{hasMarkdownBody && (
-				<CaseDeepDive defaultExpanded={true}>
-					<CaseMarkdown>
-						<Content />
-					</CaseMarkdown>
-				</CaseDeepDive>
-			)}
+				{caseView.hasTrustChapter && (
+					<CaseTrustChapter
+						securityReliability={data.securityReliability}
+						futureRoadmap={data.futureRoadmap}
+					/>
+				)}
+
+				{caseView.hasAppendixChapter && (
+					<CaseDeepDive defaultExpanded={false}>
+						<CaseMarkdown>
+							<Content />
+						</CaseMarkdown>
+					</CaseDeepDive>
+				)}
+			</CaseStudyLayout>
 
 			<CaseAdjacentNav prevProject={prevProject} nextProject={nextProject} />
+			<CaseImageLightbox />
 		</article>
 	</div>
 
 	<script>
+		function isCaseBlockInView(el: HTMLElement) {
+			const rect = el.getBoundingClientRect();
+			const vh = window.innerHeight || document.documentElement.clientHeight;
+			return rect.top < vh * 0.92 && rect.bottom > vh * 0.08;
+		}
+
 		function setupCaseStudyReveal() {
 			const revealElements = document.querySelectorAll<HTMLElement>(
-				'.case > section, .case-header, .case-jump-nav, .deep-dive-section, .adjacent, .case .close'
+				'.case-chapter--hero, #case-proof, .adjacent'
 			);
 			if (!revealElements.length) return;
 
-			// Add case-reveal class to eligible elements
+			const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
 			revealElements.forEach((el) => {
 				if (!el.classList.contains('case-reveal')) {
 					el.classList.add('case-reveal');
 				}
+				if (reducedMotion || isCaseBlockInView(el)) {
+					el.classList.add('is-revealed');
+				}
 			});
 
-			if (window.matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) {
+			if (reducedMotion || !('IntersectionObserver' in window)) {
 				revealElements.forEach((el) => el.classList.add('is-revealed'));
 				return;
 			}
@@ -186,8 +235,8 @@ const hasMarkdownBody = rawBody.trim().length > 0;
 				},
 				{
 					root: null,
-					rootMargin: '0px 0px -40px 0px',
-					threshold: 0.08
+					rootMargin: '0px 0px -8% 0px',
+					threshold: 0,
 				}
 			);
 
@@ -200,5 +249,6 @@ const hasMarkdownBody = rawBody.trim().length > 0;
 
 		setupCaseStudyReveal();
 		document.addEventListener('astro:page-load', setupCaseStudyReveal);
+		document.addEventListener('astro:after-swap', setupCaseStudyReveal);
 	</script>
 </BaseLayout>

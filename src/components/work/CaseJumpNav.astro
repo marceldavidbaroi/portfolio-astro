@@ -8,28 +8,44 @@ interface JumpItem {
 interface Props {
 	hasMetrics?: boolean;
 	hasValueCanvas?: boolean;
+	hasStoryNarrative?: boolean;
 	hasDecisions?: boolean;
 	hasStack?: boolean;
 	hasGovernance?: boolean;
 	hasDeepDive?: boolean;
+	hasProof?: boolean;
 }
 
 const {
 	hasMetrics = false,
 	hasValueCanvas = false,
+	hasStoryNarrative = false,
 	hasDecisions = false,
 	hasStack = false,
 	hasGovernance = false,
 	hasDeepDive = false,
+	hasProof = false,
 } = Astro.props;
 
 const jumpItems: JumpItem[] = [
 	{ id: 'case-top', label: 'Overview' },
+	...(hasStoryNarrative
+		? [
+				{ id: 'value-canvas', label: 'VPC' },
+				{ id: 'product-story', label: 'Product' },
+				{ id: 'login-platforms', label: 'Platforms' },
+				{ id: 'sell-modules', label: 'Modules' },
+				{ id: 'stack-rationale', label: 'Stack' },
+			]
+		: hasValueCanvas
+			? [{ id: 'value-canvas', label: 'Value & Pain' }]
+			: []),
+	...(hasProof ? [{ id: 'case-proof', label: 'Screens' }] : []),
 	...(hasMetrics ? [{ id: 'impact-metrics', label: 'Impact' }] : []),
-	...(hasValueCanvas ? [{ id: 'value-canvas', label: 'Value & Pain' }] : []),
 	...(hasDecisions ? [{ id: 'engineering-decisions', label: 'Decisions' }] : []),
-	...(hasStack ? [{ id: 'tech-breakdown', label: 'Tech Stack' }] : []),
-	...(hasGovernance ? [{ id: 'security-roadmap', label: 'Security & Roadmap' }] : []),
+	...(!hasStoryNarrative && hasStack ? [{ id: 'tech-breakdown', label: 'Tech Stack' }] : []),
+	...(hasStack && hasStoryNarrative ? [{ id: 'tech-breakdown', label: 'Tech detail' }] : []),
+	...(hasGovernance ? [{ id: 'security-roadmap', label: 'Security' }] : []),
 	...(hasDeepDive ? [{ id: 'deep-dive', label: 'Deep Dive' }] : []),
 ];
 ---
@@ -135,6 +151,8 @@ const jumpItems: JumpItem[] = [
 	function setupCaseJumpNav() {
 		const nav = document.querySelector('.case-jump-nav');
 		if (!nav) return;
+		if (nav.dataset.bound === 'true') return;
+		nav.dataset.bound = 'true';
 
 		const track = nav.querySelector<HTMLElement>('.jump-track');
 		const pills = nav.querySelectorAll<HTMLAnchorElement>('.jump-pill');

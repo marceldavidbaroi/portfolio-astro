@@ -1,0 +1,98 @@
+---
+import type { Contribution } from '../../types/project';
+
+interface Props {
+	contribution: Contribution;
+}
+
+const { contribution } = Astro.props;
+
+const hasScope = contribution.scope.length > 0;
+const hasOutOfScope = (contribution.outOfScope?.length ?? 0) > 0;
+const hasTeam = Boolean(contribution.team?.trim());
+const show = hasScope || hasOutOfScope || hasTeam;
+---
+
+{show && (
+	<section id="case-you" class="case-chapter w-full max-w-full">
+		<div class="case-chapter__kicker">
+			<h2 class="label font-mono">My contribution</h2>
+			{contribution.label && (
+				<span class="story-badge font-mono">{contribution.label}</span>
+			)}
+		</div>
+		{contribution.headline && (
+			<p class="case-chapter__lead">{contribution.headline}</p>
+		)}
+
+		{hasScope && (
+			<>
+				<h3 class="case-chapter__sub">What I owned</h3>
+				<ul class="contribution-list">
+					{contribution.scope.map((line) => (
+						<li>{line}</li>
+					))}
+				</ul>
+			</>
+		)}
+
+		{hasOutOfScope && (
+			<>
+				<h3 class="case-chapter__sub">Out of scope</h3>
+				<ul class="contribution-list contribution-list--muted">
+					{contribution.outOfScope!.map((line) => (
+						<li>{line}</li>
+					))}
+				</ul>
+			</>
+		)}
+
+		{hasTeam && (
+			<p class="contribution-team">
+				<span class="font-mono contribution-team__label">Team</span>
+				{contribution.team}
+			</p>
+		)}
+	</section>
+)}
+
+<style>
+	.contribution-list {
+		margin: 0 0 1rem;
+		padding-left: 1.2rem;
+		line-height: 1.6;
+	}
+
+	.contribution-list li {
+		margin: 0.35rem 0;
+	}
+
+	.contribution-list--muted {
+		color: var(--text-muted);
+	}
+
+	.contribution-team {
+		margin: 0.5rem 0 0;
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	.contribution-team__label {
+		display: block;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--accent);
+		margin-bottom: 0.25rem;
+	}
+
+	.story-badge {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		padding: 0.2rem 0.55rem;
+		border-radius: var(--radius-sm);
+	}
+</style>

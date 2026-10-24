@@ -1,0 +1,45 @@
+---
+interface Props {
+	securityReliability?: string[];
+	futureRoadmap?: string[];
+}
+
+const { securityReliability = [], futureRoadmap = [] } = Astro.props;
+
+const hasSecurity = securityReliability.length > 0;
+const hasRoadmap = futureRoadmap.length > 0;
+
+const show = hasSecurity || hasRoadmap;
+---
+
+{show && (
+<section id="case-trust" class="case-chapter w-full max-w-full">
+	<div class="case-chapter__kicker">
+		<h2 class="label font-mono">Trust</h2>
+	</div>
+	<p class="case-chapter__title">Security and roadmap</p>
+
+	<div class="case-trust-grid">
+		{hasSecurity && (
+			<div class="case-trust-panel">
+				<h3>Security & reliability</h3>
+				<ul>
+					{securityReliability.map((line) => (
+						<li>{line}</li>
+					))}
+				</ul>
+			</div>
+		)}
+		{hasRoadmap && (
+			<div class="case-trust-panel">
+				<h3>Future roadmap</h3>
+				<ul>
+					{futureRoadmap.map((line) => (
+						<li>{line}</li>
+					))}
+				</ul>
+			</div>
+		)}
+	</div>
+</section>
+)}

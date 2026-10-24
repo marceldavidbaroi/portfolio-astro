@@ -22,15 +22,61 @@ const media = defineCollection({
 	})
 });
 
+const contributionModeSchema = z.enum(['owner', 'lead', 'core', 'specialist']);
+
+const contributionSchema = z
+	.object({
+		mode: contributionModeSchema.default('core'),
+		label: z.string().default(''),
+		headline: z.string().default(''),
+		scope: z.array(z.string()).default([]),
+		outOfScope: z.array(z.string()).optional(),
+		team: z.string().optional(),
+	})
+	.default({
+		mode: 'core',
+		label: '',
+		headline: '',
+		scope: [],
+	});
+
+const impactMetricSchema = z.object({
+	label: z.string(),
+	value: z.string(),
+	detail: z.string().optional(),
+	attribution: z.enum(['personal', 'product', 'team']).default('personal'),
+});
+
+const painGainItemSchema = z.object({
+	painTitle: z.string(),
+	painDescription: z.string(),
+	gainTitle: z.string(),
+	gainDescription: z.string(),
+});
+
+const productSchema = z
+	.object({
+		summary: z.string().default(''),
+		tagline: z.string().optional(),
+		problem: z.string().optional(),
+		valueProposition: z
+			.object({
+				targetCustomer: z.string(),
+				showCanvas: z.boolean().optional().default(false),
+				items: z.array(painGainItemSchema).default([]),
+			})
+			.optional(),
+	})
+	.default({
+		summary: '',
+	});
+
 /**
  * ----------------------------------------------------------------------
  * 1. PROJECT / CASE STUDY METADATA SCHEMA
  * ----------------------------------------------------------------------
- * Structured for production-ready technical case studies incorporating:
- * - Visual hierarchy & preview card assets
- * - Technical stack categorization
- * - Google XYZ impact overview & quantitative metrics
- * - System architecture & engineering challenges
+ * Recruiter-first: contribution + myImpact + product (UI reads these from Phase 2+).
+ * Legacy executiveOverview / impactMetrics / valueProposition removed from content (Phase 6).
  */
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
@@ -50,6 +96,11 @@ const projects = defineCollection({
 		status: z.string().optional().default('Completed'),
 		classification: z.string().optional().default('🔒 Proprietary Enterprise IP'),
 		platformType: z.enum(['desktop', 'mobile']).default('desktop'),
+
+		/** What you owned vs product context (required shape; empty until content Phase 5–6). */
+		contribution: contributionSchema,
+		myImpact: z.array(impactMetricSchema).default([]),
+		product: productSchema,
 
 		// Flat Stack Tags for Cards & UI Badges
 		stack: z.array(z.string()).default([]),
@@ -129,7 +180,52 @@ const projects = defineCollection({
 			)
 			.default([]),
 		securityReliability: z.array(z.string()).default([]),
-		futureRoadmap: z.array(z.string()).default([])
+		futureRoadmap: z.array(z.string()).default([]),
+
+		/** Recruiter-first story spine (VPC → product → platforms → modules → stack why). */
+		caseStory: z
+			.object({
+				thesis: z.string().optional(),
+				productHeadline: z.string(),
+				productBullets: z.array(z.string()).default([]),
+				diagrams: z
+					.array(
+						z.object({
+							id: z.string(),
+							label: z.string(),
+							mermaid: z.string(),
+						})
+					)
+					.default([]),
+				platforms: z
+					.array(
+						z.object({
+							scope: z.string(),
+							who: z.string(),
+							does: z.string(),
+						})
+					)
+					.default([]),
+				modules: z
+					.array(
+						z.object({
+							name: z.string(),
+							summary: z.string(),
+							kernels: z.string().optional(),
+						})
+					)
+					.default([]),
+				stackRationale: z
+					.array(
+						z.object({
+							tech: z.string(),
+							reason: z.string(),
+						})
+					)
+					.default([]),
+				showVpcContrastCards: z.boolean().optional().default(false),
+			})
+			.optional(),
 	})
 });
 

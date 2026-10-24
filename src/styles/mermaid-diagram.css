@@ -1,0 +1,55 @@
+/* Shared Mermaid diagram shell — used by MermaidDiagram.astro and markdown upgrades */
+
+.mermaid-diagram {
+	margin: 1.15rem 0 1.5rem;
+	width: 100%;
+	max-width: 100%;
+	box-sizing: border-box;
+	border: 1px solid var(--card-border);
+	border-radius: var(--radius-md);
+	background: var(--card-bg);
+	overflow: hidden;
+}
+
+.mermaid-diagram__caption {
+	margin: 0;
+	padding: 0.45rem 0.85rem;
+	font-size: 0.72rem;
+	font-weight: 600;
+	letter-spacing: 0.04em;
+	text-transform: uppercase;
+	color: var(--text-muted);
+	border-bottom: 1px solid var(--card-border);
+	background: var(--card-bg-elevated);
+}
+
+.mermaid-diagram__viewport {
+	padding: 1rem 0.85rem;
+	overflow-x: auto;
+	-webkit-overflow-scrolling: touch;
+	overscroll-behavior-x: contain;
+}
+
+.mermaid-diagram__canvas {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 2rem;
+}
+
+.mermaid-diagram__canvas svg {
+	display: block;
+	max-width: 100%;
+	height: auto;
+}
+
+.mermaid-diagram__error {
+	margin: 0;
+	padding: 0.75rem;
+	font-size: 0.85rem;
+	color: #c2410c;
+}
+
+.markdown-article .mermaid-diagram {
+	margin: 1.25rem 0 1.75rem;
+}

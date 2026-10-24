@@ -1,0 +1,262 @@
+---
+/** One dialog per case study page; opened via [data-case-lightbox-src] triggers. */
+---
+
+<dialog class="case-image-lightbox" id="caseImageLightbox" aria-label="Screenshot preview">
+	<button type="button" class="case-image-lightbox__close" data-case-lightbox-close aria-label="Close preview">
+		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+			<line x1="18" y1="6" x2="6" y2="18"></line>
+			<line x1="6" y1="6" x2="18" y2="18"></line>
+		</svg>
+	</button>
+	<button type="button" class="case-image-lightbox__nav case-image-lightbox__nav--prev" data-case-lightbox-prev aria-label="Previous screenshot">
+		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+			<polyline points="15 18 9 12 15 6"></polyline>
+		</svg>
+	</button>
+	<button type="button" class="case-image-lightbox__nav case-image-lightbox__nav--next" data-case-lightbox-next aria-label="Next screenshot">
+		<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true">
+			<polyline points="9 18 15 12 9 6"></polyline>
+		</svg>
+	</button>
+	<figure class="case-image-lightbox__figure">
+		<img class="case-image-lightbox__img" id="caseImageLightboxImg" alt="" />
+		<figcaption class="case-image-lightbox__caption font-mono" id="caseImageLightboxCaption"></figcaption>
+	</figure>
+</dialog>
+
+<script>
+	const DIALOG_ID = 'caseImageLightbox';
+	let gallery: string[] = [];
+	let galleryTitle = 'Screenshot';
+	let index = 0;
+
+	function getDialog(): HTMLDialogElement | null {
+		return document.getElementById(DIALOG_ID) as HTMLDialogElement | null;
+	}
+
+	function getImg(): HTMLImageElement | null {
+		return document.getElementById('caseImageLightboxImg') as HTMLImageElement | null;
+	}
+
+	function getCaption(): HTMLElement | null {
+		return document.getElementById('caseImageLightboxCaption');
+	}
+
+	function renderSlide() {
+		const dialog = getDialog();
+		const img = getImg();
+		const caption = getCaption();
+		if (!dialog || !img || !gallery.length) return;
+
+		const src = gallery[index];
+		img.src = src;
+		img.alt = `${galleryTitle} screenshot ${index + 1} of ${gallery.length}`;
+		if (caption) {
+			caption.textContent = `${index + 1} / ${gallery.length}`;
+		}
+
+		const prev = dialog.querySelector<HTMLButtonElement>('[data-case-lightbox-prev]');
+		const next = dialog.querySelector<HTMLButtonElement>('[data-case-lightbox-next]');
+		const showNav = gallery.length > 1;
+		if (prev) prev.hidden = !showNav;
+		if (next) next.hidden = !showNav;
+	}
+
+	function openAt(src: string, images: string[], title: string) {
+		const dialog = getDialog();
+		if (!dialog) return;
+
+		gallery = images.length ? images : [src];
+		galleryTitle = title;
+		const found = gallery.indexOf(src);
+		index = found >= 0 ? found : 0;
+		renderSlide();
+		if (!dialog.open) dialog.showModal();
+	}
+
+	function step(delta: number) {
+		if (gallery.length < 2) return;
+		index = (index + delta + gallery.length) % gallery.length;
+		renderSlide();
+	}
+
+	function closeLightbox() {
+		getDialog()?.close();
+	}
+
+	function parseGallery(el: HTMLElement): string[] {
+		const raw = el.getAttribute('data-case-lightbox-gallery');
+		if (!raw) return [];
+		try {
+			const parsed = JSON.parse(raw) as string[];
+			return Array.isArray(parsed) ? parsed.filter(Boolean) : [];
+		} catch {
+			return [];
+		}
+	}
+
+	function onDocumentClick(e: MouseEvent) {
+		const target = e.target as HTMLElement | null;
+		if (!target) return;
+
+		const trigger = target.closest<HTMLElement>('[data-case-lightbox-src]');
+		if (!trigger) return;
+
+		e.preventDefault();
+		const src = trigger.getAttribute('data-case-lightbox-src');
+		if (!src) return;
+
+		const scope = trigger.closest<HTMLElement>('[data-case-lightbox-gallery]');
+		const images = scope ? parseGallery(scope) : [src];
+		const title = scope?.getAttribute('data-case-lightbox-title') || 'Screenshot';
+		openAt(src, images.includes(src) ? images : [src, ...images], title);
+	}
+
+	let keyHandlerBound = false;
+
+	function bindLightbox() {
+		const dialog = getDialog();
+		if (!dialog || dialog.dataset.bound === '1') return;
+		dialog.dataset.bound = '1';
+
+		dialog.querySelector('[data-case-lightbox-close]')?.addEventListener('click', closeLightbox);
+		dialog.querySelector('[data-case-lightbox-prev]')?.addEventListener('click', () => step(-1));
+		dialog.querySelector('[data-case-lightbox-next]')?.addEventListener('click', () => step(1));
+
+		dialog.addEventListener('click', (e) => {
+		 if (e.target === dialog) closeLightbox();
+		});
+
+		dialog.addEventListener('cancel', (e) => {
+			e.preventDefault();
+			closeLightbox();
+		});
+
+		if (!keyHandlerBound) {
+			keyHandlerBound = true;
+			window.addEventListener('keydown', (e) => {
+				const d = getDialog();
+				if (!d?.open) return;
+				if (e.key === 'ArrowLeft') step(-1);
+				if (e.key === 'ArrowRight') step(1);
+			});
+			document.addEventListener('click', onDocumentClick);
+		}
+	}
+
+	bindLightbox();
+	document.addEventListener('astro:page-load', bindLightbox);
+</script>
+
+<style>
+	.case-image-lightbox {
+		position: fixed;
+		inset: 0;
+		margin: auto;
+		padding: 0;
+		border: none;
+		max-width: min(96vw, 1200px);
+		max-height: 92vh;
+		width: max-content;
+		height: max-content;
+		background: transparent;
+		overflow: visible;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.case-image-lightbox:not([open]) {
+		display: none;
+	}
+
+	.case-image-lightbox::backdrop {
+		background: rgba(8, 10, 14, 0.82);
+		backdrop-filter: blur(4px);
+	}
+
+	.case-image-lightbox__figure {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.65rem;
+	}
+
+	.case-image-lightbox__img {
+		display: block;
+		max-width: min(96vw, 1120px);
+		max-height: calc(92vh - 3rem);
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--card-border);
+		box-shadow: 0 24px 64px -16px rgba(0, 0, 0, 0.55);
+		background: var(--card-bg);
+	}
+
+	.case-image-lightbox__caption {
+		margin: 0;
+		font-size: 0.72rem;
+		letter-spacing: 0.06em;
+		text-transform: uppercase;
+		color: rgba(255, 255, 255, 0.75);
+	}
+
+	.case-image-lightbox__close {
+		position: fixed;
+		top: max(0.75rem, env(safe-area-inset-top));
+		right: max(0.75rem, env(safe-area-inset-right));
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: var(--radius-full);
+		background: rgba(12, 14, 18, 0.75);
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.case-image-lightbox__nav {
+		position: fixed;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 2;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 44px;
+		height: 44px;
+		padding: 0;
+		border: 1px solid rgba(255, 255, 255, 0.2);
+		border-radius: var(--radius-full);
+		background: rgba(12, 14, 18, 0.75);
+		color: #fff;
+		cursor: pointer;
+	}
+
+	.case-image-lightbox__nav--prev {
+		left: max(0.5rem, env(safe-area-inset-left));
+	}
+
+	.case-image-lightbox__nav--next {
+		right: max(0.5rem, env(safe-area-inset-right));
+	}
+
+	.case-image-lightbox__close:hover,
+	.case-image-lightbox__nav:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.case-image-lightbox__nav[hidden] {
+		display: none;
+	}
+</style>

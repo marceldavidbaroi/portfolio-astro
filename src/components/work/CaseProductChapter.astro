@@ -1,0 +1,218 @@
+---
+import StrategyzerValueCanvas from './StrategyzerValueCanvas.astro';
+import MermaidDiagram from '../ui/MermaidDiagram.astro';
+import { tradeflowVpcData } from '../../data/tradeflowVpcData';
+import type { ProductContext } from '../../types/project';
+
+interface Diagram {
+	id: string;
+	label: string;
+	mermaid: string;
+}
+
+interface Platform {
+	scope: string;
+	who: string;
+	does: string;
+}
+
+interface Module {
+	name: string;
+	summary: string;
+	kernels?: string;
+}
+
+interface CaseStory {
+	thesis?: string;
+	productHeadline: string;
+	productBullets: string[];
+	diagrams: Diagram[];
+	platforms: Platform[];
+	modules: Module[];
+	showVpcContrastCards?: boolean;
+}
+
+interface Props {
+	product: ProductContext;
+	caseStory?: CaseStory;
+	showCaseStory: boolean;
+	showVpc: boolean;
+}
+
+const { product, caseStory, showCaseStory, showVpc } = Astro.props;
+
+const summary = product.summary?.trim() ?? '';
+const problem = product.problem?.trim() ?? '';
+const tagline = product.tagline?.trim() ?? '';
+const vp = product.valueProposition;
+const contrastItems = vp?.items?.slice(0, 3) ?? [];
+const showContrast = caseStory?.showVpcContrastCards && contrastItems.length > 0;
+
+const hasProductCopy = Boolean(summary || problem || tagline);
+const hasVpcBlock = showVpc || contrastItems.length > 0;
+const hasStoryBlocks = showCaseStory && Boolean(caseStory);
+const show = hasProductCopy || hasVpcBlock || hasStoryBlocks;
+---
+
+{show && (
+	<section id="case-context" class="case-chapter w-full max-w-full">
+		<div class="case-chapter__kicker">
+			<h2 class="label font-mono">Product context</h2>
+			{vp?.targetCustomer && (
+				<span class="story-badge font-mono">{vp.targetCustomer}</span>
+			)}
+		</div>
+
+		{tagline && <p class="case-chapter__lead">{tagline}</p>}
+		{summary && <p class="case-chapter__lead">{summary}</p>}
+		{problem && (
+			<>
+				<h3 id="context-problem" class="case-chapter__sub">Core challenge</h3>
+				<p class="case-chapter__lead">{problem}</p>
+			</>
+		)}
+
+		{hasVpcBlock && (
+			<>
+				<h3 id="context-value" class="case-chapter__sub">Value proposition</h3>
+				{caseStory?.thesis && <p class="case-chapter__lead">{caseStory.thesis}</p>}
+
+				{showVpc && (
+					<StrategyzerValueCanvas
+						labels={tradeflowVpcData.labels}
+						productsAndServices={tradeflowVpcData.productsAndServices}
+						gainCreators={tradeflowVpcData.gainCreators}
+						painRelievers={tradeflowVpcData.painRelievers}
+						customerJobs={tradeflowVpcData.customerJobs}
+						gains={tradeflowVpcData.gains}
+						pains={tradeflowVpcData.pains}
+					/>
+				)}
+
+				{showContrast && (
+					<div class="case-contrast-mini">
+						{contrastItems.map((item) => (
+							<div>
+								<p><strong>Before:</strong> {item.painTitle}</p>
+								<p><strong>After:</strong> {item.gainTitle}</p>
+							</div>
+						))}
+					</div>
+				)}
+
+				{!showVpc && contrastItems.length > 0 && !showContrast && (
+					<div class="case-contrast-mini">
+						{contrastItems.map((item) => (
+							<div>
+								<p><strong>{item.painTitle}</strong> — {item.painDescription}</p>
+								<p><strong>{item.gainTitle}</strong> — {item.gainDescription}</p>
+							</div>
+						))}
+					</div>
+				)}
+			</>
+		)}
+
+		{hasStoryBlocks && caseStory && (
+			<>
+				<h3 id="context-product" class="case-chapter__sub">What it does</h3>
+				<p class="case-chapter__lead">{caseStory.productHeadline}</p>
+				{caseStory.productBullets.length > 0 && (
+					<ul class="story-bullets">
+						{caseStory.productBullets.map((line) => (
+							<li>{line}</li>
+						))}
+					</ul>
+				)}
+				{caseStory.diagrams
+					.filter((d) => d.id === 'architecture')
+					.map((d) => (
+						<MermaidDiagram code={d.mermaid} caption="Platform architecture" />
+					))}
+
+				{caseStory.platforms.length > 0 && (
+					<>
+						<h3 id="context-platforms" class="case-chapter__sub">Platforms</h3>
+						<div class="case-story-table-wrap">
+							<table class="case-story-table">
+								<thead>
+									<tr>
+										<th scope="col">Scope</th>
+										<th scope="col">Who</th>
+										<th scope="col">Does</th>
+									</tr>
+								</thead>
+								<tbody>
+									{caseStory.platforms.map((row) => (
+										<tr>
+											<td><code>{row.scope}</code></td>
+											<td>{row.who}</td>
+											<td>{row.does}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						{caseStory.diagrams
+							.filter((d) => d.id === 'scopes')
+							.map((d) => (
+								<MermaidDiagram code={d.mermaid} caption="How surfaces connect" />
+							))}
+					</>
+				)}
+
+				{caseStory.modules.length > 0 && (
+					<>
+						<h3 id="context-modules" class="case-chapter__sub">Modules</h3>
+						<div class="case-story-table-wrap">
+							<table class="case-story-table">
+								<thead>
+									<tr>
+										<th scope="col">Module</th>
+										<th scope="col">Job</th>
+										<th scope="col">Kernels</th>
+									</tr>
+								</thead>
+								<tbody>
+									{caseStory.modules.map((row) => (
+										<tr>
+											<td><strong>{row.name}</strong></td>
+											<td>{row.summary}</td>
+											<td>{row.kernels ?? '—'}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						{caseStory.diagrams
+							.filter((d) => d.id === 'modules')
+							.map((d) => (
+								<MermaidDiagram code={d.mermaid} caption="Modules plug into kernels" />
+							))}
+					</>
+				)}
+			</>
+		)}
+	</section>
+)}
+
+<style>
+	.story-bullets {
+		margin: 0 0 1rem;
+		padding-left: 1.2rem;
+		line-height: 1.6;
+	}
+
+	.story-bullets li {
+		margin: 0.35rem 0;
+	}
+
+	.story-badge {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		padding: 0.2rem 0.55rem;
+		border-radius: var(--radius-sm);
+	}
+</style>

@@ -1,138 +1,136 @@
 ---
-id: "04"
-title: "MindVault – Full-Stack Personal Finance & Productivity Engine"
-subtitle: "Full-stack financial ledger ecosystem built on Next.js 15 App Router, NestJS modular micro-architecture, PostgreSQL TypeORM, and granular RBAC."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected a full-stack personal finance ecosystem achieving sub-65ms multi-account rollups and 100% type-safe DTO validation via a 6-layer NestJS architecture, PostgreSQL TypeORM pipelines, and Next.js 15 App Router."
-chip: "Full-Stack System"
+id: '04'
+title: MindVault – Full-Stack Personal Finance & Productivity Engine
+subtitle: Full-stack financial ledger ecosystem built on Next.js 15 App Router, NestJS modular micro-architecture, PostgreSQL TypeORM, and granular RBAC.
+description: Architected a full-stack personal finance ecosystem achieving sub-65ms multi-account rollups and 100% type-safe DTO validation via a 6-layer NestJS architecture, PostgreSQL TypeORM pipelines, and Next.js 15 App Router.
+chip: Full-Stack System
 order: 4
 featured: true
-platformType: "desktop"
-
-role: "Full-Stack Software Engineer & System Architect"
-timeline: "2025"
-status: "Completed"
-classification: "🌐 Open Source Architecture"
-
+platformType: desktop
+contribution:
+  mode: lead
+  label: Technical lead
+  headline: Architected and built MindVault, a robust full-stack personal finance and life organization ecosystem [X]. Developed a modular NestJS backend enforcing a strict 6-tier architectural pattern (Controller → Validator → Service → Repository → Transformer → Seeder) with TypeORM and PostgreSQL achieving sub-65ms ledger rollups [Y], complemented by a reactive Next.js 15 App Router frontend leveraging Zustand stores, ShadCN UI, Radix primitives, and comprehensive data visualization suites (Chart.js, Recharts, Ant Design Plots) [Z].
+  scope:
+  - Enforcing Strict Architectural Boundaries in NestJS
+  - Real-Time Multi-Account Financial Aggregations
+  - Granular Multi-User Role-Based Access Control (RBAC)
+myImpact:
+- label: Architectural Layering
+  value: 6 Layers
+  attribution: personal
+  detail: Controller → Validator → Service → Repository → Transformer → Seeder
+- label: API Query Latency
+  value: <65ms
+  attribution: personal
+  detail: TypeORM QueryBuilder indexed aggregations across multi-account ledgers
+- label: Data Integrity
+  value: 100% Type-Safe
+  attribution: personal
+  detail: Zod schemas + class-validator DTOs with standardized API response envelope
+- label: Access Control
+  value: 4 Roles
+  attribution: personal
+  detail: Hierarchical Owner, Admin, Editor, and Viewer permission scopes
+- label: Analytics Engines
+  value: Interactive
+  attribution: personal
+  detail: Multi-currency rollups via Chart.js, Recharts, and Ant Design Plots
+- label: API Contracts
+  value: OpenAPI 3.0
+  attribution: personal
+  detail: Interactive Swagger documentation + Docusaurus developer site
+product:
+  summary: Architected and built MindVault, a robust full-stack personal finance and life organization ecosystem [X]. Developed a modular NestJS backend enforcing a strict 6-tier architectural pattern (Controller → Validator → Service → Repository → Transformer → Seeder) with TypeORM and PostgreSQL achieving sub-65ms ledger rollups [Y], complemented by a reactive Next.js 15 App Router frontend leveraging Zustand stores, ShadCN UI, Radix primitives, and comprehensive data visualization suites (Chart.js, Recharts, Ant Design Plots) [Z].
+  problem: Personal financial platforms frequently suffer from architectural drift, where database logic leaks into API handlers and frontend components become tightly coupled to raw database schemas. As transaction history scales into tens of thousands of records, aggregation queries slow down and lack predictable multi-currency rollups or granular role-based sharing permissions.
+  valueProposition:
+    targetCustomer: Personal Finance Users, Freelancers & Household Budget Managers
+    showCanvas: false
+    items:
+    - painTitle: Architectural Drift & Leaking SQL in Controllers
+      painDescription: Financial apps often mix database queries directly into HTTP handlers, making business logic difficult to test and scale.
+      gainTitle: Strict 6-Layer Modular Micro-Architecture
+      gainDescription: Enforced strict separation across Controller, Validator, Service, Repository, Transformer, and Seeder layers for 100% isolated testability.
+    - painTitle: Sluggish Financial Aggregations as History Grows
+      painDescription: Calculating daily, monthly, and yearly net worth rollups across multiple accounts slowed down queries to hundreds of milliseconds.
+      gainTitle: Indexed TypeORM QueryBuilder Pipelines
+      gainDescription: Designed optimized SQL aggregation pipelines with indexed ledgers, reducing response times from 320ms to under 65ms on large datasets.
+    - painTitle: Insecure Account Sharing & IDOR Vulnerabilities
+      painDescription: Sharing budget visibility with family members or accountants without granular permissions risked unauthorized financial modifications.
+      gainTitle: Hierarchical 4-Tier Role-Based Access Control (RBAC)
+      gainDescription: Granular Owner, Admin, Editor, and Viewer roles enforced at the repository and service layers with JWT guards and passkey authentication.
+role: Full-Stack Software Engineer & System Architect
+timeline: '2025'
+status: Completed
+classification: 🌐 Open Source Architecture
 stack:
-  - "Next.js 15"
-  - "NestJS"
-  - "Prisma"
-  - "PostgreSQL"
-  - "TypeScript"
-
+- Next.js 15
+- NestJS
+- Prisma
+- PostgreSQL
+- TypeScript
 techStack:
   frontend:
-    - "Next.js 15 (App Router)"
-    - "TypeScript"
-    - "TailwindCSS + Tailwind Variants"
-    - "ShadCN UI + Radix UI Primitives"
-    - "Zustand (State Management)"
-    - "React Hook Form + Zod"
-    - "Chart.js + Recharts + Ant Design Plots"
+  - Next.js 15 (App Router)
+  - TypeScript
+  - TailwindCSS + Tailwind Variants
+  - ShadCN UI + Radix UI Primitives
+  - Zustand (State Management)
+  - React Hook Form + Zod
+  - Chart.js + Recharts + Ant Design Plots
   backend:
-    - "NestJS (Modular 6-Layer Architecture)"
-    - "TypeScript"
-    - "Prisma ORM & TypeORM"
-    - "JWT + Passport.js (Passkeys & Recovery)"
-    - "class-validator & class-transformer"
-    - "Swagger / OpenAPI 3.0"
+  - NestJS (Modular 6-Layer Architecture)
+  - TypeScript
+  - Prisma ORM & TypeORM
+  - JWT + Passport.js (Passkeys & Recovery)
+  - class-validator & class-transformer
+  - Swagger / OpenAPI 3.0
   database:
-    - "PostgreSQL 15+"
-    - "Prisma ORM"
-    - "TypeORM Data Source & Migrations"
-    - "Automated Seeders"
+  - PostgreSQL 15+
+  - Prisma ORM
+  - TypeORM Data Source & Migrations
+  - Automated Seeders
   devops:
-    - "Docker & Docker Compose"
-    - "Docusaurus (Developer Documentation Engine)"
-    - "Jest (Unit & E2E Testing)"
+  - Docker & Docker Compose
+  - Docusaurus (Developer Documentation Engine)
+  - Jest (Unit & E2E Testing)
   mobile_hardware: []
-
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: "https://github.com/marceldavidbaroi/MindVault_Backend"
-  githubFrontend: "https://github.com/marceldavidbaroi/MindVault_Frontend"
-  githubBackend: "https://github.com/marceldavidbaroi/MindVault_Backend"
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: https://github.com/marceldavidbaroi/MindVault_Backend
+  githubFrontend: https://github.com/marceldavidbaroi/MindVault_Frontend
+  githubBackend: https://github.com/marceldavidbaroi/MindVault_Backend
+  docs: ''
 images:
-  - "/images/thumb-1.png"
-  - "/images/thumb-2.png"
-  - "/images/thumb-3.png"
-  - "/images/thumb-4.png"
-
+- /images/thumb-1.png
+- /images/thumb-2.png
+- /images/thumb-3.png
+- /images/thumb-4.png
 visualAssets:
-  heroMockup: "/images/dummy-project.png"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Architected and built MindVault, a robust full-stack personal finance and life organization ecosystem [X]. Developed a modular NestJS backend enforcing a strict 6-tier architectural pattern (Controller → Validator → Service → Repository → Transformer → Seeder) with TypeORM and PostgreSQL achieving sub-65ms ledger rollups [Y], complemented by a reactive Next.js 15 App Router frontend leveraging Zustand stores, ShadCN UI, Radix primitives, and comprehensive data visualization suites (Chart.js, Recharts, Ant Design Plots) [Z]."
-
-impactMetrics:
-  - label: "Architectural Layering"
-    value: "6 Layers"
-    detail: "Controller → Validator → Service → Repository → Transformer → Seeder"
-  - label: "API Query Latency"
-    value: "<65ms"
-    detail: "TypeORM QueryBuilder indexed aggregations across multi-account ledgers"
-  - label: "Data Integrity"
-    value: "100% Type-Safe"
-    detail: "Zod schemas + class-validator DTOs with standardized API response envelope"
-  - label: "Access Control"
-    value: "4 Roles"
-    detail: "Hierarchical Owner, Admin, Editor, and Viewer permission scopes"
-  - label: "Analytics Engines"
-    value: "Interactive"
-    detail: "Multi-currency rollups via Chart.js, Recharts, and Ant Design Plots"
-  - label: "API Contracts"
-    value: "OpenAPI 3.0"
-    detail: "Interactive Swagger documentation + Docusaurus developer site"
-
-valueProposition:
-  targetCustomer: "Personal Finance Users, Freelancers & Household Budget Managers"
-  items:
-    - painTitle: "Architectural Drift & Leaking SQL in Controllers"
-      painDescription: "Financial apps often mix database queries directly into HTTP handlers, making business logic difficult to test and scale."
-      gainTitle: "Strict 6-Layer Modular Micro-Architecture"
-      gainDescription: "Enforced strict separation across Controller, Validator, Service, Repository, Transformer, and Seeder layers for 100% isolated testability."
-
-    - painTitle: "Sluggish Financial Aggregations as History Grows"
-      painDescription: "Calculating daily, monthly, and yearly net worth rollups across multiple accounts slowed down queries to hundreds of milliseconds."
-      gainTitle: "Indexed TypeORM QueryBuilder Pipelines"
-      gainDescription: "Designed optimized SQL aggregation pipelines with indexed ledgers, reducing response times from 320ms to under 65ms on large datasets."
-
-    - painTitle: "Insecure Account Sharing & IDOR Vulnerabilities"
-      painDescription: "Sharing budget visibility with family members or accountants without granular permissions risked unauthorized financial modifications."
-      gainTitle: "Hierarchical 4-Tier Role-Based Access Control (RBAC)"
-      gainDescription: "Granular Owner, Admin, Editor, and Viewer roles enforced at the repository and service layers with JWT guards and passkey authentication."
-
-problemStatement: "Personal financial platforms frequently suffer from architectural drift, where database logic leaks into API handlers and frontend components become tightly coupled to raw database schemas. As transaction history scales into tens of thousands of records, aggregation queries slow down and lack predictable multi-currency rollups or granular role-based sharing permissions."
-
-architectureSummary: "Strict 6-layer separation of concerns in NestJS backed by PostgreSQL and TypeORM migrations. Client-side state managed through decoupled Zustand domain stores with Next.js 15 Server Components and ShadCN UI."
-
+  heroMockup: /images/dummy-project.png
+architectureSummary: Strict 6-layer separation of concerns in NestJS backed by PostgreSQL and TypeORM migrations. Client-side state managed through decoupled Zustand domain stores with Next.js 15 Server Components and ShadCN UI.
 keyDecisions:
-  - challenge: "Enforcing Strict Architectural Boundaries in NestJS"
-    decision: "Mandated a strict 6-layer pattern per domain module: Controllers only route, Validators handle DTO & business validation, Services orchestrate business workflows, Repositories isolate QueryBuilder SQL, and Transformers sanitize output into standard { success, message, data } envelopes."
-    outcome: "Eliminated business logic in controllers and SQL queries in services, allowing isolated unit testing and clean API evolution."
-  - challenge: "Real-Time Multi-Account Financial Aggregations"
-    decision: "Designed indexed ledger tables with TypeORM QueryBuilder pipelines to compute daily, weekly, monthly, and yearly summaries with category breakdown rollups."
-    outcome: "Reduced summary generation latency from 320ms to sub-65ms on large datasets with zero database table locks."
-  - challenge: "Granular Multi-User Role-Based Access Control (RBAC)"
-    decision: "Implemented hierarchical account permissions supporting Owner, Admin, Editor, and Viewer roles with JWT guards, passkey authentication, and security question-based password recovery."
-    outcome: "Secured all financial operations and account sharing without IDOR vulnerabilities or cross-tenant data leakage."
-
+- challenge: Enforcing Strict Architectural Boundaries in NestJS
+  decision: 'Mandated a strict 6-layer pattern per domain module: Controllers only route, Validators handle DTO & business validation, Services orchestrate business workflows, Repositories isolate QueryBuilder SQL, and Transformers sanitize output into standard { success, message, data } envelopes.'
+  outcome: Eliminated business logic in controllers and SQL queries in services, allowing isolated unit testing and clean API evolution.
+- challenge: Real-Time Multi-Account Financial Aggregations
+  decision: Designed indexed ledger tables with TypeORM QueryBuilder pipelines to compute daily, weekly, monthly, and yearly summaries with category breakdown rollups.
+  outcome: Reduced summary generation latency from 320ms to sub-65ms on large datasets with zero database table locks.
+- challenge: Granular Multi-User Role-Based Access Control (RBAC)
+  decision: Implemented hierarchical account permissions supporting Owner, Admin, Editor, and Viewer roles with JWT guards, passkey authentication, and security question-based password recovery.
+  outcome: Secured all financial operations and account sharing without IDOR vulnerabilities or cross-tenant data leakage.
 securityReliability:
-  - "JWT Authentication with HTTP-only cookie support, token validation guards, and security question recovery."
-  - "Granular Role-Based Access Control (Owner, Admin, Editor, Viewer) enforced at the repository and service layer."
-  - "Strict DTO input whitelisting with class-validator and Zod to eliminate injection and parameter pollution."
-  - "Consistent API response contract with standardized envelope format across all endpoints."
-  - "Database schema version control with TypeORM migrations and automated seeders."
-
+- JWT Authentication with HTTP-only cookie support, token validation guards, and security question recovery.
+- Granular Role-Based Access Control (Owner, Admin, Editor, Viewer) enforced at the repository and service layer.
+- Strict DTO input whitelisting with class-validator and Zod to eliminate injection and parameter pollution.
+- Consistent API response contract with standardized envelope format across all endpoints.
+- Database schema version control with TypeORM migrations and automated seeders.
 futureRoadmap:
-  - "Real-time WebSocket notifications for multi-user shared account updates."
-  - "Open Banking / Plaid bank account automated transaction synchronization."
-  - "AI-driven cash flow forecasting and recurring subscription anomaly detection."
-  - "Exportable Tax and P&L audit reports in encrypted PDF and Excel formats."
+- Real-time WebSocket notifications for multi-user shared account updates.
+- Open Banking / Plaid bank account automated transaction synchronization.
+- AI-driven cash flow forecasting and recurring subscription anomaly detection.
+- Exportable Tax and P&L audit reports in encrypted PDF and Excel formats.
 ---
 
 ## Executive Summary

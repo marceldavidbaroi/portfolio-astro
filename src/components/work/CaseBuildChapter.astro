@@ -1,0 +1,115 @@
+---
+interface Decision {
+	challenge: string;
+	decision: string;
+	outcome?: string;
+}
+
+interface StackRow {
+	label: string;
+	items?: string[];
+}
+
+interface StackReason {
+	tech: string;
+	reason: string;
+}
+
+interface Props {
+	stackRationale?: StackReason[];
+	stackRows: StackRow[];
+	keyDecisions?: Decision[];
+	problemStatement?: string;
+}
+
+const {
+	stackRationale = [],
+	stackRows = [],
+	keyDecisions = [],
+	problemStatement,
+} = Astro.props;
+
+const hasStackWhy = stackRationale.length > 0;
+const hasStack = stackRows.length > 0;
+const hasDecisions = keyDecisions.length > 0;
+
+const show = hasStackWhy || hasStack || hasDecisions || Boolean(problemStatement);
+
+const visibleDecisions = keyDecisions.slice(0, 4);
+const hiddenDecisions = keyDecisions.slice(4);
+---
+
+{show && (
+<section id="case-build" class="case-chapter w-full max-w-full">
+	<div class="case-chapter__kicker">
+		<h2 class="label font-mono">Build</h2>
+	</div>
+	<p class="case-chapter__title">Stack and engineering choices</p>
+
+	{hasStackWhy && (
+		<>
+			<h3 id="build-stack-why" class="case-chapter__sub">Why this stack</h3>
+			<ul class="case-stack-why">
+				{stackRationale.map((row) => (
+					<li>
+						<span class="case-stack-why__tech font-mono">{row.tech}</span>
+						<span>{row.reason}</span>
+					</li>
+				))}
+			</ul>
+		</>
+	)}
+
+	{hasStack && (
+		<>
+			<h3 id="build-tech" class="case-chapter__sub">Technology</h3>
+			<div class="case-tech-details">
+				{stackRows.map((row) => (
+					<details>
+						<summary>{row.label}</summary>
+						<ul class="case-tech-pills">
+							{(row.items ?? []).map((tech) => (
+								<li>{tech}</li>
+							))}
+						</ul>
+					</details>
+				))}
+			</div>
+		</>
+	)}
+
+	{(problemStatement || hasDecisions) && (
+		<>
+			<h3 id="build-decisions" class="case-chapter__sub">Key decisions</h3>
+			{problemStatement && <p class="case-chapter__lead">{problemStatement}</p>}
+			{hasDecisions && (
+				<div class="case-decision-list">
+					{visibleDecisions.map((item, idx) => (
+						<details open={idx === 0}>
+							<summary>{item.challenge}</summary>
+							<div class="case-decision-body">
+								<p><strong>Decision:</strong> {item.decision}</p>
+								{item.outcome && <p><strong>Outcome:</strong> {item.outcome}</p>}
+							</div>
+						</details>
+					))}
+					{hiddenDecisions.length > 0 && (
+						<details>
+							<summary>Show {hiddenDecisions.length} more decisions</summary>
+							<div class="case-decision-body">
+								{hiddenDecisions.map((item) => (
+									<div style="margin-bottom: 1rem;">
+										<p><strong>{item.challenge}</strong></p>
+										<p>{item.decision}</p>
+										{item.outcome && <p>{item.outcome}</p>}
+									</div>
+								))}
+							</div>
+						</details>
+					)}
+				</div>
+			)}
+		</>
+	)}
+</section>
+)}

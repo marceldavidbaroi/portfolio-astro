@@ -592,37 +592,6 @@
 	text-align: center;
 }
 
-.footer-brand {
-	display: inline-flex;
-	align-items: center;
-	margin-right: 0.5rem;
-	opacity: 0.85;
-	transition: opacity var(--dur-fast) ease, transform var(--dur-fast) ease;
-}
-
-.footer-brand:hover {
-	opacity: 1;
-	transform: scale(1.05);
-}
-
-.footer-signature-img {
-	height: 26px;
-	width: auto;
-	display: block;
-	filter: none;
-	opacity: 0.85;
-}
-
-[data-theme="dark"] .footer-signature-img,
-:root[data-theme="dark"] .footer-signature-img {
-	filter: invert(1) contrast(1.2);
-}
-
-@media (prefers-color-scheme: dark) {
-	:root:not([data-theme="light"]) .footer-signature-img {
-		filter: invert(1) contrast(1.2);
-	}
-}
 
 .footer-pill-accent {
 	color: var(--text-main);

@@ -6,7 +6,7 @@ interface Props {
 const { defaultExpanded = true } = Astro.props;
 ---
 
-<section id="deep-dive" class="deep-dive-section w-full max-w-full">
+<section id="deep-dive" class="deep-dive-section case-chapter w-full max-w-full">
 	<div class="disclosure-card">
 		<div class="disclosure-header">
 			<div class="title-meta">
@@ -197,7 +197,7 @@ const { defaultExpanded = true } = Astro.props;
 		width: 100%;
 		max-width: 100%;
 		box-sizing: border-box;
-		overflow-x: hidden;
+		overflow-x: clip;
 		transition: max-height var(--dur-ui) var(--ease-ui), opacity var(--dur-ui) ease;
 	}
 
@@ -239,6 +239,8 @@ const { defaultExpanded = true } = Astro.props;
 		const pillsContainer = document.getElementById('deepDivePills');
 
 		if (!toggleBtn || !card || !body) return;
+		if (toggleBtn.dataset.bound === 'true') return;
+		toggleBtn.dataset.bound = 'true';
 
 		// Build quick jumping pills from markdown H2 headings
 		if (pillsContainer) {

@@ -1,136 +1,135 @@
 ---
-id: "10"
-title: "SuperCards – Unified Enterprise Operations Platform"
-subtitle: "Unified enterprise operations workspace consolidating work management, double-entry accounting, lending, and assessments across 9 modular surfaces."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Delivered 9 enterprise operations surfaces across 500+ Vue components on a unified card architecture, consolidating tasks, double-entry bookkeeping, lending, and assessments via Quasar (Vue 3) and modular Pinia stores."
-chip: "Enterprise SaaS & Fintech"
+id: '10'
+title: SuperCards – Unified Enterprise Operations Platform
+subtitle: Unified enterprise operations workspace consolidating work management, double-entry accounting, lending, and assessments across 9 modular surfaces.
+description: Delivered 9 enterprise operations surfaces across 500+ Vue components on a unified card architecture, consolidating tasks, double-entry bookkeeping, lending, and assessments via Quasar (Vue 3) and modular Pinia stores.
+chip: Enterprise SaaS & Fintech
 order: 10
 featured: true
-platformType: "desktop"
-
-role: "Frontend Engineer (Modular Architecture Lead)"
-timeline: "2024 — Present"
-status: "Active Production"
-classification: "🔒 Proprietary Enterprise IP"
-
+platformType: desktop
+contribution:
+  mode: lead
+  label: Technical lead
+  headline: Delivered end-to-end frontend capabilities across 9 enterprise product surfaces [X] — from work-item orchestration and accounting to lending, assessments, and internal app publishing [Y] — spanning 500+ production Vue components by building reusable card-based UI patterns, Pinia store orchestration, and permission-aware module shells on a shared Quasar boilerplate [Z].
+  scope:
+  - Multiple product areas (tasks, finance, loans, quizzes) needed distinct UIs but shared entities like cards, tags, attachments, and comments.
+  - Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.
+  - Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.
+  - Field staff and mobile users needed push notifications and device capabilities alongside the web SPA.
+myImpact:
+- label: Product Surfaces
+  value: 9 Surfaces
+  attribution: personal
+  detail: Tasks, Accounting, Lending, Dashboard, Recognition, Files, Quizzes, Apps
+- label: Component Scale
+  value: 500+ Components
+  attribution: personal
+  detail: Reusable card primitives, list-preview-detail patterns, and dialogs
+- label: Cross-Platform
+  value: 1 Codebase
+  attribution: personal
+  detail: Responsive Quasar desktop SPA + Capacitor 7 native mobile shells
+- label: Access Isolation
+  value: Multi-Tenant
+  attribution: product
+  detail: Tenant store and branch-preference resolution via route guards
+- label: Accounting Engine
+  value: Double-Entry
+  attribution: personal
+  detail: General ledger, journal transactions, statements, and tax-aware entries
+- label: Real-Time Sync
+  value: WebSockets
+  attribution: product
+  detail: Laravel Echo, Pusher live channels, and Firebase push notifications
+product:
+  summary: Delivered end-to-end frontend capabilities across 9 enterprise product surfaces [X] — from work-item orchestration and accounting to lending, assessments, and internal app publishing [Y] — spanning 500+ production Vue components by building reusable card-based UI patterns, Pinia store orchestration, and permission-aware module shells on a shared Quasar boilerplate [Z].
+  problem: Growing organizations were running project tracking, microfinance operations, bookkeeping, employee recognition, knowledge checks, and internal tooling across separate systems. That fragmentation created duplicate data entry, inconsistent permissions, and no single view of what teams were working on, spending, or learning. SuperCards was built to collapse these workflows into one multi-tenant platform with a shared card-based data model.
+  valueProposition:
+    targetCustomer: Multi-Tenant Enterprises, Operations Directors & Department Team Leads
+    showCanvas: false
+    items:
+    - painTitle: Fragmented Operations Across 5+ Unrelated SaaS Tools
+      painDescription: Organizations managed tasks in Jira, accounting in QuickBooks, lending in spreadsheets, and quizzes in Google Forms, causing duplicate data entry and fractured oversight.
+      gainTitle: Unified Card-Based Multi-Domain Workspace
+      gainDescription: Collapsed project management, bookkeeping, lending, and employee assessments into a single authenticated Quasar shell with a shared card entity model.
+    - painTitle: Duplicated UI Boilerplate Across Feature Teams
+      painDescription: Every business domain built separate detail drawers, tag selectors, comment threads, and attachment uploaders from scratch.
+      gainTitle: Shared Cross-Module Interaction Primitives
+      gainDescription: Engineered shared TaskDetails, TaskList, and MediaManager components configurable via layout props, cutting development time for new modules in half.
+    - painTitle: Disjointed Mobile & Web Experiences
+      painDescription: Maintaining separate mobile native apps and desktop web dashboards led to inconsistent feature availability and divergent release cycles.
+      gainTitle: Single Codebase Web + Capacitor Native App
+      gainDescription: Packaged the Quasar SPA with Capacitor 7, delivering native push notifications, camera access, and geolocation from one Vue 3 codebase.
+role: Frontend Engineer (Modular Architecture Lead)
+timeline: 2024 — Present
+status: Active Production
+classification: 🔒 Proprietary Enterprise IP
 stack:
-  - "Quasar"
-  - "Vue 3"
-  - "PHP (Laravel)"
-  - "Capacitor"
-  - "PostgreSQL"
-
+- Quasar
+- Vue 3
+- PHP (Laravel)
+- Capacitor
+- PostgreSQL
 techStack:
   frontend:
-    - "Vue 3 (Composition API)"
-    - "Quasar Framework (v2)"
-    - "TypeScript"
-    - "Pinia (Domain Stores)"
-    - "Vue Router 4"
-    - "ApexCharts & Chart.js"
-    - "TinyMCE & CodeMirror"
+  - Vue 3 (Composition API)
+  - Quasar Framework (v2)
+  - TypeScript
+  - Pinia (Domain Stores)
+  - Vue Router 4
+  - ApexCharts & Chart.js
+  - TinyMCE & CodeMirror
   mobile_hardware:
-    - "Capacitor 7 (Android & iOS)"
-    - "Firebase Push Messaging (FCM)"
-    - "Capacitor Camera & Geolocation"
+  - Capacitor 7 (Android & iOS)
+  - Firebase Push Messaging (FCM)
+  - Capacitor Camera & Geolocation
   backend:
-    - "Laravel REST APIs"
-    - "Laravel Echo & Pusher (Real-Time WebSockets)"
-    - "Multi-Service Axios Client"
+  - Laravel REST APIs
+  - Laravel Echo & Pusher (Real-Time WebSockets)
+  - Multi-Service Axios Client
   database:
-    - "PostgreSQL (Tenant-Scoped Data)"
+  - PostgreSQL (Tenant-Scoped Data)
   devops:
-    - "Vite Build System"
-    - "Quasar CLI"
-    - "Git & GitHub"
-    - "ESLint & Prettier"
-
+  - Vite Build System
+  - Quasar CLI
+  - Git & GitHub
+  - ESLint & Prettier
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: ""
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: ''
+  docs: ''
 images:
-  - "/images/thumb-1.png"
-  - "/images/thumb-2.png"
-  - "/images/thumb-3.png"
-  - "/images/thumb-4.png"
-
+- /images/thumb-1.png
+- /images/thumb-2.png
+- /images/thumb-3.png
+- /images/thumb-4.png
 visualAssets:
-  heroMockup: "/images/dummy-project.png"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Delivered end-to-end frontend capabilities across 9 enterprise product surfaces [X] — from work-item orchestration and accounting to lending, assessments, and internal app publishing [Y] — spanning 500+ production Vue components by building reusable card-based UI patterns, Pinia store orchestration, and permission-aware module shells on a shared Quasar boilerplate [Z]."
-
-impactMetrics:
-  - label: "Product Surfaces"
-    value: "9 Surfaces"
-    detail: "Tasks, Accounting, Lending, Dashboard, Recognition, Files, Quizzes, Apps"
-  - label: "Component Scale"
-    value: "500+ Components"
-    detail: "Reusable card primitives, list-preview-detail patterns, and dialogs"
-  - label: "Cross-Platform"
-    value: "1 Codebase"
-    detail: "Responsive Quasar desktop SPA + Capacitor 7 native mobile shells"
-  - label: "Access Isolation"
-    value: "Multi-Tenant"
-    detail: "Tenant store and branch-preference resolution via route guards"
-  - label: "Accounting Engine"
-    value: "Double-Entry"
-    detail: "General ledger, journal transactions, statements, and tax-aware entries"
-  - label: "Real-Time Sync"
-    value: "WebSockets"
-    detail: "Laravel Echo, Pusher live channels, and Firebase push notifications"
-
-valueProposition:
-  targetCustomer: "Multi-Tenant Enterprises, Operations Directors & Department Team Leads"
-  items:
-    - painTitle: "Fragmented Operations Across 5+ Unrelated SaaS Tools"
-      painDescription: "Organizations managed tasks in Jira, accounting in QuickBooks, lending in spreadsheets, and quizzes in Google Forms, causing duplicate data entry and fractured oversight."
-      gainTitle: "Unified Card-Based Multi-Domain Workspace"
-      gainDescription: "Collapsed project management, bookkeeping, lending, and employee assessments into a single authenticated Quasar shell with a shared card entity model."
-
-    - painTitle: "Duplicated UI Boilerplate Across Feature Teams"
-      painDescription: "Every business domain built separate detail drawers, tag selectors, comment threads, and attachment uploaders from scratch."
-      gainTitle: "Shared Cross-Module Interaction Primitives"
-      gainDescription: "Engineered shared TaskDetails, TaskList, and MediaManager components configurable via layout props, cutting development time for new modules in half."
-
-    - painTitle: "Disjointed Mobile & Web Experiences"
-      painDescription: "Maintaining separate mobile native apps and desktop web dashboards led to inconsistent feature availability and divergent release cycles."
-      gainTitle: "Single Codebase Web + Capacitor Native App"
-      gainDescription: "Packaged the Quasar SPA with Capacitor 7, delivering native push notifications, camera access, and geolocation from one Vue 3 codebase."
-
-problemStatement: "Growing organizations were running project tracking, microfinance operations, bookkeeping, employee recognition, knowledge checks, and internal tooling across separate systems. That fragmentation created duplicate data entry, inconsistent permissions, and no single view of what teams were working on, spending, or learning. SuperCards was built to collapse these workflows into one multi-tenant platform with a shared card-based data model."
-
-architectureSummary: "Modular Quasar SPA with per-domain Pinia stores, a centralized Axios API client with auth interceptors, and route-isolated feature modules that compose shared task, tag, and media primitives against Laravel REST and WebSocket backends."
-
+  heroMockup: /images/dummy-project.png
+architectureSummary: Modular Quasar SPA with per-domain Pinia stores, a centralized Axios API client with auth interceptors, and route-isolated feature modules that compose shared task, tag, and media primitives against Laravel REST and WebSocket backends.
 keyDecisions:
-  - challenge: "Multiple product areas (tasks, finance, loans, quizzes) needed distinct UIs but shared entities like cards, tags, attachments, and comments."
-    decision: "Adopted a module-per-domain architecture (src/modules/<domain>/) with shared primitives (TaskDetails, TaskList, MediaManager, AssignTagToTask) and configurable layout props instead of forking separate apps."
-    outcome: "New surfaces like Quiz Studio and Team App shipped faster by reusing the task card shell with domain-specific layout configs rather than rebuilding detail views from scratch."
-  - challenge: "Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records."
-    decision: "Implemented distinct unlink flows for child tasks vs. related-task associations with confirmation dialogs, store-level local state sync, and preview-safe read-only tag rendering."
-    outcome: "Meeting facilitators can reorganize agenda items without data loss, and external meeting previews render tag chips reliably from API payloads."
-  - challenge: "Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell."
-    decision: "Built Penny Perfect as a dedicated module with branch-aware transaction tables, journal entry dialogs, import/export pipelines, and external print-preview routes."
-    outcome: "Finance teams manage daily transactions, balance sheets, and income statements without leaving the platform."
-  - challenge: "Field staff and mobile users needed push notifications and device capabilities alongside the web SPA."
-    decision: "Wrapped the Quasar build with Capacitor 7, Firebase messaging, camera, geolocation, and local notifications while keeping a single Vue codebase."
-    outcome: "One frontend codebase serves browser and native shells with shared auth and API layers."
-
+- challenge: Multiple product areas (tasks, finance, loans, quizzes) needed distinct UIs but shared entities like cards, tags, attachments, and comments.
+  decision: Adopted a module-per-domain architecture (src/modules/<domain>/) with shared primitives (TaskDetails, TaskList, MediaManager, AssignTagToTask) and configurable layout props instead of forking separate apps.
+  outcome: New surfaces like Quiz Studio and Team App shipped faster by reusing the task card shell with domain-specific layout configs rather than rebuilding detail views from scratch.
+- challenge: Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.
+  decision: Implemented distinct unlink flows for child tasks vs. related-task associations with confirmation dialogs, store-level local state sync, and preview-safe read-only tag rendering.
+  outcome: Meeting facilitators can reorganize agenda items without data loss, and external meeting previews render tag chips reliably from API payloads.
+- challenge: Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.
+  decision: Built Penny Perfect as a dedicated module with branch-aware transaction tables, journal entry dialogs, import/export pipelines, and external print-preview routes.
+  outcome: Finance teams manage daily transactions, balance sheets, and income statements without leaving the platform.
+- challenge: Field staff and mobile users needed push notifications and device capabilities alongside the web SPA.
+  decision: Wrapped the Quasar build with Capacitor 7, Firebase messaging, camera, geolocation, and local notifications while keeping a single Vue codebase.
+  outcome: One frontend codebase serves browser and native shells with shared auth and API layers.
 securityReliability:
-  - "Route-level auth guards (requiresAuth) with token-based API interceptors; permissions enforced at the view layer via v-permission directive."
-  - "Tenant-scoped data access through tenant store and branch-preference utilities for finance and lending modules."
-  - "Pinia persisted state for session continuity; WebSocket channels for real-time user notifications."
-  - "External preview routes (meetings, vouchers, account statements) use dedicated layouts with scoped API access patterns."
-
+- Route-level auth guards (requiresAuth) with token-based API interceptors; permissions enforced at the view layer via v-permission directive.
+- Tenant-scoped data access through tenant store and branch-preference utilities for finance and lending modules.
+- Pinia persisted state for session continuity; WebSocket channels for real-time user notifications.
+- External preview routes (meetings, vouchers, account statements) use dedicated layouts with scoped API access patterns.
 futureRoadmap:
-  - "Complete remaining Loan App surfaces (collection workflows, advanced reporting, and settings parity)."
-  - "Expand Dashboard into a configurable executive widget board."
-  - "Finish Team App catalog with full publish/review lifecycle and admin governance."
-  - "Extend File Manager with bulk operations and deeper cloud provider integrations."
+- Complete remaining Loan App surfaces (collection workflows, advanced reporting, and settings parity).
+- Expand Dashboard into a configurable executive widget board.
+- Finish Team App catalog with full publish/review lifecycle and admin governance.
+- Extend File Manager with bulk operations and deeper cloud provider integrations.
 ---
 
 ## Executive Summary

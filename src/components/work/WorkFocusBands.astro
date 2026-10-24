@@ -1,26 +1,10 @@
 ---
 import ShotFan from './ShotFan.astro';
 
-interface Metric {
-	value: string;
-	label: string;
-}
-
-interface Project {
-	slug: string;
-	categories: string[];
-	searchString: string;
-	chip?: string;
-	title: string;
-	description?: string;
-	impactMetrics?: Metric[];
-	thumbs: string[];
-	platformType?: string;
-	stack?: string[];
-}
+import type { ProjectListItem } from '../../lib/projectView';
 
 interface Props {
-	projects: Project[];
+	projects: ProjectListItem[];
 }
 
 const { projects } = Astro.props;
@@ -36,11 +20,21 @@ const { projects } = Astro.props;
 				data-search-content={project.searchString}
 			>
 				<div class="feature-copy">
-					<p class="kicker font-mono">{project.chip}</p>
+					<div class="feature-kicker-row">
+						<p class="kicker font-mono">{project.chip}</p>
+						{project.contributionBadge && (
+							<span class="contribution-badge font-mono">{project.contributionBadge}</span>
+						)}
+					</div>
 					<h2 class="feature-title">{project.title}</h2>
-					{(project.impactMetrics || []).length > 0 && (
+					{(project.timeline || project.status) && (
+						<p class="feature-meta font-mono">
+							{[project.timeline, project.status].filter(Boolean).join(' · ')}
+						</p>
+					)}
+					{project.listMetrics.length > 0 && (
 						<ul class="metric-row font-mono feature-metrics">
-							{(project.impactMetrics || []).slice(0, 3).map((m) => (
+							{project.listMetrics.map((m) => (
 								<li>
 									<b>{m.value}</b>
 									<span>{m.label}</span>
@@ -175,12 +169,38 @@ const { projects } = Astro.props;
 		min-width: 0;
 	}
 
+	.feature-kicker-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem 0.65rem;
+	}
+
 	.kicker {
 		font-size: var(--type-kicker);
 		letter-spacing: 0.1em;
 		text-transform: uppercase;
 		color: var(--text-muted);
 		margin: 0;
+	}
+
+	.contribution-badge {
+		font-size: 0.68rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+		color: var(--accent);
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
+		padding: 0.15rem 0.5rem;
+		border-radius: var(--radius-sm);
+	}
+
+	.feature-meta {
+		margin: 0;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		letter-spacing: 0.03em;
 	}
 
 	.feature-title {

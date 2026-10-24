@@ -1,0 +1,28 @@
+---
+import '../../styles/mermaid-diagram.css';
+
+interface Props {
+	code: string;
+	caption?: string;
+}
+
+const { code, caption } = Astro.props;
+---
+
+<figure class="mermaid-diagram">
+	{caption && <figcaption class="mermaid-diagram__caption">{caption}</figcaption>}
+	<div class="mermaid-diagram__viewport">
+		<div class="mermaid-diagram__canvas" data-mermaid="pending">{code}</div>
+	</div>
+</figure>
+
+<script>
+	import { paintMermaidDiagrams } from '../../lib/paintMermaidDiagrams';
+
+	function run() {
+		paintMermaidDiagrams();
+	}
+
+	run();
+	document.addEventListener('astro:page-load', run);
+</script>

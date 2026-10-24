@@ -6,7 +6,7 @@
 	max-width: 100%;
 	min-width: 0;
 	box-sizing: border-box;
-	overflow-x: hidden;
+	overflow-x: clip;
 }
 
 .case {
@@ -54,13 +54,17 @@
 }
 
 /* —— Structured article sections —— */
-.case > section,
+.case > section:not(.case-chapter),
 .case .markdown-article {
 	margin-top: 2rem;
 	scroll-margin-top: 1.5rem;
 	width: 100%;
 	max-width: 100%;
 	box-sizing: border-box;
+}
+
+.case-study__main .case-chapter {
+	margin-top: 0;
 }
 
 /* —— Markdown body & Preformatted Containers —— */
@@ -252,21 +256,6 @@
 	box-sizing: border-box;
 }
 
-.markdown-article .mermaid {
-	margin: 1.35rem 0;
-	background: var(--card-bg);
-	border: 1px solid var(--card-border);
-	border-radius: var(--radius-md);
-	padding: 1.15rem;
-	width: 100%;
-	max-width: 100%;
-	overflow-x: auto;
-	overscroll-behavior-x: contain;
-	-webkit-overflow-scrolling: touch;
-	touch-action: pan-x;
-	scrollbar-width: thin;
-	box-sizing: border-box;
-}
 
 /* —— Adjacent + Close Navigation —— */
 .adjacent {
@@ -423,11 +412,17 @@
 	transition:
 		opacity 0.62s var(--ease-out),
 		transform 0.62s var(--ease-out);
-	will-change: opacity, transform;
 }
 
 .case-reveal.is-revealed {
 	opacity: 1;
 	transform: translateY(0);
+}
+
+/* Deep-dive markdown can be 10k+ px tall — IO ratio never hits high thresholds; never hide it */
+.deep-dive-section.case-reveal {
+	opacity: 1;
+	transform: none;
+	transition: none;
 }
 

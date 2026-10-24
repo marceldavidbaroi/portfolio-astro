@@ -1,155 +1,153 @@
 ---
-id: "02"
-title: "Customer Support System – Multi-Channel Helpdesk Platform"
-subtitle: "Full-stack customer support and helpdesk platform with split-pane triage, dual-database engine (MongoDB + MySQL), and automated IMAP email ticketing."
-# CV-Card Google XYZ Accomplishment Statement (Accomplished [X], measured by [Y], by doing [Z]):
-description: "Architected a multi-tenant customer support platform delivering sub-second triage across 4 agent workbenches and 3 ingestion channels by designing a dual-database engine (MongoDB + MySQL), automated IMAP synchronization, and a Laravel BFF."
-chip: "SaaS & Customer Support"
+id: '02'
+title: Customer Support System – Multi-Channel Helpdesk Platform
+subtitle: Full-stack customer support and helpdesk platform with split-pane triage, dual-database engine (MongoDB + MySQL), and automated IMAP email ticketing.
+description: Architected a multi-tenant customer support platform delivering sub-second triage across 4 agent workbenches and 3 ingestion channels by designing a dual-database engine (MongoDB + MySQL), automated IMAP synchronization, and a Laravel BFF.
+chip: SaaS & Customer Support
 order: 2
 featured: true
-platformType: "desktop"
-
-role: "Full-Stack Software Engineer (Solo Core Contributor)"
-timeline: "2026 — Present"
-status: "Active Production"
-classification: "🔒 Proprietary Enterprise IP"
-
+platformType: desktop
+contribution:
+  mode: core
+  label: Core contributor
+  headline: Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z].
+  scope:
+  - Flexible Ticket Schema vs. Strict Relational Configuration
+  - Unified Conversation Threading with Public Replies vs. Private Internal Notes
+  - Reliable Bidirectional Email Ingestion Without Direct Provider Webhooks
+  - Lightweight Public Web Forms Without Heavy Frontend App Overhead
+  - Frontend State Management Across Complex Multi-Tab Workbenches
+  outOfScope:
+  - Product roadmap and pricing (client-owned)
+  - Production DevOps and hosting (separate team)
+  team: Solo core engineer on a client product squad
+myImpact:
+- label: Multi-Tenant Isolation
+  value: 100%
+  attribution: product
+  detail: Stateless Sanctum tokens and tenant-resolved database boundaries
+- label: Agent Workbenches
+  value: 4 Surfaces
+  attribution: product
+  detail: Split-pane inbox, queue streams, drag-and-drop form builder, email templates
+- label: Inbound Channels
+  value: 3 Channels
+  attribution: product
+  detail: Manual agent creation, automated IMAP email sync, and public web forms
+- label: BFF Endpoints
+  value: 30+ REST APIs
+  attribution: personal
+  detail: Dedicated domain endpoints for tickets, queues, mailbox sync, and forms
+- label: Database Layer
+  value: Dual-Engine
+  attribution: product
+  detail: MongoDB flexible ticket documents + MySQL relational configuration & RBAC
+- label: Thread Isolation
+  value: Zero Leaks
+  attribution: product
+  detail: Dual-lane public customer replies isolated from private internal notes
+product:
+  summary: Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z].
+  problem: Organizations previously managed customer requests through fragmented email inboxes and ad-hoc spreadsheets, causing delayed response times, lost tickets, and no visibility into team workload. Support teams needed a centralized multi-tenant platform with triage queues, assignee routing, threaded customer conversations with private internal notes, automated email ingestion, and custom web forms—without forcing external customers to create platform accounts.
+  valueProposition:
+    targetCustomer: Multi-Tenant SaaS Enterprises, Support Team Leads & Customer Success Desks
+    showCanvas: false
+    items:
+    - painTitle: Lost Inquiries in Scattered Gmail Inboxes
+      painDescription: Customer emails were spread across unmonitored aliases and personal inboxes, causing delayed responses, duplicate replies, and zero visibility into team backlog.
+      gainTitle: Unified Multi-Channel Agent Workbench
+      gainDescription: Centralized Vue 3/Quasar desktop triage inbox aggregating automated IMAP email streams, custom public web forms, and manual ticket creation in one split-pane workspace.
+    - painTitle: Accidental Leaks of Internal Discussions to Customers
+      painDescription: Support agents collaborating with engineers frequently replied on customer email threads, accidentally exposing internal technical deliberations.
+      gainTitle: Dual-Lane Public Replies vs. Private Internal Notes
+      gainDescription: Engineered strict message channel isolation within the same thread—yellow-tinted private notes remain internal, while public replies trigger sanitized SMTP emails.
+    - painTitle: Spam Overload & Heavy Client Overhead on Web Forms
+      painDescription: External contact forms were flooded with bot submissions and suffered slow load times from embedding heavy frontend SPA bundles.
+      gainTitle: Lightweight Server-Rendered Forms with Anti-Spam
+      gainDescription: Visitor-facing forms load instantly as server-rendered HTML with double opt-in email verification, honeypots, rate limiting, and reCAPTCHA protection.
+    - painTitle: Rigid SQL Schemas Breaking Custom Customer Fields
+      painDescription: Every enterprise client required different custom fields (order IDs, priority tags, device models) that caused frequent schema migrations.
+      gainTitle: Dual-Database Architecture (MongoDB + MySQL)
+      gainDescription: Flexible MongoDB ticket documents handle unlimited arbitrary custom payloads, while MySQL preserves strict relational integrity for auth, queues, and mailboxes.
+role: Full-Stack Software Engineer (Solo Core Contributor)
+timeline: 2026 — Present
+status: Active Production
+classification: 🔒 Proprietary Enterprise IP
 stack:
-  - "PHP"
-  - "Blade"
-  - "Quasar"
-  - "Knockout.js"
-  - "IMAP"
-  - "MySQL"
-
+- PHP
+- Blade
+- Quasar
+- Knockout.js
+- IMAP
+- MySQL
 techStack:
   frontend:
-    - "Quasar Framework (v2)"
-    - "Blade Templates"
-    - "Knockout.js"
-    - "Vue 3"
-    - "TypeScript"
-    - "Vue Router 4"
-    - "Modular Composable Architecture"
-    - "Vite Build System"
+  - Quasar Framework (v2)
+  - Blade Templates
+  - Knockout.js
+  - Vue 3
+  - TypeScript
+  - Vue Router 4
+  - Modular Composable Architecture
+  - Vite Build System
   backend:
-    - "Laravel 11+ (BFF Architecture)"
-    - "Laravel Sanctum & Tenant Isolation Middleware"
-    - "Asynchronous Queues & Background Workers"
-    - "IMAP / SMTP Email Ingestion Engine"
-    - "Server-Rendered Visitor Forms (Blade & JavaScript)"
+  - Laravel 11+ (BFF Architecture)
+  - Laravel Sanctum & Tenant Isolation Middleware
+  - Asynchronous Queues & Background Workers
+  - IMAP / SMTP Email Ingestion Engine
+  - Server-Rendered Visitor Forms (Blade & JavaScript)
   database:
-    - "MongoDB (Flexible Ticket Documents & Custom Schemas)"
-    - "MySQL (Relational Streams, Mailboxes, RBAC & Form Schemas)"
+  - MongoDB (Flexible Ticket Documents & Custom Schemas)
+  - MySQL (Relational Streams, Mailboxes, RBAC & Form Schemas)
   devops:
-    - "Docker Compose Local Environment"
-    - "Cron Scheduler & Multi-Worker Queue Runners"
-    - "Modular Monorepo Architecture"
+  - Docker Compose Local Environment
+  - Cron Scheduler & Multi-Worker Queue Runners
+  - Modular Monorepo Architecture
   mobile_hardware: []
-
 links:
-  liveDemo: ""
-  parentPlatform: ""
-  github: ""
-  docs: ""
-
+  liveDemo: ''
+  parentPlatform: ''
+  github: ''
+  docs: ''
 images:
-  - "/images/projects/service-desk/inbox-ticket-detail.webp"
-  - "/images/projects/service-desk/inbox-tickets-list.webp"
-  - "/images/projects/service-desk/form-builder-questions.webp"
-  - "/images/projects/service-desk/form-builder-settings.webp"
-  - "/images/projects/service-desk/email-template-editor.webp"
-
+- /images/projects/service-desk/inbox-ticket-detail.webp
+- /images/projects/service-desk/inbox-tickets-list.webp
+- /images/projects/service-desk/form-builder-questions.webp
+- /images/projects/service-desk/form-builder-settings.webp
+- /images/projects/service-desk/email-template-editor.webp
 visualAssets:
-  heroMockup: "/images/projects/service-desk/inbox-ticket-detail.webp"
-
-# Executive Overview (Expanded Google XYZ Accomplishment with Architectural Depth):
-executiveOverview: "Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z]."
-
-impactMetrics:
-  - label: "Multi-Tenant Isolation"
-    value: "100%"
-    detail: "Stateless Sanctum tokens and tenant-resolved database boundaries"
-  - label: "Agent Workbenches"
-    value: "4 Surfaces"
-    detail: "Split-pane inbox, queue streams, drag-and-drop form builder, email templates"
-  - label: "Inbound Channels"
-    value: "3 Channels"
-    detail: "Manual agent creation, automated IMAP email sync, and public web forms"
-  - label: "BFF Endpoints"
-    value: "30+ REST APIs"
-    detail: "Dedicated domain endpoints for tickets, queues, mailbox sync, and forms"
-  - label: "Database Layer"
-    value: "Dual-Engine"
-    detail: "MongoDB flexible ticket documents + MySQL relational configuration & RBAC"
-  - label: "Thread Isolation"
-    value: "Zero Leaks"
-    detail: "Dual-lane public customer replies isolated from private internal notes"
-
-valueProposition:
-  targetCustomer: "Multi-Tenant SaaS Enterprises, Support Team Leads & Customer Success Desks"
-  items:
-    - painTitle: "Lost Inquiries in Scattered Gmail Inboxes"
-      painDescription: "Customer emails were spread across unmonitored aliases and personal inboxes, causing delayed responses, duplicate replies, and zero visibility into team backlog."
-      gainTitle: "Unified Multi-Channel Agent Workbench"
-      gainDescription: "Centralized Vue 3/Quasar desktop triage inbox aggregating automated IMAP email streams, custom public web forms, and manual ticket creation in one split-pane workspace."
-
-    - painTitle: "Accidental Leaks of Internal Discussions to Customers"
-      painDescription: "Support agents collaborating with engineers frequently replied on customer email threads, accidentally exposing internal technical deliberations."
-      gainTitle: "Dual-Lane Public Replies vs. Private Internal Notes"
-      gainDescription: "Engineered strict message channel isolation within the same thread—yellow-tinted private notes remain internal, while public replies trigger sanitized SMTP emails."
-
-    - painTitle: "Spam Overload & Heavy Client Overhead on Web Forms"
-      painDescription: "External contact forms were flooded with bot submissions and suffered slow load times from embedding heavy frontend SPA bundles."
-      gainTitle: "Lightweight Server-Rendered Forms with Anti-Spam"
-      gainDescription: "Visitor-facing forms load instantly as server-rendered HTML with double opt-in email verification, honeypots, rate limiting, and reCAPTCHA protection."
-
-    - painTitle: "Rigid SQL Schemas Breaking Custom Customer Fields"
-      painDescription: "Every enterprise client required different custom fields (order IDs, priority tags, device models) that caused frequent schema migrations."
-      gainTitle: "Dual-Database Architecture (MongoDB + MySQL)"
-      gainDescription: "Flexible MongoDB ticket documents handle unlimited arbitrary custom payloads, while MySQL preserves strict relational integrity for auth, queues, and mailboxes."
-
-problemStatement: "Organizations previously managed customer requests through fragmented email inboxes and ad-hoc spreadsheets, causing delayed response times, lost tickets, and no visibility into team workload. Support teams needed a centralized multi-tenant platform with triage queues, assignee routing, threaded customer conversations with private internal notes, automated email ingestion, and custom web forms—without forcing external customers to create platform accounts."
-
-architectureSummary: "Vue 3/Quasar desktop SPA connecting to a dedicated Laravel Backend-for-Frontend (BFF) at /api/v1/support/*; tickets persist as flexible MongoDB documents with rich metadata; stream configuration, mailboxes, and form schemas reside in MySQL; background workers handle IMAP email ingestion and outbound SMTP notifications asynchronously."
-
+  heroMockup: /images/projects/service-desk/inbox-ticket-detail.webp
+architectureSummary: Vue 3/Quasar desktop SPA connecting to a dedicated Laravel Backend-for-Frontend (BFF) at /api/v1/support/*; tickets persist as flexible MongoDB documents with rich metadata; stream configuration, mailboxes, and form schemas reside in MySQL; background workers handle IMAP email ingestion and outbound SMTP notifications asynchronously.
 keyDecisions:
-  - challenge: "Flexible Ticket Schema vs. Strict Relational Configuration"
-    decision: "Adopted a dual-database architecture: stored highly variable ticket payloads, custom fields, and conversation threads in MongoDB, while keeping tenant configurations, mailbox credentials, queues, and permissions in relational MySQL."
-    outcome: "Achieved ultra-fast ticket reads and schema flexibility for custom customer attributes while preserving strict relational integrity for system administration."
-
-  - challenge: "Unified Conversation Threading with Public Replies vs. Private Internal Notes"
-    decision: "Engineered a dual-lane messaging system allowing support agents to toggle between customer-facing email replies and private internal team notes within the same chronological thread."
-    outcome: "Streamlined agent collaboration and eliminated accidental exposure of internal discussion to end customers."
-
-  - challenge: "Reliable Bidirectional Email Ingestion Without Direct Provider Webhooks"
-    decision: "Implemented an asynchronous IMAP polling pipeline on dedicated background worker queues with automatic message deduplication and email thread matching via In-Reply-To, References, and ticket hash identifiers."
-    outcome: "Incoming customer emails automatically convert into tickets or append to existing threads reliably without blocking web API requests."
-
-  - challenge: "Lightweight Public Web Forms Without Heavy Frontend App Overhead"
-    decision: "Rendered visitor-facing forms as lightweight server-rendered HTML pages with client-side validation and anti-spam protection (reCAPTCHA, rate limits, honeypots), while keeping the full-featured drag-and-drop form builder in the agent SPA."
-    outcome: "Instant load times for external customers and embeddable iframe compatibility across third-party websites without loading heavy SPA bundles."
-
-  - challenge: "Frontend State Management Across Complex Multi-Tab Workbenches"
-    decision: "Designed a modular composable architecture with scoped services and clean memory lifecycle resets on tenant switches, avoiding global state bloat."
-    outcome: "Fast, responsive split-pane navigation with zero state leakage across organizational tenants."
-
-  - challenge: "Spam Prevention & Data Quality on Public Submissions"
-    decision: "Introduced configurable double opt-in email verification, automated acknowledgement triggers, honeypot fields, and IP rate limiting on public form endpoints."
-    outcome: "Drastically reduced spam submissions and prevented bogus ticket creation in agent triage queues."
-
+- challenge: Flexible Ticket Schema vs. Strict Relational Configuration
+  decision: 'Adopted a dual-database architecture: stored highly variable ticket payloads, custom fields, and conversation threads in MongoDB, while keeping tenant configurations, mailbox credentials, queues, and permissions in relational MySQL.'
+  outcome: Achieved ultra-fast ticket reads and schema flexibility for custom customer attributes while preserving strict relational integrity for system administration.
+- challenge: Unified Conversation Threading with Public Replies vs. Private Internal Notes
+  decision: Engineered a dual-lane messaging system allowing support agents to toggle between customer-facing email replies and private internal team notes within the same chronological thread.
+  outcome: Streamlined agent collaboration and eliminated accidental exposure of internal discussion to end customers.
+- challenge: Reliable Bidirectional Email Ingestion Without Direct Provider Webhooks
+  decision: Implemented an asynchronous IMAP polling pipeline on dedicated background worker queues with automatic message deduplication and email thread matching via In-Reply-To, References, and ticket hash identifiers.
+  outcome: Incoming customer emails automatically convert into tickets or append to existing threads reliably without blocking web API requests.
+- challenge: Lightweight Public Web Forms Without Heavy Frontend App Overhead
+  decision: Rendered visitor-facing forms as lightweight server-rendered HTML pages with client-side validation and anti-spam protection (reCAPTCHA, rate limits, honeypots), while keeping the full-featured drag-and-drop form builder in the agent SPA.
+  outcome: Instant load times for external customers and embeddable iframe compatibility across third-party websites without loading heavy SPA bundles.
+- challenge: Frontend State Management Across Complex Multi-Tab Workbenches
+  decision: Designed a modular composable architecture with scoped services and clean memory lifecycle resets on tenant switches, avoiding global state bloat.
+  outcome: Fast, responsive split-pane navigation with zero state leakage across organizational tenants.
+- challenge: Spam Prevention & Data Quality on Public Submissions
+  decision: Introduced configurable double opt-in email verification, automated acknowledgement triggers, honeypot fields, and IP rate limiting on public form endpoints.
+  outcome: Drastically reduced spam submissions and prevented bogus ticket creation in agent triage queues.
 securityReliability:
-  - "Stateless token authentication (Sanctum) combined with tenant isolation middleware verifying membership and permissions on every API call."
-  - "Encrypted at-rest storage for external mailbox credentials; secrets are never exposed in API responses."
-  - "Multi-layered anti-spam defenses for public forms: cryptographic submission tokens, Google reCAPTCHA, and IP rate limits."
-  - "Immutable server-side audit trails for incoming customer emails and outbound notifications."
-  - "Isolated background worker queues separating high-throughput email polling from immediate notification delivery."
-
+- Stateless token authentication (Sanctum) combined with tenant isolation middleware verifying membership and permissions on every API call.
+- Encrypted at-rest storage for external mailbox credentials; secrets are never exposed in API responses.
+- 'Multi-layered anti-spam defenses for public forms: cryptographic submission tokens, Google reCAPTCHA, and IP rate limits.'
+- Immutable server-side audit trails for incoming customer emails and outbound notifications.
+- Isolated background worker queues separating high-throughput email polling from immediate notification delivery.
 futureRoadmap:
-  - "Direct webhook ingestion engine for major email providers (SendGrid, Postmark, AWS SES) alongside IMAP."
-  - "Embeddable customer live-chat widget connected to real-time agent presence."
-  - "Automated SLA tracking and ticket escalation workflows."
-  - "AI-assisted auto-categorization and smart draft response suggestions."
+- Direct webhook ingestion engine for major email providers (SendGrid, Postmark, AWS SES) alongside IMAP.
+- Embeddable customer live-chat widget connected to real-time agent presence.
+- Automated SLA tracking and ticket escalation workflows.
+- AI-assisted auto-categorization and smart draft response suggestions.
 ---
 
 ## Executive Summary

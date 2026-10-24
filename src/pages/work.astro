@@ -5,25 +5,13 @@ import WorkFocusBands from '../components/work/WorkFocusBands.astro';
 import WorkFilters from '../components/work/WorkFilters.astro';
 import WorkArchiveTeaser from '../components/work/WorkArchiveTeaser.astro';
 import { getCollection } from 'astro:content';
-import { getProjectCategory, shots, stackNames } from '../lib/work';
+import { toProjectListItem } from '../lib/projectView';
 
 const allProjects = await getCollection('projects');
 
 const projects = allProjects
 	.sort((a, b) => a.data.order - b.data.order)
-	.map((p) => {
-		const categories = getProjectCategory(p);
-		const allStack = stackNames(p.data.techStack, p.data.stack);
-		return {
-			slug: p.id,
-			categories,
-			allStack,
-			searchString: `${p.data.title} ${p.data.subtitle || ''} ${p.data.description || ''} ${p.data.chip || ''} ${p.data.role || ''} ${(p.data.stack || []).join(' ')} ${allStack.join(' ')}`.toLowerCase(),
-			thumbs: shots(p.data.images),
-			stack: p.data.stack || [],
-			...p.data
-		};
-	});
+	.map((p) => toProjectListItem(p));
 
 const workCount = projects.length;
 

@@ -1,0 +1,170 @@
+---
+import ShotFan from './ShotFan.astro';
+import type { ImpactMetric } from '../../types/project';
+
+interface Props {
+	myImpact?: ImpactMetric[];
+	images: string[];
+	title: string;
+	isPhone?: boolean;
+}
+
+const { myImpact = [], images, title, isPhone = false } = Astro.props;
+
+const personal = myImpact.filter((m) => m.attribution === 'personal');
+const product = myImpact.filter((m) => m.attribution === 'product');
+const team = myImpact.filter((m) => m.attribution === 'team');
+const hasMetrics = myImpact.length > 0;
+const hasImages = images.length > 0;
+const show = hasMetrics || hasImages;
+const galleryJson = JSON.stringify(images);
+---
+
+
+{show && (
+<section id="case-proof" class="case-chapter w-full max-w-full">
+	<div class="case-chapter__kicker">
+		<h2 class="label font-mono">Proof</h2>
+	</div>
+	<p class="case-chapter__title">Impact and product screens</p>
+
+	{hasMetrics && (
+		<div class="case-proof-metrics">
+			{personal.length > 0 && (
+				<div class="case-proof-group">
+					<p class="case-proof-group__kicker font-mono">My results</p>
+					<div class="case-proof-stats" role="list">
+						{personal.map((item) => (
+							<div class="case-proof-stat" role="listitem">
+								<span class="case-proof-stat__value">{item.value}</span>
+								<span class="case-proof-stat__label">{item.label}</span>
+								{item.detail && <span class="case-proof-stat__label">{item.detail}</span>}
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+			{product.length > 0 && (
+				<div class="case-proof-group">
+					<p class="case-proof-group__kicker font-mono">Product outcomes</p>
+					<div class="case-proof-stats" role="list">
+						{product.map((item) => (
+							<div class="case-proof-stat" role="listitem">
+								<span class="case-proof-stat__value">{item.value}</span>
+								<span class="case-proof-stat__label">{item.label}</span>
+								{item.detail && <span class="case-proof-stat__label">{item.detail}</span>}
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+			{team.length > 0 && (
+				<div class="case-proof-group">
+					<p class="case-proof-group__kicker font-mono">Team outcomes</p>
+					<div class="case-proof-stats" role="list">
+						{team.map((item) => (
+							<div class="case-proof-stat" role="listitem">
+								<span class="case-proof-stat__value">{item.value}</span>
+								<span class="case-proof-stat__label">{item.label}</span>
+								{item.detail && <span class="case-proof-stat__label">{item.detail}</span>}
+							</div>
+						))}
+					</div>
+				</div>
+			)}
+		</div>
+	)}
+
+	{hasImages && (
+		<div
+			class="case-proof-gallery"
+			data-case-lightbox-gallery={galleryJson}
+			data-case-lightbox-title={title}
+		>
+			<div class="case-proof-shots">
+				<ShotFan images={images} phone={isPhone} size="feature" lightbox imageLabel={title} />
+			</div>
+			<p class="case-proof-hint font-mono">Click any preview to open full size. Use arrow keys to browse.</p>
+			{images.length > 1 && (
+				<ul class="case-proof-thumbs" aria-label="All screenshots">
+					{images.map((src, i) => (
+						<li>
+							<button
+								type="button"
+								class="case-proof-thumb"
+								data-case-lightbox-src={src}
+								aria-label={`${title} screenshot ${i + 1}`}
+							>
+								<img src={src} alt="" loading="lazy" />
+							</button>
+						</li>
+					))}
+				</ul>
+			)}
+		</div>
+	)}
+</section>
+)}
+
+<style>
+	.case-proof-metrics {
+		display: flex;
+		flex-direction: column;
+		gap: 1.25rem;
+		margin-bottom: 0.5rem;
+	}
+
+	.case-proof-group__kicker {
+		margin: 0 0 0.5rem;
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		color: var(--text-muted);
+	}
+
+	.case-proof-hint {
+		margin: 0.65rem 0 0;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+		text-align: center;
+	}
+
+	.case-proof-thumbs {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		justify-content: center;
+		margin: 1rem 0 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.case-proof-thumb {
+		display: block;
+		width: 4.5rem;
+		height: 2.85rem;
+		padding: 0;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm);
+		overflow: hidden;
+		cursor: zoom-in;
+		background: var(--card-bg);
+		transition: border-color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+	}
+
+	.case-proof-thumb:hover,
+	.case-proof-thumb:focus-visible {
+		border-color: var(--accent);
+		box-shadow: 0 0 0 2px var(--accent-subtle);
+		outline: none;
+	}
+
+	.case-proof-thumb img {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		object-position: top center;
+		pointer-events: none;
+	}
+</style>
