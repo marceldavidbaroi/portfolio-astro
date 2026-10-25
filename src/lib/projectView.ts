@@ -1,5 +1,5 @@
 import { getProjectCategory, shots, stackNames } from './work';
-import type { ImpactMetric, ProductContext } from '../types/project';
+import type { BenefitMatrixItem, ImpactMetric, ImprovementItem, ProductContext } from '../types/project';
 import type { CollectionEntry } from 'astro:content';
 
 type ProjectData = CollectionEntry<'projects'>['data'];
@@ -23,6 +23,45 @@ export type ProjectListItem = {
 	listMetric: ImpactMetric | null;
 	listMetrics: ImpactMetric[];
 };
+
+export function deriveMyImpact(data: ProjectData): ImpactMetric[] {
+	const derived: ImpactMetric[] = [];
+
+	// 1. From benefitMatrix: rows where attribution == 'personal' and measure.proof == 'measured'
+	if (data.benefitMatrix) {
+		for (const row of data.benefitMatrix) {
+			if (row.attribution === 'personal' && row.measure && row.measure.proof === 'measured') {
+				derived.push({
+					label: row.measure.metric,
+					value: row.measure.to || `${row.measure.from} → ${row.measure.to}`,
+					detail: row.after || row.pain,
+					attribution: 'personal',
+				});
+			}
+		}
+	}
+
+	// 2. From improvements: rows where attribution == 'personal' and measure.proof == 'measured'
+	if (data.improvements) {
+		for (const item of data.improvements) {
+			if (item.attribution === 'personal' && item.measure && item.measure.proof === 'measured') {
+				derived.push({
+					label: item.measure.metric || item.area,
+					value: item.measure.to || `${item.measure.from} → ${item.measure.to}`,
+					detail: item.userBenefit || item.after,
+					attribution: 'personal',
+				});
+			}
+		}
+	}
+
+	// If derived metrics found, use them; otherwise fallback to existing myImpact
+	if (derived.length > 0) {
+		return derived;
+	}
+
+	return data.myImpact ?? [];
+}
 
 function sortMetricsForList(metrics: ImpactMetric[]): ImpactMetric[] {
 	const personal = metrics.filter((m) => m.attribution === 'personal');
@@ -119,10 +158,14 @@ export function toCaseStudyView(
 		showVpc ||
 		showCaseStory;
 
-	const hasProofChapter = (data.myImpact?.length ?? 0) > 0 || opts.imageCount > 0;
+	const myImpact = deriveMyImpact(data);
+	const hasProofChapter = myImpact.length > 0 || opts.imageCount > 0;
 
 	const hasBuildChapter =
-		opts.hasStackRationale || opts.hasStackRows || opts.hasKeyDecisions;
+		opts.hasStackRationale ||
+		opts.hasStackRows ||
+		opts.hasKeyDecisions ||
+		(data.improvements?.length ?? 0) > 0;
 
 	const hasTrustChapter = opts.hasSecurity || opts.hasRoadmap;
 	const hasAppendixChapter = opts.hasMarkdownBody;
@@ -157,7 +200,7 @@ export function toProjectListItem(entry: CollectionEntry<'projects'>): ProjectLi
 	const { data } = entry;
 	const categories = getProjectCategory(entry);
 	const allStack = stackNames(data.techStack, data.stack);
-	const myImpact = data.myImpact ?? [];
+	const myImpact = deriveMyImpact(data);
 
 	return {
 		slug: entry.id,

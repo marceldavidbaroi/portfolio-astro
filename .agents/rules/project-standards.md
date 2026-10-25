@@ -38,12 +38,67 @@ order: 1
 featured: true
 platformType: "desktop"                 # "desktop" or "mobile"
 
-# 2. ROLE & LIFECYCLE (CV Subtitle)
+# 2. ROLE, OWNERSHIP & LIFECYCLE
 role: "Lead Framework & Migration Engineer"
 timeline: "2025 — Present"
 status: "Active Production"              # "Active Production", "Completed", "Archived"
+classification: "🔒 Proprietary Enterprise IP"
 
-# 3. CATEGORIZED TECHNOLOGY STACK
+# Ownership Schema
+contribution:
+  mode: owner                          # 'owner' | 'co-owner' | 'contributor' | 'maintainer'
+  startedFrom: scratch                 # 'scratch' | 'existing'
+  myShare: lead                        # 'lead' | 'major' | 'minor'
+  teamSize: 4                          # Exact team count (omit with # TODO(me) if not verified)
+  label: "Product Owner & Lead"
+  headline: "Architected a multi-tenant enterprise ERP across four login surfaces and parent/child tenants."
+  scope:
+    - "Schema split, migration ordering, and local replay"
+    - "Money-kernel alignment across wholesale, shop, dropship, and inbound AP"
+
+# 3. REAL USER PROBLEM
+problem:
+  statement: "Wholesale import groups run parent holdings, sister desks, and resellers on disconnected spreadsheets, causing overselling and mis-reported courier COD."
+  evidence: internal-use               # 'interviews' | 'observed' | 'internal-use' | 'assumption'
+  whoHurts:
+    - "import-operator"
+    - "shop-buyer"
+    - "dropship-reseller"
+    - "capital-partner"
+
+# 4. USER BENEFIT MATRIX (Replaces legacy valueProposition)
+benefitMatrix:
+  - persona: "Import / Wholesale Operator"
+    pain: "Overselling across sales channels"
+    before: "Wholesale desk and shop carts share stock without a single ATP pool."
+    after: "One warehouse quantity enforced by server-side issue/pick RPCs."
+    measure:
+      metric: "Channel ATP consistency"
+      from: "Desynced per-channel spreadsheets"
+      to: "Single warehouse ATP pool"
+      proof: designed                  # 'measured' | 'estimated' | 'designed' | 'qualitative'
+    attribution: personal              # 'personal' | 'team' | 'product'
+    feature:
+      - "Wholesale"
+      - "Shop"
+      - "Dropship"
+
+# 5. WHAT I IMPROVED (Required if mode != 'owner' OR startedFrom == 'existing')
+improvements:
+  - area: "Frontend shell bundle size"
+    before: "Monolithic CSS and synchronous libraries loaded on initial shell"
+    after: "Route-level CSS split and lazy heavy libs (Mermaid, ExcelJS)"
+    how: "Route-level code splitting and dynamic ESM imports"
+    measure:
+      metric: "First-load CSS reduction"
+      from: "100% monolithic shell CSS"
+      to: "~67% reduction on initial shell"
+      proof: measured                  # 'measured' | 'estimated' | 'designed' | 'qualitative'
+    userBenefit: "Faster initial dashboard load on cellular connections"
+    attribution: personal              # 'personal' | 'team'
+    ref: "https://github.com/..."      # Optional PR/commit link
+
+# 6. CATEGORIZED TECHNOLOGY STACK
 techStack:
   frontend:
     - "Vue 3.5"
@@ -56,75 +111,41 @@ techStack:
     - "Atomic RPCs"
   database:
     - "PostgreSQL 15+"
-    - "980+ Versioned Migrations"
-    - "Double-Entry Wallet"
+    - "1,330+ Versioned Migrations"
   devops:
     - "Cloudflare Pages"
     - "Docker Local Supabase"
-  mobile_hardware: []                  # Optional: ML Kit, Capacitor, NFC, BLE
+  mobile_hardware: []
 
-# 4. PROJECT LINKS & PROOF
+# 7. PROJECT LINKS & PROOF
 links:
   liveDemo: "https://example.com"      # Optional: Valid URL only (omit if proprietary/NDA)
   parentPlatform: ""
   github: "https://github.com/..."     # Optional: Public repo URL only
   docs: ""
 
-# 5. VISUAL ASSETS
+# 8. VISUAL ASSETS
 images:
-  - "/images/projects/[slug]/dashboard.png"
-  - "/images/projects/[slug]/details.png"
+  - "/images/projects/[slug]/dashboard.webp"
+  - "/images/projects/[slug]/details.webp"
 visualAssets:
-  heroMockup: "/images/projects/[slug]/dashboard.png"
+  heroMockup: "/images/projects/[slug]/dashboard.webp"
 
-# 6. EXECUTIVE OVERVIEW (GOOGLE XYZ FORMULA)
-# Formula: "Accomplished [X] as measured by [Y], by doing [Z]"
-executiveOverview: "Architected a multi-tenant SaaS ERP that enabled wholesale parent corporations to dynamically allocate stock [X], achieving 100% database-enforced RLS isolation across 17+ domain modules and 980+ migrations [Y] by designing PostgreSQL Row-Level Security policies, ATP algorithms, and atomic RPC transactions [Z]."
-
-# 7. QUANTIFIABLE IMPACT METRICS (3 to 6 Items)
-impactMetrics:
-  - label: "Tenant Data Isolation"
-    value: "100%"
-    detail: "Database engine enforced via RLS policies"
-  - label: "Domain Modules"
-    value: "17+"
-    detail: "Procurement, Commerce, Finance, Capital"
-  - label: "Database Migrations"
-    value: "980+"
-    detail: "Versioned schema with local Docker replay"
-  - label: "Atomic RPCs"
-    value: "300+"
-    detail: "Server-side transactional financial writes"
-
-# 8. ENGINEERING DECISIONS MATRIX (3 to 5 Technical Trade-offs)
+# 9. ENGINEERING DECISIONS MATRIX (3 to 5 Technical Trade-offs)
 keyDecisions:
   - challenge: "Cross-tenant data leakage between competing sales desks on shared database."
-    decision: "Implemented PostgreSQL Row-Level Security (RLS) policies evaluated at database engine level instead of application middleware."
+    decision: "Implemented PostgreSQL Row-Level Security (RLS) policies evaluated at database engine level."
     outcome: "Eliminated application-layer leaks; zero data leakage across multi-tenant scopes."
   - challenge: "Overselling stock across concurrent POS and e-commerce checkouts."
     decision: "Engineered parent-pooled virtual stock allocation algorithms with pessimistic locking RPC transactions."
-    outcome: "Eliminated duplicate inventory checkouts and reduced stock reconciliation discrepancies to 0."
+    outcome: "Eliminated duplicate inventory checkouts."
 
-# 9. VALUE PROPOSITION CANVAS (Business & User Friction)
-valueProposition:
-  targetCustomer: "Wholesale Import Conglomerates, Parent Corporations & Sister Sales Desks"
-  items:
-    - painTitle: "Siloed Stock Counts & Overselling"
-      painDescription: "Sister desks counted warehouse stock separately, causing frequent fulfillment delays and stockouts."
-      gainTitle: "Parent-Pooled Virtual Allocation (ATP)"
-      gainDescription: "Physical stock exists strictly on parent; child sales desks consume real-time virtual slices with zero overselling."
-    - painTitle: "Manual Landed Cost Guesswork"
-      painDescription: "Customs duties and freight tariffs calculated manually in spreadsheets produced inaccurate margin projections."
-      gainTitle: "Automated Landed Cost Engine"
-      gainDescription: "Deterministic server-side RPC apportions freight weight and customs fees per SKU at shipment finalization."
-
-# 10. OPTIONAL SECURITY & ROADMAP BULLETS
+# 10. SECURITY & ROADMAP BULLETS
 securityReliability:
   - "PostgreSQL RLS security-definer RPCs for all financial mutations."
   - "JWT bearer token claims validated at DB layer."
 futureRoadmap:
   - "Automated multi-region database read replica failover."
-  - "GraphQL federation layer for third-party logistics integrations."
 ---
 ```
 

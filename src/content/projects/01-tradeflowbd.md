@@ -9,12 +9,108 @@ featured: true
 platformType: desktop
 contribution:
   mode: owner
+  startedFrom: scratch
+  myShare: lead
+  # TODO(me): teamSize
   label: Product owner & lead engineer
   headline: Owned architecture and migration for a multi-tenant wholesale ERP — four login surfaces, parent/child tenants, and channel flows on shared stock and money kernels.
   scope:
   - Schema split, migration ordering, and local replay
   - Money-kernel alignment across wholesale, shop, dropship, and inbound AP
   - Platform docs and VPC narrative in the product SPA
+
+# 2. REAL USER PROBLEM
+problem:
+  statement: Wholesale import groups run parent holdings, sister desks, shops, and capital partners on disconnected spreadsheets and channel-specific stock — causing overselling, COD mis-reported as revenue, and weak audit trails between sister brands.
+  evidence: internal-use # TODO(me): confirm evidence type
+  whoHurts:
+  - import-operator
+  - shop-buyer
+  - dropship-reseller
+  - capital-partner
+
+# 3. USER BENEFIT MATRIX (replaces product.valueProposition.items)
+benefitMatrix:
+  - persona: Import / Wholesale Operator
+    pain: Overselling across channels
+    before: Wholesale desk, shop carts, and dropship picks share parent stock without a single ATP pool.
+    after: One warehouse quantity enforced by server-side issue/pick RPCs; no per-channel shadow stock.
+    measure:
+      metric: Channel ATP pool consistency
+      from: Desynced per-channel stock books
+      to: Single warehouse ATP pool
+      proof: designed
+    attribution: personal
+    feature:
+      - Wholesale
+      - Shop
+      - Dropship
+  - persona: Dropship reseller / Import operator
+    pain: COD booked as sales
+    before: Courier collections get mixed with B2B merchant totals on reports.
+    after: "Merchant AR at ship, remittance pays the bill, surplus goes to custody cashbook. (Illustrated by flow: ৳2,200 face, ৳1,500 bill, ৳80 courier AP, ৳2,120 remittance, ৳620 leftover)."
+    measure:
+      metric: Ledger separation (paper vs cash)
+      from: Mixed courier cash in sales revenue
+      to: Strict AR & custody cashbook split
+      proof: designed
+    attribution: personal
+    feature:
+      - Dropship
+      - Money desks
+  - persona: Import / Wholesale Operator
+    pain: Landed cost guesswork
+    before: Margins use invoice-line guesses instead of paid AP and locked shipment costs.
+    after: Unit cost stamped from paid AP and locked shipment costs.
+    measure:
+      metric: Landed cost valuation basis
+      from: Unlocked invoice line guesses
+      to: Paid AP and locked freight Restamp
+      proof: designed
+    attribution: personal
+    feature:
+      - Inbound
+      - PBC
+  - persona: Platform/IT owner
+    pain: Cross-tenant data leakage risks
+    before: Filtering tenant data relies on client-side SPA logic.
+    after: Boundary enforced in PostgreSQL via RLS and membership_has_module_action().
+    measure:
+      metric: Database isolation
+      from: Application-layer query filtering
+      to: PostgreSQL RLS policy enforcement
+      proof: designed
+    attribution: personal
+    feature:
+      - Tenants
+      - Access kernel
+
+# 4. IMPROVEMENTS (optional for owner + scratch; measured engineering outcomes)
+improvements:
+  - area: Frontend shell bundle size
+    before: Monolithic CSS and synchronous libraries loaded on initial shell
+    after: Route-level CSS split and lazy heavy libs (Mermaid, ExcelJS, FCM)
+    how: Route-level split and dynamic ESM imports
+    measure:
+      metric: First-load CSS reduction
+      from: 100% monolithic shell CSS
+      to: ~67% reduction on initial shell
+      proof: measured
+    userBenefit: Faster initial dashboard interactive load on cellular connections
+    attribution: personal
+  - area: Schema deployment reliability
+    before: Manual SQL execution with unverified migration ordering
+    after: Reproducible local replay on Docker Supabase before deploy
+    how: Declarative schema domain diffing and ordered migration replay
+    measure:
+      metric: Local migration replay count
+      from: 0 automated local checks
+      to: 1,330+ versioned migrations replayed locally
+      proof: measured
+    userBenefit: Zero schema regression downtime during production pushes
+    attribution: personal
+
+# Legacy fields kept for backward compatibility (deprecated: derived myImpact and benefitMatrix take precedence)
 myImpact:
 - label: Tenant isolation
   value: RLS

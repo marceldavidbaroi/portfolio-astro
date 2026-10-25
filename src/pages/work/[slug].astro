@@ -13,7 +13,7 @@ import CaseDeepDive from '../../components/work/CaseDeepDive.astro';
 import CaseMarkdown from '../../components/work/CaseMarkdown.astro';
 import CaseAdjacentNav from '../../components/work/CaseAdjacentNav.astro';
 import CaseImageLightbox from '../../components/ui/CaseImageLightbox.astro';
-import { resolveProductForDetail, toCaseStudyView } from '../../lib/projectView';
+import { deriveMyImpact, resolveProductForDetail, toCaseStudyView } from '../../lib/projectView';
 import { ipLabel, isRealUrl } from '../../lib/work';
 import '../../styles/case.css';
 import '../../styles/case-study.css';
@@ -153,12 +153,15 @@ const productForChapter = resolveProductForDetail(data);
 						caseStory={caseStory}
 						showCaseStory={caseView.showCaseStory}
 						showVpc={caseView.showVpc}
+						problem={data.problem}
+						benefitMatrix={data.benefitMatrix}
+						projectId={data.id || project.id}
 					/>
 				)}
 
 				{caseView.hasProofChapter && (
 					<CaseProofChapter
-						myImpact={data.myImpact}
+						myImpact={deriveMyImpact(data)}
 						images={allProjectImages}
 						title={data.title}
 						isPhone={isPhone}
@@ -170,7 +173,8 @@ const productForChapter = resolveProductForDetail(data);
 						stackRationale={caseStory?.stackRationale}
 						stackRows={stackRows}
 						keyDecisions={data.keyDecisions}
-						problemStatement={product.problem}
+						problemStatement={data.problem?.statement || product.problem}
+						improvements={data.improvements}
 					/>
 				)}
 

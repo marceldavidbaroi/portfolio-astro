@@ -1,0 +1,333 @@
+---
+import type { BenefitMatrixItem, ProofLevel } from '../../types/project';
+
+interface Props {
+	items: BenefitMatrixItem[];
+}
+
+const { items = [] } = Astro.props;
+
+// Group items by persona
+const groupedByPersona = items.reduce<Record<string, BenefitMatrixItem[]>>((acc, item) => {
+	const persona = item.persona || 'General';
+	if (!acc[persona]) acc[persona] = [];
+	acc[persona].push(item);
+	return acc;
+}, {});
+
+function getProofBadgeClass(proof?: ProofLevel) {
+	if (!proof) return 'proof-badge--designed';
+	switch (proof) {
+		case 'measured':
+			return 'proof-badge--measured';
+		case 'estimated':
+			return 'proof-badge--estimated';
+		case 'designed':
+			return 'proof-badge--designed';
+		case 'qualitative':
+			return 'proof-badge--qualitative';
+		default:
+			return 'proof-badge--designed';
+	}
+}
+---
+
+{items.length > 0 && (
+	<div class="benefit-matrix-wrap">
+		{Object.entries(groupedByPersona).map(([persona, rows]) => (
+			<div class="benefit-matrix-group">
+				<div class="benefit-matrix-group__header">
+					<span class="persona-badge font-mono">{persona}</span>
+				</div>
+				<div class="benefit-cards-grid">
+					{rows.map((row) => (
+						<article class="benefit-card">
+							<div class="benefit-card__head">
+								<h4 class="benefit-card__pain">{row.pain}</h4>
+								{row.measure?.proof && (
+									<span class={`proof-badge font-mono ${getProofBadgeClass(row.measure.proof)}`}>
+										{row.measure.proof}
+									</span>
+								)}
+							</div>
+
+							<div class="benefit-card__contrast">
+								{row.before && (
+									<div class="contrast-row contrast-row--before">
+										<span class="contrast-tag font-mono">Before</span>
+										<p class="contrast-text">{row.before}</p>
+									</div>
+								)}
+								<div class="contrast-row contrast-row--after">
+									<span class="contrast-tag contrast-tag--accent font-mono">After</span>
+									<p class="contrast-text font-medium">{row.after}</p>
+								</div>
+							</div>
+
+							{row.measure && (
+								<div class="benefit-card__measure">
+									<div class="measure-metric font-mono">
+										<span class="measure-label">Metric:</span> {row.measure.metric}
+									</div>
+									<div class="measure-delta font-mono">
+										<span class="measure-from">{row.measure.from}</span>
+										<span class="measure-arrow">→</span>
+										<span class="measure-to">{row.measure.to}</span>
+									</div>
+								</div>
+							)}
+
+							<div class="benefit-card__meta">
+								{row.feature && row.feature.length > 0 && (
+									<div class="benefit-features">
+										{row.feature.map((feat) => (
+											<span class="feature-pill font-mono">{feat}</span>
+										))}
+									</div>
+								)}
+								<span class="attribution-badge font-mono" title={`Attribution: ${row.attribution}`}>
+									{row.attribution}
+								</span>
+							</div>
+						</article>
+					))}
+				</div>
+			</div>
+		))}
+	</div>
+)}
+
+<style>
+	.benefit-matrix-wrap {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		margin-top: 1.5rem;
+		width: 100%;
+	}
+
+	.benefit-matrix-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+	}
+
+	.benefit-matrix-group__header {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.persona-badge {
+		font-size: 0.82rem;
+		font-weight: 700;
+		color: var(--accent);
+		background: var(--accent-subtle);
+		padding: 0.25rem 0.65rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--card-border-hover);
+		letter-spacing: 0.02em;
+	}
+
+	.benefit-cards-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.benefit-cards-grid {
+			grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		}
+	}
+
+	.benefit-card {
+		background: var(--card-bg-elevated);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md);
+		padding: 1.15rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		transition: border-color var(--dur-fast) ease;
+	}
+
+	.benefit-card:hover {
+		border-color: var(--card-border-hover);
+	}
+
+	.benefit-card__head {
+		display: flex;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.benefit-card__pain {
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+		line-height: 1.35;
+	}
+
+	/* Proof Badge Styles */
+	.proof-badge {
+		font-size: 0.68rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 0.2rem 0.5rem;
+		border-radius: var(--radius-full);
+		white-space: nowrap;
+		flex-shrink: 0;
+	}
+
+	/* Visually distinguish 'measured' from 'designed', 'qualitative', 'estimated' */
+	.proof-badge--measured {
+		background: rgba(34, 197, 94, 0.15);
+		color: #16a34a;
+		border: 1px solid rgba(34, 197, 94, 0.35);
+	}
+
+	:root[data-theme="dark"] .proof-badge--measured {
+		color: #4ade80;
+		border-color: rgba(74, 222, 128, 0.35);
+	}
+
+	.proof-badge--estimated {
+		background: rgba(234, 179, 8, 0.12);
+		color: #b45309;
+		border: 1px dashed rgba(234, 179, 8, 0.4);
+	}
+
+	:root[data-theme="dark"] .proof-badge--estimated {
+		color: #facc15;
+	}
+
+	.proof-badge--designed {
+		background: var(--card-bg);
+		color: var(--text-muted);
+		border: 1px dashed var(--card-border);
+		opacity: 0.9;
+	}
+
+	.proof-badge--qualitative {
+		background: rgba(147, 51, 234, 0.1);
+		color: #9333ea;
+		border: 1px dotted rgba(147, 51, 234, 0.35);
+	}
+
+	:root[data-theme="dark"] .proof-badge--qualitative {
+		color: #c084fc;
+	}
+
+	.benefit-card__contrast {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		background: var(--card-bg);
+		padding: 0.75rem 0.85rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--card-border);
+	}
+
+	.contrast-row {
+		display: grid;
+		grid-template-columns: 3.5rem 1fr;
+		gap: 0.5rem;
+		align-items: baseline;
+	}
+
+	.contrast-tag {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.contrast-tag--accent {
+		color: var(--accent);
+	}
+
+	.contrast-text {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	.contrast-row--after .contrast-text {
+		color: var(--text-main);
+	}
+
+	.benefit-card__measure {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: 0.45rem 0.75rem;
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm);
+		font-size: 0.78rem;
+	}
+
+	.measure-label {
+		color: var(--text-muted);
+	}
+
+	.measure-delta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.measure-from {
+		color: var(--text-muted);
+		text-decoration: line-through;
+	}
+
+	.measure-arrow {
+		color: var(--accent);
+	}
+
+	.measure-to {
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.benefit-card__meta {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+	}
+
+	.benefit-features {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+
+	.feature-pill {
+		font-size: 0.68rem;
+		padding: 0.15rem 0.45rem;
+		border-radius: var(--radius-full);
+		background: var(--card-bg);
+		border: 1px solid var(--card-border);
+		color: var(--text-muted);
+	}
+
+	.attribution-badge {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+		opacity: 0.8;
+	}
+</style>

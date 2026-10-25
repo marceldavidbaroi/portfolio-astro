@@ -22,14 +22,29 @@ const media = defineCollection({
 	})
 });
 
-const contributionModeSchema = z.enum(['owner', 'lead', 'core', 'specialist']);
+const contributionModeSchema = z.enum([
+	'owner',
+	'co-owner',
+	'contributor',
+	'maintainer',
+	// Backward compatibility for existing files prior to migration:
+	'lead',
+	'core',
+	'specialist'
+]);
+
+const contributionShareSchema = z.enum(['lead', 'major', 'minor']);
+const contributionStartedFromSchema = z.enum(['scratch', 'existing']);
 
 const contributionSchema = z
 	.object({
 		mode: contributionModeSchema.default('core'),
 		label: z.string().default(''),
 		headline: z.string().default(''),
+		teamSize: z.number().optional(),
+		myShare: contributionShareSchema.optional(),
 		scope: z.array(z.string()).default([]),
+		startedFrom: contributionStartedFromSchema.optional(),
 		outOfScope: z.array(z.string()).optional(),
 		team: z.string().optional(),
 	})
@@ -39,6 +54,44 @@ const contributionSchema = z
 		headline: '',
 		scope: [],
 	});
+
+const problemEvidenceSchema = z.enum(['interviews', 'observed', 'internal-use', 'assumption']);
+
+const problemSchema = z.object({
+	statement: z.string(),
+	evidence: problemEvidenceSchema.optional(),
+	whoHurts: z.array(z.string()).default([]),
+});
+
+const proofLevelSchema = z.enum(['measured', 'estimated', 'designed', 'qualitative']);
+
+const measureSchema = z.object({
+	metric: z.string(),
+	from: z.string(),
+	to: z.string(),
+	proof: proofLevelSchema,
+});
+
+const benefitMatrixItemSchema = z.object({
+	persona: z.string(),
+	pain: z.string(),
+	before: z.string().optional(),
+	after: z.string(),
+	measure: measureSchema.optional(),
+	attribution: z.enum(['personal', 'team', 'product']),
+	feature: z.array(z.string()).optional(),
+});
+
+const improvementItemSchema = z.object({
+	area: z.string(),
+	before: z.string(),
+	after: z.string(),
+	how: z.string(),
+	measure: measureSchema.optional(),
+	userBenefit: z.string().optional(),
+	attribution: z.enum(['personal', 'team']),
+	ref: z.string().optional(),
+});
 
 const impactMetricSchema = z.object({
 	label: z.string(),
@@ -54,6 +107,27 @@ const painGainItemSchema = z.object({
 	gainDescription: z.string(),
 });
 
+const canvasNoteSchema = z.object({
+	title: z.string(),
+	note: z.string(),
+});
+
+const vpcCanvasSchema = z.object({
+	labels: z
+		.object({
+			title: z.string().optional(),
+			valueProposition: z.string().optional(),
+			customerSegment: z.string().optional(),
+		})
+		.optional(),
+	customerJobs: z.array(canvasNoteSchema).default([]),
+	pains: z.array(canvasNoteSchema).default([]),
+	gains: z.array(canvasNoteSchema).default([]),
+	productsAndServices: z.array(canvasNoteSchema).default([]),
+	painRelievers: z.array(canvasNoteSchema).default([]),
+	gainCreators: z.array(canvasNoteSchema).default([]),
+});
+
 const productSchema = z
 	.object({
 		summary: z.string().default(''),
@@ -64,6 +138,7 @@ const productSchema = z
 				targetCustomer: z.string(),
 				showCanvas: z.boolean().optional().default(false),
 				items: z.array(painGainItemSchema).default([]),
+				canvas: vpcCanvasSchema.optional(),
 			})
 			.optional(),
 	})
@@ -81,8 +156,7 @@ const productSchema = z
 const projects = defineCollection({
 	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
 	schema: z.object({
-		// Core Identifiers & Card Info
-		id: z.string(),
+		id: z.union([z.string(), z.number()]).transform((val) => String(val).padStart(2, '0')),
 		title: z.string(),
 		subtitle: z.string().optional(),
 		description: z.string(),
@@ -226,6 +300,42 @@ const projects = defineCollection({
 				showVpcContrastCards: z.boolean().optional().default(false),
 			})
 			.optional(),
+
+		// Real User Problem (ownership + user benefit schema)
+		problem: problemSchema.optional(),
+
+		// User Benefit Matrix (replaces product.valueProposition.items)
+		benefitMatrix: z.array(benefitMatrixItemSchema).optional(),
+
+		// Improvements (required when mode != owner OR startedFrom == existing)
+		improvements: z.array(improvementItemSchema).optional(),
+	}).superRefine((data, ctx) => {
+		const mode = data.contribution?.mode;
+		const startedFrom = data.contribution?.startedFrom;
+
+		// Validation rule applies to files using the new ownership schema:
+		// (i.e. When startedFrom is specified, or when mode is explicitly one of the new modes: 'co-owner', 'contributor', 'maintainer')
+		const isNewSchema = Boolean(
+			startedFrom !== undefined ||
+			mode === 'co-owner' ||
+			mode === 'contributor' ||
+			mode === 'maintainer'
+		);
+
+		if (isNewSchema) {
+			const isNotOwner = mode !== 'owner';
+			const isExisting = startedFrom === 'existing';
+			if (isNotOwner || isExisting) {
+				const hasImprovements = (data.improvements?.length ?? 0) >= 1;
+				if (!hasImprovements) {
+					ctx.addIssue({
+						code: z.ZodIssueCode.custom,
+						message: `Project "${data.title}" (id: ${data.id}): improvements array must have at least 1 item when mode != 'owner' (current: '${mode}') or startedFrom == 'existing' (current: '${startedFrom}').`,
+						path: ['improvements']
+					});
+				}
+			}
+		}
 	})
 });
 

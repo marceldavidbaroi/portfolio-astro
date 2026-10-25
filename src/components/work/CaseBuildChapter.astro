@@ -1,4 +1,7 @@
 ---
+import CaseImprovements from './CaseImprovements.astro';
+import type { ImprovementItem } from '../../types/project';
+
 interface Decision {
 	challenge: string;
 	decision: string;
@@ -20,6 +23,7 @@ interface Props {
 	stackRows: StackRow[];
 	keyDecisions?: Decision[];
 	problemStatement?: string;
+	improvements?: ImprovementItem[];
 }
 
 const {
@@ -27,13 +31,15 @@ const {
 	stackRows = [],
 	keyDecisions = [],
 	problemStatement,
+	improvements = [],
 } = Astro.props;
 
 const hasStackWhy = stackRationale.length > 0;
 const hasStack = stackRows.length > 0;
 const hasDecisions = keyDecisions.length > 0;
+const hasImprovements = improvements.length > 0;
 
-const show = hasStackWhy || hasStack || hasDecisions || Boolean(problemStatement);
+const show = hasStackWhy || hasStack || hasDecisions || Boolean(problemStatement) || hasImprovements;
 
 const visibleDecisions = keyDecisions.slice(0, 4);
 const hiddenDecisions = keyDecisions.slice(4);
@@ -45,6 +51,13 @@ const hiddenDecisions = keyDecisions.slice(4);
 		<h2 class="label font-mono">Build</h2>
 	</div>
 	<p class="case-chapter__title">Stack and engineering choices</p>
+
+	{hasImprovements && (
+		<>
+			<h3 id="build-improvements" class="case-chapter__sub">What I improved</h3>
+			<CaseImprovements improvements={improvements} />
+		</>
+	)}
 
 	{hasStackWhy && (
 		<>

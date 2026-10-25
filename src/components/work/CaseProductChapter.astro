@@ -2,7 +2,8 @@
 import StrategyzerValueCanvas from './StrategyzerValueCanvas.astro';
 import MermaidDiagram from '../ui/MermaidDiagram.astro';
 import { tradeflowVpcData } from '../../data/tradeflowVpcData';
-import type { ProductContext } from '../../types/project';
+import CaseBenefitMatrix from './CaseBenefitMatrix.astro';
+import type { BenefitMatrixItem, Problem, ProductContext } from '../../types/project';
 
 interface Diagram {
 	id: string;
@@ -37,19 +38,26 @@ interface Props {
 	caseStory?: CaseStory;
 	showCaseStory: boolean;
 	showVpc: boolean;
+	problem?: Problem;
+	benefitMatrix?: BenefitMatrixItem[];
+	projectId?: string;
 }
 
-const { product, caseStory, showCaseStory, showVpc } = Astro.props;
+const { product, caseStory, showCaseStory, showVpc, problem: newProblem, benefitMatrix, projectId } = Astro.props;
+
+const vpcData = product.valueProposition?.canvas || tradeflowVpcData;
 
 const summary = product.summary?.trim() ?? '';
-const problem = product.problem?.trim() ?? '';
+// Support new problem object statement or fallback to product.problem string
+const problemText = newProblem?.statement?.trim() || product.problem?.trim() || '';
 const tagline = product.tagline?.trim() ?? '';
 const vp = product.valueProposition;
 const contrastItems = vp?.items?.slice(0, 3) ?? [];
-const showContrast = caseStory?.showVpcContrastCards && contrastItems.length > 0;
+const hasBenefitMatrix = Boolean(benefitMatrix && benefitMatrix.length > 0);
+const showContrast = !hasBenefitMatrix && caseStory?.showVpcContrastCards && contrastItems.length > 0;
 
-const hasProductCopy = Boolean(summary || problem || tagline);
-const hasVpcBlock = showVpc || contrastItems.length > 0;
+const hasProductCopy = Boolean(summary || problemText || tagline);
+const hasVpcBlock = showVpc || contrastItems.length > 0 || hasBenefitMatrix;
 const hasStoryBlocks = showCaseStory && Boolean(caseStory);
 const show = hasProductCopy || hasVpcBlock || hasStoryBlocks;
 ---
@@ -65,50 +73,73 @@ const show = hasProductCopy || hasVpcBlock || hasStoryBlocks;
 
 		{tagline && <p class="case-chapter__lead">{tagline}</p>}
 		{summary && <p class="case-chapter__lead">{summary}</p>}
-		{problem && (
+		{problemText && (
 			<>
-				<h3 id="context-problem" class="case-chapter__sub">Core challenge</h3>
-				<p class="case-chapter__lead">{problem}</p>
+				<div class="problem-header-wrap">
+					<h3 id="context-problem" class="case-chapter__sub">Core challenge</h3>
+					{newProblem?.evidence && (
+						<span class="evidence-badge font-mono">Evidence: {newProblem.evidence}</span>
+					)}
+				</div>
+				<p class="case-chapter__lead">{problemText}</p>
+				{newProblem?.whoHurts && newProblem.whoHurts.length > 0 && (
+					<div class="who-hurts-wrap font-mono">
+						<span class="who-hurts-label">Who hurts:</span>
+						<div class="who-hurts-pills">
+							{newProblem.whoHurts.map((persona) => (
+								<span class="who-hurts-pill">{persona}</span>
+							))}
+						</div>
+					</div>
+				)}
 			</>
 		)}
 
 		{hasVpcBlock && (
 			<>
-				<h3 id="context-value" class="case-chapter__sub">Value proposition</h3>
+				<h3 id="context-value" class="case-chapter__sub">
+					{hasBenefitMatrix ? 'User benefit matrix' : 'Value proposition'}
+				</h3>
 				{caseStory?.thesis && <p class="case-chapter__lead">{caseStory.thesis}</p>}
 
 				{showVpc && (
 					<StrategyzerValueCanvas
-						labels={tradeflowVpcData.labels}
-						productsAndServices={tradeflowVpcData.productsAndServices}
-						gainCreators={tradeflowVpcData.gainCreators}
-						painRelievers={tradeflowVpcData.painRelievers}
-						customerJobs={tradeflowVpcData.customerJobs}
-						gains={tradeflowVpcData.gains}
-						pains={tradeflowVpcData.pains}
+						labels={vpcData.labels}
+						productsAndServices={vpcData.productsAndServices}
+						gainCreators={vpcData.gainCreators}
+						painRelievers={vpcData.painRelievers}
+						customerJobs={vpcData.customerJobs}
+						gains={vpcData.gains}
+						pains={vpcData.pains}
 					/>
 				)}
 
-				{showContrast && (
-					<div class="case-contrast-mini">
-						{contrastItems.map((item) => (
-							<div>
-								<p><strong>Before:</strong> {item.painTitle}</p>
-								<p><strong>After:</strong> {item.gainTitle}</p>
+				{hasBenefitMatrix ? (
+					<CaseBenefitMatrix items={benefitMatrix!} />
+				) : (
+					<>
+						{showContrast && (
+							<div class="case-contrast-mini">
+								{contrastItems.map((item) => (
+									<div>
+										<p><strong>Before:</strong> {item.painTitle}</p>
+										<p><strong>After:</strong> {item.gainTitle}</p>
+									</div>
+								))}
 							</div>
-						))}
-					</div>
-				)}
+						)}
 
-				{!showVpc && contrastItems.length > 0 && !showContrast && (
-					<div class="case-contrast-mini">
-						{contrastItems.map((item) => (
-							<div>
-								<p><strong>{item.painTitle}</strong> — {item.painDescription}</p>
-								<p><strong>{item.gainTitle}</strong> — {item.gainDescription}</p>
+						{!showVpc && contrastItems.length > 0 && !showContrast && (
+							<div class="case-contrast-mini">
+								{contrastItems.map((item) => (
+									<div>
+										<p><strong>{item.painTitle}</strong> — {item.painDescription}</p>
+										<p><strong>{item.gainTitle}</strong> — {item.gainDescription}</p>
+									</div>
+								))}
 							</div>
-						))}
-					</div>
+						)}
+					</>
 				)}
 			</>
 		)}
@@ -214,5 +245,53 @@ const show = hasProductCopy || hasVpcBlock || hasStoryBlocks;
 		border: 1px solid var(--card-border);
 		padding: 0.2rem 0.55rem;
 		border-radius: var(--radius-sm);
+	}
+
+	.problem-header-wrap {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.75rem;
+		flex-wrap: wrap;
+	}
+
+	.evidence-badge {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+		background: var(--card-bg-elevated);
+		border: 1px dashed var(--card-border);
+		padding: 0.15rem 0.5rem;
+		border-radius: var(--radius-full);
+	}
+
+	.who-hurts-wrap {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: 0.5rem;
+		margin-top: -0.25rem;
+		margin-bottom: 1rem;
+		font-size: 0.75rem;
+	}
+
+	.who-hurts-label {
+		color: var(--text-muted);
+		text-transform: uppercase;
+		font-size: 0.68rem;
+		letter-spacing: 0.05em;
+	}
+
+	.who-hurts-pills {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.35rem;
+	}
+
+	.who-hurts-pill {
+		padding: 0.15rem 0.45rem;
+		background: var(--card-bg-elevated);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-full);
+		color: var(--text-muted);
 	}
 </style>

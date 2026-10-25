@@ -1,0 +1,318 @@
+---
+import type { ImprovementItem, ProofLevel } from '../../types/project';
+
+interface Props {
+	improvements: ImprovementItem[];
+}
+
+const { improvements = [] } = Astro.props;
+
+function getProofBadgeClass(proof?: ProofLevel) {
+	if (!proof) return 'proof-badge--designed';
+	switch (proof) {
+		case 'measured':
+			return 'proof-badge--measured';
+		case 'estimated':
+			return 'proof-badge--estimated';
+		case 'designed':
+			return 'proof-badge--designed';
+		case 'qualitative':
+			return 'proof-badge--qualitative';
+		default:
+			return 'proof-badge--designed';
+	}
+}
+---
+
+{improvements.length > 0 && (
+	<div class="improvements-wrap">
+		<div class="improvements-grid">
+			{improvements.map((item) => (
+				<article class="improvement-card">
+					<div class="improvement-card__head">
+						<span class="improvement-area font-mono">{item.area}</span>
+						{item.measure?.proof && (
+							<span class={`proof-badge font-mono ${getProofBadgeClass(item.measure.proof)}`}>
+								{item.measure.proof}
+							</span>
+						)}
+					</div>
+
+					<div class="improvement-contrast">
+						<div class="contrast-row contrast-row--before">
+							<span class="contrast-tag font-mono">Before</span>
+							<p class="contrast-text">{item.before}</p>
+						</div>
+						<div class="contrast-row contrast-row--after">
+							<span class="contrast-tag contrast-tag--accent font-mono">After</span>
+							<p class="contrast-text font-medium">{item.after}</p>
+						</div>
+					</div>
+
+					<div class="improvement-how">
+						<span class="how-label font-mono">How:</span>
+						<p class="how-text">{item.how}</p>
+					</div>
+
+					{item.userBenefit && (
+						<div class="improvement-benefit">
+							<span class="benefit-label font-mono">User benefit:</span>
+							<p class="benefit-text">{item.userBenefit}</p>
+						</div>
+					)}
+
+					{item.measure && (
+						<div class="improvement-measure">
+							<div class="measure-metric font-mono">
+								<span class="measure-label">Metric:</span> {item.measure.metric}
+							</div>
+							<div class="measure-delta font-mono">
+								<span class="measure-from">{item.measure.from}</span>
+								<span class="measure-arrow">→</span>
+								<span class="measure-to">{item.measure.to}</span>
+							</div>
+						</div>
+					)}
+
+					<div class="improvement-footer">
+						<span class="attribution-badge font-mono">
+							Attribution: {item.attribution}
+						</span>
+						{item.ref && (
+							<a href={item.ref} class="ref-link font-mono" target="_blank" rel="noopener noreferrer">
+								Reference ↗
+							</a>
+						)}
+					</div>
+				</article>
+			))}
+		</div>
+	</div>
+)}
+
+<style>
+	.improvements-wrap {
+		margin-top: 1rem;
+		width: 100%;
+	}
+
+	.improvements-grid {
+		display: grid;
+		grid-template-columns: 1fr;
+		gap: 1rem;
+	}
+
+	@media (min-width: 768px) {
+		.improvements-grid {
+			grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+		}
+	}
+
+	.improvement-card {
+		background: var(--card-bg-elevated);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md);
+		padding: 1.15rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.85rem;
+		transition: border-color var(--dur-fast) ease;
+	}
+
+	.improvement-card:hover {
+		border-color: var(--card-border-hover);
+	}
+
+	.improvement-card__head {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.75rem;
+	}
+
+	.improvement-area {
+		font-size: 0.88rem;
+		font-weight: 700;
+		color: var(--accent);
+		letter-spacing: 0.02em;
+	}
+
+	.proof-badge {
+		font-size: 0.68rem;
+		font-weight: 700;
+		text-transform: uppercase;
+		letter-spacing: 0.06em;
+		padding: 0.2rem 0.5rem;
+		border-radius: var(--radius-full);
+		white-space: nowrap;
+	}
+
+	.proof-badge--measured {
+		background: rgba(34, 197, 94, 0.15);
+		color: #16a34a;
+		border: 1px solid rgba(34, 197, 94, 0.35);
+	}
+
+	:root[data-theme="dark"] .proof-badge--measured {
+		color: #4ade80;
+		border-color: rgba(74, 222, 128, 0.35);
+	}
+
+	.proof-badge--estimated {
+		background: rgba(234, 179, 8, 0.12);
+		color: #b45309;
+		border: 1px dashed rgba(234, 179, 8, 0.4);
+	}
+
+	:root[data-theme="dark"] .proof-badge--estimated {
+		color: #facc15;
+	}
+
+	.proof-badge--designed {
+		background: var(--card-bg);
+		color: var(--text-muted);
+		border: 1px dashed var(--card-border);
+		opacity: 0.9;
+	}
+
+	.proof-badge--qualitative {
+		background: rgba(147, 51, 234, 0.1);
+		color: #9333ea;
+		border: 1px dotted rgba(147, 51, 234, 0.35);
+	}
+
+	:root[data-theme="dark"] .proof-badge--qualitative {
+		color: #c084fc;
+	}
+
+	.improvement-contrast {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		background: var(--card-bg);
+		padding: 0.75rem 0.85rem;
+		border-radius: var(--radius-sm);
+		border: 1px solid var(--card-border);
+	}
+
+	.contrast-row {
+		display: grid;
+		grid-template-columns: 3.5rem 1fr;
+		gap: 0.5rem;
+		align-items: baseline;
+	}
+
+	.contrast-tag {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.contrast-tag--accent {
+		color: var(--accent);
+	}
+
+	.contrast-text {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	.contrast-row--after .contrast-text {
+		color: var(--text-main);
+	}
+
+	.improvement-how,
+	.improvement-benefit {
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+		font-size: 0.85rem;
+	}
+
+	.how-label,
+	.benefit-label {
+		font-size: 0.68rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--accent);
+		font-weight: 600;
+	}
+
+	.how-text,
+	.benefit-text {
+		margin: 0;
+		line-height: 1.5;
+		color: var(--text-muted);
+	}
+
+	.benefit-text {
+		color: var(--text-main);
+	}
+
+	.improvement-measure {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		padding: 0.45rem 0.75rem;
+		background: var(--accent-subtle);
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm);
+		font-size: 0.78rem;
+	}
+
+	.measure-label {
+		color: var(--text-muted);
+	}
+
+	.measure-delta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+	}
+
+	.measure-from {
+		color: var(--text-muted);
+		text-decoration: line-through;
+	}
+
+	.measure-arrow {
+		color: var(--accent);
+	}
+
+	.measure-to {
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.improvement-footer {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 0.5rem;
+		margin-top: auto;
+		padding-top: 0.35rem;
+	}
+
+	.attribution-badge {
+		font-size: 0.65rem;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+		color: var(--text-muted);
+	}
+
+	.ref-link {
+		font-size: 0.72rem;
+		color: var(--accent);
+		text-decoration: none;
+	}
+
+	.ref-link:hover {
+		text-decoration: underline;
+	}
+</style>

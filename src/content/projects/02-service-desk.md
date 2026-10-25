@@ -1,296 +1,402 @@
 ---
-id: '02'
-title: Customer Support System – Multi-Channel Helpdesk Platform
-subtitle: Full-stack customer support and helpdesk platform with split-pane triage, dual-database engine (MongoDB + MySQL), and automated IMAP email ticketing.
-description: Architected a multi-tenant customer support platform delivering sub-second triage across 4 agent workbenches and 3 ingestion channels by designing a dual-database engine (MongoDB + MySQL), automated IMAP synchronization, and a Laravel BFF.
-chip: SaaS & Customer Support
+id: "02"
+title: "Service Desk – Diagnostics-First Support Platform & In-App Vue Widget"
+subtitle: "Multi-tenant helpdesk unifying a native Vue in-app widget, IMAP email and public web forms into one agent inbox, shipped as reusable NPM packages for the company suite and as a standalone web app."
+# Google XYZ: Accomplished [X], measured by [Y], by doing [Z]
+description: "Delivered a diagnostics-first support platform unifying 3 intake channels in one agent inbox, shipped as reusable NPM packages for the company suite plus a standalone web app, via database-driven app routing and server-side PII redaction."
+chip: "SaaS & Customer Support"
 order: 2
 featured: true
-platformType: desktop
+platformType: "desktop"
+
+# ROLE, OWNERSHIP & LIFECYCLE
+role: "Full-Stack Software Engineer (Solo Owner)"
+timeline: "2026 — Present"
+status: "Active Production"
+classification: "🔒 Proprietary Enterprise IP · Proficient Information Systems"
+
 contribution:
-  mode: core
-  label: Core contributor
-  headline: Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z].
+  mode: owner
+  startedFrom: scratch
+  myShare: lead
+  teamSize: 1
+  label: "Solo Engineer & Product Owner · Proficient Information Systems"
+  headline: "Planned, validated with the client, and delivered the Service Desk hub, reusable NPM packages, native Vue in-app widget and standalone web app as the only engineer, working from architecture direction set by the CEO and company architect."
   scope:
-  - Flexible Ticket Schema vs. Strict Relational Configuration
-  - Unified Conversation Threading with Public Replies vs. Private Internal Notes
-  - Reliable Bidirectional Email Ingestion Without Direct Provider Webhooks
-  - Lightweight Public Web Forms Without Heavy Frontend App Overhead
-  - Frontend State Management Across Complex Multi-Tab Workbenches
+    - "Product planning and requirements verification with the client, then end-to-end implementation"
+    - "Reusable NPM package components (@itc/service-desk) integrated into the company suite, plus a standalone web app separate from the suite"
+    - "Implemented the architect-directed stack: IMAP ingestion, Knockout.js visitor surface, and the multi-channel intake model"
+    - "Laravel BFF (/api/v1/support/*), dual-database persistence (MongoDB tickets + MySQL configuration/RBAC)"
+    - "Vue 3 / Quasar agent workbenches and the shared @itc/service-desk package"
+    - "In-app Vue widget: Sanctum-bound intake, telemetry buffers, screenshot capture and annotation"
+    - "Release V1: dynamic app registry, origin triage, omnichannel continuity"
   outOfScope:
-  - Product roadmap and pricing (client-owned)
-  - Production DevOps and hosting (separate team)
-  team: Solo core engineer on a client product squad
-myImpact:
-- label: Multi-Tenant Isolation
-  value: 100%
-  attribution: product
-  detail: Stateless Sanctum tokens and tenant-resolved database boundaries
-- label: Agent Workbenches
-  value: 4 Surfaces
-  attribution: product
-  detail: Split-pane inbox, queue streams, drag-and-drop form builder, email templates
-- label: Inbound Channels
-  value: 3 Channels
-  attribution: product
-  detail: Manual agent creation, automated IMAP email sync, and public web forms
-- label: BFF Endpoints
-  value: 30+ REST APIs
-  attribution: personal
-  detail: Dedicated domain endpoints for tickets, queues, mailbox sync, and forms
-- label: Database Layer
-  value: Dual-Engine
-  attribution: product
-  detail: MongoDB flexible ticket documents + MySQL relational configuration & RBAC
-- label: Thread Isolation
-  value: Zero Leaks
-  attribution: product
-  detail: Dual-lane public customer replies isolated from private internal notes
+    - "High-level architecture direction (technology and channel choices) set by the CEO and company architect"
+    - "Product pricing and commercial strategy (company-owned)"
+    - "Production hosting infrastructure (separate team)"
+
+# REAL USER PROBLEM
+problem:
+  statement: "Portfolio apps reported bugs through scattered emails and hardcoded .env stream mappings, so agents received 'cannot reproduce' tickets with no route, API or error context, and every new app meant a code deploy."
+  evidence: interviews              # requirements verified with the client before build
+  whoHurts:
+    - "end-reporter"
+    - "host-app-developer"
+    - "support-agent"
+
+# USER BENEFIT MATRIX
+benefitMatrix:
+  - persona: "End Reporter (App User / Employee)"
+    pain: "Manually describing browser, URL, screen size and steps; separate helpdesk login"
+    before: "Free-text emails with no environment context and a second account to track tickets."
+    after: "One-click filing from inside the app; route, viewport, user agent and annotated screenshot attach automatically via the existing Sanctum session."
+    measure:
+      metric: "Reporter-typed environment details"
+      from: "Manual description of URL, device and steps"
+      to: "Auto-captured diagnostics pack (schema_version 1)"
+      proof: designed
+    attribution: personal
+    feature:
+      - "In-App Widget"
+      - "Screenshot Annotator"
+      - "My Tickets"
+  - persona: "Support Agent / Triage Operator"
+    pain: "'Cannot reproduce' loops and context switching between app inboxes"
+    before: "Tickets without error messages, API payloads or origin app."
+    after: "Diagnostics tab with the last 20 Axios calls (status, latency, request_id), Vue exceptions, last failed API, plus client_app badges and a multi-select app filter."
+    measure:
+      metric: "Network context per ticket"
+      from: "None"
+      to: "Last 20 API calls + runtime errors"
+      proof: designed
+    attribution: personal
+    feature:
+      - "Diagnostics Tab"
+      - "Origin Triage Filter"
+      - "Unified Inbox"
+  - persona: "Host App Developer / SaaS Owner"
+    pain: "Config sprawl: stream IDs and secrets hardcoded across .env files"
+    before: "SERVICE_DESK_IN_APP_STREAM_IDS redeployed for every new app."
+    after: "support_widget_apps registry and /service-desk/apps admin page map apps to streams with zero code deploys."
+    measure:
+      metric: "Deploys needed to onboard an app"
+      from: "1 backend deploy per app"
+      to: "0 (self-service registration)"
+      proof: designed
+    attribution: personal
+    feature:
+      - "App Registry"
+      - "Admin Apps Page"
+      - "Origin Allow-List"
+
+# PRODUCT CONTEXT & VALUE PROPOSITION CANVAS
 product:
-  summary: Architected and delivered an enterprise-grade multi-channel helpdesk and customer support platform across 4 primary agent workbenches (Triage Inbox, Stream Queues, Form Builder, Email Templates) [X], supporting 3 automated inbound ingestion channels (agent manual entry, bidirectional IMAP email sync, and public embeddable web forms) [Y] backed by a 30+ endpoint RESTful BFF, asynchronous queue workers, and a dual-database architecture combining MongoDB flexible documents with MySQL relational RBAC [Z].
-  problem: Organizations previously managed customer requests through fragmented email inboxes and ad-hoc spreadsheets, causing delayed response times, lost tickets, and no visibility into team workload. Support teams needed a centralized multi-tenant platform with triage queues, assignee routing, threaded customer conversations with private internal notes, automated email ingestion, and custom web forms—without forcing external customers to create platform accounts.
+  summary: "Planned, validated and shipped a diagnostics-first, multi-tenant support platform that unifies in-app Vue, IMAP email and public web form intake in one agent inbox, distributed as reusable NPM packages (@itc/service-desk) and a standalone web app."
+  tagline: "One agent inbox for in-app, email and web form support, with diagnostics attached."
+  problem: "Portfolio apps reported bugs through scattered emails and hardcoded .env stream mappings, so agents received 'cannot reproduce' tickets with no route, API or error context, and every new app meant a code deploy."
   valueProposition:
-    targetCustomer: Multi-Tenant SaaS Enterprises, Support Team Leads & Customer Success Desks
-    showCanvas: false
+    targetCustomer: "App Users, Host Developers & Support Agents"
+    showCanvas: true
     items:
-    - painTitle: Lost Inquiries in Scattered Gmail Inboxes
-      painDescription: Customer emails were spread across unmonitored aliases and personal inboxes, causing delayed responses, duplicate replies, and zero visibility into team backlog.
-      gainTitle: Unified Multi-Channel Agent Workbench
-      gainDescription: Centralized Vue 3/Quasar desktop triage inbox aggregating automated IMAP email streams, custom public web forms, and manual ticket creation in one split-pane workspace.
-    - painTitle: Accidental Leaks of Internal Discussions to Customers
-      painDescription: Support agents collaborating with engineers frequently replied on customer email threads, accidentally exposing internal technical deliberations.
-      gainTitle: Dual-Lane Public Replies vs. Private Internal Notes
-      gainDescription: Engineered strict message channel isolation within the same thread—yellow-tinted private notes remain internal, while public replies trigger sanitized SMTP emails.
-    - painTitle: Spam Overload & Heavy Client Overhead on Web Forms
-      painDescription: External contact forms were flooded with bot submissions and suffered slow load times from embedding heavy frontend SPA bundles.
-      gainTitle: Lightweight Server-Rendered Forms with Anti-Spam
-      gainDescription: Visitor-facing forms load instantly as server-rendered HTML with double opt-in email verification, honeypots, rate limiting, and reCAPTCHA protection.
-    - painTitle: Rigid SQL Schemas Breaking Custom Customer Fields
-      painDescription: Every enterprise client required different custom fields (order IDs, priority tags, device models) that caused frequent schema migrations.
-      gainTitle: Dual-Database Architecture (MongoDB + MySQL)
-      gainDescription: Flexible MongoDB ticket documents handle unlimited arbitrary custom payloads, while MySQL preserves strict relational integrity for auth, queues, and mailboxes.
-role: Full-Stack Software Engineer (Solo Core Contributor)
-timeline: 2026 — Present
-status: Active Production
-classification: 🔒 Proprietary Enterprise IP
+      - painTitle: "Manual Context & Extra Logins"
+        painDescription: "Reporters retype URL, viewport and steps, and need a separate helpdesk account."
+        gainTitle: "One-Click Context Capture"
+        gainDescription: "Route, viewport, screenshot and identity attach automatically via the host app's Sanctum session."
+      - painTitle: "Redeploys for Every New App"
+        painDescription: "Hardcoded .env stream IDs force a backend deploy per onboarded app."
+        gainTitle: "Zero-Deploy App Registry"
+        gainDescription: "A support_widget_apps table and admin page map apps to streams at request time."
+      - painTitle: "'Cannot Reproduce' Loops"
+        painDescription: "Agents chase missing API payloads across disconnected inboxes."
+        gainTitle: "Diagnostics in One Inbox"
+        gainDescription: "Last 20 API calls, request IDs and Vue errors, filterable by app."
+    canvas:
+      labels:
+        title: "The Value Proposition Canvas"
+        valueProposition: "Service Desk Platform & In-App Vue Widget"
+        customerSegment: "App Users, Host Devs & Support Agents"
+      customerJobs:
+        - title: "Report Bugs In-Workflow"
+          note: "File issues from the current Vue page without leaving the app."
+        - title: "Onboard Apps Fast"
+          note: "Add support intake to a new app without rebuilding forms."
+        - title: "Triage Multi-App Tickets"
+          note: "Reproduce and resolve tickets from many apps in one workspace."
+      pains:
+        - title: "Manual Context Entry"
+          note: "Reporters retype URL, screen size and steps taken."
+        - title: "Secondary Login Friction"
+          note: "A separate helpdesk account just to track a ticket."
+        - title: "Hardcoded .env Routing"
+          note: "Stream IDs in config files force a deploy per new app."
+        - title: "Cannot Reproduce Loops"
+          note: "Missing errors and API payloads cause back-and-forth."
+      gains:
+        - title: "1-Click Context Filing"
+          note: "Route, viewport and screenshot attach automatically."
+        - title: "Self-Service Registry"
+          note: "Map apps to streams from an admin page, no deploy."
+        - title: "High-Fidelity Diagnostics"
+          note: "Last 20 API calls, request IDs and Vue errors per ticket."
+        - title: "Single Multi-App Inbox"
+          note: "One feed with origin badges and a per-app filter."
+      productsAndServices:
+        - title: "In-App Vue Widget"
+          note: "Help panel capturing router state, API calls and screenshots."
+        - title: "Service Desk Hub"
+          note: "Agent inbox for widget, IMAP email and public form tickets."
+        - title: "Admin App Registry"
+          note: "support_widget_apps table and admin page for app-to-stream mapping."
+      painRelievers:
+        - title: "Auto Context & Error Capture"
+          note: "Captures route, viewport, locale and unhandled exceptions."
+        - title: "Sanctum Session, Zero Seats"
+          note: "Host app auth identifies reporters; no agent seat needed."
+        - title: "Server-Side PII Redaction"
+          note: "Strips auth headers, cookies and API keys before saving."
+      gainCreators:
+        - title: "Central App-Stream Map"
+          note: "Tickets route by app_id from the database at request time."
+        - title: "Unified Diagnostics Schema"
+          note: "Versioned pack (schema_version 1) attached to every ticket."
+        - title: "Origin Badges & Filter"
+          note: "client_app chips and multi-select filter isolate each queue."
+
+# Flat Stack Tags for Cards & UI Badges
 stack:
-- PHP
-- Blade
-- Quasar
-- Knockout.js
-- IMAP
-- MySQL
+  - "Vue 3"
+  - "Laravel 11"
+  - "MongoDB"
+  - "MySQL"
+  - "TypeScript"
+  - "Quasar 2"
+
+# WHAT I IMPROVED (Release V1)
+improvements:
+  - area: "In-app ticket routing"
+    before: "Stream mapping hardcoded in .env (SERVICE_DESK_IN_APP_STREAM_IDS)"
+    after: "Database-backed registry (support_widget_apps) resolving app_id to support_stream_id at request time"
+    how: "New widget middleware on POST /api/v1/support/me/tickets with allowed_origins checks and 400 on unregistered app_id"
+    measure:
+      metric: "Code deploys per new app"
+      from: "1"
+      to: "0"
+      proof: designed
+    userBenefit: "Developers register new Vue apps in minutes without engineering involvement"
+    attribution: personal
+  - area: "Agent triage by origin"
+    before: "All app tickets mixed in one undifferentiated feed"
+    after: "client_app badge chips on ticket cards and multi-select app filter in ServiceDeskFiltersForm"
+    how: "client_app query parameter appended to GET /tickets"
+    measure:
+      metric: "Queue isolation per portfolio app"
+      from: "None"
+      to: "Per-app filtered views"
+      proof: designed
+    userBenefit: "Agents isolate a single product's queue without separate sessions"
+    attribution: personal
+
+# CATEGORIZED TECHNOLOGY STACK
 techStack:
   frontend:
-  - Quasar Framework (v2)
-  - Blade Templates
-  - Knockout.js
-  - Vue 3
-  - TypeScript
-  - Vue Router 4
-  - Modular Composable Architecture
-  - Vite Build System
+    - "Vue 3"
+    - "Quasar 2"
+    - "TypeScript"
+    - "Vue Router 4"
+    - "Knockout.js (public form visitor surface)"
+    - "Marker.js (screenshot annotation)"
+    - "Modular Composables"
+    - "@itc/service-desk package"
   backend:
-  - Laravel 11+ (BFF Architecture)
-  - Laravel Sanctum & Tenant Isolation Middleware
-  - Asynchronous Queues & Background Workers
-  - IMAP / SMTP Email Ingestion Engine
-  - Server-Rendered Visitor Forms (Blade & JavaScript)
+    - "Laravel 11+ (BFF)"
+    - "PHP 8.3"
+    - "Laravel Sanctum"
+    - "Tenant Isolation Middleware"
+    - "Queues & Background Workers"
+    - "IMAP / SMTP Engine"
   database:
-  - MongoDB (Flexible Ticket Documents & Custom Schemas)
-  - MySQL (Relational Streams, Mailboxes, RBAC & Form Schemas)
+    - "MongoDB (ticket documents)"
+    - "MySQL (streams, apps registry, mailboxes, RBAC, forms)"
   devops:
-  - Docker Compose Local Environment
-  - Cron Scheduler & Multi-Worker Queue Runners
-  - Modular Monorepo Architecture
+    - "Docker Compose"
+    - "Cron Scheduler & Queue Workers"
+    - "Private NPM package publishing"
+    - "Standalone web app deployment"
   mobile_hardware: []
+
+# LINKS & PROOF
 links:
-  liveDemo: ''
-  parentPlatform: ''
-  github: ''
-  docs: ''
+  liveDemo: ""
+  parentPlatform: ""
+  github: ""
+  docs: ""
+
 images:
-- /images/projects/service-desk/inbox-ticket-detail.webp
-- /images/projects/service-desk/inbox-tickets-list.webp
-- /images/projects/service-desk/form-builder-questions.webp
-- /images/projects/service-desk/form-builder-settings.webp
-- /images/projects/service-desk/email-template-editor.webp
+  - "/images/projects/service-desk/inbox-ticket-detail.webp"
+  - "/images/projects/service-desk/inbox-tickets-list.webp"
+  - "/images/projects/service-desk/form-builder-questions.webp"
+  - "/images/projects/service-desk/form-builder-settings.webp"
+  - "/images/projects/service-desk/email-template-editor.webp"
+  # TODO(me): add /images/projects/service-desk/widget-apps-registry.webp and diagnostics-tab.webp
 visualAssets:
-  heroMockup: /images/projects/service-desk/inbox-ticket-detail.webp
-architectureSummary: Vue 3/Quasar desktop SPA connecting to a dedicated Laravel Backend-for-Frontend (BFF) at /api/v1/support/*; tickets persist as flexible MongoDB documents with rich metadata; stream configuration, mailboxes, and form schemas reside in MySQL; background workers handle IMAP email ingestion and outbound SMTP notifications asynchronously.
+  heroMockup: "/images/projects/service-desk/inbox-ticket-detail.webp"
+
+# ENGINEERING DECISIONS MATRIX
 keyDecisions:
-- challenge: Flexible Ticket Schema vs. Strict Relational Configuration
-  decision: 'Adopted a dual-database architecture: stored highly variable ticket payloads, custom fields, and conversation threads in MongoDB, while keeping tenant configurations, mailbox credentials, queues, and permissions in relational MySQL.'
-  outcome: Achieved ultra-fast ticket reads and schema flexibility for custom customer attributes while preserving strict relational integrity for system administration.
-- challenge: Unified Conversation Threading with Public Replies vs. Private Internal Notes
-  decision: Engineered a dual-lane messaging system allowing support agents to toggle between customer-facing email replies and private internal team notes within the same chronological thread.
-  outcome: Streamlined agent collaboration and eliminated accidental exposure of internal discussion to end customers.
-- challenge: Reliable Bidirectional Email Ingestion Without Direct Provider Webhooks
-  decision: Implemented an asynchronous IMAP polling pipeline on dedicated background worker queues with automatic message deduplication and email thread matching via In-Reply-To, References, and ticket hash identifiers.
-  outcome: Incoming customer emails automatically convert into tickets or append to existing threads reliably without blocking web API requests.
-- challenge: Lightweight Public Web Forms Without Heavy Frontend App Overhead
-  decision: Rendered visitor-facing forms as lightweight server-rendered HTML pages with client-side validation and anti-spam protection (reCAPTCHA, rate limits, honeypots), while keeping the full-featured drag-and-drop form builder in the agent SPA.
-  outcome: Instant load times for external customers and embeddable iframe compatibility across third-party websites without loading heavy SPA bundles.
-- challenge: Frontend State Management Across Complex Multi-Tab Workbenches
-  decision: Designed a modular composable architecture with scoped services and clean memory lifecycle resets on tenant switches, avoiding global state bloat.
-  outcome: Fast, responsive split-pane navigation with zero state leakage across organizational tenants.
-- challenge: Spam Prevention & Data Quality on Public Submissions
-  decision: Introduced configurable double opt-in email verification, automated acknowledgement triggers, honeypot fields, and IP rate limiting on public form endpoints.
-  outcome: Drastically reduced spam submissions and prevented bogus ticket creation in agent triage queues.
+  - challenge: "Hardcoded .env stream mapping forced a deploy for every new Vue app."
+    decision: "Moved routing into a support_widget_apps table (app_id, support_stream_id, allowed_origins, is_active) with a widget-only middleware resolving the stream per request."
+    outcome: "Apps register through /service-desk/apps with zero code deploys; unregistered app_id submissions are rejected with 400."
+  - challenge: "New widget routing must never break existing email and form intake."
+    decision: "Scoped the middleware strictly to POST /api/v1/support/me/tickets so SupportEmailIngressService (IMAP) and public form controllers keep native mailbox/form stream mappings."
+    outcome: "Three channels coexist in one inbox; validated end to end across widget, email and form lifecycles."
+  - challenge: "'Cannot reproduce' tickets from missing client state."
+    decision: "Packaged a versioned diagnostics pack (schema_version 1): route metadata, viewport, locale, tenant, a ring-buffer of the last 20 Axios calls with request_id, and trapped window.onerror, unhandled rejections and Vue errors."
+    outcome: "Every in-app ticket arrives with reproducible context and an isolated last_failed_api."
+  - challenge: "Diagnostics can leak credentials and PII into tickets."
+    decision: "Enforced server-side sanitization: drop unmapped keys, cap payload size, redact Authorization, Cookie, Set-Cookie and API keys before persisting as support.context and diagnostics.json."
+    outcome: "Debug context without storing secrets in the ticket store."
+  - challenge: "Support had to work inside the company suite and also as an independent product, without duplicating UI code."
+    decision: "Packaged the agent console and in-app widget as reusable NPM components (@itc/service-desk) consumed by the suite, and built a standalone web app on the same packages."
+    outcome: "One shared codebase serves both the integrated suite experience and the standalone product; new host apps embed support by installing the package."
+  - challenge: "Variable custom ticket fields vs strict relational config."
+    decision: "Dual-database: MongoDB for flexible ticket documents and threads, MySQL for streams, apps, mailboxes, forms and RBAC."
+    outcome: "Schema flexibility for custom attributes with relational integrity for administration."
+  - challenge: "Public replies leaking internal discussion."
+    decision: "Dual-lane threading: public replies trigger sanitized SMTP, private notes stay internal within one chronological thread."
+    outcome: "Zero accidental exposure of internal notes to customers."
+
 securityReliability:
-- Stateless token authentication (Sanctum) combined with tenant isolation middleware verifying membership and permissions on every API call.
-- Encrypted at-rest storage for external mailbox credentials; secrets are never exposed in API responses.
-- 'Multi-layered anti-spam defenses for public forms: cryptographic submission tokens, Google reCAPTCHA, and IP rate limits.'
-- Immutable server-side audit trails for incoming customer emails and outbound notifications.
-- Isolated background worker queues separating high-throughput email polling from immediate notification delivery.
+  - "Sanctum session auth plus tenant-isolation middleware verifying membership and permissions on every API call."
+  - "Origin allow-list (allowed_origins) and is_active flag per registered app; 400 for unregistered app_id."
+  - "Server-side payload scrubbing and header redaction for diagnostics packs."
+  - "Encrypted app secrets and mailbox credentials; never exposed in API responses."
+  - "Anti-spam on public forms: double opt-in, honeypot, IP rate limits, reCAPTCHA."
+  - "Isolated queue workers separating IMAP polling from outbound notifications."
+
 futureRoadmap:
-- Direct webhook ingestion engine for major email providers (SendGrid, Postmark, AWS SES) alongside IMAP.
-- Embeddable customer live-chat widget connected to real-time agent presence.
-- Automated SLA tracking and ticket escalation workflows.
-- AI-assisted auto-categorization and smart draft response suggestions.
+  - "MVP 2: SLA sweep engine with breach countdown chips, business-hours routing and round-robin assignment, keyboard triage, real-time WebSocket/SSE feed."
+  - "MVP 3: screenshot blur/blackout redaction, 'What we will send' opt-out tray, reply email notifications with tokenized reply-by-email, duplicate detection."
+  - "MVP 4: two-way webhook sync with Jira, Linear and GitHub; FRT and resolution dashboards; CSAT automation; integration failure alerts."
 ---
 
-## Executive Summary
+## System Architecture & Domain Scope
 
-**Service Desk** is a high-throughput, multi-tenant customer support and helpdesk platform. Built **full-stack**, it provides a modern **Vue 3 / Quasar SPA workbench** for customer support teams and a scalable **Laravel Backend-for-Frontend (BFF)** handling automated email synchronization, queue workers, and public web form ingestion.
+**Service Desk** is a diagnostics-first, multi-tenant support platform I built solo at Proficient Information Systems. The CEO and company architect set the technical direction (IMAP ingestion, Knockout.js for the visitor surface, the channel model, and product expectations); I planned the work, verified requirements with the client, and implemented and shipped the product. It turns the support inbox into a command center for a portfolio of Vue/Quasar apps, with three intake channels feeding one agent workspace.
 
-**Support agents** work inside a desktop SPA featuring a Gmail-style triage inbox with split-pane ticket inspection, advanced multi-attribute filtering (queues, tags, assignees, search), file attachments, and a dual-lane messaging interface offering **Public Customer Replies** alongside **Private Internal Team Notes**. **Administrators** manage **support queues** (stream assignment, routing rules, team permissions), **inbox mailboxes** (IMAP/SMTP connection wizard, health checks, manual sync), **public web forms** (visual drag-and-drop form builder, custom theme styling, reCAPTCHA anti-spam), and **templated automated emails** (auto-acknowledgements, ticket confirmation links).
+### Distribution Model
 
-**External customers never need an account.** They submit inquiries seamlessly via **email** (automated background IMAP parsing into structured tickets) or **public web forms** (lightweight server-rendered visitor pages with double opt-in verification). Inquiries persist with rich custom metadata in **MongoDB**, while core relational configurations, user roles, and mailbox credentials reside in **MySQL**.
+- **NPM packages:** the agent console, in-app widget and shared composables ship as reusable components (`@itc/service-desk`), published through the company's internal NPM system.
+- **Suite integration:** the packages plug into the company suite, so host apps gain support intake by installing the package and registering an `app_id`.
+- **Standalone web app:** a separate deployment of the same packages for use outside the suite.
 
----
-
-## Architecture
-
-### System Topology & Ingestion Pipeline
+| Channel | Ingress | Tag | Stream resolution |
+|---|---|---|---|
+| In-App Vue Widget | `POST /api/v1/support/me/tickets` (Sanctum session) | `in_app` | `app_id` → `support_widget_apps` → `support_stream_id` |
+| Email | Async IMAP polling → `SupportEmailIngressService` | `email` | Mailbox configuration |
+| Public Web Form | Server-rendered hosted form | `form` | Form configuration |
 
 ```mermaid
 flowchart TB
-    subgraph Customers["External Customers (Zero Account Overhead)"]
-        EmailIn["Inbound Support Email"]
-        WebForm["Public Embeddable Web Form"]
+    subgraph Host["Host Vue App (Sanctum)"]
+        W["HelpHeaderMount / InAppTicketPanelLayer"]
+        T["Telemetry: Axios ring-buffer · router · runtime errors"]
+        S["Screenshot capture + annotator"]
+    end
+    Email["Inbound Email (IMAP)"]
+    Form["Public Web Form"]
+
+    subgraph API["Laravel BFF /api/v1/support/*"]
+        MW["Widget Middleware: app_id + origin check"]
+        REG[("support_widget_apps")]
+        SAN["Sanitizer: strip, cap, redact"]
+        ING["IMAP Ingress Service"]
+        FC["Public Form Controllers"]
     end
 
-    subgraph FrontendSPA["Agent Desktop SPA (Vue 3 / Quasar / TypeScript)"]
-        Nav["Navigation & Route Guards"]
-        Views["Agent Workbenches: Triage Inbox · Queues · Form Builder · Templates"]
-        State["Modular State Composables & Service Client"]
-        ThreadUI["Dual-Lane Message Thread (Customer Reply vs Internal Note)"]
+    subgraph Data["Persistence"]
+        M[("MongoDB: tickets")]
+        Q[("MySQL: streams, apps, RBAC")]
     end
 
-    subgraph BackendAPI["Backend-for-Frontend (Laravel REST API Host)"]
-        BFF["REST API Gateway (/api/v1/support/*)"]
-        VisitorRoutes["Lightweight Public Visitor Form Host"]
-        AuthMW["Authentication & Tenant Isolation Middleware"]
-        DomainServices["Domain Services: Ticket Manager · Ingestion · Form Engine · Mailer"]
-        EventListeners["Event Listeners & Outbound SMTP Dispatcher"]
-    end
+    Agent["Agent Console (@itc/service-desk): unified inbox, client_app filter, diagnostics tab"]
 
-    subgraph Workers["Background Asynchronous Workers"]
-        Scheduler["Cron Task Scheduler"]
-        PollWorker["Dedicated IMAP Polling Queue Worker"]
-        MailWorker["Transactional Email Delivery Queue Worker"]
-    end
-
-    subgraph Persistence["Dual Database Layer"]
-        Mongo[("MongoDB<br/>Rich Support Ticket Documents & Custom Fields")]
-        MySQL[("MySQL<br/>Queues, Mailbox Auth, Forms, Templates & Audit Logs")]
-        ExtMail["External IMAP Mail Servers"]
-        SMTP["Outbound SMTP Gateways"]
-    end
-
-    EmailIn --> ExtMail
-    WebForm --> VisitorRoutes
-
-    Views --> State
-    State --> ThreadUI
-    Nav --> Views
-
-    State --> AuthMW --> BFF
-    BFF --> DomainServices
-    VisitorRoutes --> DomainServices
-    DomainServices --> Mongo
-    DomainServices --> MySQL
-
-    Scheduler --> PollWorker
-    BFF -->|"Manual Sync Trigger"| PollWorker
-    PollWorker --> ExtMail
-    PollWorker --> DomainServices
-
-    EventListeners --> MailWorker
-    MailWorker --> SMTP
-    EmailIn -.->|"Threaded Inbox View"| Customers
-    MailWorker -.->|"Automated Notification"| Customers
+    W --> MW
+    T --> MW
+    S --> MW
+    MW --> REG
+    MW --> SAN --> M
+    Email --> ING --> M
+    Form --> FC --> M
+    REG --> Q
+    M --> Agent
 ```
 
----
+Frontend follows a modular composable architecture (11 authenticated routes under `/service-desk/*`) with scoped state that resets on tenant switch. The agent console exposes four workbenches: triage inbox, stream queues, form builder and email templates, plus the V1 apps registry.
 
-## Technical Architecture Breakdown
+### Persona Value Map
 
-### Frontend Engineering (Vue 3 / Quasar SPA)
-
-| Functional Area | Engineering Implementation |
-|---|---|
-| **Routing & Navigation** | 11 authenticated routes under `/service-desk/*` with strict permission guards |
-| **State Management** | Scoped modular composables with automatic tenant cache reset on workspace switch |
-| **API Client Layer** | Structured REST service layer communicating with dedicated `/api/v1/support` endpoints |
-| **RBAC Security** | Granular action-based access control checking user roles before rendering sensitive actions |
-| **Triage Inbox** | High-performance split-pane inbox with dynamic sorting, filtering, and load-more pagination |
-| **Stream Management** | Multi-tab queue administration for routing rules, notification preferences, and team assignments |
-| **Visual Form Builder** | Drag-and-drop custom field builder with live preview, routing config, and embed code generator |
-
----
-
-### Backend Engineering (Laravel BFF & Background Pipeline)
-
-| Functional Area | Engineering Implementation |
-|---|---|
-| **API Gateway** | RESTful `/api/v1/support` endpoints serving dedicated agent queries and mutations |
-| **Ticket Persistence** | Document-based persistence in MongoDB enabling flexible schemas, arbitrary tags, and nested custom fields |
-| **Email Ingestion Engine** | Asynchronous IMAP sync with RFC-compliant threading (`In-Reply-To`, `References`, hash detection) |
-| **Public Form Ingress** | Double opt-in verification service with cryptographic token validation, honeypots, and rate limiters |
-| **Outbound Email Pipeline** | Event-driven queued transactional mailers sending branded customer updates and auto-acknowledgements |
-| **Granular RBAC** | Backend authorization gates enforcing `support.view`, `create`, `edit`, `assign`, `delete`, and `config` |
-| **Public Form Runtime** | Ultra-lightweight server-rendered HTML forms designed for high-speed iframe embeds |
-
----
-
-## Channel → Ticket Ingestion Lifecycle
-
-| Ingestion Channel | Ingress Mechanism | Ticket Channel Tag | Agent Workflow |
+| Persona | Pains removed | Shipped | Roadmap |
 |---|---|---|---|
-| **Manual Creation** | `POST /support/tickets` | `manual` | Agent creates ticket directly during phone or in-person support |
-| **Email Ingestion** | Asynchronous IMAP Polling Job | `email` | Automated parsing into ticket thread with customer reply lanes |
-| **Public Web Form** | Web Form API with optional email verification | `form` | Verified submissions convert into tickets with custom field tables |
+| **End Reporter** | Manual context entry, separate login, no ticket visibility | Auto context capture, screenshot crop and annotation, Sanctum session, My Tickets | Blur redaction, data opt-out tray, reply-by-email (MVP 3) |
+| **Host Developer** | Rebuilding intake per app, `.env` sprawl, seat costs, PII leaks | `@itc/service-desk` components, app registry, unlimited reporters, server-side redaction | None |
+| **Support Agent** | "Cannot reproduce" loops, multi-app switching, repetitive replies | Diagnostics tab, unified inbox with `client_app` filter, canned responses and templates | Duplicate detection (MVP 3), Jira/Linear/GitHub sync (MVP 4) |
 
----
+## Core Engineering Innovations
 
-## Visual Workflows & Production Interfaces
+### 1. Database-Driven App Registry (Release V1)
 
-### 1. Split-Pane Agent Inbox & Threaded Detail View
-![Service Desk Agent Inbox Split View [desktop]](/images/projects/service-desk/inbox-ticket-detail.webp#desktop)
+Replaced `SERVICE_DESK_IN_APP_STREAM_IDS` with a registry table:
 
-### 2. Multi-Channel Ticket Queue & Filter View
-![Service Desk All Tickets Queue [desktop]](/images/projects/service-desk/inbox-tickets-list.webp#desktop)
+```
+support_widget_apps
+  id · app_id · support_stream_id (FK → support_streams)
+  allowed_origins · is_active · timestamps
+```
 
-### 3. Public Web Form Field Builder
-![Service Desk Form Builder Questions [desktop]](/images/projects/service-desk/form-builder-questions.webp#desktop)
+Widget middleware on `POST /api/v1/support/me/tickets` extracts `app_id`, loads the active record, enforces `allowed_origins`, and resolves the destination stream. Unregistered or inactive apps return `400 Bad Request`. The `/service-desk/apps` page (`SupportWidgetAppsPage`, Quasar table plus create/edit modal, validated by FormRequests) lets owners onboard apps with no deploy.
 
-### 4. Public Form Routing & Mailbox Settings
-![Service Desk Form Builder Settings [desktop]](/images/projects/service-desk/form-builder-settings.webp#desktop)
+### 2. Channel Isolation
 
-### 5. Multi-Channel Email Template & Auto-Ack Editor
-![Service Desk Email Template Editor [desktop]](/images/projects/service-desk/email-template-editor.webp#desktop)
+The middleware applies only to the widget endpoint. IMAP ingestion and public forms keep their native mailbox/form stream mappings, so adding dynamic routing could not regress existing intake.
 
----
+### 3. Deterministic Diagnostics Engine (`schema_version: 1`)
 
-## Full-Stack Ownership Map
+- **Environment auto-capture:** route `fullPath`, `meta.title`, query params, viewport, user agent, locale, timezone, active tenant.
+- **Runtime pack:** ring-buffer of the last 20 Axios requests (latency, HTTP status, backend `request_id`), trapped `window.onerror`, unhandled promise rejections and Vue exceptions, with `last_failed_api` isolated.
+- **Sanitization pipeline:** unmapped keys dropped, size limits enforced, `Authorization`/`Cookie`/`Set-Cookie`/API keys redacted, stored as `support.context` and a downloadable `diagnostics.json`.
 
-| Architecture Layer | Core Responsibilities | Key Technologies |
-|---|---|---|
-| **Frontend UI & Workbenches** | Inbox triage, queue administration, form builder, email template editor | Vue 3, Quasar Framework, TypeScript |
-| **Frontend State & Services** | Modular state composables, HTTP client services, RBAC UI gates | Vue Composables, Axios REST Client |
-| **Backend REST API** | Request validation, resource serialization, tenant isolation middleware | Laravel 11, Laravel Sanctum |
-| **Domain Services** | Ticket lifecycle management, IMAP parser, email thread matcher, form builder | PHP 8.3 Services, MongoDB ODM |
-| **Asynchronous Workers** | Scheduled mailbox polling, email dispatching, deduplication pipelines | Laravel Queues, Redis / MySQL Queue |
-| **Public Visitor Surface** | High-performance embeddable forms, anti-spam filters, double opt-in confirmation | Server-rendered HTML, JavaScript, reCAPTCHA |
+### 4. Origin Triage
+
+`client_app` badge chips on ticket cards and a multi-select filter in `ServiceDeskFiltersForm.vue` that appends `client_app` to `GET /tickets`, isolating one product's queue inside the shared inbox.
+
+## Database Design & Concurrency
+
+- **MongoDB** stores ticket documents, custom fields and conversation threads (flexible schema, fast reads).
+- **MySQL** stores streams, the app registry, mailbox credentials (encrypted), form schemas, templates, RBAC and audit logs.
+- IMAP polling runs on dedicated queue workers with message deduplication and thread matching via `In-Reply-To`, `References` and ticket hash, so ingestion never blocks API requests.
+- Tenant isolation middleware verifies membership and permissions on every call; granular gates cover `support.view`, `create`, `edit`, `assign`, `delete` and `config`.
+
+## Performance Benchmarks & Reliability
+
+| Metric | Value |
+|---|---|
+| Intake channels unified | 3 |
+| Agent workbenches | 4 (+ apps registry) |
+| REST endpoints | 30+ |
+| Authenticated routes | 11 |
+| Network calls captured per ticket | last 20 |
+| Deploys to onboard a new app | 0 (was 1) |
+| Release V1 delivery | 4-day sprint |
+| Delivery surfaces | Suite-integrated packages + standalone web app |
+
+<!-- TODO(me): add measured numbers if available: ticket list p95 latency, IMAP poll-to-ticket time, number of registered apps, tickets handled. -->
+
+**V1 release validation:** end-to-end lifecycle executed across all three channels (widget with screenshot → correct stream; IMAP email → polled into ticket; public form → assigned stream), plus triage validation that email/form tickets display correctly beside widget tickets under the app filter. Feature tests cover `/me/*` routes and multi-tenant isolation.
+
+## Lessons Learned & Architectural Retrospective
+
+- **What worked:** scoping middleware to a single endpoint made a routing rewrite low-risk; versioning the diagnostics schema (`schema_version`) leaves room to evolve the payload.
+- **Packaging:** building reusable NPM components first meant the suite integration and the standalone app shared one codebase instead of diverging.
+- **Trade-off:** the dual-database design buys flexibility but adds operational surface (two engines to back up and monitor).
+- **Do differently:** ship the app registry from day one instead of `.env` mapping, and add screenshot redaction and the data opt-out tray earlier, since privacy controls matter most for diagnostic capture.
+- **Next:** SLA sweep engine and automated routing (MVP 2), then privacy controls (MVP 3) and Jira/Linear/GitHub sync (MVP 4).
