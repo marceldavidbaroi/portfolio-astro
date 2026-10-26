@@ -1,0 +1,215 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "**BrandWala Retail (BW Retail)** is a production-grade, market-aware cross-border commerce platform designed for cross-border consumer goods verticals — with its flagship deployment powering the **K-Beauty (Korean Beauty)** retail market."
+		},
+		{
+			"type": "paragraph",
+			"text": "The platform bridges international wholesale suppliers in the United Kingdom (**Kobareseller**, **Koba International**) with local resellers, retailers, and direct consumers in Bangladesh. Engineered with **React 19**, **Vite 7**, **Tailwind CSS**, **TanStack React Query**, and **Firebase Firestore Lite**, BW Retail automates the complete lifecycle: automated catalog scraping, market-scoped routing, dynamic 5-layer commission accounting, and quota-optimized customer intelligence."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Sourcing [\"UK Wholesale Sourcing\"]\n        SCRAPE[\"Python ETL Scrapers<br/>Session/CSRF & WooCommerce APIs\"] --> BRANDS[\"40+ K-Beauty Brands<br/>Auto-Tagging Engine\"]\n    end\n\n    subgraph Data [\"Firebase Cloud Firestore\"]\n        BRANDS --> PROD[\"markets/{market_id}/products\"]\n        PROD --> CART[\"carts/{email}/items\"]\n        CART --> ORDERS[\"markets/{market_id}/orders\"]\n        ORDERS --> PROJ[\"customer_order_book<br/>(Derived Projection)\"]\n        ORDERS --> ACCT[\"kbeauty_accounting_entries\"]\n    end\n\n    subgraph Client [\"React 19 Frontend SPA\"]\n        ROUTER[\"Market-Scoped Router<br/>/#/m/{marketSlug}/{vendorSlug}/*\"]\n        QUERY[\"TanStack Query v5<br/>Cache & Cursor Pagination\"]\n        UI[\"Radix / ShadCN Primitives<br/>Tailwind CSS\"]\n        CALC[\"5-Layer Commission Engine<br/>(ui_calculation snapshot)\"]\n    end\n\n    Data <--> QUERY\n    QUERY --> ROUTER --> UI\n    UI --> CALC"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "The Cross-Border Problem"
+		},
+		{
+			"type": "paragraph",
+			"text": "Operating cross-border commerce between the UK and Bangladesh creates unique architectural and operational challenges:"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Legacy [\"Legacy Manual Operations\"]\n        A[\"Browse UK wholesale sites manually\"] --> B[\"Manually copy GBP prices to sheets\"]\n        B --> C[\"Hand-calculate COD %, packing, and margin\"]\n        C --> D[\"Take orders via WhatsApp chats\"]\n        D --> E[\"No repeat customer history or risk scoring\"]\n        E --> F[\"Firestore read costs explode from un-indexed scans\"]\n    end"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Operational Challenge",
+				"Architectural Solution in BW Retail"
+			],
+			"rows": [
+				[
+					"**Stale Sourcing Prices**",
+					"Automated Python ETL ingestion pipelines fetching from session-authenticated supplier portals and WooCommerce APIs."
+				],
+				[
+					"**Multi-Tier Profit Sharing**",
+					"Deterministic 5-layer commission calculation engine snapshotting pricing, COD fees, and delivery charges on every order."
+				],
+				[
+					"**Firestore Read Quota Spikes**",
+					"Debounced search (250ms), cursor pagination, chunked status queries, and derived Customer Order Book projections."
+				],
+				[
+					"**Multi-Market Expansion**",
+					"Modular domain architecture separating global auth/users from market features (`web/src/features/kbeauty`)."
+				],
+				[
+					"**Database Scalability**",
+					"Prepared PostgreSQL relational schema, indexed views, and migration scripts for seamless Firestore-to-SQL cutover."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Technical Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Market-Aware & Vendor-Scoped Routing"
+		},
+		{
+			"type": "paragraph",
+			"text": "The application enforces strict URL hierarchy and domain isolation using React Router:"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Products Catalog**: `/#/m/{marketSlug}/{vendorSlug}/products`"
+				},
+				{
+					"text": "**Shopping Cart**: `/#/m/{marketSlug}/{vendorSlug}/cart`"
+				},
+				{
+					"text": "**Order Management**: `/#/m/{marketSlug}/{vendorSlug}/orders`"
+				},
+				{
+					"text": "**Customer Purchase Book**: `/#/m/{marketSlug}/{vendorSlug}/customers`"
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "Global services (authentication, session state, market navigation) remain completely decoupled from market domain logic, allowing new retail verticals to plug into the platform without modifying core infrastructure."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n    URL[\"Route: /#/m/kbeauty/retail-1/orders\"] --> GUARD[\"Market & Role Guards\"]\n    GUARD --> FEATURE[\"features/kbeauty/pages/OrdersPage.jsx\"]\n    FEATURE --> QUERY[\"useOrdersQuery (TanStack Query)\"]\n    QUERY --> FIRESTORE[\"Firestore: markets/kbeauty/orders\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. The 5-Layer Commission Engine"
+		},
+		{
+			"type": "paragraph",
+			"text": "Every order computes net commissions deterministically through domain calculation pipelines (`orderCommission.js` & `uiCommission.js`), storing an immutable `ui_calculation` map directly on the order document:"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Items [\"Item Layer\"]\n        BASE[\"Base Wholesale Price (GBP)\"]\n        CUSTOM[\"Custom Reseller Sell Price (BDT)\"]\n        COMM[\"Base Product Commission\"]\n        EXTRA[\"Extra Profit = (Sell Price − Base Price) × Qty\"]\n    end\n\n    subgraph Adjustments [\"Order Deductions & Charges\"]\n        DEL[\"Delivery Adjustment (District / Thana)\"]\n        COD[\"COD Charge (Total × COD Rate %)\"]\n        PACK[\"Packing Flat Fee\"]\n        INV[\"Invoice Flat Fee\"]\n        FREE[\"Free Delivery Subsidy / Deduction\"]\n    end\n\n    subgraph Output [\"Settlement\"]\n        NET[\"Net Reseller Commission<br/>= Products Commission + Delivery Adjustment<br/>− COD Amount − Packing − Invoice − Free Delivery Deduction\"]\n    end\n\n    BASE & CUSTOM & COMM --> EXTRA\n    EXTRA & DEL & COD & PACK & INV & FREE --> NET"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Quota Optimization & Derived Projections"
+		},
+		{
+			"type": "paragraph",
+			"text": "To eliminate N+1 query fanout and high read costs on Firebase Firestore, BW Retail implements a comprehensive query optimization suite:"
+		},
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{
+					"text": "**Debounced Query Execution**: 250ms debounce on search bars preventing per-keystroke document reads."
+				},
+				{
+					"text": "**Cursor-Based Pagination**: Paginated document cursors with strict limit bounds."
+				},
+				{
+					"text": "**No-Op Write Guards**: Quantity update handlers compare dirty state before dispatching writes."
+				},
+				{
+					"text": "**Derived Customer Order Book**: A dedicated `customer_order_book` projection collection enabling instant KPI aggregation (effective quantities, order counts, gross spend) with lazy-loaded row expansions."
+				}
+			]
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    CRM[\"Customer Book Page\"] --> CHECK{\"Projection Exists?\"}\n    CHECK -- Yes --> PROJ[\"Projection Mode<br/>Read customer_order_book (1 read/customer)\"]\n    CHECK -- No --> FALLBACK[\"Legacy Fallback<br/>Aggregate active orders\"]\n    PROJ --> ROW[\"User Clicks Customer Row\"]\n    ROW --> LAZY[\"Lazy-Fetch Orders & Items on Demand\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "4. SQL & PostgreSQL Migration Readiness"
+		},
+		{
+			"type": "paragraph",
+			"text": "To prepare the platform for enterprise relational throughput, a complete PostgreSQL migration architecture was designed:"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Core Relational Schemas**: `sql/postgres/001_core_schema.sql`"
+				},
+				{
+					"text": "**Performance Indexes**: `sql/postgres/002_indexes.sql`"
+				},
+				{
+					"text": "**Customer Order Book SQL Views**: `sql/postgres/003_customer_order_book_view.sql`"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Personal Engineering Contributions"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**React 19 Frontend Architecture**: Designed the market-aware component hierarchy, Radix/ShadCN UI design system, and TanStack Query state orchestration."
+				},
+				{
+					"text": "**Python Automated Sourcing ETL**: Developed web scrapers with session auth and CSRF management for UK wholesale platforms, implementing automated regex brand detection for 40+ brands."
+				},
+				{
+					"text": "**Deterministic Commission Accounting**: Authored the full 5-layer commission calculation engine, ensuring zero discrepancies across order creation, status changes, and quantity saves."
+				},
+				{
+					"text": "**Firestore Cost Optimization**: Reduced Firestore read volume by over 60% through debounced search pipelines, cursor pagination, and derived projection collections."
+				},
+				{
+					"text": "**SQL Migration Strategy**: Architected PostgreSQL database schemas, indexes, and SQL analytical views for long-term database scalability."
+				}
+			]
+		}
+	]
+}

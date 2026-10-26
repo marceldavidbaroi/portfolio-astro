@@ -1,0 +1,115 @@
+{
+    "labels": {
+        "title": "The Value Proposition Canvas",
+        "valueProposition": "UniFlow",
+        "customerSegment": "University Students, Educators & Administrators"
+    },
+    "customerJobs": [
+        {
+            "title": "Join and run live classes",
+            "note": "Students need to enter a session quickly; teachers need to run it, share resources, and track participants."
+        },
+        {
+            "title": "Collaborate in study groups",
+            "note": "Share resources and discuss within groups tied to a course, department, and faculty."
+        },
+        {
+            "title": "Assign, submit, and grade tasks",
+            "note": "Teachers announce tasks and grade against several criteria; students submit and track their work."
+        },
+        {
+            "title": "Administer the academic hierarchy",
+            "note": "Admins manage faculties, departments, courses, and users, and audit activity."
+        }
+    ],
+    "pains": [
+        {
+            "title": "Scattered tools",
+            "note": "Schedules, discussions, submissions, and notes live in disconnected applications."
+        },
+        {
+            "title": "Hard-to-type session IDs",
+            "note": "Random identifiers are impractical to enter when joining an in-person class."
+        },
+        {
+            "title": "No unified grading flow",
+            "note": "Multi-criteria grading and submissions are handled outside a single system."
+        },
+        {
+            "title": "No central admin view",
+            "note": "Administrators lack one place to manage the hierarchy and audit cross-course activity."
+        }
+    ],
+    "gains": [
+        {
+            "title": "One workspace",
+            "note": "Sessions, groups, tasks, and todos reachable from a single app."
+        },
+        {
+            "title": "Role-appropriate interfaces",
+            "note": "Each role sees only the dashboards and actions that apply to it."
+        },
+        {
+            "title": "Fast session entry",
+            "note": "Students join a live class with a short numeric code."
+        },
+        {
+            "title": "Administrative visibility",
+            "note": "Analytics and logs give admins an overview of activity."
+        }
+    ],
+    "productsAndServices": [
+        {
+            "title": "Live Class Sessions",
+            "note": "Numeric session counters, participant tracking, resource sharing, and playground links."
+        },
+        {
+            "title": "Collaborative Groups",
+            "note": "Groups with course, department, and faculty metadata, shared resources, and discussions."
+        },
+        {
+            "title": "Task & Rubric System",
+            "note": "Task announcements, submissions, multi-criteria grading rubrics, and todo tracking."
+        },
+        {
+            "title": "Admin Control Panel",
+            "note": "16 admin pages and 6 dialogs for CRUD, analytics charts, and activity logs."
+        }
+    ],
+    "painRelievers": [
+        {
+            "title": "Modular single app",
+            "note": "Nine domain modules on one Quasar shell replace several disconnected tools."
+        },
+        {
+            "title": "Atomic session counter",
+            "note": "A Firestore transaction on metadata/counters assigns short, readable session numbers."
+        },
+        {
+            "title": "Rubric workflow",
+            "note": "Grading criteria, submissions, and results live together in the task module."
+        },
+        {
+            "title": "Central admin suite",
+            "note": "Hierarchy management and audit logs sit in one admin module."
+        }
+    ],
+    "gainCreators": [
+        {
+            "title": "Role-based routing",
+            "note": "A boot-plugin guard sends each role to its own dashboard and blocks unauthorized routes."
+        },
+        {
+            "title": "Real-time data layer",
+            "note": "Firestore backs live session and shared-resource updates."
+        },
+        {
+            "title": "Visual analytics",
+            "note": "ApexCharts and Chart.js show user activity distributions and task statistics."
+        },
+        {
+            "title": "Decoupled state",
+            "note": "Pinia stores with separate action files keep components declarative and consistent."
+        }
+    ]
+}

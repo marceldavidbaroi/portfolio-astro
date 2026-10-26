@@ -1,0 +1,430 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "The **SuperCards Quiz** module is an internal learning and assessment platform embedded inside the broader SuperCards enterprise workspace. Rather than standing up a separate LMS, the module extends the platform's **card-based data model** — every quiz is a task card tagged as a Quiz entity, categorized by section, and governed by a Draft → Published → Unpublished lifecycle."
+		},
+		{
+			"type": "paragraph",
+			"text": "I **fully refactored** this module from a tangled set of pages into a clean, modular architecture:"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**4 route-level pages** orchestrating distinct user journeys"
+				},
+				{
+					"text": "**11 dedicated components** each owning a single UI concern"
+				},
+				{
+					"text": "**1 Pinia store** (`quiz-store`) with typed API actions"
+				},
+				{
+					"text": "**1 service layer** (`quizService.js`) against the `quizbuilder` backend"
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "The refactor preserved deep integration with platform primitives (`TaskDetails`, `PreviewWindow`, tag store, media manager) while isolating all quiz-specific logic inside `src/modules/quiz/`."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Module Structure"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "src/modules/quiz/\n├── routes.js                    # 4 authenticated routes under /quiz\n├── index.js\n├── pages/\n│   ├── QuizIndex.vue            # Quick quiz creation entry\n│   ├── QuizStudioIndex.vue      # Author workspace (full CRUD)\n│   ├── ChallengeYourselfIndex.vue  # Employee discovery & browse\n│   └── AttendQuiz.vue           # Timed participation flow\n└── components/\n    ├── QuizCard.vue             # Dual-mode card (studio / challenge)\n    ├── QuizQuestionForm.vue     # Authoring, validation, AI generation\n    ├── ExistingQuestionsList.vue # Collapsible edit/delete for saved Qs\n    ├── QuizQuestionsDisplay.vue # Live question UI during quiz\n    ├── StartQuiz.vue            # Pre-quiz intro screen\n    ├── QuizResult.vue           # Score summary & grade badge\n    ├── ReviewAnswers.vue        # Post-submission mistake walkthrough\n    └── QuizParticipants.vue     # Participant analytics popover"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "System Topology"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Author [\"Author Journey\"]\n        STUDIO[\"Quiz Studio Page\"]\n        QFORM[\"QuizQuestionForm\"]\n        EXIST[\"ExistingQuestionsList\"]\n        TD[\"TaskDetails (shared)\"]\n        STUDIO --> QFORM\n        STUDIO --> EXIST\n        STUDIO --> TD\n    end\n\n    subgraph Participant [\"Participant Journey\"]\n        CHALLENGE[\"Challenge Yourself Page\"]\n        ATTEND[\"Attend Quiz Page\"]\n        START[\"StartQuiz\"]\n        DISPLAY[\"QuizQuestionsDisplay\"]\n        RESULT[\"QuizResult\"]\n        REVIEW[\"ReviewAnswers\"]\n        CHALLENGE --> ATTEND\n        ATTEND --> START --> DISPLAY --> RESULT --> REVIEW\n    end\n\n    subgraph Shared [\"Shared Layer\"]\n        CARD[\"QuizCard\"]\n        STORE[\"quiz-store (Pinia)\"]\n        API[\"quizService → quizbuilder API\"]\n        TAGS[\"tag-store (status, category)\"]\n        TASK[\"task-store (card CRUD, media)\"]\n        AI[\"openAIService (GPT-4o-mini)\"]\n    end\n\n    STUDIO --> CARD\n    CHALLENGE --> CARD\n    QFORM --> AI\n    STORE --> API\n    STUDIO --> STORE\n    ATTEND --> STORE\n    STUDIO --> TAGS\n    STUDIO --> TASK\n    QFORM --> TASK"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Client-to-Cloud Flow"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n    UI[\"Quiz UI Components\"] --> STORE[\"quiz-store\"]\n    STORE --> SVC[\"quizService.js\"]\n    SVC --> API[\"Laravel quizbuilder API\"]\n    API --> DB[(\"PostgreSQL\")]\n\n    UI --> TASKSTORE[\"task-store\"]\n    TASKSTORE --> CARDS[\"cards API (create/update/media)\"]\n\n    UI --> TAGSTORE[\"tag-store\"]\n    TAGSTORE --> TAGSAPI[\"tags API (Draft/Published/Unpublished)\"]\n\n    QFORM[\"QuizQuestionForm\"] --> OPENAI[\"OpenAI Chat Completions\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "User Journeys"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Quiz Creation (`/quiz/quizzes`)"
+		},
+		{
+			"type": "paragraph",
+			"text": "A lightweight entry point where authors create a new quiz card via the platform's shared creation dialog. On submit, the system tags the card as a **Quiz** entity type with category and difficulty settings."
+		},
+		{
+			"type": "paragraph",
+			"text": "![Create New Quiz Dialog [desktop]](/images/projects/quiz/create-quiz-dialog.webp#desktop)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Challenge Yourself — Assessment Discovery (`/quiz/challenge-yourself`)"
+		},
+		{
+			"type": "paragraph",
+			"text": "The employee-facing catalog of available assessments. Employees can browse published quizzes by category tabs, search by title, and inspect score distributions."
+		},
+		{
+			"type": "paragraph",
+			"text": "![SuperCards Quiz Challenge Yourself Catalog [desktop]](/images/projects/quiz/challenge-cards-grid.webp#desktop)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Attend Quiz — Timed Participation (`/quiz/attend-quiz/:id`)"
+		},
+		{
+			"type": "paragraph",
+			"text": "A structured assessment experience with clear pre-quiz instructions, countdown timers, progress bars, and instant submission."
+		},
+		{
+			"type": "paragraph",
+			"text": "![Quiz Instructions & Pre-Test View [desktop]](/images/projects/quiz/attend-quiz-intro.webp#desktop)"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Active Timed Assessment with Progress & MCQ Questions [desktop]](/images/projects/quiz/attend-quiz-active.webp#desktop)"
+		},
+		{
+			"type": "mermaid",
+			"code": "stateDiagram-v2\n    [*] --> Intro: Load questions\n    Intro --> Active: Start Quiz (timer begins)\n    Active --> Active: Next / Previous question\n    Active --> Results: Submit or timeout\n    Results --> Review: Review Mistakes\n    Review --> Results: Finish Review\n    Results --> [*]: Back To Challenges"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Phase",
+				"Component",
+				"Behavior"
+			],
+			"rows": [
+				[
+					"1 — Intro",
+					"`StartQuiz`",
+					"Shows question count, time limit, instructions"
+				],
+				[
+					"2 — Active",
+					"`QuizQuestionsDisplay`",
+					"Progress bar, countdown timer, MCQ radio/checkbox or fill-blank inputs, prev/next navigation"
+				],
+				[
+					"3 — Results",
+					"`QuizResult`",
+					"Percentage score, grade badge (Excellent / Average / Below Average), correct/incorrect breakdown"
+				],
+				[
+					"4 — Review",
+					"`ReviewAnswers`",
+					"Walk through each question showing user answer vs correct answer with color-coded feedback"
+				]
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Timer logic:** Countdown from quiz meta `time` (minutes); auto-submits and advances to results on expiry."
+		},
+		{
+			"type": "paragraph",
+			"text": "**Submission:** Normalizes MCQ answers as ID arrays and fill-blank answers as trimmed string arrays before posting to `quizbuilder/startQuiz`."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "6. Quiz Card — Dual-Mode Component (`QuizCard`)"
+		},
+		{
+			"type": "paragraph",
+			"text": "A single reusable card component serving both author and participant contexts via a `mode` prop:"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Feature",
+				"`mode=\"studio\"`",
+				"`mode=\"challenge\"`"
+			],
+			"rows": [
+				[
+					"**Primary Action**",
+					"Preview (opens studio panel)",
+					"Take Quiz / Retake Quiz"
+				],
+				[
+					"**Status Badge**",
+					"Clickable (toggle Published/Unpublished)",
+					"Read-only"
+				],
+				[
+					"**Score Badge**",
+					"Hidden",
+					"Shows \"My Score: X%\""
+				],
+				[
+					"**Analytics**",
+					"Participant count (opens menu)",
+					"Average score display"
+				],
+				[
+					"**Score Distribution**",
+					"Above 80% / 60–80% / Below 60%",
+					"Same"
+				]
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Participant popover:** Clicking participant count opens `QuizParticipants` — searchable, sortable list with top score, average, and attempt count per user."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Data Model"
+		},
+		{
+			"type": "paragraph",
+			"text": "Quizzes are not a separate database entity. They are **SuperCards task cards** enriched with:"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Layer",
+				"Field / Tag",
+				"Purpose"
+			],
+			"rows": [
+				[
+					"Entity Tag",
+					"`Quiz` (Entity Type category)",
+					"Identifies card as a quiz"
+				],
+				[
+					"Status Tag",
+					"`Draft` / `Published` / `Unpublished`",
+					"Lifecycle control"
+				],
+				[
+					"Category Tag",
+					"Quiz Category tags",
+					"Section grouping (e.g. HR, Engineering)"
+				],
+				[
+					"Meta",
+					"`time`",
+					"Quiz duration in minutes"
+				],
+				[
+					"Meta",
+					"`quiz_instructions`",
+					"Rich HTML instructions shown before start"
+				],
+				[
+					"Media",
+					"`quiz_cover_attachment`",
+					"Card cover image"
+				],
+				[
+					"Media",
+					"`quiz_question_attachment`",
+					"Per-question images"
+				],
+				[
+					"API",
+					"`quiz_details`",
+					"Aggregated stats (total questions, participants, score breakdown)"
+				]
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "Questions live in the `quizbuilder` service as separate records linked by `quiz_card_id`."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "API Surface (`quizService.js`)"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Method",
+				"Endpoint Pattern",
+				"Used For"
+			],
+			"rows": [
+				[
+					"`getAllQuiz`",
+					"`quizbuilder/quizList`",
+					"Card grid lists (with `quizCardList` view header)"
+				],
+				[
+					"`create`",
+					"`quizbuilder/quiz`",
+					"Batch question creation"
+				],
+				[
+					"`getQuestionsByQuizId`",
+					"`quizbuilder/quiz/answers?quizId=`",
+					"Load questions for studio + attend"
+				],
+				[
+					"`updateQuestion`",
+					"`PATCH quizbuilder/quiz/:id`",
+					"Edit existing question"
+				],
+				[
+					"`deleteQuestion`",
+					"`DELETE quizbuilder/quiz/:id`",
+					"Remove question"
+				],
+				[
+					"`submitAnswers`",
+					"`POST quizbuilder/startQuiz`",
+					"Participant submission"
+				],
+				[
+					"`getParticipants`",
+					"`quizbuilder/participantHistory/:quizId`",
+					"Participant analytics"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Refactor Summary — What Changed"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Structural"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Extracted **11 components** from monolithic page logic"
+				},
+				{
+					"text": "Introduced dedicated **`quiz-store`** with 8 typed actions (create, fetch, update, delete, submit, participants)"
+				},
+				{
+					"text": "Centralized HTTP in **`quizService.js`** with consistent `quizbuilder` resource naming"
+				},
+				{
+					"text": "Each page is a **thin orchestrator** — route params, store calls, event wiring only"
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "UX"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Studio preview panel** replaces full-page navigation for editing"
+				},
+				{
+					"text": "**Deep link** support (`?card_id=`) for sharing quiz edit URLs"
+				},
+				{
+					"text": "**Scroll-into-view** with highlight when selecting a card"
+				},
+				{
+					"text": "**Collapsible existing questions** with search and expand-all"
+				},
+				{
+					"text": "**Four-phase attend flow** with timer, progress, and mistake review"
+				},
+				{
+					"text": "**AI question generation** with preview-before-apply workflow"
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Technical"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Validation moved to **reactive computed error getters** (not inline template checks)"
+				},
+				{
+					"text": "Question type switching **resets form state** via watchers (MCQ ↔ fill-blank)"
+				},
+				{
+					"text": "Answer type switching **normalizes correctAnswers** (single radio ↔ multi checkbox)"
+				},
+				{
+					"text": "Submission payload **type-normalizes** MCQ IDs and fill-blank strings"
+				},
+				{
+					"text": "`ReviewAnswers` handles **multiple API response shapes** via candidate field normalization"
+				}
+			]
+		}
+	]
+}

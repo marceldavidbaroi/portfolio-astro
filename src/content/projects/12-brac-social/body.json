@@ -1,0 +1,86 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "The **BRAC Social Platform** is an internal team collaboration portal designed to connect team members through announcements, discussion threads, and peer interactions. My work on this project was focused on **frontend UI fixes and responsiveness** — polishing the user experience, correcting layout anomalies, and making the application feel smooth and usable on all device sizes."
+		},
+		{
+			"type": "paragraph",
+			"text": "Built with **Vue 3** and the **Quasar Framework**, I tackled real-world UI pain points to deliver a cohesive product feel without adding unnecessary complexity."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n  QuasarClient[\"Quasar Vue 3 Client\"] --> BreakpointLayer[\"$q.screen / Grid Breakpoints\"]\n  BreakpointLayer --> FeedCards[\"Feed Cards & Media Grids\"]\n  FeedCards --> RestApi[\"REST Discussion Feed API\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Core Responsibilities & What I Delivered"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Cross-Device Responsive Layouts"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Rebuilt rigid desktop-first layout sections with fluid Quasar grid utilities (`row`, `col-xs-12`, `col-sm-6`, `col-md-4`)."
+				},
+				{
+					"text": "Adjusted header navigation, side drawers, and user avatars to adapt dynamically between desktop monitors, tablets, and smartphones."
+				},
+				{
+					"text": "Resolved viewport-overflow bugs and eliminated unintended horizontal page bouncing on touch devices."
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Feed Cards & Media Optimization"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Standardized the visual structure of social feed cards: author headers, timestamp formatting, rich text bodies, and multi-image attachment previews."
+				},
+				{
+					"text": "Implemented responsive image grid containers preventing high-resolution photos from breaking container boundaries."
+				},
+				{
+					"text": "Refined comment threads and reply inputs for improved tap target accessibility on mobile browsers."
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Interaction & Visual Polish"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Fixed alignment, typography hierarchy, and spacing across announcements and notification drawers."
+				},
+				{
+					"text": "Cleaned up active states and micro-interactions for likes, shares, and reaction badges."
+				}
+			]
+		}
+	]
+}

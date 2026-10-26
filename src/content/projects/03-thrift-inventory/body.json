@@ -1,0 +1,818 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 1,
+			"text": "Thrift App — Case Study"
+		},
+		{
+			"type": "paragraph",
+			"text": "**Role:** Full-Stack Mobile Developer<br>\n**Timeline:** 2025 — Present<br>\n**Status:** Active Production (v1.0.5)<br>\n**Parent Platform:** [TradeflowBD](https://tradeflowbd.com) — Thrift Vertical<br>\n**Repo:** [github.com/marceldavidbaroi](https://github.com/marceldavidbaroi)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "At a Glance"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**What it is**",
+					"Mobile warehouse companion for second-hand / thrift retail inventory"
+				],
+				[
+					"**Who it's for**",
+					"Warehouse operators registering inbound garments and performing shelf audits"
+				],
+				[
+					"**Core problem**",
+					"Desktop-only stock registration and paper stock checks can't keep up with shipment intake"
+				],
+				[
+					"**How it's built**",
+					"Quasar + Capacitor 8 Android app → Supabase RPCs + Cloudinary images"
+				],
+				[
+					"**Relationship**",
+					"Mobile field app for the Thrift vertical inside TradeflowBD ERP"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "The Problem"
+		},
+		{
+			"type": "paragraph",
+			"text": "TradeflowBD's Thrift vertical handles second-hand garment retail — inbound consignment shipments, unique SKU barcodes, garment measurements, landed costing, POS sales, and returns. The web admin (`/:slug/app/thrift/*`) covers the full lifecycle, but warehouse floor work exposed critical gaps:"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Pain points on the warehouse floor"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Before [\"Before: Floor Operations\"]\n        A[\"Inbound shipment boxes arrive\"] --> B[\"Walk to desktop PC\"]\n        B --> C[\"Register item one-by-one in web admin\"]\n        C --> D[\"Print barcode label separately\"]\n        D --> E[\"Paper stocktake sheets\"]\n        E --> F[\"Manual shelf reconciliation days later\"]\n        F --> G[\"Misplaced items discovered at POS checkout\"]\n    end"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Pain Point",
+				"Business Impact"
+			],
+			"rows": [
+				[
+					"**Desktop-bound registration**",
+					"Operators leave the shelf to use a PC — slows intake to ~2–3 items/minute"
+				],
+				[
+					"**No mobile barcode lookup**",
+					"Finding an item's status requires logging into the web admin"
+				],
+				[
+					"**Paper stock audits**",
+					"Human error in counting; no real-time discrepancy detection"
+				],
+				[
+					"**Misplaced stock invisible**",
+					"Items scanned at wrong shelf/box sit undetected until a sale fails"
+				],
+				[
+					"**English-only UI**",
+					"Bangladeshi warehouse staff need Bengali labels for daily workflows"
+				],
+				[
+					"**No scan feedback**",
+					"In noisy warehouses, operators can't tell if a scan succeeded without checking the screen"
+				]
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "The core question"
+		},
+		{
+			"type": "quote",
+			"text": "How do you let warehouse staff register garments, scan barcodes, audit shelves, and fix misplaced stock — all from a phone at the shelf — while keeping the TradeflowBD web admin in sync?"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "The Solution"
+		},
+		{
+			"type": "paragraph",
+			"text": "**Thrift App** is a Capacitor Android companion (also runs as a responsive web SPA) that connects to the same Supabase backend as TradeflowBD's Thrift vertical. It handles the warehouse-floor workflows the web admin was never designed for."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Five core workflows"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n    subgraph Mobile [\"Thrift App (Warehouse Floor)\"]\n        INSERT[\"Insert Stock<br/>Select shipment + box\"]\n        REGISTER[\"Register Stock<br/>Barcode + photo + metadata\"]\n        SCAN[\"Scan & Action<br/>Lookup / move / status\"]\n        AUDIT[\"Audit Mode<br/>Shelf/box stocktake\"]\n        LIST[\"Stock List<br/>Search + filter + bulk actions\"]\n    end\n\n    subgraph Backend [\"Supabase (Shared with TradeflowBD)\"]\n        RPC[\"Atomic RPCs\"]\n        DB[\"thrift_stocks<br/>thrift_barcodes<br/>thrift_shipments\"]\n    end\n\n    subgraph Web [\"TradeflowBD Web Admin\"]\n        ADMIN[\"Thrift Stock Page<br/>POS / Reports / Tag Print\"]\n    end\n\n    INSERT --> REGISTER\n    REGISTER --> RPC\n    SCAN --> RPC\n    AUDIT --> RPC\n    LIST --> RPC\n    RPC --> DB\n    DB --> ADMIN"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Workflow",
+				"Route",
+				"What it does"
+			],
+			"rows": [
+				[
+					"**Dashboard**",
+					"`/`",
+					"Daily KPIs (items added today, total inventory, available stock) + quick action tiles"
+				],
+				[
+					"**Insert Stock**",
+					"`/insert-stock`",
+					"Pick active shipment and box context for intake session"
+				],
+				[
+					"**Register Stock**",
+					"`/register-stock`",
+					"Scan/create barcode, capture product photo, enter metadata, register via RPC"
+				],
+				[
+					"**Scan & Action**",
+					"`/scan-barcode`",
+					"Single or continuous scan → lookup, move shelf, change status, bulk queue"
+				],
+				[
+					"**Audit Mode**",
+					"`/audit-mode`",
+					"Shelf/box stocktake with verified / missing / misplaced detection"
+				],
+				[
+					"**Stock List**",
+					"`/stock-list`",
+					"Searchable inventory with status, condition, shelf/box filters"
+				]
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "![Thrift App Mobile Warehouse Overview & Daily KPI Dashboard](/images/projects/thrift/dashboard.webp)"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Thrift App Live Inventory Feed with Barcode & Garment Specifications](/images/projects/thrift/inventory.webp)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "System design"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Device [\"Android Device / Mobile Browser\"]\n        UI[\"Quasar Vue 3 UI\"]\n        MLKIT[\"Google ML Kit<br/>Barcode Scanner\"]\n        CAM[\"Capacitor Camera<br/>Product Photos\"]\n        FEEDBACK[\"Audio + Haptic<br/>Scan Feedback\"]\n        I18N[\"Vue I18n<br/>EN + BN\"]\n    end\n\n    subgraph State [\"Client State\"]\n        TQ[\"TanStack Query<br/>Cache + Invalidation\"]\n        PINIA[\"Pinia<br/>Auth + Locale\"]\n    end\n\n    subgraph Cloud [\"Cloud Services\"]\n        SB[\"Supabase<br/>Auth + PostgreSQL + RPCs\"]\n        CL[\"Cloudinary<br/>Image Storage\"]\n        EDGE[\"Supabase Edge Function<br/>Signed Upload URL\"]\n    end\n\n    subgraph Ecosystem [\"TradeflowBD Ecosystem\"]\n        WEB[\"Web Admin<br/>Thrift Module\"]\n    end\n\n    UI --> MLKIT & CAM & FEEDBACK & I18N\n    UI --> TQ & PINIA\n    TQ --> SB\n    CAM --> EDGE --> CL\n    SB --> WEB"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Mobile build pipeline"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n    CODE[\"Quasar SPA<br/>src/\"] --> BUILD[\"quasar build<br/>-m capacitor -T android\"]\n    BUILD --> SYNC[\"cap sync android\"]\n    SYNC --> APK[\"Release APK/AAB<br/>com.brandwala.thriftapp\"]\n    APK --> DEVICE[\"Warehouse Android Devices\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Barcode Scanning Architecture"
+		},
+		{
+			"type": "paragraph",
+			"text": "The scanning layer uses a dual-strategy approach for reliability across Android devices."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    START[\"Operator taps Scan\"] --> PERM{\"Camera<br/>permission?\"}\n    PERM -- Denied --> ERR[\"Show error notification\"]\n    PERM -- Granted --> ML{\"Google ML Kit<br/>module installed?\"}\n    ML -- No --> INSTALL[\"Install module<br/>with progress UI\"]\n    INSTALL --> NATIVE\n    ML -- Yes --> NATIVE[\"Native Scan UI<br/>BarcodeScanner.scan()\"]\n    NATIVE -- Success --> NORM[\"normalizeScannedBarcode()\"]\n    NATIVE -- Fail --> OVERLAY[\"Camera Overlay Fallback<br/>BarcodeScanner.startScan()\"]\n    OVERLAY --> NORM\n    NORM --> LOOKUP[\"Supabase barcode lookup\"]\n    LOOKUP --> FEEDBACK[\"Audio chime + vibration\"]"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Scan modes"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Mode",
+				"Behavior",
+				"Use Case"
+			],
+			"rows": [
+				[
+					"**Single Scan**",
+					"Scan → show item detail card → action (move, status change)",
+					"One-off lookup or correction"
+				],
+				[
+					"**Continuous Scan**",
+					"Scan repeatedly → items queue up → batch move or batch status update",
+					"High-volume intake or bulk corrections"
+				]
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "![Thrift App Single & Continuous Barcode Scanner UI](/images/projects/thrift/scanner.webp)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Scan feedback system"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "Success → 880Hz double-tone chime + 80ms vibration\nError   → 220Hz sawtooth beep + [100, 50, 100]ms vibration pattern"
+		},
+		{
+			"type": "paragraph",
+			"text": "Operators get instant confirmation without looking at the screen — critical in noisy warehouse environments."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Audit Mode — Stocktake Workflow"
+		},
+		{
+			"type": "paragraph",
+			"text": "The most operationally impactful feature. Replaces paper stock checks with a structured digital workflow."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    A[\"Select Shelf + Box\"] --> B[\"Load expected items<br/>from database\"]\n    B --> C[\"Start audit session\"]\n    C --> D[\"Scan barcode\"]\n    D --> E{\"Match expected<br/>list?\"}\n    E -- Yes --> F[\"Mark VERIFIED<br/>✓ success feedback\"]\n    E -- No --> G{\"Exists in DB<br/>different location?\"}\n    G -- Yes --> H[\"Flag MISPLACED<br/>⚠ warning feedback\"]\n    G -- No --> I[\"Mark UNKNOWN<br/>✗ error feedback\"]\n    F & H & I --> J{\"More items?\"}\n    J -- Yes --> D\n    J -- No --> K[\"Review summary<br/>Verified / Missing / Misplaced\"]\n    K --> L[\"Bulk relocate misplaced items\"]\n    K --> M[\"End audit session\"]"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Discrepancy types"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Status",
+				"Meaning",
+				"Action"
+			],
+			"rows": [
+				[
+					"**VERIFIED**",
+					"Scanned item matches expected shelf/box",
+					"Auto-marked on scan"
+				],
+				[
+					"**MISSING**",
+					"Expected item not scanned during session",
+					"Flagged in summary"
+				],
+				[
+					"**MISPLACED**",
+					"Item exists in DB but at wrong shelf/box",
+					"One-tap or bulk relocate to current audit location"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Stock Registration Flow"
+		},
+		{
+			"type": "paragraph",
+			"text": "Full garment intake at the warehouse shelf — no desktop required."
+		},
+		{
+			"type": "paragraph",
+			"text": "![Thrift App Mobile Stock Intake & Garment Registration Form](/images/projects/thrift/register.webp)"
+		},
+		{
+			"type": "mermaid",
+			"code": "sequenceDiagram\n    participant Op as Warehouse Operator\n    participant App as Thrift App\n    participant Cam as Capacitor Camera\n    participant CL as Cloudinary\n    participant RPC as Supabase RPC\n    participant Web as TradeflowBD Web Admin\n\n    Op->>App: Select shipment + box context\n    Op->>App: Scan or enter barcode\n    App->>RPC: Check barcode availability\n    Op->>Cam: Capture product photo\n    Cam-->>App: Base64 image\n    App->>CL: Upload to shipment folder\n    CL-->>App: secure_url\n    Op->>App: Enter brand, size, condition, weight, price\n    App->>RPC: register_thrift_stock_from_app()\n    RPC->>RPC: Create stock + link barcode + save image\n    RPC-->>App: stock_id\n    App->>App: Invalidate TanStack Query caches\n    Note over Web: Web admin stock list<br/>refreshes on next query"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Registration captures"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Barcode (scanned or manual)"
+				},
+				{
+					"text": "Product photo (camera with optional crop/edit)"
+				},
+				{
+					"text": "Brand, category, type, color, size, condition"
+				},
+				{
+					"text": "Shelf and box location"
+				},
+				{
+					"text": "Product weight + extra weight (for landed cost apportionment)"
+				},
+				{
+					"text": "Origin unit price + listed sell price"
+				},
+				{
+					"text": "Shipment and box context (auto-linked)"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Data Sync Strategy"
+		},
+		{
+			"type": "quote",
+			"text": "**Note:** The app does **not** use Supabase Realtime WebSocket channels. Sync is achieved through TanStack Query cache invalidation after every mutation."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n  MUTATION[\"Stock mutation<br/>(register, move, status)\"] --> RPC[\"Supabase RPC\"]\n  RPC --> INVALIDATE[\"Invalidate query keys<br/>thrift/stock-list<br/>thrift/stock-detail<br/>thrift/dashboard\"]\n  INVALIDATE --> REFETCH[\"Next page load or<br/>manual refresh pulls fresh data\"]\n  REFETCH --> WEB[\"TradeflowBD web admin<br/>sees updated stock\"]"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Query Key",
+				"Data",
+				"Invalidated On"
+			],
+			"rows": [
+				[
+					"`thrift/stock-list`",
+					"Paginated inventory",
+					"Register, update, bulk move, bulk status"
+				],
+				[
+					"`thrift/stock-detail/:id`",
+					"Single item detail",
+					"Update location, status"
+				],
+				[
+					"`thrift/dashboard`",
+					"Daily KPI metrics",
+					"Stock registration"
+				],
+				[
+					"`thrift/barcodes`",
+					"Barcode pool",
+					"Create, delete barcode"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Authentication"
+		},
+		{
+			"type": "paragraph",
+			"text": "Dual-path auth for web and native Android."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    LOGIN[\"Login Page\"] --> PLATFORM{\"Platform?\"}\n    PLATFORM -- Web --> OAUTH[\"Supabase OAuth<br/>Google redirect\"]\n    PLATFORM -- Android --> NATIVE[\"Native Google Picker<br/>@capgo/capacitor-social-login\"]\n    NATIVE --> IDTOKEN[\"signInWithIdToken()\"]\n    OAUTH --> CALLBACK[\"/auth/callback\"]\n    IDTOKEN --> BOOTSTRAP[\"bootstrapUserSession()\"]\n    CALLBACK --> BOOTSTRAP\n    BOOTSTRAP --> MEMBER{\"Valid Thrift<br/>membership?\"}\n    MEMBER -- Yes --> DASH[\"Dashboard\"]\n    MEMBER -- No --> DENY[\"Access denied → logout\"]"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Core Technical Decisions"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 1 — Google ML Kit over web-based decoders"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"JavaScript barcode libraries struggle with Code-128 thermal labels in low light, at angles, and on curved garment hang-tags."
+				],
+				[
+					"**Decision**",
+					"Use `@capacitor-mlkit/barcode-scanning` which wraps Google's on-device ML Kit scanner with auto-zoom, native UI, and a camera overlay fallback."
+				],
+				[
+					"**Outcome**",
+					"Hardware-accelerated decoding on Android with graceful degradation when the native scan UI is unavailable."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 2 — Continuous scan queue for batch operations"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Registering or relocating 50+ items during shipment intake requires scanning each item, navigating a form, and saving — far too slow."
+				],
+				[
+					"**Decision**",
+					"Continuous scan mode builds a queue of scanned items. Operators batch-apply shelf moves or status changes via `bulk_update_thrift_stock_locations` and `bulk_update_thrift_stock_statuses` RPCs."
+				],
+				[
+					"**Outcome**",
+					"Scan many, act once. Bulk operations complete in a single database round-trip."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 3 — Audit mode with three-tier discrepancy detection"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Paper stocktakes can't detect items physically present but logged at the wrong shelf — the most common warehouse error."
+				],
+				[
+					"**Decision**",
+					"Audit mode loads expected items for a shelf/box, then on each scan: match → verified, no match but exists elsewhere → misplaced (with one-tap relocate), not in DB → unknown."
+				],
+				[
+					"**Outcome**",
+					"Structured stocktake with real-time progress bar and actionable discrepancy summary."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 4 — Atomic RPC registration, not client-side inserts"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Stock registration touches `thrift_stocks`, `thrift_barcodes`, and `thrift_stock_images` — partial client writes leave orphaned records."
+				],
+				[
+					"**Decision**",
+					"Single `register_thrift_stock_from_app` RPC handles the full registration atomically. Image upload to Cloudinary happens first; the RPC receives the `secure_url`."
+				],
+				[
+					"**Outcome**",
+					"No partial registrations. Duplicate barcode/image detection before write."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 5 — Bilingual UI for warehouse operators"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Warehouse staff in Bangladesh are more productive in Bengali, but the tech stack is English-first."
+				],
+				[
+					"**Decision**",
+					"Full Vue I18n integration with English and Bengali (বাংলা), persisted locale preference, covering all operator-facing workflows including help dialogs."
+				],
+				[
+					"**Outcome**",
+					"Operators use the app in their preferred language without a separate build."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 6 — Audio + haptic scan feedback"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"In noisy warehouses, operators can't hear notification sounds or see the screen while handling garments."
+				],
+				[
+					"**Decision**",
+					"Web Audio API success/error tones + `navigator.vibrate()` haptic patterns triggered on every scan result via `triggerScanFeedback()`."
+				],
+				[
+					"**Outcome**",
+					"Instant tactile and audio confirmation — success feels different from error without looking at the device."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Tech Stack"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Layer",
+				"Technology",
+				"Role"
+			],
+			"rows": [
+				[
+					"**UI Framework**",
+					"Quasar 2 + Vue 3.5 + TypeScript",
+					"Mobile-first SPA, shared web + native"
+				],
+				[
+					"**Mobile Runtime**",
+					"Capacitor 8",
+					"Android native shell, camera, haptics"
+				],
+				[
+					"**Barcode**",
+					"@capacitor-mlkit/barcode-scanning",
+					"Google ML Kit on-device decoding"
+				],
+				[
+					"**Camera**",
+					"@capacitor/camera",
+					"Product photo capture with crop/edit"
+				],
+				[
+					"**Auth**",
+					"Supabase Auth + @capgo/capacitor-social-login",
+					"Web OAuth + native Google ID token"
+				],
+				[
+					"**Server State**",
+					"TanStack Query v5",
+					"Query caching, mutation invalidation"
+				],
+				[
+					"**Client State**",
+					"Pinia",
+					"Auth session, locale preference"
+				],
+				[
+					"**i18n**",
+					"Vue I18n v10",
+					"English + Bengali"
+				],
+				[
+					"**Images**",
+					"Cloudinary (via Edge Function)",
+					"Shipment-scoped folder upload"
+				],
+				[
+					"**Backend**",
+					"Supabase PostgreSQL + RPCs",
+					"Shared with TradeflowBD Thrift vertical"
+				],
+				[
+					"**Icons**",
+					"Phosphor Icons",
+					"Consistent iconography"
+				],
+				[
+					"**Build**",
+					"Quasar Vite + Capacitor CLI",
+					"`build:android` → release APK/AAB"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Relationship to TradeflowBD"
+		},
+		{
+			"type": "paragraph",
+			"text": "Thrift App is the **mobile field layer** of the TradeflowBD Thrift vertical — not a standalone product."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph TradeflowBD [\"TradeflowBD Platform\"]\n        subgraph ThriftVertical [\"Thrift Vertical\"]\n            SHIP[\"Shipment Intake<br/>(Web Admin)\"]\n            COST[\"Landed Cost Engine<br/>(Web Admin)\"]\n            POS[\"POS Sales Desk<br/>(Web Admin)\"]\n            TAG[\"Barcode Tag Print<br/>(Web Admin)\"]\n            REPORTS[\"Sales Reports<br/>(Web Admin)\"]\n        end\n    end\n\n    subgraph ThriftApp [\"Thrift App (Mobile)\"]\n        REG[\"Stock Registration\"]\n        SCAN[\"Barcode Scan & Action\"]\n        AUDIT[\"Shelf Audit\"]\n    end\n\n    REG -->|\"register_thrift_stock_from_app\"| SHIP\n    SCAN -->|\"lookup + update\"| SHIP\n    AUDIT -->|\"verify + relocate\"| SHIP\n    SHIP --> COST --> POS\n    POS --> REPORTS\n    SHIP --> TAG"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Layer",
+				"Runs On",
+				"Handles"
+			],
+			"rows": [
+				[
+					"**Thrift App (mobile)**",
+					"Android phone at warehouse shelf",
+					"Registration, scanning, audit, quick status/location changes"
+				],
+				[
+					"**TradeflowBD web admin**",
+					"Desktop browser",
+					"Shipment costing, POS invoicing, tag printing, returns, reports, investor yield"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "What I Built"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Barcode scanning engine** — ML Kit integration with module auto-install, native UI + overlay fallback, barcode normalization, and audio/haptic feedback"
+				},
+				{
+					"text": "**Stock registration workflow** — End-to-end mobile intake: barcode → photo → metadata → Cloudinary upload → atomic RPC"
+				},
+				{
+					"text": "**Continuous scan + bulk queue** — Batch shelf moves and status updates via bulk RPCs"
+				},
+				{
+					"text": "**Audit mode** — Full stocktake workflow with verified/missing/misplaced detection and bulk relocation"
+				},
+				{
+					"text": "**Bilingual operator UI** — English and Bengali across all workflows with persisted locale"
+				},
+				{
+					"text": "**Native Android auth** — Google Sign-In via ID token (no Custom Tab redirect on Android)"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Visual Workflows & Mobile Wireframes"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Mobile Warehouse Scanner & Inventory Wireframes"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "+-----------------------------------+    +-----------------------------------+\n| [=] Thrift App  [#] [EN v]  (D)   |    | [=] Thrift App  [#] [EN v]  (D)   |\n+-----------------------------------+    +-----------------------------------+\n| Warehouse Overview     (?) (Sync) |    | Barcode Scanner               (?) |\n| Sat, Aug 29, 2026 * Thrift        |    |                                   |\n|                                   |    | [Q] Single Scan            ( o )  |\n| QUICK ACTIONS                     |    | +-------------------------------+ |\n| +-------------------------------+ |    | |   [#] SINGLE SCAN             | |\n| | (+) Insert New Item        >  | |    | +-------------------------------+ |\n| |     Register stock manually   | |    |                                   |\n| +-------------------------------+ |    | Enter or scan barcode:            |\n| | [#] Scan & Action          >  | |    | +--------------------------+----+ |\n| |     Continuous batch scanning | |    | | 16-AA-26-000101          | [Q]| |\n| +-------------------------------+ |    | +--------------------------+----+ |\n| | [=] View Inventory         >  | |    |                                   |\n| |     Browse full stock list    | |    | +-- SCANNED ITEM CARD -----------+|\n| +-------------------------------+ |    | | [IMG] NEXT Corduroy Jacket     ||\n| | [*] Inventory Audit        >  | |    | |       Sz 12 | Bust: 34\" L: 22\" ||\n| |     Shelf & box stocktake     | |    | |       Loc: Shelf A-04 / Box 12 ||\n| +-------------------------------+ |    | |       Landed: ৳2,850.00        ||\n|                                   |    | +--------------------------------+|\n| DAILY INVENTORY KPIs              |    |                                   |\n| +-------------------------------+ |    | [ Move Shelf ]   [ Mark Damaged ] |\n| | Items Added Today       [Cal] | |    |                                   |\n| | 420 Pcs                       | |    |                                   |\n| +-------------------------------+ |    |                                   |\n+-----------------------------------+    +-----------------------------------+\n| [Home]  [Scan]  [+]  [Audit] [Inv]|    | [Home]  [Scan]  [+]  [Audit] [Inv]|\n+-----------------------------------+    +-----------------------------------+\n        (A) Dashboard View                       (B) Scanner & Action View"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Shelf Audit & Misplaced Item Detection Flow"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph ST1 [\"Step 1: Session Initiation\"]\n        AUDIT_START[\"Select Warehouse Zone<br/>(e.g., Rack B / Shelf 03 / Box 14)\"]\n        LOAD_EXPECTED[\"Query Supabase for Expected SKUs<br/>(Cached via TanStack Query)\"]\n        AUDIT_START --> LOAD_EXPECTED\n    end\n\n    subgraph ST2 [\"Step 2: Continuous ML Kit Scan Loop\"]\n        LOAD_EXPECTED --> SCAN_SKU[\"ML Kit Camera Scan / Barcode Key-in\"]\n        SCAN_SKU --> CHECK{\"Matches expected<br/>Shelf/Box?\"}\n        \n        CHECK -- Yes --> VERIFIED[\"VERIFIED ✓<br/>880Hz Audio Chime<br/>80ms Vibration\"]\n        CHECK -- No, Exists Elsewhere --> MISPLACED[\"MISPLACED ⚠<br/>Yellow Alert<br/>One-Tap Relocate Action\"]\n        CHECK -- No, Not in System --> UNKNOWN[\"UNKNOWN ✗<br/>220Hz Error Tone<br/>Flag for Quarantine\"]\n    end\n\n    subgraph ST3 [\"Step 3: Discrepancy Resolution & Sync\"]\n        VERIFIED & MISPLACED & UNKNOWN --> SUMMARY[\"Audit Summary Review<br/>(e.g., 48 Verified, 2 Missing, 1 Misplaced)\"]\n        SUMMARY --> RPC_RESOLVE[\"Trigger bulk_update_thrift_stock_locations()<br/>Invalidate TanStack Query Keys\"]\n        RPC_RESOLVE --> SYNCED[\"TradeflowBD Admin Stock Reconciled\"]\n    end"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Future Roadmap"
+		},
+		{
+			"type": "mermaid",
+			"code": "timeline\n    title Thrift App Roadmap\n    section In Progress\n        Production Hardening : v1.0.5 on warehouse devices\n    section Planned\n        Offline Queue : IndexedDB sync for poor connectivity zones\n        Thermal Printer : Bluetooth label printing at the shelf\n        Supabase Realtime : Push stock changes to web admin without refresh\n        iOS Build : Capacitor iOS with equivalent ML Kit support"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Links"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Parent Platform:** [tradeflowbd.com](https://tradeflowbd.com)"
+				},
+				{
+					"text": "**GitHub:** [github.com/marceldavidbaroi](https://github.com/marceldavidbaroi)"
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "paragraph",
+			"text": "*Thrift App — Scan at the shelf. Register on the floor. Audit with confidence. Syncs with TradeflowBD.*"
+		}
+	]
+}

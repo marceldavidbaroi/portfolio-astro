@@ -7,19 +7,39 @@ const { workCount } = Astro.props;
 ---
 
 <section class="masthead">
-	<p class="label font-mono">Work · {workCount} case studies</p>
-	<h1 class="page-title">Selected work</h1>
-	<p class="lead">Production SaaS, ERP, mobile, and internal tools.</p>
+	<div class="masthead-kicker">
+		<p class="label font-mono">Work Archive</p>
+		<span class="masthead-count font-mono">{workCount} Case Studies</span>
+	</div>
+	<h1 class="page-title font-sans">Selected Work & Case Studies</h1>
+	<p class="lead">Production SaaS, enterprise architectures, mobile apps, and distributed systems engineering.</p>
 </section>
 
 <style>
 	.masthead {
-		padding-bottom: 1.75rem;
+		padding: 0.5rem 0 2rem;
+		border-bottom: 1px solid var(--card-border);
+		margin-bottom: 1.5rem;
+	}
+
+	.masthead-kicker {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		margin-bottom: 0.75rem;
+	}
+
+	.masthead-count {
+		font-size: var(--type-meta);
+		color: var(--text-muted);
+		letter-spacing: 0.05em;
+		text-transform: uppercase;
 	}
 
 	.page-title {
-		margin: 0.35rem 0 0;
-		font-size: clamp(1.85rem, 5vw, 2.6rem);
+		margin: 0;
+		font-size: clamp(2rem, 5vw, 3rem);
 		font-weight: 800;
 		letter-spacing: -0.04em;
 		line-height: 1.1;
@@ -27,10 +47,26 @@ const { workCount } = Astro.props;
 	}
 
 	.lead {
-		margin: 0.55rem 0 0;
-		font-size: var(--type-body);
-		line-height: 1.5;
-		color: var(--text-main);
-		max-width: 34rem;
+		margin: 0.75rem 0 0;
+		font-size: clamp(1rem, 2vw, 1.125rem);
+		line-height: 1.55;
+		color: var(--text-muted);
+		max-width: 44rem;
+		text-wrap: pretty;
+	}
+
+	@media (max-width: 640px) {
+		.masthead {
+			padding: 0.25rem 0 1.5rem;
+			margin-bottom: 1.25rem;
+		}
+
+		.page-title {
+			font-size: 1.75rem;
+		}
+
+		.lead {
+			font-size: 0.95rem;
+		}
 	}
 </style>

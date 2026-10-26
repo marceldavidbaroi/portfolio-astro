@@ -1,0 +1,172 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "**Docstach** is an enterprise documentation engine engineered to convert raw customer support ticket data, incident logs, and resolution threads into standardized, interactive knowledge documentation. While the backend handles ticket aggregation and AI/templated response generation, I engineered the **entire frontend UI and document preview architecture** using the **Quasar Framework (Vue 3)** and **TypeScript**."
+		},
+		{
+			"type": "paragraph",
+			"text": "The preview interface provides a dedicated viewing experience with **multi-level nested navigation**, a **safe HTML document parser**, and a real-time **'On This Page' Table of Contents** that tracks reading progress."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Frontend Preview Engine Topology"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Ticket_Source [\"Backend Data Layer\"]\n        RAW_TICKETS[\"Raw Support Ticket Data<br/>(Threads, Logs, Statuses)\"]\n        GEN_ENGINE[\"Auto-Response Generator<br/>(Structured HTML Output)\"]\n        RAW_TICKETS --> GEN_ENGINE\n    end\n\n    subgraph Quasar_Frontend [\"Docstach Frontend (Quasar / Vue 3 / TypeScript)\"]\n        STORE[\"Docstach Pinia Store<br/>(Active Document, Nav Tree, View State)\"]\n        \n        subgraph Preview_Layout [\"Dedicated Document Preview Layout\"]\n            NESTED_NAV[\"Left Pane:<br/>Nested Navigation Tree<br/>(Categories, Tickets, Chapters)\"]\n            \n            subgraph Center_Pane [\"Center Reading Pane\"]\n                PARSER[\"HTML Parser & Sanitizer<br/>(Scoped Typography & Tables)\"]\n                DOC_BODY[\"Interactive Document Body<br/>(Injected Anchor Targets)\"]\n                PARSER --> DOC_BODY\n            end\n            \n            TOC[\"Right Pane:<br/>'On This Page' Sub-Nav<br/>(IntersectionObserver ScrollSpy)\"]\n        end\n    end\n\n    GEN_ENGINE -->|\"JSON Payload with HTML\"| STORE\n    STORE --> NESTED_NAV\n    STORE --> PARSER\n    DOC_BODY -->|\"Scanned Headings (H2/H3)\"| TOC"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Visual Workflows & Document Preview Interface"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Dedicated 3-Pane Document Preview Interface"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Docstach Document Preview Interface [desktop]](/images/projects/docstach/preview.webp#desktop)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Core Technical Decisions"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 1 — Dedicated Document Preview Layout vs Embedded Modal"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Displaying auto-generated ticket documents inside standard dashboard modals felt cramped, prevented deep-linking to sections, and lacked sufficient width for wide financial and technical tables."
+				],
+				[
+					"**Decision**",
+					"Designed an independent **Document Preview Layout** in Quasar with collapsible sidebars, clean typography margins, and full viewport height utilization."
+				],
+				[
+					"**Outcome**",
+					"Provided readers with a focused, book-like reading experience while maximizing horizontal space for dense tabular ticket logs."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 2 — DOM-Scanned 'On This Page' Section Navigation"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Auto-generated ticket documentation can span thousands of words across dozens of technical subheadings; readers needed instant jumping without requiring the server to calculate heading offsets."
+				],
+				[
+					"**Decision**",
+					"Implemented a client-side heading parser in Vue 3 that traverses the rendered `.doc-body` DOM, collects `<h2>` and `<h3>` tags, creates sluggified anchor IDs, and binds an `IntersectionObserver` to highlight the active section in real time."
+				],
+				[
+					"**Outcome**",
+					"Zero backend overhead for table of contents generation and effortless navigation across lengthy technical incident summaries."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 3 — Safe HTML Body Parsing & Scoped Typography"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Ingesting raw HTML generated from ticket histories risked CSS bleed (destroying layout styles) and potential cross-site scripting if ticket threads contained unescaped inputs."
+				],
+				[
+					"**Decision**",
+					"Constructed an HTML sanitizer and parser pipeline that strips malicious script tags and applies strict `.docstach-prose` scoped styling to headings, tables, blockquotes, and code snippets."
+				],
+				[
+					"**Outcome**",
+					"100% resilient rendering of auto-generated responses with consistent enterprise typography and complete protection against CSS leakage."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "What I Built (Personal Contributions)"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Engineered Quasar Frontend UI**: Built the entire frontend interface and component architecture in Vue 3 and Quasar Framework."
+				},
+				{
+					"text": "**Dedicated Document Preview Layout**: Designed the specialized 3-pane documentation layout isolating reading tools from administrative sidebars."
+				},
+				{
+					"text": "**Hierarchical Nested Navigation Tree**: Created the recursive category, ticket, and chapter sidebar allowing instant traversal across ticket archives."
+				},
+				{
+					"text": "**'On This Page' ScrollSpy Engine**: Implemented DOM heading extraction and real-time scroll tracking for sub-section navigation."
+				},
+				{
+					"text": "**HTML Content Parser**: Built the rendering and sanitization layer that transforms raw auto-generated HTML responses into responsive, beautifully styled documentation."
+				}
+			]
+		}
+	]
+}

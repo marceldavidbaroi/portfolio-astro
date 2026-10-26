@@ -38,13 +38,10 @@ def process_images():
 
         try:
             with Image.open(file_path) as img:
-                # 1. Check & fix EXIF orientation if needed
+                # 1. Read EXIF orientation without mutating the file on disk
                 transposed = ImageOps.exif_transpose(img)
-                if transposed is not None and transposed != img:
-                    transposed.save(file_path, quality=95)
+                if transposed is not None:
                     img = transposed
-                    rotated_count += 1
-                    print(f"🔄 Auto-rotated EXIF orientation for: {src}")
 
                 w, h = img.size
                 aspect_ratio = round(w / h, 3)

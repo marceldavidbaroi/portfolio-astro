@@ -1,0 +1,180 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "The **Microfinance Loan Collection App & Web Portal** is a dual-interface fintech solution engineered to digitize grassroots microfinance operations. Field collection agents conduct door-to-door visits to collect loan installments from borrowers, log payments in real time, view upcoming collection lists, and adjust agent settings. On the web portal, branch supervisors monitor regional loan statuses, branch performance, and agent cash handovers."
+		},
+		{
+			"type": "paragraph",
+			"text": "As the **solo frontend developer for the Android mobile application** and a **contributor to the branch web management pages**, I built the mobile user experience in **Quasar Framework (Vue 3) + Pinia**, optimizing for rapid touch input, clear route schedules, and reliable daily cash settlements."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Field Collection & Branch Management Topology"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Field_Agent [\"Field Operations — Solo Quasar Android App\"]\n        LOGIN[\"Agent Auth & Route Sync\"]\n        COLL_LIST[\"Daily Collection List<br/>(Due Today, Arrears, Overdue)\"]\n        PAY_MODAL[\"Payment Collection Modal<br/>(Installment, Penalties, Payment Mode)\"]\n        RECEIPT[\"Digital Receipt Generator<br/>(Transaction Reference & Timestamp)\"]\n        SUMMARY[\"End-of-Day Cash Settlement<br/>(Total Vault Handover Summary)\"]\n        SETTINGS[\"Agent Settings & Offline Sync\"]\n        \n        LOGIN --> COLL_LIST --> PAY_MODAL --> RECEIPT --> SUMMARY\n        SETTINGS --> COLL_LIST\n    end\n\n    subgraph State_Layer [\"Pinia Client Stores\"]\n        AUTH_STORE[\"useAuthStore (Agent Credentials)\"]\n        LOAN_STORE[\"useLoanCollectionStore (Borrower Ledgers)\"]\n        BRANCH_STORE[\"useBranchStore (Branch Schedules)\"]\n    end\n\n    subgraph Branch_Web [\"Branch Management Portal (Desktop Web)\"]\n        LOAN_MGMT[\"Loan Management & Approval Pages\"]\n        BRANCH_VIEW[\"Branch Ledger & Agent Reconciliation\"]\n        REPORTS[\"Daily Disbursement & Collection Rollup\"]\n    end\n\n    subgraph Backend_Services [\"Core Microfinance API\"]\n        API_GATEWAY[\"REST API Gateway (JWT Secured)\"]\n        LOAN_SVC[\"Loan Servicing & Installment Engine\"]\n        LEDGER_DB[(\"Core Microfinance Database\")]\n    end\n\n    COLL_LIST & PAY_MODAL & SUMMARY --> LOAN_STORE & AUTH_STORE\n    LOAN_MGMT & BRANCH_VIEW --> BRANCH_STORE\n    LOAN_STORE & BRANCH_STORE -->|\"HTTPS / JSON\"| API_GATEWAY\n    API_GATEWAY --> LOAN_SVC --> LEDGER_DB"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Mobile Collection Workflow"
+		},
+		{
+			"type": "paragraph",
+			"text": "The door-to-door collection lifecycle follows an intuitive, high-speed flow designed for field agents moving rapidly between locations:"
+		},
+		{
+			"type": "mermaid",
+			"code": "sequenceDiagram\n    autonumber\n    actor Agent as Field Collection Agent\n    participant App as Quasar Android App\n    participant Store as Pinia Loan Store\n    participant API as Microfinance Backend\n    actor Borrower as Borrower (Client)\n\n    Agent->>App: Open Daily Route & Collection List\n    App->>Store: Load assigned borrower schedules\n    Store->>App: Display sorted list (Due, Arrears, Paid)\n    \n    Agent->>Borrower: Visit door-to-door & receive installment cash\n    Agent->>App: Tap \"Collect Payment\" on Borrower Card\n    App->>App: Validate installment amount against loan schedule\n    Agent->>App: Confirm payment & submit transaction\n    \n    App->>Store: Record local collection transaction\n    Store->>API: POST /api/v1/collections/collect\n    API-->>Store: Transaction Verified (Receipt #RC-90482)\n    Store-->>App: Mark borrower as PAID & update daily total\n    App-->>Borrower: Instant SMS / digital receipt confirmation\n    \n    Agent->>App: Open End-of-Day Settlement at Branch\n    App->>Agent: Display total cash collected for vault handover"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Visual Workflows & Production Interfaces"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Field Mobile Android App — Route Collection List"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Field Agent Collection Route List [mobile]](/images/projects/microfinance/collections.webp#mobile)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Web Management Portal — Branch Collections Ledger"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Web Portal Branch Collection Ledger [desktop]](/images/projects/microfinance/web-collections.webp#desktop)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Web Management Portal — Member Accounts & Loan Approvals"
+		},
+		{
+			"type": "paragraph",
+			"text": "![Web Portal Member Loan Accounts [desktop]](/images/projects/microfinance/web-members.webp#desktop)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Core Technical Decisions"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 1 — Mobile-First Quasar Architecture for Field Hardware"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"Field agents operate on budget Android smartphones in direct sunlight and varying conditions; heavy web views or non-responsive mobile layouts caused slow tapping and frequent UI freezes."
+				],
+				[
+					"**Decision**",
+					"Engineered the entire field mobile experience with lightweight Quasar Android components, large touch targets, tactile ripple feedback, high-contrast typography, and Pinia reactive stores."
+				],
+				[
+					"**Outcome**",
+					"Lightweight APK footprint with instant screen transitions and zero latency during high-frequency field payment entries."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Decision 2 — End-of-Day Branch Vault Settlement Reconciliation"
+		},
+		{
+			"type": "table",
+			"header": [
+				"",
+				""
+			],
+			"rows": [
+				[
+					"**Problem**",
+					"At the end of every collection shift, branch accountants spent substantial time auditing individual paper receipt slips against cash envelopes handed over by field agents."
+				],
+				[
+					"**Decision**",
+					"Built an automated **Day Summary & Settlement** engine that aggregates collected cash by route, borrower count, payment method, and exact timestamps with an immutable sign-off summary."
+				],
+				[
+					"**Outcome**",
+					"Eliminated evening settlement bottlenecks and ensured 100% audit parity between field cash collection and core branch accounting ledgers."
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "What I Built (Personal Contributions)"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Solo Mobile App Development**: Built the complete standalone Quasar Android application for field collection agents from scratch."
+				},
+				{
+					"text": "**Route & Collection Lists**: Engineered the daily collection scheduler, categorizing borrower cards by `Due Today`, `Arrears`, and `Completed`."
+				},
+				{
+					"text": "**Payment Collection & Receipt Flow**: Developed modal payment collection workflows with cash/MFS options and instant receipt generation."
+				},
+				{
+					"text": "**Agent Day Settlement & Summary**: Implemented the end-of-day reconciliation view calculating total collections for branch vault handovers."
+				},
+				{
+					"text": "**Web Portal Loan UI**: Contributed responsive UI layouts for branch loan management, borrower profiles, and ledger inspection pages."
+				},
+				{
+					"text": "**State Management & Caching**: Configured Pinia stores for local collection caching and smooth navigation across field shifts."
+				}
+			]
+		}
+	]
+}

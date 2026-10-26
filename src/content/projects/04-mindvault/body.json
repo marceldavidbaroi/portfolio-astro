@@ -1,0 +1,205 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "System Architecture & Domain Scope"
+		},
+		{
+			"type": "paragraph",
+			"text": "**MindVault** is a multi-user personal finance platform I built solo as a self-directed learning project, to practice production-style backend and frontend architecture rather than to serve live users. The NestJS backend owns accounts, transactions, the ledger, summaries, tags and authentication; the Next.js client handles dashboards, reports and account management."
+		},
+		{
+			"type": "table",
+			"header": [
+				"Layer",
+				"Flow"
+			],
+			"rows": [
+				[
+					"Frontend",
+					"`Page (app/)` → `Zustand Store` → `API Service` → HTTP"
+				],
+				[
+					"Backend",
+					"`Controller` → `ValidationPipe (DTO)` → `Service` → `TypeORM` → `PostgreSQL`"
+				]
+			]
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Client [\"Next.js 15 App Router\"]\n        UI[\"32 pages · 92 components\"]\n        Stores[\"11 Zustand stores\"]\n        Services[\"10 API services\"]\n        UI --> Stores --> Services\n    end\n\n    subgraph Server [\"NestJS 11 + TypeORM\"]\n        Controllers[\"22 controllers · 89 endpoints\"]\n        Guards[\"JWT & account RBAC guards\"]\n        Domain[\"28 domain services\"]\n        Ledger[\"Ledger & decimal engine\"]\n        Summary[\"Incremental summary engine\"]\n        Controllers --> Guards --> Domain\n        Domain --> Ledger\n        Domain --> Summary\n    end\n\n    DB[(\"PostgreSQL · 24 entities\")]\n    Services -->|\"REST + cookies\"| Controllers\n    Domain --> DB"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Persona Value Map"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Persona",
+				"Pains removed",
+				"Built"
+			],
+			"rows": [
+				[
+					"**Account Owner**",
+					"Balance drift, untraceable edits",
+					"Decimal ledger, immutable `AccountLedger`, non-negative checks"
+				],
+				[
+					"**Collaborator**",
+					"All-or-nothing sharing",
+					"Per-account roles via `AccountUserRole` and guards"
+				],
+				[
+					"**Dashboard Viewer**",
+					"Slow analytics, lost records",
+					"Pre-aggregated summaries, charts, soft-delete recycle bin"
+				]
+			]
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Core Engineering Innovations"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Precision Ledger Engine"
+		},
+		{
+			"type": "paragraph",
+			"text": "Balances are updated through `safeAdd` and `safeSubtract` helpers on `decimal.js`, with non-negative checks, while every change is written to an immutable `AccountLedger` table for audit."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Incremental Summary Pipeline"
+		},
+		{
+			"type": "paragraph",
+			"text": "Transaction create, update and delete hooks update 6 summary entities (daily, weekly, monthly, yearly, category) in the same transaction, so analytics endpoints read rollups instead of raw history."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Contextual Account RBAC"
+		},
+		{
+			"type": "paragraph",
+			"text": "An `AccountUserRole` junction entity maps users to accounts with Owner, Admin, Editor or Viewer roles, enforced by custom NestJS guards independent of global JWT auth."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "4. Client State Architecture"
+		},
+		{
+			"type": "paragraph",
+			"text": "Domain-specific Zustand stores and API services feed an `ApiResponseToast` listener, giving consistent success and error feedback across all mutations."
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Database Design & Concurrency"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "24 TypeORM entities on PostgreSQL covering users, sessions, accounts, ledgers, transactions, summaries, categories, currencies, roles and tags."
+				},
+				{
+					"text": "Summary updates run in the same transaction as the ledger mutation they derive from, keeping balances and rollups consistent."
+				},
+				{
+					"text": "Six `nestjs-command` seeders bootstrap roles, categories, currencies, account types, tag groups and tags."
+				},
+				{
+					"text": "Tags use soft delete with restore, plus dedicated repositories, validators and transformers."
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Performance Benchmarks & Reliability"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Metric",
+				"Value"
+			],
+			"rows": [
+				[
+					"REST endpoints",
+					"89 across 22 controllers"
+				],
+				[
+					"Domain services",
+					"28"
+				],
+				[
+					"Database entities",
+					"24"
+				],
+				[
+					"DTOs",
+					"44"
+				],
+				[
+					"Automated tests",
+					"82 cases across 10 spec files"
+				],
+				[
+					"Frontend routes / components",
+					"32 pages / 92 components"
+				],
+				[
+					"Zustand stores / API services",
+					"11 / 10"
+				],
+				[
+					"Commits",
+					"161 (100 backend, 61 frontend), solo"
+				]
+			]
+		},
+		{
+			"type": "comment",
+			"text": "TODO(me): add real benchmarks if you measure them: dashboard endpoint latency with N transactions, summary update time per write. No latency numbers are claimed here."
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Lessons Learned & Architectural Retrospective"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**What worked:** isolating money math in one helper module and routing every balance change through it kept precision rules in a single place."
+				},
+				{
+					"text": "**Trade-offs:** pre-aggregated summaries speed up reads but add write-path work; per-account roles add joins on scoped requests."
+				},
+				{
+					"text": "**Learning outcome:** this project was my practice ground for modular NestJS design, transactional consistency, role-based access and a store-per-domain frontend."
+				},
+				{
+					"text": "**Next:** statement export (PDF and CSV), then the personal growth suite."
+				}
+			]
+		},
+		{
+			"type": "comment",
+			"text": "TODO(me): add one or two honest \"what I would do differently\" points from your own experience."
+		}
+	]
+}

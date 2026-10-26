@@ -1,0 +1,218 @@
+{
+	"id": "10",
+	"title": "SuperCards – Unified Enterprise Operations Suite",
+	"subtitle": "Multi-tenant product suite on a shared card platform, spanning task management, double-entry accounting, lending, and assessments.",
+	"description": "Contributed to the card and task management system, login flow, core reusable components, and shared packages of an enterprise product suite, and shipped accounting and assessment products on Quasar (Vue 3) and modular Pinia stores.",
+	"chip": "Enterprise SaaS & Fintech",
+	"order": 10,
+	"featured": true,
+	"platformType": "desktop",
+	"contribution": {
+		"mode": "contributor",
+		"label": "Core contributor",
+		"headline": "Co-built the card and task management system with senior engineers [X], delivered the login flow, core reusable components, and shared packages that every product in the suite relies on [Y], and shipped accounting and assessment products plus partial lending, dashboard, recognition, file, and team app surfaces on a shared Quasar codebase [Z].",
+		"scope": [
+			"The suite hosts many products (tasks, finance, loans, quizzes) that needed distinct UIs but shared entities like cards, tags, attachments, and comments.",
+			"Every product needed one consistent login, permission, and tenant-resolution flow instead of per-product authentication.",
+			"Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.",
+			"Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.",
+			"Field staff and mobile users needed push notifications and device capabilities alongside the web SPA."
+		]
+	},
+	"improvements": [
+		{
+			"area": "Cross-product primitive reuse",
+			"before": "Per-product ad-hoc task lists, cards, tags, and attachment views built in silos",
+			"after": "Shared card and task management primitives with domain-configurable layout props",
+			"how": "Co-built modular card primitives and reusable dialog components in src/modules/",
+			"measure": {
+				"metric": "Surface reusability",
+				"from": "0 shared product primitives",
+				"to": "9 product surfaces sharing core card shell",
+				"proof": "qualitative"
+			},
+			"userBenefit": "Unified user experience and instant onboarding across all enterprise products in the suite",
+			"attribution": "personal"
+		}
+	],
+	"myImpact": [
+		{
+			"label": "Task Management",
+			"value": "Core Cards",
+			"attribution": "personal",
+			"detail": "Co-built the card and task system with senior engineers: lists, details, tags, unlink flows"
+		},
+		{
+			"label": "Platform Foundations",
+			"value": "Login + Core",
+			"attribution": "personal",
+			"detail": "Login flow, core reusable components, and shared packages used across products"
+		},
+		{
+			"label": "Product Surfaces",
+			"value": "9 Surfaces",
+			"attribution": "personal",
+			"detail": "Tasks, Accounting, Lending, Dashboard, Recognition, Files, Quizzes, Apps"
+		},
+		{
+			"label": "Suite Scale",
+			"value": "500+ Components",
+			"attribution": "product",
+			"detail": "Suite-wide Vue components built on shared card primitives and dialogs"
+		},
+		{
+			"label": "Cross-Platform",
+			"value": "1 Codebase",
+			"attribution": "product",
+			"detail": "Responsive Quasar desktop SPA + Capacitor 7 native mobile shells"
+		},
+		{
+			"label": "Access Isolation",
+			"value": "Multi-Tenant",
+			"attribution": "product",
+			"detail": "Tenant store and branch-preference resolution via route guards"
+		},
+		{
+			"label": "Accounting Engine",
+			"value": "Double-Entry",
+			"attribution": "personal",
+			"detail": "General ledger, journal transactions, statements, and tax-aware entries"
+		},
+		{
+			"label": "Real-Time Sync",
+			"value": "WebSockets",
+			"attribution": "product",
+			"detail": "Laravel Echo, Pusher live channels, and Firebase push notifications"
+		}
+	],
+	"product": {
+		"summary": "Co-built the card and task management system with senior engineers [X], delivered the login flow, core reusable components, and shared packages that every product in the suite relies on [Y], and shipped accounting and assessment products plus partial lending, dashboard, recognition, file, and team app surfaces on a shared Quasar codebase [Z].",
+		"problem": "Growing organizations were running project tracking, microfinance operations, bookkeeping, employee recognition, knowledge checks, and internal tooling across separate systems. That fragmentation created duplicate data entry, inconsistent permissions, and no single view of what teams were working on, spending, or learning. SuperCards is a suite of products built on one multi-tenant platform with a shared card-based data model, one login, and one set of core components.",
+		"valueProposition": {
+			"targetCustomer": "Multi-Tenant Enterprises, Operations Directors & Department Team Leads",
+			"showCanvas": false,
+			"items": [
+				{
+					"painTitle": "Fragmented Operations Across 5+ Unrelated SaaS Tools",
+					"painDescription": "Organizations managed tasks in Jira, accounting in QuickBooks, lending in spreadsheets, and quizzes in Google Forms, causing duplicate data entry and fractured oversight.",
+					"gainTitle": "Unified Card-Based Product Suite",
+					"gainDescription": "Project management, bookkeeping, lending, and employee assessments live as products in a single authenticated Quasar shell with a shared card entity model."
+				},
+				{
+					"painTitle": "Duplicated UI Boilerplate Across Products",
+					"painDescription": "Each business domain risked building its own detail drawers, tag selectors, comment threads, and attachment uploaders from scratch.",
+					"gainTitle": "Shared Core Components & Packages",
+					"gainDescription": "Shared TaskDetails, TaskList, and media components, configurable through layout props, let new products reuse the same tested building blocks."
+				},
+				{
+					"painTitle": "Inconsistent Access Across Products",
+					"painDescription": "Separate products with separate sign-ins and permission rules make tenant isolation and access control hard to keep consistent.",
+					"gainTitle": "One Login, Consistent Permissions",
+					"gainDescription": "A single login flow with route guards, token interceptors, and permission directives resolves tenant and branch context for every product."
+				},
+				{
+					"painTitle": "Disjointed Mobile & Web Experiences",
+					"painDescription": "Maintaining separate mobile native apps and desktop web dashboards led to inconsistent feature availability and divergent release cycles.",
+					"gainTitle": "Single Codebase Web + Capacitor Native App",
+					"gainDescription": "The Quasar SPA is packaged with Capacitor 7, delivering native push notifications, camera access, and geolocation from one Vue 3 codebase."
+				}
+			]
+		}
+	},
+	"role": "Frontend Engineer",
+	"timeline": "2024 — Present",
+	"status": "Active Production",
+	"classification": "🔒 Proprietary Enterprise IP",
+	"stack": [
+		"Quasar",
+		"Vue 3",
+		"PHP (Laravel)",
+		"Capacitor",
+		"PostgreSQL"
+	],
+	"techStack": {
+		"frontend": [
+			"Vue 3 (Composition API)",
+			"Quasar Framework (v2)",
+			"TypeScript",
+			"Pinia (Domain Stores)",
+			"Vue Router 4",
+			"ApexCharts & Chart.js",
+			"TinyMCE & CodeMirror"
+		],
+		"mobile_hardware": [
+			"Capacitor 7 (Android & iOS)",
+			"Firebase Push Messaging (FCM)",
+			"Capacitor Camera & Geolocation"
+		],
+		"backend": [
+			"Laravel REST APIs",
+			"Laravel Echo & Pusher (Real-Time WebSockets)",
+			"Multi-Service Axios Client"
+		],
+		"database": [
+			"PostgreSQL (Tenant-Scoped Data)"
+		],
+		"devops": [
+			"Vite Build System",
+			"Quasar CLI",
+			"Git & GitHub",
+			"ESLint & Prettier"
+		]
+	},
+	"links": {
+		"liveDemo": "",
+		"parentPlatform": "",
+		"github": "",
+		"docs": ""
+	},
+	"images": [
+		"/images/thumb-1.png",
+		"/images/thumb-2.png",
+		"/images/thumb-3.png",
+		"/images/thumb-4.png"
+	],
+	"visualAssets": {
+		"heroMockup": "/images/dummy-project.png"
+	},
+	"architectureSummary": "Modular Quasar SPA serving a suite of products, with a shared login flow, core reusable components and shared packages, per-domain Pinia stores, and a centralized Axios API client with auth interceptors, composing shared task, tag, and media primitives against Laravel REST and WebSocket backends.",
+	"keyDecisions": [
+		{
+			"challenge": "The suite hosts many products (tasks, finance, loans, quizzes) that needed distinct UIs but shared entities like cards, tags, attachments, and comments.",
+			"decision": "Worked with senior engineers on a module-per-domain architecture (src/modules/<domain>/) with shared primitives (TaskDetails, TaskList, MediaManager, AssignTagToTask) and configurable layout props instead of forking separate apps.",
+			"outcome": "New surfaces like Quiz Studio and Team App reuse the task card shell with domain-specific layout configs rather than rebuilding detail views from scratch."
+		},
+		{
+			"challenge": "Every product needed the same authentication, permission, and tenant-resolution behavior.",
+			"decision": "Built a single login flow with route-level guards, token interceptors, a permission directive, and tenant/branch context resolution shared by all modules.",
+			"outcome": "Users sign in once and move across products with consistent access control and tenant-scoped data."
+		},
+		{
+			"challenge": "Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.",
+			"decision": "Implemented distinct unlink flows for child tasks vs. related-task associations with confirmation dialogs, store-level local state sync, and preview-safe read-only tag rendering.",
+			"outcome": "Meeting facilitators can reorganize agenda items without data loss, and external meeting previews render tag chips reliably from API payloads."
+		},
+		{
+			"challenge": "Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.",
+			"decision": "Built Penny Perfect as a dedicated module with branch-aware transaction tables, journal entry dialogs, import/export pipelines, and external print-preview routes.",
+			"outcome": "Finance teams manage daily transactions, balance sheets, and income statements without leaving the platform."
+		},
+		{
+			"challenge": "Field staff and mobile users needed push notifications and device capabilities alongside the web SPA.",
+			"decision": "Wrapped the Quasar build with Capacitor 7, Firebase messaging, camera, geolocation, and local notifications while keeping a single Vue codebase.",
+			"outcome": "One frontend codebase serves browser and native shells with shared auth and API layers."
+		}
+	],
+	"securityReliability": [
+		"Shared login flow with route-level auth guards (requiresAuth) and token-based API interceptors; permissions enforced at the view layer via v-permission directive.",
+		"Tenant-scoped data access through tenant store and branch-preference utilities for finance and lending modules.",
+		"Pinia persisted state for session continuity; WebSocket channels for real-time user notifications.",
+		"External preview routes (meetings, vouchers, account statements) use dedicated layouts with scoped API access patterns."
+	],
+	"futureRoadmap": [
+		"Complete remaining Loan App surfaces (collection workflows, advanced reporting, and settings parity).",
+		"Expand Dashboard into a configurable executive widget board.",
+		"Finish Team App catalog with full publish/review lifecycle and admin governance.",
+		"Extend File Manager with bulk operations and deeper cloud provider integrations."
+	]
+}

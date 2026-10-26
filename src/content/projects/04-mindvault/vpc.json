@@ -1,0 +1,131 @@
+{
+	"labels": {
+		"title": "The Value Proposition Canvas",
+		"valueProposition": "MindVault Personal Finance Ledger",
+		"customerSegment": "Individuals & Families Managing Multiple Accounts"
+	},
+	"customerJobs": [
+		{
+			"title": "Track Every Account",
+			"note": "Record income and expenses across several accounts and currencies in one place."
+		},
+		{
+			"title": "Share With Family",
+			"note": "Let a partner or relative see or edit one account without exposing the rest."
+		},
+		{
+			"title": "Understand Spending",
+			"note": "See daily to yearly trends and category breakdowns without waiting on slow reports."
+		},
+		{
+			"title": "Keep Records Organised",
+			"note": "Tag, group and recover transactions as categories and habits change."
+		}
+	],
+	"pains": [
+		{
+			"title": "Balance Drift",
+			"note": "Floating-point math makes balances slightly wrong and hard to reconcile."
+		},
+		{
+			"title": "Untraceable Edits",
+			"note": "Balances change in place with no record of who changed what."
+		},
+		{
+			"title": "All-or-Nothing Sharing",
+			"note": "Sharing means giving full access or duplicating the account."
+		},
+		{
+			"title": "Slow Dashboards",
+			"note": "Trend charts rescan the whole history as transactions pile up."
+		},
+		{
+			"title": "Lost Context on Delete",
+			"note": "Removing a tag or category erases historical meaning."
+		}
+	],
+	"gains": [
+		{
+			"title": "Exact Balances",
+			"note": "Totals match to the cent, with no negative-balance surprises."
+		},
+		{
+			"title": "Auditable History",
+			"note": "Every balance change leaves an append-only ledger entry."
+		},
+		{
+			"title": "Granular Sharing",
+			"note": "Owner, Admin, Editor or Viewer access chosen per account."
+		},
+		{
+			"title": "Fast Analytics",
+			"note": "Trend and category views load from rollups, not raw history."
+		},
+		{
+			"title": "Safe Cleanup",
+			"note": "Deleted tags and groups can be restored from a recycle bin."
+		}
+	],
+	"productsAndServices": [
+		{
+			"title": "Precision Ledger Engine",
+			"note": "decimal.js helpers with non-negative checks, backed by an immutable AccountLedger table."
+		},
+		{
+			"title": "Account RBAC",
+			"note": "AccountUserRole junction entity and NestJS guards for per-account roles."
+		},
+		{
+			"title": "Incremental Summary Engine",
+			"note": "Daily, weekly, monthly, yearly and category summaries updated on every write."
+		},
+		{
+			"title": "Tagging Subsystem",
+			"note": "Hierarchical tag groups with soft delete and restore."
+		},
+		{
+			"title": "Next.js Client",
+			"note": "Dashboards, reports and account management over 11 Zustand stores."
+		}
+	],
+	"painRelievers": [
+		{
+			"title": "Arbitrary-Precision Math",
+			"note": "safeAdd and safeSubtract replace floating-point arithmetic across the ledger."
+		},
+		{
+			"title": "Append-Only Audit Trail",
+			"note": "Each change is written to AccountLedger, so edits are never silent."
+		},
+		{
+			"title": "Per-Account Guards",
+			"note": "Authorisation is checked per account, separate from global JWT login."
+		},
+		{
+			"title": "Pre-Aggregated Reads",
+			"note": "Analytics endpoints read six summary entities instead of scanning transactions."
+		},
+		{
+			"title": "Soft Delete & Recycle Bin",
+			"note": "Tags and groups are flagged, not erased, so history keeps its context."
+		}
+	],
+	"gainCreators": [
+		{
+			"title": "Money Math in One Place",
+			"note": "Every balance change routes through a single helper module."
+		},
+		{
+			"title": "Transactional Summaries",
+			"note": "Rollups update in the same transaction as the ledger write, so they stay consistent."
+		},
+		{
+			"title": "Roles Without Duplication",
+			"note": "Collaborators get exactly the access they need on shared accounts."
+		},
+		{
+			"title": "Uniform Feedback",
+			"note": "An ApiResponseToast bridge gives consistent success and error messages on every mutation."
+		}
+	]
+}

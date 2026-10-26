@@ -20,7 +20,7 @@ interface Props {
 const { title, heroImage, isPhone = false, visualAssets, images = [] } = Astro.props;
 
 // Filter out dummy/placeholder images
-const sanitize = (src?: string) => {
+const sanitize = (src?: string | null) => {
 	if (!src) return null;
 	if (src.includes('dummy') || src.includes('thumb-')) return null;
 	return src;

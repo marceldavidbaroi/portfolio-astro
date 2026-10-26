@@ -168,7 +168,7 @@ const { tabs, stackLinks, workCount } = Astro.props;
 <style>
 	.filters {
 		position: static;
-		padding: 0.6rem 0 1rem;
+		padding: 0.25rem 0 1.25rem;
 		margin: 0 0 1.5rem;
 		background: transparent;
 		border-bottom: 1px solid var(--card-border);
@@ -178,8 +178,9 @@ const { tabs, stackLinks, workCount } = Astro.props;
 		display: flex;
 		align-items: center;
 		justify-content: space-between;
-		gap: 1rem;
+		gap: 1.25rem;
 		width: 100%;
+		flex-wrap: wrap;
 	}
 
 	.tabs-scroll-container {
@@ -200,53 +201,54 @@ const { tabs, stackLinks, workCount } = Astro.props;
 	.tabs {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: 0.45rem;
 		flex-shrink: 0;
 	}
 
 	.tab {
 		appearance: none;
-		border: 1px solid transparent;
-		background: transparent;
-		padding: 0.35rem 0.75rem;
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		padding: 0.35rem 0.85rem;
 		margin: 0;
 		font: inherit;
-		font-size: 0.875rem;
+		font-size: 0.825rem;
 		font-weight: 500;
 		color: var(--text-muted);
 		cursor: pointer;
 		border-radius: var(--radius-full);
 		display: inline-flex;
 		align-items: center;
-		gap: 0.4rem;
+		gap: 0.45rem;
 		white-space: nowrap;
 		transition: all var(--dur-fast) ease;
 	}
 
 	.tab:hover {
 		color: var(--text-main);
-		background: var(--accent-subtle);
+		border-color: var(--card-border-hover);
+		background: var(--card-bg-elevated);
 	}
 
 	.tab.active {
 		color: var(--accent);
 		background: var(--accent-subtle);
-		border-color: var(--card-border-hover);
+		border-color: var(--accent);
 		font-weight: 600;
 	}
 
 	.tab-count {
 		font-size: 0.7rem;
-		padding: 0.05rem 0.35rem;
+		padding: 0.05rem 0.4rem;
 		border-radius: 999px;
-		background: var(--card-bg);
+		background: var(--card-bg-elevated);
 		border: 1px solid var(--card-border);
 		color: inherit;
 		opacity: 0.85;
 	}
 
 	.tab.active .tab-count {
-		background: var(--accent-subtle);
+		background: var(--card-bg);
 		border-color: var(--card-border-hover);
 		opacity: 1;
 	}

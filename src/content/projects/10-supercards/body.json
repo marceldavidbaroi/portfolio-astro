@@ -1,0 +1,633 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "**SuperCards** is a multi-tenant enterprise **product suite** built on a shared card platform. Work items, financial records, loan accounts, quizzes, and internal applications are all modeled as **cards** inside one authenticated workspace, and each product (task management, accounting, lending, assessments, recognition, file storage, team apps) is delivered as its own module on top of the same core."
+		},
+		{
+			"type": "paragraph",
+			"text": "My role as **Frontend Engineer** covered two layers. At the platform layer, I worked alongside senior engineers on the **card and task management system**, the **login and authentication flow**, the **core reusable components**, and **shared packages** that every product consumes. At the product layer, I shipped and hardened individual surfaces: full ownership on accounting and assessments, and substantial partial delivery on lending, the dashboard, recognition, file storage, and the team app catalog."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Suite Topology & Client-to-Cloud Flow"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Client [\"SuperCards Client (Web + Capacitor)\"]\n        AUTH[\"Login & Auth Flow\"]\n        CORE[\"Core Reusable Components\"]\n        PKG[\"Shared Packages\"]\n        STORE[\"Pinia Stores\"]\n        AUTH --> STORE\n        CORE --> STORE\n        PKG --> CORE\n    end\n\n    subgraph Products [\"Product Modules (Suite)\"]\n        TASKS[\"Task Management Cards\"]\n        PENNY[\"Accounting (Penny Perfect)\"]\n        LOAN[\"Lending (Loan App)\"]\n        DASH[\"Operations Dashboard\"]\n        BOUNTY[\"Employee Recognition\"]\n        FILE[\"Cloud File Manager\"]\n        QUIZ[\"Assessment & Quiz\"]\n        TEAM[\"Team App Catalog\"]\n    end\n\n    CORE --> Products\n    AUTH --> Products\n    STORE --> API[\"Axios API Client\"]\n    API --> LARAVEL[\"Laravel REST API\"]\n    API --> WS[\"Laravel Echo / Pusher\"]\n    LARAVEL --> DB[(\"PostgreSQL\")]\n    WS --> LARAVEL\n    CAP[\"Capacitor Native Layer\"] --> Client\n    CAP --> FCM[\"Firebase Push\"]"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Modular Frontend Structure"
+		},
+		{
+			"type": "paragraph",
+			"text": "SuperCards is a suite, not a single distributable package. Each product lives in an isolated module with its own routes, pages, and components, registered into a shared Quasar layout and built on a common core:"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Layer",
+				"Responsibility"
+			],
+			"rows": [
+				[
+					"`src/modules/<domain>/`",
+					"Product pages, local components, routes"
+				],
+				[
+					"`src/stores/<domain>-store`",
+					"API orchestration and reactive state"
+				],
+				[
+					"`src/services/`",
+					"HTTP client wrappers per backend resource"
+				],
+				[
+					"`src/components/`",
+					"Core reusable components shared by every product (tags, comments, media, charts, card shells)"
+				],
+				[
+					"`src/composables/`",
+					"Shared logic (criteria/pagination, WebSocket events, back button, auth helpers)"
+				],
+				[
+					"Shared packages",
+					"Common building blocks consumed across products so each module does not reimplement them"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Contribution Areas"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Platform Layer (shared across all products)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Card & Task Management System — **Core Contributor (with seniors)**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does (business terms):**<br>\nThe card system is the backbone of the suite. Teams create, assign, tag, comment on, and track operational cards across projects, and other products reuse the same card model."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered (alongside senior engineers):**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Enhanced **task list rendering** with configurable field visibility (assignees, tags, attachments, completion state, thumbnails, dashboard-specific layouts)."
+				},
+				{
+					"text": "Improved **list-item performance and correctness**: markdown/HTML description previews, media link resolution via computed pipelines, and tag chip enrichment from the global tag store."
+				},
+				{
+					"text": "Built **meeting-topic task orchestration**: sub-task vs. related-task distinction, safe unlink flows (detach without delete), and read-only preview mode for external meeting shares."
+				},
+				{
+					"text": "Strengthened **store synchronization** so UI state updates immediately after unlink, delete, and related-card operations without full page reloads."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** Teams spend less time context-switching during meetings and project reviews, and facilitators can reorganize agendas without risking data loss."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Task Detail Experience — **Core Contributor (with seniors)**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nThe detail view is the operational command center for a single card: description, custom fields, child tasks, blockers, related items, comments, attachments, meeting topics, product links, and action workflows."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Extended the **configurable detail shell** (`layoutConfig` props) so different products show only relevant sections (Quiz hides attachments; Team App shows website/Git URL and publish toggle)."
+				},
+				{
+					"text": "Integrated **rich content rendering** (Markdown preview, HTML parsing, heading deep-links, media carousels)."
+				},
+				{
+					"text": "Wired **cross-entity actions**: tag assignment, comment threads, attachment management, meeting topic panels, and dynamic meta-field forms."
+				},
+				{
+					"text": "Ensured detail views work inside **slide-over preview panels** used across Dashboard, Quiz Studio, and Team App."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** One detail component powers multiple products, giving users a consistent editing experience whether they are managing a project task, a quiz, or an internal app listing."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Login & Authentication Flow — **Contributor**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nThe single entry point into the suite. It authenticates the user, resolves the tenant and branch context, and routes them into the right product with the right permissions."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Login flow** on web and Capacitor native shells, with token handling through the shared Axios client and auth interceptors."
+				},
+				{
+					"text": "**Route-level guards** (`requiresAuth`) and session continuity through persisted Pinia state."
+				},
+				{
+					"text": "**Permission wiring** so the `v-permission` directive and auth store getters gate products and actions consistently."
+				},
+				{
+					"text": "**Tenant and branch context resolution** after login, so finance and lending modules load scoped data."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** Users authenticate once and move across every product in the suite with consistent access control and tenant isolation."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "4. Core Reusable Components & Shared Packages — **Contributor**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nThe building blocks every product relies on. Instead of each product team building its own detail drawers, tag selectors, comment threads, and media uploaders, the suite shares one tested set."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Card primitives**: `TaskList`, `TaskListItem`, and `TaskDetails`, configurable through `fields` and `layoutConfig` props per product."
+				},
+				{
+					"text": "**Cross-module components**: tag assignment, comments, media management, and chart wrappers reused across modules."
+				},
+				{
+					"text": "**Shared composables** for criteria/pagination, WebSocket events, and navigation behavior."
+				},
+				{
+					"text": "**Shared packages** that product modules consume, keeping behavior consistent and reducing per-product duplication."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** New product surfaces start from proven building blocks, so they are faster to deliver and look and behave consistently."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Product Layer"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "5. Accounting Module (Penny Perfect) — **Full**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nBranch-level bookkeeping for organizations that need general ledger, journal entries, financial statements, and voucher printing inside the same platform they use for operations."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Transaction ledger** with date controls, branch filtering, debit/credit columns, running balances, and color-coded entry types."
+				},
+				{
+					"text": "**Journal entry creation and editing** with account multi-select, media attachments on entries, and detail dialogs."
+				},
+				{
+					"text": "**Financial reporting surfaces**: balance sheet, income statement, chart of accounts, and report index with print-preview routes."
+				},
+				{
+					"text": "**Import/export pipelines** for bulk transaction and journal data."
+				},
+				{
+					"text": "**External print layouts** for vouchers, transaction reports, and report previews (shareable/printable views)."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** Finance teams no longer need a separate accounting tool for day-to-day posting and statement generation, and branch operators work in the same tenant context as the rest of the organization."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "6. Assessment & Quiz Platform — **Full**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nInternal learning and knowledge checks. Authors build quizzes, publish them, and employees attend timed assessments or self-challenge sessions."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I delivered:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Quiz Studio**: card-grid management, status tags, preview panel, and inline question authoring (`QuizQuestionForm`)."
+				},
+				{
+					"text": "**Question lifecycle**: create, update, delete questions; cover image upload/removal; quiz status transitions."
+				},
+				{
+					"text": "**Participation flows**: attend-quiz route, challenge-yourself mode, participant tracking, and result display."
+				},
+				{
+					"text": "**Reuse of TaskDetails** as the quiz metadata shell with quiz-specific layout config (attachments off, custom fields off)."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Business value:** HR and team leads can run knowledge checks without a separate LMS, and quizzes inherit the platform's tagging, ownership, and preview patterns."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "7. Lending Platform (Loan App) — **Partial**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nMicrofinance and cooperative lending: member onboarding, loan lifecycle, collections, branch management, dues tracking, and regulatory-style reports."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I contributed:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Loan and member management UI**: searchable loan tables, member detail panels, loan dialogs, and status-filtered views (pending, approved, disbursed, ongoing)."
+				},
+				{
+					"text": "**Collection and dues workflows**: collection date editing, add-dues dialogs, and payment-day request settings."
+				},
+				{
+					"text": "**Reporting surfaces**: account statements, monthly summary reports, collection sheet reports, and LLP reports, including print-preview routes."
+				},
+				{
+					"text": "**Branch and settings integration**: tenant/branch preference resolution, sales tax configuration, and import dialogs for savings/member data."
+				},
+				{
+					"text": "**Member audit and settlement dialogs** for operational review."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Remaining scope (not yet full):** Additional home/entry flows, agent management parity, and deeper cooperative settings."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "8. Operations Dashboard — **Partial**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nThe landing workspace where users see today's time entries, assigned tasks, starred/watch items, team availability, announcements, and recognition leaderboard highlights in one scrollable view."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I contributed:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Composed **multi-source dashboard panels**: Klockins time entries, task lists with inline preview, bounty leaderboard medals, and announcement covers."
+				},
+				{
+					"text": "Implemented **in-dashboard task preview** using the shared `TaskDetails` slide-over without route navigation."
+				},
+				{
+					"text": "Wired **pagination and criteria** across watch lists, star lists, and resource views."
+				},
+				{
+					"text": "Integrated **availability status** and tag-filtered resource browsing."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Remaining scope:** Configurable widget layout and executive-level analytics cards."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "9. Employee Recognition (Office Bounty) — **Partial**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nPeer and manager recognition: allocate bounty budgets, award colleagues, track given bounties, and display period-based leaderboards."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I contributed:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Bounty awarding flow** with balance checks, admin/owner permission gates, and creation dialogs."
+				},
+				{
+					"text": "**Leaderboard and period filtering** (monthly default range, custom date windows)."
+				},
+				{
+					"text": "**Given bounty history** with paginated lists and tag-enriched records."
+				},
+				{
+					"text": "**Dashboard integration**: top-3 medal display on the home dashboard."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Remaining scope:** Advanced allocation rules, team-level analytics, and notification hooks."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "10. Cloud File Manager — **Partial**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nGoogle Drive–connected document storage: browse folders, upload files, preview documents, and organize content with breadcrumb navigation."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I contributed:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Drive browser UI** with folder navigation, breadcrumb trail, and nested route support (`/drive/:path`)."
+				},
+				{
+					"text": "**File operations**: create folder, upload, preview (open in new tab), context menu actions."
+				},
+				{
+					"text": "**Move workflow** via `FileMoveComponent` for reorganizing files across directories."
+				},
+				{
+					"text": "**Store-driven state** for file lists, preview image links, and breadcrumb building."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Remaining scope:** Bulk move/copy, sharing permissions UI, and multi-provider support beyond Google Drive."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "11. Team App Catalog — **Partial**"
+		},
+		{
+			"type": "paragraph",
+			"text": "**What this surface does:**<br>\nAn internal app marketplace where teams publish tools they've built, with publish/unpublish status, website links, Git URLs, ratings, and searchable card listings."
+		},
+		{
+			"type": "paragraph",
+			"text": "**What I contributed:**"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**My Apps and App List pages** with status filters (All / Published / Unpublished)."
+				},
+				{
+					"text": "**App card grid** with preview panel, average rating display, and status tag chips."
+				},
+				{
+					"text": "**TaskDetails integration** with team-app-specific props: website URL, Git URL, publish toggle, and rating mode."
+				},
+				{
+					"text": "**App lifecycle handlers**: status change, deletion, and preview scroll-into-view on selection."
+				}
+			]
+		},
+		{
+			"type": "paragraph",
+			"text": "**Remaining scope:** Full admin review workflow, app discovery/search, and install/analytics tracking."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Technical Highlights"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Area",
+				"Approach"
+			],
+			"rows": [
+				[
+					"**Reusable card shell**",
+					"`TaskList` + `TaskListItem` + `TaskDetails` composed with `fields` / `layoutConfig` props per product"
+				],
+				[
+					"**Auth & access**",
+					"Shared login flow, `requiresAuth` route guards, token interceptors, and `v-permission` directive backed by auth store getters"
+				],
+				[
+					"**Rich content**",
+					"Markdown preview (`md-editor-v3`), HTML parsing, media link resolution, always via `computed()`, never inline template calls"
+				],
+				[
+					"**Multi-tenant**",
+					"Tenant store + branch preference utilities for finance/lending scoping"
+				],
+				[
+					"**Real-time**",
+					"Laravel Echo composable for user notifications and presence"
+				],
+				[
+					"**Print / external views**",
+					"Dedicated `/external` routes with `AuthLayout` for vouchers, statements, and meeting previews"
+				],
+				[
+					"**Mobile**",
+					"Capacitor 7 with camera, geolocation, push notifications, and background location plugins"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Summary Table — Contribution Depth"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Surface",
+				"Depth",
+				"Primary Deliverables"
+			],
+			"rows": [
+				[
+					"Card & Task Management",
+					"**Core Contributor (with seniors)**",
+					"List rendering, tags, unlink flows, meeting preview, store sync"
+				],
+				[
+					"Task Detail Views",
+					"**Core Contributor (with seniors)**",
+					"Configurable detail shell, rich content, cross-entity actions"
+				],
+				[
+					"Login & Auth Flow",
+					"**Contributor**",
+					"Login, route guards, permissions, tenant/branch resolution"
+				],
+				[
+					"Core Components & Shared Packages",
+					"**Contributor**",
+					"Card primitives, shared components, composables, shared packages"
+				],
+				[
+					"Accounting (Penny Perfect)",
+					"**Full**",
+					"Ledger, journals, statements, import/export, print routes"
+				],
+				[
+					"Assessment (Quiz)",
+					"**Full**",
+					"Studio, questions, attendance, challenge mode"
+				],
+				[
+					"Lending (Loan App)",
+					"**Partial**",
+					"Loans, members, collections, reports, settings tabs"
+				],
+				[
+					"Operations Dashboard",
+					"**Partial**",
+					"Time + tasks + bounty + announcements composite view"
+				],
+				[
+					"Employee Recognition",
+					"**Partial**",
+					"Award flow, leaderboard, period filters, dashboard medals"
+				],
+				[
+					"Cloud File Manager",
+					"**Partial**",
+					"Drive browser, upload, preview, move workflow"
+				],
+				[
+					"Team App Catalog",
+					"**Partial**",
+					"App cards, publish toggle, ratings, preview panel"
+				]
+			]
+		}
+	]
+}

@@ -1,0 +1,243 @@
+{
+	"id": "06",
+	"title": "UniFlow – Real-Time University Class & Learning Platform",
+	"subtitle": "Role-based class and learning management app for students, teachers, and administrators, built on Quasar and Firebase.",
+	"description": "Accomplished a centralized university learning platform as measured by 44 routes across 9 domain modules, 77 Vue components, 10 Pinia stores, and 12 Firestore entity schemas, by engineering a role-guarded Quasar (Vue 3) app on Firebase Authentication and Cloud Firestore.",
+	"chip": "EdTech & Real-Time Web App",
+	"order": 6,
+	"featured": false,
+	"platformType": "desktop",
+	"role": "Solo Full-Stack Engineer",
+	"timeline": "Mar 2025 — Jun 2025",
+	"status": "Completed",
+	"classification": "Personal Project",
+	"contribution": {
+		"mode": "owner",
+		"startedFrom": "scratch",
+		"myShare": "lead",
+		"label": "Solo owner & full-stack engineer",
+		"headline": "Designed and built the entire platform alone: architecture, Firestore data model, role-based routing, Pinia state layer, and all 77 Vue components.",
+		"scope": [
+			"Live class sessions with human-readable numeric session codes",
+			"Role-based workspaces for Student, Teacher, and Admin",
+			"Collaborative study groups with shared resources",
+			"Task announcements, submissions, and multi-criteria grading rubrics",
+			"Admin panel for faculties, departments, courses, users, and activity logs"
+		],
+		"teamSize": 1
+	},
+	"problem": {
+		"statement": "University academic workflows are fragmented: schedules, group discussions, task submissions, and lecture notes live in disconnected apps. Teachers lack one tool for live sessions and graded multi-criteria tasks, and administrators lack a central view of faculties, departments, courses, and activity logs.",
+		"evidence": "assumption",
+		"whoHurts": [
+			"student",
+			"teacher",
+			"academic-admin"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Student",
+			"pain": "Joining sessions and tracking tasks, groups, and notes across separate tools",
+			"before": "Course info, group chats, and submissions scattered across disconnected apps; random IDs to join a class",
+			"after": "One workspace with a short numeric code to join a live session, plus groups, tasks, and todos in the same app",
+			"measure": {
+				"metric": "Session join identifier",
+				"from": "Random Firestore document ID",
+				"to": "Short auto-incrementing numeric code",
+				"proof": "designed"
+			},
+			"attribution": "personal",
+			"feature": [
+				"Session",
+				"Group",
+				"Todo"
+			]
+		},
+		{
+			"persona": "Teacher",
+			"pain": "No single tool to run live sessions and grade against several criteria",
+			"before": "Announcements, submissions, and grading handled in separate places",
+			"after": "Task announcements, submissions, and rubric-based grading in one role-specific dashboard",
+			"measure": {
+				"metric": "Tools needed for task lifecycle",
+				"from": "Several disconnected tools",
+				"to": "One app",
+				"proof": "designed"
+			},
+			"attribution": "personal",
+			"feature": [
+				"Task",
+				"Session",
+				"Dashboard"
+			]
+		},
+		{
+			"persona": "Academic Administrator",
+			"pain": "No central place to manage the university hierarchy or audit activity",
+			"before": "Faculties, departments, courses, and logs not managed or audited in one place",
+			"after": "A 16-page admin suite with CRUD across the hierarchy, analytics charts, and activity logs",
+			"measure": {
+				"metric": "Admin management surfaces",
+				"from": "None",
+				"to": "16 admin pages and 6 dialogs",
+				"proof": "measured"
+			},
+			"attribution": "personal",
+			"feature": [
+				"Admin"
+			]
+		}
+	],
+	"myImpact": [
+		{
+			"label": "Domain modules",
+			"value": "9 Modules",
+			"attribution": "personal",
+			"detail": "admin, auth, dashboard, group, home, liveShare, session, task, todo"
+		},
+		{
+			"label": "Route endpoints",
+			"value": "44 Routes",
+			"attribution": "personal",
+			"detail": "Aggregated from per-module route files with role-based meta guards"
+		},
+		{
+			"label": "Vue components",
+			"value": "77 Components",
+			"attribution": "personal",
+			"detail": "40 pages, 34 UI components, 2 layouts, and the root App"
+		},
+		{
+			"label": "State layer",
+			"value": "10 Stores",
+			"attribution": "personal",
+			"detail": "Pinia stores with separated state and action files, persisted state"
+		},
+		{
+			"label": "Data model",
+			"value": "12 Schemas",
+			"attribution": "personal",
+			"detail": "Firestore entity collections documented in the repo"
+		},
+		{
+			"label": "Delivery",
+			"value": "181 Commits",
+			"attribution": "personal",
+			"detail": "100% solo authorship over roughly three months"
+		}
+	],
+	"product": {
+		"summary": "Delivered a role-based university learning platform: live class sessions, collaborative groups, graded tasks with rubrics, and an admin control panel, as a Quasar (Vue 3) SPA on Firebase.",
+		"problem": "Course schedules, group discussions, task submissions, and notes are scattered across disconnected apps. Teachers have no unified tool for live sessions and rubric grading, and administrators have no central dashboard for the academic hierarchy and audit logs.",
+		"tagline": "One workspace for live classes, groups, tasks, and administration.",
+		"valueProposition": {
+			"targetCustomer": "University Students, Educators & Academic Administrators",
+			"showCanvas": true,
+			"items": [
+				{
+					"painTitle": "Fragmented Academic Tools",
+					"painDescription": "Schedules, discussions, submissions, and notes spread across disconnected applications.",
+					"gainTitle": "Unified Learning Workspace",
+					"gainDescription": "Sessions, groups, tasks, and todos live in one app with role-specific dashboards."
+				},
+				{
+					"painTitle": "Hard-to-Enter Session Identifiers",
+					"painDescription": "Random document IDs are impractical for students to type when joining an in-person class.",
+					"gainTitle": "Human-Readable Session Codes",
+					"gainDescription": "A Firestore transaction on a counter document assigns short auto-incrementing numbers to each session."
+				},
+				{
+					"painTitle": "No Multi-Criteria Grading Flow",
+					"painDescription": "Educators lack a single tool to announce tasks, collect submissions, and grade against several criteria.",
+					"gainTitle": "Rubric-Based Task Workflow",
+					"gainDescription": "Task announcements, submissions, grading rubrics, and todo tracking in one module."
+				},
+				{
+					"painTitle": "No Central Administrative View",
+					"painDescription": "Administrators cannot manage or audit faculties, departments, courses, and cross-course activity from one place.",
+					"gainTitle": "Admin Control Panel",
+					"gainDescription": "CRUD across the university hierarchy, user management, analytics charts, and activity logs."
+				}
+			]
+		}
+	},
+	"stack": [
+		"Vue 3",
+		"Quasar 2",
+		"Pinia",
+		"Firebase Firestore",
+		"Firebase Authentication"
+	],
+	"techStack": {
+		"frontend": [
+			"Vue 3.4",
+			"Quasar Framework 2 (Vite)",
+			"Pinia + pinia-plugin-persistedstate",
+			"Vue Router 4",
+			"ApexCharts",
+			"Chart.js"
+		],
+		"mobile_hardware": [],
+		"backend": [
+			"Firebase Authentication",
+			"Firebase service layer (queries and atomic counters)"
+		],
+		"database": [
+			"Cloud Firestore (12 entity collections)"
+		],
+		"devops": [
+			"Vite",
+			"Quasar CLI",
+			"Git & GitHub",
+			"ESLint & Prettier"
+		]
+	},
+	"links": {
+		"liveDemo": "",
+		"parentPlatform": "",
+		"github": "https://github.com/marceldavidbaroi/UniFlow-",
+		"docs": ""
+	},
+	"images": [
+		"/images/projects/uniflow/dashboard.webp"
+	],
+	"visualAssets": {
+		"heroMockup": "/images/projects/uniflow/dashboard.webp",
+		"screenshots": [
+			"/images/projects/uniflow/dashboard.webp"
+		]
+	},
+	"keyDecisions": [
+		{
+			"challenge": "A multi-role app with dozens of pages and dialogs leads to a bloated router file and scattered components.",
+			"decision": "Split the codebase into 9 isolated modules under src/modules/, each with its own pages/, components/, and routes.js, aggregated into the central router. Trade-off: manual route aggregation in src/router/index.js.",
+			"outcome": "Clear domain boundaries and room to add admin and student features without touching unrelated code."
+		},
+		{
+			"challenge": "Random Firestore document IDs are hard for students to type when joining an in-person session.",
+			"decision": "Added a Firestore transaction in firebaseService.js that atomically increments a metadata/counters document to assign human-readable session numbers. Trade-off: one extra read/write transaction per session creation.",
+			"outcome": "Short numeric session codes students can enter to join live classes."
+		},
+		{
+			"challenge": "Three roles (Student, Teacher, Admin) needed route protection without repeating authorization logic in every view.",
+			"decision": "Centralized access control in the Quasar boot/auth.js plugin, checking to.meta.requiresAuth and to.meta.roles against the Pinia user store's current role. Trade-off: every protected route must declare its metadata.",
+			"outcome": "Unauthorized users are redirected to /unauthorized or /auth/login before a view mounts."
+		},
+		{
+			"challenge": "Direct Firestore SDK calls inside components caused tight coupling, duplicated queries, and inconsistent loading and error handling.",
+			"decision": "Split each of the 10 Pinia stores into index.js (state/getters) and action.js, keeping Firestore calls in the service layer and store actions. Trade-off: extra action files per store.",
+			"outcome": "Network mutations and state caching are centralized, so components stay declarative."
+		}
+	],
+	"securityReliability": [
+		"Role-based navigation guard (boot/auth.js) checking requiresAuth and roles route metadata before views mount",
+		"Firebase Authentication for sign-in; Firebase security rules authored for Firestore data access",
+		"Pinia persisted state for session continuity across reloads",
+		"Atomic Firestore transaction for session counter increments"
+	],
+	"futureRoadmap": [
+		"In-app video conferencing and screen sharing during live sessions",
+		"Push notifications for upcoming session deadlines and task submissions"
+	]
+}

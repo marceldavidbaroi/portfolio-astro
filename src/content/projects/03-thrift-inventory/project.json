@@ -1,0 +1,195 @@
+{
+	"id": "03",
+	"title": "Inventory Management – Mobile Warehouse & Barcode Automation",
+	"subtitle": "Capacitor Android companion for retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time backend sync.",
+	"description": "Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs.",
+	"chip": "Mobile Hardware & IoT",
+	"order": 3,
+	"featured": true,
+	"platformType": "mobile",
+	"contribution": {
+		"mode": "specialist",
+		"label": "Domain specialist",
+		"headline": "Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.",
+		"scope": [
+			"Unreliable Barcode Scanning in Warehouse Conditions",
+			"High-Volume Intake During Shipment Processing",
+			"Stock Discrepancies Across Shelf/Box Locations",
+			"Operator UX in Noisy Warehouse Environments",
+			"Desktop-Only Registration Bottleneck"
+		],
+		"team": "Mobile companion to TradeflowBD Thrift (web admin by platform team)"
+	},
+	"myImpact": [
+		{
+			"label": "Continuous Scan Engine",
+			"value": "Batch Mode",
+			"attribution": "personal",
+			"detail": "High-speed camera decoding with audio/haptic confirmation"
+		},
+		{
+			"label": "Bin Audit Discrepancy Detection",
+			"value": "3 States",
+			"attribution": "personal",
+			"detail": "Verified, missing, and misplaced item detection per shelf/box"
+		},
+		{
+			"label": "Operator Localization",
+			"value": "Bilingual",
+			"attribution": "product",
+			"detail": "English and Bengali (বাংলা) with persisted device locale"
+		},
+		{
+			"label": "Stock Registration Ingestion",
+			"value": "Atomic RPC",
+			"attribution": "personal",
+			"detail": "Transactional writes across stocks, barcodes, and Cloudinary CDN"
+		},
+		{
+			"label": "Intake Latency",
+			"value": "Sub-Second",
+			"attribution": "personal",
+			"detail": "Instant on-shelf garment registration and sync to TradeflowBD"
+		},
+		{
+			"label": "Unified Cross-Platform",
+			"value": "1 Codebase",
+			"attribution": "product",
+			"detail": "Android native APK/AAB + responsive web via Quasar & Capacitor"
+		}
+	],
+	"product": {
+		"summary": "Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.",
+		"problem": "Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.",
+		"valueProposition": {
+			"targetCustomer": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams",
+			"showCanvas": false,
+			"items": [
+				{
+					"painTitle": "Desktop-Tethered Registration Bottlenecks",
+					"painDescription": "Floor operators had to haul garments to desktop PCs or hand-write paper intake sheets, causing massive intake delays during container arrivals.",
+					"gainTitle": "On-Floor Mobile Registration with Photo Upload",
+					"gainDescription": "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds."
+				},
+				{
+					"painTitle": "Undetected Misplaced Stock & Phantom Out-of-Stocks",
+					"painDescription": "Garments placed on incorrect shelf/box bins went unnoticed for weeks, showing as unavailable for sale while physically in the warehouse.",
+					"gainTitle": "Structured 3-State Shelf & Bin Audit Mode",
+					"gainDescription": "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs."
+				},
+				{
+					"painTitle": "Slow Single-Item Scanning & Form Navigation Fatigue",
+					"painDescription": "Scanning barcode labels one-by-one with mandatory screen confirmation caused high operator fatigue and slow intake rates.",
+					"gainTitle": "Google ML Kit Continuous Batch Queue Scanning",
+					"gainDescription": "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates."
+				},
+				{
+					"painTitle": "Language Barrier for Warehouse Floor Staff",
+					"painDescription": "Complex English ERP interfaces caused operator misclassification and required extensive supervision.",
+					"gainTitle": "Bilingual Operator Interface (English + Bengali)",
+					"gainDescription": "Complete high-contrast bilingual localization (বাংলা + EN) with persisted device locale and large touch targets designed for warehouse floors."
+				}
+			]
+		}
+	},
+	"role": "Full-Stack Mobile Engineer (Solo Contributor)",
+	"timeline": "2026 — Present",
+	"status": "Active Production (v1.0.5)",
+	"classification": "🔒 Proprietary Enterprise IP",
+	"stack": [
+		"Quasar",
+		"Vue 3",
+		"Supabase",
+		"Capacitor (Android)",
+		"Google ML Kit"
+	],
+	"techStack": {
+		"frontend": [
+			"Quasar Framework (v2)",
+			"Vue.js (v3) + TypeScript",
+			"Capacitor 8 (Android)",
+			"TanStack Query (Vue Query)",
+			"Vue I18n (English + Bengali)"
+		],
+		"mobile_hardware": [
+			"@capacitor-mlkit/barcode-scanning (Google ML Kit)",
+			"@capacitor/camera (Product Photo Capture)",
+			"Native Haptic & Audio Scan Feedback",
+			"@capgo/capacitor-social-login (Native Google Auth)"
+		],
+		"backend": [
+			"Supabase (PostgreSQL + Auth + RPCs)",
+			"Cloudinary (Direct Image Upload via Edge Function)"
+		],
+		"database": [
+			"PostgreSQL (thrift_stocks, thrift_barcodes, thrift_shipments)",
+			"Atomic RPCs (register_thrift_stock_from_app, bulk_update_*)"
+		],
+		"devops": [
+			"Capacitor Android Release Builds (APK/AAB)",
+			"Quasar Vite SPA (Web + Native from one codebase)"
+		]
+	},
+	"links": {
+		"liveDemo": "",
+		"parentPlatform": "https://tradeflowbd.com",
+		"github": "https://github.com/marceldavidbaroi",
+		"docs": ""
+	},
+	"images": [
+		"/images/projects/thrift/dashboard.webp",
+		"/images/projects/thrift/register.webp",
+		"/images/projects/thrift/scanner.webp",
+		"/images/projects/thrift/inventory.webp"
+	],
+	"visualAssets": {
+		"heroMockup": "/images/projects/thrift/dashboard.webp",
+		"screenshots": [
+			"/images/projects/thrift/dashboard.webp",
+			"/images/projects/thrift/register.webp",
+			"/images/projects/thrift/scanner.webp",
+			"/images/projects/thrift/inventory.webp"
+		]
+	},
+	"architectureSummary": "Capacitor 8 Android app (Quasar/Vue 3) using Google ML Kit for hardware barcode decoding, Capacitor Camera for product photos, Cloudinary for image storage, and Supabase RPCs for atomic stock writes — companion to the TradeflowBD Thrift web admin.",
+	"keyDecisions": [
+		{
+			"challenge": "Unreliable Barcode Scanning in Warehouse Conditions",
+			"decision": "Integrated @capacitor-mlkit/barcode-scanning with Google ML Kit on Android, auto-installing the scanner module on first use, with a camera overlay fallback when the native scan UI fails.",
+			"outcome": "Reliable Code-128 reads on thermal labels with permission handling, auto-zoom, and normalized barcode parsing."
+		},
+		{
+			"challenge": "High-Volume Intake During Shipment Processing",
+			"decision": "Built continuous scan mode with a bulk action queue — operators scan many items in sequence, then batch-update shelf location or stock status in one RPC call.",
+			"outcome": "Eliminated per-item form navigation during peak intake; bulk operations use bulk_update_thrift_stock_locations and bulk_update_thrift_stock_statuses RPCs."
+		},
+		{
+			"challenge": "Stock Discrepancies Across Shelf/Box Locations",
+			"decision": "Designed Audit Mode — select a shelf/box, load expected items, scan to verify, flag missing items, detect misplaced stock via live barcode lookup, and relocate in bulk.",
+			"outcome": "Structured stocktake workflow with progress tracking, audio/haptic feedback, and one-tap bulk relocation for misplaced items."
+		},
+		{
+			"challenge": "Operator UX in Noisy Warehouse Environments",
+			"decision": "Added audio chimes (success/error tones) and device vibration via scanFeedback utilities, plus contextual AppHelpDialog guides on every major workflow.",
+			"outcome": "Operators get instant scan confirmation without looking at the screen."
+		},
+		{
+			"challenge": "Desktop-Only Registration Bottleneck",
+			"decision": "Mobile stock registration captures barcode, product photo (Capacitor Camera), metadata (brand, size, condition, weight, pricing), and registers atomically via register_thrift_stock_from_app RPC with Cloudinary image upload.",
+			"outcome": "Full garment intake at the warehouse shelf — data appears in TradeflowBD web admin immediately on cache refresh."
+		}
+	],
+	"securityReliability": [
+		"Supabase Auth with native Google Sign-In on Android (ID token) and browser OAuth on web.",
+		"Tenant-scoped session bootstrap with membership validation before any stock operation.",
+		"Atomic RPC for stock registration — no partial writes across thrift_stocks, thrift_barcodes, and thrift_stock_images.",
+		"Duplicate image detection per barcode/shipment before Cloudinary upload.",
+		"TanStack Query cache invalidation keeps stock list, detail, and dashboard metrics consistent after every mutation."
+	],
+	"futureRoadmap": [
+		"Offline-first IndexedDB queue for warehouse zones with poor connectivity.",
+		"Bluetooth thermal printer integration for on-the-spot barcode label printing.",
+		"Supabase Realtime subscriptions for live dashboard push (currently poll + cache invalidation).",
+		"iOS Capacitor build with equivalent ML Kit barcode support."
+	]
+}

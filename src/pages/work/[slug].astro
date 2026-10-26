@@ -1,5 +1,4 @@
 ---
-import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import CaseBreadcrumb from '../../components/work/CaseBreadcrumb.astro';
 import CaseHero from '../../components/work/CaseHero.astro';
@@ -11,15 +10,18 @@ import CaseBuildChapter from '../../components/work/CaseBuildChapter.astro';
 import CaseTrustChapter from '../../components/work/CaseTrustChapter.astro';
 import CaseDeepDive from '../../components/work/CaseDeepDive.astro';
 import CaseMarkdown from '../../components/work/CaseMarkdown.astro';
+import CaseBodyBlocks from '../../components/work/CaseBodyBlocks.astro';
 import CaseAdjacentNav from '../../components/work/CaseAdjacentNav.astro';
 import CaseImageLightbox from '../../components/ui/CaseImageLightbox.astro';
+import { getAllProjects } from '../../lib/getProject';
+import { blocksToText } from '../../lib/blocksToText';
 import { deriveMyImpact, resolveProductForDetail, toCaseStudyView } from '../../lib/projectView';
 import { ipLabel, isRealUrl } from '../../lib/work';
 import '../../styles/case.css';
 import '../../styles/case-study.css';
 
 export async function getStaticPaths() {
-	const projects = await getCollection('projects');
+	const projects = await getAllProjects();
 	const sorted = [...projects].sort((a, b) => a.data.order - b.data.order);
 
 	return projects.flatMap((project) => {
@@ -37,9 +39,8 @@ export async function getStaticPaths() {
 
 const { project, prevProject, nextProject } = Astro.props;
 const { data } = project;
-const { Content } = await render(project);
 
-const rawBody = project.body || '';
+const rawBody = blocksToText(project.blocks);
 const contribution = data.contribution;
 const product = data.product;
 const caseStory = data.caseStory;
@@ -95,7 +96,7 @@ const stackRows = [
 	{ label: 'DevOps & Infra', items: data.techStack?.devops }
 ].filter((row) => row.items && row.items.length > 0);
 
-const hasMarkdownBody = rawBody.trim().length > 0;
+const hasMarkdownBody = project.blocks.some((b) => b.type !== 'comment');
 
 const caseView = toCaseStudyView(project, {
 	imageCount: allProjectImages.length,
@@ -188,7 +189,7 @@ const productForChapter = resolveProductForDetail(data);
 				{caseView.hasAppendixChapter && (
 					<CaseDeepDive defaultExpanded={false}>
 						<CaseMarkdown>
-							<Content />
+							<CaseBodyBlocks blocks={project.blocks} />
 						</CaseMarkdown>
 					</CaseDeepDive>
 				)}

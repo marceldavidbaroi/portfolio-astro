@@ -1,0 +1,205 @@
+{
+	"id": "16",
+	"title": "Nidhara – Security-First Auth Foundation for a Personal Finance & Growth Platform",
+	"subtitle": "NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.",
+	"description": "Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.",
+	"chip": "Security-First Auth & FinTech Foundation",
+	"order": 16,
+	"featured": false,
+	"platformType": "desktop",
+
+	"role": "Solo Full-Stack Engineer",
+	"timeline": "Dec 2025 — Feb 2026",
+	"status": "Active Production",
+	"classification": "Personal Project",
+
+	"contribution": {
+		"mode": "owner",
+		"startedFrom": "scratch",
+		"myShare": "lead",
+		"label": "Solo owner & full-stack engineer",
+		"headline": "Designed and built the monorepo, authentication engine, session lifecycle, Prisma data model, and documentation site alone.",
+		"scope": [
+			"npm workspaces monorepo: NestJS backend, Next.js frontend, Docusaurus docs",
+			"Signup, signin, refresh, and logout flows with Argon2 and dual-token issuance",
+			"Database-backed sessions with CSRF verification and revocation on replay or logout",
+			"Security event, account security state, and sudo session data models",
+			"Swagger documentation, response envelope interceptor, and structured Pino logging"
+		],
+		"teamSize": 1
+	},
+
+	"problem": {
+		"statement": "Personal finance and journaling tools are fragmented, and many leave users with weak credential storage and fragile session handling. A financial platform needs an auditable authentication foundation, with strict session invalidation, CSRF defenses, and event logging, in place before any ledgers are connected.",
+		"evidence": "assumption",
+		"whoHurts": ["account-holder"]
+	},
+
+	"benefitMatrix": [
+		{
+			"persona": "Account Holder",
+			"pain": "Stolen or replayed session tokens could expose personal financial data",
+			"before": "Long-lived refresh tokens in cookies with no replay detection",
+			"after": "Single-use refresh tokens bound to a session record, rotated on every refresh and paired with a CSRF token",
+			"measure": {
+				"metric": "Refresh token reuse",
+				"from": "Reusable until expiry",
+				"to": "Single-use, revoked on replay",
+				"proof": "designed"
+			},
+			"attribution": "personal",
+			"feature": ["Auth", "AuthSession"]
+		},
+		{
+			"persona": "Platform Owner",
+			"pain": "No audit trail of sign-in activity",
+			"before": "Unstructured console logs and no record of login outcomes",
+			"after": "Security events (login success, login failure, logout, refresh rotation) stored with user-agent and IP metadata, plus structured JSON request logs",
+			"measure": {
+				"metric": "Tracked security event types",
+				"from": "0",
+				"to": "4",
+				"proof": "measured"
+			},
+			"attribution": "personal",
+			"feature": ["SecurityEvent", "Pino Logging"]
+		}
+	],
+
+	"myImpact": [
+		{
+			"label": "Workspaces",
+			"value": "3 Workspaces",
+			"attribution": "personal",
+			"detail": "Backend (NestJS), frontend (Next.js 16), and docs-site (Docusaurus) in one npm monorepo"
+		},
+		{
+			"label": "Auth endpoints",
+			"value": "5 Endpoints",
+			"attribution": "personal",
+			"detail": "Signup, signin, refresh, logout, and an app route across 2 controllers"
+		},
+		{
+			"label": "Data model",
+			"value": "6 Models",
+			"attribution": "personal",
+			"detail": "User, AuthCredential, AuthSession, SecurityEvent, UserAccountSecurityState, SudoSession in 2 migrations"
+		},
+		{
+			"label": "Password hashing",
+			"value": "Argon2",
+			"attribution": "personal",
+			"detail": "Used for credentials and refresh token hashes"
+		},
+		{
+			"label": "Documentation",
+			"value": "30 Pages",
+			"attribution": "personal",
+			"detail": "Architecture, domain specifications, and sequence diagrams in Docusaurus"
+		},
+		{
+			"label": "Delivery",
+			"value": "18 Commits",
+			"attribution": "personal",
+			"detail": "100% solo authorship over roughly two months"
+		}
+	],
+
+	"product": {
+		"summary": "Delivered the security foundation of a personal wealth and growth platform: Argon2 credentials, rotating refresh-token sessions with CSRF checks, audit events, and a documented monorepo ready for the finance ledger to be added.",
+		"problem": "Financial tools need strong credential storage, strict session invalidation, and an audit trail before they handle money. Many personal apps add these late, or not at all.",
+		"tagline": "Get authentication right before the ledger arrives.",
+		"valueProposition": {
+			"targetCustomer": "Individuals managing personal finances and life records",
+			"showCanvas": true,
+			"items": [
+				{
+					"painTitle": "Weak Credential Storage",
+					"painDescription": "Passwords hashed with older schemes are easier to attack with GPU-accelerated brute force.",
+					"gainTitle": "Argon2 Hashing",
+					"gainDescription": "Argon2 protects both passwords and stored refresh token hashes."
+				},
+				{
+					"painTitle": "Replayable Sessions",
+					"painDescription": "Long-lived refresh tokens in cookies can be stolen or abused through cross-site requests.",
+					"gainTitle": "Rotating, CSRF-Checked Sessions",
+					"gainDescription": "Each refresh issues a new token, validates a matching CSRF token, and revokes the session on replay."
+				},
+				{
+					"painTitle": "No Audit Trail",
+					"painDescription": "Console logs are hard to search and do not record who tried to sign in or from where.",
+					"gainTitle": "Security Events & Structured Logs",
+					"gainDescription": "Login, logout, and refresh events are stored with IP and user-agent, and requests are logged as structured JSON."
+				}
+			]
+		}
+	},
+
+	"stack": ["NestJS 11", "Prisma 7", "PostgreSQL 15", "Next.js 16", "TypeScript"],
+
+	"techStack": {
+		"frontend": ["Next.js 16 (App Router)", "React 19", "TailwindCSS 4", "TypeScript", "Docusaurus 3 (docs site)"],
+		"mobile_hardware": [],
+		"backend": [
+			"NestJS 11",
+			"Argon2",
+			"Passport JWT",
+			"cookie-parser",
+			"nestjs-pino / pino-http",
+			"Swagger (OpenAPI)"
+		],
+		"database": ["PostgreSQL 15", "Prisma ORM 7 (6 models, 2 migrations)"],
+		"devops": ["Docker Compose", "npm workspaces", "ESLint & Prettier", "Jest"]
+	},
+
+	"links": {
+		"liveDemo": "",
+		"parentPlatform": "",
+		"github": "https://github.com/marceldavidbaroi/Nidhara-",
+		"docs": ""
+	},
+
+	"images": ["/images/projects/nidhara/swagger.webp"],
+
+	"visualAssets": {
+		"heroMockup": "/images/projects/nidhara/swagger.webp",
+		"screenshots": ["/images/projects/nidhara/swagger.webp"]
+	},
+
+	"keyDecisions": [
+		{
+			"challenge": "Protect credentials and session secrets against GPU-accelerated brute-force attacks.",
+			"decision": "Used Argon2 for credential verification and refresh token hashes instead of bcrypt. Trade-off: higher memory use per authentication request.",
+			"outcome": "Stronger resistance to hardware-assisted brute force on stored secrets."
+		},
+		{
+			"challenge": "Long-lived refresh tokens in cookies risk theft and cross-site request forgery.",
+			"decision": "Bound each refresh token to a session record, rotated the refresh hash on every /auth/refresh call, and required a matching client csrfToken. Trade-off: extra database writes on refresh.",
+			"outcome": "Refresh token reuse is rejected and background refresh from another site is blocked."
+		},
+		{
+			"challenge": "Sensitive account changes need re-authentication without interrupting the ongoing session.",
+			"decision": "Modeled a standalone SudoSession with a time-bounded sudoUntil and a verified escalation method (PASSWORD, RECOVERY_KEY, MFA). Trade-off: sensitive endpoints will need a second authorization check.",
+			"outcome": "A data model for step-up authentication is in place for when sensitive endpoints are built."
+		},
+		{
+			"challenge": "Plain console logs are hard to search and weak as an audit trail.",
+			"decision": "Integrated nestjs-pino with pino-http and a global ResponseInterceptor to emit structured JSON logs and a uniform response envelope. Trade-off: some extra bootstrap configuration.",
+			"outcome": "Searchable request and response logs for auditing and debugging."
+		}
+	],
+
+	"securityReliability": [
+		"Argon2 hashing for passwords and refresh token hashes",
+		"Dual-token flow: short-lived access token plus httpOnly refresh cookie",
+		"Single-use refresh rotation with CSRF token verification; session revoked on replay or logout",
+		"Security events (LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, REFRESH_ROTATED) stored with IP and user-agent",
+		"Failed-login tracking and sudo session state modeled in the database"
+	],
+
+	"futureRoadmap": [
+		"Passkey (WebAuthn) and security question authentication",
+		"Financial accounts, immutable transaction ledgers, and savings goals",
+		"Personal development suite (LifeLog, Capsule, Knowledge base, Micro Actions)"
+	]
+}

@@ -1,0 +1,738 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="description" content="Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs."><link rel="canonical" href="http://localhost:4321/work/03/"><link rel="icon" type="image/svg+xml" href="/favicon.svg"><link rel="icon" href="/favicon.ico" sizes="any"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap" rel="stylesheet"><meta name="generator" content="Astro v7.2.9"><title>Inventory Management – Mobile Warehouse &amp; Barcode Automation | Case Study</title><!-- Zero-Flash Theme Initializer --><script>
+			function applyTheme() {
+				const storedTheme = localStorage.getItem('theme');
+				if (storedTheme === 'dark' || storedTheme === 'light') {
+					document.documentElement.dataset.theme = storedTheme;
+				} else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+					document.documentElement.dataset.theme = 'dark';
+				} else {
+					document.documentElement.dataset.theme = 'light';
+				}
+			}
+			applyTheme();
+			document.addEventListener('astro:after-swap', applyTheme);
+		</script><!-- Open Graph --><meta property="og:type" content="website"><meta property="og:title" content="Inventory Management – Mobile Warehouse &amp; Barcode Automation | Case Study"><meta property="og:description" content="Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs."><meta property="og:url" content="http://localhost:4321/work/03/"><meta property="og:image" content="http://localhost:4321/og-preview.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><!-- Twitter Card --><meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="Inventory Management – Mobile Warehouse &amp; Barcode Automation | Case Study"><meta name="twitter:description" content="Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs."><meta name="twitter:image" content="http://localhost:4321/og-preview.png"><script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Marcel David Baroi","jobTitle":"Software Engineer","email":"mailto:marceldavidbaroi@gmail.com","url":"http://localhost:4321/work/03/","address":{"@type":"PostalAddress","addressLocality":"Dhaka","addressCountry":"BD"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Daffodil International University"},"sameAs":["https://github.com/marceldavidbaroi","https://www.linkedin.com/in/marcel-david-baroi/"]}</script><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><script type="module" src="/_astro/ClientRouter.astro_astro_type_script_index_0_lang.CYDbzu1r.js"></script><link rel="stylesheet" href="/_astro/BaseLayout.CqtTTAOh.css"><link rel="stylesheet" href="/_astro/ShotFan.Be9CilCL.css"><link rel="stylesheet" href="/_astro/_slug_.BngaG5UM.css"></head><body><div class="layout-wrapper"><header id="site-header" class="header"><div class="header-container"><a href="/" class="header-brand" aria-label="Marcel David Baroi - Home"><span class="header-brand-name">Marcel David Baroi</span></a><nav class="nav" aria-label="Primary"><div class="nav-links"><a href="/" class="nav-link">Home</a><div class="nav-more-container"><button id="header-more-btn" type="button" class="nav-more-btn" aria-label="More navigation links" aria-expanded="false" aria-haspopup="true"><span>More</span></button><div id="header-more-dropdown" class="nav-dropdown-menu" role="menu" hidden aria-hidden="true"><a href="/about" role="menuitem" class="nav-dropdown-item"><span>About</span></a><a href="/experience" role="menuitem" class="nav-dropdown-item"><span>Career</span></a><a href="/education" role="menuitem" class="nav-dropdown-item"><span>School &amp; University</span></a><a href="/skills" role="menuitem" class="nav-dropdown-item"><span>Skills</span></a><a href="/credentials" role="menuitem" class="nav-dropdown-item"><span>Credentials</span></a><a href="/philosophy" role="menuitem" class="nav-dropdown-item"><span>Philosophy</span></a><a href="/gallery" role="menuitem" class="nav-dropdown-item"><span>Albums &amp; Stories</span></a></div></div><button id="theme-toggle" type="button" class="theme-toggle" aria-label="Toggle color theme" aria-live="polite" data-astro-cid-l6lhmie6><!-- Sun Icon (shown in dark mode to switch to light) --><svg class="theme-icon sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-l6lhmie6><circle cx="12" cy="12" r="4" data-astro-cid-l6lhmie6></circle><path d="M12 2v2" data-astro-cid-l6lhmie6></path><path d="M12 20v2" data-astro-cid-l6lhmie6></path><path d="m4.93 4.93 1.41 1.41" data-astro-cid-l6lhmie6></path><path d="m17.66 17.66 1.41 1.41" data-astro-cid-l6lhmie6></path><path d="M2 12h2" data-astro-cid-l6lhmie6></path><path d="M20 12h2" data-astro-cid-l6lhmie6></path><path d="m6.34 17.66-1.41 1.41" data-astro-cid-l6lhmie6></path><path d="m19.07 4.93-1.41 1.41" data-astro-cid-l6lhmie6></path></svg><!-- Moon Icon (shown in light mode to switch to dark) --><svg class="theme-icon moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" data-astro-cid-l6lhmie6><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z" data-astro-cid-l6lhmie6></path></svg></button><script type="module">function e(){let e=document.querySelectorAll(`#theme-toggle, #floating-theme-toggle`);if(e.length===0)return;let t=()=>{let e=document.documentElement.dataset.theme;if(e===`dark`||e===`light`)return e;let t=localStorage.getItem(`theme`);return t===`dark`||t===`light`?t:window.matchMedia(`(prefers-color-scheme: dark)`).matches?`dark`:`light`};e.forEach(e=>{e.dataset.bound||(e.dataset.bound=`true`,e.addEventListener(`click`,async n=>{let r=t()===`dark`?`light`:`dark`,i=()=>{document.documentElement.dataset.theme=r,localStorage.setItem(`theme`,r)},a=window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;if(!document.startViewTransition||a){i();return}let o=e.getBoundingClientRect(),s=n.clientX||o.left+o.width/2,c=n.clientY||o.top+o.height/2,l=Math.hypot(Math.max(s,window.innerWidth-s),Math.max(c,window.innerHeight-c));document.documentElement.classList.add(`theme-transitioning`);let u=document.startViewTransition(()=>{i()});u.ready.then(()=>{let e=[`circle(0px at ${s}px ${c}px)`,`circle(${l}px at ${s}px ${c}px)`];document.documentElement.animate({clipPath:e},{duration:400,easing:`cubic-bezier(0.16, 1, 0.3, 1)`,pseudoElement:`::view-transition-new(root)`}).finished.finally(()=>{document.documentElement.classList.remove(`theme-transitioning`)})}).catch(()=>{document.documentElement.classList.remove(`theme-transitioning`)}),u.finished.finally(()=>{document.documentElement.classList.remove(`theme-transitioning`)})}))})}e(),document.addEventListener(`astro:after-swap`,e),document.addEventListener(`astro:page-load`,e);</script></div></nav></div></header><main class="main-content wide-container align-start"><div class="case-shell"><article class="case"><div class="crumb font-mono"><a href="/work">Work</a><span aria-hidden="true"> / </span><span>Inventory Management – Mobile Warehouse &amp; Barcode Automation</span><span class="crumb-time">~18 min read</span></div><div class="case-study"><nav class="case-study__nav-mobile case-chapter-nav" aria-label="Case study chapters"><div class="case-chapter-nav__track"><a href="#case-top" class="case-chapter-nav__pill" data-chapter-id="case-top">Overview</a><a href="#case-you" class="case-chapter-nav__pill" data-chapter-id="case-you">My contribution</a><a href="#case-context" class="case-chapter-nav__pill" data-chapter-id="case-context">Product context</a><a href="#case-proof" class="case-chapter-nav__pill" data-chapter-id="case-proof">Proof</a><a href="#case-build" class="case-chapter-nav__pill" data-chapter-id="case-build">Build</a><a href="#case-trust" class="case-chapter-nav__pill" data-chapter-id="case-trust">Trust</a><a href="#deep-dive" class="case-chapter-nav__pill" data-chapter-id="deep-dive">Appendix</a></div></nav><div class="case-study__grid"><nav class="case-study__nav case-study__nav-desktop case-chapter-nav" aria-label="Case study chapters"><ul class="case-chapter-nav__list"><li><a href="#case-top" class="case-chapter-nav__link" data-chapter-id="case-top">Overview</a></li><li><a href="#case-you" class="case-chapter-nav__link" data-chapter-id="case-you">My contribution</a></li><li><a href="#case-context" class="case-chapter-nav__link" data-chapter-id="case-context">Product context</a></li><li><a href="#case-proof" class="case-chapter-nav__link" data-chapter-id="case-proof">Proof</a></li><li><a href="#case-build" class="case-chapter-nav__link" data-chapter-id="case-build">Build</a></li><li><a href="#case-trust" class="case-chapter-nav__link" data-chapter-id="case-trust">Trust</a></li><li><a href="#deep-dive" class="case-chapter-nav__link" data-chapter-id="deep-dive">Appendix</a></li></ul></nav><div class="case-study__main"><section id="case-top" class="case-chapter case-chapter--hero"><div class="case-hero-band" data-astro-cid-uzzvd6uo><header class="case-header w-full max-w-full" data-astro-cid-uzzvd6uo><div class="kicker-row font-mono" data-astro-cid-uzzvd6uo><span class="badge badge-chip" data-astro-cid-uzzvd6uo>Mobile Hardware &amp; IoT</span><span class="badge badge-status" data-astro-cid-uzzvd6uo>Active Production (v1.0.5)</span><span class="badge badge-class" data-astro-cid-uzzvd6uo>Proprietary</span><span class="badge badge-contribution" data-astro-cid-uzzvd6uo>Domain specialist</span></div><h1 class="case-title font-sans" data-astro-cid-uzzvd6uo>Inventory Management – Mobile Warehouse &amp; Barcode Automation</h1><p class="case-subtitle" data-astro-cid-uzzvd6uo>Capacitor Android companion for retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time backend sync.</p><div class="case-meta font-mono" data-astro-cid-uzzvd6uo><div class="meta-pill" data-astro-cid-uzzvd6uo><span class="meta-label" data-astro-cid-uzzvd6uo>Role:</span><span class="meta-val" data-astro-cid-uzzvd6uo>Full-Stack Mobile Engineer (Solo Contributor)</span></div><div class="meta-pill" data-astro-cid-uzzvd6uo><span class="meta-label" data-astro-cid-uzzvd6uo>Timeline:</span><span class="meta-val" data-astro-cid-uzzvd6uo>2026 — Present</span></div></div><div class="case-hero-stack font-mono" aria-label="Core Technologies" data-astro-cid-uzzvd6uo><span class="stack-badge" data-astro-cid-uzzvd6uo>Quasar</span><span class="stack-badge" data-astro-cid-uzzvd6uo>Vue 3</span><span class="stack-badge" data-astro-cid-uzzvd6uo>Supabase</span><span class="stack-badge" data-astro-cid-uzzvd6uo>Capacitor (Android)</span><span class="stack-badge" data-astro-cid-uzzvd6uo>Google ML Kit</span></div><p class="case-outcome" data-astro-cid-uzzvd6uo>Engineered the mobile warehouse companion for TradeflowBD&#39;s Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.</p><div class="hero-actions" data-astro-cid-uzzvd6uo><a class="btn-action btn-ghost font-mono" href="https://tradeflowbd.com" target="_blank" rel="noopener noreferrer" data-astro-cid-uzzvd6uo><span data-astro-cid-uzzvd6uo>Parent Platform</span></a></div></header><div class="case-hero-band__visual" data-case-lightbox-gallery="[&quot;/images/projects/thrift/dashboard.webp&quot;,&quot;/images/projects/thrift/register.webp&quot;,&quot;/images/projects/thrift/scanner.webp&quot;,&quot;/images/projects/thrift/inventory.webp&quot;]" data-case-lightbox-title="Inventory Management – Mobile Warehouse &amp; Barcode Automation" data-astro-cid-uzzvd6uo><div class="shot-stack is-phone is-hero" data-astro-cid-b3gnywrg><span class="shot-layer" style="--i: 0" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/dashboard.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 1, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/dashboard.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></span><span class="shot-layer" style="--i: 1" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/register.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 2, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/register.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></span><span class="shot-layer" style="--i: 2" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/scanner.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 3, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/scanner.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></span></div></div></div></section><section id="case-you" class="case-chapter w-full max-w-full" data-astro-cid-o7fktzzh><div class="case-chapter__kicker" data-astro-cid-o7fktzzh><h2 class="label font-mono" data-astro-cid-o7fktzzh>My contribution</h2><span class="story-badge font-mono" data-astro-cid-o7fktzzh>Domain specialist</span></div><p class="case-chapter__lead" data-astro-cid-o7fktzzh>Engineered the mobile warehouse companion for TradeflowBD&#39;s Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.</p><h3 class="case-chapter__sub" data-astro-cid-o7fktzzh>What I owned</h3><ul class="contribution-list" data-astro-cid-o7fktzzh><li data-astro-cid-o7fktzzh>Unreliable Barcode Scanning in Warehouse Conditions</li><li data-astro-cid-o7fktzzh>High-Volume Intake During Shipment Processing</li><li data-astro-cid-o7fktzzh>Stock Discrepancies Across Shelf/Box Locations</li><li data-astro-cid-o7fktzzh>Operator UX in Noisy Warehouse Environments</li><li data-astro-cid-o7fktzzh>Desktop-Only Registration Bottleneck</li></ul><p class="contribution-team" data-astro-cid-o7fktzzh><span class="font-mono contribution-team__label" data-astro-cid-o7fktzzh>Team</span>Mobile companion to TradeflowBD Thrift (web admin by platform team)</p></section><section id="case-context" class="case-chapter w-full max-w-full" data-astro-cid-sn3ybzdl><div class="case-chapter__kicker" data-astro-cid-sn3ybzdl><h2 class="label font-mono" data-astro-cid-sn3ybzdl>Product context</h2><span class="story-badge font-mono" data-astro-cid-sn3ybzdl>Warehouse Operators, Floor Managers &amp; Second-Hand Retail Logistics Teams</span></div><p class="case-chapter__lead" data-astro-cid-sn3ybzdl>Engineered the mobile warehouse companion for TradeflowBD&#39;s Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.</p><div class="problem-header-wrap" data-astro-cid-sn3ybzdl><h3 id="context-problem" class="case-chapter__sub" data-astro-cid-sn3ybzdl>Core challenge</h3></div><p class="case-chapter__lead" data-astro-cid-sn3ybzdl>Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.</p><h3 id="context-value" class="case-chapter__sub" data-astro-cid-sn3ybzdl>Value proposition</h3><div class="case-contrast-mini" data-astro-cid-sn3ybzdl><div data-astro-cid-sn3ybzdl><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>Desktop-Tethered Registration Bottlenecks</strong> — Floor operators had to haul garments to desktop PCs or hand-write paper intake sheets, causing massive intake delays during container arrivals.</p><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>On-Floor Mobile Registration with Photo Upload</strong> — Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds.</p></div><div data-astro-cid-sn3ybzdl><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>Undetected Misplaced Stock &amp; Phantom Out-of-Stocks</strong> — Garments placed on incorrect shelf/box bins went unnoticed for weeks, showing as unavailable for sale while physically in the warehouse.</p><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>Structured 3-State Shelf &amp; Bin Audit Mode</strong> — Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs.</p></div><div data-astro-cid-sn3ybzdl><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>Slow Single-Item Scanning &amp; Form Navigation Fatigue</strong> — Scanning barcode labels one-by-one with mandatory screen confirmation caused high operator fatigue and slow intake rates.</p><p data-astro-cid-sn3ybzdl><strong data-astro-cid-sn3ybzdl>Google ML Kit Continuous Batch Queue Scanning</strong> — Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates.</p></div></div></section><section id="case-proof" class="case-chapter w-full max-w-full" data-astro-cid-uws5uawv><div class="case-chapter__kicker" data-astro-cid-uws5uawv><h2 class="label font-mono" data-astro-cid-uws5uawv>Proof</h2></div><p class="case-chapter__title" data-astro-cid-uws5uawv>Impact and product screens</p><div class="case-proof-metrics" data-astro-cid-uws5uawv><div class="case-proof-group" data-astro-cid-uws5uawv><p class="case-proof-group__kicker font-mono" data-astro-cid-uws5uawv>My results</p><div class="case-proof-stats" role="list" data-astro-cid-uws5uawv><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>Batch Mode</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Continuous Scan Engine</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>High-speed camera decoding with audio/haptic confirmation</span></div><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>3 States</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Bin Audit Discrepancy Detection</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Verified, missing, and misplaced item detection per shelf/box</span></div><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>Atomic RPC</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Stock Registration Ingestion</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Transactional writes across stocks, barcodes, and Cloudinary CDN</span></div><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>Sub-Second</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Intake Latency</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Instant on-shelf garment registration and sync to TradeflowBD</span></div></div></div><div class="case-proof-group" data-astro-cid-uws5uawv><p class="case-proof-group__kicker font-mono" data-astro-cid-uws5uawv>Product outcomes</p><div class="case-proof-stats" role="list" data-astro-cid-uws5uawv><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>Bilingual</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Operator Localization</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>English and Bengali (বাংলা) with persisted device locale</span></div><div class="case-proof-stat" role="listitem" data-astro-cid-uws5uawv><span class="case-proof-stat__value" data-astro-cid-uws5uawv>1 Codebase</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Unified Cross-Platform</span><span class="case-proof-stat__label" data-astro-cid-uws5uawv>Android native APK/AAB + responsive web via Quasar &amp; Capacitor</span></div></div></div></div><div class="case-proof-gallery" data-case-lightbox-gallery="[&quot;/images/projects/thrift/dashboard.webp&quot;,&quot;/images/projects/thrift/register.webp&quot;,&quot;/images/projects/thrift/scanner.webp&quot;,&quot;/images/projects/thrift/inventory.webp&quot;]" data-case-lightbox-title="Inventory Management – Mobile Warehouse &amp; Barcode Automation" data-astro-cid-uws5uawv><div class="case-proof-shots" data-astro-cid-uws5uawv><div class="shot-collage" data-astro-cid-b3gnywrg><div class="collage-main" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/dashboard.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 1, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/dashboard.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></div><div class="collage-sub collage-sub-1" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/register.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 2, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/register.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></div><div class="collage-sub collage-sub-2" data-astro-cid-b3gnywrg><button type="button" class="shot-lightbox-trigger" data-case-lightbox-src="/images/projects/thrift/scanner.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation 3, view full size" data-astro-cid-b3gnywrg><img src="/images/projects/thrift/scanner.webp" alt="" loading="eager" data-astro-cid-b3gnywrg></button></div></div></div><p class="case-proof-hint font-mono" data-astro-cid-uws5uawv>Click any preview to open full size. Use arrow keys to browse.</p><ul class="case-proof-thumbs" aria-label="All screenshots" data-astro-cid-uws5uawv><li data-astro-cid-uws5uawv><button type="button" class="case-proof-thumb" data-case-lightbox-src="/images/projects/thrift/dashboard.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation screenshot 1" data-astro-cid-uws5uawv><img src="/images/projects/thrift/dashboard.webp" alt="" loading="lazy" data-astro-cid-uws5uawv></button></li><li data-astro-cid-uws5uawv><button type="button" class="case-proof-thumb" data-case-lightbox-src="/images/projects/thrift/register.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation screenshot 2" data-astro-cid-uws5uawv><img src="/images/projects/thrift/register.webp" alt="" loading="lazy" data-astro-cid-uws5uawv></button></li><li data-astro-cid-uws5uawv><button type="button" class="case-proof-thumb" data-case-lightbox-src="/images/projects/thrift/scanner.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation screenshot 3" data-astro-cid-uws5uawv><img src="/images/projects/thrift/scanner.webp" alt="" loading="lazy" data-astro-cid-uws5uawv></button></li><li data-astro-cid-uws5uawv><button type="button" class="case-proof-thumb" data-case-lightbox-src="/images/projects/thrift/inventory.webp" aria-label="Inventory Management – Mobile Warehouse &amp; Barcode Automation screenshot 4" data-astro-cid-uws5uawv><img src="/images/projects/thrift/inventory.webp" alt="" loading="lazy" data-astro-cid-uws5uawv></button></li></ul></div></section><section id="case-build" class="case-chapter w-full max-w-full"><div class="case-chapter__kicker"><h2 class="label font-mono">Build</h2></div><p class="case-chapter__title">Stack and engineering choices</p><h3 id="build-tech" class="case-chapter__sub">Technology</h3><div class="case-tech-details"><details><summary>Frontend</summary><ul class="case-tech-pills"><li>Quasar Framework (v2)</li><li>Vue.js (v3) + TypeScript</li><li>Capacitor 8 (Android)</li><li>TanStack Query (Vue Query)</li><li>Vue I18n (English + Bengali)</li></ul></details><details><summary>Mobile &amp; Hardware</summary><ul class="case-tech-pills"><li>@capacitor-mlkit/barcode-scanning (Google ML Kit)</li><li>@capacitor/camera (Product Photo Capture)</li><li>Native Haptic &amp; Audio Scan Feedback</li><li>@capgo/capacitor-social-login (Native Google Auth)</li></ul></details><details><summary>Backend</summary><ul class="case-tech-pills"><li>Supabase (PostgreSQL + Auth + RPCs)</li><li>Cloudinary (Direct Image Upload via Edge Function)</li></ul></details><details><summary>Database</summary><ul class="case-tech-pills"><li>PostgreSQL (thrift_stocks, thrift_barcodes, thrift_shipments)</li><li>Atomic RPCs (register_thrift_stock_from_app, bulk_update_*)</li></ul></details><details><summary>DevOps &amp; Infra</summary><ul class="case-tech-pills"><li>Capacitor Android Release Builds (APK/AAB)</li><li>Quasar Vite SPA (Web + Native from one codebase)</li></ul></details></div><h3 id="build-decisions" class="case-chapter__sub">Key decisions</h3><p class="case-chapter__lead">Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.</p><div class="case-decision-list"><details open><summary>Unreliable Barcode Scanning in Warehouse Conditions</summary><div class="case-decision-body"><p><strong>Decision:</strong> Integrated @capacitor-mlkit/barcode-scanning with Google ML Kit on Android, auto-installing the scanner module on first use, with a camera overlay fallback when the native scan UI fails.</p><p><strong>Outcome:</strong> Reliable Code-128 reads on thermal labels with permission handling, auto-zoom, and normalized barcode parsing.</p></div></details><details><summary>High-Volume Intake During Shipment Processing</summary><div class="case-decision-body"><p><strong>Decision:</strong> Built continuous scan mode with a bulk action queue — operators scan many items in sequence, then batch-update shelf location or stock status in one RPC call.</p><p><strong>Outcome:</strong> Eliminated per-item form navigation during peak intake; bulk operations use bulk_update_thrift_stock_locations and bulk_update_thrift_stock_statuses RPCs.</p></div></details><details><summary>Stock Discrepancies Across Shelf/Box Locations</summary><div class="case-decision-body"><p><strong>Decision:</strong> Designed Audit Mode — select a shelf/box, load expected items, scan to verify, flag missing items, detect misplaced stock via live barcode lookup, and relocate in bulk.</p><p><strong>Outcome:</strong> Structured stocktake workflow with progress tracking, audio/haptic feedback, and one-tap bulk relocation for misplaced items.</p></div></details><details><summary>Operator UX in Noisy Warehouse Environments</summary><div class="case-decision-body"><p><strong>Decision:</strong> Added audio chimes (success/error tones) and device vibration via scanFeedback utilities, plus contextual AppHelpDialog guides on every major workflow.</p><p><strong>Outcome:</strong> Operators get instant scan confirmation without looking at the screen.</p></div></details><details><summary>Show 1 more decisions</summary><div class="case-decision-body"><div style="margin-bottom: 1rem;"><p><strong>Desktop-Only Registration Bottleneck</strong></p><p>Mobile stock registration captures barcode, product photo (Capacitor Camera), metadata (brand, size, condition, weight, pricing), and registers atomically via register_thrift_stock_from_app RPC with Cloudinary image upload.</p><p>Full garment intake at the warehouse shelf — data appears in TradeflowBD web admin immediately on cache refresh.</p></div></div></details></div></section><section id="case-trust" class="case-chapter w-full max-w-full"><div class="case-chapter__kicker"><h2 class="label font-mono">Trust</h2></div><p class="case-chapter__title">Security and roadmap</p><div class="case-trust-grid"><div class="case-trust-panel"><h3>Security & reliability</h3><ul><li>Supabase Auth with native Google Sign-In on Android (ID token) and browser OAuth on web.</li><li>Tenant-scoped session bootstrap with membership validation before any stock operation.</li><li>Atomic RPC for stock registration — no partial writes across thrift_stocks, thrift_barcodes, and thrift_stock_images.</li><li>Duplicate image detection per barcode/shipment before Cloudinary upload.</li><li>TanStack Query cache invalidation keeps stock list, detail, and dashboard metrics consistent after every mutation.</li></ul></div><div class="case-trust-panel"><h3>Future roadmap</h3><ul><li>Offline-first IndexedDB queue for warehouse zones with poor connectivity.</li><li>Bluetooth thermal printer integration for on-the-spot barcode label printing.</li><li>Supabase Realtime subscriptions for live dashboard push (currently poll + cache invalidation).</li><li>iOS Capacitor build with equivalent ML Kit barcode support.</li></ul></div></div></section><section id="deep-dive" class="deep-dive-section case-chapter w-full max-w-full" data-astro-cid-6afbxb32><div class="disclosure-card" data-astro-cid-6afbxb32><div class="disclosure-header" data-astro-cid-6afbxb32><div class="title-meta" data-astro-cid-6afbxb32><span class="badge font-mono" data-astro-cid-6afbxb32>Progressive Disclosure</span><h2 class="label font-mono" data-astro-cid-6afbxb32>Architectural Deep-Dive, Schemas & Workflows</h2></div><div class="disclosure-actions font-mono" data-astro-cid-6afbxb32><button type="button" class="disclosure-toggle-btn" id="deepDiveToggleBtn" aria-expanded="false" data-astro-cid-6afbxb32><span class="btn-text" data-astro-cid-6afbxb32>Expand Technical Specs</span><svg class="chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" data-astro-cid-6afbxb32><polyline points="6 9 12 15 18 9" data-astro-cid-6afbxb32></polyline></svg></button></div></div><!-- Navigation Pills for Fast Jumping Inside Deep-Dive with Horizontal Scrollable Rail on Mobile --><div class="deep-dive-nav font-mono" id="deepDiveNav" aria-label="Quick jump within architecture deep-dive" data-astro-cid-6afbxb32><span class="nav-label" data-astro-cid-6afbxb32>Jump:</span><div class="nav-pills" id="deepDivePills" data-astro-cid-6afbxb32></div></div><div class="disclosure-body" id="deepDiveBody" data-astro-cid-6afbxb32><div class="markdown-article w-full max-w-full" data-astro-cid-6afbxb32><section class="markdown-article w-full max-w-full"><h1 id="thrift-app--case-study">Thrift App — Case Study</h1>
+<p><strong>Role:</strong> Full-Stack Mobile Developer<br>
+<strong>Timeline:</strong> 2025 — Present<br>
+<strong>Status:</strong> Active Production (v1.0.5)<br>
+<strong>Parent Platform:</strong> <a href="https://tradeflowbd.com">TradeflowBD</a> — Thrift Vertical<br>
+<strong>Repo:</strong> <a href="https://github.com/marceldavidbaroi">github.com/marceldavidbaroi</a></p>
+<hr>
+<h2 id="at-a-glance">At a Glance</h2>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>What it is</strong></td>
+<td>Mobile warehouse companion for second-hand / thrift retail inventory</td>
+</tr>
+<tr>
+<td><strong>Who it’s for</strong></td>
+<td>Warehouse operators registering inbound garments and performing shelf audits</td>
+</tr>
+<tr>
+<td><strong>Core problem</strong></td>
+<td>Desktop-only stock registration and paper stock checks can’t keep up with shipment intake</td>
+</tr>
+<tr>
+<td><strong>How it’s built</strong></td>
+<td>Quasar + Capacitor 8 Android app → Supabase RPCs + Cloudinary images</td>
+</tr>
+<tr>
+<td><strong>Relationship</strong></td>
+<td>Mobile field app for the Thrift vertical inside TradeflowBD ERP</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="the-problem">The Problem</h2>
+<p>TradeflowBD’s Thrift vertical handles second-hand garment retail — inbound consignment shipments, unique SKU barcodes, garment measurements, landed costing, POS sales, and returns. The web admin (<code>/:slug/app/thrift/*</code>) covers the full lifecycle, but warehouse floor work exposed critical gaps:</p>
+<h3 id="pain-points-on-the-warehouse-floor">Pain points on the warehouse floor</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TD</span></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Before </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Before</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">Floor Operations</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        A</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Inbound shipment boxes arrive"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> B</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Walk to desktop PC"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        B </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> C</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Register item one-by-one in web admin"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        C </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> D</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Print barcode label separately"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        D </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> E</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Paper stocktake sheets"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        E </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> F</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Manual shelf reconciliation days later"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        F </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> G</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Misplaced items discovered at POS checkout"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Pain Point</th>
+<th>Business Impact</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Desktop-bound registration</strong></td>
+<td>Operators leave the shelf to use a PC — slows intake to ~2–3 items/minute</td>
+</tr>
+<tr>
+<td><strong>No mobile barcode lookup</strong></td>
+<td>Finding an item’s status requires logging into the web admin</td>
+</tr>
+<tr>
+<td><strong>Paper stock audits</strong></td>
+<td>Human error in counting; no real-time discrepancy detection</td>
+</tr>
+<tr>
+<td><strong>Misplaced stock invisible</strong></td>
+<td>Items scanned at wrong shelf/box sit undetected until a sale fails</td>
+</tr>
+<tr>
+<td><strong>English-only UI</strong></td>
+<td>Bangladeshi warehouse staff need Bengali labels for daily workflows</td>
+</tr>
+<tr>
+<td><strong>No scan feedback</strong></td>
+<td>In noisy warehouses, operators can’t tell if a scan succeeded without checking the screen</td>
+</tr>
+</tbody>
+</table>
+<h3 id="the-core-question">The core question</h3>
+<blockquote>
+<p>How do you let warehouse staff register garments, scan barcodes, audit shelves, and fix misplaced stock — all from a phone at the shelf — while keeping the TradeflowBD web admin in sync?</p>
+</blockquote>
+<hr>
+<h2 id="the-solution">The Solution</h2>
+<p><strong>Thrift App</strong> is a Capacitor Android companion (also runs as a responsive web SPA) that connects to the same Supabase backend as TradeflowBD’s Thrift vertical. It handles the warehouse-floor workflows the web admin was never designed for.</p>
+<h3 id="five-core-workflows">Five core workflows</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> LR</span></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Mobile </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Thrift App </span><span style="color:#F97583">(</span><span style="color:#9ECBFF">Warehouse Floor</span><span style="color:#F97583">)</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        INSERT</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Insert Stock&lt;br/&gt;Select shipment + box"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        REGISTER</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Register Stock&lt;br/&gt;Barcode + photo + metadata"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        SCAN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Scan &amp; Action&lt;br/&gt;Lookup / move / status"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        AUDIT</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Audit Mode&lt;br/&gt;Shelf/box stocktake"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        LIST</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Stock List&lt;br/&gt;Search + filter + bulk actions"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Backend </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Supabase </span><span style="color:#F97583">(</span><span style="color:#9ECBFF">Shared with TradeflowBD</span><span style="color:#F97583">)</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        RPC</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Atomic RPCs"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        DB</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"thrift_stocks&lt;br/&gt;thrift_barcodes&lt;br/&gt;thrift_shipments"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Web </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">TradeflowBD Web Admin</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        ADMIN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Thrift Stock Page&lt;br/&gt;POS / Reports / Tag Print"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">    INSERT </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> REGISTER</span></span>
+<span class="line"><span style="color:#FFAB70">    REGISTER </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> RPC</span></span>
+<span class="line"><span style="color:#FFAB70">    SCAN </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> RPC</span></span>
+<span class="line"><span style="color:#FFAB70">    AUDIT </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> RPC</span></span>
+<span class="line"><span style="color:#FFAB70">    LIST </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> RPC</span></span>
+<span class="line"><span style="color:#FFAB70">    RPC </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> DB</span></span>
+<span class="line"><span style="color:#FFAB70">    DB </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> ADMIN</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th>Route</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Dashboard</strong></td>
+<td><code>/</code></td>
+<td>Daily KPIs (items added today, total inventory, available stock) + quick action tiles</td>
+</tr>
+<tr>
+<td><strong>Insert Stock</strong></td>
+<td><code>/insert-stock</code></td>
+<td>Pick active shipment and box context for intake session</td>
+</tr>
+<tr>
+<td><strong>Register Stock</strong></td>
+<td><code>/register-stock</code></td>
+<td>Scan/create barcode, capture product photo, enter metadata, register via RPC</td>
+</tr>
+<tr>
+<td><strong>Scan &amp; Action</strong></td>
+<td><code>/scan-barcode</code></td>
+<td>Single or continuous scan → lookup, move shelf, change status, bulk queue</td>
+</tr>
+<tr>
+<td><strong>Audit Mode</strong></td>
+<td><code>/audit-mode</code></td>
+<td>Shelf/box stocktake with verified / missing / misplaced detection</td>
+</tr>
+<tr>
+<td><strong>Stock List</strong></td>
+<td><code>/stock-list</code></td>
+<td>Searchable inventory with status, condition, shelf/box filters</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/projects/thrift/dashboard.webp" alt="Thrift App Mobile Warehouse Overview &amp; Daily KPI Dashboard"></p>
+<p><img src="/images/projects/thrift/inventory.webp" alt="Thrift App Live Inventory Feed with Barcode &amp; Garment Specifications"></p>
+<hr>
+<h2 id="architecture">Architecture</h2>
+<h3 id="system-design">System design</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TB</span></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Device </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Android Device </span><span style="color:#E1E4E8">/ </span><span style="color:#FFAB70">Mobile Browser</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        UI</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Quasar Vue 3 UI"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        MLKIT</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Google ML Kit&lt;br/&gt;Barcode Scanner"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        CAM</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Capacitor Camera&lt;br/&gt;Product Photos"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        FEEDBACK</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Audio + Haptic&lt;br/&gt;Scan Feedback"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        I18N</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Vue I18n&lt;br/&gt;EN + BN"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> State </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Client State</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        TQ</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"TanStack Query&lt;br/&gt;Cache + Invalidation"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        PINIA</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Pinia&lt;br/&gt;Auth + Locale"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Cloud </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Cloud Services</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        SB</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Supabase&lt;br/&gt;Auth + PostgreSQL + RPCs"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        CL</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Cloudinary&lt;br/&gt;Image Storage"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        EDGE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Supabase Edge Function&lt;br/&gt;Signed Upload URL"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> Ecosystem </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">TradeflowBD Ecosystem</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        WEB</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Web Admin&lt;br/&gt;Thrift Module"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">    UI </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> MLKIT </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">CAM </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">FEEDBACK </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">I18N</span></span>
+<span class="line"><span style="color:#FFAB70">    UI </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> TQ </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">PINIA</span></span>
+<span class="line"><span style="color:#FFAB70">    TQ </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> SB</span></span>
+<span class="line"><span style="color:#FFAB70">    CAM </span><span style="color:#F97583">--</span><span style="color:#9ECBFF">&gt; EDGE </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> CL</span></span>
+<span class="line"><span style="color:#FFAB70">    SB </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> WEB</span></span></code></pre>
+<h3 id="mobile-build-pipeline">Mobile build pipeline</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> LR</span></span>
+<span class="line"><span style="color:#FFAB70">    CODE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Quasar SPA&lt;br/&gt;src/"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> BUILD</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"quasar build&lt;br/&gt;-m capacitor -T android"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    BUILD </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> SYNC</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"cap sync android"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    SYNC </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> APK</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Release APK/AAB&lt;br/&gt;com.brandwala.thriftapp"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    APK </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> DEVICE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Warehouse Android Devices"</span><span style="color:#F97583">]</span></span></code></pre>
+<hr>
+<h2 id="barcode-scanning-architecture">Barcode Scanning Architecture</h2>
+<p>The scanning layer uses a dual-strategy approach for reliability across Android devices.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TD</span></span>
+<span class="line"><span style="color:#FFAB70">    START</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Operator taps Scan"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> PERM</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Camera&lt;br/&gt;permission?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    PERM </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Denied </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> ERR</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Show error notification"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    PERM </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Granted </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> ML</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Google ML Kit&lt;br/&gt;module installed?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    ML </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> INSTALL</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Install module&lt;br/&gt;with progress UI"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    INSTALL </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> NATIVE</span></span>
+<span class="line"><span style="color:#FFAB70">    ML </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> NATIVE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Native Scan UI&lt;br/&gt;BarcodeScanner.scan()"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    NATIVE </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Success </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> NORM</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"normalizeScannedBarcode()"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    NATIVE </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Fail </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> OVERLAY</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Camera Overlay Fallback&lt;br/&gt;BarcodeScanner.startScan()"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    OVERLAY </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> NORM</span></span>
+<span class="line"><span style="color:#FFAB70">    NORM </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> LOOKUP</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Supabase barcode lookup"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    LOOKUP </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> FEEDBACK</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Audio chime + vibration"</span><span style="color:#F97583">]</span></span></code></pre>
+<h3 id="scan-modes">Scan modes</h3>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+<th>Use Case</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Single Scan</strong></td>
+<td>Scan → show item detail card → action (move, status change)</td>
+<td>One-off lookup or correction</td>
+</tr>
+<tr>
+<td><strong>Continuous Scan</strong></td>
+<td>Scan repeatedly → items queue up → batch move or batch status update</td>
+<td>High-volume intake or bulk corrections</td>
+</tr>
+</tbody>
+</table>
+<p><img src="/images/projects/thrift/scanner.webp" alt="Thrift App Single &amp; Continuous Barcode Scanner UI"></p>
+<h3 id="scan-feedback-system">Scan feedback system</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="text"><code><span class="line"><span>Success → 880Hz double-tone chime + 80ms vibration</span></span>
+<span class="line"><span>Error   → 220Hz sawtooth beep + [100, 50, 100]ms vibration pattern</span></span></code></pre>
+<p>Operators get instant confirmation without looking at the screen — critical in noisy warehouse environments.</p>
+<hr>
+<h2 id="audit-mode--stocktake-workflow">Audit Mode — Stocktake Workflow</h2>
+<p>The most operationally impactful feature. Replaces paper stock checks with a structured digital workflow.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TD</span></span>
+<span class="line"><span style="color:#FFAB70">    A</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Select Shelf + Box"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> B</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Load expected items&lt;br/&gt;from database"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    B </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> C</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Start audit session"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    C </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> D</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Scan barcode"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    D </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> E</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Match expected&lt;br/&gt;list?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    E </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> F</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Mark VERIFIED&lt;br/&gt;✓ success feedback"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    E </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> G</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Exists in DB&lt;br/&gt;different location?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    G </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> H</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Flag MISPLACED&lt;br/&gt;⚠ warning feedback"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    G </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> I</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Mark UNKNOWN&lt;br/&gt;✗ error feedback"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    F </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">H </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">I </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> J</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"More items?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    J </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> D</span></span>
+<span class="line"><span style="color:#FFAB70">    J </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> K</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Review summary&lt;br/&gt;Verified / Missing / Misplaced"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    K </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> L</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Bulk relocate misplaced items"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    K </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> M</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"End audit session"</span><span style="color:#F97583">]</span></span></code></pre>
+<h3 id="discrepancy-types">Discrepancy types</h3>
+<table>
+<thead>
+<tr>
+<th>Status</th>
+<th>Meaning</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>VERIFIED</strong></td>
+<td>Scanned item matches expected shelf/box</td>
+<td>Auto-marked on scan</td>
+</tr>
+<tr>
+<td><strong>MISSING</strong></td>
+<td>Expected item not scanned during session</td>
+<td>Flagged in summary</td>
+</tr>
+<tr>
+<td><strong>MISPLACED</strong></td>
+<td>Item exists in DB but at wrong shelf/box</td>
+<td>One-tap or bulk relocate to current audit location</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="stock-registration-flow">Stock Registration Flow</h2>
+<p>Full garment intake at the warehouse shelf — no desktop required.</p>
+<p><img src="/images/projects/thrift/register.webp" alt="Thrift App Mobile Stock Intake &amp; Garment Registration Form"></p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">sequenceDiagram</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> Op</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> Warehouse Operator</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> App</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> Thrift App</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> Cam</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> Capacitor Camera</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> CL</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> Cloudinary</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> RPC</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> Supabase RPC</span></span>
+<span class="line"><span style="color:#F97583">    participant</span><span style="color:#FFAB70"> Web</span><span style="color:#F97583"> as</span><span style="color:#9ECBFF"> TradeflowBD Web Admin</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">    Op</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Select shipment + box context</span></span>
+<span class="line"><span style="color:#FFAB70">    Op</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Scan or enter barcode</span></span>
+<span class="line"><span style="color:#FFAB70">    App</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">RPC</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Check barcode availability</span></span>
+<span class="line"><span style="color:#FFAB70">    Op</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">Cam</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Capture product photo</span></span>
+<span class="line"><span style="color:#FFAB70">    Cam</span><span style="color:#F97583">--&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Base64 image</span></span>
+<span class="line"><span style="color:#FFAB70">    App</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">CL</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Upload to shipment folder</span></span>
+<span class="line"><span style="color:#FFAB70">    CL</span><span style="color:#F97583">--&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> secure_url</span></span>
+<span class="line"><span style="color:#FFAB70">    Op</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Enter brand, size, condition, weight, price</span></span>
+<span class="line"><span style="color:#FFAB70">    App</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">RPC</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> register_thrift_stock_from_app()</span></span>
+<span class="line"><span style="color:#FFAB70">    RPC</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">RPC</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Create stock + link barcode + save image</span></span>
+<span class="line"><span style="color:#FFAB70">    RPC</span><span style="color:#F97583">--&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> stock_id</span></span>
+<span class="line"><span style="color:#FFAB70">    App</span><span style="color:#F97583">-&gt;&gt;</span><span style="color:#FFAB70">App</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Invalidate TanStack Query caches</span></span>
+<span class="line"><span style="color:#F97583">    Note</span><span style="color:#B392F0"> over</span><span style="color:#FFAB70"> Web</span><span style="color:#F97583">:</span><span style="color:#9ECBFF"> Web admin stock list&lt;br/&gt;refreshes on next query</span></span></code></pre>
+<h3 id="registration-captures">Registration captures</h3>
+<ul>
+<li>Barcode (scanned or manual)</li>
+<li>Product photo (camera with optional crop/edit)</li>
+<li>Brand, category, type, color, size, condition</li>
+<li>Shelf and box location</li>
+<li>Product weight + extra weight (for landed cost apportionment)</li>
+<li>Origin unit price + listed sell price</li>
+<li>Shipment and box context (auto-linked)</li>
+</ul>
+<hr>
+<h2 id="data-sync-strategy">Data Sync Strategy</h2>
+<blockquote>
+<p><strong>Note:</strong> The app does <strong>not</strong> use Supabase Realtime WebSocket channels. Sync is achieved through TanStack Query cache invalidation after every mutation.</p>
+</blockquote>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> LR</span></span>
+<span class="line"><span style="color:#FFAB70">  MUTATION</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Stock mutation&lt;br/&gt;(register, move, status)"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> RPC</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Supabase RPC"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  RPC </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> INVALIDATE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Invalidate query keys&lt;br/&gt;thrift/stock-list&lt;br/&gt;thrift/stock-detail&lt;br/&gt;thrift/dashboard"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  INVALIDATE </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> REFETCH</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Next page load or&lt;br/&gt;manual refresh pulls fresh data"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">  REFETCH </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> WEB</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"TradeflowBD web admin&lt;br/&gt;sees updated stock"</span><span style="color:#F97583">]</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Query Key</th>
+<th>Data</th>
+<th>Invalidated On</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>thrift/stock-list</code></td>
+<td>Paginated inventory</td>
+<td>Register, update, bulk move, bulk status</td>
+</tr>
+<tr>
+<td><code>thrift/stock-detail/:id</code></td>
+<td>Single item detail</td>
+<td>Update location, status</td>
+</tr>
+<tr>
+<td><code>thrift/dashboard</code></td>
+<td>Daily KPI metrics</td>
+<td>Stock registration</td>
+</tr>
+<tr>
+<td><code>thrift/barcodes</code></td>
+<td>Barcode pool</td>
+<td>Create, delete barcode</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="authentication">Authentication</h2>
+<p>Dual-path auth for web and native Android.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TD</span></span>
+<span class="line"><span style="color:#FFAB70">    LOGIN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Login Page"</span><span style="color:#F97583">]</span><span style="color:#F97583"> --&gt;</span><span style="color:#FFAB70"> PLATFORM</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Platform?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    PLATFORM </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Web </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> OAUTH</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Supabase OAuth&lt;br/&gt;Google redirect"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    PLATFORM </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Android </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> NATIVE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Native Google Picker&lt;br/&gt;@capgo/capacitor-social-login"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    NATIVE </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> IDTOKEN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"signInWithIdToken()"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    OAUTH </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> CALLBACK</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"/auth/callback"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    IDTOKEN </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> BOOTSTRAP</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"bootstrapUserSession()"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    CALLBACK </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> BOOTSTRAP</span></span>
+<span class="line"><span style="color:#FFAB70">    BOOTSTRAP </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> MEMBER</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Valid Thrift&lt;br/&gt;membership?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#FFAB70">    MEMBER </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> DASH</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Dashboard"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">    MEMBER </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> DENY</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Access denied → logout"</span><span style="color:#F97583">]</span></span></code></pre>
+<hr>
+<h2 id="core-technical-decisions">Core Technical Decisions</h2>
+<h3 id="decision-1--google-ml-kit-over-web-based-decoders">Decision 1 — Google ML Kit over web-based decoders</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>JavaScript barcode libraries struggle with Code-128 thermal labels in low light, at angles, and on curved garment hang-tags.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Use <code>@capacitor-mlkit/barcode-scanning</code> which wraps Google’s on-device ML Kit scanner with auto-zoom, native UI, and a camera overlay fallback.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>Hardware-accelerated decoding on Android with graceful degradation when the native scan UI is unavailable.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="decision-2--continuous-scan-queue-for-batch-operations">Decision 2 — Continuous scan queue for batch operations</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>Registering or relocating 50+ items during shipment intake requires scanning each item, navigating a form, and saving — far too slow.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Continuous scan mode builds a queue of scanned items. Operators batch-apply shelf moves or status changes via <code>bulk_update_thrift_stock_locations</code> and <code>bulk_update_thrift_stock_statuses</code> RPCs.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>Scan many, act once. Bulk operations complete in a single database round-trip.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="decision-3--audit-mode-with-three-tier-discrepancy-detection">Decision 3 — Audit mode with three-tier discrepancy detection</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>Paper stocktakes can’t detect items physically present but logged at the wrong shelf — the most common warehouse error.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Audit mode loads expected items for a shelf/box, then on each scan: match → verified, no match but exists elsewhere → misplaced (with one-tap relocate), not in DB → unknown.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>Structured stocktake with real-time progress bar and actionable discrepancy summary.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="decision-4--atomic-rpc-registration-not-client-side-inserts">Decision 4 — Atomic RPC registration, not client-side inserts</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>Stock registration touches <code>thrift_stocks</code>, <code>thrift_barcodes</code>, and <code>thrift_stock_images</code> — partial client writes leave orphaned records.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Single <code>register_thrift_stock_from_app</code> RPC handles the full registration atomically. Image upload to Cloudinary happens first; the RPC receives the <code>secure_url</code>.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>No partial registrations. Duplicate barcode/image detection before write.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="decision-5--bilingual-ui-for-warehouse-operators">Decision 5 — Bilingual UI for warehouse operators</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>Warehouse staff in Bangladesh are more productive in Bengali, but the tech stack is English-first.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Full Vue I18n integration with English and Bengali (বাংলা), persisted locale preference, covering all operator-facing workflows including help dialogs.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>Operators use the app in their preferred language without a separate build.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h3 id="decision-6--audio--haptic-scan-feedback">Decision 6 — Audio + haptic scan feedback</h3>
+<table>
+<thead>
+<tr>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Problem</strong></td>
+<td>In noisy warehouses, operators can’t hear notification sounds or see the screen while handling garments.</td>
+</tr>
+<tr>
+<td><strong>Decision</strong></td>
+<td>Web Audio API success/error tones + <code>navigator.vibrate()</code> haptic patterns triggered on every scan result via <code>triggerScanFeedback()</code>.</td>
+</tr>
+<tr>
+<td><strong>Outcome</strong></td>
+<td>Instant tactile and audio confirmation — success feels different from error without looking at the device.</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="tech-stack">Tech Stack</h2>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Technology</th>
+<th>Role</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>UI Framework</strong></td>
+<td>Quasar 2 + Vue 3.5 + TypeScript</td>
+<td>Mobile-first SPA, shared web + native</td>
+</tr>
+<tr>
+<td><strong>Mobile Runtime</strong></td>
+<td>Capacitor 8</td>
+<td>Android native shell, camera, haptics</td>
+</tr>
+<tr>
+<td><strong>Barcode</strong></td>
+<td>@capacitor-mlkit/barcode-scanning</td>
+<td>Google ML Kit on-device decoding</td>
+</tr>
+<tr>
+<td><strong>Camera</strong></td>
+<td>@capacitor/camera</td>
+<td>Product photo capture with crop/edit</td>
+</tr>
+<tr>
+<td><strong>Auth</strong></td>
+<td>Supabase Auth + @capgo/capacitor-social-login</td>
+<td>Web OAuth + native Google ID token</td>
+</tr>
+<tr>
+<td><strong>Server State</strong></td>
+<td>TanStack Query v5</td>
+<td>Query caching, mutation invalidation</td>
+</tr>
+<tr>
+<td><strong>Client State</strong></td>
+<td>Pinia</td>
+<td>Auth session, locale preference</td>
+</tr>
+<tr>
+<td><strong>i18n</strong></td>
+<td>Vue I18n v10</td>
+<td>English + Bengali</td>
+</tr>
+<tr>
+<td><strong>Images</strong></td>
+<td>Cloudinary (via Edge Function)</td>
+<td>Shipment-scoped folder upload</td>
+</tr>
+<tr>
+<td><strong>Backend</strong></td>
+<td>Supabase PostgreSQL + RPCs</td>
+<td>Shared with TradeflowBD Thrift vertical</td>
+</tr>
+<tr>
+<td><strong>Icons</strong></td>
+<td>Phosphor Icons</td>
+<td>Consistent iconography</td>
+</tr>
+<tr>
+<td><strong>Build</strong></td>
+<td>Quasar Vite + Capacitor CLI</td>
+<td><code>build:android</code> → release APK/AAB</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="relationship-to-tradeflowbd">Relationship to TradeflowBD</h2>
+<p>Thrift App is the <strong>mobile field layer</strong> of the TradeflowBD Thrift vertical — not a standalone product.</p>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TB</span></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> TradeflowBD </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">TradeflowBD Platform</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#F97583">        subgraph</span><span style="color:#B392F0"> ThriftVertical </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Thrift Vertical</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">            SHIP</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Shipment Intake&lt;br/&gt;(Web Admin)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">            COST</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Landed Cost Engine&lt;br/&gt;(Web Admin)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">            POS</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"POS Sales Desk&lt;br/&gt;(Web Admin)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">            TAG</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Barcode Tag Print&lt;br/&gt;(Web Admin)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">            REPORTS</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Sales Reports&lt;br/&gt;(Web Admin)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">        end</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> ThriftApp </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Thrift App </span><span style="color:#F97583">(</span><span style="color:#9ECBFF">Mobile</span><span style="color:#F97583">)</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        REG</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Stock Registration"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        SCAN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Barcode Scan &amp; Action"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        AUDIT</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Shelf Audit"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#FFAB70">    REG </span><span style="color:#F97583">--&gt;|</span><span style="color:#9ECBFF">"register_thrift_stock_from_app"</span><span style="color:#F97583">|</span><span style="color:#FFAB70"> SHIP</span></span>
+<span class="line"><span style="color:#FFAB70">    SCAN </span><span style="color:#F97583">--&gt;|</span><span style="color:#9ECBFF">"lookup + update"</span><span style="color:#F97583">|</span><span style="color:#FFAB70"> SHIP</span></span>
+<span class="line"><span style="color:#FFAB70">    AUDIT </span><span style="color:#F97583">--&gt;|</span><span style="color:#9ECBFF">"verify + relocate"</span><span style="color:#F97583">|</span><span style="color:#FFAB70"> SHIP</span></span>
+<span class="line"><span style="color:#FFAB70">    SHIP </span><span style="color:#F97583">--</span><span style="color:#9ECBFF">&gt; COST </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> POS</span></span>
+<span class="line"><span style="color:#FFAB70">    POS </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> REPORTS</span></span>
+<span class="line"><span style="color:#FFAB70">    SHIP </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> TAG</span></span></code></pre>
+<table>
+<thead>
+<tr>
+<th>Layer</th>
+<th>Runs On</th>
+<th>Handles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Thrift App (mobile)</strong></td>
+<td>Android phone at warehouse shelf</td>
+<td>Registration, scanning, audit, quick status/location changes</td>
+</tr>
+<tr>
+<td><strong>TradeflowBD web admin</strong></td>
+<td>Desktop browser</td>
+<td>Shipment costing, POS invoicing, tag printing, returns, reports, investor yield</td>
+</tr>
+</tbody>
+</table>
+<hr>
+<h2 id="what-i-built">What I Built</h2>
+<ul>
+<li><strong>Barcode scanning engine</strong> — ML Kit integration with module auto-install, native UI + overlay fallback, barcode normalization, and audio/haptic feedback</li>
+<li><strong>Stock registration workflow</strong> — End-to-end mobile intake: barcode → photo → metadata → Cloudinary upload → atomic RPC</li>
+<li><strong>Continuous scan + bulk queue</strong> — Batch shelf moves and status updates via bulk RPCs</li>
+<li><strong>Audit mode</strong> — Full stocktake workflow with verified/missing/misplaced detection and bulk relocation</li>
+<li><strong>Bilingual operator UI</strong> — English and Bengali across all workflows with persisted locale</li>
+<li><strong>Native Android auth</strong> — Google Sign-In via ID token (no Custom Tab redirect on Android)</li>
+</ul>
+<hr>
+<h2 id="visual-workflows--mobile-wireframes">Visual Workflows &amp; Mobile Wireframes</h2>
+<h3 id="1-mobile-warehouse-scanner--inventory-wireframes">1. Mobile Warehouse Scanner &amp; Inventory Wireframes</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="plaintext"><code><span class="line"><span>+-----------------------------------+    +-----------------------------------+</span></span>
+<span class="line"><span>| [=] Thrift App  [#] [EN v]  (D)   |    | [=] Thrift App  [#] [EN v]  (D)   |</span></span>
+<span class="line"><span>+-----------------------------------+    +-----------------------------------+</span></span>
+<span class="line"><span>| Warehouse Overview     (?) (Sync) |    | Barcode Scanner               (?) |</span></span>
+<span class="line"><span>| Sat, Aug 29, 2026 * Thrift        |    |                                   |</span></span>
+<span class="line"><span>|                                   |    | [Q] Single Scan            ( o )  |</span></span>
+<span class="line"><span>| QUICK ACTIONS                     |    | +-------------------------------+ |</span></span>
+<span class="line"><span>| +-------------------------------+ |    | |   [#] SINGLE SCAN             | |</span></span>
+<span class="line"><span>| | (+) Insert New Item        &gt;  | |    | +-------------------------------+ |</span></span>
+<span class="line"><span>| |     Register stock manually   | |    |                                   |</span></span>
+<span class="line"><span>| +-------------------------------+ |    | Enter or scan barcode:            |</span></span>
+<span class="line"><span>| | [#] Scan &amp; Action          &gt;  | |    | +--------------------------+----+ |</span></span>
+<span class="line"><span>| |     Continuous batch scanning | |    | | 16-AA-26-000101          | [Q]| |</span></span>
+<span class="line"><span>| +-------------------------------+ |    | +--------------------------+----+ |</span></span>
+<span class="line"><span>| | [=] View Inventory         &gt;  | |    |                                   |</span></span>
+<span class="line"><span>| |     Browse full stock list    | |    | +-- SCANNED ITEM CARD -----------+|</span></span>
+<span class="line"><span>| +-------------------------------+ |    | | [IMG] NEXT Corduroy Jacket     ||</span></span>
+<span class="line"><span>| | [*] Inventory Audit        &gt;  | |    | |       Sz 12 | Bust: 34" L: 22" ||</span></span>
+<span class="line"><span>| |     Shelf &amp; box stocktake     | |    | |       Loc: Shelf A-04 / Box 12 ||</span></span>
+<span class="line"><span>| +-------------------------------+ |    | |       Landed: ৳2,850.00        ||</span></span>
+<span class="line"><span>|                                   |    | +--------------------------------+|</span></span>
+<span class="line"><span>| DAILY INVENTORY KPIs              |    |                                   |</span></span>
+<span class="line"><span>| +-------------------------------+ |    | [ Move Shelf ]   [ Mark Damaged ] |</span></span>
+<span class="line"><span>| | Items Added Today       [Cal] | |    |                                   |</span></span>
+<span class="line"><span>| | 420 Pcs                       | |    |                                   |</span></span>
+<span class="line"><span>| +-------------------------------+ |    |                                   |</span></span>
+<span class="line"><span>+-----------------------------------+    +-----------------------------------+</span></span>
+<span class="line"><span>| [Home]  [Scan]  [+]  [Audit] [Inv]|    | [Home]  [Scan]  [+]  [Audit] [Inv]|</span></span>
+<span class="line"><span>+-----------------------------------+    +-----------------------------------+</span></span>
+<span class="line"><span>        (A) Dashboard View                       (B) Scanner &amp; Action View</span></span></code></pre>
+<h3 id="2-shelf-audit--misplaced-item-detection-flow">2. Shelf Audit &amp; Misplaced Item Detection Flow</h3>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#F97583">flowchart</span><span style="color:#B392F0"> TD</span></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> ST1 </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Step 1</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">Session Initiation</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        AUDIT_START</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Select Warehouse Zone&lt;br/&gt;(e.g., Rack B / Shelf 03 / Box 14)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        LOAD_EXPECTED</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Query Supabase for Expected SKUs&lt;br/&gt;(Cached via TanStack Query)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        AUDIT_START </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> LOAD_EXPECTED</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> ST2 </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Step 2</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">Continuous ML Kit Scan Loop</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        LOAD_EXPECTED </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> SCAN_SKU</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"ML Kit Camera Scan / Barcode Key-in"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        SCAN_SKU </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> CHECK</span><span style="color:#F97583">{</span><span style="color:#9ECBFF">"Matches expected&lt;br/&gt;Shelf/Box?"</span><span style="color:#F97583">}</span></span>
+<span class="line"><span style="color:#E1E4E8">        </span></span>
+<span class="line"><span style="color:#FFAB70">        CHECK </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> Yes </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> VERIFIED</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"VERIFIED ✓&lt;br/&gt;880Hz Audio Chime&lt;br/&gt;80ms Vibration"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        CHECK </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No, Exists Elsewhere </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> MISPLACED</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"MISPLACED ⚠&lt;br/&gt;Yellow Alert&lt;br/&gt;One-Tap Relocate Action"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        CHECK </span><span style="color:#F97583">--</span><span style="color:#9ECBFF"> No, Not in System </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> UNKNOWN</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"UNKNOWN ✗&lt;br/&gt;220Hz Error Tone&lt;br/&gt;Flag for Quarantine"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span>
+<span class="line"></span>
+<span class="line"><span style="color:#F97583">    subgraph</span><span style="color:#B392F0"> ST3 </span><span style="color:#E1E4E8">["</span><span style="color:#FFAB70">Step 3</span><span style="color:#E1E4E8">: </span><span style="color:#FFAB70">Discrepancy Resolution </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">Sync</span><span style="color:#E1E4E8">"]</span></span>
+<span class="line"><span style="color:#FFAB70">        VERIFIED </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">MISPLACED </span><span style="color:#E1E4E8">&amp; </span><span style="color:#FFAB70">UNKNOWN </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> SUMMARY</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Audit Summary Review&lt;br/&gt;(e.g., 48 Verified, 2 Missing, 1 Misplaced)"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        SUMMARY </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> RPC_RESOLVE</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"Trigger bulk_update_thrift_stock_locations()&lt;br/&gt;Invalidate TanStack Query Keys"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#FFAB70">        RPC_RESOLVE </span><span style="color:#F97583">--&gt;</span><span style="color:#FFAB70"> SYNCED</span><span style="color:#F97583">[</span><span style="color:#9ECBFF">"TradeflowBD Admin Stock Reconciled"</span><span style="color:#F97583">]</span></span>
+<span class="line"><span style="color:#F97583">    end</span></span></code></pre>
+<hr>
+<h2 id="future-roadmap">Future Roadmap</h2>
+<pre class="astro-code github-dark" style="background-color:#24292e;color:#e1e4e8; overflow-x: auto;" tabindex="0" data-language="mermaid"><code><span class="line"><span style="color:#E1E4E8">timeline</span></span>
+<span class="line"><span style="color:#E1E4E8">    title Thrift App Roadmap</span></span>
+<span class="line"><span style="color:#E1E4E8">    section In Progress</span></span>
+<span class="line"><span style="color:#E1E4E8">        Production Hardening : v1.0.5 on warehouse devices</span></span>
+<span class="line"><span style="color:#E1E4E8">    section Planned</span></span>
+<span class="line"><span style="color:#E1E4E8">        Offline Queue : IndexedDB sync for poor connectivity zones</span></span>
+<span class="line"><span style="color:#E1E4E8">        Thermal Printer : Bluetooth label printing at the shelf</span></span>
+<span class="line"><span style="color:#E1E4E8">        Supabase Realtime : Push stock changes to web admin without refresh</span></span>
+<span class="line"><span style="color:#E1E4E8">        iOS Build : Capacitor iOS with equivalent ML Kit support</span></span></code></pre>
+<hr>
+<h2 id="links">Links</h2>
+<ul>
+<li><strong>Parent Platform:</strong> <a href="https://tradeflowbd.com">tradeflowbd.com</a></li>
+<li><strong>GitHub:</strong> <a href="https://github.com/marceldavidbaroi">github.com/marceldavidbaroi</a></li>
+</ul>
+<hr>
+<p><em>Thrift App — Scan at the shelf. Register on the floor. Audit with confidence. Syncs with TradeflowBD.</em></p>
+</section><script type="module" src="/_astro/CaseMarkdown.astro_astro_type_script_index_0_lang.DHKQwZwg.js"></script></div></div></div></section><script type="module">function e(){let e=document.getElementById(`deepDiveToggleBtn`),t=document.querySelector(`.disclosure-card`),n=document.getElementById(`deepDiveBody`),r=document.getElementById(`deepDivePills`);if(!e||!t||!n||e.dataset.bound===`true`)return;if(e.dataset.bound=`true`,r){let e=n.querySelectorAll(`h2`);if(r.innerHTML=``,e.forEach((e,n)=>{let a=e.textContent?.trim()||`Section ${n+1}`;e.id||=`spec-${a.toLowerCase().replace(/[^a-z0-9]+/g,`-`).replace(/(^-|-$)/g,``)}`;let o=document.createElement(`a`);o.href=`#${e.id}`,o.className=`deep-dive-pill`,o.textContent=a,o.addEventListener(`click`,()=>{t.classList.contains(`is-collapsed`)&&i()}),r.appendChild(o)}),e.length===0){let e=document.getElementById(`deepDiveNav`);e&&(e.style.display=`none`)}}function i(){let n=e?.getAttribute(`aria-expanded`)!==`true`;e?.setAttribute(`aria-expanded`,String(n));let r=e?.querySelector(`.btn-text`);r&&(r.textContent=n?`Collapse Specs`:`Expand Technical Specs`),t?.classList.toggle(`is-collapsed`,!n)}e.addEventListener(`click`,i)}e(),document.addEventListener(`astro:page-load`,e);</script></div></div></div><script type="module">function e(){let e=document.querySelectorAll(`[data-chapter-id]`);if(!e.length)return;let t=Array.from(e).map(e=>{let t=e.getAttribute(`data-chapter-id`),n=t?document.getElementById(t):null;return n?{link:e,el:n}:null}).filter(e=>!!e);if(!t.length)return;let n=t=>{e.forEach(e=>{let n=e.getAttribute(`data-chapter-id`)===t;e.classList.toggle(`is-active`,n)})},r=new IntersectionObserver(e=>{let t=e.filter(e=>e.isIntersecting).sort((e,t)=>t.intersectionRatio-e.intersectionRatio)[0];t?.target?.id&&n(t.target.id)},{rootMargin:`-20% 0px -55% 0px`,threshold:[0,.1,.25]});t.forEach(({el:e})=>r.observe(e)),e.forEach(e=>{e.addEventListener(`click`,t=>{let n=e.getAttribute(`data-chapter-id`),r=n?document.getElementById(n):null;if(!r)return;t.preventDefault();let i=r.getBoundingClientRect().top+window.scrollY-88;window.scrollTo({top:i,behavior:`smooth`})})})}e(),document.addEventListener(`astro:page-load`,e);</script><nav class="adjacent"><a href="/work/02-service-desk"><span class="mini font-mono">Previous</span><span>Service Desk – Diagnostics-First Support Platform &amp; In-App Vue Widget</span></a><a href="/work/04-mindvault" class="next"><span class="mini font-mono">Next</span><span>MindVault – Multi-User Personal Finance Ledger Platform</span></a></nav><section class="close" aria-label="Contact"><p class="close-kicker font-mono">Case closed</p><p class="close-title">More work.</p><div class="hero-actions"><a class="btn-solid font-mono" href="mailto:marceldavidbaroi@gmail.com">Email me</a><a class="text-link font-mono" href="/work">All work →</a></div></section><dialog class="case-image-lightbox" id="caseImageLightbox" aria-label="Screenshot preview" data-astro-cid-bifako53><button type="button" class="case-image-lightbox__close" data-case-lightbox-close aria-label="Close preview" data-astro-cid-bifako53><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" data-astro-cid-bifako53><line x1="18" y1="6" x2="6" y2="18" data-astro-cid-bifako53></line><line x1="6" y1="6" x2="18" y2="18" data-astro-cid-bifako53></line></svg></button><button type="button" class="case-image-lightbox__nav case-image-lightbox__nav--prev" data-case-lightbox-prev aria-label="Previous screenshot" data-astro-cid-bifako53><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" data-astro-cid-bifako53><polyline points="15 18 9 12 15 6" data-astro-cid-bifako53></polyline></svg></button><button type="button" class="case-image-lightbox__nav case-image-lightbox__nav--next" data-case-lightbox-next aria-label="Next screenshot" data-astro-cid-bifako53><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true" data-astro-cid-bifako53><polyline points="9 18 15 12 9 6" data-astro-cid-bifako53></polyline></svg></button><figure class="case-image-lightbox__figure" data-astro-cid-bifako53><img class="case-image-lightbox__img" id="caseImageLightboxImg" alt="" data-astro-cid-bifako53><figcaption class="case-image-lightbox__caption font-mono" id="caseImageLightboxCaption" data-astro-cid-bifako53></figcaption></figure></dialog><script type="module">var e=[],t=`Screenshot`,n=0;function r(){return document.getElementById(`caseImageLightbox`)}function i(){return document.getElementById(`caseImageLightboxImg`)}function a(){return document.getElementById(`caseImageLightboxCaption`)}function o(){let o=r(),s=i(),c=a();if(!o||!s||!e.length)return;s.src=e[n],s.alt=`${t} screenshot ${n+1} of ${e.length}`,c&&(c.textContent=`${n+1} / ${e.length}`);let l=o.querySelector(`[data-case-lightbox-prev]`),u=o.querySelector(`[data-case-lightbox-next]`),d=e.length>1;l&&(l.hidden=!d),u&&(u.hidden=!d)}function s(i,a,s){let c=r();if(!c)return;e=a.length?a:[i],t=s;let l=e.indexOf(i);n=l>=0?l:0,o(),c.open||c.showModal()}function c(t){e.length<2||(n=(n+t+e.length)%e.length,o())}function l(){r()?.close()}function u(e){let t=e.getAttribute(`data-case-lightbox-gallery`);if(!t)return[];try{let e=JSON.parse(t);return Array.isArray(e)?e.filter(Boolean):[]}catch{return[]}}function d(e){let t=e.target;if(!t)return;let n=t.closest(`[data-case-lightbox-src]`);if(!n)return;e.preventDefault();let r=n.getAttribute(`data-case-lightbox-src`);if(!r)return;let i=n.closest(`[data-case-lightbox-gallery]`),a=i?u(i):[r],o=i?.getAttribute(`data-case-lightbox-title`)||`Screenshot`;s(r,a.includes(r)?a:[r,...a],o)}var f=!1;function p(){let e=r();!e||e.dataset.bound===`1`||(e.dataset.bound=`1`,e.querySelector(`[data-case-lightbox-close]`)?.addEventListener(`click`,l),e.querySelector(`[data-case-lightbox-prev]`)?.addEventListener(`click`,()=>c(-1)),e.querySelector(`[data-case-lightbox-next]`)?.addEventListener(`click`,()=>c(1)),e.addEventListener(`click`,t=>{t.target===e&&l()}),e.addEventListener(`cancel`,e=>{e.preventDefault(),l()}),f||(f=!0,window.addEventListener(`keydown`,e=>{r()?.open&&(e.key===`ArrowLeft`&&c(-1),e.key===`ArrowRight`&&c(1))}),document.addEventListener(`click`,d)))}p(),document.addEventListener(`astro:page-load`,p);</script></article></div><script type="module">function e(e){let t=e.getBoundingClientRect(),n=window.innerHeight||document.documentElement.clientHeight;return t.top<n*.92&&t.bottom>n*.08}function t(){let t=document.querySelectorAll(`.case-chapter--hero, #case-proof, .adjacent`);if(!t.length)return;let n=window.matchMedia(`(prefers-reduced-motion: reduce)`).matches;if(t.forEach(t=>{t.classList.contains(`case-reveal`)||t.classList.add(`case-reveal`),(n||e(t))&&t.classList.add(`is-revealed`)}),n||!(`IntersectionObserver`in window)){t.forEach(e=>e.classList.add(`is-revealed`));return}let r=new IntersectionObserver(e=>{e.forEach(e=>{e.isIntersecting&&(e.target.classList.add(`is-revealed`),r.unobserve(e.target))})},{root:null,rootMargin:`0px 0px -8% 0px`,threshold:0});t.forEach(e=>{e.classList.contains(`is-revealed`)||r.observe(e)})}t(),document.addEventListener(`astro:page-load`,t),document.addEventListener(`astro:after-swap`,t);</script></main><footer class="site-footer"><div class="footer-inner font-mono"><span class="footer-pill">Based in Dhaka (UTC+6) · 4–5 hrs overlap with US East &amp; EU CET</span><span class="footer-sep" aria-hidden="true">·</span><span class="footer-pill footer-pill-accent">Available for Full-Time · Remote / Relocation</span></div></footer></div><!-- Floating Navigation Menu (Appears when scrolled) --><div id="floating-menu-container" class="floating-menu-container"><button id="floating-menu-btn" type="button" class="floating-menu-btn" aria-label="Toggle navigation menu" aria-expanded="false" aria-haspopup="true"><span class="floating-menu-icon" aria-hidden="true"><span class="icon-line top-line"></span><span class="icon-line bottom-line"></span></span></button><button id="floating-theme-toggle" type="button" class="floating-theme-btn" aria-label="Toggle color theme" aria-live="polite"><!-- Sun Icon (shown in dark mode) --><svg class="theme-icon sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg><!-- Moon Icon (shown in light mode) --><svg class="theme-icon moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg></button><div id="floating-dropdown" class="floating-dropdown" role="menu" hidden aria-hidden="true"><a href="/" role="menuitem" class="floating-dropdown-item"><span>Home</span></a><a href="/work" role="menuitem" class="floating-dropdown-item active"><span>Work</span></a><a href="/about" role="menuitem" class="floating-dropdown-item"><span>About</span></a><a href="/experience" role="menuitem" class="floating-dropdown-item"><span>Career</span></a><a href="/education" role="menuitem" class="floating-dropdown-item"><span>School &amp; University</span></a><a href="/skills" role="menuitem" class="floating-dropdown-item"><span>Skills</span></a><a href="/credentials" role="menuitem" class="floating-dropdown-item"><span>Credentials</span></a><a href="/philosophy" role="menuitem" class="floating-dropdown-item"><span>Philosophy</span></a><a href="/gallery" role="menuitem" class="floating-dropdown-item"><span>Albums &amp; Stories</span></a></div></div><div id="command-menu" class="cmdk" data-email="marceldavidbaroi@gmail.com" hidden aria-hidden="true" data-astro-cid-o4jt4aa6><div class="cmdk-backdrop" data-cmdk-close data-astro-cid-o4jt4aa6></div><div class="cmdk-dialog" role="dialog" aria-modal="true" aria-labelledby="cmdk-title" data-astro-cid-o4jt4aa6><div class="cmdk-header" data-astro-cid-o4jt4aa6><input id="cmdk-input" class="cmdk-input font-mono" type="text" placeholder="Jump to…" autocomplete="off" spellcheck="false" aria-label="Command menu search" data-astro-cid-o4jt4aa6></div><p id="cmdk-title" class="cmdk-sr-only" data-astro-cid-o4jt4aa6>Quick navigation command menu</p><ul class="cmdk-list" id="cmdk-list" role="listbox" data-astro-cid-o4jt4aa6><li class="cmdk-item" role="option" data-id="home" data-label="Home" data-keywords="home home index" data-href="/" data-type="nav" data-external="false" data-index="0" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Home</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="work" data-label="Work / Case Studies" data-keywords="work / case studies work projects case studies portfolio" data-href="/work" data-type="nav" data-external="false" data-index="1" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Work / Case Studies</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="about" data-label="About Profile" data-keywords="about profile about profile bio" data-href="/about" data-type="nav" data-external="false" data-index="2" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>About Profile</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="career" data-label="Career / Experience" data-keywords="career / experience career experience jobs roles employment proficient software engineer" data-href="/experience" data-type="nav" data-external="false" data-index="3" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Career / Experience</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="education" data-label="School &amp; University" data-keywords="school &amp; university school university education bsc cse hsc notre dame daffodil transcript degrees" data-href="/education" data-type="nav" data-external="false" data-index="4" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>School &amp; University</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="skills" data-label="Skills Matrix" data-keywords="skills matrix skills stack tech" data-href="/skills" data-type="nav" data-external="false" data-index="5" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Skills Matrix</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="credentials" data-label="Credentials" data-keywords="credentials credentials certifications certs" data-href="/credentials" data-type="nav" data-external="false" data-index="6" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Credentials</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="philosophy" data-label="Engineering Philosophy" data-keywords="engineering philosophy philosophy architecture principles" data-href="/philosophy" data-type="nav" data-external="false" data-index="7" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Engineering Philosophy</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="gallery" data-label="Albums &amp; Stories" data-keywords="albums &amp; stories gallery albums stories photos memoirs photography" data-href="/gallery" data-type="nav" data-external="false" data-index="8" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Albums &amp; Stories</span><span class="cmdk-item-meta font-mono" data-meta="Page" data-astro-cid-o4jt4aa6>Page</span></li><li class="cmdk-item" role="option" data-id="resume" data-label="Download Resume (PDF)" data-keywords="download resume (pdf) resume cv pdf download" data-href="/resume.pdf" data-type="action" data-external="true" data-index="9" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Download Resume (PDF)</span><span class="cmdk-item-meta font-mono" data-meta="File" data-astro-cid-o4jt4aa6>File</span></li><li class="cmdk-item" role="option" data-id="resume-txt" data-label="ATS Text CV" data-keywords="ats text cv ats resume text plain cv" data-href="/resume.txt" data-type="action" data-external="true" data-index="10" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>ATS Text CV</span><span class="cmdk-item-meta font-mono" data-meta="File" data-astro-cid-o4jt4aa6>File</span></li><li class="cmdk-item" role="option" data-id="email" data-label="Copy Email" data-keywords="copy email email copy contact mail" data-href="#copy-email" data-type="copy-email" data-external="false" data-index="11" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>Copy Email</span><span class="cmdk-item-meta font-mono" data-meta="Copy" data-astro-cid-o4jt4aa6>Copy</span></li><li class="cmdk-item" role="option" data-id="linkedin" data-label="LinkedIn" data-keywords="linkedin linkedin social" data-href="https://www.linkedin.com/in/marcel-david-baroi/" data-type="action" data-external="true" data-index="12" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>LinkedIn</span><span class="cmdk-item-meta font-mono" data-meta="Link" data-astro-cid-o4jt4aa6>Link</span></li><li class="cmdk-item" role="option" data-id="github" data-label="GitHub" data-keywords="github github code repos" data-href="https://github.com/marceldavidbaroi" data-type="action" data-external="true" data-index="13" data-astro-cid-o4jt4aa6><span class="cmdk-item-label" data-astro-cid-o4jt4aa6>GitHub</span><span class="cmdk-item-meta font-mono" data-meta="Link" data-astro-cid-o4jt4aa6>Link</span></li></ul><div class="cmdk-empty font-mono" id="cmdk-empty" hidden data-astro-cid-o4jt4aa6>No matches</div><div class="cmdk-footer font-mono" data-astro-cid-o4jt4aa6><span data-astro-cid-o4jt4aa6>↑↓ Navigate</span><span data-astro-cid-o4jt4aa6>↵ Select</span><span data-astro-cid-o4jt4aa6>Esc Close</span></div></div></div><script type="module">function e(){let e=document.getElementById(`command-menu`),t=document.getElementById(`cmdk-input`),n=document.getElementById(`cmdk-list`),r=document.getElementById(`cmdk-empty`);if(!e||!t||!n||e.dataset.bound===`true`)return;e.dataset.bound=`true`;let i=e.dataset.email||``,a=0,o=()=>Array.from(n.querySelectorAll(`.cmdk-item`)).filter(e=>e.style.display!==`none`);function s(e){let t=o();if(t.length===0){a=0;return}a=(e%t.length+t.length)%t.length,t.forEach((e,t)=>e.classList.toggle(`is-active`,t===a)),t[a]?.scrollIntoView({block:`nearest`})}function c(e){let t=e.trim().toLowerCase(),i=0;n.querySelectorAll(`.cmdk-item`).forEach(e=>{let n=e.dataset.keywords||``,r=!t||n.includes(t);e.style.display=r?``:`none`,r&&i++}),r&&(r.hidden=i>0),s(0)}async function l(e){let t=e.dataset.type,n=e.dataset.href||`/`,r=e.dataset.external===`true`;if(t===`copy-email`){try{await navigator.clipboard.writeText(i)}catch{let e=document.createElement(`textarea`);e.value=i,document.body.appendChild(e),e.select(),document.execCommand(`copy`),document.body.removeChild(e)}let t=e.querySelector(`.cmdk-item-meta`);t&&(t.textContent=`Copied`),window.setTimeout(()=>f(),500);return}f(),r?window.open(n,`_blank`,`noopener,noreferrer`):window.location.href=n}function u(e){document.dispatchEvent(new CustomEvent(`command-menu:change`,{detail:{open:e}}))}function d(){e.hidden=!1,e.setAttribute(`aria-hidden`,`false`),document.body.style.overflow=`hidden`,t.value=``,c(``),u(!0),window.setTimeout(()=>t.focus(),10)}function f(){e.hidden=!0,e.setAttribute(`aria-hidden`,`true`),document.body.style.overflow=``,u(!1)}document.addEventListener(`keydown`,t=>{if((t.metaKey||t.ctrlKey)&&t.key.toLowerCase()===`k`){t.preventDefault(),e.hidden?d():f();return}if(!e.hidden){if(t.key===`Escape`)t.preventDefault(),f();else if(t.key===`ArrowDown`)t.preventDefault(),s(a+1);else if(t.key===`ArrowUp`)t.preventDefault(),s(a-1);else if(t.key===`Enter`){t.preventDefault();let e=o();e[a]&&l(e[a])}}}),t.addEventListener(`input`,()=>c(t.value)),n.addEventListener(`click`,e=>{let t=e.target.closest(`.cmdk-item`);t&&l(t)}),e.querySelectorAll(`[data-cmdk-close]`).forEach(e=>{e.addEventListener(`click`,f)}),window.__openCommandMenu=d}e(),document.addEventListener(`astro:page-load`,e);</script><script type="module">function e(){let e=document.getElementById(`header-more-btn`),t=document.getElementById(`header-more-dropdown`),n=document.getElementById(`floating-menu-container`),r=document.getElementById(`floating-menu-btn`),i=document.getElementById(`floating-dropdown`);if(!e||!t||e.dataset.bound)return;e.dataset.bound=`true`;let a=!1,o=()=>!t.hasAttribute(`hidden`)&&t.style.display!==`none`,s=()=>!!(i&&!i.hasAttribute(`hidden`)&&i.style.display!==`none`),c=()=>{t.hidden=!0,t.setAttribute(`aria-hidden`,`true`),e.setAttribute(`aria-expanded`,`false`),e.classList.remove(`is-open`)},l=()=>{u(),t.hidden=!1,t.removeAttribute(`hidden`),t.setAttribute(`aria-hidden`,`false`),e.setAttribute(`aria-expanded`,`true`),e.classList.add(`is-open`)},u=()=>{!i||!r||(i.hidden=!0,i.setAttribute(`aria-hidden`,`true`),r.setAttribute(`aria-expanded`,`false`),r.classList.remove(`is-open`),n?.classList.remove(`is-menu-open`))},d=()=>{!i||!r||(c(),i.hidden=!1,i.removeAttribute(`hidden`),i.setAttribute(`aria-hidden`,`false`),r.setAttribute(`aria-expanded`,`true`),r.classList.add(`is-open`),n?.classList.add(`is-menu-open`))};e.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation(),o()?c():l()}),r?.addEventListener(`click`,e=>{e.preventDefault(),e.stopPropagation(),s()?u():d()}),document.addEventListener(`click`,n=>{let a=n.target;o()&&a&&!t.contains(a)&&!e.contains(a)&&c(),s()&&a&&!i?.contains(a)&&!r?.contains(a)&&u()}),document.addEventListener(`keydown`,t=>{t.key===`Escape`&&(o()&&(c(),e.focus()),s()&&(u(),r?.focus()))});let f=()=>{let e=window.scrollY>60;n?.classList.toggle(`is-scrolled`,e)};window.addEventListener(`scroll`,()=>{a||(a=!0,requestAnimationFrame(()=>{f(),a=!1}))},{passive:!0}),f(),document.addEventListener(`command-menu:change`,(e=>{e.detail.open&&(c(),u())}))}e(),document.addEventListener(`astro:page-load`,e);</script></body></html>

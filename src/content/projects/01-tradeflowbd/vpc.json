@@ -1,0 +1,139 @@
+{
+	"labels": {
+		"title": "The Value Proposition Canvas",
+		"valueProposition": "TradeFlow BD Platform",
+		"customerSegment": "Import / Wholesale Operator"
+	},
+	"customerJobs": [
+		{
+			"title": "Live Catalogs",
+			"note": "Show buyers live catalogs, negotiated quotes, and new lines without maintaining parallel price lists in chat or spreadsheets."
+		},
+		{
+			"title": "Capture Every Order Mode",
+			"note": "Take walk-in or trade bills, shop checkout, catalog negotiation, pre-order costing files, or dropship to a recipient."
+		},
+		{
+			"title": "Inbound & Warehouse",
+			"note": "Track shipments, receive into warehouse lots, bin and grade stock, and fulfill picks."
+		},
+		{
+			"title": "Dropship Operations",
+			"note": "Reseller buys at wholesale; the company ships to the end customer. Courier remittance and reseller profit stay separate from COD face."
+		},
+		{
+			"title": "Money & Capital",
+			"note": "Customer bills and collections, supplier AP from landed shipments, cashbook leftover, and read-only investor visibility on shipment profit share."
+		}
+	],
+	"pains": [
+		{
+			"title": "Overselling",
+			"note": "The same parent stock backs wholesale desk, shop carts, and dropship picks."
+		},
+		{
+			"title": "Quote Chaos",
+			"note": "Custom and quote specs live in email while fulfillment runs in another tool."
+		},
+		{
+			"title": "Inbound Blind Spots",
+			"note": "Promising dates without knowing what is in transit, received, or still on a costing file."
+		},
+		{
+			"title": "Finance Lies",
+			"note": "Treating COD as sales, mixing dropship merchant totals with recipient cash, or editing issued invoices instead of credit notes."
+		},
+		{
+			"title": "Stale Catalogs",
+			"note": "Each shop or customer group needs different prices, visibility, or negotiation rules."
+		}
+	],
+	"gains": [
+		{
+			"title": "One Picture",
+			"note": "Open shipments, warehouse lots, shop orders, bills due, and cash in — with sales, cash, and COD defined the same way in reports."
+		},
+		{
+			"title": "No Re-Keying",
+			"note": "Sell standard, negotiated, pre-order, and dropship flows without copying SKU and party into separate systems."
+		},
+		{
+			"title": "Defensible Cost",
+			"note": "Unit cost from inbound pays and locked shipment costs; gross profit from shipment P&L, not guessed invoice-line COGS."
+		},
+		{
+			"title": "Faster Close",
+			"note": "Confirmed demand to pick, ship, bill, and collect — including Delivery paper close for pre-orders."
+		},
+		{
+			"title": "Self-Serve Shops",
+			"note": "Buyers use the right shop with the right prices and stock-backed availability."
+		}
+	],
+	"productsAndServices": [
+		{
+			"title": "Warehouse Kernel",
+			"note": "Parent warehouse lots, bin tree, movements, FIFO issue on bills and shop picks."
+		},
+		{
+			"title": "Shop & Catalogs",
+			"note": "Multiple shops per tenant; vendor catalog, fixed price, and dropship types; group pricing and listing visibility."
+		},
+		{
+			"title": "Order Capture",
+			"note": "Wholesale compose (take / condition / walk-in); shop carts and negotiation; pre-order costing (PBC) and demand desk."
+		},
+		{
+			"title": "Inbound & Landed Cost",
+			"note": "Shipment lifecycle, cost buckets, AP bills per bucket × currency, lock and restamp from pays."
+		},
+		{
+			"title": "Money Kernel",
+			"note": "Bills, pays, allocations, profile cashbook; dropship remittance and merchant leftover payout."
+		},
+		{
+			"title": "Access & Investor",
+			"note": "Parent/child tenants, four login scopes (platform, app, shop, investor); investor portal read-only on shipment share."
+		}
+	],
+	"painRelievers": [
+		{
+			"title": "One Warehouse Quantity",
+			"note": "Shop holds and pick lines debit the same lots; server-side issue and pick RPCs enforce availability — no channel-by-channel stock books."
+		},
+		{
+			"title": "Quote to Demand",
+			"note": "PBC files and catalog negotiation lock confirmed qty into demand; Delivery paper close issues take or condition bills through the money kernel."
+		},
+		{
+			"title": "Shipment Statuses",
+			"note": "Draft through received; post-to-stock from sellable lines; demand and backlog tie to profiles before goods are on hand."
+		},
+		{
+			"title": "Bills, Pays, Cashbook",
+			"note": "Merchant AR at ship, net remittance pay-in, leftover on profile cashbook; investor share on shipment investments, not a shadow ledger."
+		},
+		{
+			"title": "Per-Shop Listings",
+			"note": "Markup rules, group hides, and dropship floor prices; staff catalog browse separate from the customer shop."
+		}
+	],
+	"gainCreators": [
+		{
+			"title": "Locked Money Layers",
+			"note": "Reporting treasury reads sales vs cash vs COD vs AR; staff dashboard attention queue deep-links into desks."
+		},
+		{
+			"title": "Modules on One Parent",
+			"note": "Child brands and new dropship or catalog shops without splitting warehouse or cashbook."
+		},
+		{
+			"title": "Shipment P&L",
+			"note": "Landed and local costs; portal shows partner share on batches — collections stay on staff money desks."
+		},
+		{
+			"title": "Receive to Pick",
+			"note": "Inbound milestones feed lots and unit stamp; dropship processing picks against those lots then ship+issue in one step."
+		}
+	]
+}

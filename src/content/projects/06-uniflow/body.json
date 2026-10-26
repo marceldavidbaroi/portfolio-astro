@@ -1,0 +1,178 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Technical Appendix"
+		},
+		{
+			"type": "paragraph",
+			"text": "UniFlow is a modular single-page application built on **Quasar** and **Vue 3**, with **Firebase Authentication** and **Cloud Firestore** as a serverless backend. Route transitions pass through a boot-plugin guard that checks authentication and role, views dispatch to domain-specific **Pinia** stores, and the stores talk to Firebase through a service layer."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Architecture"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Client [\"Client (Vue 3 + Quasar)\"]\n        Guard[\"boot/auth.js Route Guard\"]\n        Router[\"Vue Router (44 routes, 9 modules)\"]\n        Views[\"77 Vue Components\"]\n        Guard --> Router --> Views\n    end\n\n    subgraph State [\"State (Pinia)\"]\n        Stores[\"10 Domain Stores\"]\n        Persist[\"Persisted State Plugin\"]\n        Views --> Stores --> Persist\n    end\n\n    subgraph Firebase [\"Firebase\"]\n        Auth[\"Authentication\"]\n        Svc[\"Service Layer (queries, atomic counters)\"]\n        DB[(\"Cloud Firestore (12 entities)\")]\n        Stores --> Svc --> DB\n        Stores --> Auth\n    end"
+		},
+		{
+			"type": "paragraph",
+			"text": "**Request flow:** `Route (modules/*/routes.js)` → `Guard (boot/auth.js)` → `Page/Component` → `Pinia Store` → `Firebase Service` → `Firestore`."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Module Map"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Module",
+				"Responsibility"
+			],
+			"rows": [
+				[
+					"`admin`",
+					"16 pages and 6 dialogs for faculties, departments, courses, users, and logs"
+				],
+				[
+					"`auth`",
+					"Login, signup, and logout views"
+				],
+				[
+					"`dashboard`",
+					"Role-specific dashboards for Admin, Student, and Teacher"
+				],
+				[
+					"`group`",
+					"Collaborative group views, members, and shared resources"
+				],
+				[
+					"`home`",
+					"Landing overview page"
+				],
+				[
+					"`liveShare`",
+					"Real-time collaborative live share and chat panel"
+				],
+				[
+					"`session`",
+					"Classroom session creation, joining, and management"
+				],
+				[
+					"`task`",
+					"Task announcements, submissions, and grading rubrics"
+				],
+				[
+					"`todo`",
+					"Personal todo lists and item trackers"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Route Protection"
+		},
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{
+					"text": "Each protected route declares `meta.requiresAuth` and a `meta.roles` array in its module's `routes.js`."
+				},
+				{
+					"text": "The `boot/auth.js` plugin runs before each navigation and compares the route metadata with the current role in the Pinia user store."
+				},
+				{
+					"text": "Unauthenticated users are sent to `/auth/login`; users without the right role are sent to `/unauthorized`, before the view mounts."
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Session Numbering"
+		},
+		{
+			"type": "paragraph",
+			"text": "Session creation runs a Firestore transaction in `firebaseService.js` that reads and increments a single `metadata/counters` document, so two sessions created at the same time never receive the same number. The cost is one extra read and write per session creation."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "By the Numbers"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Metric",
+				"Count"
+			],
+			"rows": [
+				[
+					"Git commits (solo)",
+					"181"
+				],
+				[
+					"Feature modules",
+					"9"
+				],
+				[
+					"Configured routes",
+					"44"
+				],
+				[
+					"Vue files",
+					"77 (40 pages, 34 components, 2 layouts, 1 root App)"
+				],
+				[
+					"Pinia stores",
+					"10"
+				],
+				[
+					"Firestore entity schemas",
+					"12"
+				],
+				[
+					"Quasar boot plugins",
+					"2 (`boot/auth.js`, `boot/firebase.js`)"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "State Layer Convention"
+		},
+		{
+			"type": "paragraph",
+			"text": "Each store is split into `index.js` (state and getters) and `action.js` (mutations and Firestore calls). Components never call the Firestore SDK directly, which keeps loading and error handling in one place per domain."
+		},
+		{
+			"type": "comment",
+			"text": "TODO: add 2-4 screenshots (Live Session view, Teacher Task Dashboard, Admin Panel) and point images/visualAssets in project.json at them."
+		}
+	]
+}

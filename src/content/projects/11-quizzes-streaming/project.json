@@ -1,0 +1,169 @@
+{
+	"id": "11",
+	"title": "SuperCards Quiz – Internal Learning & Assessment Platform",
+	"subtitle": "Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.",
+	"description": "Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.",
+	"chip": "Learning & Assessment",
+	"order": 11,
+	"featured": true,
+	"platformType": "desktop",
+	"contribution": {
+		"mode": "lead",
+		"label": "Technical lead",
+		"headline": "Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].",
+		"scope": [
+			"Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.",
+			"Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).",
+			"Participants needed a guided, timed experience with post-submission review — not just a static form.",
+			"Authors starting from scratch on question banks was slow and error-prone."
+		]
+	},
+	"myImpact": [
+		{
+			"label": "User Journeys",
+			"value": "4 Workflows",
+			"attribution": "personal",
+			"detail": "Creation, Studio Authoring, Challenge Discovery, and Timed Attend"
+		},
+		{
+			"label": "Module Refactor",
+			"value": "11 Components",
+			"attribution": "personal",
+			"detail": "Clean separation across authoring, live display, and mistake review"
+		},
+		{
+			"label": "AI Acceleration",
+			"value": "GPT-4o",
+			"attribution": "personal",
+			"detail": "Automated MCQ and fill-in-the-blank question generation from descriptions"
+		},
+		{
+			"label": "Timed Assessment",
+			"value": "4-Phase Flow",
+			"attribution": "personal",
+			"detail": "Intro → Countdown Session → Score Calculation → Mistake Walkthrough"
+		},
+		{
+			"label": "Platform Reuse",
+			"value": "100% Shared",
+			"attribution": "personal",
+			"detail": "Reused universal task card model without separate LMS infrastructure"
+		},
+		{
+			"label": "Session Safety",
+			"value": "Auto-Submit",
+			"attribution": "personal",
+			"detail": "Defensive client countdown timers with instant score payload normalization"
+		}
+	],
+	"product": {
+		"summary": "Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].",
+		"problem": "Organizations running knowledge checks through spreadsheets, external quiz tools, or ad-hoc forms had no way to tie assessments to their existing project and people data. Authors could not see who participated, how teams scored, or whether content was ready to publish. Employees had no single place to discover available quizzes, track their own scores, or review mistakes after submission.",
+		"valueProposition": {
+			"targetCustomer": "Enterprise People Ops, Training Coordinators & Internal Knowledge Leads",
+			"showCanvas": false,
+			"items": [
+				{
+					"painTitle": "Fragmented External Quiz Tools (Google Forms / Typeform)",
+					"painDescription": "Running assessments on external survey tools disconnected test scores from employee employee work profiles and project teams.",
+					"gainTitle": "Embedded Native Learning Surface in SuperCards",
+					"gainDescription": "Directly transformed the platform's universal card model into timed quizzes, associating assessment results with real employee profiles."
+				},
+				{
+					"painTitle": "Slow Manual Question Bank Creation for Authors",
+					"painDescription": "Training coordinators spent hours manually formatting multiple-choice options and fill-in-the-blank text inputs.",
+					"gainTitle": "AI-Powered Question Studio (OpenAI GPT-4o)",
+					"gainDescription": "Integrated automated question generation that creates structured MCQ banks from course titles in seconds for author review."
+				},
+				{
+					"painTitle": "Lack of Immediate Feedback & Mistake Walkthroughs",
+					"painDescription": "Traditional quiz forms showed binary pass/fail grades without allowing employees to inspect correct answers and explanations.",
+					"gainTitle": "Post-Submission Mistake Review Engine",
+					"gainDescription": "Engineered an interactive review screen showing correct explanations, highlighted answer differences, and grade score badging."
+				}
+			]
+		}
+	},
+	"role": "Frontend Engineer (Learning Systems Lead)",
+	"timeline": "Oct 2025 — Dec 2025",
+	"status": "Completed",
+	"classification": "🔒 Proprietary Enterprise IP",
+	"stack": [
+		"Quasar",
+		"Vue 3",
+		"OpenAI API",
+		"Pinia",
+		"TypeScript"
+	],
+	"techStack": {
+		"frontend": [
+			"Vue 3 (Composition API)",
+			"Quasar Framework (v2)",
+			"TypeScript",
+			"Pinia (quiz-store)",
+			"md-editor-v3 / q-editor"
+		],
+		"backend": [
+			"Laravel REST API (quizbuilder service)",
+			"Card & Tag Meta-Field System",
+			"OpenAI GPT-4o-mini Integration"
+		],
+		"database": [],
+		"devops": [
+			"Vite Build System",
+			"Quasar CLI",
+			"Git & GitHub"
+		],
+		"mobile_hardware": []
+	},
+	"links": {
+		"liveDemo": "",
+		"parentPlatform": "",
+		"github": "",
+		"docs": ""
+	},
+	"images": [
+		"/images/projects/quiz/challenge-cards-grid.webp",
+		"/images/projects/quiz/attend-quiz-active.webp",
+		"/images/projects/quiz/attend-quiz-intro.webp",
+		"/images/projects/quiz/create-quiz-dialog.webp"
+	],
+	"visualAssets": {
+		"heroMockup": "/images/projects/quiz/challenge-cards-grid.webp"
+	},
+	"architectureSummary": "Quiz module mounted at `/quiz` with four routes, a dedicated Pinia store and `quizbuilder` API service, composing platform primitives (TaskDetails, tags, media) around quiz-specific components for authoring, participation, and analytics.",
+	"keyDecisions": [
+		{
+			"challenge": "Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.",
+			"decision": "Modeled quizzes as SuperCards task cards with entity tags (Quiz), status tags (Draft / Published / Unpublished), category tags (Quiz Category), and meta fields (time, quiz_instructions).",
+			"outcome": "Authors reuse the platform's card creation dialog, tag system, and detail shell — quiz-specific logic stays in the Quiz module only."
+		},
+		{
+			"challenge": "Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).",
+			"decision": "Split into focused components: QuizQuestionForm (authoring + validation + AI), ExistingQuestionsList (collapsible edit/delete), QuizCard (dual studio/challenge modes), and thin orchestration pages.",
+			"outcome": "Each component owns one concern; studio page wires them together via events and store actions."
+		},
+		{
+			"challenge": "Participants needed a guided, timed experience with post-submission review — not just a static form.",
+			"decision": "Built a four-phase attend flow (intro → questions → results → mistake review) with countdown timer, progress bar, and auto-submit on timeout.",
+			"outcome": "Employees get a structured assessment experience comparable to dedicated quiz apps, without leaving SuperCards."
+		},
+		{
+			"challenge": "Authors starting from scratch on question banks was slow and error-prone.",
+			"decision": "Integrated OpenAI question generation with configurable MCQ/fill-blank counts, preview dialog, and one-click injection into the authoring form.",
+			"outcome": "Empty quizzes can be bootstrapped in seconds; authors review and edit AI output before publishing."
+		}
+	],
+	"securityReliability": [
+		"All quiz routes require authentication (requiresAuth: true).",
+		"Studio lists filter by owner; challenge page only surfaces Published quizzes.",
+		"Question attachments use bearer-token headers via MediaManager; cover images use dedicated quiz_cover_attachment collection.",
+		"Submission payload normalizes MCQ answer IDs and fill-in-the-blank strings before API post to prevent type mismatches."
+	],
+	"futureRoadmap": [
+		"Timed quiz anti-cheat (tab-switch detection, question shuffle).",
+		"Certificate generation on passing threshold.",
+		"Admin analytics dashboard across all quizzes and departments.",
+		"Bulk import/export of question banks."
+	]
+}

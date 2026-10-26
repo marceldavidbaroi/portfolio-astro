@@ -1,6 +1,6 @@
 # Project Case Study Data Standards & Authoring Rules
 
-This document defines the standard for authoring, updating, and refactoring project case studies. All projects in `src/content/projects/` must follow this schema and structural standard to ensure recruiters, hiring managers, and product leaders can triage candidate competency in under 30 seconds.
+This document defines the standard for authoring, updating, and refactoring project case studies. All projects live in `src/content/projects/<slug>/` with `project.json`, `body.json`, and optional `vpc.json`. All files are validated by Zod schemas to ensure recruiters, hiring managers, and product leaders can triage candidate competency in under 30 seconds.
 
 ---
 
@@ -8,28 +8,55 @@ This document defines the standard for authoring, updating, and refactoring proj
 
 Treat every project card on the portfolio as a **top-tier engineering CV / Resume entry**. The project card provides recruiters and hiring managers with a clear accomplishment statement at a glance:
 
-| # | CV Component | Frontmatter Field | Format & Google XYZ Standard |
+| # | CV Component | Project JSON Field | Format & Google XYZ Standard |
 | :--- | :--- | :--- | :--- |
 | **1** | **Job / Project Header** | `title`, `role`, `timeline` | Title + Exact Role + Timeline (e.g. `Lead Migration Engineer · 2025 — Present`). |
 | **2** | **The CV Bullet (Google XYZ)** | `description` | **Strict Google XYZ format**: `"Accomplished [X] as measured by [Y], by doing [Z]"` (2–3 punchy lines, ~25–35 words). |
 | **3** | **Skills & Tech Tags** | `chip`, `techStack` | Category chip + top 3 technology pills (e.g. `Enterprise ERP`, `Vue 3.5`, `PostgreSQL`). |
 | **4** | **Executive Case Study Proof** | `executiveOverview`, `impactMetrics` | Detailed XYZ impact paragraph + 3–6 numeric KPI pills in case study. |
 | **5** | **Engineering Trade-offs** | `keyDecisions` | Challenge → Decision (with architectural trade-off) → Measured Impact. |
-| **6** | **Product Value Canvas** | `valueProposition` | 2-column matrix: Severe Pains (Before) vs Architectural Gains (After). |
+| **6** | **Product Value Canvas** | `valueProposition` or `vpc.json` | 2-column matrix: Severe Pains (Before) vs Architectural Gains (After). |
 | **7** | **Proof of Work** | `links`, `visualAssets`, `images` | Framed hero interface screenshots + live demo links or proprietary IP badge. |
 
 ---
 
-## 2. Mandatory Frontmatter Schema Template
+## 2. Mandatory Project JSON Structure
 
-Every markdown file in `src/content/projects/` MUST adhere to this YAML frontmatter structure:
+Every project directory in `src/content/projects/<slug>/` MUST contain:
+- `project.json`: Metadata, ownership, metrics, decisions, and product specs.
+- `body.json`: Typed narrative blocks (`heading`, `paragraph`, `list`, `table`, `mermaid`, `code`, `quote`).
+- `vpc.json` (optional): Value Proposition Canvas customer profile & value map.
 
-```yaml
----
-# 1. CORE IDENTIFIERS & CV CARD SCANNING
-id: "01"                                # Two-digit index string ("01", "02", ...)
-title: "TradeflowBD – Multi-Tenant Wholesale ERP"
-subtitle: "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation and landed cost engine."
+Example `project.json`:
+
+```json
+{
+  "id": "01",
+  "title": "TradeflowBD – Multi-Tenant Wholesale ERP",
+  "subtitle": "Multi-tenant SaaS ERP with parent-pooled virtual stock allocation and landed cost engine.",
+  "description": "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules and 4 application scopes via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions.",
+  "chip": "Enterprise ERP & SaaS",
+  "order": 1,
+  "featured": true,
+  "platformType": "desktop",
+  "role": "Lead Framework & Migration Engineer",
+  "timeline": "2025 — Present",
+  "status": "Active Production",
+  "classification": "🔒 Proprietary Enterprise IP",
+  "contribution": {
+    "mode": "owner",
+    "startedFrom": "scratch",
+    "myShare": "lead",
+    "teamSize": 4,
+    "label": "Product Owner & Lead",
+    "headline": "Architected a multi-tenant enterprise ERP across four login surfaces and parent/child tenants.",
+    "scope": [
+      "Schema split, migration ordering, and local replay",
+      "Money-kernel alignment across wholesale, shop, dropship, and inbound AP"
+    ]
+  }
+}
+```
 # Strict Google XYZ CV Bullet (Accomplished [X], measured by [Y], by doing [Z]):
 # Focus on SYSTEM CAPABILITY & BUSINESS VALUE (e.g. Zero Overselling, 100% RLS Isolation), NOT internal trivia (e.g. lines of code or migration count).
 description: "Architected a multi-tenant enterprise ERP achieving 100% database RLS isolation and zero-overselling inventory synchronization across 17+ domain modules and 4 application scopes via recursive PostgreSQL policies, ATP algorithms, and atomic RPC transactions."

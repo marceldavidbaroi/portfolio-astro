@@ -1,0 +1,61 @@
+---
+import type { BodyBlock, ListItem } from '../../lib/projectSchema';
+import { createHeadingSlugger, renderInline } from '../../lib/renderInline';
+
+interface Props {
+	blocks: BodyBlock[];
+}
+
+const { blocks } = Astro.props;
+const slug = createHeadingSlugger();
+
+---
+
+{
+	blocks.map((block) => {
+		switch (block.type) {
+			case 'heading': {
+				const Tag = `h${block.level}` as 'h2';
+				return <Tag id={slug(block.text)} set:html={renderInline(block.text)} />;
+			}
+			case 'paragraph':
+				return <p set:html={renderInline(block.text)} />;
+			case 'quote':
+				return <blockquote><p set:html={renderInline(block.text)} /></blockquote>;
+			case 'divider':
+				return <hr />;
+			case 'mermaid':
+				return <pre class="language-mermaid"><code class="language-mermaid">{block.code}</code></pre>;
+			case 'code':
+				return <pre class={`language-${block.lang}`}><code class={`language-${block.lang}`}>{block.code}</code></pre>;
+			case 'table':
+				return (
+					<table>
+						<thead>
+							<tr>{block.header.map((h) => <th set:html={renderInline(h)} />)}</tr>
+						</thead>
+						<tbody>
+							{block.rows.map((row) => (
+								<tr>{row.map((cell) => <td set:html={renderInline(cell)} />)}</tr>
+							))}
+						</tbody>
+					</table>
+				);
+			case 'list': {
+				const List = block.ordered ? 'ol' : 'ul';
+				const renderItems = (items: ListItem[], loose: boolean) =>
+					items.map((it) => (
+						<li>
+							{loose ? <p set:html={renderInline(it.text)} /> : <Fragment set:html={renderInline(it.text)} />}
+							{it.children && it.children.length > 0 && (
+								<ul>{renderItems(it.children, Boolean(it.childrenLoose))}</ul>
+							)}
+						</li>
+					));
+				return <List>{renderItems(block.items, Boolean(block.loose))}</List>;
+			}
+			case 'comment':
+				return null;
+		}
+	})
+}

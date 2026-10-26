@@ -1,0 +1,38 @@
+{
+	"labels": {
+		"title": "The Value Proposition Canvas",
+		"valueProposition": "Nidhara",
+		"customerSegment": "Individuals managing personal finances and life records"
+	},
+	"customerJobs": [
+		{ "title": "Keep an account safe", "note": "Sign in and stay signed in without exposing credentials or sessions." },
+		{ "title": "Organize finances and life records", "note": "Hold money tracking and personal journaling in one trusted place." },
+		{ "title": "Approve sensitive changes", "note": "Confirm identity again before changing passwords or security settings." }
+	],
+	"pains": [
+		{ "title": "Weak credential storage", "note": "Older hashing schemes are easier to attack with brute force." },
+		{ "title": "Stolen or replayed sessions", "note": "Long-lived tokens in cookies can be stolen or abused through cross-site requests." },
+		{ "title": "No visibility into sign-in activity", "note": "Users and owners cannot see failed logins or session changes." }
+	],
+	"gains": [
+		{ "title": "Confidence in account security", "note": "Credentials and sessions are protected before sensitive data is stored." },
+		{ "title": "Traceable activity", "note": "Sign-in and session events can be reviewed." },
+		{ "title": "A foundation to build on", "note": "Finance and growth features can be added on top of a secure base." }
+	],
+	"productsAndServices": [
+		{ "title": "Authentication Engine", "note": "Signup, signin, refresh, and logout with Argon2 and dual-token issuance." },
+		{ "title": "Session Lifecycle", "note": "Database-backed sessions with rotating refresh hashes and CSRF verification." },
+		{ "title": "Security Event Log", "note": "Stored login, logout, and refresh events with IP and user-agent." },
+		{ "title": "Documentation Site", "note": "30 Docusaurus pages covering architecture, domain specs, and sequence diagrams." }
+	],
+	"painRelievers": [
+		{ "title": "Argon2", "note": "Passwords and refresh token hashes are stored with a memory-hard algorithm." },
+		{ "title": "Single-use rotation", "note": "Every refresh issues a new token and rejects reuse, revoking the session on replay." },
+		{ "title": "CSRF token pairing", "note": "Refresh requires a matching client token, blocking cross-site refresh attempts." }
+	],
+	"gainCreators": [
+		{ "title": "Immutable security events", "note": "Login outcomes and refresh rotations are recorded for later review." },
+		{ "title": "Sudo session model", "note": "Time-bounded step-up authentication is modeled for sensitive actions." },
+		{ "title": "Structured logging", "note": "JSON request logs make auditing and debugging searchable." }
+	]
+}

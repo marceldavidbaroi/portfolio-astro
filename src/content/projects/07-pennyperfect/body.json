@@ -1,0 +1,159 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "**PennyPerfect** is an enterprise modular double-entry accounting suite engineered for multi-tenant **Supercards** organizations. Rather than a monolithic ERP, PennyPerfect is architected as **seven composable frontend packages** (`@itc/pennyperfect-*`) that deliver dedicated accounting modules—from chart of accounts and journal transactions to balance sheets, income statements, and PDF reporting."
+		},
+		{
+			"type": "paragraph",
+			"text": "All packages are orchestrated by a meta-dependency package (`@itc/pennyperfect`), auto-discovered through `@itc/menu-system`, and powered by a consolidated Laravel package (`itc/pennyperfect`) operating under `/api/v1` with Sanctum authentication and strict tenant-scoping."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Modular Package Composition & Host Ingestion Topology"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Host_App [\"Supercards Host Application (Quasar / Vue 3)\"]\n        BOOT[\"Host Boot Files<br/>(configureTaxApi, configureSettingsApi)\"]\n        INJECT[\"Vue provide/inject<br/>(apiClient, authStore, tenantStore)\"]\n        MENU_SYS[\"@itc/menu-system<br/>(discover:ci / appPlugin auto-discovery)\"]\n    end\n\n    subgraph Meta_Package [\"@itc/pennyperfect (Meta-Orchestrator)\"]\n        DEPS[\"Exports aggregated routes & package bindings\"]\n    end\n\n    subgraph Domain_Packages [\"7 Composable Vue 3 / Vite Library Packages\"]\n        PKG_COA[\"@itc/pennyperfect-chartofaccounts<br/>(Ledger Trees, System Account Guards)\"]\n        PKG_TX[\"@itc/pennyperfect-transactions<br/>(Income, Expense, Journal, Tax Dialogs)\"]\n        PKG_IS[\"@itc/pennyperfect-incomestatement<br/>(P&L Statements, Branch Breakdown)\"]\n        PKG_BS[\"@itc/pennyperfect-balancesheet<br/>(Asset/Liability Ledgers, Equity Rollup)\"]\n        PKG_REP[\"@itc/pennyperfect-reports<br/>(Daily/Monthly Summaries, A4 PDF Export)\"]\n        PKG_SET[\"@itc/pennyperfect-settings<br/>(Tax Codes, Fiscal Years, Currency)\"]\n    end\n\n    subgraph Backend_Services [\"Laravel API Gateway (/api/v1)\"]\n        SANCTUM[\"Laravel Sanctum (auth:sanctum)\"]\n        TENANT_MW[\"Tenant Scoping Middleware (X-Tenant-Id)\"]\n        PP_BE[\"itc/pennyperfect (Accounting Engine)\"]\n        AUTH_BE[\"itc/core-auth-accounts (Branches & Users)\"]\n        PG_DB[(\"PostgreSQL Database<br/>(Tenant-Scoped Accounts & Ledgers)\")]\n    end\n\n    Host_App --> Meta_Package\n    Meta_Package --> Domain_Packages\n    BOOT & INJECT --> Domain_Packages\n    Domain_Packages -->|\"HTTPS / Bearer Token + X-Tenant-Id\"| SANCTUM\n    SANCTUM --> TENANT_MW\n    TENANT_MW --> PP_BE & AUTH_BE\n    PP_BE & AUTH_BE --> PG_DB"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Package Architecture Standard"
+		},
+		{
+			"type": "paragraph",
+			"text": "Each `@itc/pennyperfect-*` package is structured as an isolated, independently versioned Vite library package:"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "@itc/pennyperfect-<module>/\n├── src/\n│   ├── components/      # Quasar UI components, Dialogs, Trees\n│   ├── pages/           # Root module pages mounted under /penny-perfect/*\n│   ├── stores/          # Module Pinia stores (with persisted state if needed)\n│   ├── services/        # HTTP API services (apiUrlBuilder + callApi / apiClient)\n│   ├── types/           # TypeScript interfaces & DTO contracts\n│   ├── router/          # routes.ts exporting RouteRecordRaw[]\n│   └── index.ts         # appPlugin manifest (routes, menu, boot helpers)\n├── package.json         # Scoped package manifest, peerDependencies\n├── tsconfig.json        # TypeScript configuration\n└── vite.config.ts       # Vite 7 library build (ESM + CJS)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Data Schema & Accounting Ledger Flow"
+		},
+		{
+			"type": "paragraph",
+			"text": "PennyPerfect enforces double-entry bookkeeping rules across all journal, income, and expense entries:"
+		},
+		{
+			"type": "mermaid",
+			"code": "erDiagram\n    TENANT ||--o{ ACCOUNT : \"defines chart of\"\n    ACCOUNT ||--o{ ACCOUNT : \"parent/child hierarchy\"\n    TENANT ||--o{ TRANSACTION : \"records\"\n    TRANSACTION ||--o{ TRANSACTION_ENTRY : \"contains debit/credit lines\"\n    ACCOUNT ||--o{ TRANSACTION_ENTRY : \"impacted by\"\n    TAX_CODE ||--o{ TRANSACTION : \"applied to\"\n    BRANCH ||--o{ TRANSACTION : \"attributed to\"\n\n    ACCOUNT {\n        uuid id PK\n        string code\n        string name\n        string type \"Asset | Liability | Equity | Revenue | Expense\"\n        uuid parent_id FK\n        boolean is_system_account\n        decimal current_balance\n    }\n\n    TRANSACTION {\n        uuid id PK\n        string reference_no\n        date transaction_date\n        string type \"Journal | Income | Expense\"\n        uuid tax_code_id FK\n        uuid branch_id FK\n        decimal total_amount\n        string status \"Draft | Posted\"\n    }\n\n    TRANSACTION_ENTRY {\n        uuid id PK\n        uuid transaction_id FK\n        uuid account_id FK\n        string entry_type \"DEBIT | CREDIT\"\n        decimal amount\n    }\n\n    TAX_CODE {\n        uuid id PK\n        string code\n        decimal rate_percentage\n        boolean is_active\n    }"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Visual Workflows & Production Interfaces"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Chart of Accounts Ledger Hierarchy"
+		},
+		{
+			"type": "paragraph",
+			"text": "![PennyPerfect Chart of Accounts](/images/projects/pennyperfect/chart-of-accounts.webp)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Multi-Tab Transactions & Tax Code Management"
+		},
+		{
+			"type": "paragraph",
+			"text": "![PennyPerfect Transactions Ledger](/images/projects/pennyperfect/transactions.webp)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Financial Statements: Balance Sheet & Income Statement"
+		},
+		{
+			"type": "paragraph",
+			"text": "![PennyPerfect Balance Sheet](/images/projects/pennyperfect/balance-sheet.webp)"
+		},
+		{
+			"type": "paragraph",
+			"text": "![PennyPerfect Income Statement](/images/projects/pennyperfect/income-statement.webp)"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "4. Operational Financial Reports & Export"
+		},
+		{
+			"type": "paragraph",
+			"text": "![PennyPerfect Reports & Summaries](/images/projects/pennyperfect/reports.webp)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Client-Side Report Preview & Multi-Page A4 PDF Assembly"
+		},
+		{
+			"type": "mermaid",
+			"code": "sequenceDiagram\n    autonumber\n    actor User as Finance Manager\n    participant Page as Reports Page (/penny-perfect/reports)\n    participant Store as useReportsStore (Pinia)\n    participant API as itc/pennyperfect (/api/v1/reports)\n    participant Iframe as Hidden Print Iframe (/external/reports)\n    participant Engine as html2canvas + jsPDF\n\n    User->>Page: Select Monthly Summary & Branch Filter\n    Page->>Store: fetchMonthlySummary({ branchId, month, year })\n    Store->>API: GET /api/v1/reports/monthly-summary\n    API-->>Store: JSON Summary Records\n    Store-->>Page: Render On-Screen Report\n    \n    User->>Page: Click \"Export to PDF\"\n    Page->>Iframe: Mount styled report in hidden A4 print frame\n    Iframe->>Engine: html2canvas captures high-res DOM snapshot (.report-preview-a4)\n    Engine->>Engine: Paginate canvas slices into 297x210mm A4 pages (jsPDF)\n    Engine-->>User: Trigger browser PDF download (PennyPerfect_Report_2026.pdf)"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "What I Built (Personal Contributions)"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Engineered Multi-Package Frontend Architecture**: Decomposed the accounting system into 7 modular Vite/Vue 3 packages (`@itc/pennyperfect-*`) with standalone routes, Pinia stores, and Quasar UI pages."
+				},
+				{
+					"text": "**P0 Authentication & Tax API Resolution**: Diagnosed and fixed boot-time tax endpoint failure that caused unexpected session logouts on page load by implementing `configureTaxApi` lazy configuration."
+				},
+				{
+					"text": "**Standardized Host Provide/Inject Integration**: Implemented host boot providers for `apiClient`, `authStore`, and `tenantStore`, ensuring uniform Sanctum Bearer tokens and `X-Tenant-Id` header propagation."
+				},
+				{
+					"text": "**Branch API Alignment**: Refactored branch loaders across statements and reports to consume `GET /tenants/{tenantId}/branches` from `itc/core-auth-accounts` and made branch fields nullable for flexible transactions."
+				},
+				{
+					"text": "**Route & Menu Discovery Pipeline**: Streamlined `appPlugin.routes` and `@itc/menu-system` auto-discovery to expose 6 production accounting surfaces under the `/penny-perfect/*` hierarchy."
+				},
+				{
+					"text": "**Client-Side PDF Generation Engine**: Designed an in-browser PDF export pipeline using hidden iframe rendering, `html2canvas`, and `jsPDF` for pixel-perfect A4 accounting statements without server rendering load."
+				}
+			]
+		}
+	]
+}

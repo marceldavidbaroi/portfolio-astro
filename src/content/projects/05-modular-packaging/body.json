@@ -1,0 +1,181 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Executive Summary"
+		},
+		{
+			"type": "paragraph",
+			"text": "The **Enterprise Modular Packaging System** was built to dismantle monolithic Quasar web applications into independent, reusable npm packages. Rather than relying on fragile copy-pasting across client projects, every shared component, data-table widget, dialog, and business domain feature was transformed into an autonomous, version-controlled npm package."
+		},
+		{
+			"type": "paragraph",
+			"text": "While the high-level system architecture and strategy was laid out by the **Senior Systems Architect**, I—alongside a peer software engineer—served as the **core implementation and testing team**. We developed the actual feature packages, engineered the end-to-end **Proof of Concept (POC)**, resolved Quasar/Vite packaging quirks, and performed integration testing to validate that packages worked seamlessly in downstream client applications."
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Architecture"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Package Extraction & Consumption Topology"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TB\n    subgraph Core [\"Enterprise Quasar Packaging System\"]\n        ARCH[\"Architectural Blueprint<br/>(Senior Architect)\"]\n        IMPL[\"Feature Implementation & Core POC<br/>(Myself & Peer Engineer)\"]\n        TEST[\"Integration & Monorepo Testing<br/>(Verdaccio / pnpm link)\"]\n        ARCH --> IMPL --> TEST\n    end\n\n    subgraph Packages [\"Autonomous Scoped npm Packages\"]\n        PKG_AUTH[\"@enterprise/quasar-auth<br/>(Login, RBAC, Session Store)\"]\n        PKG_TABLE[\"@enterprise/quasar-datatable<br/>(Server-side Pagination, Filters)\"]\n        PKG_FORMS[\"@enterprise/quasar-form-kit<br/>(Dynamic Validations, Uploaders)\"]\n        PKG_CHARTS[\"@enterprise/quasar-analytics<br/>(KPI Cards, Chart Visualizations)\"]\n    end\n\n    TEST -->|\"Build & Publish\"| PKG_AUTH & PKG_TABLE & PKG_FORMS & PKG_CHARTS\n\n    subgraph Client_Apps [\"Downstream Consumer Applications\"]\n        APP_1[\"Wholesale Trading Portal<br/>(Quasar SPA)\"]\n        APP_2[\"Warehouse Mobile Companion<br/>(Capacitor Android)\"]\n        APP_3[\"Investor Portal<br/>(B2B Web App)\"]\n    end\n\n    PKG_AUTH & PKG_TABLE & PKG_FORMS --> APP_1\n    PKG_AUTH & PKG_TABLE --> APP_2\n    PKG_AUTH & PKG_CHARTS --> APP_3"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "The Packaging Standard & Vite Library Build"
+		},
+		{
+			"type": "paragraph",
+			"text": "Each modular feature package is isolated with its own build pipeline, type definitions, and dependencies:"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "@enterprise/<package-name>/\n├── src/\n│   ├── components/      # Quasar UI components (.vue)\n│   ├── composables/     # Reusable reactive logic & hooks\n│   ├── stores/          # Pinia state stores\n│   ├── types/           # TypeScript contracts & interfaces\n│   └── index.ts         # Library entrypoint (exports & Quasar install plugin)\n├── package.json         # Scoped package manifest, peerDependencies, exports\n├── tsconfig.json        # Strict TypeScript configuration\n├── vite.config.ts       # Vite library mode build (ESM + CJS + d.ts)\n└── README.md            # Usage guide, prop tables, and integration examples"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Build & Export Lifecycle"
+		},
+		{
+			"type": "mermaid",
+			"code": "sequenceDiagram\n    autonumber\n    actor Dev as Implementation Engineer\n    participant Vite as Vite (Library Mode)\n    participant Rollup as Rollup Bundler\n    participant Reg as Private npm Registry\n    participant Host as Target Quasar Application\n\n    Dev->>Vite: Build package (pnpm build)\n    Vite->>Rollup: Bundle components (.vue) & TypeScript\n    Rollup->>Rollup: Externalize Vue & Quasar core\n    Rollup->>Rollup: Emit ESM (/dist/index.mjs), CJS (/dist/index.cjs), and .d.ts\n    Dev->>Reg: Publish package with SemVer (e.g. v1.2.0)\n    Host->>Reg: pnpm add @enterprise/quasar-datatable\n    Host->>Host: import { QEnterpriseTable } from '@enterprise/quasar-datatable'\n    Host->>Dev: Feature runs natively with host Quasar theme"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Proof of Concept (POC) & Core Testing"
+		},
+		{
+			"type": "paragraph",
+			"text": "Before rolling out the packaging pattern across company products, we engineered a comprehensive Proof of Concept (POC) testing workflow to address key edge cases:"
+		},
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{
+					"text": "**Quasar Component Style Ingestion**:",
+					"children": [
+						{
+							"text": "Monolithic Quasar apps rely on Vite plugins to auto-import Quasar Sass variables and components. In an npm package, un-compiled Sass can break host builds."
+						},
+						{
+							"text": "**Solution Tested**: Configured packages to pre-bundle compiled CSS or export explicit CSS entrypoints (`dist/style.css`) that the host application imports during bootstrap."
+						}
+					]
+				},
+				{
+					"text": "**Peer Dependency De-duplication**:",
+					"children": [
+						{
+							"text": "Multiple packages importing different copies of `vue` or `quasar` cause runtime errors such as `provide/inject` failures and broken reactivity."
+						},
+						{
+							"text": "**Solution Tested**: Marked `vue`, `quasar`, and `pinia` as strict `peerDependencies` with `^3.x` and `^2.x` ranges, preventing duplicate instances in `node_modules`."
+						}
+					]
+				},
+				{
+					"text": "**Verdaccio Local Registry Integration Sandbox**:",
+					"children": [
+						{
+							"text": "Ran an on-premises Verdaccio registry instance to simulate real-world publishing, version upgrades, and breaking-change migrations before publishing to remote corporate registries."
+						}
+					]
+				}
+			],
+			"loose": true
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Visual Workflows & Architecture Wireframes"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Consumer Application Composition Wireframe"
+		},
+		{
+			"type": "code",
+			"lang": "text",
+			"code": "+----------------------------------------------------------------------------------------------------+\n|  [Logo] Host Quasar Application                                               | (User Profile)     |\n+----------------------------------------------------------------------------------------------------+\n|                                                                                                    |\n|  [ FROM: @enterprise/quasar-auth ]                                                                |\n|  +-- ACTIVE SESSION BAR -------------------------------------------------------------------------+ |\n|  | Tenant: UK Import Corp   | Role: Senior Operations   | Session Token: VALID (Expires in 8h)   | |\n|  +-----------------------------------------------------------------------------------------------+ |\n|                                                                                                    |\n|  [ FROM: @enterprise/quasar-analytics ]                                                           |\n|  +-- MODULAR KPI DASHBOARD WIDGET ---------------------------------------------------------------+ |\n|  | [ Card: Inbound Shipments (42) ] [ Card: Active Stock (14,200) ] [ Card: Margin Rollup (24%) ] | |\n|  +-----------------------------------------------------------------------------------------------+ |\n|                                                                                                    |\n|  [ FROM: @enterprise/quasar-datatable ]                                                           |\n|  +-- REUSABLE SERVER-SIDE DATA TABLE PACKAGE ----------------------------------------------------+ |\n|  | Search: [ Type to filter...        ]  Columns: [v]  Export: [ Excel | CSV ]  [+ New Action]   | |\n|  |-----------------------------------------------------------------------------------------------| |\n|  | [x] | Batch ID    | Cargo Manifest        | Total Weight | Status       | Actions             | |\n|  |-----|-------------|-----------------------|--------------|--------------|---------------------| |\n|  | [ ] | #BT-2026-01 | Felixstowe Container 1| 12,400 kg    | IN_TRANSIT   | [View] [Edit] [Del] | |\n|  | [ ] | #BT-2026-02 | Southampton Air Cargo | 1,850 kg     | RECEIVED     | [View] [Edit] [Del] | |\n|  +-----------------------------------------------------------------------------------------------+ |\n|  | Showing 1-20 of 140 Records                             [<<] [<] [1] [2] [3] [>] [>>]         | |\n+----------------------------------------------------------------------------------------------------+"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Package Lifecycle & QA Verification Loop"
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Phase1 [\"1. Package Development\"]\n        CODE[\"Implement Feature / Component in Quasar\"]\n        SPEC[\"Write Unit & Component Tests\"]\n        CODE --> SPEC\n    end\n\n    subgraph Phase2 [\"2. POC Sandbox Validation\"]\n        BUILD[\"Vite Library Build (ESM + d.ts)\"]\n        LOCAL[\"Verdaccio Local Registry Publish\"]\n        LINK[\"Test in Host App via pnpm link\"]\n        SPEC --> BUILD --> LOCAL --> LINK\n    end\n\n    subgraph Phase3 [\"3. Automated Quality Gate\"]\n        LINT[\"ESLint + Prettier Check\"]\n        TYPE[\"TypeScript Compilation (tsc --noEmit)\"]\n        PEER[\"Peer Dependency Conflict Audit\"]\n        LINK --> LINT & TYPE & PEER\n    end\n\n    subgraph Phase4 [\"4. Production Registry & Distribution\"]\n        PUB[\"Publish to Corporate Registry\"]\n        CONSUME[\"Downstream Apps Install via SemVer\"]\n        LINT & TYPE & PEER --> PUB --> CONSUME\n    end"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "What I Built (Personal Contributions)"
+		},
+		{
+			"type": "paragraph",
+			"text": "In this project, the architectural direction was established by the **Senior Systems Architect**, while I worked alongside a peer developer on the practical implementation:"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Implemented Feature Packages**: Extracted and built standalone Quasar packages for reusable components, data-tables, filter bars, and common business dialogs."
+				},
+				{
+					"text": "**Built End-to-End POC Sandbox**: Created the local testing environment using Verdaccio and `pnpm workspaces` to validate package publishing, import paths, and tree-shaking."
+				},
+				{
+					"text": "**Solved Quasar Style & Asset Bundling**: Resolved styling encapsulation issues, ensuring package components consumed the parent application's Quasar theme without duplicating global styles."
+				},
+				{
+					"text": "**Engineered Core Integration Tests**: Created test suites to verify that updates to core packages maintained backwards compatibility with downstream production apps."
+				},
+				{
+					"text": "**Created Package Starter Templates**: Authored template configurations (Vite build settings, TypeScript configurations, standard `package.json` export maps) for other engineering teams to adopt."
+				}
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Future Roadmap"
+		},
+		{
+			"type": "mermaid",
+			"code": "timeline\n    title Modular Packaging System Roadmap\n    section Completed (POC & Core)\n        Architecture Strategy & Standards : Designed by Senior Architect\n        Core Package Implementation : Built feature packages with peer developer\n        Testing Sandbox & POC : Verdaccio integration & styling validation\n    section Next Iterations\n        Automated Changesets CI : SemVer bumping on PR merge\n        Storybook Documentation : Live interactive component showcase\n        Runtime Module Federation : Exploring micro-frontend dynamic loading"
+		}
+	]
+}

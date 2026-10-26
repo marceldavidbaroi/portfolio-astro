@@ -1,0 +1,107 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "At a Glance"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Aspect",
+				"Implementation Details"
+			],
+			"rows": [
+				[
+					"**Platform**",
+					"Native Android APK built with Flutter & Dart"
+				],
+				[
+					"**Backend & Cloud**",
+					"Supabase Cloud (PostgreSQL 15+, Auth, Realtime, Storage)"
+				],
+				[
+					"**Offline Architecture**",
+					"Local SQLite write-ahead transaction buffer with automatic conflict resolution"
+				],
+				[
+					"**Hardware Integrations**",
+					"Bluetooth ESC/POS 58mm/80mm thermal receipt printers, 2D barcode scanner"
+				],
+				[
+					"**Core Modules**",
+					"Cashier Shifts, Counter POS, Customer Meal AR, Vendor AP, Staff Payroll Logs"
+				]
+			]
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "The Operational Challenge"
+		},
+		{
+			"type": "paragraph",
+			"text": "Institutional food services operate differently from standard retail shops. Rather than browsing items, diners want rapid, frictionless service:"
+		},
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{
+					"text": "**Burst Volume:** 80% of daily transactions occur within two concentrated 45-minute periods (breakfast and lunch)."
+				},
+				{
+					"text": "**Hybrid Settlement:** Diners pay with cash, digital wallets, or institutional credit accounts (deducted from monthly salaries)."
+				},
+				{
+					"text": "**Cashier Accountability:** Canteens operate across multiple shifts with rotating operators; without strict cash drawer float tracking, reconciliation at end-of-day is impossible."
+				},
+				{
+					"text": "**Kitchen Coordination:** Counters need fast item tallying to alert cooks when high-demand dishes (rice, curries, snacks) are running low."
+				}
+			]
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Client [\"Flutter Mobile Client (Android)\"]\n        UI[\"Counter POS & Touch Grid\"] --> Queue[\"Local SQLite Queue\"]\n        Queue --> Printer[\"Bluetooth Thermal Printer\"]\n    end\n    \n    subgraph Sync [\"Background Sync Engine\"]\n        Queue -->|Sync mutations when online| RPC[\"Supabase Atomic RPCs\"]\n    end\n    \n    subgraph Cloud [\"Supabase PostgreSQL 15+\"]\n        RPC --> Shifts[\"Shift Cashbooks\"]\n        RPC --> Ledgers[\"Customer AR & Wallets\"]\n        RPC --> Stock[\"Vendor AP & Raw Stock\"]\n    end"
+		},
+		{
+			"type": "divider"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Key Functional Modules"
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "1. Shift & Cash Drawer Control"
+		},
+		{
+			"type": "paragraph",
+			"text": "Before processing any transactions, cashiers must open an active business shift by declaring the starting physical cash float. Every incoming cash payment, customer cash-in, and expense payout is tracked against that active shift. At handover, the app calculates expected versus physical cash, logging variances for management review."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "2. Customer Meal AR & Institutional Accounts"
+		},
+		{
+			"type": "paragraph",
+			"text": "Regular diners, faculty, or corporate employees maintain digital meal accounts with configurable credit ceilings. The system allows post-paid dining with automatic ledger updates, generating end-of-month statements for direct payroll deduction or cash settlement."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "3. Rapid Counter POS & Hardware Integration"
+		},
+		{
+			"type": "paragraph",
+			"text": "The UI is optimized for large touch targets and minimum taps. Counter staff can add items, select payment method (Cash, Digital Wallet, or Account Credit), and print an itemized kitchen slip in less than two seconds."
+		}
+	]
+}

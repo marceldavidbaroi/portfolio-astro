@@ -1,0 +1,72 @@
+{
+	"blocks": [
+		{ "type": "heading", "level": 2, "text": "Technical Appendix" },
+		{
+			"type": "paragraph",
+			"text": "Nidhara is an **npm workspaces monorepo** with three workspaces: a **NestJS 11** backend using **Prisma** and **PostgreSQL**, a **Next.js 16** frontend, and a **Docusaurus** documentation site. This case study covers the authentication and session foundation, which is the part built so far. The finance ledger and personal growth features are planned, not shipped."
+		},
+		{ "type": "divider" },
+		{ "type": "heading", "level": 3, "text": "Architecture" },
+		{
+			"type": "mermaid",
+			"code": "flowchart TD\n    subgraph Mono [\"Monorepo (npm workspaces)\"]\n        FE[\"frontend (Next.js 16)\"]\n        DOCS[\"docs-site (Docusaurus)\"]\n        BE[\"backend (NestJS 11)\"]\n    end\n\n    subgraph Pipeline [\"Backend Pipeline\"]\n        INT[\"ResponseInterceptor + Pino Logger\"]\n        AUTHC[\"AuthController\"]\n        APPC[\"AppController\"]\n        GUARD[\"JWT Strategy & Guards\"]\n        INT --> AUTHC\n        INT --> APPC\n        AUTHC --> GUARD\n    end\n\n    subgraph Services [\"Application Services\"]\n        AUTHS[\"AuthService (Argon2, token rotation)\"]\n        TOK[\"AuthTokensService (JWT sign/verify)\"]\n        USERS[\"UsersService\"]\n        AUTHC --> AUTHS\n        AUTHS --> TOK\n        AUTHS --> USERS\n    end\n\n    subgraph Data [\"PostgreSQL (Prisma)\"]\n        MODELS[(\"6 Models\")]\n        AUTHS --> MODELS\n        USERS --> MODELS\n    end\n\n    BE --> Pipeline"
+		},
+		{
+			"type": "paragraph",
+			"text": "**Request flow:** `Client Request` → `ResponseInterceptor & Pino` → `Controller (dto/)` → `Service` → `PrismaService` → `PostgreSQL`."
+		},
+		{ "type": "divider" },
+		{ "type": "heading", "level": 3, "text": "Data Model" },
+		{
+			"type": "table",
+			"header": ["Model", "Purpose"],
+			"rows": [
+				["`User`", "Core account record"],
+				["`AuthCredential`", "Stored credential data, hashed with Argon2"],
+				["`AuthSession`", "One record per session, holding the rotating refresh hash and CSRF verification state"],
+				["`SecurityEvent`", "Immutable log of LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, and REFRESH_ROTATED with IP and user-agent"],
+				["`UserAccountSecurityState`", "Tracks failed logins and account security status"],
+				["`SudoSession`", "Time-bounded privilege escalation with a verified method (PASSWORD, RECOVERY_KEY, MFA)"]
+			]
+		},
+		{ "type": "divider" },
+		{ "type": "heading", "level": 3, "text": "Refresh Rotation Flow" },
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{ "text": "On signin, the server issues a short-lived access token and an httpOnly refresh cookie, and stores a hash of the refresh token on a new `AuthSession`." },
+				{ "text": "The client calls `/auth/refresh` with the cookie and its `csrfToken`." },
+				{ "text": "The server verifies the refresh hash and the CSRF token against the session record." },
+				{ "text": "On success, it issues a new access token and a new refresh token, and replaces the stored hash, so the old token cannot be used again." },
+				{ "text": "A replayed token or a logout revokes the session, and a security event is recorded." }
+			]
+		},
+		{ "type": "divider" },
+		{ "type": "heading", "level": 3, "text": "Scope & Status" },
+		{
+			"type": "paragraph",
+			"text": "The project is at prototype stage. The backend exposes **5 endpoints** across 2 controllers and has one smoke-level test (`app.controller.spec.ts`). Passkey and security-question authentication, the sudo escalation endpoints, and all finance features are on the roadmap. The `SudoSession` and `UserAccountSecurityState` tables exist in the schema, but the flows that use them are not built yet."
+		},
+		{ "type": "divider" },
+		{ "type": "heading", "level": 3, "text": "By the Numbers" },
+		{
+			"type": "table",
+			"header": ["Metric", "Count"],
+			"rows": [
+				["Git commits (solo)", "18"],
+				["Monorepo workspaces", "3"],
+				["REST endpoints", "5 across 2 controllers"],
+				["Backend services", "4 (`AuthService`, `AuthTokensService`, `UsersService`, `PrismaService`)"],
+				["Prisma models", "6"],
+				["Prisma migrations", "2"],
+				["Backend spec files", "1 (1 test case)"],
+				["Documentation pages", "30"]
+			]
+		},
+		{
+			"type": "comment",
+			"text": "TODO: add 1-2 screenshots (Swagger UI, auth flow) and point images/visualAssets in project.json at them. Consider adding tests for auth flows before featuring this project."
+		}
+	]
+}

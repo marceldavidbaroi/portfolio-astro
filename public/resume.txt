@@ -1,94 +1,139 @@
 MARCEL DAVID BAROI
-Software Engineer
-Dhaka, Bangladesh | Open to on-site and hybrid roles in Dhaka
-marceldavidbaroi@gmail.com | linkedin.com/in/marcel-david-baroi | github.com/marceldavidbaroi
+Full Stack Engineer · TypeScript / Vue 3 / NestJS · PHP / Laravel · PostgreSQL / Supabase
+Dhaka, Bangladesh (UTC+6) · Remote preferred · Open to on-site/hybrid in Dhaka
++880 1795-774216 · marceldavidbaroi@gmail.com · marceldavidbaroi.pages.dev · LinkedIn · GitHub
 
 ========================================================================
 SUMMARY
 ========================================================================
-Software Engineer with production experience in PHP (Laravel/MVC),
-Vue 3, Quasar, TypeScript, PostgreSQL, MySQL, and Flutter. Builds full-stack
-ERP, helpdesk, and mobile POS systems used in live operations. Increased
-reusable frontend packages by 60% using private npm/SemVer. Notre Dame
-College (HSC) and B.Sc. CSE, CGPA 3.91.
+Product-minded full stack engineer with nearly 2 years of professional
+experience and a 3.91/4.00 CS degree, with a track record of independently
+architecting and shipping complex, data-intensive business applications.
+Fluent in TypeScript (Vue 3, NestJS, Next.js) with strong relational database
+fundamentals (PostgreSQL, RLS, atomic transactions). Engineered and maintain
+a multi-tenant wholesale ERP in daily production (6,000+ SKUs) and the
+Service Desk platform embedded across company client apps.
 
-========================================================================
-TECHNICAL SKILLS
-========================================================================
-Languages: PHP, JavaScript, TypeScript, Dart, SQL, Python
-Frontend: Vue 3, Quasar, Pinia, React, Next.js, HTML, CSS, Tailwind CSS
-Backend: Laravel, REST APIs, NestJS, Node.js, Supabase (Auth, RLS, Realtime)
-Database: PostgreSQL, MySQL, MongoDB, Firebase Firestore, SQLite
-Mobile: Flutter, Dart, Capacitor (Android), offline-first SQLite
-Tools: Git, Docker, Vite, npm/SemVer packages, Linux
+Highlights:
+- Engineered a multi-tenant ERP in daily production (6,000+ SKUs); client
+  roughly doubled order volume after adoption.
+- Sole maintainer of a company-wide Service Desk platform, embedded as the
+  standard support plugin across all client apps.
+- Replaced paper warehouse audits with a barcode-scanning Capacitor Android
+  app synced via atomic database RPCs.
 
 ========================================================================
 EXPERIENCE
 ========================================================================
 
-Junior Software Engineer
-Proficient Information Systems — Dhaka, Bangladesh (Hybrid)
-November 2024 – Present
+Software Engineer (Full Stack) · Nov 2024 – Present
+Proficient Information Systems · Dhaka, Bangladesh · On-site / hybrid
+Product engineering team of 40+ developers and 10+ admin/staff delivering
+multi-tenant SaaS and client software. Scope below reflects solo ownership
+of two production systems.
 
-Grew from Vue 3/Quasar UI work into full-stack delivery on PHP (Laravel/MVC),
-PostgreSQL/Supabase, and MySQL. Built modular frontend packages that raised
-cross-project reuse by 60%.
+- Service Desk (Support Platform) — Sole Engineer: Designed and shipped the
+  company's support platform (Vue 3/Quasar, Laravel, MongoDB, MySQL) —
+  standalone web portal plus an embeddable package now the standard support
+  plugin across all company client applications.
+- Unified Intake & Deduplication: Consolidated three support channels into
+  one inbox — in-app Vue widget, IMAP email sync (using subject and sender
+  matching for threading), and public web forms hardened with double opt-in,
+  rate limiting (Laravel: 3/min, 100/hr), and reCAPTCHA.
+- Automated Issue Context: Client widget captures current route state, recent
+  API calls, and client-side runtime errors on ticket submit; server-side
+  sanitization strips sensitive payloads before persistence, making tickets
+  instantly reproducible.
+- Package Infrastructure: Co-built the company-wide private npm packaging
+  workflow (Vite library mode, SemVer). Collaborated with a teammate to
+  prototype approaches, presented to senior engineers, and integrated the
+  approved solution (auth, ticketing, common components) to cut setup time on
+  new client apps.
+- SuperCards — Task Management Module: Contributed to the task-management
+  feature within a 10+ engineer team (mostly mid/senior); refactored core
+  components into private packages for cross-project reuse.
+- Mobile (Solo): Built the Flutter frontend for a microfinance loan-officer
+  app (daily disbursements/collections) and a Quasar-based loan-collection
+  app shipped as a Capacitor Android build.
 
-- Delivered core modules for a multi-tenant wholesale ERP: landed-cost engine,
-  double-entry ledger, and virtual stock allocation (Vue 3, Quasar, PHP,
-  PostgreSQL, Supabase RLS).
-- Built customer support workflows for a multi-channel helpdesk: Quasar agent
-  UI, Laravel BFF, IMAP email ticketing, MongoDB tickets + MySQL RBAC
-  (4 workbenches, 3 intake channels, 30+ REST APIs).
-- Split shared Quasar UI into versioned private npm packages (Vite library
-  mode, SemVer), reused across client apps.
-- Shipped accounting and operations screens (PennyPerfect, SuperCards) on
-  Vue 3/Quasar with Laravel Sanctum multi-tenant APIs.
-- Represented the company at the 25th Textech Bangladesh International Expo
-  2026 with 4 days of live ERP demos for garment buyers.
+Contract Full Stack Engineer — Multi-Tenant Wholesale ERP · 2025 – Present
+(part-time contract, alongside full-time role)
+Engaged by an import-distribution business to design and build a custom
+production ERP. I designed the system; the business uses it in daily
+production.
 
-------------------------------------------------------------------------
+- Business Impact: Moved order-taking, billing, and inventory tracking fully
+  out of spreadsheets into an automated system; the client roughly doubled
+  order volume and increased sales after adoption.
+- Complexity & Operations: Manages 3 tenants, a live catalog of 6,000+
+  products, and regular monthly processing of 20+ wholesale and 60+ dropship
+  orders. ~3 admin users across 3 businesses, each serving ~15–20 B2B
+  customers. Bills and invoices generate automatically on order confirmation.
+- Origin & Ownership: While working part-time at the business, identified
+  their manual Excel-based workflow and proposed, designed, and solo-built
+  the custom ERP (Vue 3, Quasar, TypeScript, Supabase, PostgreSQL).
+- Strict Tenant Isolation: Enforced tenant isolation and access controls in
+  PostgreSQL using Row-Level Security (RLS) policies and PL/pgSQL security
+  functions keyed to auth.uid() and membership checks — providing
+  defense-in-depth beyond application-level filtering.
+- Inventory & Transactional Integrity: Mitigated overselling across B2B
+  storefront, dropshipping, and direct wholesale channels using atomic
+  Supabase RPCs, row-level locks (SELECT FOR UPDATE), and
+  Available-To-Promise (ATP) logic.
+- Billing & Financial Ledger: Engineered a billing and cashbook system
+  supporting standard bills, debit/credit notes, and payment allocations.
+  Built a landed-cost calculation engine that snapshots FX rates and
+  allocates freight/customs duties based on product weight at shipment
+  finalization.
+- Warehouse Mobile App: Replaced paper warehouse audits with a Capacitor
+  Android app: continuous barcode scanning (Google ML Kit), discrepancies
+  synced to PostgreSQL via atomic RPCs.
+- Frontend Performance: Implemented route-level code splitting and lazy
+  loading for heavy UI tables and charting libraries; utilized Pinia and
+  TanStack Query for aggressive caching and cursor pagination to keep
+  interactions responsive on low-bandwidth networks.
+- Observability & CI/CD: Established GitHub Actions workflows for automated
+  testing and Vercel auto-deploy; implemented Sentry for frontend/backend
+  error tracking with email alerting. Configured Supabase daily backups with
+  documented restore procedures.
+- Security & Dependency Management: Managed secrets via environment
+  variables and server-only service-role keys; tracked dependency CVEs via
+  manual pnpm audits.
 
-Software Developer (Own Products and Client Work)
-Dhaka, Bangladesh | Parallel with full-time role
-July 2025 – Present
+========================================================================
+PROJECTS
+========================================================================
 
-- TradeflowBD (own product): multi-tenant wholesale ERP for inventory, landed
-  costing, and invoicing (Vue 3, Quasar, PostgreSQL, Supabase RLS, 17+ modules).
-- Smart Hisab (client): offline-first Flutter canteen POS with SQLite queue,
-  Bluetooth thermal print, and Supabase double-entry ledgers; sub-1.2s checkout,
-  500+ meals per rush, 0.0% shift cash variance.
-- BrandWala Retail: React 19 storefront and Python catalog pipeline for 40+
-  K-Beauty brands; cut Firestore read cost about 60%.
-  github.com/david-git-2/brand-wala-retail
+MindVault · Double-Entry Finance API & Client · 2025
+Backend · Frontend — Handwritten to extend backend stack beyond Supabase/Laravel
+
+- Architected a double-entry ledger API with a decimal-precise immutable
+  transaction engine, per-account role-based access control (RBAC), and
+  automated integration tests using NestJS, TypeORM, PostgreSQL.
+- Built a responsive web client with Next.js 15, TypeScript, Tailwind CSS to
+  visualize net worth and cash-flow analytics.
+
+========================================================================
+TECHNICAL SKILLS
+========================================================================
+
+- Frontend: Vue 3, Quasar, TypeScript, JavaScript, Pinia, TanStack Query,
+  Tailwind CSS, Next.js, HTML5/CSS3
+- Mobile: Flutter (frontend), Capacitor, Android builds, Google ML Kit
+- Backend & APIs: TypeScript, Node.js, NestJS, PHP, Laravel, REST API design
+- Databases: PostgreSQL / Supabase (schema design, RLS, PL/pgSQL RPCs),
+  MySQL, MongoDB, TypeORM
+- Testing & CI/CD: PHPUnit/Laravel test cases, Jest/integration tests, GitHub
+  Actions, Vercel, Sentry
+- Tooling: Git, Docker, Vite, pnpm/npm private registries, modular/private
+  packages, Linux, Cloudflare Pages
 
 ========================================================================
 EDUCATION
 ========================================================================
-B.Sc. in Computer Science and Engineering
-Daffodil International University, Dhaka | 2020 – 2024
-CGPA 3.91 / 4.00 | 142 credits
 
-Higher Secondary Certificate (HSC), Science
-Notre Dame College, Dhaka | 2017 – 2019
-GPA 4.67 / 5.00 | Dhaka Board | Batch 2019
+B.Sc. in Computer Science & Engineering · Daffodil International University · 2020 – 2024
+CGPA: 3.91 / 4.00 · HackerRank Verified: Python, JavaScript, React, SQL
 
-========================================================================
-ADDITIONAL
-========================================================================
-Operations support at BrandWala (import-export, 2025 – Present): Excel
-landed-cost, supplier bills, and stock sheets. This trade work is what the
-ERP costing features are based on.
-
-========================================================================
-CERTIFICATIONS
-========================================================================
-Google Cloud: Prompt Design in Vertex AI; Responsible AI (2025)
-Cisco Networking Academy: Python Essentials 2 (2025); JavaScript Essentials 2 (2024)
-freeCodeCamp: Responsive Web Design (2025)
-HackerRank: JavaScript (Basic), React (Basic), Python (Basic)
-
-========================================================================
-LANGUAGES
-========================================================================
-English, Bengali
+Higher Secondary Certificate (HSC), Science · Notre Dame College, Dhaka · 2017 – 2019
+GPA: 4.67 / 5.00

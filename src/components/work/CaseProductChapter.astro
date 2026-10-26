@@ -1,7 +1,6 @@
 ---
 import StrategyzerValueCanvas from './StrategyzerValueCanvas.astro';
 import MermaidDiagram from '../ui/MermaidDiagram.astro';
-import { tradeflowVpcData } from '../../data/tradeflowVpcData';
 import CaseBenefitMatrix from './CaseBenefitMatrix.astro';
 import type { BenefitMatrixItem, Problem, ProductContext } from '../../types/project';
 
@@ -45,7 +44,7 @@ interface Props {
 
 const { product, caseStory, showCaseStory, showVpc, problem: newProblem, benefitMatrix, projectId } = Astro.props;
 
-const vpcData = product.valueProposition?.canvas || tradeflowVpcData;
+const vpcData = product.valueProposition?.canvas;
 
 const summary = product.summary?.trim() ?? '';
 // Support new problem object statement or fallback to product.problem string
@@ -102,7 +101,7 @@ const show = hasProductCopy || hasVpcBlock || hasStoryBlocks;
 				</h3>
 				{caseStory?.thesis && <p class="case-chapter__lead">{caseStory.thesis}</p>}
 
-				{showVpc && (
+				{showVpc && vpcData && (
 					<StrategyzerValueCanvas
 						labels={vpcData.labels}
 						productsAndServices={vpcData.productsAndServices}

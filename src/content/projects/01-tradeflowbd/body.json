@@ -1,0 +1,106 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Technical appendix (hiring manager depth)"
+		},
+		{
+			"type": "paragraph",
+			"text": "Expand this section only when you need implementation detail. The story above is the recruiter path."
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Flagship flow — dropship remittance (numbers)"
+		},
+		{
+			"type": "table",
+			"header": [
+				"Step",
+				"What happens"
+			],
+			"rows": [
+				[
+					"Retail COD",
+					"Recipient pays courier face value (e.g. ৳2,200) — **not** booked as merchant sales"
+				],
+				[
+					"At ship",
+					"B2B merchant bill issued (e.g. ৳1,500) + courier AP (e.g. ৳80)"
+				],
+				[
+					"Bank in",
+					"Net remittance (e.g. ৳2,120) allocates to merchant bill"
+				],
+				[
+					"Leftover",
+					"Surplus (e.g. ৳620) credits dropshipper custody cashbook for payout"
+				]
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Flagship flow — inbound landed cost"
+		},
+		{
+			"type": "list",
+			"ordered": true,
+			"items": [
+				{
+					"text": "Record shipment cost buckets → draft AP bills per bucket × currency.  "
+				},
+				{
+					"text": "Lock shipment → issue AP.  "
+				},
+				{
+					"text": "Pay vendors → FX from actual pays → restamp unit cost on open lots.  "
+				},
+				{
+					"text": "Corrections via credit/debit notes — not silent edits to issued AP."
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "Schema & delivery"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Declarative domains: `procurement/`, `shop_order/`, `bills_pays/`, `notifications/` (+ unsplit `public.sql`).  "
+				},
+				{
+					"text": "Local workflow: edit schemas → `db diff` → migration → `backend:local` replay on Docker Supabase.  "
+				},
+				{
+					"text": "Frontend: route-level CSS split (~67% first-load CSS reduction on initial shell) and lazy heavy libs (Mermaid, ExcelJS, FCM)."
+				}
+			]
+		},
+		{
+			"type": "heading",
+			"level": 3,
+			"text": "What I owned"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "Migration ordering and schema split for safe empty-DB replay.  "
+				},
+				{
+					"text": "Money-kernel alignment across wholesale, shop order, dropship settlement, and inbound AP.  "
+				},
+				{
+					"text": "Platform/docs narrative and VPC structure for operators (in-product guide at `/docs` on the product SPA)."
+				}
+			]
+		}
+	]
+}

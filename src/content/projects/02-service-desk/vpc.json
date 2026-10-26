@@ -1,0 +1,99 @@
+{
+	"labels": {
+		"title": "The Value Proposition Canvas",
+		"valueProposition": "Service Desk Platform & In-App Vue Widget",
+		"customerSegment": "App Users, Host Devs & Support Agents"
+	},
+	"customerJobs": [
+		{
+			"title": "Report Bugs In-Workflow",
+			"note": "File issues from the current Vue page without leaving the app."
+		},
+		{
+			"title": "Onboard Apps Fast",
+			"note": "Add support intake to a new app without rebuilding forms."
+		},
+		{
+			"title": "Triage Multi-App Tickets",
+			"note": "Reproduce and resolve tickets from many apps in one workspace."
+		}
+	],
+	"pains": [
+		{
+			"title": "Manual Context Entry",
+			"note": "Reporters retype URL, screen size and steps taken."
+		},
+		{
+			"title": "Secondary Login Friction",
+			"note": "A separate helpdesk account just to track a ticket."
+		},
+		{
+			"title": "Hardcoded .env Routing",
+			"note": "Stream IDs in config files force a deploy per new app."
+		},
+		{
+			"title": "Cannot Reproduce Loops",
+			"note": "Missing errors and API payloads cause back-and-forth."
+		}
+	],
+	"gains": [
+		{
+			"title": "1-Click Context Filing",
+			"note": "Route, viewport and screenshot attach automatically."
+		},
+		{
+			"title": "Self-Service Registry",
+			"note": "Map apps to streams from an admin page, no deploy."
+		},
+		{
+			"title": "High-Fidelity Diagnostics",
+			"note": "Last 20 API calls, request IDs and Vue errors per ticket."
+		},
+		{
+			"title": "Single Multi-App Inbox",
+			"note": "One feed with origin badges and a per-app filter."
+		}
+	],
+	"productsAndServices": [
+		{
+			"title": "In-App Vue Widget",
+			"note": "Help panel capturing router state, API calls and screenshots."
+		},
+		{
+			"title": "Service Desk Hub",
+			"note": "Agent inbox for widget, IMAP email and public form tickets."
+		},
+		{
+			"title": "Admin App Registry",
+			"note": "support_widget_apps table and admin page for app-to-stream mapping."
+		}
+	],
+	"painRelievers": [
+		{
+			"title": "Auto Context & Error Capture",
+			"note": "Captures route, viewport, locale and unhandled exceptions."
+		},
+		{
+			"title": "Sanctum Session, Zero Seats",
+			"note": "Host app auth identifies reporters; no agent seat needed."
+		},
+		{
+			"title": "Server-Side PII Redaction",
+			"note": "Strips auth headers, cookies and API keys before saving."
+		}
+	],
+	"gainCreators": [
+		{
+			"title": "Central App-Stream Map",
+			"note": "Tickets route by app_id from the database at request time."
+		},
+		{
+			"title": "Unified Diagnostics Schema",
+			"note": "Versioned pack (schema_version 1) attached to every ticket."
+		},
+		{
+			"title": "Origin Badges & Filter",
+			"note": "client_app chips and multi-select filter isolate each queue."
+		}
+	]
+}

@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { file, glob } from 'astro/loaders';
+import { vpcCanvasSchema } from './lib/projectSchema';
 
 /**
  * ----------------------------------------------------------------------
@@ -107,26 +108,6 @@ const painGainItemSchema = z.object({
 	gainDescription: z.string(),
 });
 
-const canvasNoteSchema = z.object({
-	title: z.string(),
-	note: z.string(),
-});
-
-const vpcCanvasSchema = z.object({
-	labels: z
-		.object({
-			title: z.string().optional(),
-			valueProposition: z.string().optional(),
-			customerSegment: z.string().optional(),
-		})
-		.optional(),
-	customerJobs: z.array(canvasNoteSchema).default([]),
-	pains: z.array(canvasNoteSchema).default([]),
-	gains: z.array(canvasNoteSchema).default([]),
-	productsAndServices: z.array(canvasNoteSchema).default([]),
-	painRelievers: z.array(canvasNoteSchema).default([]),
-	gainCreators: z.array(canvasNoteSchema).default([]),
-});
 
 const productSchema = z
 	.object({
@@ -154,7 +135,12 @@ const productSchema = z
  * Legacy executiveOverview / impactMetrics / valueProposition removed from content (Phase 6).
  */
 const projects = defineCollection({
-	loader: glob({ pattern: '**/*.md', base: './src/content/projects' }),
+	loader: glob({
+		pattern: '*/project.json',
+		base: './src/content/projects',
+		// <slug>/project.json -> slug (keeps URLs and aliases unchanged)
+		generateId: ({ entry }) => entry.split('/')[0]
+	}),
 	schema: z.object({
 		id: z.union([z.string(), z.number()]).transform((val) => String(val).padStart(2, '0')),
 		title: z.string(),
