@@ -4,7 +4,7 @@
 	"subtitle": "Interactive 3-pane document preview engine built with Quasar Framework, Vue 3, Pinia, and reactive IntersectionObserver Table of Contents.",
 	"description": "Engineered a dedicated 3-pane documentation preview engine in Quasar (Vue 3), converting raw ticket threads into publication-grade documents with dynamic DOM-scanned Table of Contents and safe HTML parsing.",
 	"chip": "Doc Engine & Quasar UI",
-	"order": 8,
+	"order": 9,
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {

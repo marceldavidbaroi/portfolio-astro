@@ -1,0 +1,114 @@
+{
+	"id": "17",
+	"title": "Private Capital-Markets & Order Management Platform",
+	"subtitle": "Full-stack workspace UX, i18n, notifications, and back-office fee configuration on a microservice trading stack.",
+	"description": "Shipped full-stack workspace and onboarding improvements on a private microservice trading platform, measured by 30 merged commits across Vue workspace modules and Spring OMS APIs, by implementing client scoping, i18n, notification UX, and back-office fee configuration end-to-end.",
+	"chip": "FinTech & Microservices",
+	"order": 4,
+	"featured": false,
+	"platformType": "desktop",
+	"role": "Software Engineer (Full-Stack Contributor)",
+	"timeline": "Nov 2026 — Present",
+	"status": "Active Development",
+	"classification": "🔒 Private Client Engagement (NDA)",
+	"contribution": {
+		"mode": "contributor",
+		"startedFrom": "existing",
+		"myShare": "minor",
+		"label": "Full-Stack Contributor (Senior-Reviewed)",
+		"headline": "Targeted full-stack slices across Vue 3 workspace modules and Spring Boot OMS back-office endpoints within a senior-led microservice team.",
+		"scope": [
+			"Workspace UX, client scoping, and i18n refinements across the Vue 3 / Quasar frontend",
+			"Authentication surface and notification UX updates",
+			"Back-office (BO) fee configuration UI and matching oms-service API endpoints",
+			"Architecture discussion, proposals, and peer review with full-stack leads (Sazal & Shamim)"
+		]
+	},
+	"problem": {
+		"statement": "High-density trading and back-office workflows require consistent client scoping, localized UI surfaces, reliable notification delivery, and synchronized fee configuration between the web workspace and backend OMS services.",
+		"evidence": "observed",
+		"whoHurts": [
+			"dealer-operator",
+			"investor-user",
+			"back-office-admin"
+		]
+	},
+	"myImpact": [
+		{
+			"label": "Cross-Repo Delivery",
+			"value": "30 Commits",
+			"attribution": "personal",
+			"detail": "24 frontend commits and 6 backend commits merged Nov 12–16, 2026"
+		},
+		{
+			"label": "Frontend Modules",
+			"value": "4 Modules",
+			"attribution": "personal",
+			"detail": "workspace, auth, notifications, and boAccount flows in Vue 3 / Quasar"
+		},
+		{
+			"label": "Backend OMS Slice",
+			"value": "BO Fee APIs",
+			"attribution": "personal",
+			"detail": "End-to-end BO fee configuration endpoints in Spring Boot oms-service"
+		}
+	],
+	"product": {
+		"summary": "A private multi-service capital-markets and order-management platform built with a Vue 3 / Quasar / Capacitor client and a Java 21 / Spring Boot 3.3 microservice backend behind Spring Cloud Gateway."
+	},
+	"stack": [
+		"Vue 3",
+		"Quasar",
+		"Capacitor",
+		"Java 21",
+		"Spring Boot 3.3",
+		"Spring Cloud Gateway",
+		"PostgreSQL",
+		"Redis",
+		"RabbitMQ"
+	],
+	"techStack": {
+		"frontend": [
+			"Vue 3",
+			"Quasar",
+			"TypeScript",
+			"i18n"
+		],
+		"mobile_hardware": [
+			"Capacitor"
+		],
+		"backend": [
+			"Java 21",
+			"Spring Boot 3.3",
+			"Spring Cloud Gateway",
+			"Microservices"
+		],
+		"database": [
+			"PostgreSQL",
+			"Redis",
+			"RabbitMQ"
+		],
+		"devops": []
+	},
+	"architectureSummary": "Web and mobile clients (Vue 3, Quasar, Capacitor) route through Spring Cloud Gateway to domain microservices—including OMS, CAT, market data, and exchange adapter services—backed by PostgreSQL, Redis, and RabbitMQ.",
+	"keyDecisions": [
+		{
+			"challenge": "Synchronizing back-office fee configuration between the workspace UI and OMS domain rules",
+			"decision": "Implemented end-to-end BO fee configuration across the boAccount frontend module and matching oms-service API endpoints under senior-reviewed architecture guidelines.",
+			"outcome": "Consistent fee configuration flow spanning UI validation and backend persistence."
+		},
+		{
+			"challenge": "Maintaining clean workspace scoping, localization, and notification clarity across user roles",
+			"decision": "Delivered targeted refinements in workspace, auth, and notifications modules without disrupting established platform conventions.",
+			"outcome": "Cleaner dealer/investor workspace flows and localized UI messaging."
+		}
+	],
+	"securityReliability": [
+		"Client details, tenant hosts, and proprietary workflows omitted under NDA",
+		"Senior-reviewed full-stack changes across gateway-routed microservices"
+	],
+	"images": [],
+	"visualAssets": {
+		"screenshots": []
+	}
+}

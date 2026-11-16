@@ -4,15 +4,13 @@
 	"subtitle": "NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.",
 	"description": "Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.",
 	"chip": "Security-First Auth & FinTech Foundation",
-	"order": 16,
+	"order": 17,
 	"featured": false,
 	"platformType": "desktop",
-
 	"role": "Solo Full-Stack Engineer",
 	"timeline": "Dec 2025 — Feb 2026",
 	"status": "Active Production",
 	"classification": "Personal Project",
-
 	"contribution": {
 		"mode": "owner",
 		"startedFrom": "scratch",
@@ -28,13 +26,13 @@
 		],
 		"teamSize": 1
 	},
-
 	"problem": {
 		"statement": "Personal finance and journaling tools are fragmented, and many leave users with weak credential storage and fragile session handling. A financial platform needs an auditable authentication foundation, with strict session invalidation, CSRF defenses, and event logging, in place before any ledgers are connected.",
 		"evidence": "assumption",
-		"whoHurts": ["account-holder"]
+		"whoHurts": [
+			"account-holder"
+		]
 	},
-
 	"benefitMatrix": [
 		{
 			"persona": "Account Holder",
@@ -48,7 +46,10 @@
 				"proof": "designed"
 			},
 			"attribution": "personal",
-			"feature": ["Auth", "AuthSession"]
+			"feature": [
+				"Auth",
+				"AuthSession"
+			]
 		},
 		{
 			"persona": "Platform Owner",
@@ -62,10 +63,12 @@
 				"proof": "measured"
 			},
 			"attribution": "personal",
-			"feature": ["SecurityEvent", "Pino Logging"]
+			"feature": [
+				"SecurityEvent",
+				"Pino Logging"
+			]
 		}
 	],
-
 	"myImpact": [
 		{
 			"label": "Workspaces",
@@ -104,7 +107,6 @@
 			"detail": "100% solo authorship over roughly two months"
 		}
 	],
-
 	"product": {
 		"summary": "Delivered the security foundation of a personal wealth and growth platform: Argon2 credentials, rotating refresh-token sessions with CSRF checks, audit events, and a documented monorepo ready for the finance ledger to be added.",
 		"problem": "Financial tools need strong credential storage, strict session invalidation, and an audit trail before they handle money. Many personal apps add these late, or not at all.",
@@ -134,11 +136,21 @@
 			]
 		}
 	},
-
-	"stack": ["NestJS 11", "Prisma 7", "PostgreSQL 15", "Next.js 16", "TypeScript"],
-
+	"stack": [
+		"NestJS 11",
+		"Prisma 7",
+		"PostgreSQL 15",
+		"Next.js 16",
+		"TypeScript"
+	],
 	"techStack": {
-		"frontend": ["Next.js 16 (App Router)", "React 19", "TailwindCSS 4", "TypeScript", "Docusaurus 3 (docs site)"],
+		"frontend": [
+			"Next.js 16 (App Router)",
+			"React 19",
+			"TailwindCSS 4",
+			"TypeScript",
+			"Docusaurus 3 (docs site)"
+		],
 		"mobile_hardware": [],
 		"backend": [
 			"NestJS 11",
@@ -148,24 +160,32 @@
 			"nestjs-pino / pino-http",
 			"Swagger (OpenAPI)"
 		],
-		"database": ["PostgreSQL 15", "Prisma ORM 7 (6 models, 2 migrations)"],
-		"devops": ["Docker Compose", "npm workspaces", "ESLint & Prettier", "Jest"]
+		"database": [
+			"PostgreSQL 15",
+			"Prisma ORM 7 (6 models, 2 migrations)"
+		],
+		"devops": [
+			"Docker Compose",
+			"npm workspaces",
+			"ESLint & Prettier",
+			"Jest"
+		]
 	},
-
 	"links": {
 		"liveDemo": "",
 		"parentPlatform": "",
 		"github": "https://github.com/marceldavidbaroi/Nidhara-",
 		"docs": ""
 	},
-
-	"images": ["/images/projects/nidhara/swagger.webp"],
-
+	"images": [
+		"/images/projects/nidhara/swagger.webp"
+	],
 	"visualAssets": {
 		"heroMockup": "/images/projects/nidhara/swagger.webp",
-		"screenshots": ["/images/projects/nidhara/swagger.webp"]
+		"screenshots": [
+			"/images/projects/nidhara/swagger.webp"
+		]
 	},
-
 	"keyDecisions": [
 		{
 			"challenge": "Protect credentials and session secrets against GPU-accelerated brute-force attacks.",
@@ -188,7 +208,6 @@
 			"outcome": "Searchable request and response logs for auditing and debugging."
 		}
 	],
-
 	"securityReliability": [
 		"Argon2 hashing for passwords and refresh token hashes",
 		"Dual-token flow: short-lived access token plus httpOnly refresh cookie",
@@ -196,7 +215,6 @@
 		"Security events (LOGIN_SUCCESS, LOGIN_FAILED, LOGOUT, REFRESH_ROTATED) stored with IP and user-agent",
 		"Failed-login tracking and sudo session state modeled in the database"
 	],
-
 	"futureRoadmap": [
 		"Passkey (WebAuthn) and security question authentication",
 		"Financial accounts, immutable transaction ledgers, and savings goals",

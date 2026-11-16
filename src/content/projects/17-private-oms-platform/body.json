@@ -1,0 +1,40 @@
+{
+	"blocks": [
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "System Overview"
+		},
+		{
+			"type": "paragraph",
+			"text": "A private capital-markets and order-management platform serving web and mobile clients (Vue 3, Quasar, Capacitor) behind a Spring Cloud Gateway. Core trading, account, market data, and exchange workflows are separated into Java 21 / Spring Boot 3.3 microservices backed by PostgreSQL, Redis, and RabbitMQ. Specific client branding, hostnames, and operational metrics are omitted under NDA."
+		},
+		{
+			"type": "mermaid",
+			"code": "flowchart LR\n    Client[\"Web & Mobile Client\\n(Vue 3 · Quasar · Capacitor)\"] --> Gateway[\"Spring Cloud Gateway\"]\n    Gateway --> OMS[\"OMS Service\"]\n    Gateway --> CAT[\"CAT Service\"]\n    Gateway --> Market[\"Market Data Service\"]\n    OMS --> Exchange[\"Exchange Adapter\"]\n    OMS --> DB[(\"PostgreSQL · Redis · RabbitMQ\")]"
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Team Context"
+		},
+		{
+			"type": "paragraph",
+			"text": "Joined the existing multi-repo platform on November 4 as a full-stack Software Engineer at Proficient Information Systems (sister concern of IT Conquest). Working within a senior-led full-stack team (architecture led by Sazal and Shamim), I contribute targeted frontend and backend slices while participating in architecture discussions, proposals, and peer code reviews."
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Contribution Footprint"
+		},
+		{
+			"type": "list",
+			"items": [
+				"**Active Window:** November 12–16, 2026 (following onboarding and environment ramp from November 4).",
+				"**Frontend (`Vue 3 / Quasar`):** 24 commits across `workspace`, `auth`, `notifications`, and `boAccount` modules — improving client scoping, i18n, notification UX, and back-office fee UI.",
+				"**Backend (`Java 21 / Spring Boot 3.3`):** 6 commits in `oms-service` implementing matching back-office (BO) fee configuration endpoints.",
+				"**Visuals:** No screenshots included per client confidentiality."
+			]
+		}
+	]
+}

@@ -15,3 +15,5 @@ Full documentation: https://docs.astro.build
 Design system (tokens, type, components): [redesign/system.md](redesign/system.md)
 
 Project case study / CV-card standards (when editing `src/content/projects/`): [.agents/rules/project-standards.md](.agents/rules/project-standards.md)
+
+Master CV context sync (when adding/updating `src/content/` or `scripts/cv-profile.json`): [.agents/rules/master-cv-sync.md](.agents/rules/master-cv-sync.md)

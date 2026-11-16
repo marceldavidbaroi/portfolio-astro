@@ -4,7 +4,7 @@
 	"subtitle": "Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.",
 	"description": "Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.",
 	"chip": "Learning & Assessment",
-	"order": 11,
+	"order": 12,
 	"featured": true,
 	"platformType": "desktop",
 	"contribution": {

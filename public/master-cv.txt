@@ -1,0 +1,662 @@
+MARCEL DAVID BAROI
+Full Stack Engineer · TypeScript / Vue 3 / NestJS · PHP / Laravel · PostgreSQL / Supabase
+Dhaka, Bangladesh (UTC+6) · Remote preferred · Open to on-site/hybrid in Dhaka
++880 1795-774216 · marceldavidbaroi@gmail.com · https://marceldavidbaroi.pages.dev · LinkedIn: https://www.linkedin.com/in/marcel-david-baroi/ · GitHub: https://github.com/marceldavidbaroi
+
+Note: Master context document auto-generated from portfolio-astro (src/content/ + scripts/cv-profile.json).
+
+============================================================================
+SUMMARY
+============================================================================
+
+Product-minded full stack engineer with a 3.91/4.00 B.Sc. in Computer Science & Engineering and a track record of independently architecting and shipping complex, data-intensive business applications. Fluent in TypeScript (Vue 3, Quasar, NestJS, Next.js) and PHP (Laravel/MVC) with strong relational database fundamentals (PostgreSQL, Row-Level Security, atomic RPCs). Engineered and maintain a multi-tenant wholesale ERP in daily production (6,000+ SKUs), a company-wide Service Desk platform embedded across client apps, and modular npm packaging infrastructure.
+
+============================================================================
+TECHNICAL SKILLS
+============================================================================
+
+- Frontend: Vue 3, Quasar Framework, TypeScript, JavaScript (ES6+), Pinia, TanStack Query, Next.js, Tailwind CSS, HTML5/CSS3
+- Mobile: Flutter (frontend), Capacitor, Android builds, Google ML Kit
+- Backend & APIs: TypeScript, Node.js, NestJS, PHP, Laravel, REST API design
+- Databases: PostgreSQL / Supabase (schema design, RLS, PL/pgSQL RPCs), MySQL, MongoDB, TypeORM
+- Testing & CI/CD: PHPUnit / Laravel test cases, Jest / integration tests, GitHub Actions, Vercel, Cloudflare Pages, Sentry
+- Tooling & Infrastructure: Git, Docker / Docker Compose, Vite, pnpm / npm private registries, Modular SemVer packages, Linux
+
+============================================================================
+EXPERIENCE (FULL DETAIL)
+============================================================================
+
+Software Engineer · Proficient Information Systems (November 2024 — Present)
+Dhaka, Bangladesh (Hybrid) · Full-time (Hybrid) · https://proficient.systems
+
+Summary: Hybrid engineering role starting with modern Vue 3/Quasar frontend development and advancing into full-stack PHP & Quasar architectures, modular npm packaging infrastructure, company hackathons, and international ERP trade expos.
+Executive Impact: Progressed from frontend UI development to full-stack engineering across Quasar, Vue 3, PHP, and Supabase [X], architecting modular npm package systems that boosted cross-project code reusability by +60% and delivering production ERP & helpdesk platforms [Y] while winning team hackathons and representing enterprise software solutions at the 25th Textech International Expo [Z].
+Key Metrics: Engineering Trajectory: Frontend → Full-Stack | Code Reusability: +60% Modular Pkg | Core Stack: PHP + Quasar + Supabase | Industry Expos: 25th Textech 2026
+Highlights:
+  - Progressed from foundational frontend Vue 3 / Quasar UI engineering into full-stack delivery integrating PHP (Laravel/MVC), PostgreSQL, and Supabase RLS backends
+  - Architected and delivered the Enterprise Modular Packaging Infrastructure with Quasar and Vite library mode, creating autonomous SemVer npm packages served over private Git registries to increase code reusability by 60%
+  - Engineered core modules for the TradeflowBD Multi-Tenant ERP, including landed costing calculation engines, double-entry ledgers, and virtual inventory allocation
+  - Built customer support and triage workflows for the Customer Support System (Service Desk) combining Quasar frontend interfaces with a dual-database engine (MongoDB + MySQL) and automated IMAP email ticketing
+  - Collaborated closely with CEO Reza Khan and senior engineering mentors across sprint deliveries, architecture whiteboard sessions, and hybrid work sprints
+  - Successfully completed an intensive company engineering hackathon followed by a celebratory team outing at Mawa in April 2025
+  - Represented the company at the 25th Textech Bangladesh International Expo 2026, managing 4 days of live ERP demonstrations and buyer discussions for the garment and textile manufacturing sector
+Responsibilities:
+  - Deliver responsive, accessible, data-dense user interfaces using Vue 3, Quasar Framework, and TypeScript
+  - Develop and maintain full-stack PHP (Laravel/MVC) backend services, RESTful APIs, and database migrations
+  - Maintain and publish proprietary UI and utility packages to private npm registries using Semantic Versioning
+  - Design and test relational database schemas and Row-Level Security (RLS) policies in PostgreSQL and Supabase
+  - Participate in agile sprint rituals, architecture reviews, hackathons, and client-facing tech expos
+Stack: PHP (Core/Laravel), Vue 3, Quasar Framework, TypeScript, Supabase (RLS), PostgreSQL, MySQL, Pinia, Vite Library Builds
+Skills Used: languages: TypeScript, JavaScript (ES6+), PHP (Laravel/MVC), SQL (PostgreSQL / MySQL) | frameworks: Vue.js (v2/v3), Quasar Framework (v2), Pinia, Blade Templates, Knockout.js | cloudInfra: Supabase (Realtime, RLS, Auth), PostgreSQL, Private Git / npm Registries, Docker Compose | practices: Full-Stack PHP & Quasar Engineering, Modular npm Packaging & SemVer, Multi-Tenant Row-Level Security, Architecture-First AI Synthesis, Hybrid Agile Delivery
+Narrative:
+## Role Overview & Engineering Evolution
+
+Joining Proficient Information Systems in November 2024 in a hybrid capacity, I began by mastering frontend architecture with Vue 3, Quasar Framework, and TypeScript. Over time, my responsibilities expanded into full-stack engineering—delivering scalable PHP (Laravel/MVC) backends, relational database schemas with PostgreSQL/Supabase RLS, and dual-database engines (MySQL + MongoDB) for high-throughput enterprise platforms.
+
+### Key Milestones & Contributions
+
+1. Enterprise Frontend to Full-Stack Migration: Engineered mission-critical workflows across TradeflowBD ERP and Customer Service Desk, transitioning from pure UI development into backend API design, asynchronous queue management, and automated IMAP email ingestion.
+2. Modular Packaging System: Built and standardized the Enterprise Modular Packaging Infrastructure, decoupling UI components into standalone, reusable npm packages with Vite library builds and SemVer automation.
+3. Team Hackathon Victory & Celebrations: Collaborated with peers through high-intensity hackathon cycles, celebrating the delivery milestone with our team outing at Mawa in April 2025.
+4. 25th Textech International Expo 2026: Represented the company alongside CEO Reza Khan, demonstrating ERP capabilities live to garment industry leaders during a 4-day international expo.
+
+----------------------------------------------------------------------------
+
+Software Developer (Proprietary Solutions) · Software Services & Client Solutions (Q3 2025 — Present)
+Dhaka, Bangladesh · Independent Contractor · https://github.com/marceldavidbaroi
+
+Summary: Designing and developing proprietary software solutions — engineering the TradeflowBD wholesale ERP (my own software tailored to automate commercial trade workflows) and Smart Hisab (my own mobile Canteen POS & billing app in Flutter and Supabase for a separate client).
+Executive Impact: Architected and developing proprietary full-stack and mobile software solutions [X], engineering the TradeflowBD wholesale ERP to replace manual spreadsheets and developing an offline-first Flutter/Supabase canteen POS [Y] to eliminate operational latency and automate ledger reconciliation [Z].
+Key Metrics: Wholesale ERP: Own Software | Canteen Client App: Own Software | Data Isolation: 100% RLS | Client Solutions: 2 Systems
+Highlights:
+  - Independently designing and building a multi-tenant wholesale ERP platform (TradeflowBD) as my own software to automate inventory, landed costing, and invoicing for wholesale clients
+  - Independently building Smart Hisab, an offline-first mobile Canteen POS and institutional meal ERP app in Flutter and Supabase as my own software for a separate client
+  - Architected double-entry PostgreSQL ledgers, shift cashbook vaults, and atomic RPC transaction functions with 100% Row-Level Security
+  - Engineered responsive, high-density web interfaces and offline-first mobile workflows using Vue 3, Quasar Framework, and Flutter
+  - Leveraging firsthand operational domain insights in trade accounting to engineer practical, reliable software products
+Responsibilities:
+  - Architect, develop, and maintain proprietary ERP software solutions using Vue 3, Quasar, and Supabase
+  - Build offline-first cross-platform mobile applications in Flutter with local SQLite queues and Bluetooth thermal printing
+  - Design atomic PostgreSQL database schemas, Row-Level Security policies, and RPC transaction functions
+  - Deliver custom software solutions directly to commercial clients with end-to-end support
+Stack: Vue 3, Quasar, Flutter, Dart, Supabase (RLS), PostgreSQL, TypeScript
+Skills Used: languages: TypeScript, JavaScript, Dart, SQL, Python | frameworks: Vue.js (v3), Quasar Framework, Flutter, Pinia | cloudInfra: Supabase (PostgreSQL, Realtime, RLS), Docker, Git, Cloudflare Pages | practices: Proprietary Software Engineering, Offline-First Mobile Architecture, Double-Entry Accounting, Row-Level Security (RLS)
+Narrative:
+## Role Overview & Software Products
+
+Developing proprietary software products and custom client solutions. Engineering the TradeflowBD wholesale ERP (my own software developed to modernize and automate wholesale commerce workflows) and developing Smart Hisab (my own mobile Canteen POS & billing app in Flutter and Supabase for a separate client).
+
+----------------------------------------------------------------------------
+
+Operations & Data Specialist · BrandWala (Import-Export Trading) (2025 — Present)
+Dhaka, Bangladesh · Full-time (Employee) · https://github.com/marceldavidbaroi
+
+Summary: Employed at a small import-export trading business managing daily operational data, product file records, and accounts calculations using Excel — calculating international procurement landed costs, shipping duties, and item-level margins.
+Executive Impact: Managed business data, inventory records, and financial calculations using Excel for a small import-export trading company [X], eliminating pricing discrepancies and streamlining supplier reconciliation [Y] by designing landed-cost calculation templates and daily margin models [Z].
+Key Metrics: Data & Accounts: Excel Ledgers | Procurement Costing: Landed Margins | Reconciliation Variance: 0.0% | Focus Area: Import-Export
+Highlights:
+  - Employed to manage operational file records, commercial data, and accounts calculations with Excel for a small import-export trading company
+  - Calculated international procurement landed costs, freight charges, customs fees, and product margins in Excel spreadsheets
+  - Reconciled daily supplier invoices, customer payment files, and warehouse stock records
+  - Gained firsthand operational domain insights in commercial trade logistics and accounting that directly inform real-world software design
+Responsibilities:
+  - Manage day-to-day data entry, file organization, and financial calculations using Excel
+  - Calculate procurement landed costs, import expenses, and margin schedules
+  - Reconcile daily invoices, customer payments, and warehouse inventory sheets
+Stack: Excel (Data & Accounts), Spreadsheet Modeling, Landed Costing, Bookkeeping & Invoicing
+Skills Used: languages: Excel Spreadsheets, Mathematical Calculations | frameworks: Costing Templates, Inventory Sheets | practices: Data Management, Landed Cost Apportionment, Supplier Reconciliation, Commercial Bookkeeping
+Narrative:
+## Role Overview & Commercial Operations
+
+Employed at BrandWala, a small import-export trading business, managing day-to-day data, file records, and accounts calculations using Excel. Handled international landed-cost calculations, supplier reconciliation, and warehouse stock tracking, gaining the practical trade domain experience that grounds my software architectures.
+
+----------------------------------------------------------------------------
+
+Private STEM & Academic Tutor · Independent Academic Mentorship (2020 — Q1 2025)
+Dhaka, Bangladesh · Independent Practice · https://github.com/marceldavidbaroi
+
+Summary: Conducted specialized academic mentoring in Higher Mathematics, Physics, and ICT for SSC and HSC candidates from top-tier schools and colleges across Dhaka, tutoring ~24 talented students to outstanding board exam results.
+Executive Impact: Mentored ~24 talented secondary and higher secondary candidates through structured syllabus roadmaps, conceptual problem-solving drills, and performance diagnostics [X], achieving a 100% board examination pass rate with top GPA-5.00 distinctions [Y] across SSC and HSC cohorts from prestigious Dhaka institutions [Z].
+Key Metrics: Students Mentored: 24 Talented Students | Board Exam Success: Top GPA-5.00 | Mentorship Span: 5 Years (2020–2025) | Core Focus: STEM & Mathematics
+Highlights:
+  - Delivered rigorous one-on-one and small-batch academic mentorship for SSC and HSC candidates from Dhaka's most reputed schools and colleges (including Notre Dame College cohorts)
+  - Specialized in Higher Mathematics, Physics, and ICT, demystifying abstract mathematical logic, calculus, mechanics, and algorithm fundamentals through intuitive conceptual frameworks
+  - Guided 24 talented students through high-pressure national board examination preparation, with students earning top GPA-5.00 grades and gaining admission to premier engineering faculties
+  - Cultivated structured pedagogy, analytical diagnostic routines, and clear communication techniques that directly inform technical engineering leadership and system design communication
+Responsibilities:
+  - Design customized curriculum pacing and analytical problem sets for SSC and HSC candidates
+  - Conduct deep-dive conceptual lectures and weekly diagnostic mock examinations
+  - Provide individualized academic feedback, exam strategy coaching, and university admission guidance
+  - Track long-term student performance metrics and maintain transparent communication with guardians
+Stack: Higher Mathematics, Physics, Calculus & Algebra, ICT / Programming, Pedagogical Mentorship
+Skills Used: languages: Mathematical Logic, Formal Proofs, Bengali, English | frameworks: Diagnostic Assessment, Curriculum Design | practices: Concept-First Teaching, Analytical Problem Solving, Student Mentorship, Performance Tracking
+Narrative:
+## Role Overview & Academic Mentorship
+
+Between 2020 and early 2025 (Q1), provided dedicated academic tutoring and STEM mentorship for SSC and HSC students from reputed schools and colleges throughout Dhaka. Mentored approximately 24 talented students in Higher Mathematics, Physics, and ICT, guiding them to top academic distinctions and national board examination success.
+
+----------------------------------------------------------------------------
+
+============================================================================
+PROJECTS & CASE STUDIES (17 TOTAL)
+============================================================================
+
+[01] TradeFlow BD – Multi-Tenant Wholesale ERP · Enterprise ERP & SaaS · 2025 — Present · Active Production
+Role: Lead Framework & Migration Engineer
+Subtitle: Sell modules on four kernels — one parent stock, one books, wholesale + shop + dropship + pre-order.
+Overview: Lead engineer on a production multi-tenant wholesale ERP: parent/child tenants, four login surfaces, and sell modules (wholesale, shop, dropship, inbound, money) on shared Access, Warehouse, Landed Cost, and Money kernels — Postgres RLS, atomic RPCs, Vue/Quasar SPA on Supabase.
+Contribution: Product owner & lead engineer | owner | scratch | lead
+  Owned architecture and migration for a multi-tenant wholesale ERP — four login surfaces, parent/child tenants, and channel flows on shared stock and money kernels.
+  - Scope: Schema split, migration ordering, and local replay
+  - Scope: Money-kernel alignment across wholesale, shop, dropship, and inbound AP
+  - Scope: Platform docs and VPC narrative in the product SPA
+Problem: Wholesale import groups run parent holdings, sister desks, shops, and capital partners on disconnected spreadsheets and channel-specific stock — causing overselling, COD mis-reported as revenue, and weak audit trails between sister brands.
+Key Outcomes / Benefit Matrix:
+  - Import / Wholesale Operator — Overselling across channels: One warehouse quantity enforced by server-side issue/pick RPCs; no per-channel shadow stock. [Channel ATP pool consistency: Desynced per-channel stock books -> Single warehouse ATP pool (designed)]
+  - Dropship reseller / Import operator — COD booked as sales: Merchant AR at ship, remittance pays the bill, surplus goes to custody cashbook. (Illustrated by flow: ৳2,200 face, ৳1,500 bill, ৳80 courier AP, ৳2,120 remittance, ৳620 leftover). [Ledger separation (paper vs cash): Mixed courier cash in sales revenue -> Strict AR & custody cashbook split (designed)]
+  - Import / Wholesale Operator — Landed cost guesswork: Unit cost stamped from paid AP and locked shipment costs. [Landed cost valuation basis: Unlocked invoice line guesses -> Paid AP and locked freight Restamp (designed)]
+  - Platform/IT owner — Cross-tenant data leakage risks: Boundary enforced in PostgreSQL via RLS and membership_has_module_action(). [Database isolation: Application-layer query filtering -> PostgreSQL RLS policy enforcement (designed)]
+Engineering Improvements:
+  - Frontend shell bundle size: Route-level CSS split and lazy heavy libs (Mermaid, ExcelJS, FCM) (First-load CSS reduction: 100% monolithic shell CSS -> ~67% reduction on initial shell)
+  - Schema deployment reliability: Reproducible local replay on Docker Supabase before deploy (Local migration replay count: 0 automated local checks -> 1,330+ versioned migrations replayed locally)
+Impact:
+  - Tenant isolation: RLS — Cross-tenant boundary enforced in PostgreSQL, not only in the SPA
+  - Sell modules: 9 packs — Tenants, money, inbound, wholesale, shop, shop admin, dropship, PBC, thrift
+  - Login surfaces: 4 — platform · app · shop · investor
+  - Schema discipline: 1,330+ — Versioned migrations with local Docker replay before deploy
+Architecture: Vue/Quasar SPA on Supabase Postgres. Four kernels (Access, Warehouse, Landed cost, Money) and nine sell modules as adapters — not separate ledgers or inventory silos for core BW.
+Key Technical Decisions:
+  - Row-level security and `membership_has_module_action()` on tenant data — not client-side filtering alone.
+  - Stock on parent `global_stocks`; channels consume ATP via pessimistic RPCs (`SELECT FOR UPDATE`).
+  - Unified money kernel — profile, bill, pay, allocation, cashbook — with adjustment notes after issue.
+  - Declarative domain folders under `supabase/schemas/<domain>/` with migration diff checks.
+Tech Stack: Vue 3.5, Quasar 2, Supabase, TypeScript, PostgreSQL 15+, Capacitor
+
+----------------------------------------------------------------------------
+
+[02] Service Desk – Diagnostics-First Support Platform & In-App Vue Widget · SaaS & Customer Support · 2026 — Present · Active Production
+Role: Full-Stack Software Engineer (Solo Owner)
+Subtitle: Multi-tenant helpdesk unifying a native Vue in-app widget, IMAP email and public web forms into one agent inbox, shipped as reusable NPM packages for the company suite and as a standalone web app.
+Overview: Delivered a diagnostics-first support platform unifying 3 intake channels in one agent inbox, shipped as reusable NPM packages for the company suite plus a standalone web app, via database-driven app routing and server-side PII redaction.
+Contribution: Solo Engineer & Product Owner · Proficient Information Systems | owner | scratch | lead
+  Planned, validated with the client, and delivered the Service Desk hub, reusable NPM packages, native Vue in-app widget and standalone web app as the only engineer, working from architecture direction set by the CEO and company architect.
+  - Scope: Product planning and requirements verification with the client, then end-to-end implementation
+  - Scope: Reusable NPM package components (@itc/service-desk) integrated into the company suite, plus a standalone web app separate from the suite
+  - Scope: Implemented the architect-directed stack: IMAP ingestion, Knockout.js visitor surface, and the multi-channel intake model
+  - Scope: Laravel BFF (/api/v1/support/*), dual-database persistence (MongoDB tickets + MySQL configuration/RBAC)
+  - Scope: Vue 3 / Quasar agent workbenches and the shared @itc/service-desk package
+  - Scope: In-app Vue widget: Sanctum-bound intake, telemetry buffers, screenshot capture and annotation
+  - Scope: Release V1: dynamic app registry, origin triage, omnichannel continuity
+Problem: Portfolio apps reported bugs through scattered emails and hardcoded .env stream mappings, so agents received 'cannot reproduce' tickets with no route, API or error context, and every new app meant a code deploy.
+Key Outcomes / Benefit Matrix:
+  - End Reporter (App User / Employee) — Manually describing browser, URL, screen size and steps; separate helpdesk login: One-click filing from inside the app; route, viewport, user agent and annotated screenshot attach automatically via the existing Sanctum session. [Reporter-typed environment details: Manual description of URL, device and steps -> Auto-captured diagnostics pack (schema_version 1) (designed)]
+  - Support Agent / Triage Operator — 'Cannot reproduce' loops and context switching between app inboxes: Diagnostics tab with the last 20 Axios calls (status, latency, request_id), Vue exceptions, last failed API, plus client_app badges and a multi-select app filter. [Network context per ticket: None -> Last 20 API calls + runtime errors (designed)]
+  - Host App Developer / SaaS Owner — Config sprawl: stream IDs and secrets hardcoded across .env files: support_widget_apps registry and /service-desk/apps admin page map apps to streams with zero code deploys. [Deploys needed to onboard an app: 1 backend deploy per app -> 0 (self-service registration) (designed)]
+Engineering Improvements:
+  - In-app ticket routing: Database-backed registry (support_widget_apps) resolving app_id to support_stream_id at request time (Code deploys per new app: 1 -> 0)
+  - Agent triage by origin: client_app badge chips on ticket cards and multi-select app filter in ServiceDeskFiltersForm (Queue isolation per portfolio app: None -> Per-app filtered views)
+Key Technical Decisions:
+  - Moved routing into a support_widget_apps table (app_id, support_stream_id, allowed_origins, is_active) with a widget-only middleware resolving the stream per request.
+  - Scoped the middleware strictly to POST /api/v1/support/me/tickets so SupportEmailIngressService (IMAP) and public form controllers keep native mailbox/form stream mappings.
+  - Packaged a versioned diagnostics pack (schema_version 1): route metadata, viewport, locale, tenant, a ring-buffer of the last 20 Axios calls with request_id, and trapped window.onerror, unhandled rejections and Vue errors.
+  - Enforced server-side sanitization: drop unmapped keys, cap payload size, redact Authorization, Cookie, Set-Cookie and API keys before persisting as support.context and diagnostics.json.
+  - Packaged the agent console and in-app widget as reusable NPM components (@itc/service-desk) consumed by the suite, and built a standalone web app on the same packages.
+  - Dual-database: MongoDB for flexible ticket documents and threads, MySQL for streams, apps, mailboxes, forms and RBAC.
+  - Dual-lane threading: public replies trigger sanitized SMTP, private notes stay internal within one chronological thread.
+Tech Stack: Vue 3, Laravel 11, MongoDB, MySQL, TypeScript, Quasar 2
+
+----------------------------------------------------------------------------
+
+[03] Inventory Management – Mobile Warehouse & Barcode Automation · Mobile Hardware & IoT · 2026 — Present · Active Production (v1.0.5)
+Role: Full-Stack Mobile Engineer (Solo Contributor)
+Subtitle: Capacitor Android companion for retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time backend sync.
+Overview: Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs.
+Contribution: Domain specialist | specialist
+  Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.
+  - Scope: Unreliable Barcode Scanning in Warehouse Conditions
+  - Scope: High-Volume Intake During Shipment Processing
+  - Scope: Stock Discrepancies Across Shelf/Box Locations
+  - Scope: Operator UX in Noisy Warehouse Environments
+  - Scope: Desktop-Only Registration Bottleneck
+Impact:
+  - Continuous Scan Engine: Batch Mode — High-speed camera decoding with audio/haptic confirmation
+  - Bin Audit Discrepancy Detection: 3 States — Verified, missing, and misplaced item detection per shelf/box
+  - Operator Localization: Bilingual — English and Bengali (বাংলা) with persisted device locale
+  - Stock Registration Ingestion: Atomic RPC — Transactional writes across stocks, barcodes, and Cloudinary CDN
+  - Intake Latency: Sub-Second — Instant on-shelf garment registration and sync to TradeflowBD
+  - Unified Cross-Platform: 1 Codebase — Android native APK/AAB + responsive web via Quasar & Capacitor
+Architecture: Capacitor 8 Android app (Quasar/Vue 3) using Google ML Kit for hardware barcode decoding, Capacitor Camera for product photos, Cloudinary for image storage, and Supabase RPCs for atomic stock writes — companion to the TradeflowBD Thrift web admin.
+Key Technical Decisions:
+  - Integrated @capacitor-mlkit/barcode-scanning with Google ML Kit on Android, auto-installing the scanner module on first use, with a camera overlay fallback when the native scan UI fails.
+  - Built continuous scan mode with a bulk action queue — operators scan many items in sequence, then batch-update shelf location or stock status in one RPC call.
+  - Designed Audit Mode — select a shelf/box, load expected items, scan to verify, flag missing items, detect misplaced stock via live barcode lookup, and relocate in bulk.
+  - Added audio chimes (success/error tones) and device vibration via scanFeedback utilities, plus contextual AppHelpDialog guides on every major workflow.
+  - Mobile stock registration captures barcode, product photo (Capacitor Camera), metadata (brand, size, condition, weight, pricing), and registers atomically via register_thrift_stock_from_app RPC with Cloudinary image upload.
+Tech Stack: Quasar, Vue 3, Supabase, Capacitor (Android), Google ML Kit
+Links: parentPlatform: https://tradeflowbd.com · github: https://github.com/marceldavidbaroi
+
+----------------------------------------------------------------------------
+
+[17] Private Capital-Markets & Order Management Platform · FinTech & Microservices · Nov 2026 — Present · Active Development
+Role: Software Engineer (Full-Stack Contributor)
+Subtitle: Full-stack workspace UX, i18n, notifications, and back-office fee configuration on a microservice trading stack.
+Overview: Shipped full-stack workspace and onboarding improvements on a private microservice trading platform, measured by 30 merged commits across Vue workspace modules and Spring OMS APIs, by implementing client scoping, i18n, notification UX, and back-office fee configuration end-to-end.
+Contribution: Full-Stack Contributor (Senior-Reviewed) | contributor | existing | minor
+  Targeted full-stack slices across Vue 3 workspace modules and Spring Boot OMS back-office endpoints within a senior-led microservice team.
+  - Scope: Workspace UX, client scoping, and i18n refinements across the Vue 3 / Quasar frontend
+  - Scope: Authentication surface and notification UX updates
+  - Scope: Back-office (BO) fee configuration UI and matching oms-service API endpoints
+  - Scope: Architecture discussion, proposals, and peer review with full-stack leads (Sazal & Shamim)
+Problem: High-density trading and back-office workflows require consistent client scoping, localized UI surfaces, reliable notification delivery, and synchronized fee configuration between the web workspace and backend OMS services.
+Impact:
+  - Cross-Repo Delivery: 30 Commits — 24 frontend commits and 6 backend commits merged Nov 12–16, 2026
+  - Frontend Modules: 4 Modules — workspace, auth, notifications, and boAccount flows in Vue 3 / Quasar
+  - Backend OMS Slice: BO Fee APIs — End-to-end BO fee configuration endpoints in Spring Boot oms-service
+Architecture: Web and mobile clients (Vue 3, Quasar, Capacitor) route through Spring Cloud Gateway to domain microservices—including OMS, CAT, market data, and exchange adapter services—backed by PostgreSQL, Redis, and RabbitMQ.
+Key Technical Decisions:
+  - Implemented end-to-end BO fee configuration across the boAccount frontend module and matching oms-service API endpoints under senior-reviewed architecture guidelines.
+  - Delivered targeted refinements in workspace, auth, and notifications modules without disrupting established platform conventions.
+Tech Stack: Vue 3, Quasar, Capacitor, Java 21, Spring Boot 3.3, Spring Cloud Gateway, PostgreSQL, Redis, RabbitMQ
+
+----------------------------------------------------------------------------
+
+[04] MindVault – Multi-User Personal Finance Ledger Platform · Full-Stack FinTech · Oct 2025 — Dec 2025 · Completed
+Role: Solo Full-Stack Engineer
+Subtitle: Full-stack personal finance app with an immutable decimal-precise ledger, per-account roles and pre-aggregated analytics, built as a self-directed learning project.
+Overview: Engineered a full-stack personal finance platform with an immutable, decimal-precise ledger, measured by 89 REST endpoints, 24 entities and 82 tests, via a NestJS/TypeORM API, pre-aggregated summaries and a Next.js client.
+Contribution: Solo Developer · Self-Learning Project | owner | scratch | lead
+  Designed and built the entire platform alone, backend and frontend, to learn production-style NestJS, PostgreSQL and Next.js architecture.
+  - Scope: NestJS 11 backend: 11 modules, 22 controllers, 28 services, 24 TypeORM entities
+  - Scope: Arbitrary-precision ledger engine and incremental summary pipeline
+  - Scope: JWT, passkey and security-question auth with session tracking
+  - Scope: Account-level RBAC (Owner, Admin, Editor, Viewer)
+  - Scope: Next.js 15 App Router client: 32 pages, 11 Zustand stores, 10 API services
+  - Scope: Seeder CLI, Docker setup and 82 automated test cases
+Problem: Personal finance tools suffer from floating-point balance drift, opaque balance edits, all-or-nothing sharing and dashboards that slow down as transaction history grows.
+Key Outcomes / Benefit Matrix:
+  - Individual Account Owner — Balances that drift or change without a trace: decimal.js arithmetic with non-negative balance checks and an append-only AccountLedger audit trail. [Balance arithmetic: IEEE 754 floating-point -> Arbitrary-precision decimals (designed)]
+  - Shared-Account Collaborator — Sharing means giving full access or duplicating accounts: Per-account roles (Owner, Admin, Editor, Viewer) enforced by NestJS guards via AccountUserRole. [Permission scope: Global role only -> Per-account role (designed)]
+  - Dashboard Viewer — Analytics slow down as history grows: Daily, weekly, monthly, yearly and category summaries updated transactionally on each write. [Analytics read path: On-demand aggregation over raw transactions -> Reads from 6 pre-aggregated summary entities (designed)]
+Key Technical Decisions:
+  - Stored amounts as string/numeric values and wrapped all math in decimal.js helpers (safeAdd, safeSubtract) with non-negative balance checks. Trade-off: explicit type parsing across services and DTOs.
+  - Added dedicated summary entities (daily, weekly, monthly, yearly, category) updated transactionally on create, update and delete. Trade-off: extra write-path work.
+  - Separated global authentication from account authorization with an AccountUserRole junction entity and custom NestJS guards. Trade-off: extra lookups on account-scoped requests.
+  - Split data access into 10 API services and state into 11 domain Zustand stores, with a global ApiResponseToast bridge. Trade-off: more store and service files.
+  - Dedicated repositories, validators and transformers for tags and tag groups. Trade-off: more classes per module.
+Tech Stack: Next.js 15, NestJS 11, PostgreSQL, TypeScript, TypeORM, Zustand
+Links: github: https://github.com/marceldavidbaroi/MindVault_Backend · githubFrontend: https://github.com/marceldavidbaroi/MindVault_Frontend · githubBackend: https://github.com/marceldavidbaroi/MindVault_Backend
+
+----------------------------------------------------------------------------
+
+[05] Enterprise Modular Packaging System · Quasar & npm Architecture · 2025 — Q1 2026 · Completed & Adopted
+Role: Frontend Implementation & POC Engineer
+Subtitle: Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.
+Overview: Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.
+Contribution: Domain specialist | specialist
+  Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
+  - Scope: Preserving Quasar Directives & Component Styles in Isolated Packages
+  - Scope: Verifying Packaging Viability via Proof of Concept (POC)
+  - Scope: Team Implementation Workflow & Modular Domain Boundaries
+Impact:
+  - Code Reusability: +65% — Plug-and-play adoption across multiple client web applications
+  - Package Extraction: Scoped npm — Decoupled monolithic components into standalone private packages
+  - POC & Testing: 100% Passed — End-to-end package bundling, style extraction, and runtime validation
+  - Release Autonomy: SemVer — Independent versioning without rebasing entire host monoliths
+  - Package Rollout: <1 Hour — Standardized template manifests for rapid component modularization
+  - Style Isolation: Zero Collisions — Vite library mode bundling with host Quasar theme consumption
+Architecture: Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode.
+Key Technical Decisions:
+  - Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount.
+  - Constructed a local Verdaccio and `pnpm link` sandbox testbed to validate component lifecycle, TypeScript type declarations (.d.ts), and reactivity before publishing to private registries.
+  - Divided responsibilities between architecture planning (Senior Architect) and core feature implementation/testing (myself and peer engineer), creating standard template manifests for all future packages.
+Tech Stack: Vue 3, Vite, npm, GitLab Registry, SemVer
+
+----------------------------------------------------------------------------
+
+[06] UniFlow – Real-Time University Class & Learning Platform · EdTech & Real-Time Web App · Mar 2025 — Jun 2025 · Completed
+Role: Solo Full-Stack Engineer
+Subtitle: Role-based class and learning management app for students, teachers, and administrators, built on Quasar and Firebase.
+Overview: Accomplished a centralized university learning platform as measured by 44 routes across 9 domain modules, 77 Vue components, 10 Pinia stores, and 12 Firestore entity schemas, by engineering a role-guarded Quasar (Vue 3) app on Firebase Authentication and Cloud Firestore.
+Contribution: Solo owner & full-stack engineer | owner | scratch | lead
+  Designed and built the entire platform alone: architecture, Firestore data model, role-based routing, Pinia state layer, and all 77 Vue components.
+  - Scope: Live class sessions with human-readable numeric session codes
+  - Scope: Role-based workspaces for Student, Teacher, and Admin
+  - Scope: Collaborative study groups with shared resources
+  - Scope: Task announcements, submissions, and multi-criteria grading rubrics
+  - Scope: Admin panel for faculties, departments, courses, users, and activity logs
+Problem: University academic workflows are fragmented: schedules, group discussions, task submissions, and lecture notes live in disconnected apps. Teachers lack one tool for live sessions and graded multi-criteria tasks, and administrators lack a central view of faculties, departments, courses, and activity logs.
+Key Outcomes / Benefit Matrix:
+  - Student — Joining sessions and tracking tasks, groups, and notes across separate tools: One workspace with a short numeric code to join a live session, plus groups, tasks, and todos in the same app [Session join identifier: Random Firestore document ID -> Short auto-incrementing numeric code (designed)]
+  - Teacher — No single tool to run live sessions and grade against several criteria: Task announcements, submissions, and rubric-based grading in one role-specific dashboard [Tools needed for task lifecycle: Several disconnected tools -> One app (designed)]
+  - Academic Administrator — No central place to manage the university hierarchy or audit activity: A 16-page admin suite with CRUD across the hierarchy, analytics charts, and activity logs [Admin management surfaces: None -> 16 admin pages and 6 dialogs (measured)]
+Impact:
+  - Domain modules: 9 Modules — admin, auth, dashboard, group, home, liveShare, session, task, todo
+  - Route endpoints: 44 Routes — Aggregated from per-module route files with role-based meta guards
+  - Vue components: 77 Components — 40 pages, 34 UI components, 2 layouts, and the root App
+  - State layer: 10 Stores — Pinia stores with separated state and action files, persisted state
+  - Data model: 12 Schemas — Firestore entity collections documented in the repo
+  - Delivery: 181 Commits — 100% solo authorship over roughly three months
+Key Technical Decisions:
+  - Split the codebase into 9 isolated modules under src/modules/, each with its own pages/, components/, and routes.js, aggregated into the central router. Trade-off: manual route aggregation in src/router/index.js.
+  - Added a Firestore transaction in firebaseService.js that atomically increments a metadata/counters document to assign human-readable session numbers. Trade-off: one extra read/write transaction per session creation.
+  - Centralized access control in the Quasar boot/auth.js plugin, checking to.meta.requiresAuth and to.meta.roles against the Pinia user store's current role. Trade-off: every protected route must declare its metadata.
+  - Split each of the 10 Pinia stores into index.js (state/getters) and action.js, keeping Firestore calls in the service layer and store actions. Trade-off: extra action files per store.
+Tech Stack: Vue 3, Quasar 2, Pinia, Firebase Firestore, Firebase Authentication
+Links: github: https://github.com/marceldavidbaroi/UniFlow-
+
+----------------------------------------------------------------------------
+
+[07] Finance & Accounting App – Modular Enterprise Suite · Fintech & Enterprise SaaS · 2025 — H1 2026 · Active Production
+Role: Frontend Engineer (Modular Package Architecture)
+Subtitle: Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.
+Overview: Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.
+Contribution: Core contributor | core
+  Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
+  - Scope: Feature scope vs. maintainability in a monorepo with nested git repos
+  - Scope: Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
+  - Scope: Legacy branch API (/loanapp/branchs) missing in Supercards backend
+  - Scope: Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
+  - Scope: Print/PDF export without server-side rendering
+Impact:
+  - Modular Packages: 7 Packages — Six domain packages orchestrated by a meta-dependency installer
+  - Production Surfaces: 6 Menus — Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings
+  - API Surface: 15+ Endpoints — Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups
+  - Integration Stability: P0 Resolved — Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout
+  - Report Export Engine: A4 PDF — Client-side multi-page summary PDF assembly via html2canvas & jsPDF
+  - Multi-Tenant Scoping: 100% Isolated — Tenant context and branch routing via dynamic API interceptors
+Architecture: Seven Vite-built Vue library packages expose routes, Pinia stores, and Quasar pages; the Supercards host provides apiClient, authStore, and tenantStore via boot/provide; @itc/menu-system discovers appPlugin menus; all domain HTTP flows through itc/pennyperfect on Laravel under /api/v1 with Sanctum + tenant middleware.
+Key Technical Decisions:
+  - Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.
+  - Standardized host boot files (pennyperfect-transactions, pennyperfect-settings, pennyperfect-balancesheet) calling configureTaxApi / configureSettingsApi / configureBalanceSheetApi with apiUrlBuilder + appId: pennyperfect; feature pages inject apiClient, authStore, tenantStore for Axios-interceptor packages.
+  - Migrated income statement and reports branch loaders to GET /tenants/{tenantId}/branches (itc/core-auth-accounts); made branchId nullable across transaction and settings forms to match backend validation.
+  - Unified appPlugin.routes to ./src/router/routes.ts; host imports { routes } from package entry as single source of truth.
+  - Client-side PDF via hidden iframe loading /external/reports, html2canvas snapshot of .report-preview-a4, jsPDF multi-page assembly.
+Tech Stack: Quasar, Vue 3, TypeScript, Pinia, Vite
+
+----------------------------------------------------------------------------
+
+[08] Documentation Engine – Automated Helpdesk Document Generator · Doc Engine & Quasar UI · 2025 — Feb 2026 · Active Production
+Role: Frontend UI & Document Preview Engineer (Solo Contributor)
+Subtitle: Interactive 3-pane document preview engine built with Quasar Framework, Vue 3, Pinia, and reactive IntersectionObserver Table of Contents.
+Overview: Engineered a dedicated 3-pane documentation preview engine in Quasar (Vue 3), converting raw ticket threads into publication-grade documents with dynamic DOM-scanned Table of Contents and safe HTML parsing.
+Contribution: Domain specialist | specialist
+  Engineered the frontend document preview system for Docstach using Quasar Framework (Vue 3) and TypeScript [X], transforming raw ticket thread data and automated responses into structured, publishable documentation [Y] by building a dedicated 3-pane viewport layout with recursive navigation, a dynamic DOM-scanned 'On This Page' Table of Contents, and scoped HTML sanitization [Z].
+  - Scope: Dedicated Reading Layout Isolated from Admin Dashboard
+  - Scope: Multi-Tier Nested Navigation for Large Ticket Sets
+  - Scope: Dynamic In-Document 'On This Page' Table of Contents
+  - Scope: Safe HTML Parsing & Styling of Auto-Generated Content
+Impact:
+  - Document Layout: 3 Panes — Hierarchical nested nav tree, parsed HTML reading pane, and sticky on-page TOC
+  - Navigation Tracking: Dynamic TOC — DOM-scanned headings with live IntersectionObserver ScrollSpy tracking
+  - Data Transformation: Ticket-to-Doc — Instant in-browser preview of auto-generated responses from raw ticket data
+  - Security & XSS: 100% Sanitized — Client-side markup parsing and scoped typography style injection
+  - Render Latency: Sub-50ms — High-speed virtual DOM parsing without external heavy markdown runtimes
+  - Viewport Adaptability: Responsive — Collapsible dual-sidebars with persisted reading state preferences
+Architecture: Frontend single-page layout engineered in Quasar and Vue 3, featuring a 3-pane documentation layout: a nested category/ticket navigation tree on the left, an HTML-parsed reading pane in the center, and an auto-generated 'On This Page' Table of Contents on the right.
+Key Technical Decisions:
+  - Architected a dedicated full-bleed documentation preview layout separate from the standard administrative dashboard, providing distraction-free reading, custom document headers, and responsive print/export capabilities.
+  - Engineered a recursive nested navigation tree component in Quasar supporting unlimited hierarchy levels (Workspaces → Categories → Ticket Threads → Documentation Chapters) with active route indicators and search filtering.
+  - Built a reactive DOM scanner that parses the rendered HTML body, extracts heading elements (H2/H3), injects unique anchor IDs, and builds a sticky Table of Contents sidebar with IntersectionObserver scroll tracking.
+  - Constructed an HTML parsing and sanitization pipeline that ingests raw server-generated response markup, cleans unsafe attributes, and injects scoped typography styles for code blocks, callouts, and data tables.
+Tech Stack: Quasar, Vue 3, Pinia, TypeScript
+
+----------------------------------------------------------------------------
+
+[09] Automated Store Management Platform · Retail Operations & POS · Feb 2026 — Apr 2026 · Active Production
+Role: UI/UX Integration Engineer (Frontend Lead)
+Subtitle: High-density retail POS and store operations interface engineered with Quasar, Vue 3, and optimized keyboard-first data entry workflows.
+Overview: Engineered a high-density retail store management interface achieving 100% Figma-to-code parity and +30% faster cashier data entry via keyboard-first Quasar components and reactive state caching.
+Contribution: Technical lead | lead
+  Engineered responsive, high-density store management and retail checkout interfaces [X], achieving 100% visual fidelity to Lambda Design Figma specifications and +30% faster cashier transaction throughput [Y] by developing custom keyboard-first Quasar components, streamlined shift balancing workflows, and reactive catalog search caches [Z].
+  - Scope: Maximizing Screen Real Estate for High-Volume Data Entry
+  - Scope: Keyboard-Only Navigation & Hotkey Ergonomics
+  - Scope: Sub-Second Product Search During Live Checkout
+Impact:
+  - Figma Parity: 100% — Pixel-perfect implementation from Lambda Design systems
+  - Entry Speed: +30% — Keyboard-first navigation, tab indexing, and rapid hotkeys
+  - Item Lookup: Sub-50ms — Client-side reactive search across active store catalog
+  - Layout Density: High-Density — Maximized information hierarchy for rapid cashier shifts
+  - Shift Balancing: Automated — End-of-day cash drawer reconciliation workflows
+  - Touchscreen Support: POS Ready — Adaptive touch targets and multi-resolution responsive grid
+Architecture: Single-Page Application built on Quasar Framework and Vue 3, integrating Lambda Design System CSS tokens, Pinia client caching for offline-resilient product lookups, and RESTful API endpoints for invoice submission and shift settlement.
+Key Technical Decisions:
+  - Designed a compact, high-density data grid using Quasar's dense table modes and custom typography tokens from the Lambda Design System.
+  - Implemented a global keyboard event bus mapping F-keys and arrow keys to common actions (New Sale, Add Discount, Complete Payment, Void Item).
+  - Cached active inventory catalogs in local Pinia stores with fuzzy search indexation, syncing asynchronously with backend inventory updates.
+Tech Stack: Quasar, Vue 3, TypeScript, Pinia
+
+----------------------------------------------------------------------------
+
+[10] SuperCards – Unified Enterprise Operations Suite · Enterprise SaaS & Fintech · 2024 — Present · Active Production
+Role: Frontend Engineer
+Subtitle: Multi-tenant product suite on a shared card platform, spanning task management, double-entry accounting, lending, and assessments.
+Overview: Contributed to the card and task management system, login flow, core reusable components, and shared packages of an enterprise product suite, and shipped accounting and assessment products on Quasar (Vue 3) and modular Pinia stores.
+Contribution: Core contributor | contributor
+  Co-built the card and task management system with senior engineers [X], delivered the login flow, core reusable components, and shared packages that every product in the suite relies on [Y], and shipped accounting and assessment products plus partial lending, dashboard, recognition, file, and team app surfaces on a shared Quasar codebase [Z].
+  - Scope: The suite hosts many products (tasks, finance, loans, quizzes) that needed distinct UIs but shared entities like cards, tags, attachments, and comments.
+  - Scope: Every product needed one consistent login, permission, and tenant-resolution flow instead of per-product authentication.
+  - Scope: Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.
+  - Scope: Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.
+  - Scope: Field staff and mobile users needed push notifications and device capabilities alongside the web SPA.
+Engineering Improvements:
+  - Cross-product primitive reuse: Shared card and task management primitives with domain-configurable layout props (Surface reusability: 0 shared product primitives -> 9 product surfaces sharing core card shell)
+Impact:
+  - Task Management: Core Cards — Co-built the card and task system with senior engineers: lists, details, tags, unlink flows
+  - Platform Foundations: Login + Core — Login flow, core reusable components, and shared packages used across products
+  - Product Surfaces: 9 Surfaces — Tasks, Accounting, Lending, Dashboard, Recognition, Files, Quizzes, Apps
+  - Suite Scale: 500+ Components — Suite-wide Vue components built on shared card primitives and dialogs
+  - Cross-Platform: 1 Codebase — Responsive Quasar desktop SPA + Capacitor 7 native mobile shells
+  - Access Isolation: Multi-Tenant — Tenant store and branch-preference resolution via route guards
+  - Accounting Engine: Double-Entry — General ledger, journal transactions, statements, and tax-aware entries
+  - Real-Time Sync: WebSockets — Laravel Echo, Pusher live channels, and Firebase push notifications
+Architecture: Modular Quasar SPA serving a suite of products, with a shared login flow, core reusable components and shared packages, per-domain Pinia stores, and a centralized Axios API client with auth interceptors, composing shared task, tag, and media primitives against Laravel REST and WebSocket backends.
+Key Technical Decisions:
+  - Worked with senior engineers on a module-per-domain architecture (src/modules/<domain>/) with shared primitives (TaskDetails, TaskList, MediaManager, AssignTagToTask) and configurable layout props instead of forking separate apps.
+  - Built a single login flow with route-level guards, token interceptors, a permission directive, and tenant/branch context resolution shared by all modules.
+  - Implemented distinct unlink flows for child tasks vs. related-task associations with confirmation dialogs, store-level local state sync, and preview-safe read-only tag rendering.
+  - Built Penny Perfect as a dedicated module with branch-aware transaction tables, journal entry dialogs, import/export pipelines, and external print-preview routes.
+  - Wrapped the Quasar build with Capacitor 7, Firebase messaging, camera, geolocation, and local notifications while keeping a single Vue codebase.
+Tech Stack: Quasar, Vue 3, PHP (Laravel), Capacitor, PostgreSQL
+
+----------------------------------------------------------------------------
+
+[11] SuperCards Quiz – Internal Learning & Assessment Platform · Learning & Assessment · Oct 2025 — Dec 2025 · Completed
+Role: Frontend Engineer (Learning Systems Lead)
+Subtitle: Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.
+Overview: Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.
+Contribution: Technical lead | lead
+  Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].
+  - Scope: Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.
+  - Scope: Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).
+  - Scope: Participants needed a guided, timed experience with post-submission review — not just a static form.
+  - Scope: Authors starting from scratch on question banks was slow and error-prone.
+Impact:
+  - User Journeys: 4 Workflows — Creation, Studio Authoring, Challenge Discovery, and Timed Attend
+  - Module Refactor: 11 Components — Clean separation across authoring, live display, and mistake review
+  - AI Acceleration: GPT-4o — Automated MCQ and fill-in-the-blank question generation from descriptions
+  - Timed Assessment: 4-Phase Flow — Intro → Countdown Session → Score Calculation → Mistake Walkthrough
+  - Platform Reuse: 100% Shared — Reused universal task card model without separate LMS infrastructure
+  - Session Safety: Auto-Submit — Defensive client countdown timers with instant score payload normalization
+Architecture: Quiz module mounted at /quiz with four routes, a dedicated Pinia store and quizbuilder API service, composing platform primitives (TaskDetails, tags, media) around quiz-specific components for authoring, participation, and analytics.
+Key Technical Decisions:
+  - Modeled quizzes as SuperCards task cards with entity tags (Quiz), status tags (Draft / Published / Unpublished), category tags (Quiz Category), and meta fields (time, quiz_instructions).
+  - Split into focused components: QuizQuestionForm (authoring + validation + AI), ExistingQuestionsList (collapsible edit/delete), QuizCard (dual studio/challenge modes), and thin orchestration pages.
+  - Built a four-phase attend flow (intro → questions → results → mistake review) with countdown timer, progress bar, and auto-submit on timeout.
+  - Integrated OpenAI question generation with configurable MCQ/fill-blank counts, preview dialog, and one-click injection into the authoring form.
+Tech Stack: Quasar, Vue 3, OpenAI API, Pinia, TypeScript
+
+----------------------------------------------------------------------------
+
+[12] Enterprise Social Collaboration Platform – UI Refinement · UI & Responsiveness · 2024 — Jan 2025 · Completed
+Role: Frontend UI & Responsiveness Contributor
+Subtitle: Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3.
+Overview: Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization.
+Contribution: Core contributor | core
+  Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z].
+  - Scope: Inconsistent Mobile & Tablet Feed Card Breakpoints
+  - Scope: Component Polish & User Experience Continuity
+Impact:
+  - Device Fluidity: 100% Fluid — Zero horizontal overflow across smartphones, tablets, and desktop monitors
+  - Media Rendering: Zero Clipping — Adaptive multi-image attachment previews and fluid typography constraints
+  - Touch Usability: 48px Targets — Standardized accessible tap targets for reactions, comments, and drawers
+  - Component Polish: Quasar v2 — Standardized discussion cards and smooth drawer transition animations
+  - Layout Shifts: Zero CLS — Eliminated cumulative layout shifts during dynamic feed rendering
+Architecture: Frontend single-page application built with Quasar Framework (Vue 3), optimized for multi-device responsiveness through flexible grid constraints and Quasar breakpoint utilities.
+Key Technical Decisions:
+  - Refactored feed cards and media attachment galleries to use fluid Flexbox and Quasar responsive classes ($q.screen / col-xs-12 col-md-8), ensuring content scales naturally on smaller viewports.
+  - Streamlined interactive states (hover effects, active tap feedback, comment drawer animations) and standardized spacing/padding across the application shell.
+Tech Stack: Quasar, Vue 3, CSS Grid, Responsive Design
+
+----------------------------------------------------------------------------
+
+[13] BrandWala Retail – Market-Aware Cross-Border Commerce Platform · Cross-Border Commerce · 2025 — 2026 · Active Production
+Role: Lead Full-Stack & Systems Engineer
+Subtitle: High-performance cross-border retail platform built with React 19, Firebase Firestore, TanStack Query, and automated Python catalog scrapers.
+Overview: Architected a market-aware cross-border commerce platform achieving sub-second catalog renders and -60% Firestore read costs across 40+ K-Beauty brands by designing React 19 market-scoped routing, TanStack Query cache invalidation, automated Python ETL pipelines, and a 5-layer real-time commission engine.
+Contribution: Technical lead | lead
+  Architected and deployed BrandWala Retail [X], an enterprise cross-border K-Beauty commerce platform serving Bangladeshi resellers and wholesale importers. Built a high-performance React 19 SPA backed by Firebase Firestore Lite and TanStack Query v5 [Y] — automating UK wholesale catalog ingestion via Python scrapers for 40+ brands, orchestrating a 5-layer real-time commission engine with delivery adjustments, and implementing quota-optimized cursor pagination and derived Customer Order Book projections [Z].
+  - Scope: Automating UK Wholesale Catalog Ingestion
+  - Scope: Market-Aware Multi-Vendor Routing
+  - Scope: Complex 5-Layer Commission Calculation
+  - Scope: Firestore Read Quota Optimization
+  - Scope: Customer Order Book Intelligence
+Impact:
+  - Catalog Automation: 40+ Brands — COSRX, Laneige, Beauty of Joseon, Anua auto-tagged via Python ETL pipelines
+  - Firestore Quota: -60% Reads — Debounced search, cursor pagination, and status-filtered batch queries
+  - Commission Engine: 5 Layers — Base margin, custom price markup, COD %, packing flat, and invoice fee
+  - Architecture: Market-Scoped — Multi-market / vendor URL routing (/m/{market}/{vendor}/products)
+  - Customer CRM: Order Book — Derived projection mode with lazy row expansion for buyer intelligence
+  - Migration State: SQL Ready — Relational PostgreSQL schema, indexes, and customer order book SQL views
+Architecture: React 19 + Vite SPA with market-scoped routing (/#/m/{marketSlug}/{vendorSlug}/...) connecting to Firebase Firestore Lite via TanStack Query v5, backed by automated Python catalog ingestion pipelines and role-enforced Firestore security rules.
+Key Technical Decisions:
+  - Built dedicated Python scrapers with session/CSRF authentication for kobareseller.com and WooCommerce REST API adapters, integrating automatic regex brand tagging for 40+ K-Beauty labels.
+  - Structured routing under /#/m/{marketSlug}/{vendorSlug}/(products|cart|orders) with React Router 7 and domain feature isolation under web/src/features/{market}.
+  - Centralized calculation logic in domain modules (orderCommission.js / uiCommission.js), capturing base commissions, custom sell markups, delivery adjustments, COD fees, packing charges, and invoice deductions in an immutable ui_calculation order snapshot.
+  - Implemented 250ms debounced searching, cursor-based pagination, bounded page limits, no-op write guards on quantity updates, and chunked status queries (submitted, placed, cancelled).
+  - Built a derived customer_order_book projection supporting dual-mode operation (projection mode with legacy fallback) with lazy-loaded row expansions.
+Tech Stack: React 19, Firebase Firestore, TanStack Query, Python Web Scraping, TailwindCSS, TypeScript
+Links: github: https://github.com/david-git-2/brand-wala-retail
+
+----------------------------------------------------------------------------
+
+[14] Microfinance Loan Collection App & Web Portal · Fintech & Mobile App · 2025 · Completed
+Role: Frontend Engineer (Solo Mobile & Web Contributor)
+Subtitle: Door-to-door loan installment collection Android app and branch management portal built with Quasar Framework, Vue 3, and Pinia.
+Overview: Engineered a field microfinance loan collection Android app and branch web portal, cutting door-to-door collection time by +50% and eliminating manual settlement variance via Quasar (Vue 3), Pinia offline caching, and instant digital receipt generation.
+Contribution: Core contributor | core
+  Developed a solo frontend microfinance loan collection mobile app for Android and contributed responsive branch loan management interfaces on the web portal using Quasar Framework, Vue 3, and Pinia [X]. Equipped field agents with daily collection lists and digital receipts [Y], cutting collection turnaround by +50% and eliminating end-of-day branch cash discrepancies via offline schedule caching and automated settlement summaries [Z].
+  - Scope: Field Reliability for Door-to-Door Loan Installment Logging
+  - Scope: Unified Codebase for Mobile Android & Web Management Portals
+  - Scope: End-of-Day Branch Reconciliation & Agent Settlement
+Impact:
+  - Field Collection Speed: +50% — Optimized touch inputs, rapid borrower lookup, and quick installment modals
+  - Mobile Architecture: Solo Android — Engineered standalone Quasar Android client from scratch
+  - Payment Verification: Digital Receipts — Instant payment reference generation with borrower ledger updates
+  - Branch Settlement: Zero Variance — Automated end-of-day cash vault reconciliation and handover reports
+  - Field Reliability: Offline-Ready — Local schedule caching for intermittent network connectivity
+  - Platform Scope: 2 Surfaces — Field agent Android APK + desktop branch manager supervision portal
+Architecture: Frontend architecture powered by Quasar Framework and Vue 3, distributed as an Android field app (solo development) and responsive desktop web modules for branch managers with Pinia state management.
+Key Technical Decisions:
+  - Built a mobile-first collection flow in Quasar with Pinia stores and local storage caching, enabling agents to view daily borrower schedules and record payments with instant receipt generation even during intermittent network dips.
+  - Leveraged Quasar's cross-platform UI primitives to build standalone Android APK views for field workers while delivering responsive branch and loan management interfaces for desktop web supervisors.
+  - Designed a dedicated collection settlement and summary view calculating total cash collected, outstanding arrears, and installment counts prior to daily branch vault handovers.
+Tech Stack: Quasar, Android Build, Vue 3, Pinia, Capacitor
+
+----------------------------------------------------------------------------
+
+[15] Smart Hisab – Canteen POS & Meal ERP Platform · Flutter & Cloud ERP · 2026 — Present · Active Development
+Role: Lead Mobile & Backend Engineer (Client Project)
+Subtitle: High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.
+Overview: Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.
+Contribution: Technical lead | lead
+  Architected and developing an offline-first institutional canteen POS and meal ERP platform for a dedicated client using Flutter and Supabase PostgreSQL [X]. Replaced paper meal tokens and chaotic shift registers with automated customer AR accounts and digital shift cashbooks [Y], enabling sub-second counter transactions, zero-variance cashier handovers, and atomic ledger reconciliation during peak lunch hours [Z].
+  - Scope: Guarantee sub-second counter throughput during lunch rush without internet dependency
+  - Scope: Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases
+  - Scope: Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)
+Impact:
+  - Counter Checkout: <1.2s — Rapid meal voucher issuance via offline SQLite queue
+  - Shift Variance: 0.0% — Strict cash drawer open/close reconciliation
+  - Peak Capacity: 500+ Meals — Handles concentrated rush without network latency
+  - Data Integrity: 100% RLS — PostgreSQL tenant and role-based clearance
+Architecture: Smart Hisab separates high-velocity counter operations from background server synchronization. The Flutter client runs an offline-first SQLite write buffer that queues meal orders and cash receipts locally, allowing counter staff to serve diners at maximum speed regardless of connectivity. In the background, background workers flush queued mutations through atomic Supabase RPC transactions into PostgreSQL, updating customer AR wallets, vendor inventory AP, and shift cash drawers with strict Row-Level Security.
+Key Technical Decisions:
+  - Built an offline-first local mutation store in SQLite with optimistic UI updates and background batch sync
+  - Implemented atomic PostgreSQL stored procedures (RPCs) in Supabase with explicit debit/credit balancing
+  - Applied Supabase Row-Level Security (RLS) policies tied directly to user roles and assigned shift IDs
+Tech Stack: Flutter, Supabase, Dart, PostgreSQL, Android
+
+----------------------------------------------------------------------------
+
+[16] Nidhara – Security-First Auth Foundation for a Personal Finance & Growth Platform · Security-First Auth & FinTech Foundation · Dec 2025 — Feb 2026 · Active Production
+Role: Solo Full-Stack Engineer
+Subtitle: NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.
+Overview: Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.
+Contribution: Solo owner & full-stack engineer | owner | scratch | lead
+  Designed and built the monorepo, authentication engine, session lifecycle, Prisma data model, and documentation site alone.
+  - Scope: npm workspaces monorepo: NestJS backend, Next.js frontend, Docusaurus docs
+  - Scope: Signup, signin, refresh, and logout flows with Argon2 and dual-token issuance
+  - Scope: Database-backed sessions with CSRF verification and revocation on replay or logout
+  - Scope: Security event, account security state, and sudo session data models
+  - Scope: Swagger documentation, response envelope interceptor, and structured Pino logging
+Problem: Personal finance and journaling tools are fragmented, and many leave users with weak credential storage and fragile session handling. A financial platform needs an auditable authentication foundation, with strict session invalidation, CSRF defenses, and event logging, in place before any ledgers are connected.
+Key Outcomes / Benefit Matrix:
+  - Account Holder — Stolen or replayed session tokens could expose personal financial data: Single-use refresh tokens bound to a session record, rotated on every refresh and paired with a CSRF token [Refresh token reuse: Reusable until expiry -> Single-use, revoked on replay (designed)]
+  - Platform Owner — No audit trail of sign-in activity: Security events (login success, login failure, logout, refresh rotation) stored with user-agent and IP metadata, plus structured JSON request logs [Tracked security event types: 0 -> 4 (measured)]
+Impact:
+  - Workspaces: 3 Workspaces — Backend (NestJS), frontend (Next.js 16), and docs-site (Docusaurus) in one npm monorepo
+  - Auth endpoints: 5 Endpoints — Signup, signin, refresh, logout, and an app route across 2 controllers
+  - Data model: 6 Models — User, AuthCredential, AuthSession, SecurityEvent, UserAccountSecurityState, SudoSession in 2 migrations
+  - Password hashing: Argon2 — Used for credentials and refresh token hashes
+  - Documentation: 30 Pages — Architecture, domain specifications, and sequence diagrams in Docusaurus
+  - Delivery: 18 Commits — 100% solo authorship over roughly two months
+Key Technical Decisions:
+  - Used Argon2 for credential verification and refresh token hashes instead of bcrypt. Trade-off: higher memory use per authentication request.
+  - Bound each refresh token to a session record, rotated the refresh hash on every /auth/refresh call, and required a matching client csrfToken. Trade-off: extra database writes on refresh.
+  - Modeled a standalone SudoSession with a time-bounded sudoUntil and a verified escalation method (PASSWORD, RECOVERY_KEY, MFA). Trade-off: sensitive endpoints will need a second authorization check.
+  - Integrated nestjs-pino with pino-http and a global ResponseInterceptor to emit structured JSON logs and a uniform response envelope. Trade-off: some extra bootstrap configuration.
+Tech Stack: NestJS 11, Prisma 7, PostgreSQL 15, Next.js 16, TypeScript
+Links: github: https://github.com/marceldavidbaroi/Nidhara-
+
+----------------------------------------------------------------------------
+
+============================================================================
+EDUCATION
+============================================================================
+
+Bachelor of Science in Computer Science & Engineering · Daffodil International University (DIU) (2020 — 2024)
+Dhaka, Bangladesh · Completed · CGPA: 3.91 / 4 · 142 credits
+Summary: Rigorous 142-credit undergraduate curriculum (CSE Batch 55) encompassing core computer science algorithms, systems architecture, distributed computing, database management, software engineering, artificial intelligence, and applied robotics under the UGC Uniform Grading System.
+Key Focus Areas: Software Engineering & Full-Lifecycle Projects (Software Projects I–VI), Distributed Systems, Operating Systems & Relational Databases, Data Structures, Advanced Algorithms & Discrete Mathematics, Artificial Intelligence, Data Mining, Big Data & IoT, Computer Networks, Data Communication & Embedded Systems, Compiler Design, Computer Architecture & Information Security
+
+Higher Secondary Certificate (HSC) — Science · Notre Dame College, Dhaka (2017 — 2019)
+Dhaka, Bangladesh · Completed · GPA: 4.67 / 5
+Summary: Completed Higher Secondary Certificate in Science from Notre Dame College, Dhaka (Batch '19, Group 13) with GPA 4.67 / 5.00 under the Dhaka Education Board, covering the standard science curriculum and actively participating in club activities.
+Key Courses: Physics, Chemistry, Higher Mathematics, Biology, Information & Communication Technology (ICT), English, Bangla
+Co-Curricular: Notre Dame Math Club (NDMC), Notre Dame Cultural Club (NDCC)
+
+============================================================================
+RESEARCH & PUBLICATIONS
+============================================================================
+
+CNN-Based Bangla Handwritten Character Recognition: Exploring Ekush Dataset for Performance Enhancement (2023 — 2024)
+Undergraduate Final Year Thesis · Bachelor of Science in Computer Science & Engineering · Department of Computer Science & Engineering · Daffodil International University · Sole Researcher & Author (Individual Thesis)
+Subtitle: Benchmarking 16 Deep Learning & Classical Machine Learning Models on Isolated Characters
+Abstract: Developed an optical character recognition (OCR) pipeline to accurately classify complex handwritten Bangla characters (vowels and consonants). Evaluated and benchmarked 16 machine learning and deep learning models on a curated subset of the Ekush dataset containing 80,000 images across 50 classes. DenseNet achieved peak state-of-the-art recognition accuracy (97.93% on vowels, 95.99% on consonants) by maximizing feature reuse and gradient flow under compute-constrained training.
+Dataset: Ekush Dataset (Curated Subset) (80000 images, 50 classes)
+Key Metrics: VOWEL ACCURACY: 97.93% | CONSONANT ACCURACY: 95.99% | DATASET VOLUME: 80,000 | MODELS BENCHMARKED: 16 Classifiers
+Key Takeaways:
+  - DenseNet achieved the highest performance across all metrics (97.93% vowel accuracy, 95.99% consonant accuracy) by leveraging tight interlayer connections for gradient propagation and feature reuse.
+  - Non-linear Support Vector Machines (88.14% vowel, 78.77% consonant) outperformed all other tree-based and distance-based classical algorithms, establishing the best non-neural baseline.
+  - Consonant recognition presented a significantly higher error rate across all 16 classifiers due to shared structural strokes, subtle ligature differences, and higher intra-class handwriting variability compared to vowels.
+  - Feature reuse in densely connected layers allowed superior accuracy within just 5 training epochs, demonstrating high efficiency under constrained computational resources.
+Tags: Deep Learning, Computer Vision, Convolutional Neural Networks (CNN), DenseNet, Optical Character Recognition (OCR), Ekush Dataset, Bangla Language Processing, PyTorch / Scikit-Learn, Academic Thesis
+Repository: https://internship.daffodilvarsity.edu.bd/?app=home&cmd=reportsViewPDFskin&project_number=26095
+
+============================================================================
+ENGINEERING PHILOSOPHY
+============================================================================
+
+- Problem & Market Discovery: Before starting any project, I identify the real market friction and the exact business problem that needs solving. I map out user pain points and define clear success criteria upfront.
+- Research Existing Solutions: I audit current market solutions to understand their strengths and pinpoint their weaknesses. This gap analysis uncovers what is missing so we can design a differentiated, superior product.
+- Design the Solution & Data Model: Before writing application logic, I architect the full solution: designing the database schemas, entity relationships, integrity constraints, and API contracts that back the system.
+- UI/UX Design & Implementation: I design intuitive user journeys and responsive interfaces in UI/UX, then translate them into performant, production-ready frontend and backend code tested against real-world user flows.

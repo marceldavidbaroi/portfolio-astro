@@ -1,0 +1,61 @@
+{
+  "name": "Marcel David Baroi",
+  "headline": "Full Stack Engineer · TypeScript / Vue 3 / NestJS · PHP / Laravel · PostgreSQL / Supabase",
+  "location": "Dhaka, Bangladesh (UTC+6)",
+  "availability": "Remote preferred · Open to on-site/hybrid in Dhaka",
+  "phone": "+880 1795-774216",
+  "email": "marceldavidbaroi@gmail.com",
+  "website": "https://marceldavidbaroi.pages.dev",
+  "linkedin": "https://www.linkedin.com/in/marcel-david-baroi/",
+  "github": "https://github.com/marceldavidbaroi",
+  "summary": "Product-minded full stack engineer with a 3.91/4.00 B.Sc. in Computer Science & Engineering and a track record of independently architecting and shipping complex, data-intensive business applications. Fluent in TypeScript (Vue 3, Quasar, NestJS, Next.js) and PHP (Laravel/MVC) with strong relational database fundamentals (PostgreSQL, Row-Level Security, atomic RPCs). Engineered and maintain a multi-tenant wholesale ERP in daily production (6,000+ SKUs), a company-wide Service Desk platform embedded across client apps, and modular npm packaging infrastructure.",
+  "technicalSkills": {
+    "Frontend": [
+      "Vue 3",
+      "Quasar Framework",
+      "TypeScript",
+      "JavaScript (ES6+)",
+      "Pinia",
+      "TanStack Query",
+      "Next.js",
+      "Tailwind CSS",
+      "HTML5/CSS3"
+    ],
+    "Mobile": [
+      "Flutter (frontend)",
+      "Capacitor",
+      "Android builds",
+      "Google ML Kit"
+    ],
+    "Backend & APIs": [
+      "TypeScript",
+      "Node.js",
+      "NestJS",
+      "PHP",
+      "Laravel",
+      "REST API design"
+    ],
+    "Databases": [
+      "PostgreSQL / Supabase (schema design, RLS, PL/pgSQL RPCs)",
+      "MySQL",
+      "MongoDB",
+      "TypeORM"
+    ],
+    "Testing & CI/CD": [
+      "PHPUnit / Laravel test cases",
+      "Jest / integration tests",
+      "GitHub Actions",
+      "Vercel",
+      "Cloudflare Pages",
+      "Sentry"
+    ],
+    "Tooling & Infrastructure": [
+      "Git",
+      "Docker / Docker Compose",
+      "Vite",
+      "pnpm / npm private registries",
+      "Modular SemVer packages",
+      "Linux"
+    ]
+  }
+}

@@ -4,7 +4,7 @@
 	"subtitle": "High-performance cross-border retail platform built with React 19, Firebase Firestore, TanStack Query, and automated Python catalog scrapers.",
 	"description": "Architected a market-aware cross-border commerce platform achieving sub-second catalog renders and -60% Firestore read costs across 40+ K-Beauty brands by designing React 19 market-scoped routing, TanStack Query cache invalidation, automated Python ETL pipelines, and a 5-layer real-time commission engine.",
 	"chip": "Cross-Border Commerce",
-	"order": 13,
+	"order": 14,
 	"featured": true,
 	"platformType": "desktop",
 	"contribution": {
