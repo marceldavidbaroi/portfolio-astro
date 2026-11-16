@@ -1,5 +1,5 @@
 ---
-role: "Junior Software Engineer"
+role: "Software Engineer"
 company: "Proficient Information Systems"
 companyUrl: "https://proficient.systems"
 companyLogo: "/images/experience/proficient-logo.png"
