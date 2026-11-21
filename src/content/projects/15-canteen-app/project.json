@@ -122,14 +122,7 @@
 		"github": "",
 		"docs": ""
 	},
-	"images": [
-		"/images/projects/canteen/canteen-pos-hero.webp",
-		"/images/projects/canteen/shift-cashbook.webp",
-		"/images/projects/canteen/customer-ledger.webp"
-	],
-	"visualAssets": {
-		"heroMockup": "/images/projects/canteen/canteen-pos-hero.webp"
-	},
+	"images": [],
 	"architectureSummary": "Smart Hisab separates high-velocity counter operations from background server synchronization. The Flutter client runs an offline-first SQLite write buffer that queues meal orders and cash receipts locally, allowing counter staff to serve diners at maximum speed regardless of connectivity. In the background, background workers flush queued mutations through atomic Supabase RPC transactions into PostgreSQL, updating customer AR wallets, vendor inventory AP, and shift cash drawers with strict Row-Level Security.",
 	"keyDecisions": [
 		{

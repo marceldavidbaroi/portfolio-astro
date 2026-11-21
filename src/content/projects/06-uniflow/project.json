@@ -199,15 +199,7 @@
 		"github": "https://github.com/marceldavidbaroi/UniFlow-",
 		"docs": ""
 	},
-	"images": [
-		"/images/projects/uniflow/dashboard.webp"
-	],
-	"visualAssets": {
-		"heroMockup": "/images/projects/uniflow/dashboard.webp",
-		"screenshots": [
-			"/images/projects/uniflow/dashboard.webp"
-		]
-	},
+	"images": [],
 	"keyDecisions": [
 		{
 			"challenge": "A multi-role app with dozens of pages and dialogs leads to a bloated router file and scattered components.",

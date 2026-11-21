@@ -177,15 +177,7 @@
 		"github": "https://github.com/marceldavidbaroi/Nidhara-",
 		"docs": ""
 	},
-	"images": [
-		"/images/projects/nidhara/swagger.webp"
-	],
-	"visualAssets": {
-		"heroMockup": "/images/projects/nidhara/swagger.webp",
-		"screenshots": [
-			"/images/projects/nidhara/swagger.webp"
-		]
-	},
+	"images": [],
 	"keyDecisions": [
 		{
 			"challenge": "Protect credentials and session secrets against GPU-accelerated brute-force attacks.",

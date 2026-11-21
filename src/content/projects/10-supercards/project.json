@@ -172,9 +172,6 @@
 		"/images/thumb-3.png",
 		"/images/thumb-4.png"
 	],
-	"visualAssets": {
-		"heroMockup": "/images/dummy-project.png"
-	},
 	"architectureSummary": "Modular Quasar SPA serving a suite of products, with a shared login flow, core reusable components and shared packages, per-domain Pinia stores, and a centralized Axios API client with auth interceptors, composing shared task, tag, and media primitives against Laravel REST and WebSocket backends.",
 	"keyDecisions": [
 		{

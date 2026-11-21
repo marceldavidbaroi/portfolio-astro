@@ -128,9 +128,6 @@
 		"/images/thumb-3.png",
 		"/images/thumb-4.png"
 	],
-	"visualAssets": {
-		"heroMockup": "/images/dummy-project.png"
-	},
 	"architectureSummary": "Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode.",
 	"keyDecisions": [
 		{

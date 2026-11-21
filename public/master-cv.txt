@@ -233,7 +233,7 @@ Key Technical Decisions:
   - Added audio chimes (success/error tones) and device vibration via scanFeedback utilities, plus contextual AppHelpDialog guides on every major workflow.
   - Mobile stock registration captures barcode, product photo (Capacitor Camera), metadata (brand, size, condition, weight, pricing), and registers atomically via register_thrift_stock_from_app RPC with Cloudinary image upload.
 Tech Stack: Quasar, Vue 3, Supabase, Capacitor (Android), Google ML Kit
-Links: parentPlatform: https://tradeflowbd.com · github: https://github.com/marceldavidbaroi
+Links: parentPlatform: https://tradeflowbd.com
 
 ----------------------------------------------------------------------------
 

@@ -123,8 +123,5 @@
 		"Client details, tenant hosts, and proprietary workflows omitted under NDA",
 		"Senior-reviewed full-stack changes across gateway-routed microservices"
 	],
-	"images": [],
-	"visualAssets": {
-		"screenshots": []
-	}
+	"images": []
 }
