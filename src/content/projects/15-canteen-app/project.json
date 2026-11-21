@@ -4,8 +4,8 @@
 	"subtitle": "High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.",
 	"description": "Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.",
 	"chip": "Flutter & Cloud ERP",
-	"order": 16,
-	"featured": true,
+	"order": 4,
+	"featured": false,
 	"platformType": "mobile",
 	"contribution": {
 		"mode": "lead",

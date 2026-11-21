@@ -29,11 +29,20 @@
 		},
 		{
 			"type": "list",
+			"ordered": false,
 			"items": [
-				"**Active Window:** November 12–16, 2026 (following onboarding and environment ramp from November 4).",
-				"**Frontend (`Vue 3 / Quasar`):** 24 commits across `workspace`, `auth`, `notifications`, and `boAccount` modules — improving client scoping, i18n, notification UX, and back-office fee UI.",
-				"**Backend (`Java 21 / Spring Boot 3.3`):** 6 commits in `oms-service` implementing matching back-office (BO) fee configuration endpoints.",
-				"**Visuals:** No screenshots included per client confidentiality."
+				{
+					"text": "**Active Window:** November 12–16, 2026 (following onboarding and environment ramp from November 4)."
+				},
+				{
+					"text": "**Frontend (`Vue 3 / Quasar`):** 24 commits across `workspace`, `auth`, `notifications`, and `boAccount` modules — improving client scoping, i18n, notification UX, and back-office fee UI."
+				},
+				{
+					"text": "**Backend (`Java 21 / Spring Boot 3.3`):** 6 commits in `oms-service` implementing matching back-office (BO) fee configuration endpoints."
+				},
+				{
+					"text": "**Visuals:** No screenshots included per client confidentiality."
+				}
 			]
 		}
 	]

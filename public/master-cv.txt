@@ -237,6 +237,29 @@ Links: parentPlatform: https://tradeflowbd.com · github: https://github.com/mar
 
 ----------------------------------------------------------------------------
 
+[15] Smart Hisab – Canteen POS & Meal ERP Platform · Flutter & Cloud ERP · 2026 — Present · Active Development
+Role: Lead Mobile & Backend Engineer (Client Project)
+Subtitle: High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.
+Overview: Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.
+Contribution: Technical lead | lead
+  Architected and developing an offline-first institutional canteen POS and meal ERP platform for a dedicated client using Flutter and Supabase PostgreSQL [X]. Replaced paper meal tokens and chaotic shift registers with automated customer AR accounts and digital shift cashbooks [Y], enabling sub-second counter transactions, zero-variance cashier handovers, and atomic ledger reconciliation during peak lunch hours [Z].
+  - Scope: Guarantee sub-second counter throughput during lunch rush without internet dependency
+  - Scope: Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases
+  - Scope: Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)
+Impact:
+  - Counter Checkout: <1.2s — Rapid meal voucher issuance via offline SQLite queue
+  - Shift Variance: 0.0% — Strict cash drawer open/close reconciliation
+  - Peak Capacity: 500+ Meals — Handles concentrated rush without network latency
+  - Data Integrity: 100% RLS — PostgreSQL tenant and role-based clearance
+Architecture: Smart Hisab separates high-velocity counter operations from background server synchronization. The Flutter client runs an offline-first SQLite write buffer that queues meal orders and cash receipts locally, allowing counter staff to serve diners at maximum speed regardless of connectivity. In the background, background workers flush queued mutations through atomic Supabase RPC transactions into PostgreSQL, updating customer AR wallets, vendor inventory AP, and shift cash drawers with strict Row-Level Security.
+Key Technical Decisions:
+  - Built an offline-first local mutation store in SQLite with optimistic UI updates and background batch sync
+  - Implemented atomic PostgreSQL stored procedures (RPCs) in Supabase with explicit debit/credit balancing
+  - Applied Supabase Row-Level Security (RLS) policies tied directly to user roles and assigned shift IDs
+Tech Stack: Flutter, Supabase, Dart, PostgreSQL, Android
+
+----------------------------------------------------------------------------
+
 [17] Private Capital-Markets & Order Management Platform · FinTech & Microservices · Nov 2026 — Present · Active Development
 Role: Software Engineer (Full-Stack Contributor)
 Subtitle: Full-stack workspace UX, i18n, notifications, and back-office fee configuration on a microservice trading stack.
@@ -248,6 +271,9 @@ Contribution: Full-Stack Contributor (Senior-Reviewed) | contributor | existing 
   - Scope: Back-office (BO) fee configuration UI and matching oms-service API endpoints
   - Scope: Architecture discussion, proposals, and peer review with full-stack leads (Sazal & Shamim)
 Problem: High-density trading and back-office workflows require consistent client scoping, localized UI surfaces, reliable notification delivery, and synchronized fee configuration between the web workspace and backend OMS services.
+Engineering Improvements:
+  - Back-office fee configuration: Unified BO fee configuration flow spanning boAccount UI and oms-service APIs
+  - Workspace scoping, i18n & notifications: Consistent client scoping, localized UI copy, and streamlined notification handling
 Impact:
   - Cross-Repo Delivery: 30 Commits — 24 frontend commits and 6 backend commits merged Nov 12–16, 2026
   - Frontend Modules: 4 Modules — workspace, auth, notifications, and boAccount flows in Vue 3 / Quasar
@@ -257,6 +283,97 @@ Key Technical Decisions:
   - Implemented end-to-end BO fee configuration across the boAccount frontend module and matching oms-service API endpoints under senior-reviewed architecture guidelines.
   - Delivered targeted refinements in workspace, auth, and notifications modules without disrupting established platform conventions.
 Tech Stack: Vue 3, Quasar, Capacitor, Java 21, Spring Boot 3.3, Spring Cloud Gateway, PostgreSQL, Redis, RabbitMQ
+
+----------------------------------------------------------------------------
+
+[13] BrandWala Retail – Market-Aware Cross-Border Commerce Platform · Cross-Border Commerce · 2025 — 2026 · Active Production
+Role: Lead Full-Stack & Systems Engineer
+Subtitle: High-performance cross-border retail platform built with React 19, Firebase Firestore, TanStack Query, and automated Python catalog scrapers.
+Overview: Architected a market-aware cross-border commerce platform achieving sub-second catalog renders and -60% Firestore read costs across 40+ K-Beauty brands by designing React 19 market-scoped routing, TanStack Query cache invalidation, automated Python ETL pipelines, and a 5-layer real-time commission engine.
+Contribution: Technical lead | lead
+  Architected and deployed BrandWala Retail [X], an enterprise cross-border K-Beauty commerce platform serving Bangladeshi resellers and wholesale importers. Built a high-performance React 19 SPA backed by Firebase Firestore Lite and TanStack Query v5 [Y] — automating UK wholesale catalog ingestion via Python scrapers for 40+ brands, orchestrating a 5-layer real-time commission engine with delivery adjustments, and implementing quota-optimized cursor pagination and derived Customer Order Book projections [Z].
+  - Scope: Automating UK Wholesale Catalog Ingestion
+  - Scope: Market-Aware Multi-Vendor Routing
+  - Scope: Complex 5-Layer Commission Calculation
+  - Scope: Firestore Read Quota Optimization
+  - Scope: Customer Order Book Intelligence
+Impact:
+  - Catalog Automation: 40+ Brands — COSRX, Laneige, Beauty of Joseon, Anua auto-tagged via Python ETL pipelines
+  - Firestore Quota: -60% Reads — Debounced search, cursor pagination, and status-filtered batch queries
+  - Commission Engine: 5 Layers — Base margin, custom price markup, COD %, packing flat, and invoice fee
+  - Architecture: Market-Scoped — Multi-market / vendor URL routing (/m/{market}/{vendor}/products)
+  - Customer CRM: Order Book — Derived projection mode with lazy row expansion for buyer intelligence
+  - Migration State: SQL Ready — Relational PostgreSQL schema, indexes, and customer order book SQL views
+Architecture: React 19 + Vite SPA with market-scoped routing (/#/m/{marketSlug}/{vendorSlug}/...) connecting to Firebase Firestore Lite via TanStack Query v5, backed by automated Python catalog ingestion pipelines and role-enforced Firestore security rules.
+Key Technical Decisions:
+  - Built dedicated Python scrapers with session/CSRF authentication for kobareseller.com and WooCommerce REST API adapters, integrating automatic regex brand tagging for 40+ K-Beauty labels.
+  - Structured routing under /#/m/{marketSlug}/{vendorSlug}/(products|cart|orders) with React Router 7 and domain feature isolation under web/src/features/{market}.
+  - Centralized calculation logic in domain modules (orderCommission.js / uiCommission.js), capturing base commissions, custom sell markups, delivery adjustments, COD fees, packing charges, and invoice deductions in an immutable ui_calculation order snapshot.
+  - Implemented 250ms debounced searching, cursor-based pagination, bounded page limits, no-op write guards on quantity updates, and chunked status queries (submitted, placed, cancelled).
+  - Built a derived customer_order_book projection supporting dual-mode operation (projection mode with legacy fallback) with lazy-loaded row expansions.
+Tech Stack: React 19, Firebase Firestore, TanStack Query, Python Web Scraping, TailwindCSS, TypeScript
+Links: github: https://github.com/david-git-2/brand-wala-retail
+
+----------------------------------------------------------------------------
+
+[07] Finance & Accounting App – Modular Enterprise Suite · Fintech & Enterprise SaaS · 2025 — H1 2026 · Active Production
+Role: Frontend Engineer (Modular Package Architecture)
+Subtitle: Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.
+Overview: Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.
+Contribution: Core contributor | core
+  Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
+  - Scope: Feature scope vs. maintainability in a monorepo with nested git repos
+  - Scope: Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
+  - Scope: Legacy branch API (/loanapp/branchs) missing in Supercards backend
+  - Scope: Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
+  - Scope: Print/PDF export without server-side rendering
+Impact:
+  - Modular Packages: 7 Packages — Six domain packages orchestrated by a meta-dependency installer
+  - Production Surfaces: 6 Menus — Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings
+  - API Surface: 15+ Endpoints — Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups
+  - Integration Stability: P0 Resolved — Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout
+  - Report Export Engine: A4 PDF — Client-side multi-page summary PDF assembly via html2canvas & jsPDF
+  - Multi-Tenant Scoping: 100% Isolated — Tenant context and branch routing via dynamic API interceptors
+Architecture: Seven Vite-built Vue library packages expose routes, Pinia stores, and Quasar pages; the Supercards host provides apiClient, authStore, and tenantStore via boot/provide; @itc/menu-system discovers appPlugin menus; all domain HTTP flows through itc/pennyperfect on Laravel under /api/v1 with Sanctum + tenant middleware.
+Key Technical Decisions:
+  - Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.
+  - Standardized host boot files (pennyperfect-transactions, pennyperfect-settings, pennyperfect-balancesheet) calling configureTaxApi / configureSettingsApi / configureBalanceSheetApi with apiUrlBuilder + appId: pennyperfect; feature pages inject apiClient, authStore, tenantStore for Axios-interceptor packages.
+  - Migrated income statement and reports branch loaders to GET /tenants/{tenantId}/branches (itc/core-auth-accounts); made branchId nullable across transaction and settings forms to match backend validation.
+  - Unified appPlugin.routes to ./src/router/routes.ts; host imports { routes } from package entry as single source of truth.
+  - Client-side PDF via hidden iframe loading /external/reports, html2canvas snapshot of .report-preview-a4, jsPDF multi-page assembly.
+Tech Stack: Quasar, Vue 3, TypeScript, Pinia, Vite
+
+----------------------------------------------------------------------------
+
+[16] Nidhara – Security-First Auth Foundation for a Personal Finance & Growth Platform · Security-First Auth & FinTech Foundation · Dec 2025 — Feb 2026 · Active Production
+Role: Solo Full-Stack Engineer
+Subtitle: NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.
+Overview: Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.
+Contribution: Solo owner & full-stack engineer | owner | scratch | lead
+  Designed and built the monorepo, authentication engine, session lifecycle, Prisma data model, and documentation site alone.
+  - Scope: npm workspaces monorepo: NestJS backend, Next.js frontend, Docusaurus docs
+  - Scope: Signup, signin, refresh, and logout flows with Argon2 and dual-token issuance
+  - Scope: Database-backed sessions with CSRF verification and revocation on replay or logout
+  - Scope: Security event, account security state, and sudo session data models
+  - Scope: Swagger documentation, response envelope interceptor, and structured Pino logging
+Problem: Personal finance and journaling tools are fragmented, and many leave users with weak credential storage and fragile session handling. A financial platform needs an auditable authentication foundation, with strict session invalidation, CSRF defenses, and event logging, in place before any ledgers are connected.
+Key Outcomes / Benefit Matrix:
+  - Account Holder — Stolen or replayed session tokens could expose personal financial data: Single-use refresh tokens bound to a session record, rotated on every refresh and paired with a CSRF token [Refresh token reuse: Reusable until expiry -> Single-use, revoked on replay (designed)]
+  - Platform Owner — No audit trail of sign-in activity: Security events (login success, login failure, logout, refresh rotation) stored with user-agent and IP metadata, plus structured JSON request logs [Tracked security event types: 0 -> 4 (measured)]
+Impact:
+  - Workspaces: 3 Workspaces — Backend (NestJS), frontend (Next.js 16), and docs-site (Docusaurus) in one npm monorepo
+  - Auth endpoints: 5 Endpoints — Signup, signin, refresh, logout, and an app route across 2 controllers
+  - Data model: 6 Models — User, AuthCredential, AuthSession, SecurityEvent, UserAccountSecurityState, SudoSession in 2 migrations
+  - Password hashing: Argon2 — Used for credentials and refresh token hashes
+  - Documentation: 30 Pages — Architecture, domain specifications, and sequence diagrams in Docusaurus
+  - Delivery: 18 Commits — 100% solo authorship over roughly two months
+Key Technical Decisions:
+  - Used Argon2 for credential verification and refresh token hashes instead of bcrypt. Trade-off: higher memory use per authentication request.
+  - Bound each refresh token to a session record, rotated the refresh hash on every /auth/refresh call, and required a matching client csrfToken. Trade-off: extra database writes on refresh.
+  - Modeled a standalone SudoSession with a time-bounded sudoUntil and a verified escalation method (PASSWORD, RECOVERY_KEY, MFA). Trade-off: sensitive endpoints will need a second authorization check.
+  - Integrated nestjs-pino with pino-http and a global ResponseInterceptor to emit structured JSON logs and a uniform response envelope. Trade-off: some extra bootstrap configuration.
+Tech Stack: NestJS 11, Prisma 7, PostgreSQL 15, Next.js 16, TypeScript
+Links: github: https://github.com/marceldavidbaroi/Nidhara-
 
 ----------------------------------------------------------------------------
 
@@ -285,31 +402,6 @@ Key Technical Decisions:
   - Dedicated repositories, validators and transformers for tags and tag groups. Trade-off: more classes per module.
 Tech Stack: Next.js 15, NestJS 11, PostgreSQL, TypeScript, TypeORM, Zustand
 Links: github: https://github.com/marceldavidbaroi/MindVault_Backend · githubFrontend: https://github.com/marceldavidbaroi/MindVault_Frontend · githubBackend: https://github.com/marceldavidbaroi/MindVault_Backend
-
-----------------------------------------------------------------------------
-
-[05] Enterprise Modular Packaging System · Quasar & npm Architecture · 2025 — Q1 2026 · Completed & Adopted
-Role: Frontend Implementation & POC Engineer
-Subtitle: Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.
-Overview: Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.
-Contribution: Domain specialist | specialist
-  Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
-  - Scope: Preserving Quasar Directives & Component Styles in Isolated Packages
-  - Scope: Verifying Packaging Viability via Proof of Concept (POC)
-  - Scope: Team Implementation Workflow & Modular Domain Boundaries
-Impact:
-  - Code Reusability: +65% — Plug-and-play adoption across multiple client web applications
-  - Package Extraction: Scoped npm — Decoupled monolithic components into standalone private packages
-  - POC & Testing: 100% Passed — End-to-end package bundling, style extraction, and runtime validation
-  - Release Autonomy: SemVer — Independent versioning without rebasing entire host monoliths
-  - Package Rollout: <1 Hour — Standardized template manifests for rapid component modularization
-  - Style Isolation: Zero Collisions — Vite library mode bundling with host Quasar theme consumption
-Architecture: Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode.
-Key Technical Decisions:
-  - Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount.
-  - Constructed a local Verdaccio and `pnpm link` sandbox testbed to validate component lifecycle, TypeScript type declarations (.d.ts), and reactivity before publishing to private registries.
-  - Divided responsibilities between architecture planning (Senior Architect) and core feature implementation/testing (myself and peer engineer), creating standard template manifests for all future packages.
-Tech Stack: Vue 3, Vite, npm, GitLab Registry, SemVer
 
 ----------------------------------------------------------------------------
 
@@ -346,32 +438,80 @@ Links: github: https://github.com/marceldavidbaroi/UniFlow-
 
 ----------------------------------------------------------------------------
 
-[07] Finance & Accounting App – Modular Enterprise Suite · Fintech & Enterprise SaaS · 2025 — H1 2026 · Active Production
-Role: Frontend Engineer (Modular Package Architecture)
-Subtitle: Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.
-Overview: Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.
-Contribution: Core contributor | core
-  Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
-  - Scope: Feature scope vs. maintainability in a monorepo with nested git repos
-  - Scope: Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
-  - Scope: Legacy branch API (/loanapp/branchs) missing in Supercards backend
-  - Scope: Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
-  - Scope: Print/PDF export without server-side rendering
+[11] SuperCards Quiz – Internal Learning & Assessment Platform · Learning & Assessment · Oct 2025 — Dec 2025 · Completed
+Role: Frontend Engineer (Learning Systems Lead)
+Subtitle: Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.
+Overview: Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.
+Contribution: Technical lead | lead
+  Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].
+  - Scope: Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.
+  - Scope: Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).
+  - Scope: Participants needed a guided, timed experience with post-submission review — not just a static form.
+  - Scope: Authors starting from scratch on question banks was slow and error-prone.
 Impact:
-  - Modular Packages: 7 Packages — Six domain packages orchestrated by a meta-dependency installer
-  - Production Surfaces: 6 Menus — Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings
-  - API Surface: 15+ Endpoints — Accounts CRUD, tax codes, statements, ledger, and debit/credit rollups
-  - Integration Stability: P0 Resolved — Boot-time configureTaxApi and lazy dialogs eliminated 401-driven session logout
-  - Report Export Engine: A4 PDF — Client-side multi-page summary PDF assembly via html2canvas & jsPDF
-  - Multi-Tenant Scoping: 100% Isolated — Tenant context and branch routing via dynamic API interceptors
-Architecture: Seven Vite-built Vue library packages expose routes, Pinia stores, and Quasar pages; the Supercards host provides apiClient, authStore, and tenantStore via boot/provide; @itc/menu-system discovers appPlugin menus; all domain HTTP flows through itc/pennyperfect on Laravel under /api/v1 with Sanctum + tenant middleware.
+  - User Journeys: 4 Workflows — Creation, Studio Authoring, Challenge Discovery, and Timed Attend
+  - Module Refactor: 11 Components — Clean separation across authoring, live display, and mistake review
+  - AI Acceleration: GPT-4o — Automated MCQ and fill-in-the-blank question generation from descriptions
+  - Timed Assessment: 4-Phase Flow — Intro → Countdown Session → Score Calculation → Mistake Walkthrough
+  - Platform Reuse: 100% Shared — Reused universal task card model without separate LMS infrastructure
+  - Session Safety: Auto-Submit — Defensive client countdown timers with instant score payload normalization
+Architecture: Quiz module mounted at /quiz with four routes, a dedicated Pinia store and quizbuilder API service, composing platform primitives (TaskDetails, tags, media) around quiz-specific components for authoring, participation, and analytics.
 Key Technical Decisions:
-  - Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.
-  - Standardized host boot files (pennyperfect-transactions, pennyperfect-settings, pennyperfect-balancesheet) calling configureTaxApi / configureSettingsApi / configureBalanceSheetApi with apiUrlBuilder + appId: pennyperfect; feature pages inject apiClient, authStore, tenantStore for Axios-interceptor packages.
-  - Migrated income statement and reports branch loaders to GET /tenants/{tenantId}/branches (itc/core-auth-accounts); made branchId nullable across transaction and settings forms to match backend validation.
-  - Unified appPlugin.routes to ./src/router/routes.ts; host imports { routes } from package entry as single source of truth.
-  - Client-side PDF via hidden iframe loading /external/reports, html2canvas snapshot of .report-preview-a4, jsPDF multi-page assembly.
-Tech Stack: Quasar, Vue 3, TypeScript, Pinia, Vite
+  - Modeled quizzes as SuperCards task cards with entity tags (Quiz), status tags (Draft / Published / Unpublished), category tags (Quiz Category), and meta fields (time, quiz_instructions).
+  - Split into focused components: QuizQuestionForm (authoring + validation + AI), ExistingQuestionsList (collapsible edit/delete), QuizCard (dual studio/challenge modes), and thin orchestration pages.
+  - Built a four-phase attend flow (intro → questions → results → mistake review) with countdown timer, progress bar, and auto-submit on timeout.
+  - Integrated OpenAI question generation with configurable MCQ/fill-blank counts, preview dialog, and one-click injection into the authoring form.
+Tech Stack: Quasar, Vue 3, OpenAI API, Pinia, TypeScript
+
+----------------------------------------------------------------------------
+
+[09] Automated Store Management Platform · Retail Operations & POS · Feb 2026 — Apr 2026 · Active Production
+Role: UI/UX Integration Engineer (Frontend Lead)
+Subtitle: High-density retail POS and store operations interface engineered with Quasar, Vue 3, and optimized keyboard-first data entry workflows.
+Overview: Engineered a high-density retail store management interface achieving 100% Figma-to-code parity and +30% faster cashier data entry via keyboard-first Quasar components and reactive state caching.
+Contribution: Technical lead | lead
+  Engineered responsive, high-density store management and retail checkout interfaces [X], achieving 100% visual fidelity to Lambda Design Figma specifications and +30% faster cashier transaction throughput [Y] by developing custom keyboard-first Quasar components, streamlined shift balancing workflows, and reactive catalog search caches [Z].
+  - Scope: Maximizing Screen Real Estate for High-Volume Data Entry
+  - Scope: Keyboard-Only Navigation & Hotkey Ergonomics
+  - Scope: Sub-Second Product Search During Live Checkout
+Impact:
+  - Figma Parity: 100% — Pixel-perfect implementation from Lambda Design systems
+  - Entry Speed: +30% — Keyboard-first navigation, tab indexing, and rapid hotkeys
+  - Item Lookup: Sub-50ms — Client-side reactive search across active store catalog
+  - Layout Density: High-Density — Maximized information hierarchy for rapid cashier shifts
+  - Shift Balancing: Automated — End-of-day cash drawer reconciliation workflows
+  - Touchscreen Support: POS Ready — Adaptive touch targets and multi-resolution responsive grid
+Architecture: Single-Page Application built on Quasar Framework and Vue 3, integrating Lambda Design System CSS tokens, Pinia client caching for offline-resilient product lookups, and RESTful API endpoints for invoice submission and shift settlement.
+Key Technical Decisions:
+  - Designed a compact, high-density data grid using Quasar's dense table modes and custom typography tokens from the Lambda Design System.
+  - Implemented a global keyboard event bus mapping F-keys and arrow keys to common actions (New Sale, Add Discount, Complete Payment, Void Item).
+  - Cached active inventory catalogs in local Pinia stores with fuzzy search indexation, syncing asynchronously with backend inventory updates.
+Tech Stack: Quasar, Vue 3, TypeScript, Pinia
+
+----------------------------------------------------------------------------
+
+[05] Enterprise Modular Packaging System · Quasar & npm Architecture · 2025 — Q1 2026 · Completed & Adopted
+Role: Frontend Implementation & POC Engineer
+Subtitle: Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.
+Overview: Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.
+Contribution: Domain specialist | specialist
+  Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
+  - Scope: Preserving Quasar Directives & Component Styles in Isolated Packages
+  - Scope: Verifying Packaging Viability via Proof of Concept (POC)
+  - Scope: Team Implementation Workflow & Modular Domain Boundaries
+Impact:
+  - Code Reusability: +65% — Plug-and-play adoption across multiple client web applications
+  - Package Extraction: Scoped npm — Decoupled monolithic components into standalone private packages
+  - POC & Testing: 100% Passed — End-to-end package bundling, style extraction, and runtime validation
+  - Release Autonomy: SemVer — Independent versioning without rebasing entire host monoliths
+  - Package Rollout: <1 Hour — Standardized template manifests for rapid component modularization
+  - Style Isolation: Zero Collisions — Vite library mode bundling with host Quasar theme consumption
+Architecture: Architectural blueprint defined by Senior Architect; implemented features and conducted core testing/POCs converting Quasar components into scoped private npm packages built with Vite in library mode.
+Key Technical Decisions:
+  - Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount.
+  - Constructed a local Verdaccio and `pnpm link` sandbox testbed to validate component lifecycle, TypeScript type declarations (.d.ts), and reactivity before publishing to private registries.
+  - Divided responsibilities between architecture planning (Senior Architect) and core feature implementation/testing (myself and peer engineer), creating standard template manifests for all future packages.
+Tech Stack: Vue 3, Vite, npm, GitLab Registry, SemVer
 
 ----------------------------------------------------------------------------
 
@@ -399,31 +539,6 @@ Key Technical Decisions:
   - Built a reactive DOM scanner that parses the rendered HTML body, extracts heading elements (H2/H3), injects unique anchor IDs, and builds a sticky Table of Contents sidebar with IntersectionObserver scroll tracking.
   - Constructed an HTML parsing and sanitization pipeline that ingests raw server-generated response markup, cleans unsafe attributes, and injects scoped typography styles for code blocks, callouts, and data tables.
 Tech Stack: Quasar, Vue 3, Pinia, TypeScript
-
-----------------------------------------------------------------------------
-
-[09] Automated Store Management Platform · Retail Operations & POS · Feb 2026 — Apr 2026 · Active Production
-Role: UI/UX Integration Engineer (Frontend Lead)
-Subtitle: High-density retail POS and store operations interface engineered with Quasar, Vue 3, and optimized keyboard-first data entry workflows.
-Overview: Engineered a high-density retail store management interface achieving 100% Figma-to-code parity and +30% faster cashier data entry via keyboard-first Quasar components and reactive state caching.
-Contribution: Technical lead | lead
-  Engineered responsive, high-density store management and retail checkout interfaces [X], achieving 100% visual fidelity to Lambda Design Figma specifications and +30% faster cashier transaction throughput [Y] by developing custom keyboard-first Quasar components, streamlined shift balancing workflows, and reactive catalog search caches [Z].
-  - Scope: Maximizing Screen Real Estate for High-Volume Data Entry
-  - Scope: Keyboard-Only Navigation & Hotkey Ergonomics
-  - Scope: Sub-Second Product Search During Live Checkout
-Impact:
-  - Figma Parity: 100% — Pixel-perfect implementation from Lambda Design systems
-  - Entry Speed: +30% — Keyboard-first navigation, tab indexing, and rapid hotkeys
-  - Item Lookup: Sub-50ms — Client-side reactive search across active store catalog
-  - Layout Density: High-Density — Maximized information hierarchy for rapid cashier shifts
-  - Shift Balancing: Automated — End-of-day cash drawer reconciliation workflows
-  - Touchscreen Support: POS Ready — Adaptive touch targets and multi-resolution responsive grid
-Architecture: Single-Page Application built on Quasar Framework and Vue 3, integrating Lambda Design System CSS tokens, Pinia client caching for offline-resilient product lookups, and RESTful API endpoints for invoice submission and shift settlement.
-Key Technical Decisions:
-  - Designed a compact, high-density data grid using Quasar's dense table modes and custom typography tokens from the Lambda Design System.
-  - Implemented a global keyboard event bus mapping F-keys and arrow keys to common actions (New Sale, Add Discount, Complete Payment, Void Item).
-  - Cached active inventory catalogs in local Pinia stores with fuzzy search indexation, syncing asynchronously with backend inventory updates.
-Tech Stack: Quasar, Vue 3, TypeScript, Pinia
 
 ----------------------------------------------------------------------------
 
@@ -460,85 +575,6 @@ Tech Stack: Quasar, Vue 3, PHP (Laravel), Capacitor, PostgreSQL
 
 ----------------------------------------------------------------------------
 
-[11] SuperCards Quiz – Internal Learning & Assessment Platform · Learning & Assessment · Oct 2025 — Dec 2025 · Completed
-Role: Frontend Engineer (Learning Systems Lead)
-Subtitle: Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.
-Overview: Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.
-Contribution: Technical lead | lead
-  Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].
-  - Scope: Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.
-  - Scope: Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).
-  - Scope: Participants needed a guided, timed experience with post-submission review — not just a static form.
-  - Scope: Authors starting from scratch on question banks was slow and error-prone.
-Impact:
-  - User Journeys: 4 Workflows — Creation, Studio Authoring, Challenge Discovery, and Timed Attend
-  - Module Refactor: 11 Components — Clean separation across authoring, live display, and mistake review
-  - AI Acceleration: GPT-4o — Automated MCQ and fill-in-the-blank question generation from descriptions
-  - Timed Assessment: 4-Phase Flow — Intro → Countdown Session → Score Calculation → Mistake Walkthrough
-  - Platform Reuse: 100% Shared — Reused universal task card model without separate LMS infrastructure
-  - Session Safety: Auto-Submit — Defensive client countdown timers with instant score payload normalization
-Architecture: Quiz module mounted at /quiz with four routes, a dedicated Pinia store and quizbuilder API service, composing platform primitives (TaskDetails, tags, media) around quiz-specific components for authoring, participation, and analytics.
-Key Technical Decisions:
-  - Modeled quizzes as SuperCards task cards with entity tags (Quiz), status tags (Draft / Published / Unpublished), category tags (Quiz Category), and meta fields (time, quiz_instructions).
-  - Split into focused components: QuizQuestionForm (authoring + validation + AI), ExistingQuestionsList (collapsible edit/delete), QuizCard (dual studio/challenge modes), and thin orchestration pages.
-  - Built a four-phase attend flow (intro → questions → results → mistake review) with countdown timer, progress bar, and auto-submit on timeout.
-  - Integrated OpenAI question generation with configurable MCQ/fill-blank counts, preview dialog, and one-click injection into the authoring form.
-Tech Stack: Quasar, Vue 3, OpenAI API, Pinia, TypeScript
-
-----------------------------------------------------------------------------
-
-[12] Enterprise Social Collaboration Platform – UI Refinement · UI & Responsiveness · 2024 — Jan 2025 · Completed
-Role: Frontend UI & Responsiveness Contributor
-Subtitle: Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3.
-Overview: Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization.
-Contribution: Core contributor | core
-  Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z].
-  - Scope: Inconsistent Mobile & Tablet Feed Card Breakpoints
-  - Scope: Component Polish & User Experience Continuity
-Impact:
-  - Device Fluidity: 100% Fluid — Zero horizontal overflow across smartphones, tablets, and desktop monitors
-  - Media Rendering: Zero Clipping — Adaptive multi-image attachment previews and fluid typography constraints
-  - Touch Usability: 48px Targets — Standardized accessible tap targets for reactions, comments, and drawers
-  - Component Polish: Quasar v2 — Standardized discussion cards and smooth drawer transition animations
-  - Layout Shifts: Zero CLS — Eliminated cumulative layout shifts during dynamic feed rendering
-Architecture: Frontend single-page application built with Quasar Framework (Vue 3), optimized for multi-device responsiveness through flexible grid constraints and Quasar breakpoint utilities.
-Key Technical Decisions:
-  - Refactored feed cards and media attachment galleries to use fluid Flexbox and Quasar responsive classes ($q.screen / col-xs-12 col-md-8), ensuring content scales naturally on smaller viewports.
-  - Streamlined interactive states (hover effects, active tap feedback, comment drawer animations) and standardized spacing/padding across the application shell.
-Tech Stack: Quasar, Vue 3, CSS Grid, Responsive Design
-
-----------------------------------------------------------------------------
-
-[13] BrandWala Retail – Market-Aware Cross-Border Commerce Platform · Cross-Border Commerce · 2025 — 2026 · Active Production
-Role: Lead Full-Stack & Systems Engineer
-Subtitle: High-performance cross-border retail platform built with React 19, Firebase Firestore, TanStack Query, and automated Python catalog scrapers.
-Overview: Architected a market-aware cross-border commerce platform achieving sub-second catalog renders and -60% Firestore read costs across 40+ K-Beauty brands by designing React 19 market-scoped routing, TanStack Query cache invalidation, automated Python ETL pipelines, and a 5-layer real-time commission engine.
-Contribution: Technical lead | lead
-  Architected and deployed BrandWala Retail [X], an enterprise cross-border K-Beauty commerce platform serving Bangladeshi resellers and wholesale importers. Built a high-performance React 19 SPA backed by Firebase Firestore Lite and TanStack Query v5 [Y] — automating UK wholesale catalog ingestion via Python scrapers for 40+ brands, orchestrating a 5-layer real-time commission engine with delivery adjustments, and implementing quota-optimized cursor pagination and derived Customer Order Book projections [Z].
-  - Scope: Automating UK Wholesale Catalog Ingestion
-  - Scope: Market-Aware Multi-Vendor Routing
-  - Scope: Complex 5-Layer Commission Calculation
-  - Scope: Firestore Read Quota Optimization
-  - Scope: Customer Order Book Intelligence
-Impact:
-  - Catalog Automation: 40+ Brands — COSRX, Laneige, Beauty of Joseon, Anua auto-tagged via Python ETL pipelines
-  - Firestore Quota: -60% Reads — Debounced search, cursor pagination, and status-filtered batch queries
-  - Commission Engine: 5 Layers — Base margin, custom price markup, COD %, packing flat, and invoice fee
-  - Architecture: Market-Scoped — Multi-market / vendor URL routing (/m/{market}/{vendor}/products)
-  - Customer CRM: Order Book — Derived projection mode with lazy row expansion for buyer intelligence
-  - Migration State: SQL Ready — Relational PostgreSQL schema, indexes, and customer order book SQL views
-Architecture: React 19 + Vite SPA with market-scoped routing (/#/m/{marketSlug}/{vendorSlug}/...) connecting to Firebase Firestore Lite via TanStack Query v5, backed by automated Python catalog ingestion pipelines and role-enforced Firestore security rules.
-Key Technical Decisions:
-  - Built dedicated Python scrapers with session/CSRF authentication for kobareseller.com and WooCommerce REST API adapters, integrating automatic regex brand tagging for 40+ K-Beauty labels.
-  - Structured routing under /#/m/{marketSlug}/{vendorSlug}/(products|cart|orders) with React Router 7 and domain feature isolation under web/src/features/{market}.
-  - Centralized calculation logic in domain modules (orderCommission.js / uiCommission.js), capturing base commissions, custom sell markups, delivery adjustments, COD fees, packing charges, and invoice deductions in an immutable ui_calculation order snapshot.
-  - Implemented 250ms debounced searching, cursor-based pagination, bounded page limits, no-op write guards on quantity updates, and chunked status queries (submitted, placed, cancelled).
-  - Built a derived customer_order_book projection supporting dual-mode operation (projection mode with legacy fallback) with lazy-loaded row expansions.
-Tech Stack: React 19, Firebase Firestore, TanStack Query, Python Web Scraping, TailwindCSS, TypeScript
-Links: github: https://github.com/david-git-2/brand-wala-retail
-
-----------------------------------------------------------------------------
-
 [14] Microfinance Loan Collection App & Web Portal · Fintech & Mobile App · 2025 · Completed
 Role: Frontend Engineer (Solo Mobile & Web Contributor)
 Subtitle: Door-to-door loan installment collection Android app and branch management portal built with Quasar Framework, Vue 3, and Pinia.
@@ -564,58 +600,25 @@ Tech Stack: Quasar, Android Build, Vue 3, Pinia, Capacitor
 
 ----------------------------------------------------------------------------
 
-[15] Smart Hisab – Canteen POS & Meal ERP Platform · Flutter & Cloud ERP · 2026 — Present · Active Development
-Role: Lead Mobile & Backend Engineer (Client Project)
-Subtitle: High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.
-Overview: Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.
-Contribution: Technical lead | lead
-  Architected and developing an offline-first institutional canteen POS and meal ERP platform for a dedicated client using Flutter and Supabase PostgreSQL [X]. Replaced paper meal tokens and chaotic shift registers with automated customer AR accounts and digital shift cashbooks [Y], enabling sub-second counter transactions, zero-variance cashier handovers, and atomic ledger reconciliation during peak lunch hours [Z].
-  - Scope: Guarantee sub-second counter throughput during lunch rush without internet dependency
-  - Scope: Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases
-  - Scope: Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)
+[12] Enterprise Social Collaboration Platform – UI Refinement · UI & Responsiveness · 2024 — Jan 2025 · Completed
+Role: Frontend UI & Responsiveness Contributor
+Subtitle: Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3.
+Overview: Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization.
+Contribution: Core contributor | core
+  Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z].
+  - Scope: Inconsistent Mobile & Tablet Feed Card Breakpoints
+  - Scope: Component Polish & User Experience Continuity
 Impact:
-  - Counter Checkout: <1.2s — Rapid meal voucher issuance via offline SQLite queue
-  - Shift Variance: 0.0% — Strict cash drawer open/close reconciliation
-  - Peak Capacity: 500+ Meals — Handles concentrated rush without network latency
-  - Data Integrity: 100% RLS — PostgreSQL tenant and role-based clearance
-Architecture: Smart Hisab separates high-velocity counter operations from background server synchronization. The Flutter client runs an offline-first SQLite write buffer that queues meal orders and cash receipts locally, allowing counter staff to serve diners at maximum speed regardless of connectivity. In the background, background workers flush queued mutations through atomic Supabase RPC transactions into PostgreSQL, updating customer AR wallets, vendor inventory AP, and shift cash drawers with strict Row-Level Security.
+  - Device Fluidity: 100% Fluid — Zero horizontal overflow across smartphones, tablets, and desktop monitors
+  - Media Rendering: Zero Clipping — Adaptive multi-image attachment previews and fluid typography constraints
+  - Touch Usability: 48px Targets — Standardized accessible tap targets for reactions, comments, and drawers
+  - Component Polish: Quasar v2 — Standardized discussion cards and smooth drawer transition animations
+  - Layout Shifts: Zero CLS — Eliminated cumulative layout shifts during dynamic feed rendering
+Architecture: Frontend single-page application built with Quasar Framework (Vue 3), optimized for multi-device responsiveness through flexible grid constraints and Quasar breakpoint utilities.
 Key Technical Decisions:
-  - Built an offline-first local mutation store in SQLite with optimistic UI updates and background batch sync
-  - Implemented atomic PostgreSQL stored procedures (RPCs) in Supabase with explicit debit/credit balancing
-  - Applied Supabase Row-Level Security (RLS) policies tied directly to user roles and assigned shift IDs
-Tech Stack: Flutter, Supabase, Dart, PostgreSQL, Android
-
-----------------------------------------------------------------------------
-
-[16] Nidhara – Security-First Auth Foundation for a Personal Finance & Growth Platform · Security-First Auth & FinTech Foundation · Dec 2025 — Feb 2026 · Active Production
-Role: Solo Full-Stack Engineer
-Subtitle: NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.
-Overview: Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.
-Contribution: Solo owner & full-stack engineer | owner | scratch | lead
-  Designed and built the monorepo, authentication engine, session lifecycle, Prisma data model, and documentation site alone.
-  - Scope: npm workspaces monorepo: NestJS backend, Next.js frontend, Docusaurus docs
-  - Scope: Signup, signin, refresh, and logout flows with Argon2 and dual-token issuance
-  - Scope: Database-backed sessions with CSRF verification and revocation on replay or logout
-  - Scope: Security event, account security state, and sudo session data models
-  - Scope: Swagger documentation, response envelope interceptor, and structured Pino logging
-Problem: Personal finance and journaling tools are fragmented, and many leave users with weak credential storage and fragile session handling. A financial platform needs an auditable authentication foundation, with strict session invalidation, CSRF defenses, and event logging, in place before any ledgers are connected.
-Key Outcomes / Benefit Matrix:
-  - Account Holder — Stolen or replayed session tokens could expose personal financial data: Single-use refresh tokens bound to a session record, rotated on every refresh and paired with a CSRF token [Refresh token reuse: Reusable until expiry -> Single-use, revoked on replay (designed)]
-  - Platform Owner — No audit trail of sign-in activity: Security events (login success, login failure, logout, refresh rotation) stored with user-agent and IP metadata, plus structured JSON request logs [Tracked security event types: 0 -> 4 (measured)]
-Impact:
-  - Workspaces: 3 Workspaces — Backend (NestJS), frontend (Next.js 16), and docs-site (Docusaurus) in one npm monorepo
-  - Auth endpoints: 5 Endpoints — Signup, signin, refresh, logout, and an app route across 2 controllers
-  - Data model: 6 Models — User, AuthCredential, AuthSession, SecurityEvent, UserAccountSecurityState, SudoSession in 2 migrations
-  - Password hashing: Argon2 — Used for credentials and refresh token hashes
-  - Documentation: 30 Pages — Architecture, domain specifications, and sequence diagrams in Docusaurus
-  - Delivery: 18 Commits — 100% solo authorship over roughly two months
-Key Technical Decisions:
-  - Used Argon2 for credential verification and refresh token hashes instead of bcrypt. Trade-off: higher memory use per authentication request.
-  - Bound each refresh token to a session record, rotated the refresh hash on every /auth/refresh call, and required a matching client csrfToken. Trade-off: extra database writes on refresh.
-  - Modeled a standalone SudoSession with a time-bounded sudoUntil and a verified escalation method (PASSWORD, RECOVERY_KEY, MFA). Trade-off: sensitive endpoints will need a second authorization check.
-  - Integrated nestjs-pino with pino-http and a global ResponseInterceptor to emit structured JSON logs and a uniform response envelope. Trade-off: some extra bootstrap configuration.
-Tech Stack: NestJS 11, Prisma 7, PostgreSQL 15, Next.js 16, TypeScript
-Links: github: https://github.com/marceldavidbaroi/Nidhara-
+  - Refactored feed cards and media attachment galleries to use fluid Flexbox and Quasar responsive classes ($q.screen / col-xs-12 col-md-8), ensuring content scales naturally on smaller viewports.
+  - Streamlined interactive states (hover effects, active tap feedback, comment drawer animations) and standardized spacing/padding across the application shell.
+Tech Stack: Quasar, Vue 3, CSS Grid, Responsive Design
 
 ----------------------------------------------------------------------------
 

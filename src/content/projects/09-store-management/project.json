@@ -4,7 +4,7 @@
 	"subtitle": "High-density retail POS and store operations interface engineered with Quasar, Vue 3, and optimized keyboard-first data entry workflows.",
 	"description": "Engineered a high-density retail store management interface achieving 100% Figma-to-code parity and +30% faster cashier data entry via keyboard-first Quasar components and reactive state caching.",
 	"chip": "Retail Operations & POS",
-	"order": 10,
+	"order": 12,
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {

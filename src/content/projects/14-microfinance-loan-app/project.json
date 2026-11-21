@@ -4,7 +4,7 @@
 	"subtitle": "Door-to-door loan installment collection Android app and branch management portal built with Quasar Framework, Vue 3, and Pinia.",
 	"description": "Engineered a field microfinance loan collection Android app and branch web portal, cutting door-to-door collection time by +50% and eliminating manual settlement variance via Quasar (Vue 3), Pinia offline caching, and instant digital receipt generation.",
 	"chip": "Fintech & Mobile App",
-	"order": 15,
+	"order": 16,
 	"featured": false,
 	"platformType": "mobile",
 	"contribution": {

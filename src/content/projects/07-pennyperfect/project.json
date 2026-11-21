@@ -4,7 +4,7 @@
 	"subtitle": "Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.",
 	"description": "Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.",
 	"chip": "Fintech & Enterprise SaaS",
-	"order": 8,
+	"order": 7,
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {

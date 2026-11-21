@@ -4,7 +4,7 @@
 	"subtitle": "NestJS, Prisma, and Next.js monorepo with Argon2 authentication, rotating refresh-token sessions, and audit logging.",
 	"description": "Accomplished a hardened authentication foundation for a personal wealth and growth platform as measured by 5 REST endpoints, 6 Prisma models, 2 database migrations, and 30 documentation pages, by building Argon2 hashing, single-use rotating refresh tokens with CSRF checks, and structured Pino logging in a NestJS monorepo.",
 	"chip": "Security-First Auth & FinTech Foundation",
-	"order": 17,
+	"order": 8,
 	"featured": false,
 	"platformType": "desktop",
 	"role": "Solo Full-Stack Engineer",

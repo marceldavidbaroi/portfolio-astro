@@ -4,7 +4,7 @@
 	"subtitle": "Role-based class and learning management app for students, teachers, and administrators, built on Quasar and Firebase.",
 	"description": "Accomplished a centralized university learning platform as measured by 44 routes across 9 domain modules, 77 Vue components, 10 Pinia stores, and 12 Firestore entity schemas, by engineering a role-guarded Quasar (Vue 3) app on Firebase Authentication and Cloud Firestore.",
 	"chip": "EdTech & Real-Time Web App",
-	"order": 7,
+	"order": 10,
 	"featured": false,
 	"platformType": "desktop",
 	"role": "Solo Full-Stack Engineer",

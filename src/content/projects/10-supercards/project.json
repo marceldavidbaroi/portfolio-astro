@@ -4,8 +4,8 @@
 	"subtitle": "Multi-tenant product suite on a shared card platform, spanning task management, double-entry accounting, lending, and assessments.",
 	"description": "Contributed to the card and task management system, login flow, core reusable components, and shared packages of an enterprise product suite, and shipped accounting and assessment products on Quasar (Vue 3) and modular Pinia stores.",
 	"chip": "Enterprise SaaS & Fintech",
-	"order": 11,
-	"featured": true,
+	"order": 15,
+	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
 		"mode": "contributor",

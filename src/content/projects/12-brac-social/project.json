@@ -4,7 +4,7 @@
 	"subtitle": "Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3.",
 	"description": "Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization.",
 	"chip": "UI & Responsiveness",
-	"order": 13,
+	"order": 17,
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {

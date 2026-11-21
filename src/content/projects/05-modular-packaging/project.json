@@ -4,7 +4,7 @@
 	"subtitle": "Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.",
 	"description": "Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.",
 	"chip": "Quasar & npm Architecture",
-	"order": 6,
+	"order": 13,
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {

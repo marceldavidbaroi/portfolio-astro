@@ -23,9 +23,10 @@ const hscScienceProgram = hscEntry.data;
 const projectEntries = await getAllProjects();
 const byId = Object.fromEntries(projectEntries.map((entry) => [entry.id, entry]));
 
-const focused = ['01-tradeflowbd', '02-service-desk', '07-pennyperfect']
-	.map((id) => byId[id])
-	.filter(Boolean)
+const focused = projectEntries
+	.filter((entry) => entry.data.featured)
+	.sort((a, b) => a.data.order - b.data.order)
+	.slice(0, 3)
 	.map((entry) => toProjectListItem(entry));
 const featured = focused[0];
 
