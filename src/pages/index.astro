@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import HomeHero from '../components/home/HomeHero.astro';
+import HomeModeTabs from '../components/home/HomeModeTabs.astro';
 import HomeActionsBar from '../components/home/HomeActionsBar.astro';
 import HomeHowIWork from '../components/home/HomeHowIWork.astro';
 import HomeFeaturedWork from '../components/home/HomeFeaturedWork.astro';
@@ -46,6 +47,7 @@ import '../styles/about.css';
 
 <BaseLayout isWide alignStart>
 	<HomeHero />
+	<HomeModeTabs />
 	<HomeActionsBar />
 
 	<div class="home-scroll-flow" id="home-scroll-flow">

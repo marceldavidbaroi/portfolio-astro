@@ -1,0 +1,118 @@
+---
+const modes = [
+	{ id: 'developer', label: 'Developer' },
+	{ id: 'educator', label: 'Educator' },
+	{ id: 'researcher', label: 'Researcher' },
+	{ id: 'stories', label: 'Stories & Gallery' },
+] as const;
+---
+
+<nav class="home-mode-tabs" aria-label="Portfolio perspective modes">
+	<div class="mode-tabs-list" role="tablist" aria-label="Perspective modes">
+		{modes.map((mode, idx) => (
+			<button
+				type="button"
+				role="tab"
+				class:list={['mode-tab', { 'is-active': idx === 0 }]}
+				data-mode-tab={mode.id}
+				aria-selected={idx === 0 ? 'true' : 'false'}
+				tabindex={idx === 0 ? 0 : -1}
+			>
+				{mode.label}
+			</button>
+		))}
+	</div>
+</nav>
+
+<script>
+	function initHomeModeTabs() {
+		const validModes = new Set(['developer', 'educator', 'researcher', 'stories']);
+		const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode-tab]'));
+		if (!tabs.length) return;
+
+		function setMode(modeId: string, updateUrl = true) {
+			const next = validModes.has(modeId) ? modeId : 'developer';
+			document.documentElement.dataset.mode = next;
+
+			tabs.forEach((tab) => {
+				const isActive = tab.dataset.modeTab === next;
+				tab.classList.toggle('is-active', isActive);
+				tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
+				tab.setAttribute('tabindex', isActive ? '0' : '-1');
+			});
+
+			if (updateUrl) {
+				const url = new URL(window.location.href);
+				if (next === 'developer') {
+					url.searchParams.delete('mode');
+				} else {
+					url.searchParams.set('mode', next);
+				}
+				window.history.replaceState({}, '', url);
+			}
+		}
+
+		const params = new URLSearchParams(window.location.search);
+		const initialMode = params.get('mode') || 'developer';
+		setMode(initialMode, false);
+
+		tabs.forEach((tab) => {
+			tab.addEventListener('click', () => {
+				const modeId = tab.dataset.modeTab;
+				if (modeId) setMode(modeId, true);
+			});
+		});
+	}
+
+	initHomeModeTabs();
+	document.addEventListener('astro:page-load', initHomeModeTabs);
+</script>
+
+<style>
+	.home-mode-tabs {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		padding: 0.75rem 1.25rem 0.25rem;
+	}
+
+	.mode-tabs-list {
+		display: inline-flex;
+		flex-wrap: wrap;
+		justify-content: center;
+		gap: 0.35rem;
+		padding: 0.3rem;
+		border-radius: 999px;
+		background: var(--card-bg, #f4f0e7);
+		border: 1px solid var(--card-border, rgba(95, 80, 56, 0.12));
+	}
+
+	.mode-tab {
+		appearance: none;
+		border: 0;
+		background: transparent;
+		color: var(--text-muted, #746855);
+		font-family: var(--font-sans, inherit);
+		font-size: 0.875rem;
+		font-weight: 500;
+		line-height: 1.2;
+		padding: 0.45rem 0.95rem;
+		border-radius: 999px;
+		cursor: pointer;
+		transition: color 0.2s ease, background-color 0.2s ease;
+	}
+
+	.mode-tab:hover {
+		color: var(--text-main, #2b251e);
+	}
+
+	.mode-tab.is-active {
+		background: var(--accent, #84353f);
+		color: #fffcf8;
+	}
+
+	.mode-tab:focus-visible {
+		outline: 2px solid var(--accent, #84353f);
+		outline-offset: 2px;
+	}
+</style>

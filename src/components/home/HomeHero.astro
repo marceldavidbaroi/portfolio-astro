@@ -1,39 +1,51 @@
 ---
-import { site } from '../../data/site';
+import { site } from "../../data/site";
 ---
 
 <section id="hero-section" class="hero-section" aria-label="Introduction">
 	<div class="face-container" id="face-container">
-		
 		<!-- Designer Details (Left Column) -->
-		<a href="/about" class="identity-col designer" id="designer-side" aria-label="About Designer details">
+		<a
+			href="/about"
+			class="identity-col designer"
+			id="designer-side"
+			aria-label="About Designer details"
+		>
 			<div class="description" id="designer-desc">
 				<h1 class="identity-title">designer</h1>
-				<p class="identity-bio">Product designer specialising in UI design and design systems.</p>
+				<p class="identity-bio">
+					Product designer specialising in UI design and design
+					systems.
+				</p>
 			</div>
 		</a>
 
 		<!-- Interactive Face Stage (Center Column) -->
-		<a href="/about" class="face-stage" id="face-stage" aria-label="About Marcel David Baroi">
+		<a
+			href="/about"
+			class="face-stage"
+			id="face-stage"
+			aria-label="About Marcel David Baroi"
+		>
 			<!-- Static fallback / base face composite -->
-			<img 
-				id="face-base" 
-				class="face-base" 
-				src="/images/portrait-split-half.webp" 
-				alt="Marcel David Baroi - Designer & Engineer" 
-				width="1024" 
-				height="1024" 
+			<img
+				id="face-base"
+				class="face-base"
+				src="/images/portrait-split-half.webp"
+				alt="Marcel David Baroi - Designer & Engineer"
+				width="1024"
+				height="1024"
 				loading="eager"
 			/>
 
 			<!-- Designer Half Image Layer (Left colorful sketch) -->
 			<div class="face-layer designer-layer" id="designer-layer">
-				<img 
-					src="/images/portrait-designer.webp" 
-					alt="Designer Portrait" 
-					class="face-img" 
-					width="1024" 
-					height="1024" 
+				<img
+					src="/images/portrait-designer.webp"
+					alt="Designer Portrait"
+					class="face-img"
+					width="1024"
+					height="1024"
 					loading="eager"
 				/>
 			</div>
@@ -45,48 +57,74 @@ import { site } from '../../data/site';
 					<span class="code-line">&lt;html&gt;</span>
 					<span class="code-line indent">height: 100%;</span>
 					<span class="code-line indent">class="architect"</span>
-					<span class="code-line big">CSS3 <span class="dim">HTML5</span></span>
+					<span class="code-line big">
+						CSS3 <span class="dim">HTML5</span>
+					</span>
 					<span class="code-line indent">color: #2b251e;</span>
 					<span class="code-line">TypeScript</span>
 				</div>
-				<img 
-					src="/images/portrait-coder.webp" 
-					alt="Engineer Portrait" 
-					class="face-img" 
-					width="1024" 
-					height="1024" 
+				<img
+					src="/images/portrait-coder.webp"
+					alt="Engineer Portrait"
+					class="face-img"
+					width="1024"
+					height="1024"
 					loading="eager"
 				/>
 			</div>
 
 			<!-- Vertical Split Indicator Line (Subtle guide like Adham's seam) -->
-			<div class="face-split-line" id="face-split-line" aria-hidden="true"></div>
+			<div
+				class="face-split-line"
+				id="face-split-line"
+				aria-hidden="true"
+			></div>
 		</a>
 
 		<!-- Engineer Details (Right Column) -->
-		<a href="/about" class="identity-col coder" id="coder-side" aria-label="About Engineer details">
+		<a
+			href="/about"
+			class="identity-col coder"
+			id="coder-side"
+			aria-label="About Engineer details"
+		>
 			<div class="description" id="coder-desc">
-				<h1 class="identity-title"><span class="chevron-left">&lt;</span>engineer<span class="chevron-right">&gt;</span></h1>
-				<p class="identity-bio">Full-stack engineer building scalable backends, robust APIs, and modern web apps.</p>
+				<h1 class="identity-title">
+					<span class="chevron-left">&lt;</span>engineer
+					<span class="chevron-right">&gt;</span>
+				</h1>
+				<p class="identity-bio">
+					Full-stack engineer building scalable backends, robust APIs,
+					and modern web apps.
+				</p>
 			</div>
 		</a>
-
 	</div>
 </section>
 
 <script>
 	function initAdhamHero() {
-		const section = document.getElementById('hero-section');
-		const stage = document.getElementById('face-stage');
-		const designerLayer = document.getElementById('designer-layer');
-		const coderLayer = document.getElementById('coder-layer');
-		const designerDesc = document.getElementById('designer-desc');
-		const coderDesc = document.getElementById('coder-desc');
-		const splitLine = document.getElementById('face-split-line');
+		const section = document.getElementById("hero-section");
+		const stage = document.getElementById("face-stage");
+		const designerLayer = document.getElementById("designer-layer");
+		const coderLayer = document.getElementById("coder-layer");
+		const designerDesc = document.getElementById("designer-desc");
+		const coderDesc = document.getElementById("coder-desc");
+		const splitLine = document.getElementById("face-split-line");
 
-		if (!section || !stage || !designerLayer || !coderLayer || !designerDesc || !coderDesc) return;
+		if (
+			!section ||
+			!stage ||
+			!designerLayer ||
+			!coderLayer ||
+			!designerDesc ||
+			!coderDesc
+		)
+			return;
 
-		const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+		const prefersReduced = window.matchMedia(
+			"(prefers-reduced-motion: reduce)",
+		).matches;
 		if (prefersReduced) {
 			applyVisuals(50);
 			return;
@@ -128,7 +166,10 @@ import { site } from '../../data/site';
 				splitLine.style.left = `${splitPos}%`;
 			}
 
-			const designerOpacity = Math.min(1, Math.max(0.35, (100 - pct) / 50));
+			const designerOpacity = Math.min(
+				1,
+				Math.max(0.35, (100 - pct) / 50),
+			);
 			const coderOpacity = Math.min(1, Math.max(0.35, pct / 50));
 
 			designerDesc.style.opacity = `${designerOpacity}`;
@@ -160,22 +201,27 @@ import { site } from '../../data/site';
 			}
 		};
 
-		section.addEventListener('mousemove', handleMouseMove);
-		section.addEventListener('mouseenter', handleMouseEnter);
-		section.addEventListener('mouseleave', handleMouseLeave);
+		section.addEventListener("mousemove", handleMouseMove);
+		section.addEventListener("mouseenter", handleMouseEnter);
+		section.addEventListener("mouseleave", handleMouseLeave);
 
 		// Touch swipe support for mobile
-		section.addEventListener('touchmove', (e: TouchEvent) => {
-			if (e.touches.length > 0) {
-				const rect = section.getBoundingClientRect();
-				const touchX = e.touches[0].clientX - rect.left;
-				relMouseX = (touchX / rect.width) * 100;
-				isHovered = true;
-				if (!animId) animId = requestAnimationFrame(updatePositions);
-			}
-		}, { passive: true });
+		section.addEventListener(
+			"touchmove",
+			(e: TouchEvent) => {
+				if (e.touches.length > 0) {
+					const rect = section.getBoundingClientRect();
+					const touchX = e.touches[0].clientX - rect.left;
+					relMouseX = (touchX / rect.width) * 100;
+					isHovered = true;
+					if (!animId)
+						animId = requestAnimationFrame(updatePositions);
+				}
+			},
+			{ passive: true },
+		);
 
-		section.addEventListener('touchend', () => {
+		section.addEventListener("touchend", () => {
 			isHovered = false;
 			relMouseX = 50;
 			if (!animId) animId = requestAnimationFrame(updatePositions);
@@ -185,17 +231,16 @@ import { site } from '../../data/site';
 	}
 
 	initAdhamHero();
-	document.addEventListener('astro:page-load', initAdhamHero);
+	document.addEventListener("astro:page-load", initAdhamHero);
 </script>
 
 <style>
 	.hero-section {
 		width: 100%;
-		min-height: calc(100svh - 4.5rem);
+		min-height: calc(100svh - 9.5rem);
 		position: relative;
 		overflow: hidden;
-		padding: clamp(1.5rem, 3vw, 3rem) 0;
-		border-bottom: 1px solid var(--card-border);
+		padding: clamp(1rem, 2.2vw, 2.25rem) 0;
 		background-color: var(--bg-color);
 		display: flex;
 		justify-content: center;
@@ -241,7 +286,9 @@ import { site } from '../../data/site';
 	.description {
 		width: 100%;
 		max-width: clamp(140px, 25vw, 290px);
-		transition: transform 0.3s ease, opacity 0.3s ease;
+		transition:
+			transform 0.3s ease,
+			opacity 0.3s ease;
 	}
 
 	.identity-col:hover .description {
@@ -302,7 +349,11 @@ import { site } from '../../data/site';
 		color: inherit;
 		border-radius: 50%;
 		overflow: hidden;
-		transition: background-color var(--dur-normal, 250ms) ease, box-shadow var(--dur-normal, 250ms) ease, border-color var(--dur-normal, 250ms) ease, transform 0.25s ease;
+		transition:
+			background-color var(--dur-normal, 250ms) ease,
+			box-shadow var(--dur-normal, 250ms) ease,
+			border-color var(--dur-normal, 250ms) ease,
+			transform 0.25s ease;
 	}
 
 	.face-stage:hover {
@@ -491,4 +542,3 @@ import { site } from '../../data/site';
 		}
 	}
 </style>
-
