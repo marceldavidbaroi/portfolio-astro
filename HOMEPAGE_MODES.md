@@ -30,21 +30,21 @@ Modes set `data-mode="<id>"` alongside `data-theme="light|dark"` so CSS transiti
 - **Hero Layer:** 2–3 large blurred radial color orbs (`blur(90px)`) positioned behind the split-face portrait, drifting slowly on a **16–22s `ease-in-out infinite alternate`** CSS animation (disabled automatically under `prefers-reduced-motion: reduce`).
 - **Page Wash:** A soft 2-stop pastel gradient in Light Mode and a deep tonal gradient in Dark Mode, with translucent `--card-bg` surfaces (`rgba(255, 255, 255, 0.65)` light / translucent dark glass) so content remains high-contrast and legible.
 
-### Light Mode (`[data-theme="light"]` — Soft Pastel Wash)
+### Light Mode (`[data-theme="light"]` — Editorial Pastel & Stone)
 | Mode | `--accent` | Page Pastel Gradient (`--bg-color`) | Blending Hero Orbs |
 | :--- | :--- | :--- | :--- |
-| **Developer** | `#84353f` | `#fdf2f3` → `#f7e5e8` | Blush Rose `#eab5be` + Warm Coral `#f3cfc2` |
-| **Educator** | `#245c4a` | `#eff9f5` → `#e0f2eb` | Soft Mint `#9edbc6` + Sky Teal `#b4dce8` |
-| **Researcher** | `#2e4a7d` | `#eff4fd` → `#e3ecfa` | Periwinkle `#b0c7f2` + Soft Lavender `#c9c0f0` |
-| **Stories & Gallery** | `#944e27` | `#fef4ea` → `#fbe7d5` | Soft Peach `#f2c29b` + Warm Gold `#edd79f` |
+| **Developer** | `#2c3540` | `#f4f6f8` → `#e7ecf0` | `#bcc7d4` + `#cfd6cc` |
+| **Educator** | `#245c4a` | `#eff8f4` → `#e0f0e9` | `#9edbc6` + `#b6dce6` |
+| **Researcher** | `#2b497a` | `#eff4fc` → `#e2ebfa` | `#adc5f0` + `#bfd0f2` |
+| **Stories & Gallery** | `#8f4b24` | `#faf4ed` → `#f3e6d6` | `#edc09a` + `#e8d5a3` |
 
 ### Dark Mode (`[data-theme="dark"]` — Luminous Mesh)
 | Mode | `--accent` | Page Dark Gradient (`--bg-color`) | Blending Hero Orbs |
 | :--- | :--- | :--- | :--- |
-| **Developer** | `#e07f8a` | `#171012` → `#120d0f` | Deep Wine `#7a2e39` + Plum `#4f253a` |
-| **Educator** | `#66c7a9` | `#0d1714` → `#0a1210` | Emerald `#245c4a` + Ocean `#1c4b5c` |
-| **Researcher** | `#82a9e8` | `#0e121c` → `#0a0d15` | Cobalt `#2a4578` + Violet `#3f3470` |
-| **Stories & Gallery** | `#e6a06e` | `#18120c` → `#120e09` | Terracotta `#7d4422` + Amber `#69501e` |
+| **Developer** | `#9db0c4` | `#111418` → `#0c0e11` | `#2b3847` + `#263638` |
+| **Educator** | `#66c7a9` | `#0d1714` → `#0a110f` | `#245c4a` + `#1c4b5c` |
+| **Researcher** | `#82a9e8` | `#0e121c` → `#0a0d14` | `#2a4578` + `#35396e` |
+| **Stories & Gallery** | `#e39e6b` | `#17120d` → `#110d09` | `#754020` + `#614b1e` |
 
 ---
 

@@ -1,28 +1,30 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import HomeHero from '../components/home/HomeHero.astro';
-import HomeModeTabs from '../components/home/HomeModeTabs.astro';
-import HomeActionsBar from '../components/home/HomeActionsBar.astro';
-import HomeHowIWork from '../components/home/HomeHowIWork.astro';
-import HomeFeaturedWork from '../components/home/HomeFeaturedWork.astro';
-import HomeExperienceRail from '../components/home/HomeExperienceRail.astro';
-import HomeEducationStrip from '../components/home/HomeEducationStrip.astro';
-import HomeSkillsStrip from '../components/home/HomeSkillsStrip.astro';
-import HomeContactClose from '../components/home/HomeContactClose.astro';
-import { getCollection, getEntry } from 'astro:content';
-import { getAllProjects } from '../lib/getProject';
-import { mediaMap, resolveAssets } from '../lib/media';
-import { toProjectListItem } from '../lib/projectView';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import HomeHero from "../components/home/HomeHero.astro";
+import HomeModeTabs from "../components/home/HomeModeTabs.astro";
+import HomeActionsBar from "../components/home/HomeActionsBar.astro";
+import HomeHowIWork from "../components/home/HomeHowIWork.astro";
+import HomeFeaturedWork from "../components/home/HomeFeaturedWork.astro";
+import HomeExperienceRail from "../components/home/HomeExperienceRail.astro";
+import HomeEducationStrip from "../components/home/HomeEducationStrip.astro";
+import HomeSkillsStrip from "../components/home/HomeSkillsStrip.astro";
+import HomeContactClose from "../components/home/HomeContactClose.astro";
+import { getCollection, getEntry } from "astro:content";
+import { getAllProjects } from "../lib/getProject";
+import { mediaMap, resolveAssets } from "../lib/media";
+import { toProjectListItem } from "../lib/projectView";
 
-const media = mediaMap(await getCollection('media'));
-const bscEntry = await getEntry('education', 'bsc-cse');
-const hscEntry = await getEntry('education', 'hsc-science');
-if (!bscEntry || !hscEntry) throw new Error('Missing education content');
+const media = mediaMap(await getCollection("media"));
+const bscEntry = await getEntry("education", "bsc-cse");
+const hscEntry = await getEntry("education", "hsc-science");
+if (!bscEntry || !hscEntry) throw new Error("Missing education content");
 const bscCseProgram = bscEntry.data;
 const hscScienceProgram = hscEntry.data;
 
 const projectEntries = await getAllProjects();
-const byId = Object.fromEntries(projectEntries.map((entry) => [entry.id, entry]));
+const byId = Object.fromEntries(
+	projectEntries.map((entry) => [entry.id, entry]),
+);
 
 const focused = projectEntries
 	.filter((entry) => entry.data.featured)
@@ -31,21 +33,37 @@ const focused = projectEntries
 	.map((entry) => toProjectListItem(entry));
 const featured = focused[0];
 
-const experience = (await getCollection('experience'))
+const experience = (await getCollection("experience"))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((entry) => ({
 		slug: entry.id,
 		...entry.data,
-		cardImages: resolveAssets(entry.data.cardImages || [], media).map((a) => a.src)
+		cardImages: resolveAssets(entry.data.cardImages || [], media).map(
+			(a) => a.src,
+		),
 	}));
 
-const skills = ['Next.js', 'Vue 3', 'NestJS', 'Flutter', 'TypeScript', 'PostgreSQL', 'Supabase', 'Docker'];
+const skills = [
+	"Next.js",
+	"Vue 3",
+	"NestJS",
+	"Flutter",
+	"TypeScript",
+	"PostgreSQL",
+	"Supabase",
+	"Docker",
+];
 const workCount = projectEntries.length;
 
-import '../styles/about.css';
+import "../styles/about.css";
 ---
 
 <BaseLayout isWide alignStart>
+	<div class="page-mesh-bg" aria-hidden="true">
+		<span class="page-orb page-orb-1"></span>
+		<span class="page-orb page-orb-2"></span>
+		<span class="page-orb page-orb-3"></span>
+	</div>
 	<HomeHero />
 	<HomeModeTabs />
 	<HomeActionsBar />
@@ -66,7 +84,10 @@ import '../styles/about.css';
 		</div>
 
 		<div class="reveal-section">
-			<HomeEducationStrip bscCseProgram={bscCseProgram} hscScienceProgram={hscScienceProgram} />
+			<HomeEducationStrip
+				bscCseProgram={bscCseProgram}
+				hscScienceProgram={hscScienceProgram}
+			/>
 		</div>
 
 		<div class="reveal-section">
@@ -81,20 +102,23 @@ import '../styles/about.css';
 
 <script>
 	function initHomeScrollReveal() {
-		const sections = document.querySelectorAll('.reveal-section');
+		const sections = document.querySelectorAll(".reveal-section");
 		if (!sections.length) return;
 
-		const observer = new IntersectionObserver((entries) => {
-			entries.forEach((entry) => {
-				if (entry.isIntersecting) {
-					entry.target.classList.add('is-revealed');
-					observer.unobserve(entry.target);
-				}
-			});
-		}, {
-			threshold: 0.05,
-			rootMargin: '0px 0px -40px 0px'
-		});
+		const observer = new IntersectionObserver(
+			(entries) => {
+				entries.forEach((entry) => {
+					if (entry.isIntersecting) {
+						entry.target.classList.add("is-revealed");
+						observer.unobserve(entry.target);
+					}
+				});
+			},
+			{
+				threshold: 0.05,
+				rootMargin: "0px 0px -40px 0px",
+			},
+		);
 
 		sections.forEach((section) => {
 			observer.observe(section);
@@ -102,7 +126,7 @@ import '../styles/about.css';
 	}
 
 	initHomeScrollReveal();
-	document.addEventListener('astro:page-load', initHomeScrollReveal);
+	document.addEventListener("astro:page-load", initHomeScrollReveal);
 </script>
 
 <style>
@@ -115,7 +139,9 @@ import '../styles/about.css';
 	.reveal-section {
 		opacity: 0;
 		transform: translateY(28px);
-		transition: opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1), transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
+		transition:
+			opacity 0.65s cubic-bezier(0.16, 1, 0.3, 1),
+			transform 0.65s cubic-bezier(0.16, 1, 0.3, 1);
 		will-change: opacity, transform;
 	}
 
@@ -130,5 +156,201 @@ import '../styles/about.css';
 			transform: none !important;
 			transition: none !important;
 		}
+	}
+
+	/* Homepage 4-Mode Pastel & Dark Luminous Theme System */
+	:global(html) {
+		--bg-grad-start: #f4f6f8;
+		--bg-grad-end: #e7ecf0;
+		--hero-orb-1: #bcc7d4;
+		--hero-orb-2: #cfd6cc;
+	}
+
+	.page-mesh-bg {
+		position: fixed;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+		z-index: -1;
+	}
+
+	.page-orb {
+		position: absolute;
+		border-radius: 999px;
+		filter: blur(110px);
+		opacity: 0.42;
+		will-change: transform;
+		transition: background-color 0.55s ease;
+	}
+
+	.page-orb-1 {
+		width: clamp(320px, 48vw, 680px);
+		height: clamp(320px, 48vw, 680px);
+		top: -14%;
+		left: -10%;
+		background: var(--hero-orb-1, #bcc7d4);
+		animation: pageOrbDriftA 20s ease-in-out infinite alternate;
+	}
+
+	.page-orb-2 {
+		width: clamp(300px, 44vw, 640px);
+		height: clamp(300px, 44vw, 640px);
+		top: 28%;
+		right: -12%;
+		background: var(--hero-orb-2, #cfd6cc);
+		animation: pageOrbDriftB 24s ease-in-out infinite alternate;
+	}
+
+	.page-orb-3 {
+		width: clamp(280px, 42vw, 600px);
+		height: clamp(280px, 42vw, 600px);
+		bottom: -16%;
+		left: 18%;
+		background: var(--hero-orb-1, #bcc7d4);
+		opacity: 0.28;
+		animation: pageOrbDriftC 26s ease-in-out infinite alternate;
+	}
+
+	@keyframes pageOrbDriftA {
+		0% { transform: translate3d(0, 0, 0) scale(1); }
+		100% { transform: translate3d(6%, 8%, 0) scale(1.1); }
+	}
+
+	@keyframes pageOrbDriftB {
+		0% { transform: translate3d(0, 0, 0) scale(1); }
+		100% { transform: translate3d(-7%, -6%, 0) scale(1.08); }
+	}
+
+	@keyframes pageOrbDriftC {
+		0% { transform: translate3d(0, 0, 0) scale(1); }
+		100% { transform: translate3d(5%, -7%, 0) scale(1.07); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.page-orb {
+			animation: none;
+		}
+	}
+
+	:global(html[data-theme="dark"]) .page-orb {
+		opacity: 0.3;
+	}
+
+	:global(html[data-theme="dark"]) .page-orb-3 {
+		opacity: 0.2;
+	}
+
+	:global(body) {
+		background-color: var(--bg-grad-start);
+		background-image: linear-gradient(
+			160deg,
+			var(--bg-grad-start) 0%,
+			var(--bg-grad-end) 100%
+		);
+		background-attachment: fixed;
+		transition:
+			background-color 0.4s ease,
+			color 0.3s ease;
+	}
+
+	:global(html[data-mode="developer"]) {
+		--accent: #2c3540;
+		--accent-hover: color-mix(
+			in oklch,
+			var(--accent) 75%,
+			var(--text-main)
+		);
+		--bg-color: #f4f6f8;
+		--bg-grad-start: #f4f6f8;
+		--bg-grad-end: #e7ecf0;
+		--card-bg: rgba(255, 255, 255, 0.65);
+		--hero-orb-1: #bcc7d4;
+		--hero-orb-2: #cfd6cc;
+	}
+
+	:global(html[data-mode="educator"]) {
+		--accent: #245c4a;
+		--accent-hover: color-mix(
+			in oklch,
+			var(--accent) 75%,
+			var(--text-main)
+		);
+		--bg-color: #eff8f4;
+		--bg-grad-start: #eff8f4;
+		--bg-grad-end: #e0f0e9;
+		--card-bg: rgba(255, 255, 255, 0.65);
+		--hero-orb-1: #9edbc6;
+		--hero-orb-2: #b6dce6;
+	}
+
+	:global(html[data-mode="researcher"]) {
+		--accent: #2b497a;
+		--accent-hover: color-mix(
+			in oklch,
+			var(--accent) 75%,
+			var(--text-main)
+		);
+		--bg-color: #eff4fc;
+		--bg-grad-start: #eff4fc;
+		--bg-grad-end: #e2ebfa;
+		--card-bg: rgba(255, 255, 255, 0.65);
+		--hero-orb-1: #adc5f0;
+		--hero-orb-2: #bfd0f2;
+	}
+
+	:global(html[data-mode="stories"]) {
+		--accent: #8f4b24;
+		--accent-hover: color-mix(
+			in oklch,
+			var(--accent) 75%,
+			var(--text-main)
+		);
+		--bg-color: #faf4ed;
+		--bg-grad-start: #faf4ed;
+		--bg-grad-end: #f3e6d6;
+		--card-bg: rgba(255, 255, 255, 0.65);
+		--hero-orb-1: #edc09a;
+		--hero-orb-2: #e8d5a3;
+	}
+
+	:global(html[data-theme="dark"][data-mode="developer"]),
+	:global(html[data-theme="dark"]:not([data-mode])) {
+		--accent: #9db0c4;
+		--bg-color: #111418;
+		--bg-grad-start: #111418;
+		--bg-grad-end: #0c0e11;
+		--card-bg: rgba(255, 255, 255, 0.04);
+		--hero-orb-1: #2b3847;
+		--hero-orb-2: #263638;
+	}
+
+	:global(html[data-theme="dark"][data-mode="educator"]) {
+		--accent: #66c7a9;
+		--bg-color: #0d1714;
+		--bg-grad-start: #0d1714;
+		--bg-grad-end: #0a110f;
+		--card-bg: rgba(255, 255, 255, 0.04);
+		--hero-orb-1: #245c4a;
+		--hero-orb-2: #1c4b5c;
+	}
+
+	:global(html[data-theme="dark"][data-mode="researcher"]) {
+		--accent: #82a9e8;
+		--bg-color: #0e121c;
+		--bg-grad-start: #0e121c;
+		--bg-grad-end: #0a0d14;
+		--card-bg: rgba(255, 255, 255, 0.04);
+		--hero-orb-1: #2a4578;
+		--hero-orb-2: #35396e;
+	}
+
+	:global(html[data-theme="dark"][data-mode="stories"]) {
+		--accent: #e39e6b;
+		--bg-color: #17120d;
+		--bg-grad-start: #17120d;
+		--bg-grad-end: #110d09;
+		--card-bg: rgba(255, 255, 255, 0.04);
+		--hero-orb-1: #754020;
+		--hero-orb-2: #614b1e;
 	}
 </style>

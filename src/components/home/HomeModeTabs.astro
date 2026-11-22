@@ -1,9 +1,9 @@
 ---
 const modes = [
-	{ id: 'developer', label: 'Developer' },
-	{ id: 'educator', label: 'Educator' },
-	{ id: 'researcher', label: 'Researcher' },
-	{ id: 'stories', label: 'Stories & Gallery' },
+	{ id: "developer", label: "Developer" },
+	{ id: "educator", label: "Educator" },
+	{ id: "researcher", label: "Researcher" },
+	{ id: "stories", label: "Stories & Gallery" },
 ] as const;
 ---
 
@@ -13,9 +13,9 @@ const modes = [
 			<button
 				type="button"
 				role="tab"
-				class:list={['mode-tab', { 'is-active': idx === 0 }]}
+				class:list={["mode-tab", { "is-active": idx === 0 }]}
 				data-mode-tab={mode.id}
-				aria-selected={idx === 0 ? 'true' : 'false'}
+				aria-selected={idx === 0 ? "true" : "false"}
 				tabindex={idx === 0 ? 0 : -1}
 			>
 				{mode.label}
@@ -26,38 +26,49 @@ const modes = [
 
 <script>
 	function initHomeModeTabs() {
-		const validModes = new Set(['developer', 'educator', 'researcher', 'stories']);
-		const tabs = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-mode-tab]'));
+		const validModes = new Set([
+			"developer",
+			"educator",
+			"researcher",
+			"stories",
+		]);
+		const tabs = Array.from(
+			document.querySelectorAll<HTMLButtonElement>("[data-mode-tab]"),
+		);
 		if (!tabs.length) return;
 
 		function setMode(modeId: string, updateUrl = true) {
-			const next = validModes.has(modeId) ? modeId : 'developer';
+			const next = validModes.has(modeId) ? modeId : "developer";
 			document.documentElement.dataset.mode = next;
 
 			tabs.forEach((tab) => {
 				const isActive = tab.dataset.modeTab === next;
-				tab.classList.toggle('is-active', isActive);
-				tab.setAttribute('aria-selected', isActive ? 'true' : 'false');
-				tab.setAttribute('tabindex', isActive ? '0' : '-1');
+				tab.classList.toggle("is-active", isActive);
+				tab.setAttribute("aria-selected", isActive ? "true" : "false");
+				tab.setAttribute("tabindex", isActive ? "0" : "-1");
 			});
 
 			if (updateUrl) {
 				const url = new URL(window.location.href);
-				if (next === 'developer') {
-					url.searchParams.delete('mode');
+				if (next === "developer") {
+					url.searchParams.delete("mode");
 				} else {
-					url.searchParams.set('mode', next);
+					url.searchParams.set("mode", next);
 				}
-				window.history.replaceState({}, '', url);
+				window.history.replaceState({}, "", url);
 			}
+
+			window.dispatchEvent(
+				new CustomEvent("home-mode-change", { detail: { mode: next } }),
+			);
 		}
 
 		const params = new URLSearchParams(window.location.search);
-		const initialMode = params.get('mode') || 'developer';
+		const initialMode = params.get("mode") || "developer";
 		setMode(initialMode, false);
 
 		tabs.forEach((tab) => {
-			tab.addEventListener('click', () => {
+			tab.addEventListener("click", () => {
 				const modeId = tab.dataset.modeTab;
 				if (modeId) setMode(modeId, true);
 			});
@@ -65,7 +76,7 @@ const modes = [
 	}
 
 	initHomeModeTabs();
-	document.addEventListener('astro:page-load', initHomeModeTabs);
+	document.addEventListener("astro:page-load", initHomeModeTabs);
 </script>
 
 <style>
@@ -99,7 +110,9 @@ const modes = [
 		padding: 0.45rem 0.95rem;
 		border-radius: 999px;
 		cursor: pointer;
-		transition: color 0.2s ease, background-color 0.2s ease;
+		transition:
+			color 0.2s ease,
+			background-color 0.2s ease;
 	}
 
 	.mode-tab:hover {

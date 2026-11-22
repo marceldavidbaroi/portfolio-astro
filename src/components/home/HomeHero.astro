@@ -12,8 +12,8 @@ import { site } from "../../data/site";
 			aria-label="About Designer details"
 		>
 			<div class="description" id="designer-desc">
-				<h1 class="identity-title">designer</h1>
-				<p class="identity-bio">
+				<h1 class="identity-title" id="designer-title">designer</h1>
+				<p class="identity-bio" id="designer-bio">
 					Product designer specialising in UI design and design
 					systems.
 				</p>
@@ -53,7 +53,7 @@ import { site } from "../../data/site";
 			<!-- Engineer Half Image Layer (Right ink line sketch) with code backdrop decoration -->
 			<div class="face-layer coder-layer" id="coder-layer">
 				<!-- Ambient code snippets in background matching Adham Dannaway's signature right side -->
-				<div class="code-bg-deco font-mono" aria-hidden="true">
+				<div class="code-bg-deco font-mono" id="hero-backdrop-deco" aria-hidden="true">
 					<span class="code-line">&lt;html&gt;</span>
 					<span class="code-line indent">height: 100%;</span>
 					<span class="code-line indent">class="architect"</span>
@@ -89,11 +89,11 @@ import { site } from "../../data/site";
 			aria-label="About Engineer details"
 		>
 			<div class="description" id="coder-desc">
-				<h1 class="identity-title">
+				<h1 class="identity-title" id="coder-title">
 					<span class="chevron-left">&lt;</span>engineer
 					<span class="chevron-right">&gt;</span>
 				</h1>
-				<p class="identity-bio">
+				<p class="identity-bio" id="coder-bio">
 					Full-stack engineer building scalable backends, robust APIs,
 					and modern web apps.
 				</p>
@@ -232,6 +232,104 @@ import { site } from "../../data/site";
 
 	initAdhamHero();
 	document.addEventListener("astro:page-load", initAdhamHero);
+
+	function initHeroModeCopy() {
+		const leftTitle = document.getElementById('designer-title');
+		const leftBio = document.getElementById('designer-bio');
+		const rightTitle = document.getElementById('coder-title');
+		const rightBio = document.getElementById('coder-bio');
+		const deco = document.getElementById('hero-backdrop-deco');
+		if (!leftTitle || !leftBio || !rightTitle || !rightBio || !deco) return;
+
+		const copyByMode: Record<string, {
+			leftTitle: string;
+			leftBio: string;
+			rightHtml: string;
+			rightBio: string;
+			decoLines: Array<{ text: string; cls?: string }>;
+		}> = {
+			developer: {
+				leftTitle: 'designer',
+				leftBio: 'Product designer specialising in UI design and design systems.',
+				rightHtml: '<span class="chevron-left">&lt;</span>engineer<span class="chevron-right">&gt;</span>',
+				rightBio: 'Full-stack engineer building scalable backends, robust APIs, and modern web apps.',
+				decoLines: [
+					{ text: '<html>' },
+					{ text: 'height: 100%;', cls: 'indent' },
+					{ text: 'class="architect"', cls: 'indent' },
+					{ text: 'CSS3 HTML5', cls: 'big' },
+					{ text: 'color: #2b251e;', cls: 'indent' },
+					{ text: 'TypeScript' },
+				],
+			},
+			educator: {
+				leftTitle: 'mentor',
+				leftBio: '5 years guiding ~24 STEM students to GPA-5.00 board distinctions.',
+				rightHtml: 'educator',
+				rightBio: 'Breaking down Higher Math, Physics & ICT into clear mental models.',
+				decoLines: [
+					{ text: 'f(x) = dx/dt' },
+					{ text: 'Σ n = 1..∞', cls: 'indent' },
+					{ text: 'Higher Math', cls: 'indent' },
+					{ text: 'Physics · ICT', cls: 'big' },
+					{ text: '24+ Students', cls: 'indent' },
+					{ text: 'GPA 5.00' },
+				],
+			},
+			researcher: {
+				leftTitle: 'explorer',
+				leftBio: '3.91/4.00 B.Sc. in CSE with a focus on applied machine learning.',
+				rightHtml: 'researcher',
+				rightBio: 'Deep learning, Bangla HWCR (Ekush) & reproducible benchmarks.',
+				decoLines: [
+					{ text: 'CNN · ResNet' },
+					{ text: 'Ekush HWCR', cls: 'indent' },
+					{ text: '367k+ Samples', cls: 'indent' },
+					{ text: '3.91 CGPA', cls: 'big' },
+					{ text: 'PyTorch', cls: 'indent' },
+					{ text: 'Benchmarks' },
+				],
+			},
+			stories: {
+				leftTitle: 'creator',
+				leftBio: 'Classical Tabla, competition-winning fine arts, theatre & cinema.',
+				rightHtml: 'leader',
+				rightBio: 'Civic engagement, protocol force & industry engineering expos.',
+				decoLines: [
+					{ text: '2017 — 2025' },
+					{ text: 'Dhaka, BD', cls: 'indent' },
+					{ text: 'NDC · DIU', cls: 'indent' },
+					{ text: 'Tabla · Art', cls: 'big' },
+					{ text: 'Protocol Force', cls: 'indent' },
+					{ text: 'TexTech Expo' },
+				],
+			},
+		};
+
+		function applyMode(modeId: string) {
+			const cfg = copyByMode[modeId] || copyByMode.developer;
+			leftTitle.textContent = cfg.leftTitle;
+			leftBio.textContent = cfg.leftBio;
+			rightTitle.innerHTML = cfg.rightHtml;
+			rightBio.textContent = cfg.rightBio;
+			deco.innerHTML = '';
+			cfg.decoLines.forEach((line) => {
+				const span = document.createElement('span');
+				span.className = line.cls ? `code-line ${line.cls}` : 'code-line';
+				span.textContent = line.text;
+				deco.appendChild(span);
+			});
+		}
+
+		applyMode(document.documentElement.dataset.mode || 'developer');
+		window.addEventListener('home-mode-change', (e: Event) => {
+			const modeId = (e as CustomEvent<{ mode?: string }>).detail?.mode || 'developer';
+			applyMode(modeId);
+		});
+	}
+
+	initHeroModeCopy();
+	document.addEventListener('astro:page-load', initHeroModeCopy);
 </script>
 
 <style>
@@ -241,18 +339,88 @@ import { site } from "../../data/site";
 		position: relative;
 		overflow: hidden;
 		padding: clamp(1rem, 2.2vw, 2.25rem) 0;
-		background-color: var(--bg-color);
+		background-color: transparent;
 		display: flex;
 		justify-content: center;
 		align-items: center;
 		user-select: none;
 	}
 
+	.hero-mesh-bg {
+		position: absolute;
+		inset: 0;
+		overflow: hidden;
+		pointer-events: none;
+		z-index: 0;
+		mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0) 100%);
+		-webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 65%, rgba(0, 0, 0, 0) 100%);
+	}
+
+	.hero-orb {
+		position: absolute;
+		border-radius: 999px;
+		filter: blur(100px);
+		opacity: 0.4;
+		will-change: transform;
+		transition: background-color 0.55s ease;
+	}
+
+	.hero-orb-1 {
+		width: clamp(240px, 38vw, 520px);
+		height: clamp(240px, 38vw, 520px);
+		top: -12%;
+		left: 12%;
+		background: var(--hero-orb-1, #bcc7d4);
+		animation: heroOrbDriftA 18s ease-in-out infinite alternate;
+	}
+
+	.hero-orb-2 {
+		width: clamp(260px, 40vw, 560px);
+		height: clamp(260px, 40vw, 560px);
+		bottom: -10%;
+		right: 10%;
+		background: var(--hero-orb-2, #cfd6cc);
+		animation: heroOrbDriftB 22s ease-in-out infinite alternate;
+	}
+
+	@keyframes heroOrbDriftA {
+		0% {
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		100% {
+			transform: translate3d(4%, 6%, 0) scale(1.08);
+		}
+	}
+
+	@keyframes heroOrbDriftB {
+		0% {
+			transform: translate3d(0, 0, 0) scale(1);
+		}
+		100% {
+			transform: translate3d(-5%, -5%, 0) scale(1.06);
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.hero-orb-1,
+		.hero-orb-2 {
+			animation: none;
+		}
+	}
+
+	:global([data-theme="dark"]) .hero-orb {
+		opacity: 0.3;
+	}
+
 	/* 3-Column fluid container that scales down naturally on any screen */
 	.face-container {
+		position: relative;
+		z-index: 1;
 		width: 100%;
 		max-width: 1140px;
 		display: flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
 		align-items: center;
 		justify-content: space-between;
 		gap: clamp(0.5rem, 2vw, 2rem);
