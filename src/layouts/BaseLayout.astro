@@ -80,6 +80,14 @@ const personJsonLd = {
 				} else {
 					document.documentElement.dataset.theme = 'light';
 				}
+
+				const validModes = ['developer', 'educator', 'researcher', 'stories'];
+				const urlMode = new URLSearchParams(window.location.search).get('mode');
+				const storedMode = localStorage.getItem('portfolio-mode');
+				const mode = validModes.includes(urlMode)
+					? urlMode
+					: (validModes.includes(storedMode) ? storedMode : 'developer');
+				document.documentElement.dataset.mode = mode;
 			}
 			applyTheme();
 			document.addEventListener('astro:after-swap', applyTheme);
@@ -104,6 +112,11 @@ const personJsonLd = {
 		<ClientRouter />
 	</head>
 	<body>
+		<div class="page-mesh-bg" aria-hidden="true">
+			<span class="page-orb page-orb-1"></span>
+			<span class="page-orb page-orb-2"></span>
+			<span class="page-orb page-orb-3"></span>
+		</div>
 		<div class="layout-wrapper">
 			<header id="site-header" class="header">
 				<div class="header-container">

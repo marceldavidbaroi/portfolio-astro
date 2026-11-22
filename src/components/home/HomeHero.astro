@@ -517,8 +517,12 @@ import { site } from "../../data/site";
 		color: inherit;
 		border-radius: 50%;
 		overflow: hidden;
+		background:
+			radial-gradient(circle at 25% 25%, var(--portrait-orb-1, rgba(188, 199, 212, 0.55)), transparent 65%),
+			radial-gradient(circle at 75% 80%, var(--portrait-orb-2, rgba(207, 214, 204, 0.55)), transparent 65%),
+			linear-gradient(150deg, var(--portrait-grad-start, #f4f6f8), var(--portrait-grad-end, #e7ecf0));
 		transition:
-			background-color var(--dur-normal, 250ms) ease,
+			background var(--dur-normal, 250ms) ease,
 			box-shadow var(--dur-normal, 250ms) ease,
 			border-color var(--dur-normal, 250ms) ease,
 			transform 0.25s ease;
@@ -528,10 +532,9 @@ import { site } from "../../data/site";
 		transform: scale(1.015);
 	}
 
-	/* Dark mode: Editorial circular spotlight that naturally frames the positive artwork */
+	/* Dark mode: Keep the Light pastel gradient inside the portrait medallion for ink legibility */
 	:root[data-theme="dark"] .face-stage {
-		background-color: #fbf9f5;
-		border: 1px solid rgba(227, 222, 214, 0.12);
+		border: 1px solid rgba(227, 222, 214, 0.14);
 		box-shadow:
 			0 0 0 1px rgba(255, 255, 255, 0.04),
 			0 20px 48px -12px rgba(0, 0, 0, 0.65),
@@ -540,8 +543,7 @@ import { site } from "../../data/site";
 
 	@media (prefers-color-scheme: dark) {
 		:root:not([data-theme="light"]) .face-stage {
-			background-color: #fbf9f5;
-			border: 1px solid rgba(227, 222, 214, 0.12);
+			border: 1px solid rgba(227, 222, 214, 0.14);
 			box-shadow:
 				0 0 0 1px rgba(255, 255, 255, 0.04),
 				0 20px 48px -12px rgba(0, 0, 0, 0.65),
@@ -570,6 +572,7 @@ import { site } from "../../data/site";
 		align-items: center;
 		justify-content: center;
 		will-change: clip-path;
+		mix-blend-mode: multiply;
 	}
 
 	.face-layer.designer-layer {

@@ -40,6 +40,7 @@ const modes = [
 		function setMode(modeId: string, updateUrl = true) {
 			const next = validModes.has(modeId) ? modeId : "developer";
 			document.documentElement.dataset.mode = next;
+			localStorage.setItem("portfolio-mode", next);
 
 			tabs.forEach((tab) => {
 				const isActive = tab.dataset.modeTab === next;
@@ -64,7 +65,10 @@ const modes = [
 		}
 
 		const params = new URLSearchParams(window.location.search);
-		const initialMode = params.get("mode") || "developer";
+		const initialMode =
+			params.get("mode") ||
+			localStorage.getItem("portfolio-mode") ||
+			"developer";
 		setMode(initialMode, false);
 
 		tabs.forEach((tab) => {

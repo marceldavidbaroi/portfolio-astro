@@ -59,11 +59,6 @@ import "../styles/about.css";
 ---
 
 <BaseLayout isWide alignStart>
-	<div class="page-mesh-bg" aria-hidden="true">
-		<span class="page-orb page-orb-1"></span>
-		<span class="page-orb page-orb-2"></span>
-		<span class="page-orb page-orb-3"></span>
-	</div>
 	<HomeHero />
 	<HomeModeTabs />
 	<HomeActionsBar />
@@ -157,92 +152,4 @@ import "../styles/about.css";
 			transition: none !important;
 		}
 	}
-
-	.page-mesh-bg {
-		position: fixed;
-		inset: 0;
-		overflow: hidden;
-		pointer-events: none;
-		z-index: -1;
-	}
-
-	.page-orb {
-		position: absolute;
-		border-radius: 999px;
-		filter: blur(110px);
-		opacity: 0.42;
-		will-change: transform;
-		transition: background-color 0.55s ease;
-	}
-
-	.page-orb-1 {
-		width: clamp(320px, 48vw, 680px);
-		height: clamp(320px, 48vw, 680px);
-		top: -14%;
-		left: -10%;
-		background: var(--hero-orb-1, #bcc7d4);
-		animation: pageOrbDriftA 20s ease-in-out infinite alternate;
-	}
-
-	.page-orb-2 {
-		width: clamp(300px, 44vw, 640px);
-		height: clamp(300px, 44vw, 640px);
-		top: 28%;
-		right: -12%;
-		background: var(--hero-orb-2, #cfd6cc);
-		animation: pageOrbDriftB 24s ease-in-out infinite alternate;
-	}
-
-	.page-orb-3 {
-		width: clamp(280px, 42vw, 600px);
-		height: clamp(280px, 42vw, 600px);
-		bottom: -16%;
-		left: 18%;
-		background: var(--hero-orb-1, #bcc7d4);
-		opacity: 0.28;
-		animation: pageOrbDriftC 26s ease-in-out infinite alternate;
-	}
-
-	@keyframes pageOrbDriftA {
-		0% { transform: translate3d(0, 0, 0) scale(1); }
-		100% { transform: translate3d(6%, 8%, 0) scale(1.1); }
-	}
-
-	@keyframes pageOrbDriftB {
-		0% { transform: translate3d(0, 0, 0) scale(1); }
-		100% { transform: translate3d(-7%, -6%, 0) scale(1.08); }
-	}
-
-	@keyframes pageOrbDriftC {
-		0% { transform: translate3d(0, 0, 0) scale(1); }
-		100% { transform: translate3d(5%, -7%, 0) scale(1.07); }
-	}
-
-	@media (prefers-reduced-motion: reduce) {
-		.page-orb {
-			animation: none;
-		}
-	}
-
-	:global(html[data-theme="dark"]) .page-orb {
-		opacity: 0.3;
-	}
-
-	:global(html[data-theme="dark"]) .page-orb-3 {
-		opacity: 0.2;
-	}
-
-	:global(body) {
-		background-color: var(--bg-grad-start);
-		background-image: linear-gradient(
-			160deg,
-			var(--bg-grad-start) 0%,
-			var(--bg-grad-end) 100%
-		);
-		background-attachment: fixed;
-		transition:
-			background-color 0.4s ease,
-			color 0.3s ease;
-	}
-
 </style>
