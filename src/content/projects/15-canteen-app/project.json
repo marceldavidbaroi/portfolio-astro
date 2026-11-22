@@ -75,14 +75,15 @@
 	},
 	"role": "Lead Mobile & Backend Engineer (Client Project)",
 	"timeline": "2026 — Present",
-	"status": "Active Development",
+	"status": "Conceptual · In Progress",
 	"classification": "🔒 Proprietary Client IP",
 	"stack": [
+		"Next.js",
 		"Flutter",
+		"React Native",
 		"Supabase",
-		"Dart",
 		"PostgreSQL",
-		"Android"
+		"TypeScript"
 	],
 	"techStack": {
 		"frontend": [
@@ -192,5 +193,72 @@
 				"Real-Time Meal AR & Wallets"
 			]
 		}
-	]
+	],
+	"caseStory": {
+		"thesis": "Smart Hisab is an evolving, conceptual canteen POS and meal ERP—prototyped in React Native, experimented in Flutter for offline hardware, and iterated into Next.js while requirements remain under active discussion.",
+		"productHeadline": "Conceptual institutional canteen POS and meal ERP designed for high-burst lunch counters, shift cashbook reconciliation, and diner meal credit ledgers.",
+		"productBullets": [
+			"Work-in-progress architecture under client discussion: a portion was prototyped in React Native, tested in Flutter for offline SQLite/thermal printing, and the latest iteration is built in Next.js.",
+			"Designed around four roles: Superadmin, Cashier, Kitchen Manager, and Auditor.",
+			"Models shift-based cash drawer accountability (opening float, mid-day drops, closing audit) alongside diner AR meal wallets.",
+			"Supabase PostgreSQL + RLS enforces role and shift boundaries across counter and back-office surfaces."
+		],
+		"showVpcContrastCards": false,
+		"diagrams": [
+			{
+				"id": "canteen-architecture",
+				"label": "Conceptual Architecture & Stack Evolution",
+				"mermaid": "flowchart LR\n  POS[\"Counter POS (RN -> Flutter -> Next.js)\"] --> SB[\"Supabase PostgreSQL + RLS\"]\n  MGR[\"Shift & Cashbook Manager\"] --> SB\n  DIN[\"Diner AR & Meal Wallets\"] --> SB\n"
+			}
+		],
+		"platforms": [
+			{
+				"scope": "Counter POS",
+				"who": "Cashier",
+				"does": "Issues meal tokens quickly during peak lunch hours and manages the active shift drawer"
+			},
+			{
+				"scope": "Back-Office & Shift Audit",
+				"who": "Kitchen Manager / Auditor",
+				"does": "Reviews shift cashbook handovers, daily meal counts, and diner credit balances"
+			},
+			{
+				"scope": "Admin",
+				"who": "Superadmin",
+				"does": "Configures menus, meal pricing, credit limits, and staff role clearances"
+			}
+		],
+		"modules": [
+			{
+				"name": "Peak-Hour POS & Token Dispatch",
+				"summary": "Fast meal checkout designed to keep queues moving even on unreliable cafeteria Wi-Fi",
+				"kernels": "POS Queue + Receipt Dispatch"
+			},
+			{
+				"name": "Shift Cashbook Vault",
+				"summary": "Opening float declaration, mid-day cash drops, and closing drawer reconciliation per cashier shift",
+				"kernels": "Shift Ledger"
+			},
+			{
+				"name": "Diner Meal AR & Wallets",
+				"summary": "Tracks pre-paid balances, credit limits, and month-end deduction summaries",
+				"kernels": "Double-Entry AR"
+			},
+			{
+				"name": "Role & Shift Isolation",
+				"summary": "Separates cashier shift views from management and auditor cross-shift reporting",
+				"kernels": "Supabase RLS"
+			}
+		],
+		"stackRationale": [
+			{
+				"tech": "React Native -> Flutter -> Next.js",
+				"reason": "Started with a React Native prototype, explored Flutter for offline SQLite and Bluetooth thermal printing, and moved the latest iteration to Next.js for faster web/POS iteration while product scope is finalized."
+			},
+			{
+				"tech": "Supabase PostgreSQL + RLS",
+				"reason": "Provides a single relational ledger with Row-Level Security across prototypes without rewriting backend infrastructure."
+			}
+		]
+	}
 }

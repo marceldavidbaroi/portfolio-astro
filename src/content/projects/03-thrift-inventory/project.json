@@ -232,5 +232,71 @@
 				"Google ML Kit Continuous Batch Queue Scanning"
 			]
 		}
-	]
+	],
+	"caseStory": {
+		"thesis": "Thrift Inventory is the mobile floor-intake companion to TradeFlow BD's web ERP—turning smartphone cameras into high-speed barcode scanners and photo-intake stations scoped to the thrift tenant.",
+		"productHeadline": "Mobile warehouse intake and shelf-audit companion for TradeFlow BD, letting floor staff photograph garments, scan barcodes, and reconcile stock directly into their tenant's web inventory.",
+		"productBullets": [
+			"Companion to the full TradeFlow BD web ERP: floor operators handle rapid intake and audits on Android while managers oversee full stock on the web.",
+			"Captures garment photos via Capacitor Camera, uploads to Cloudinary, and attaches barcodes into `thrift_stocks` via atomic RPCs.",
+			"Continuous Google ML Kit barcode scanning with audio/haptic feedback and batch queue processing for high-volume container arrivals.",
+			"3-state shelf/box Audit Mode detects missing or misplaced items and relocates them in bulk, isolated inside the thrift tenant."
+		],
+		"showVpcContrastCards": false,
+		"diagrams": [
+			{
+				"id": "mobile-web-sync",
+				"label": "Mobile Intake to TradeFlow BD Web Sync",
+				"mermaid": "flowchart LR\n  CAM[\"Capacitor Camera + ML Kit Scanner\"] --> APP[\"Thrift Mobile App (Vue 3 + Quasar)\"]\n  APP -->|\"Image Upload\"| CLD[\"Cloudinary CDN\"]\n  APP -->|\"register_thrift_stock_from_app RPC\"| SB[\"Supabase PostgreSQL (Thrift Tenant RLS)\"]\n  CLD -->|\"CDN URL\"| SB\n  SB <-->|\"Live Tenant Inventory\"| WEB[\"TradeFlow BD Web Admin\"]\n"
+			}
+		],
+		"platforms": [
+			{
+				"scope": "Mobile App (Android)",
+				"who": "Warehouse Floor Operator",
+				"does": "Photographs garments, scans barcodes continuously with ML Kit, registers new stock, and runs shelf/box audits"
+			},
+			{
+				"scope": "Web ERP (TradeFlow BD)",
+				"who": "Warehouse Manager / Admin",
+				"does": "Manages the full thrift inventory, pricing, shipments, and tenant-scoped stock records synced from mobile intake"
+			}
+		],
+		"modules": [
+			{
+				"name": "Barcode Scanning & Batch Queue",
+				"summary": "Hardware-accelerated continuous camera scanning with audio/haptic feedback and batch location/status updates",
+				"kernels": "Google ML Kit + scanFeedback"
+			},
+			{
+				"name": "Mobile Photo & Stock Intake",
+				"summary": "On-floor garment photography, metadata capture, and duplicate-checked Cloudinary upload bound to barcodes",
+				"kernels": "Capacitor Camera + Cloudinary + Atomic RPC"
+			},
+			{
+				"name": "Stock Reconciliation (Audit Mode)",
+				"summary": "Select shelf/box, scan expected items, flag missing garments, and bulk-relocate misplaced stock",
+				"kernels": "3-State Audit + Bulk Relocate RPC"
+			},
+			{
+				"name": "TradeFlow BD Tenant Sync",
+				"summary": "Tenant-scoped session bootstrap and isolated `thrift_*` tables synced directly with the TradeFlow BD web ERP",
+				"kernels": "Supabase Auth + PostgreSQL RLS"
+			}
+		],
+		"stackRationale": [
+			{
+				"tech": "Vue 3 + Quasar 2 + Capacitor 8",
+				"reason": "Reuses the parent TradeFlow BD stack and team skillset for fast mobile delivery and shared Supabase/TanStack Query patterns without maintaining a separate Flutter or native codebase."
+			},
+			{
+				"tech": "Google ML Kit Barcode Scanning",
+				"reason": "Provides fast, hardware-accelerated continuous barcode decoding on Android without requiring dedicated Zebra/handheld scanner hardware."
+			},
+			{
+				"tech": "Supabase PostgreSQL + Atomic RPCs",
+				"reason": "Shares the parent platform's tenant-isolated database so mobile intake, photos, and barcodes commit atomically and appear in the web ERP immediately."
+			}
+		]
+	}
 }

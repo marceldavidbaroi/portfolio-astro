@@ -195,6 +195,11 @@ Key Outcomes / Benefit Matrix:
 Engineering Improvements:
   - In-app ticket routing: Database-backed registry (support_widget_apps) resolving app_id to support_stream_id at request time (Code deploys per new app: 1 -> 0)
   - Agent triage by origin: client_app badge chips on ticket cards and multi-select app filter in ServiceDeskFiltersForm (Queue isolation per portfolio app: None -> Per-app filtered views)
+Impact:
+  - Intake Channels Unified: 3 Channels — In-app Vue widget (@itc/service-desk), IMAP email polling, and Blade + Knockout.js public forms
+  - App Onboarding Deploys: 0 Deploys — Database-backed support_widget_apps registry maps new apps to streams without code deploys
+  - Diagnostics Context: Last 20 Calls — Auto-captures last 20 Axios calls, Vue runtime errors, route, viewport, and annotated screenshots
+  - Dual-DB Architecture: Mongo + MySQL — MongoDB shared cards/comments for speed alongside MySQL streams, mailboxes, and RBAC
 Key Technical Decisions:
   - Moved routing into a support_widget_apps table (app_id, support_stream_id, allowed_origins, is_active) with a widget-only middleware resolving the stream per request.
   - Scoped the middleware strictly to POST /api/v1/support/me/tickets so SupportEmailIngressService (IMAP) and public form controllers keep native mailbox/form stream mappings.
@@ -242,7 +247,7 @@ Links: parentPlatform: https://tradeflowbd.com
 
 ----------------------------------------------------------------------------
 
-[15] Smart Hisab – Canteen POS & Meal ERP Platform · Flutter & Cloud ERP · 2026 — Present · Active Development
+[15] Smart Hisab – Canteen POS & Meal ERP Platform · Flutter & Cloud ERP · 2026 — Present · Conceptual · In Progress
 Role: Lead Mobile & Backend Engineer (Client Project)
 Subtitle: High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.
 Overview: Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.
@@ -266,7 +271,7 @@ Key Technical Decisions:
   - Built an offline-first local mutation store in SQLite with optimistic UI updates and background batch sync
   - Implemented atomic PostgreSQL stored procedures (RPCs) in Supabase with explicit debit/credit balancing
   - Applied Supabase Row-Level Security (RLS) policies tied directly to user roles and assigned shift IDs
-Tech Stack: Flutter, Supabase, Dart, PostgreSQL, Android
+Tech Stack: Next.js, Flutter, React Native, Supabase, PostgreSQL, TypeScript
 
 ----------------------------------------------------------------------------
 
@@ -416,6 +421,11 @@ Key Outcomes / Benefit Matrix:
   - Individual Account Owner — Balances that drift or change without a trace: decimal.js arithmetic with non-negative balance checks and an append-only AccountLedger audit trail. [Balance arithmetic: IEEE 754 floating-point -> Arbitrary-precision decimals (designed)]
   - Shared-Account Collaborator — Sharing means giving full access or duplicating accounts: Per-account roles (Owner, Admin, Editor, Viewer) enforced by NestJS guards via AccountUserRole. [Permission scope: Global role only -> Per-account role (designed)]
   - Dashboard Viewer — Analytics slow down as history grows: Daily, weekly, monthly, yearly and category summaries updated transactionally on each write. [Analytics read path: On-demand aggregation over raw transactions -> Reads from 6 pre-aggregated summary entities (designed)]
+Impact:
+  - API Surface: 89 Endpoints — NestJS 11 REST API across 11 modules, 22 controllers, and 28 services
+  - Data Model: 24 Entities — PostgreSQL + TypeORM schema with decimal.js ledger and 6 pre-aggregated summary tables
+  - Automated Tests: 82 Tests — Automated test suite covering ledger precision, RBAC guards, and summary pipelines
+  - Frontend Scope: 32 Pages — Next.js 15 App Router client with 11 Zustand stores and 10 API services
 Key Technical Decisions:
   - Stored amounts as string/numeric values and wrapped all math in decimal.js helpers (safeAdd, safeSubtract) with non-negative balance checks. Trade-off: explicit type parsing across services and DTOs.
   - Added dedicated summary entities (daily, weekly, monthly, yearly, category) updated transactionally on create, update and delete. Trade-off: extra write-path work.

@@ -98,6 +98,32 @@
 			]
 		}
 	],
+	"myImpact": [
+		{
+			"label": "Intake Channels Unified",
+			"value": "3 Channels",
+			"attribution": "personal",
+			"detail": "In-app Vue widget (@itc/service-desk), IMAP email polling, and Blade + Knockout.js public forms"
+		},
+		{
+			"label": "App Onboarding Deploys",
+			"value": "0 Deploys",
+			"attribution": "personal",
+			"detail": "Database-backed support_widget_apps registry maps new apps to streams without code deploys"
+		},
+		{
+			"label": "Diagnostics Context",
+			"value": "Last 20 Calls",
+			"attribution": "personal",
+			"detail": "Auto-captures last 20 Axios calls, Vue runtime errors, route, viewport, and annotated screenshots"
+		},
+		{
+			"label": "Dual-DB Architecture",
+			"value": "Mongo + MySQL",
+			"attribution": "personal",
+			"detail": "MongoDB shared cards/comments for speed alongside MySQL streams, mailboxes, and RBAC"
+		}
+	],
 	"product": {
 		"summary": "Planned, validated and shipped a diagnostics-first, multi-tenant support platform that unifies in-app Vue, IMAP email and public web form intake in one agent inbox, distributed as reusable NPM packages (@itc/service-desk) and a standalone web app.",
 		"tagline": "One agent inbox for in-app, email and web form support, with diagnostics attached.",

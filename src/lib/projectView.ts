@@ -141,7 +141,7 @@ export function toCaseStudyView(
 	const caseStory = data.caseStory;
 	const mode = contribution?.mode ?? 'core';
 
-	const showCaseStory = Boolean(caseStory) && isOwnerOrLead(mode);
+	const showCaseStory = Boolean(caseStory);
 	const showVpc = Boolean(product?.valueProposition?.showCanvas) && isOwnerOrLead(mode);
 
 	const hasContributionChapter =

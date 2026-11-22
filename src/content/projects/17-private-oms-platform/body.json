@@ -44,6 +44,30 @@
 					"text": "**Visuals:** No screenshots included per client confidentiality."
 				}
 			]
+		},
+		{
+			"type": "heading",
+			"level": 2,
+			"text": "Key Engineering Contributions"
+		},
+		{
+			"type": "paragraph",
+			"text": "Within the senior-led microservice workflow, my early delivery focused on three NDA-safe product and integration slices:"
+		},
+		{
+			"type": "list",
+			"ordered": false,
+			"items": [
+				{
+					"text": "**Client Scoping & i18n (`workspace` / `auth`):** Standardized client-context scoping across workspace views and resolved localization gaps across shared UI copy and form labels."
+				},
+				{
+					"text": "**Notification UX (`notifications`):** Refined real-time alert presentation, read/unread state handling, and layout consistency across desktop and responsive viewports."
+				},
+				{
+					"text": "**Back-Office Fee Configuration (`boAccount` ↔ `oms-service`):** Delivered the end-to-end BO fee configuration UI in Vue 3 / Quasar paired with matching Spring Boot OMS API endpoints."
+				}
+			]
 		}
 	]
 }

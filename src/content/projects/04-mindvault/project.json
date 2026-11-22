@@ -91,6 +91,32 @@
 			]
 		}
 	],
+	"myImpact": [
+		{
+			"label": "API Surface",
+			"value": "89 Endpoints",
+			"attribution": "personal",
+			"detail": "NestJS 11 REST API across 11 modules, 22 controllers, and 28 services"
+		},
+		{
+			"label": "Data Model",
+			"value": "24 Entities",
+			"attribution": "personal",
+			"detail": "PostgreSQL + TypeORM schema with decimal.js ledger and 6 pre-aggregated summary tables"
+		},
+		{
+			"label": "Automated Tests",
+			"value": "82 Tests",
+			"attribution": "personal",
+			"detail": "Automated test suite covering ledger precision, RBAC guards, and summary pipelines"
+		},
+		{
+			"label": "Frontend Scope",
+			"value": "32 Pages",
+			"attribution": "personal",
+			"detail": "Next.js 15 App Router client with 11 Zustand stores and 10 API services"
+		}
+	],
 	"product": {
 		"summary": "A self-built, multi-user personal finance platform that keeps balances exact, edits auditable and sharing granular, with fast analytics from pre-aggregated summaries.",
 		"tagline": "Exact balances, auditable history, per-account sharing.",

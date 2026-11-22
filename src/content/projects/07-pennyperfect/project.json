@@ -226,5 +226,62 @@
 			"how": "Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.",
 			"attribution": "personal"
 		}
-	]
+	],
+	"caseStory": {
+		"thesis": "Built the full Quasar/Vue 3 frontend module for PennyPerfect as a contributor—packaging Transactions, Accounts, Reports, and Ledgers into composable NPM packages that plug into the host suite.",
+		"productHeadline": "Full Quasar frontend suite for multi-tenant accounting—delivering Transactions, Chart of Accounts, Financial Reports, and Ledgers as modular, independently versioned NPM packages.",
+		"productBullets": [
+			"Contributed the complete frontend layer in Vue 3 + Quasar 2 across Transactions, Accounts, Reports, and Ledgers.",
+			"Decomposed accounting screens into composable @itc/pennyperfect-* packages orchestrated by a meta-package with dynamic route and menu discovery.",
+			"Added safe host boot configuration (configure*Api) and lazy dialog loading to prevent premature 401 session logouts.",
+			"Built client-side A4 PDF export (html2canvas + jsPDF) for Balance Sheets and Income Statements with zero server-side rendering overhead."
+		],
+		"showVpcContrastCards": false,
+		"diagrams": [
+			{
+				"id": "pennyperfect-frontend",
+				"label": "Modular Quasar Frontend Architecture",
+				"mermaid": "flowchart LR\n  HOST[\"Host Suite (SuperCards)\"] -->|\"boot + discover:ci\"| META[\"@itc/pennyperfect Meta-Package\"]\n  META --> TX[\"Transactions\"]\n  META --> ACC[\"Accounts & Chart of Accounts\"]\n  META --> REP[\"Reports (Balance Sheet & Income)\"]\n  META --> LED[\"Ledgers & Settings\"]\n  TX --> API[\"Laravel Sanctum APIs (X-Tenant-Id)\"]\n  ACC --> API\n  REP --> API\n  LED --> API\n"
+			}
+		],
+		"platforms": [
+			{
+				"scope": "Frontend Module (Quasar / Vue 3)",
+				"who": "Finance & Accounting Users",
+				"does": "Records transactions, manages Chart of Accounts, inspects ledgers, and exports A4 financial reports inside the host suite"
+			}
+		],
+		"modules": [
+			{
+				"name": "Transactions",
+				"summary": "Income/expense entry, journal workflows, and cashbook operations packaged in @itc/pennyperfect-transactions",
+				"kernels": "Quasar UI + Sanctum API"
+			},
+			{
+				"name": "Accounts (Chart of Accounts)",
+				"summary": "Account hierarchy management with protected system-account guards to prevent destructive edits",
+				"kernels": "Pinia Persisted State"
+			},
+			{
+				"name": "Reports",
+				"summary": "Balance Sheet, Income Statement, and summary reporting with client-side A4 PDF export",
+				"kernels": "html2canvas + jsPDF"
+			},
+			{
+				"name": "Ledgers & Settings",
+				"summary": "Account ledger views, tax codes, and host-injected API configuration via configure*Api boot hooks",
+				"kernels": "Modular @itc/pennyperfect-* NPM"
+			}
+		],
+		"stackRationale": [
+			{
+				"tech": "Vue 3 + Quasar 2 Modular NPM Packages",
+				"reason": "Allows each accounting domain (Transactions, Accounts, Reports, Ledgers) to be versioned, built, and plugged into host apps via route/menu discovery without bloating a single monolith."
+			},
+			{
+				"tech": "Pinia + Host Boot Hooks (configure*Api)",
+				"reason": "Shares the host app's Sanctum auth and X-Tenant-Id interceptors cleanly while preserving filter state locally."
+			}
+		]
+	}
 }
