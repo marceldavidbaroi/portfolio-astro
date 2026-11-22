@@ -535,7 +535,7 @@ import { site } from "../../data/site";
 		box-shadow:
 			0 0 0 1px rgba(255, 255, 255, 0.04),
 			0 20px 48px -12px rgba(0, 0, 0, 0.65),
-			0 0 60px -15px rgba(232, 168, 85, 0.15);
+			0 0 60px -15px rgba(var(--accent-rgb), 0.18);
 	}
 
 	@media (prefers-color-scheme: dark) {
@@ -545,7 +545,7 @@ import { site } from "../../data/site";
 			box-shadow:
 				0 0 0 1px rgba(255, 255, 255, 0.04),
 				0 20px 48px -12px rgba(0, 0, 0, 0.65),
-				0 0 60px -15px rgba(232, 168, 85, 0.15);
+				0 0 60px -15px rgba(var(--accent-rgb), 0.18);
 		}
 	}
 
@@ -636,7 +636,7 @@ import { site } from "../../data/site";
 		background: linear-gradient(
 			to bottom,
 			transparent,
-			rgba(184, 110, 30, 0.4) 30%,
+			rgba(var(--accent-rgb), 0.4) 30%,
 			rgba(43, 37, 30, 0.4) 70%,
 			transparent
 		);
@@ -651,7 +651,7 @@ import { site } from "../../data/site";
 		background: linear-gradient(
 			to bottom,
 			transparent,
-			rgba(232, 168, 85, 0.5) 30%,
+			rgba(var(--accent-rgb), 0.5) 30%,
 			rgba(255, 255, 255, 0.3) 70%,
 			transparent
 		);

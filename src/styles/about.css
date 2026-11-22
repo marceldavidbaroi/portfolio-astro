@@ -960,7 +960,7 @@
 
 .about-linkcard:hover {
 	transform: translateY(-3px);
-	border-color: var(--accent, #b45309);
+	border-color: var(--accent);
 	box-shadow: 0 8px 20px rgba(0, 0, 0, 0.09);
 }
 
@@ -986,7 +986,7 @@
 }
 
 .about-linkcard:hover .about-linkcard-arrow {
-	color: var(--accent, #b45309);
+	color: var(--accent);
 	transform: translate(2px, -2px);
 }
 

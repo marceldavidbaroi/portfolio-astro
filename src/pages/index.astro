@@ -158,14 +158,6 @@ import "../styles/about.css";
 		}
 	}
 
-	/* Homepage 4-Mode Pastel & Dark Luminous Theme System */
-	:global(html) {
-		--bg-grad-start: #f4f6f8;
-		--bg-grad-end: #e7ecf0;
-		--hero-orb-1: #bcc7d4;
-		--hero-orb-2: #cfd6cc;
-	}
-
 	.page-mesh-bg {
 		position: fixed;
 		inset: 0;
@@ -253,104 +245,4 @@ import "../styles/about.css";
 			color 0.3s ease;
 	}
 
-	:global(html[data-mode="developer"]) {
-		--accent: #2c3540;
-		--accent-hover: color-mix(
-			in oklch,
-			var(--accent) 75%,
-			var(--text-main)
-		);
-		--bg-color: #f4f6f8;
-		--bg-grad-start: #f4f6f8;
-		--bg-grad-end: #e7ecf0;
-		--card-bg: rgba(255, 255, 255, 0.65);
-		--hero-orb-1: #bcc7d4;
-		--hero-orb-2: #cfd6cc;
-	}
-
-	:global(html[data-mode="educator"]) {
-		--accent: #245c4a;
-		--accent-hover: color-mix(
-			in oklch,
-			var(--accent) 75%,
-			var(--text-main)
-		);
-		--bg-color: #eff8f4;
-		--bg-grad-start: #eff8f4;
-		--bg-grad-end: #e0f0e9;
-		--card-bg: rgba(255, 255, 255, 0.65);
-		--hero-orb-1: #9edbc6;
-		--hero-orb-2: #b6dce6;
-	}
-
-	:global(html[data-mode="researcher"]) {
-		--accent: #2b497a;
-		--accent-hover: color-mix(
-			in oklch,
-			var(--accent) 75%,
-			var(--text-main)
-		);
-		--bg-color: #eff4fc;
-		--bg-grad-start: #eff4fc;
-		--bg-grad-end: #e2ebfa;
-		--card-bg: rgba(255, 255, 255, 0.65);
-		--hero-orb-1: #adc5f0;
-		--hero-orb-2: #bfd0f2;
-	}
-
-	:global(html[data-mode="stories"]) {
-		--accent: #8f4b24;
-		--accent-hover: color-mix(
-			in oklch,
-			var(--accent) 75%,
-			var(--text-main)
-		);
-		--bg-color: #faf4ed;
-		--bg-grad-start: #faf4ed;
-		--bg-grad-end: #f3e6d6;
-		--card-bg: rgba(255, 255, 255, 0.65);
-		--hero-orb-1: #edc09a;
-		--hero-orb-2: #e8d5a3;
-	}
-
-	:global(html[data-theme="dark"][data-mode="developer"]),
-	:global(html[data-theme="dark"]:not([data-mode])) {
-		--accent: #9db0c4;
-		--bg-color: #111418;
-		--bg-grad-start: #111418;
-		--bg-grad-end: #0c0e11;
-		--card-bg: rgba(255, 255, 255, 0.04);
-		--hero-orb-1: #2b3847;
-		--hero-orb-2: #263638;
-	}
-
-	:global(html[data-theme="dark"][data-mode="educator"]) {
-		--accent: #66c7a9;
-		--bg-color: #0d1714;
-		--bg-grad-start: #0d1714;
-		--bg-grad-end: #0a110f;
-		--card-bg: rgba(255, 255, 255, 0.04);
-		--hero-orb-1: #245c4a;
-		--hero-orb-2: #1c4b5c;
-	}
-
-	:global(html[data-theme="dark"][data-mode="researcher"]) {
-		--accent: #82a9e8;
-		--bg-color: #0e121c;
-		--bg-grad-start: #0e121c;
-		--bg-grad-end: #0a0d14;
-		--card-bg: rgba(255, 255, 255, 0.04);
-		--hero-orb-1: #2a4578;
-		--hero-orb-2: #35396e;
-	}
-
-	:global(html[data-theme="dark"][data-mode="stories"]) {
-		--accent: #e39e6b;
-		--bg-color: #17120d;
-		--bg-grad-start: #17120d;
-		--bg-grad-end: #110d09;
-		--card-bg: rgba(255, 255, 255, 0.04);
-		--hero-orb-1: #754020;
-		--hero-orb-2: #614b1e;
-	}
 </style>
