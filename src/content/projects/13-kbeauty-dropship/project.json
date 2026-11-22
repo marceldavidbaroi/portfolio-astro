@@ -8,7 +8,7 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "lead",
+		"mode": "owner",
 		"label": "Technical lead",
 		"headline": "Architected and deployed BrandWala Retail [X], an enterprise cross-border K-Beauty commerce platform serving Bangladeshi resellers and wholesale importers. Built a high-performance React 19 SPA backed by Firebase Firestore Lite and TanStack Query v5 [Y] — automating UK wholesale catalog ingestion via Python scrapers for 40+ brands, orchestrating a 5-layer real-time commission engine with delivery adjustments, and implementing quota-optimized cursor pagination and derived Customer Order Book projections [Z].",
 		"scope": [
@@ -17,7 +17,9 @@
 			"Complex 5-Layer Commission Calculation",
 			"Firestore Read Quota Optimization",
 			"Customer Order Book Intelligence"
-		]
+		],
+		"startedFrom": "scratch",
+		"myShare": "lead"
 	},
 	"myImpact": [
 		{
@@ -62,7 +64,7 @@
 		"problem": "Bangladeshi K-Beauty resellers faced a disconnected workflow: manually scraping UK supplier websites, hand-calculating multi-tier commissions with delivery charges and COD deductions, taking orders over WhatsApp without customer purchase history, and facing Firestore quota spikes from un-optimized query patterns.",
 		"valueProposition": {
 			"targetCustomer": "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations",
-			"showCanvas": false,
+			"showCanvas": true,
 			"items": [
 				{
 					"painTitle": "Manual Price Copying & Catalog Drift",
@@ -176,5 +178,44 @@
 		"Courier webhook integration for automated courier tracking and status updates.",
 		"Automated reconciliation pipeline comparing Firestore documents with PostgreSQL records.",
 		"Multi-currency dynamic FX rate engine for real-time GBP to BDT conversion adjustments."
+	],
+	"problem": {
+		"statement": "Bangladeshi K-Beauty resellers faced a disconnected workflow: manually scraping UK supplier websites, hand-calculating multi-tier commissions with delivery charges and COD deductions, taking orders over WhatsApp without customer purchase history, and facing Firestore quota spikes from un-optimized query patterns.",
+		"evidence": "observed",
+		"whoHurts": [
+			"cross-border-resellers-wholesale-importers-k-beauty-retail-operations"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations",
+			"pain": "Manual Price Copying & Catalog Drift",
+			"before": "Resellers spent hours manually browsing UK wholesale websites and copying GBP prices into spreadsheets, causing stockouts and stale exchange rates.",
+			"after": "Engineered automated ETL scrapers for kobareseller.com (session/CSRF auth) and WooCommerce APIs, automatically upserting categorized catalog items.",
+			"attribution": "personal",
+			"feature": [
+				"Automated Python Scraping & Ingestion Pipelines"
+			]
+		},
+		{
+			"persona": "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations",
+			"pain": "Disputed Multi-Tier Commission Calculations",
+			"before": "Calculating custom price markups, delivery charge adjustments, COD percentages, and packing fees by hand led to payout reconciliation errors.",
+			"after": "Built a centralized mathematical calculation engine that computes live breakdowns at checkout and persists immutable snapshots on orders.",
+			"attribution": "personal",
+			"feature": [
+				"Deterministic 5-Layer UI Commission Engine"
+			]
+		},
+		{
+			"persona": "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations",
+			"pain": "Firestore Quota Inflation & High Read Costs",
+			"before": "Unbounded Firestore queries on large order catalogs rapidly consumed free quotas and caused UI slowdowns during search.",
+			"after": "Implemented debounced searches, cursor pagination, status-filtered batch reads, and derived Customer Order Book collections.",
+			"attribution": "personal",
+			"feature": [
+				"Quota-Optimized Querying & Derived Projections"
+			]
+		}
 	]
 }

@@ -8,7 +8,7 @@
 	"featured": true,
 	"platformType": "mobile",
 	"contribution": {
-		"mode": "specialist",
+		"mode": "owner",
 		"label": "Domain specialist",
 		"headline": "Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.",
 		"scope": [
@@ -18,7 +18,9 @@
 			"Operator UX in Noisy Warehouse Environments",
 			"Desktop-Only Registration Bottleneck"
 		],
-		"team": "Mobile companion to TradeflowBD Thrift (web admin by platform team)"
+		"team": "Mobile companion to TradeflowBD Thrift (web admin by platform team)",
+		"startedFrom": "scratch",
+		"myShare": "lead"
 	},
 	"myImpact": [
 		{
@@ -63,7 +65,7 @@
 		"problem": "Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.",
 		"valueProposition": {
 			"targetCustomer": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams",
-			"showCanvas": false,
+			"showCanvas": true,
 			"items": [
 				{
 					"painTitle": "Desktop-Tethered Registration Bottlenecks",
@@ -191,5 +193,44 @@
 		"Bluetooth thermal printer integration for on-the-spot barcode label printing.",
 		"Supabase Realtime subscriptions for live dashboard push (currently poll + cache invalidation).",
 		"iOS Capacitor build with equivalent ML Kit barcode support."
+	],
+	"problem": {
+		"statement": "Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.",
+		"evidence": "observed",
+		"whoHurts": [
+			"warehouse-operators-floor-managers-second-hand-retail-logistics-teams"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams",
+			"pain": "Desktop-Tethered Registration Bottlenecks",
+			"before": "Floor operators had to haul garments to desktop PCs or hand-write paper intake sheets, causing massive intake delays during container arrivals.",
+			"after": "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds.",
+			"attribution": "personal",
+			"feature": [
+				"On-Floor Mobile Registration with Photo Upload"
+			]
+		},
+		{
+			"persona": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams",
+			"pain": "Undetected Misplaced Stock & Phantom Out-of-Stocks",
+			"before": "Garments placed on incorrect shelf/box bins went unnoticed for weeks, showing as unavailable for sale while physically in the warehouse.",
+			"after": "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs.",
+			"attribution": "personal",
+			"feature": [
+				"Structured 3-State Shelf & Bin Audit Mode"
+			]
+		},
+		{
+			"persona": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams",
+			"pain": "Slow Single-Item Scanning & Form Navigation Fatigue",
+			"before": "Scanning barcode labels one-by-one with mandatory screen confirmation caused high operator fatigue and slow intake rates.",
+			"after": "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates.",
+			"attribution": "personal",
+			"feature": [
+				"Google ML Kit Continuous Batch Queue Scanning"
+			]
+		}
 	]
 }

@@ -8,14 +8,16 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "lead",
+		"mode": "contributor",
 		"label": "Technical lead",
 		"headline": "Engineered responsive, high-density store management and retail checkout interfaces [X], achieving 100% visual fidelity to Lambda Design Figma specifications and +30% faster cashier transaction throughput [Y] by developing custom keyboard-first Quasar components, streamlined shift balancing workflows, and reactive catalog search caches [Z].",
 		"scope": [
 			"Maximizing Screen Real Estate for High-Volume Data Entry",
 			"Keyboard-Only Navigation & Hotkey Ergonomics",
 			"Sub-Second Product Search During Live Checkout"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -152,5 +154,53 @@
 		"Direct integration with hardware thermal receipt printers and cash drawers.",
 		"Offline sales mode with local IndexedDB queue and background cloud sync.",
 		"Customer loyalty points lookup and barcode redemption at checkout."
+	],
+	"problem": {
+		"statement": "Retail store staff operating in fast-paced retail environments require high-density, error-resilient interfaces. Traditional ERP screens are cluttered with excessive whitespace and slow input mechanics, leading to checkout bottlenecks and high operational error rates during peak retail hours.",
+		"evidence": "observed",
+		"whoHurts": [
+			"retail-store-operators-cashiers-floor-inventory-supervisors"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Retail Store Operators, Cashiers & Floor Inventory Supervisors",
+			"pain": "Slow Mouse-Dependent POS Checkout Flows",
+			"before": "Cashiers relying on mouse clicks for line-item additions and discounts suffered from long checkout queues during peak retail hours.",
+			"after": "Engineered tab-indexed forms with customizable hotkeys, allowing complete invoice creation and checkout without lifting hands from the keyboard.",
+			"attribution": "product",
+			"feature": [
+				"Keyboard-First Hotkey & Barcode Entry Engine"
+			]
+		},
+		{
+			"persona": "Retail Store Operators, Cashiers & Floor Inventory Supervisors",
+			"pain": "UI Inconsistency & Design System Drift",
+			"before": "Inconsistent button styles, font scalings, and form spacing led to cashier misclicks and slow onboarding for seasonal staff.",
+			"after": "Standardized all UI primitives against Lambda Design tokens, guaranteeing consistent density, visual cues, and accessible contrast.",
+			"attribution": "product",
+			"feature": [
+				"100% Lambda Design System Token Integration"
+			]
+		},
+		{
+			"persona": "Retail Store Operators, Cashiers & Floor Inventory Supervisors",
+			"pain": "Manual Cash Drawer Discrepancies at Shift End",
+			"before": "Cashiers spent 30+ minutes balancing cash registers against receipts at shift close, frequently encountering unaccounted variance.",
+			"after": "Implemented real-time register balancing calculations that aggregate cash, card, and credit payments for instant audit sign-off.",
+			"attribution": "product",
+			"feature": [
+				"Automated Shift Reconciliation Workflows"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Maximizing Screen Real Estate for High-Volume Data Entry",
+			"before": "Maximizing Screen Real Estate for High-Volume Data Entry",
+			"after": "Cashiers view 2x more order line items without vertical scrolling, reducing lookup fatigue.",
+			"how": "Designed a compact, high-density data grid using Quasar's dense table modes and custom typography tokens from the Lambda Design System.",
+			"attribution": "personal"
+		}
 	]
 }

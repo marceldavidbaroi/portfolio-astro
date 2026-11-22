@@ -8,7 +8,7 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "specialist",
+		"mode": "contributor",
 		"label": "Domain specialist",
 		"headline": "Engineered the frontend document preview system for Docstach using Quasar Framework (Vue 3) and TypeScript [X], transforming raw ticket thread data and automated responses into structured, publishable documentation [Y] by building a dedicated 3-pane viewport layout with recursive navigation, a dynamic DOM-scanned 'On This Page' Table of Contents, and scoped HTML sanitization [Z].",
 		"scope": [
@@ -16,7 +16,9 @@
 			"Multi-Tier Nested Navigation for Large Ticket Sets",
 			"Dynamic In-Document 'On This Page' Table of Contents",
 			"Safe HTML Parsing & Styling of Auto-Generated Content"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -158,5 +160,53 @@
 		"One-click export of previewed documents to PDF and Markdown format.",
 		"Inline diff viewer comparing original ticket thread logs against the auto-generated documentation.",
 		"Collaborative comment annotations on specific paragraphs within the preview viewport."
+	],
+	"problem": {
+		"statement": "Customer support teams and engineering maintainers spent hours manually formatting ticket threads, incident reports, and customer solutions into knowledge base articles, with no dedicated preview environment to inspect auto-generated documentation before distribution.",
+		"evidence": "observed",
+		"whoHurts": [
+			"customer-support-teams-technical-writers-documentation-maintainers"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Customer Support Teams, Technical Writers & Documentation Maintainers",
+			"pain": "Cramped Modal Views for Long Technical Responses",
+			"before": "Inspecting auto-generated ticket resolutions in standard dashboard modals caused horizontal table truncation and poor readability.",
+			"after": "Designed an isolated documentation layout with collapsible navigation trees, wide table viewports, and distraction-free typography.",
+			"attribution": "product",
+			"feature": [
+				"Dedicated 3-Pane Full-Viewport Reading Engine"
+			]
+		},
+		{
+			"persona": "Customer Support Teams, Technical Writers & Documentation Maintainers",
+			"pain": "Disorientation in Dense Multi-Section Ticket Docs",
+			"before": "Readers had to scroll endlessly through lengthy incident post-mortems and resolutions without knowing document structure.",
+			"after": "Engineered a reactive parser extracting H2/H3 anchors with live IntersectionObserver scroll tracking for instant sub-section jumping.",
+			"attribution": "product",
+			"feature": [
+				"Real-Time DOM-Scanned 'On This Page' TOC"
+			]
+		},
+		{
+			"persona": "Customer Support Teams, Technical Writers & Documentation Maintainers",
+			"pain": "XSS Risks & Broken Styles from Raw Server HTML",
+			"before": "Rendering raw auto-generated HTML responses directly risked script injection and leaked un-scoped CSS into host applications.",
+			"after": "Constructed an in-browser sanitization pipeline that strips unsafe attributes and applies clean typography to code blocks and tables.",
+			"attribution": "product",
+			"feature": [
+				"Safe HTML Parsing & Scoped Typography Engine"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Dedicated Reading Layout Isolated from Admin Dashboard",
+			"before": "Dedicated Reading Layout Isolated from Admin Dashboard",
+			"after": "Delivered a clean, publication-grade reading experience optimized for reading long-form ticket resolutions and architectural documentation.",
+			"how": "Architected a dedicated full-bleed documentation preview layout separate from the standard administrative dashboard, providing distraction-free reading, custom document headers, and responsive print/export capabilities.",
+			"attribution": "personal"
+		}
 	]
 }

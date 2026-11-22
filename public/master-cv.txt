@@ -211,13 +211,18 @@ Tech Stack: Vue 3, Laravel 11, MongoDB, MySQL, TypeScript, Quasar 2
 Role: Full-Stack Mobile Engineer (Solo Contributor)
 Subtitle: Capacitor Android companion for retail inventory — Google ML Kit barcode scanning, shelf audit mode, and real-time backend sync.
 Overview: Engineered an Android warehouse inventory companion achieving sub-second barcode intake and misplaced stock resolution across shelf locations via Google ML Kit continuous batch scanning, Capacitor Camera, and atomic Supabase RPCs.
-Contribution: Domain specialist | specialist
+Contribution: Domain specialist | owner | scratch | lead
   Engineered the mobile warehouse companion for TradeflowBD's Thrift vertical — replacing paper-based stock checks and desktop-only registration with a Capacitor Android app featuring Google ML Kit barcode scanning, continuous batch queue operations, shelf/box audit with misplaced-item detection, bilingual operator UI, and atomic Supabase RPC registration that syncs instantly to the web admin dashboard via TanStack Query cache invalidation.
   - Scope: Unreliable Barcode Scanning in Warehouse Conditions
   - Scope: High-Volume Intake During Shipment Processing
   - Scope: Stock Discrepancies Across Shelf/Box Locations
   - Scope: Operator UX in Noisy Warehouse Environments
   - Scope: Desktop-Only Registration Bottleneck
+Problem: Warehouse staff registering second-hand garments on a desktop ERP could not keep up with inbound shipment volume. Paper stock checks caused miscounts, misplaced items sat undetected for weeks, and barcode lookup required walking back to a PC.
+Key Outcomes / Benefit Matrix:
+  - Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams — Desktop-Tethered Registration Bottlenecks: Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds.
+  - Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams — Undetected Misplaced Stock & Phantom Out-of-Stocks: Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs.
+  - Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams — Slow Single-Item Scanning & Form Navigation Fatigue: Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates.
 Impact:
   - Continuous Scan Engine: Batch Mode — High-speed camera decoding with audio/haptic confirmation
   - Bin Audit Discrepancy Detection: 3 States — Verified, missing, and misplaced item detection per shelf/box
@@ -241,11 +246,16 @@ Links: parentPlatform: https://tradeflowbd.com
 Role: Lead Mobile & Backend Engineer (Client Project)
 Subtitle: High-speed, offline-first canteen POS and institutional meal ERP for Android — built with Flutter and Supabase PostgreSQL.
 Overview: Architected a high-speed, offline-first canteen POS and meal ERP platform achieving instant meal checkout and zero-discrepancy shift reconciliation across 500+ daily counter transactions via Flutter, local SQLite offline caching, Supabase PostgreSQL, and atomic RPC double-entry ledgers.
-Contribution: Technical lead | lead
+Contribution: Technical lead | owner | scratch | lead
   Architected and developing an offline-first institutional canteen POS and meal ERP platform for a dedicated client using Flutter and Supabase PostgreSQL [X]. Replaced paper meal tokens and chaotic shift registers with automated customer AR accounts and digital shift cashbooks [Y], enabling sub-second counter transactions, zero-variance cashier handovers, and atomic ledger reconciliation during peak lunch hours [Z].
   - Scope: Guarantee sub-second counter throughput during lunch rush without internet dependency
   - Scope: Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases
   - Scope: Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)
+Problem: Institutional canteens, corporate cafeterias, and educational dining facilities operate under extreme peak burst loads: hundreds of diners arrive within a 45-minute lunch window. Reliance on paper tokens, manual tally books, or cloud-dependent web systems results in catastrophic counter queues during Wi-Fi drops, misplaced meal receipts, cash drawer discrepancies, and uncollected customer debt.
+Key Outcomes / Benefit Matrix:
+  - Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers — Peak-Hour Counter Congestion: Flutter SQLite engine issues meal tokens in <1.2 seconds with instant Bluetooth thermal receipt printing.
+  - Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers — Cash Discrepancies & Drawer Leaks: Enforces mandatory opening float declaration, mid-day cash drops, and closing drawer audit before handover.
+  - Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers — Uncollected Meal Credit: Digital diner balances, monthly pre-paid credit limits, and automated payroll deduction exports.
 Impact:
   - Counter Checkout: <1.2s — Rapid meal voucher issuance via offline SQLite queue
   - Shift Variance: 0.0% — Strict cash drawer open/close reconciliation
@@ -290,13 +300,18 @@ Tech Stack: Vue 3, Quasar, Capacitor, Java 21, Spring Boot 3.3, Spring Cloud Gat
 Role: Lead Full-Stack & Systems Engineer
 Subtitle: High-performance cross-border retail platform built with React 19, Firebase Firestore, TanStack Query, and automated Python catalog scrapers.
 Overview: Architected a market-aware cross-border commerce platform achieving sub-second catalog renders and -60% Firestore read costs across 40+ K-Beauty brands by designing React 19 market-scoped routing, TanStack Query cache invalidation, automated Python ETL pipelines, and a 5-layer real-time commission engine.
-Contribution: Technical lead | lead
+Contribution: Technical lead | owner | scratch | lead
   Architected and deployed BrandWala Retail [X], an enterprise cross-border K-Beauty commerce platform serving Bangladeshi resellers and wholesale importers. Built a high-performance React 19 SPA backed by Firebase Firestore Lite and TanStack Query v5 [Y] — automating UK wholesale catalog ingestion via Python scrapers for 40+ brands, orchestrating a 5-layer real-time commission engine with delivery adjustments, and implementing quota-optimized cursor pagination and derived Customer Order Book projections [Z].
   - Scope: Automating UK Wholesale Catalog Ingestion
   - Scope: Market-Aware Multi-Vendor Routing
   - Scope: Complex 5-Layer Commission Calculation
   - Scope: Firestore Read Quota Optimization
   - Scope: Customer Order Book Intelligence
+Problem: Bangladeshi K-Beauty resellers faced a disconnected workflow: manually scraping UK supplier websites, hand-calculating multi-tier commissions with delivery charges and COD deductions, taking orders over WhatsApp without customer purchase history, and facing Firestore quota spikes from un-optimized query patterns.
+Key Outcomes / Benefit Matrix:
+  - Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations — Manual Price Copying & Catalog Drift: Engineered automated ETL scrapers for kobareseller.com (session/CSRF auth) and WooCommerce APIs, automatically upserting categorized catalog items.
+  - Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations — Disputed Multi-Tier Commission Calculations: Built a centralized mathematical calculation engine that computes live breakdowns at checkout and persists immutable snapshots on orders.
+  - Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations — Firestore Quota Inflation & High Read Costs: Implemented debounced searches, cursor pagination, status-filtered batch reads, and derived Customer Order Book collections.
 Impact:
   - Catalog Automation: 40+ Brands — COSRX, Laneige, Beauty of Joseon, Anua auto-tagged via Python ETL pipelines
   - Firestore Quota: -60% Reads — Debounced search, cursor pagination, and status-filtered batch queries
@@ -320,13 +335,20 @@ Links: github: https://github.com/david-git-2/brand-wala-retail
 Role: Frontend Engineer (Modular Package Architecture)
 Subtitle: Enterprise modular accounting suite decomposed into 7 composable Vue 3 / Vite packages for multi-tenant financial reporting and double-entry ledgers.
 Overview: Architected an enterprise modular accounting suite across 7 composable npm packages and 6 production surfaces by designing a meta-orchestrator, standardized Vue provide/inject abstractions, and Laravel Sanctum multi-tenant APIs.
-Contribution: Core contributor | core
+Contribution: Core contributor | contributor | existing | major
   Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].
   - Scope: Feature scope vs. maintainability in a monorepo with nested git repos
   - Scope: Inconsistent HTTP client patterns across packages (raw Axios vs @itc/coreservice callApi)
   - Scope: Legacy branch API (/loanapp/branchs) missing in Supercards backend
   - Scope: Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)
   - Scope: Print/PDF export without server-side rendering
+Problem: Finance teams inside Supercards tenants needed in-app accounting—accounts, journal entries, tax-aware income/expense, and standard financial reports—without bolting on a separate ERP. Legacy PennyPerfect UIs assumed a monolithic loan-app API (e.g. /loanapp/branchs, cashbook import/export) and wrong default API hosts, causing broken branch filters, failed imports, and session logout when tax endpoints 401'd on page load.
+Key Outcomes / Benefit Matrix:
+  - Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads — Monolithic Frontend Bloat Across Accounting Modules: Decomposed the suite into independently versioned packages (@itc/pennyperfect-*) orchestrated by a meta-package with dynamic route discovery.
+  - Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads — P0 Session Logouts from Premature Boot-Time API Calls: Engineered configureTaxApi boot abstractions and deferred API requests until dialog mount, guaranteeing 100% boot stability.
+  - Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads — Heavy Server-Side PDF Rendering Infrastructure: Engineered client-side rendering with hidden iframes, html2canvas rasterization, and jsPDF assembly for instant zero-server PDF exports.
+Engineering Improvements:
+  - Feature scope vs. maintainability in a monorepo with nested git repos: Teams can version, build, and publish modules independently; host integration is boot + spread routes + discover:ci instead of a growing frontend/src tree.
 Impact:
   - Modular Packages: 7 Packages — Six domain packages orchestrated by a meta-dependency installer
   - Production Surfaces: 6 Menus — Chart of Accounts, Transactions, Balance Sheet, P&L, Reports, Settings
@@ -442,12 +464,19 @@ Links: github: https://github.com/marceldavidbaroi/UniFlow-
 Role: Frontend Engineer (Learning Systems Lead)
 Subtitle: Card-based internal learning & assessment engine built on Quasar, Vue 3, Pinia, OpenAI question generation, and timed test runners.
 Overview: Architected an embedded internal assessment and quiz platform across 4 user journeys and 11 modular components, enabling AI-assisted question generation and timed test runs via Quasar (Vue 3) and OpenAI GPT-4o integration.
-Contribution: Technical lead | lead
+Contribution: Technical lead | contributor | existing | major
   Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].
   - Scope: Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.
   - Scope: Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).
   - Scope: Participants needed a guided, timed experience with post-submission review — not just a static form.
   - Scope: Authors starting from scratch on question banks was slow and error-prone.
+Problem: Organizations running knowledge checks through spreadsheets, external quiz tools, or ad-hoc forms had no way to tie assessments to their existing project and people data. Authors could not see who participated, how teams scored, or whether content was ready to publish. Employees had no single place to discover available quizzes, track their own scores, or review mistakes after submission.
+Key Outcomes / Benefit Matrix:
+  - Enterprise People Ops, Training Coordinators & Internal Knowledge Leads — Fragmented External Quiz Tools (Google Forms / Typeform): Directly transformed the platform's universal card model into timed quizzes, associating assessment results with real employee profiles.
+  - Enterprise People Ops, Training Coordinators & Internal Knowledge Leads — Slow Manual Question Bank Creation for Authors: Integrated automated question generation that creates structured MCQ banks from course titles in seconds for author review.
+  - Enterprise People Ops, Training Coordinators & Internal Knowledge Leads — Lack of Immediate Feedback & Mistake Walkthroughs: Engineered an interactive review screen showing correct explanations, highlighted answer differences, and grade score badging.
+Engineering Improvements:
+  - Quizzes needed rich metadata (status, category, time limit, instructions, cover : Authors reuse the platform's card creation dialog, tag system, and detail shell — quiz-specific logic stays in the Quiz module only.
 Impact:
   - User Journeys: 4 Workflows — Creation, Studio Authoring, Challenge Discovery, and Timed Attend
   - Module Refactor: 11 Components — Clean separation across authoring, live display, and mistake review
@@ -469,11 +498,18 @@ Tech Stack: Quasar, Vue 3, OpenAI API, Pinia, TypeScript
 Role: UI/UX Integration Engineer (Frontend Lead)
 Subtitle: High-density retail POS and store operations interface engineered with Quasar, Vue 3, and optimized keyboard-first data entry workflows.
 Overview: Engineered a high-density retail store management interface achieving 100% Figma-to-code parity and +30% faster cashier data entry via keyboard-first Quasar components and reactive state caching.
-Contribution: Technical lead | lead
+Contribution: Technical lead | contributor | existing | major
   Engineered responsive, high-density store management and retail checkout interfaces [X], achieving 100% visual fidelity to Lambda Design Figma specifications and +30% faster cashier transaction throughput [Y] by developing custom keyboard-first Quasar components, streamlined shift balancing workflows, and reactive catalog search caches [Z].
   - Scope: Maximizing Screen Real Estate for High-Volume Data Entry
   - Scope: Keyboard-Only Navigation & Hotkey Ergonomics
   - Scope: Sub-Second Product Search During Live Checkout
+Problem: Retail store staff operating in fast-paced retail environments require high-density, error-resilient interfaces. Traditional ERP screens are cluttered with excessive whitespace and slow input mechanics, leading to checkout bottlenecks and high operational error rates during peak retail hours.
+Key Outcomes / Benefit Matrix:
+  - Retail Store Operators, Cashiers & Floor Inventory Supervisors — Slow Mouse-Dependent POS Checkout Flows: Engineered tab-indexed forms with customizable hotkeys, allowing complete invoice creation and checkout without lifting hands from the keyboard.
+  - Retail Store Operators, Cashiers & Floor Inventory Supervisors — UI Inconsistency & Design System Drift: Standardized all UI primitives against Lambda Design tokens, guaranteeing consistent density, visual cues, and accessible contrast.
+  - Retail Store Operators, Cashiers & Floor Inventory Supervisors — Manual Cash Drawer Discrepancies at Shift End: Implemented real-time register balancing calculations that aggregate cash, card, and credit payments for instant audit sign-off.
+Engineering Improvements:
+  - Maximizing Screen Real Estate for High-Volume Data Entry: Cashiers view 2x more order line items without vertical scrolling, reducing lookup fatigue.
 Impact:
   - Figma Parity: 100% — Pixel-perfect implementation from Lambda Design systems
   - Entry Speed: +30% — Keyboard-first navigation, tab indexing, and rapid hotkeys
@@ -494,11 +530,18 @@ Tech Stack: Quasar, Vue 3, TypeScript, Pinia
 Role: Frontend Implementation & POC Engineer
 Subtitle: Enterprise Quasar & Vue 3 modular packaging system — Vite library builds, private npm registries, and autonomous SemVer publishing.
 Overview: Decomposed monolithic enterprise Quasar applications into reusable scoped npm packages, increasing code reusability by +65% across multiple client apps via Vite library mode builds, SemVer automation, and Verdaccio POC sandboxing.
-Contribution: Domain specialist | specialist
+Contribution: Domain specialist | contributor | existing | major
   Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].
   - Scope: Preserving Quasar Directives & Component Styles in Isolated Packages
   - Scope: Verifying Packaging Viability via Proof of Concept (POC)
   - Scope: Team Implementation Workflow & Modular Domain Boundaries
+Problem: Large enterprise client applications built on Quasar were duplicating identical UI components, tables, filters, authentication flows, and business workflows by copy-pasting across repositories. When a bug was discovered or a feature was enhanced, engineers had to patch multiple monoliths manually, resulting in divergent codebases and severe maintenance overhead.
+Key Outcomes / Benefit Matrix:
+  - Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers — Fragile Code Copy-Pasting Across Client Repositories: Shared domain features and UI components packaged as independently versioned npm modules with automated CI/CD publication.
+  - Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers — CSS Style Clashes & Duplicate Runtime Bundles: Configured Vite to externalize Vue and Quasar core while auto-injecting tree-shakeable directives and styles cleanly on package mount.
+  - Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers — Risky Production Deployments of Unverified Packages: Engineered a local registry testbed ensuring 100% type safety and runtime validation prior to publishing packages to production registries.
+Engineering Improvements:
+  - Preserving Quasar Directives & Component Styles in Isolated Packages: Clean, tree-shakeable npm packages that consume host app Quasar styles without CSS collisions or duplicate runtime bundles.
 Impact:
   - Code Reusability: +65% — Plug-and-play adoption across multiple client web applications
   - Package Extraction: Scoped npm — Decoupled monolithic components into standalone private packages
@@ -519,12 +562,19 @@ Tech Stack: Vue 3, Vite, npm, GitLab Registry, SemVer
 Role: Frontend UI & Document Preview Engineer (Solo Contributor)
 Subtitle: Interactive 3-pane document preview engine built with Quasar Framework, Vue 3, Pinia, and reactive IntersectionObserver Table of Contents.
 Overview: Engineered a dedicated 3-pane documentation preview engine in Quasar (Vue 3), converting raw ticket threads into publication-grade documents with dynamic DOM-scanned Table of Contents and safe HTML parsing.
-Contribution: Domain specialist | specialist
+Contribution: Domain specialist | contributor | existing | major
   Engineered the frontend document preview system for Docstach using Quasar Framework (Vue 3) and TypeScript [X], transforming raw ticket thread data and automated responses into structured, publishable documentation [Y] by building a dedicated 3-pane viewport layout with recursive navigation, a dynamic DOM-scanned 'On This Page' Table of Contents, and scoped HTML sanitization [Z].
   - Scope: Dedicated Reading Layout Isolated from Admin Dashboard
   - Scope: Multi-Tier Nested Navigation for Large Ticket Sets
   - Scope: Dynamic In-Document 'On This Page' Table of Contents
   - Scope: Safe HTML Parsing & Styling of Auto-Generated Content
+Problem: Customer support teams and engineering maintainers spent hours manually formatting ticket threads, incident reports, and customer solutions into knowledge base articles, with no dedicated preview environment to inspect auto-generated documentation before distribution.
+Key Outcomes / Benefit Matrix:
+  - Customer Support Teams, Technical Writers & Documentation Maintainers — Cramped Modal Views for Long Technical Responses: Designed an isolated documentation layout with collapsible navigation trees, wide table viewports, and distraction-free typography.
+  - Customer Support Teams, Technical Writers & Documentation Maintainers — Disorientation in Dense Multi-Section Ticket Docs: Engineered a reactive parser extracting H2/H3 anchors with live IntersectionObserver scroll tracking for instant sub-section jumping.
+  - Customer Support Teams, Technical Writers & Documentation Maintainers — XSS Risks & Broken Styles from Raw Server HTML: Constructed an in-browser sanitization pipeline that strips unsafe attributes and applies clean typography to code blocks and tables.
+Engineering Improvements:
+  - Dedicated Reading Layout Isolated from Admin Dashboard: Delivered a clean, publication-grade reading experience optimized for reading long-form ticket resolutions and architectural documentation.
 Impact:
   - Document Layout: 3 Panes — Hierarchical nested nav tree, parsed HTML reading pane, and sticky on-page TOC
   - Navigation Tracking: Dynamic TOC — DOM-scanned headings with live IntersectionObserver ScrollSpy tracking
@@ -546,13 +596,18 @@ Tech Stack: Quasar, Vue 3, Pinia, TypeScript
 Role: Frontend Engineer
 Subtitle: Multi-tenant product suite on a shared card platform, spanning task management, double-entry accounting, lending, and assessments.
 Overview: Contributed to the card and task management system, login flow, core reusable components, and shared packages of an enterprise product suite, and shipped accounting and assessment products on Quasar (Vue 3) and modular Pinia stores.
-Contribution: Core contributor | contributor
+Contribution: Core contributor | contributor | existing | minor
   Co-built the card and task management system with senior engineers [X], delivered the login flow, core reusable components, and shared packages that every product in the suite relies on [Y], and shipped accounting and assessment products plus partial lending, dashboard, recognition, file, and team app surfaces on a shared Quasar codebase [Z].
   - Scope: The suite hosts many products (tasks, finance, loans, quizzes) that needed distinct UIs but shared entities like cards, tags, attachments, and comments.
   - Scope: Every product needed one consistent login, permission, and tenant-resolution flow instead of per-product authentication.
   - Scope: Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.
   - Scope: Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.
   - Scope: Field staff and mobile users needed push notifications and device capabilities alongside the web SPA.
+Problem: Growing organizations were running project tracking, microfinance operations, bookkeeping, employee recognition, knowledge checks, and internal tooling across separate systems. That fragmentation created duplicate data entry, inconsistent permissions, and no single view of what teams were working on, spending, or learning. SuperCards is a suite of products built on one multi-tenant platform with a shared card-based data model, one login, and one set of core components.
+Key Outcomes / Benefit Matrix:
+  - Multi-Tenant Enterprises, Operations Directors & Department Team Leads — Fragmented Operations Across 5+ Unrelated SaaS Tools: Project management, bookkeeping, lending, and employee assessments live as products in a single authenticated Quasar shell with a shared card entity model.
+  - Multi-Tenant Enterprises, Operations Directors & Department Team Leads — Duplicated UI Boilerplate Across Products: Shared TaskDetails, TaskList, and media components, configurable through layout props, let new products reuse the same tested building blocks.
+  - Multi-Tenant Enterprises, Operations Directors & Department Team Leads — Inconsistent Access Across Products: A single login flow with route guards, token interceptors, and permission directives resolves tenant and branch context for every product.
 Engineering Improvements:
   - Cross-product primitive reuse: Shared card and task management primitives with domain-configurable layout props (Surface reusability: 0 shared product primitives -> 9 product surfaces sharing core card shell)
 Impact:
@@ -579,11 +634,18 @@ Tech Stack: Quasar, Vue 3, PHP (Laravel), Capacitor, PostgreSQL
 Role: Frontend Engineer (Solo Mobile & Web Contributor)
 Subtitle: Door-to-door loan installment collection Android app and branch management portal built with Quasar Framework, Vue 3, and Pinia.
 Overview: Engineered a field microfinance loan collection Android app and branch web portal, cutting door-to-door collection time by +50% and eliminating manual settlement variance via Quasar (Vue 3), Pinia offline caching, and instant digital receipt generation.
-Contribution: Core contributor | core
+Contribution: Core contributor | contributor | existing | major
   Developed a solo frontend microfinance loan collection mobile app for Android and contributed responsive branch loan management interfaces on the web portal using Quasar Framework, Vue 3, and Pinia [X]. Equipped field agents with daily collection lists and digital receipts [Y], cutting collection turnaround by +50% and eliminating end-of-day branch cash discrepancies via offline schedule caching and automated settlement summaries [Z].
   - Scope: Field Reliability for Door-to-Door Loan Installment Logging
   - Scope: Unified Codebase for Mobile Android & Web Management Portals
   - Scope: End-of-Day Branch Reconciliation & Agent Settlement
+Problem: Microfinance field agents visiting borrowers door-to-door often face connectivity drops, manual receipt book errors, and delays in daily branch ledger reconciliation, creating cash discrepancies and slow reporting.
+Key Outcomes / Benefit Matrix:
+  - Microfinance Institutions, Field Recovery Agents & Branch Supervisors — Slow Paper Receipt Books & Calculation Errors: Engineered high-speed payment modals with automatic interest, penalty, and principal calculations and digital receipt generation.
+  - Microfinance Institutions, Field Recovery Agents & Branch Supervisors — Disputed End-of-Day Cash Vault Settlements: Automated real-time calculation of total cash collected, outstanding arrears, and installment counts for instant vault sign-off.
+  - Microfinance Institutions, Field Recovery Agents & Branch Supervisors — App Freezes in Low-Connectivity Rural Areas: Cached daily borrower routes and payment ledgers locally, allowing agents to log collections offline and sync on reconnection.
+Engineering Improvements:
+  - Field Reliability for Door-to-Door Loan Installment Logging: Eliminated paper collection sheets and sped up door-to-door transaction processing time by over 50%.
 Impact:
   - Field Collection Speed: +50% — Optimized touch inputs, rapid borrower lookup, and quick installment modals
   - Mobile Architecture: Solo Android — Engineered standalone Quasar Android client from scratch
@@ -604,10 +666,17 @@ Tech Stack: Quasar, Android Build, Vue 3, Pinia, Capacitor
 Role: Frontend UI & Responsiveness Contributor
 Subtitle: Internal social collaboration portal UI stabilization, cross-device responsiveness, and feed component refactoring in Quasar and Vue 3.
 Overview: Optimized the internal social collaboration platform achieving 100% fluid mobile/tablet responsiveness and zero viewport clipping via Quasar (Vue 3) breakpoint refactoring and CSS grid stabilization.
-Contribution: Core contributor | core
+Contribution: Core contributor | contributor | existing | minor
   Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z].
   - Scope: Inconsistent Mobile & Tablet Feed Card Breakpoints
   - Scope: Component Polish & User Experience Continuity
+Problem: The initial internal social platform suffered from visual inconsistencies, broken mobile drawer states, overflowing text cards, and rigid desktop-first styling that degraded the user experience for field staff and mobile browser users.
+Key Outcomes / Benefit Matrix:
+  - Internal Enterprise Staff, Field Coordinators & Organizational Teams — Broken Mobile Views & Horizontal Viewport Overflow: Rebuilt rigid desktop sections using dynamic Quasar screen utilities ($q.screen) for seamless smartphone and tablet adaptability.
+  - Internal Enterprise Staff, Field Coordinators & Organizational Teams — Disjointed Media Attachment Previews: Engineered responsive image grid components that constrain high-res media while preserving crisp aspect ratios.
+  - Internal Enterprise Staff, Field Coordinators & Organizational Teams — Frustrating Small Tap Targets on Touchscreens: Standardized tap targets, active press feedback, and fluid drawer gestures across all interactive feed elements.
+Engineering Improvements:
+  - Inconsistent Mobile & Tablet Feed Card Breakpoints: Eliminated horizontal scrollbars, text clipping, and broken card layouts on mobile and tablet devices.
 Impact:
   - Device Fluidity: 100% Fluid — Zero horizontal overflow across smartphones, tablets, and desktop monitors
   - Media Rendering: Zero Clipping — Adaptive multi-image attachment previews and fluid typography constraints

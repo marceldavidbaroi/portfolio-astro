@@ -1,0 +1,95 @@
+{
+  "labels": {
+    "title": "The Value Proposition Canvas",
+    "valueProposition": "Smart Hisab – Canteen POS & Meal ERP Platform",
+    "customerSegment": "Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers"
+  },
+  "customerJobs": [
+    {
+      "title": "Core Workflow 1",
+      "note": "Guarantee sub-second counter throughput during lunch rush without internet dependency"
+    },
+    {
+      "title": "Core Workflow 2",
+      "note": "Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases"
+    },
+    {
+      "title": "Core Workflow 3",
+      "note": "Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)"
+    }
+  ],
+  "pains": [
+    {
+      "title": "Peak-Hour Counter Congestion",
+      "note": "Web apps freeze or lag when 300+ students or workers queue for meals simultaneously on spotty cafeteria Wi-Fi."
+    },
+    {
+      "title": "Cash Discrepancies & Drawer Leaks",
+      "note": "Multiple cashiers change shifts without structured drawer counts, leading to untracked register shortages."
+    },
+    {
+      "title": "Uncollected Meal Credit",
+      "note": "Manual credit ledgers lead to disputes over diner meal tabs and unpaid month-end balances."
+    }
+  ],
+  "gains": [
+    {
+      "title": "Offline-First Instant Dispatch",
+      "note": "Flutter SQLite engine issues meal tokens in <1.2 seconds with instant Bluetooth thermal receipt printing."
+    },
+    {
+      "title": "Atomic Shift Cashbook",
+      "note": "Enforces mandatory opening float declaration, mid-day cash drops, and closing drawer audit before handover."
+    },
+    {
+      "title": "Real-Time Meal AR & Wallets",
+      "note": "Digital diner balances, monthly pre-paid credit limits, and automated payroll deduction exports."
+    }
+  ],
+  "productsAndServices": [
+    {
+      "title": "Flutter",
+      "note": "Core Flutter capability powering Smart Hisab – Canteen POS & Meal ERP Platform."
+    },
+    {
+      "title": "Supabase",
+      "note": "Core Supabase capability powering Smart Hisab – Canteen POS & Meal ERP Platform."
+    },
+    {
+      "title": "Dart",
+      "note": "Core Dart capability powering Smart Hisab – Canteen POS & Meal ERP Platform."
+    },
+    {
+      "title": "PostgreSQL",
+      "note": "Core PostgreSQL capability powering Smart Hisab – Canteen POS & Meal ERP Platform."
+    }
+  ],
+  "painRelievers": [
+    {
+      "title": "Eliminates: Peak-Hour Counter Congestion",
+      "note": "Flutter SQLite engine issues meal tokens in <1.2 seconds with instant Bluetooth thermal receipt printing."
+    },
+    {
+      "title": "Eliminates: Cash Discrepancies & Drawer Leaks",
+      "note": "Enforces mandatory opening float declaration, mid-day cash drops, and closing drawer audit before handover."
+    },
+    {
+      "title": "Eliminates: Uncollected Meal Credit",
+      "note": "Digital diner balances, monthly pre-paid credit limits, and automated payroll deduction exports."
+    }
+  ],
+  "gainCreators": [
+    {
+      "title": "Offline-First Instant Dispatch",
+      "note": "Flutter SQLite engine issues meal tokens in <1.2 seconds with instant Bluetooth thermal receipt printing."
+    },
+    {
+      "title": "Atomic Shift Cashbook",
+      "note": "Enforces mandatory opening float declaration, mid-day cash drops, and closing drawer audit before handover."
+    },
+    {
+      "title": "Real-Time Meal AR & Wallets",
+      "note": "Digital diner balances, monthly pre-paid credit limits, and automated payroll deduction exports."
+    }
+  ]
+}

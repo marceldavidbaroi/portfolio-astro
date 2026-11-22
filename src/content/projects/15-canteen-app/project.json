@@ -8,14 +8,16 @@
 	"featured": false,
 	"platformType": "mobile",
 	"contribution": {
-		"mode": "lead",
+		"mode": "owner",
 		"label": "Technical lead",
 		"headline": "Architected and developing an offline-first institutional canteen POS and meal ERP platform for a dedicated client using Flutter and Supabase PostgreSQL [X]. Replaced paper meal tokens and chaotic shift registers with automated customer AR accounts and digital shift cashbooks [Y], enabling sub-second counter transactions, zero-variance cashier handovers, and atomic ledger reconciliation during peak lunch hours [Z].",
 		"scope": [
 			"Guarantee sub-second counter throughput during lunch rush without internet dependency",
 			"Maintain financial double-entry integrity between customer payments, cashier cashbooks, and vendor food purchases",
 			"Support multiple user clearance levels (Superadmin, Cashier, Kitchen Manager, Auditor)"
-		]
+		],
+		"startedFrom": "scratch",
+		"myShare": "lead"
 	},
 	"myImpact": [
 		{
@@ -48,7 +50,7 @@
 		"problem": "Institutional canteens, corporate cafeterias, and educational dining facilities operate under extreme peak burst loads: hundreds of diners arrive within a 45-minute lunch window. Reliance on paper tokens, manual tally books, or cloud-dependent web systems results in catastrophic counter queues during Wi-Fi drops, misplaced meal receipts, cash drawer discrepancies, and uncollected customer debt.",
 		"valueProposition": {
 			"targetCustomer": "Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers",
-			"showCanvas": false,
+			"showCanvas": true,
 			"items": [
 				{
 					"painTitle": "Peak-Hour Counter Congestion",
@@ -151,5 +153,44 @@
 		"RFID / NFC smart card tap-to-pay reader integration for contactless 0.5s counter clearance",
 		"Automated kitchen display system (KDS) for real-time prep station order dispatch",
 		"Weekly nutritional tracking and dynamic meal subsidy calculation for corporate cafeterias"
+	],
+	"problem": {
+		"statement": "Institutional canteens, corporate cafeterias, and educational dining facilities operate under extreme peak burst loads: hundreds of diners arrive within a 45-minute lunch window. Reliance on paper tokens, manual tally books, or cloud-dependent web systems results in catastrophic counter queues during Wi-Fi drops, misplaced meal receipts, cash drawer discrepancies, and uncollected customer debt.",
+		"evidence": "observed",
+		"whoHurts": [
+			"commercial-canteens-university-dining-halls-factory-cafeterias-institutional-caterers"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers",
+			"pain": "Peak-Hour Counter Congestion",
+			"before": "Web apps freeze or lag when 300+ students or workers queue for meals simultaneously on spotty cafeteria Wi-Fi.",
+			"after": "Flutter SQLite engine issues meal tokens in <1.2 seconds with instant Bluetooth thermal receipt printing.",
+			"attribution": "personal",
+			"feature": [
+				"Offline-First Instant Dispatch"
+			]
+		},
+		{
+			"persona": "Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers",
+			"pain": "Cash Discrepancies & Drawer Leaks",
+			"before": "Multiple cashiers change shifts without structured drawer counts, leading to untracked register shortages.",
+			"after": "Enforces mandatory opening float declaration, mid-day cash drops, and closing drawer audit before handover.",
+			"attribution": "personal",
+			"feature": [
+				"Atomic Shift Cashbook"
+			]
+		},
+		{
+			"persona": "Commercial Canteens, University Dining Halls, Factory Cafeterias & Institutional Caterers",
+			"pain": "Uncollected Meal Credit",
+			"before": "Manual credit ledgers lead to disputes over diner meal tabs and unpaid month-end balances.",
+			"after": "Digital diner balances, monthly pre-paid credit limits, and automated payroll deduction exports.",
+			"attribution": "personal",
+			"feature": [
+				"Real-Time Meal AR & Wallets"
+			]
+		}
 	]
 }

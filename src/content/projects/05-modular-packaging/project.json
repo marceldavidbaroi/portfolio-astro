@@ -8,14 +8,16 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "specialist",
+		"mode": "contributor",
 		"label": "Domain specialist",
 		"headline": "Collaborated with a Senior Systems Architect and a peer engineer to develop and validate an enterprise Quasar modular packaging ecosystem [X]. Implemented core domain features, built the end-to-end Proof of Concept (POC), and led integration testing to convert monolithic Quasar components and features into independently versioned, plug-and-play npm packages [Y] increasing code reusability by +65% across multiple client applications with isolated build pipelines [Z].",
 		"scope": [
 			"Preserving Quasar Directives & Component Styles in Isolated Packages",
 			"Verifying Packaging Viability via Proof of Concept (POC)",
 			"Team Implementation Workflow & Modular Domain Boundaries"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -156,5 +158,53 @@
 		"Automated Changesets workflow for automated SemVer bumps on pull request merge.",
 		"Storybook integration for visual component regression testing inside isolated package repos.",
 		"Micro-frontend federation exploration for runtime package loading without build-time re-linking."
+	],
+	"problem": {
+		"statement": "Large enterprise client applications built on Quasar were duplicating identical UI components, tables, filters, authentication flows, and business workflows by copy-pasting across repositories. When a bug was discovered or a feature was enhanced, engineers had to patch multiple monoliths manually, resulting in divergent codebases and severe maintenance overhead.",
+		"evidence": "observed",
+		"whoHurts": [
+			"enterprise-frontend-teams-multi-app-engineering-orgs-component-library-maintainers"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers",
+			"pain": "Fragile Code Copy-Pasting Across Client Repositories",
+			"before": "Identical Quasar tables, auth flows, and form components were duplicated by copy-pasting, causing divergent bug patches across 3+ client monoliths.",
+			"after": "Shared domain features and UI components packaged as independently versioned npm modules with automated CI/CD publication.",
+			"attribution": "product",
+			"feature": [
+				"Autonomous Scoped Private npm Packages"
+			]
+		},
+		{
+			"persona": "Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers",
+			"pain": "CSS Style Clashes & Duplicate Runtime Bundles",
+			"before": "Packaging Quasar components traditionally bundled duplicate Vue/Quasar runtimes and caused conflicting global CSS overrides.",
+			"after": "Configured Vite to externalize Vue and Quasar core while auto-injecting tree-shakeable directives and styles cleanly on package mount.",
+			"attribution": "product",
+			"feature": [
+				"Vite Library Mode with Explicit Externalization"
+			]
+		},
+		{
+			"persona": "Enterprise Frontend Teams, Multi-App Engineering Orgs & Component Library Maintainers",
+			"pain": "Risky Production Deployments of Unverified Packages",
+			"before": "Publishing unvalidated npm packages broke downstream client builds due to missing TypeScript declarations (.d.ts) or peer dependency mismatches.",
+			"after": "Engineered a local registry testbed ensuring 100% type safety and runtime validation prior to publishing packages to production registries.",
+			"attribution": "product",
+			"feature": [
+				"Verdaccio & pnpm Link POC Sandbox Testbed"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Preserving Quasar Directives & Component Styles in Isolated Packages",
+			"before": "Preserving Quasar Directives & Component Styles in Isolated Packages",
+			"after": "Clean, tree-shakeable npm packages that consume host app Quasar styles without CSS collisions or duplicate runtime bundles.",
+			"how": "Configured Vite library mode builds with explicit externalization of Vue and Quasar core while bundling CSS assets and auto-installing Quasar component plugins on package mount.",
+			"attribution": "personal"
+		}
 	]
 }

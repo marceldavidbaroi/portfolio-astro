@@ -10,21 +10,6 @@ Scope: `src/content/projects/`, `src/content/experience/`, `src/pages/index.astr
 
 ## 3. Incomplete Schema & Case Study Gaps
 
-### 3.1 Legacy `contribution` & Missing `problem` / `benefitMatrix` / `vpc.json`
-- **The Fault:** 11 of 17 projects still use old `contribution.mode` values (`specialist`, `core`, `lead`) instead of the current schema (`owner` | `co-owner` | `contributor` | `maintainer` + `startedFrom` + `myShare`), and are missing `problem`, `benefitMatrix`, and `vpc.json`. Because of this, the **Product Context** and **Benefit Matrix** sections on `/work/<slug>` are skipped or incomplete.
-- **How to Fix:** Follow `.agents/rules/project-standards.md` to migrate each `project.json` to the new `contribution` fields, add `problem` and `benefitMatrix`, and create `vpc.json` where appropriate (prioritize top-ordered projects first).
-  - [ ] `03-thrift-inventory` (`order: 3`, `featured: true`)
-  - [ ] `15-canteen-app` (`order: 4`)
-  - [ ] `13-kbeauty-dropship` (`order: 6`)
-  - [ ] `07-pennyperfect` (`order: 7`)
-  - [ ] `11-quizzes-streaming` (`order: 11`)
-  - [ ] `09-store-management` (`order: 12`)
-  - [ ] `05-modular-packaging` (`order: 13`)
-  - [ ] `08-docstach` (`order: 14`)
-  - [ ] `10-supercards` (`order: 15`)
-  - [ ] `14-microfinance-loan-app` (`order: 16`)
-  - [ ] `12-brac-social` (`order: 17`)
-
 ### 3.2 Missing `caseStory` Spine
 - **The Fault:** Only `01-tradeflowbd` defines `caseStory` (`platforms`, `modules`, `stackRationale`, `diagrams`). Without `caseStory`, the structured recruiter story spine on `/work/<slug>` does not render (and `toCaseStudyView` in `src/lib/projectView.ts` only enables it for `owner` / `lead` modes).
 - **How to Fix:** Add `caseStory` to the top owned/lead projects so recruiters can scan architecture, modules, and stack choices in under 30 seconds.

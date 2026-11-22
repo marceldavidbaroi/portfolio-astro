@@ -1,0 +1,95 @@
+{
+  "labels": {
+    "title": "The Value Proposition Canvas",
+    "valueProposition": "BrandWala Retail – Market-Aware Cross-Border Commerce Platform",
+    "customerSegment": "Cross-Border Resellers, Wholesale Importers & K-Beauty Retail Operations"
+  },
+  "customerJobs": [
+    {
+      "title": "Core Workflow 1",
+      "note": "Automating UK Wholesale Catalog Ingestion"
+    },
+    {
+      "title": "Core Workflow 2",
+      "note": "Market-Aware Multi-Vendor Routing"
+    },
+    {
+      "title": "Core Workflow 3",
+      "note": "Complex 5-Layer Commission Calculation"
+    }
+  ],
+  "pains": [
+    {
+      "title": "Manual Price Copying & Catalog Drift",
+      "note": "Resellers spent hours manually browsing UK wholesale websites and copying GBP prices into spreadsheets, causing stockouts and stale exchange rates."
+    },
+    {
+      "title": "Disputed Multi-Tier Commission Calculations",
+      "note": "Calculating custom price markups, delivery charge adjustments, COD percentages, and packing fees by hand led to payout reconciliation errors."
+    },
+    {
+      "title": "Firestore Quota Inflation & High Read Costs",
+      "note": "Unbounded Firestore queries on large order catalogs rapidly consumed free quotas and caused UI slowdowns during search."
+    }
+  ],
+  "gains": [
+    {
+      "title": "Automated Python Scraping & Ingestion Pipelines",
+      "note": "Engineered automated ETL scrapers for kobareseller.com (session/CSRF auth) and WooCommerce APIs, automatically upserting categorized catalog items."
+    },
+    {
+      "title": "Deterministic 5-Layer UI Commission Engine",
+      "note": "Built a centralized mathematical calculation engine that computes live breakdowns at checkout and persists immutable snapshots on orders."
+    },
+    {
+      "title": "Quota-Optimized Querying & Derived Projections",
+      "note": "Implemented debounced searches, cursor pagination, status-filtered batch reads, and derived Customer Order Book collections."
+    }
+  ],
+  "productsAndServices": [
+    {
+      "title": "React 19",
+      "note": "Core React 19 capability powering BrandWala Retail – Market-Aware Cross-Border Commerce Platform."
+    },
+    {
+      "title": "Firebase Firestore",
+      "note": "Core Firebase Firestore capability powering BrandWala Retail – Market-Aware Cross-Border Commerce Platform."
+    },
+    {
+      "title": "TanStack Query",
+      "note": "Core TanStack Query capability powering BrandWala Retail – Market-Aware Cross-Border Commerce Platform."
+    },
+    {
+      "title": "Python Web Scraping",
+      "note": "Core Python Web Scraping capability powering BrandWala Retail – Market-Aware Cross-Border Commerce Platform."
+    }
+  ],
+  "painRelievers": [
+    {
+      "title": "Eliminates: Manual Price Copying & Catalog Drift",
+      "note": "Engineered automated ETL scrapers for kobareseller.com (session/CSRF auth) and WooCommerce APIs, automatically upserting categorized catalog items."
+    },
+    {
+      "title": "Eliminates: Disputed Multi-Tier Commission Calculations",
+      "note": "Built a centralized mathematical calculation engine that computes live breakdowns at checkout and persists immutable snapshots on orders."
+    },
+    {
+      "title": "Eliminates: Firestore Quota Inflation & High Read Costs",
+      "note": "Implemented debounced searches, cursor pagination, status-filtered batch reads, and derived Customer Order Book collections."
+    }
+  ],
+  "gainCreators": [
+    {
+      "title": "Automated Python Scraping & Ingestion Pipelines",
+      "note": "Engineered automated ETL scrapers for kobareseller.com (session/CSRF auth) and WooCommerce APIs, automatically upserting categorized catalog items."
+    },
+    {
+      "title": "Deterministic 5-Layer UI Commission Engine",
+      "note": "Built a centralized mathematical calculation engine that computes live breakdowns at checkout and persists immutable snapshots on orders."
+    },
+    {
+      "title": "Quota-Optimized Querying & Derived Projections",
+      "note": "Implemented debounced searches, cursor pagination, status-filtered batch reads, and derived Customer Order Book collections."
+    }
+  ]
+}

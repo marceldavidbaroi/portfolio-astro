@@ -1,0 +1,111 @@
+{
+  "labels": {
+    "title": "The Value Proposition Canvas",
+    "valueProposition": "Inventory Management – Mobile Warehouse & Barcode Automation",
+    "customerSegment": "Warehouse Operators, Floor Managers & Second-Hand Retail Logistics Teams"
+  },
+  "customerJobs": [
+    {
+      "title": "Core Workflow 1",
+      "note": "Unreliable Barcode Scanning in Warehouse Conditions"
+    },
+    {
+      "title": "Core Workflow 2",
+      "note": "High-Volume Intake During Shipment Processing"
+    },
+    {
+      "title": "Core Workflow 3",
+      "note": "Stock Discrepancies Across Shelf/Box Locations"
+    }
+  ],
+  "pains": [
+    {
+      "title": "Desktop-Tethered Registration Bottlenecks",
+      "note": "Floor operators had to haul garments to desktop PCs or hand-write paper intake sheets, causing massive intake delays during container arrivals."
+    },
+    {
+      "title": "Undetected Misplaced Stock & Phantom Out-of-Stocks",
+      "note": "Garments placed on incorrect shelf/box bins went unnoticed for weeks, showing as unavailable for sale while physically in the warehouse."
+    },
+    {
+      "title": "Slow Single-Item Scanning & Form Navigation Fatigue",
+      "note": "Scanning barcode labels one-by-one with mandatory screen confirmation caused high operator fatigue and slow intake rates."
+    },
+    {
+      "title": "Language Barrier for Warehouse Floor Staff",
+      "note": "Complex English ERP interfaces caused operator misclassification and required extensive supervision."
+    }
+  ],
+  "gains": [
+    {
+      "title": "On-Floor Mobile Registration with Photo Upload",
+      "note": "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds."
+    },
+    {
+      "title": "Structured 3-State Shelf & Bin Audit Mode",
+      "note": "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs."
+    },
+    {
+      "title": "Google ML Kit Continuous Batch Queue Scanning",
+      "note": "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates."
+    },
+    {
+      "title": "Bilingual Operator Interface (English + Bengali)",
+      "note": "Complete high-contrast bilingual localization (বাংলা + EN) with persisted device locale and large touch targets designed for warehouse floors."
+    }
+  ],
+  "productsAndServices": [
+    {
+      "title": "Quasar",
+      "note": "Core Quasar capability powering Inventory Management – Mobile Warehouse & Barcode Automation."
+    },
+    {
+      "title": "Vue 3",
+      "note": "Core Vue 3 capability powering Inventory Management – Mobile Warehouse & Barcode Automation."
+    },
+    {
+      "title": "Supabase",
+      "note": "Core Supabase capability powering Inventory Management – Mobile Warehouse & Barcode Automation."
+    },
+    {
+      "title": "Capacitor (Android)",
+      "note": "Core Capacitor (Android) capability powering Inventory Management – Mobile Warehouse & Barcode Automation."
+    }
+  ],
+  "painRelievers": [
+    {
+      "title": "Eliminates: Desktop-Tethered Registration Bottlenecks",
+      "note": "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds."
+    },
+    {
+      "title": "Eliminates: Undetected Misplaced Stock & Phantom Out-of-Stocks",
+      "note": "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs."
+    },
+    {
+      "title": "Eliminates: Slow Single-Item Scanning & Form Navigation Fatigue",
+      "note": "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates."
+    },
+    {
+      "title": "Eliminates: Language Barrier for Warehouse Floor Staff",
+      "note": "Complete high-contrast bilingual localization (বাংলা + EN) with persisted device locale and large touch targets designed for warehouse floors."
+    }
+  ],
+  "gainCreators": [
+    {
+      "title": "On-Floor Mobile Registration with Photo Upload",
+      "note": "Capacitor 8 Android app captures product photos directly via Capacitor Camera, uploads to Cloudinary CDN, and registers inventory in sub-seconds."
+    },
+    {
+      "title": "Structured 3-State Shelf & Bin Audit Mode",
+      "note": "Operators scan boxes to verify expected stock, immediately detect misplaced items via live DB queries, and relocate them with one-tap atomic RPCs."
+    },
+    {
+      "title": "Google ML Kit Continuous Batch Queue Scanning",
+      "note": "Hardware-accelerated continuous camera decoding with audio/haptic feedback queues dozens of scans for instant bulk location/status updates."
+    },
+    {
+      "title": "Bilingual Operator Interface (English + Bengali)",
+      "note": "Complete high-contrast bilingual localization (বাংলা + EN) with persisted device locale and large touch targets designed for warehouse floors."
+    }
+  ]
+}

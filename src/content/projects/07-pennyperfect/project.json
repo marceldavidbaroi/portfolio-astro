@@ -8,7 +8,7 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "core",
+		"mode": "contributor",
 		"label": "Core contributor",
 		"headline": "Delivered a comprehensive double-entry accounting suite for multi-tenant organizations [X] by decomposing PennyPerfect into 7 independently publishable Vue packages covering chart of accounts, transactions, balance sheets, P&L statements, reports, and settings [Y], achieving 6 auto-discovered production menu surfaces under /penny-perfect/* backed by standardized Vue provide/inject abstractions and Laravel Sanctum multi-tenant APIs [Z].",
 		"scope": [
@@ -17,7 +17,9 @@
 			"Legacy branch API (/loanapp/branchs) missing in Supercards backend",
 			"Reports had duplicate route definitions (src/routes.ts vs src/router/routes.ts)",
 			"Print/PDF export without server-side rendering"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -176,5 +178,53 @@
 		"Consolidate remaining /loanapp/* settings APIs onto core-auth-accounts + pennyperfect tax-code routes.",
 		"Add general ledger package (@itc/pennyperfect-general-ledger) to the meta-package dependency set for a seventh reporting surface.",
 		"Unify all packages on @itc/coreservice callApi instead of mixed raw Axios service layers."
+	],
+	"problem": {
+		"statement": "Finance teams inside Supercards tenants needed in-app accounting—accounts, journal entries, tax-aware income/expense, and standard financial reports—without bolting on a separate ERP. Legacy PennyPerfect UIs assumed a monolithic loan-app API (e.g. /loanapp/branchs, cashbook import/export) and wrong default API hosts, causing broken branch filters, failed imports, and session logout when tax endpoints 401'd on page load.",
+		"evidence": "observed",
+		"whoHurts": [
+			"enterprise-finance-teams-multi-tenant-saas-organizations-accounting-leads"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads",
+			"pain": "Monolithic Frontend Bloat Across Accounting Modules",
+			"before": "Integrating double-entry accounting into host applications traditionally bloated frontend bundles and coupled financial code with unrelated core app logic.",
+			"after": "Decomposed the suite into independently versioned packages (@itc/pennyperfect-*) orchestrated by a meta-package with dynamic route discovery.",
+			"attribution": "product",
+			"feature": [
+				"7 Composable Autonomous Vue Library Packages"
+			]
+		},
+		{
+			"persona": "Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads",
+			"pain": "P0 Session Logouts from Premature Boot-Time API Calls",
+			"before": "Unauthenticated tax code fetch calls during initial application boot triggered 401 errors, inadvertently logging users out of their host session.",
+			"after": "Engineered configureTaxApi boot abstractions and deferred API requests until dialog mount, guaranteeing 100% boot stability.",
+			"attribution": "product",
+			"feature": [
+				"Lazy Dialog Loading & Safe Host Boot Handlers"
+			]
+		},
+		{
+			"persona": "Enterprise Finance Teams, Multi-Tenant SaaS Organizations & Accounting Leads",
+			"pain": "Heavy Server-Side PDF Rendering Infrastructure",
+			"before": "Generating multi-page A4 balance sheets and monthly income statements previously required dedicated headless browser microservices.",
+			"after": "Engineered client-side rendering with hidden iframes, html2canvas rasterization, and jsPDF assembly for instant zero-server PDF exports.",
+			"attribution": "product",
+			"feature": [
+				"Client-Side In-Browser A4 PDF Assembly"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Feature scope vs. maintainability in a monorepo with nested git repos",
+			"before": "Feature scope vs. maintainability in a monorepo with nested git repos",
+			"after": "Teams can version, build, and publish modules independently; host integration is boot + spread routes + discover:ci instead of a growing frontend/src tree.",
+			"how": "Split PennyPerfect into domain packages (@itc/pennyperfect-transactions, -chartofaccounts, -balancesheet, -incomestatement, -reports, -settings) with @itc/pennyperfect as a meta dependency installer; each package ships appPlugin.routes + appPlugin.menu with parent: pennyperfect.",
+			"attribution": "personal"
+		}
 	]
 }

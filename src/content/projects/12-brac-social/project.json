@@ -8,13 +8,15 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "core",
+		"mode": "contributor",
 		"label": "Core contributor",
 		"headline": "Contributed essential frontend polish, layout bug fixes, and comprehensive cross-device responsive optimizations for the BRAC Social Platform using Quasar Framework and Vue 3 [X]. Eliminated mobile/tablet viewport clipping and horizontal scrolling defects [Y] by standardizing interactive feed card components, responsive image grids, and 48px touch targets across varying screen sizes [Z].",
 		"scope": [
 			"Inconsistent Mobile & Tablet Feed Card Breakpoints",
 			"Component Polish & User Experience Continuity"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "minor"
 	},
 	"myImpact": [
 		{
@@ -135,5 +137,53 @@
 	"futureRoadmap": [
 		"Dark mode theme toggle support.",
 		"PWA installable shell for offline post caching."
+	],
+	"problem": {
+		"statement": "The initial internal social platform suffered from visual inconsistencies, broken mobile drawer states, overflowing text cards, and rigid desktop-first styling that degraded the user experience for field staff and mobile browser users.",
+		"evidence": "observed",
+		"whoHurts": [
+			"internal-enterprise-staff-field-coordinators-organizational-teams"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Internal Enterprise Staff, Field Coordinators & Organizational Teams",
+			"pain": "Broken Mobile Views & Horizontal Viewport Overflow",
+			"before": "Field coordinators accessing the internal social portal on smartphones encountered clipped text cards and awkward horizontal scrolling.",
+			"after": "Rebuilt rigid desktop sections using dynamic Quasar screen utilities ($q.screen) for seamless smartphone and tablet adaptability.",
+			"attribution": "product",
+			"feature": [
+				"Fluid Quasar Responsive Grid Refactoring"
+			]
+		},
+		{
+			"persona": "Internal Enterprise Staff, Field Coordinators & Organizational Teams",
+			"pain": "Disjointed Media Attachment Previews",
+			"before": "High-resolution photos posted in discussion threads broke container boundaries and caused severe visual misalignment.",
+			"after": "Engineered responsive image grid components that constrain high-res media while preserving crisp aspect ratios.",
+			"attribution": "product",
+			"feature": [
+				"Adaptive Multi-Image Gallery Containers"
+			]
+		},
+		{
+			"persona": "Internal Enterprise Staff, Field Coordinators & Organizational Teams",
+			"pain": "Frustrating Small Tap Targets on Touchscreens",
+			"before": "Reaction buttons, comment replies, and notification drawers were difficult to trigger on touch devices due to tiny hit targets.",
+			"after": "Standardized tap targets, active press feedback, and fluid drawer gestures across all interactive feed elements.",
+			"attribution": "product",
+			"feature": [
+				"48px Accessible Mobile Touch Ergonomics"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Inconsistent Mobile & Tablet Feed Card Breakpoints",
+			"before": "Inconsistent Mobile & Tablet Feed Card Breakpoints",
+			"after": "Eliminated horizontal scrollbars, text clipping, and broken card layouts on mobile and tablet devices.",
+			"how": "Refactored feed cards and media attachment galleries to use fluid Flexbox and Quasar responsive classes ($q.screen / col-xs-12 col-md-8), ensuring content scales naturally on smaller viewports.",
+			"attribution": "personal"
+		}
 	]
 }

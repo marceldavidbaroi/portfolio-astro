@@ -8,7 +8,7 @@
 	"featured": false,
 	"platformType": "desktop",
 	"contribution": {
-		"mode": "lead",
+		"mode": "contributor",
 		"label": "Technical lead",
 		"headline": "Delivered a production-ready internal assessment platform across 4 end-to-end user journeys (Create, Author, Discover, Participate) [X] spanning 15 dedicated Vue files and 11 composable components [Y], by refactoring the Quiz module into an isolated Pinia state architecture with OpenAI GPT-4o question generation and timed participation workflows [Z].",
 		"scope": [
@@ -16,7 +16,9 @@
 			"Authoring UI was growing into an unmaintainable single file with mixed concerns (validation, AI, existing questions, new questions, cover upload).",
 			"Participants needed a guided, timed experience with post-submission review — not just a static form.",
 			"Authors starting from scratch on question banks was slow and error-prone."
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -165,5 +167,53 @@
 		"Certificate generation on passing threshold.",
 		"Admin analytics dashboard across all quizzes and departments.",
 		"Bulk import/export of question banks."
+	],
+	"problem": {
+		"statement": "Organizations running knowledge checks through spreadsheets, external quiz tools, or ad-hoc forms had no way to tie assessments to their existing project and people data. Authors could not see who participated, how teams scored, or whether content was ready to publish. Employees had no single place to discover available quizzes, track their own scores, or review mistakes after submission.",
+		"evidence": "observed",
+		"whoHurts": [
+			"enterprise-people-ops-training-coordinators-internal-knowledge-leads"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Enterprise People Ops, Training Coordinators & Internal Knowledge Leads",
+			"pain": "Fragmented External Quiz Tools (Google Forms / Typeform)",
+			"before": "Running assessments on external survey tools disconnected test scores from employee employee work profiles and project teams.",
+			"after": "Directly transformed the platform's universal card model into timed quizzes, associating assessment results with real employee profiles.",
+			"attribution": "product",
+			"feature": [
+				"Embedded Native Learning Surface in SuperCards"
+			]
+		},
+		{
+			"persona": "Enterprise People Ops, Training Coordinators & Internal Knowledge Leads",
+			"pain": "Slow Manual Question Bank Creation for Authors",
+			"before": "Training coordinators spent hours manually formatting multiple-choice options and fill-in-the-blank text inputs.",
+			"after": "Integrated automated question generation that creates structured MCQ banks from course titles in seconds for author review.",
+			"attribution": "product",
+			"feature": [
+				"AI-Powered Question Studio (OpenAI GPT-4o)"
+			]
+		},
+		{
+			"persona": "Enterprise People Ops, Training Coordinators & Internal Knowledge Leads",
+			"pain": "Lack of Immediate Feedback & Mistake Walkthroughs",
+			"before": "Traditional quiz forms showed binary pass/fail grades without allowing employees to inspect correct answers and explanations.",
+			"after": "Engineered an interactive review screen showing correct explanations, highlighted answer differences, and grade score badging.",
+			"attribution": "product",
+			"feature": [
+				"Post-Submission Mistake Review Engine"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Quizzes needed rich metadata (status, category, time limit, instructions, cover ",
+			"before": "Quizzes needed rich metadata (status, category, time limit, instructions, cover image) without building a separate content entity.",
+			"after": "Authors reuse the platform's card creation dialog, tag system, and detail shell — quiz-specific logic stays in the Quiz module only.",
+			"how": "Modeled quizzes as SuperCards task cards with entity tags (Quiz), status tags (Draft / Published / Unpublished), category tags (Quiz Category), and meta fields (time, quiz_instructions).",
+			"attribution": "personal"
+		}
 	]
 }

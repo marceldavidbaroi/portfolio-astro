@@ -8,14 +8,16 @@
 	"featured": false,
 	"platformType": "mobile",
 	"contribution": {
-		"mode": "core",
+		"mode": "contributor",
 		"label": "Core contributor",
 		"headline": "Developed a solo frontend microfinance loan collection mobile app for Android and contributed responsive branch loan management interfaces on the web portal using Quasar Framework, Vue 3, and Pinia [X]. Equipped field agents with daily collection lists and digital receipts [Y], cutting collection turnaround by +50% and eliminating end-of-day branch cash discrepancies via offline schedule caching and automated settlement summaries [Z].",
 		"scope": [
 			"Field Reliability for Door-to-Door Loan Installment Logging",
 			"Unified Codebase for Mobile Android & Web Management Portals",
 			"End-of-Day Branch Reconciliation & Agent Settlement"
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "major"
 	},
 	"myImpact": [
 		{
@@ -158,5 +160,53 @@
 		"Bluetooth thermal printer integration for immediate physical paper receipt handovers.",
 		"GPS route optimization and geotagged collection location verification.",
 		"SMS gateway trigger sending instant automated payment confirmation to borrower mobile numbers."
+	],
+	"problem": {
+		"statement": "Microfinance field agents visiting borrowers door-to-door often face connectivity drops, manual receipt book errors, and delays in daily branch ledger reconciliation, creating cash discrepancies and slow reporting.",
+		"evidence": "observed",
+		"whoHurts": [
+			"microfinance-institutions-field-recovery-agents-branch-supervisors"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Microfinance Institutions, Field Recovery Agents & Branch Supervisors",
+			"pain": "Slow Paper Receipt Books & Calculation Errors",
+			"before": "Field agents manually wrote paper receipts and calculated remaining balances, creating frequent tally errors and long collection visits.",
+			"after": "Engineered high-speed payment modals with automatic interest, penalty, and principal calculations and digital receipt generation.",
+			"attribution": "product",
+			"feature": [
+				"One-Tap Digital Installment Logging"
+			]
+		},
+		{
+			"persona": "Microfinance Institutions, Field Recovery Agents & Branch Supervisors",
+			"pain": "Disputed End-of-Day Cash Vault Settlements",
+			"before": "Branch supervisors spent hours reconciling paper receipt stubs against agent cash bags at shift end to locate cash discrepancies.",
+			"after": "Automated real-time calculation of total cash collected, outstanding arrears, and installment counts for instant vault sign-off.",
+			"attribution": "product",
+			"feature": [
+				"Automated End-of-Day Settlement Summary"
+			]
+		},
+		{
+			"persona": "Microfinance Institutions, Field Recovery Agents & Branch Supervisors",
+			"pain": "App Freezes in Low-Connectivity Rural Areas",
+			"before": "Field agents visiting remote villages experienced network drops, preventing them from loading daily collection routes.",
+			"after": "Cached daily borrower routes and payment ledgers locally, allowing agents to log collections offline and sync on reconnection.",
+			"attribution": "product",
+			"feature": [
+				"Offline Pinia Schedule Caching"
+			]
+		}
+	],
+	"improvements": [
+		{
+			"area": "Field Reliability for Door-to-Door Loan Installment Logging",
+			"before": "Field Reliability for Door-to-Door Loan Installment Logging",
+			"after": "Eliminated paper collection sheets and sped up door-to-door transaction processing time by over 50%.",
+			"how": "Built a mobile-first collection flow in Quasar with Pinia stores and local storage caching, enabling agents to view daily borrower schedules and record payments with instant receipt generation even during intermittent network dips.",
+			"attribution": "personal"
+		}
 	]
 }

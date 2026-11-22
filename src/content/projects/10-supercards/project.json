@@ -17,7 +17,9 @@
 			"Meeting agendas mixed sub-tasks and loosely related work items, and users needed to detach associations without deleting underlying records.",
 			"Accounting users needed branch-scoped ledgers, debit/credit visibility, and printable financial reports from the same app shell.",
 			"Field staff and mobile users needed push notifications and device capabilities alongside the web SPA."
-		]
+		],
+		"startedFrom": "existing",
+		"myShare": "minor"
 	},
 	"improvements": [
 		{
@@ -211,5 +213,44 @@
 		"Expand Dashboard into a configurable executive widget board.",
 		"Finish Team App catalog with full publish/review lifecycle and admin governance.",
 		"Extend File Manager with bulk operations and deeper cloud provider integrations."
+	],
+	"problem": {
+		"statement": "Growing organizations were running project tracking, microfinance operations, bookkeeping, employee recognition, knowledge checks, and internal tooling across separate systems. That fragmentation created duplicate data entry, inconsistent permissions, and no single view of what teams were working on, spending, or learning. SuperCards is a suite of products built on one multi-tenant platform with a shared card-based data model, one login, and one set of core components.",
+		"evidence": "observed",
+		"whoHurts": [
+			"multi-tenant-enterprises-operations-directors-department-team-leads"
+		]
+	},
+	"benefitMatrix": [
+		{
+			"persona": "Multi-Tenant Enterprises, Operations Directors & Department Team Leads",
+			"pain": "Fragmented Operations Across 5+ Unrelated SaaS Tools",
+			"before": "Organizations managed tasks in Jira, accounting in QuickBooks, lending in spreadsheets, and quizzes in Google Forms, causing duplicate data entry and fractured oversight.",
+			"after": "Project management, bookkeeping, lending, and employee assessments live as products in a single authenticated Quasar shell with a shared card entity model.",
+			"attribution": "product",
+			"feature": [
+				"Unified Card-Based Product Suite"
+			]
+		},
+		{
+			"persona": "Multi-Tenant Enterprises, Operations Directors & Department Team Leads",
+			"pain": "Duplicated UI Boilerplate Across Products",
+			"before": "Each business domain risked building its own detail drawers, tag selectors, comment threads, and attachment uploaders from scratch.",
+			"after": "Shared TaskDetails, TaskList, and media components, configurable through layout props, let new products reuse the same tested building blocks.",
+			"attribution": "product",
+			"feature": [
+				"Shared Core Components & Packages"
+			]
+		},
+		{
+			"persona": "Multi-Tenant Enterprises, Operations Directors & Department Team Leads",
+			"pain": "Inconsistent Access Across Products",
+			"before": "Separate products with separate sign-ins and permission rules make tenant isolation and access control hard to keep consistent.",
+			"after": "A single login flow with route guards, token interceptors, and permission directives resolves tenant and branch context for every product.",
+			"attribution": "product",
+			"feature": [
+				"One Login, Consistent Permissions"
+			]
+		}
 	]
 }
