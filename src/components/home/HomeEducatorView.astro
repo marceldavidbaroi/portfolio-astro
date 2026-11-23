@@ -1,0 +1,426 @@
+---
+import HomeActionsBar from './HomeActionsBar.astro';
+import HomeExperienceRail from './HomeExperienceRail.astro';
+import HomeEducationStrip from './HomeEducationStrip.astro';
+import { teachingPillars, studentOutcomes, onlineProfiles } from '../../data/aboutData';
+
+interface ExperienceItem {
+	slug: string;
+	order: number;
+	period: string;
+	role: string;
+	company: string;
+	badge?: string;
+	summary?: string;
+	highlights?: string[];
+	relatedProjects?: Array<{ slug: string; label: string }>;
+	cardImages?: string[];
+	galleryHref?: string;
+}
+
+interface EducationProgram {
+	degree?: string;
+	shortDegree?: string;
+	institution: string;
+	institutionShort?: string;
+	period?: string;
+	badge?: string;
+	cgpa?: number;
+	gpa?: number;
+	maxGpa: number;
+	summary?: string;
+}
+
+interface ResearchPaper {
+	slug: string;
+	shortTitle?: string;
+	title: string;
+	subtitle?: string;
+	abstract: string;
+	pdfDownloadUrl?: string;
+	officialRepositoryUrl?: string;
+}
+
+interface Props {
+	teachingExperience: ExperienceItem[];
+	bscCseProgram: EducationProgram;
+	hscScienceProgram: EducationProgram;
+	researchPaper?: ResearchPaper;
+}
+
+const { teachingExperience, bscCseProgram, hscScienceProgram, researchPaper } = Astro.props;
+const slideshareProfile = onlineProfiles.find((p) => p.platformId === 'slideshare');
+
+const teachingSkillGroups = [
+	{
+		category: 'Subjects Taught',
+		items: ['Higher Mathematics', 'Physics', 'ICT', 'Computer Science Fundamentals', 'Calculus & Linear Algebra'],
+	},
+	{
+		category: 'Pedagogy & Mentorship',
+		items: ['First-Principles Instruction', '1-on-1 Adaptive Pacing', 'Diagnostic Mock Exams', 'Curriculum Planning', 'Technical Writing & Slides'],
+	},
+];
+---
+
+<div class="educator-view">
+	<HomeActionsBar mode="educator" />
+
+	<div class="home-scroll-flow">
+		<!-- 1. Teaching Experience & Student Outcomes -->
+		<HomeExperienceRail experience={teachingExperience} />
+
+		<section class="edu-outcomes" aria-labelledby="outcomes-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Verified Student Outcomes</p>
+			</div>
+			<h2 id="outcomes-heading" class="sr-only">Student Academic Outcomes</h2>
+			<div class="outcomes-grid">
+				{studentOutcomes.map((item) => (
+					<div class="outcome-item">
+						<div class="outcome-top">
+							<span class="outcome-score font-mono">{item.outcome}</span>
+							<span class="outcome-level font-mono">{item.level}</span>
+						</div>
+						<p class="outcome-school">{item.institution}</p>
+						{item.progression && (
+							<p class="outcome-prog font-mono">{item.progression}</p>
+						)}
+					</div>
+				))}
+			</div>
+		</section>
+
+		<!-- 2. How I Teach (Pedagogy Pillars) -->
+		<section class="how-i-teach" aria-labelledby="teach-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">How I Teach</p>
+			</div>
+			<h2 id="teach-heading" class="sr-only">Teaching Philosophy and Methodology</h2>
+			<div class="teach-grid">
+				{teachingPillars.map((pillar) => (
+					<article class="teach-card">
+						<div class="teach-meta font-mono">
+							<span class="teach-num">{pillar.num}</span>
+							<span class="teach-tag">{pillar.tag}</span>
+						</div>
+						<h3 class="teach-title">{pillar.title}</h3>
+						<p class="teach-desc">{pillar.desc}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<!-- 3. Education & Academic Results -->
+		<HomeEducationStrip
+			bscCseProgram={bscCseProgram}
+			hscScienceProgram={hscScienceProgram}
+		/>
+
+		<!-- 4. Research & Teaching Materials -->
+		<section class="edu-research" aria-labelledby="edu-research-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Research & Teaching Materials</p>
+				{slideshareProfile && (
+					<a class="section-link font-mono" href={slideshareProfile.url} target="_blank" rel="noopener noreferrer">
+						SlideShare Decks ↗
+					</a>
+				)}
+			</div>
+			<h2 id="edu-research-heading" class="sr-only">Research Paper and Teaching Decks</h2>
+
+			{researchPaper && (
+				<div class="research-row">
+					<div class="research-body">
+						<h3 class="research-title">
+							<a href={`/research/${researchPaper.slug}`} class="research-link">
+								{researchPaper.shortTitle || researchPaper.title}
+							</a>
+						</h3>
+						<p class="research-desc">{researchPaper.abstract}</p>
+					</div>
+					<div class="research-actions font-mono">
+						<a href={`/research/${researchPaper.slug}`} class="res-btn">Read Summary →</a>
+						{researchPaper.pdfDownloadUrl && (
+							<a href={researchPaper.pdfDownloadUrl} target="_blank" rel="noopener noreferrer" class="res-btn">
+								Thesis PDF ↗
+							</a>
+						)}
+					</div>
+				</div>
+			)}
+		</section>
+
+		<!-- 5. Teaching Skills -->
+		<section class="edu-skills" aria-labelledby="edu-skills-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Subjects & Pedagogy</p>
+			</div>
+			<h2 id="edu-skills-heading" class="sr-only">Teaching Subjects and Skills</h2>
+			<div class="edu-skills-rows">
+				{teachingSkillGroups.map((group) => (
+					<div class="edu-skill-row">
+						<span class="edu-skill-cat font-mono">{group.category}</span>
+						<ul class="edu-skill-tags">
+							{group.items.map((skill) => (
+								<li class="edu-skill-tag font-mono">{skill}</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+		</section>
+	</div>
+</div>
+
+<style>
+	.educator-view {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.section-kicker {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-kicker .label {
+		margin: 0;
+	}
+
+	.section-kicker .section-link {
+		font-size: var(--type-cta, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.section-kicker .section-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	/* Outcomes */
+	.edu-outcomes {
+		padding: 2.75rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.outcomes-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+
+	.outcome-item {
+		padding: 1rem 1.1rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md, 10px);
+		background: var(--card-bg);
+		display: flex;
+		flex-direction: column;
+		gap: 0.35rem;
+	}
+
+	.outcome-top {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.5rem;
+	}
+
+	.outcome-score {
+		font-size: 0.95rem;
+		font-weight: 800;
+		color: var(--accent);
+	}
+
+	.outcome-level {
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.outcome-school {
+		margin: 0;
+		font-size: 0.95rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.outcome-prog {
+		margin: 0;
+		font-size: 0.75rem;
+		color: var(--text-muted);
+	}
+
+	/* How I Teach */
+	.how-i-teach {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.teach-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.teach-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding-top: 0.85rem;
+		border-top: 2px solid var(--card-border);
+	}
+
+	.teach-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.teach-num {
+		font-weight: 800;
+		color: var(--accent);
+	}
+
+	.teach-title {
+		margin: 0;
+		font-size: 1.02rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		color: var(--text-main);
+	}
+
+	.teach-desc {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	/* Research & Docs */
+	.edu-research {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.research-row {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		justify-content: space-between;
+		gap: 1.25rem;
+	}
+
+	.research-body {
+		flex: 1 1 28rem;
+		min-width: 0;
+	}
+
+	.research-title {
+		margin: 0 0 0.45rem;
+		font-size: 1.08rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.research-link {
+		color: var(--text-main);
+		text-decoration: none;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.research-link:hover {
+		color: var(--accent);
+	}
+
+	.research-desc {
+		margin: 0;
+		font-size: 0.92rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	.research-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.6rem;
+		align-items: center;
+	}
+
+	.res-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.45rem 0.85rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm, 6px);
+		font-size: 0.78rem;
+		font-weight: 600;
+		color: var(--text-main);
+		text-decoration: none;
+		transition: border-color var(--dur-fast, 150ms) ease, color var(--dur-fast, 150ms) ease;
+	}
+
+	.res-btn:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	/* Teaching Skills */
+	.edu-skills {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.edu-skills-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.edu-skill-row {
+		display: grid;
+		grid-template-columns: 12.5rem minmax(0, 1fr);
+		gap: 0.6rem 1.5rem;
+		align-items: baseline;
+	}
+
+	.edu-skill-cat {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.edu-skill-tags {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.edu-skill-tag {
+		font-size: 0.78rem;
+		padding: 0.3rem 0.65rem;
+		border-radius: var(--radius-sm, 6px);
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		color: var(--text-main);
+	}
+
+	@media (max-width: 720px) {
+		.edu-skill-row {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>

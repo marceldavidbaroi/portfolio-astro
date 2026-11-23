@@ -49,6 +49,15 @@ const modes = [
 				tab.setAttribute("tabindex", isActive ? "0" : "-1");
 			});
 
+			document.querySelectorAll<HTMLElement>("[data-mode-panel]").forEach((panel) => {
+				const isMatch = panel.dataset.modePanel === next;
+				if (isMatch) {
+					panel.removeAttribute("hidden");
+				} else {
+					panel.setAttribute("hidden", "");
+				}
+			});
+
 			if (updateUrl) {
 				const url = new URL(window.location.href);
 				if (next === "developer") {

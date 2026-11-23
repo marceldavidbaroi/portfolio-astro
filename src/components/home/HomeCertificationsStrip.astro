@@ -1,0 +1,241 @@
+---
+import { compactCerts } from '../../data/aboutData';
+
+const featuredCerts = compactCerts.filter((c) => c.featured);
+const extraCerts = compactCerts.filter((c) => !c.featured);
+const totalCount = compactCerts.length;
+---
+
+<section class="home-certs" aria-labelledby="certs-heading">
+	<div class="section-kicker">
+		<p class="label font-mono">Certifications</p>
+		<a class="section-link font-mono" href="/about#certifications">All credentials →</a>
+	</div>
+	<h2 id="certs-heading" class="sr-only">Notable Certifications</h2>
+
+	<ul class="certs-list">
+		{featuredCerts.map((cert) => (
+			<li class="cert-row">
+				<a
+					class="cert-link"
+					href={cert.url}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<div class="cert-main">
+						<span class="cert-title">{cert.title}</span>
+						<span class="cert-issuer font-mono">{cert.issuer}</span>
+					</div>
+					<div class="cert-meta font-mono">
+						<span class="cert-date">{cert.date}</span>
+						<span class="cert-arrow" aria-hidden="true">↗</span>
+					</div>
+				</a>
+			</li>
+		))}
+
+		{extraCerts.map((cert) => (
+			<li class="cert-row cert-row--extra" hidden>
+				<a
+					class="cert-link"
+					href={cert.url}
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					<div class="cert-main">
+						<span class="cert-title">{cert.title}</span>
+						<span class="cert-issuer font-mono">{cert.issuer}</span>
+					</div>
+					<div class="cert-meta font-mono">
+						<span class="cert-date">{cert.date}</span>
+						<span class="cert-arrow" aria-hidden="true">↗</span>
+					</div>
+				</a>
+			</li>
+		))}
+	</ul>
+
+	{extraCerts.length > 0 && (
+		<div class="certs-footer">
+			<button
+				type="button"
+				class="certs-toggle font-mono"
+				id="certs-toggle-btn"
+				aria-expanded="false"
+				data-total={totalCount}
+			>
+				See all certifications ({totalCount}) ▾
+			</button>
+		</div>
+	)}
+</section>
+
+<script>
+	function initCertsToggle() {
+		const btn = document.getElementById('certs-toggle-btn');
+		if (!btn || btn.dataset.bound === 'true') return;
+		btn.dataset.bound = 'true';
+
+		const total = btn.dataset.total || '';
+		btn.addEventListener('click', () => {
+			const expanded = btn.getAttribute('aria-expanded') === 'true';
+			const next = !expanded;
+			btn.setAttribute('aria-expanded', String(next));
+			document.querySelectorAll('.cert-row--extra').forEach((row) => {
+				if (next) {
+					row.removeAttribute('hidden');
+				} else {
+					row.setAttribute('hidden', '');
+				}
+			});
+			btn.textContent = next
+				? 'Show fewer certifications ▴'
+				: `See all certifications (${total}) ▾`;
+		});
+	}
+
+	initCertsToggle();
+	document.addEventListener('astro:page-load', initCertsToggle);
+</script>
+
+<style>
+	.home-certs {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.section-kicker {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-kicker .label {
+		margin: 0;
+	}
+
+	.section-kicker .section-link {
+		font-size: var(--type-cta, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.section-kicker .section-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	.certs-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.cert-row {
+		border-top: 1px solid var(--card-border);
+	}
+
+	.cert-row:last-child {
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.cert-row[hidden] {
+		display: none;
+	}
+
+	.cert-link {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 0.95rem 0.25rem;
+		text-decoration: none;
+		color: inherit;
+		transition: background-color var(--dur-fast, 150ms) ease;
+	}
+
+	.cert-link:hover {
+		background-color: var(--slot);
+	}
+
+	.cert-main {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0.35rem 0.85rem;
+		min-width: 0;
+	}
+
+	.cert-title {
+		font-size: 0.98rem;
+		font-weight: 700;
+		letter-spacing: -0.015em;
+		color: var(--text-main);
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.cert-link:hover .cert-title {
+		color: var(--accent);
+	}
+
+	.cert-issuer {
+		font-size: var(--type-meta, 0.78rem);
+		color: var(--text-muted);
+	}
+
+	.cert-meta {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.5rem;
+		flex-shrink: 0;
+		font-size: var(--type-meta, 0.78rem);
+		color: var(--text-muted);
+	}
+
+	.cert-arrow {
+		transition: transform var(--dur-fast, 150ms) ease, color var(--dur-fast, 150ms) ease;
+	}
+
+	.cert-link:hover .cert-arrow {
+		transform: translate(2px, -2px);
+		color: var(--accent);
+	}
+
+	.certs-footer {
+		margin-top: 1rem;
+		display: flex;
+		justify-content: flex-start;
+	}
+
+	.certs-toggle {
+		appearance: none;
+		background: transparent;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm, 6px);
+		padding: 0.45rem 0.85rem;
+		font-size: var(--type-meta, 0.8rem);
+		font-weight: 600;
+		color: var(--text-muted);
+		cursor: pointer;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.certs-toggle:hover {
+		color: var(--text-main);
+		border-color: var(--accent);
+	}
+
+	@media (max-width: 600px) {
+		.cert-link {
+			flex-direction: column;
+			gap: 0.25rem;
+		}
+	}
+</style>

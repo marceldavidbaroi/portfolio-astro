@@ -1,0 +1,432 @@
+---
+import HomeActionsBar from './HomeActionsBar.astro';
+import { compactPursuits } from '../../data/aboutData';
+
+interface ArchiveStory {
+	id: string;
+	order: number;
+	tag: string;
+	title: string;
+	subtitle?: string;
+	body: string;
+	dedicatedUrl?: string;
+	btnText?: string;
+}
+
+interface AlbumPreview {
+	title: string;
+	tag: string;
+	href: string;
+	imageSrc: string;
+	imageAlt: string;
+}
+
+interface Props {
+	archiveStories: ArchiveStory[];
+	albumPreviews: AlbumPreview[];
+}
+
+const { archiveStories, albumPreviews } = Astro.props;
+
+const personalPhilosophy = [
+	{
+		num: '01',
+		tag: 'CURIOSITY BEYOND SCREENS',
+		title: 'Art, Music & Perspective',
+		desc: 'Drawing creative discipline and visual proportion from classical percussion, fine arts, theatre, and world cinema.',
+	},
+	{
+		num: '02',
+		tag: 'CIVIC & COMMUNITY PRESENCE',
+		title: 'Stepping Up When It Counts',
+		desc: 'From international security protocol at a 100,000-person papal mass to organizing student-led civic discipline in Dhaka.',
+	},
+	{
+		num: '03',
+		tag: 'CRAFT & RHYTHM',
+		title: 'Patient Execution',
+		desc: 'Applying the same structured cadence and focus learned from years of classical Tabla practice to everyday teamwork.',
+	},
+];
+---
+
+<div class="stories-view">
+	<HomeActionsBar mode="stories" />
+
+	<div class="home-scroll-flow">
+		<!-- 1. Personal Philosophy -->
+		<section class="stories-philosophy" aria-labelledby="stories-phil-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Personal Philosophy</p>
+			</div>
+			<h2 id="stories-phil-heading" class="sr-only">Personal Philosophy</h2>
+			<div class="phil-grid">
+				{personalPhilosophy.map((item) => (
+					<article class="phil-card">
+						<div class="phil-meta font-mono">
+							<span class="phil-num">{item.num}</span>
+							<span class="phil-tag">{item.tag}</span>
+						</div>
+						<h3 class="phil-title">{item.title}</h3>
+						<p class="phil-desc">{item.desc}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<!-- 2. Photo Albums (4 Curated Previews) -->
+		<section class="stories-albums" aria-labelledby="stories-albums-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Photo Albums</p>
+				<a class="section-link font-mono" href="/gallery">Explore all albums →</a>
+			</div>
+			<h2 id="stories-albums-heading" class="sr-only">Curated Photo Albums</h2>
+			<div class="albums-grid">
+				{albumPreviews.map((album) => (
+					<a href={album.href} class="album-card">
+						<div class="album-thumb-wrap">
+							<img
+								src={album.imageSrc}
+								alt={album.imageAlt}
+								class="album-thumb"
+								loading="lazy"
+							/>
+						</div>
+						<div class="album-info">
+							<span class="album-tag font-mono">{album.tag}</span>
+							<h3 class="album-title">{album.title}</h3>
+						</div>
+					</a>
+				))}
+			</div>
+		</section>
+
+		<!-- 3. Featured Events & Milestones -->
+		<section class="stories-events" aria-labelledby="stories-events-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Featured Events &amp; Milestones</p>
+				<a class="section-link font-mono" href="/archive">Full archive →</a>
+			</div>
+			<h2 id="stories-events-heading" class="sr-only">Formative Events and Civic Milestones</h2>
+			<ul class="events-list">
+				{archiveStories.map((story) => {
+					const excerpt = story.body.split('\n')[0];
+					const href = story.dedicatedUrl || `/archive#${story.id}`;
+					return (
+						<li class="event-row">
+							<div class="event-tag-col font-mono">{story.tag}</div>
+							<div class="event-body">
+								<h3 class="event-title">
+									<a href={href} class="event-link">{story.title}</a>
+								</h3>
+								{story.subtitle && <p class="event-sub">{story.subtitle}</p>}
+								<p class="event-excerpt">{excerpt}</p>
+							</div>
+						</li>
+					);
+				})}
+			</ul>
+		</section>
+
+		<!-- 4. Extracurricular & Beyond Code -->
+		<section class="stories-pursuits" aria-labelledby="stories-pursuits-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Beyond Code</p>
+			</div>
+			<h2 id="stories-pursuits-heading" class="sr-only">Creative and Extracurricular Pursuits</h2>
+			<div class="pursuits-grid">
+				{compactPursuits.map((pursuit) => (
+					<article class="pursuit-card">
+						<span class="pursuit-tag font-mono">{pursuit.tag}</span>
+						<h3 class="pursuit-title">
+							{pursuit.url ? (
+								<a href={pursuit.url} target="_blank" rel="noopener noreferrer" class="pursuit-link">
+									{pursuit.title} ↗
+								</a>
+							) : (
+								pursuit.title
+							)}
+						</h3>
+						<p class="pursuit-desc">{pursuit.desc}</p>
+					</article>
+				))}
+			</div>
+		</section>
+	</div>
+</div>
+
+<style>
+	.stories-view {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.section-kicker {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-kicker .label {
+		margin: 0;
+	}
+
+	.section-kicker .section-link {
+		font-size: var(--type-cta, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.section-kicker .section-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	/* Personal Philosophy */
+	.stories-philosophy {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.phil-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.phil-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding-top: 0.85rem;
+		border-top: 2px solid var(--card-border);
+	}
+
+	.phil-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.phil-num {
+		font-weight: 800;
+		color: var(--accent);
+	}
+
+	.phil-title {
+		margin: 0;
+		font-size: 1.02rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		color: var(--text-main);
+	}
+
+	.phil-desc {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	/* Photo Albums */
+	.stories-albums {
+		padding: 3rem 0 2.75rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.albums-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+		gap: 1rem;
+	}
+
+	.album-card {
+		display: flex;
+		flex-direction: column;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md, 10px);
+		background: var(--card-bg);
+		overflow: hidden;
+		text-decoration: none;
+		color: inherit;
+		transition: border-color var(--dur-fast, 150ms) ease, transform var(--dur-fast, 150ms) ease;
+	}
+
+	.album-card:hover {
+		border-color: var(--accent);
+		transform: translateY(-2px);
+	}
+
+	.album-thumb-wrap {
+		aspect-ratio: 16 / 10;
+		width: 100%;
+		overflow: hidden;
+		background: var(--slot);
+	}
+
+	.album-thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+	}
+
+	.album-info {
+		padding: 0.85rem 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.album-tag {
+		font-size: 0.7rem;
+		color: var(--text-muted);
+	}
+
+	.album-title {
+		margin: 0;
+		font-size: 0.96rem;
+		font-weight: 700;
+		color: var(--text-main);
+	}
+
+	.album-card:hover .album-title {
+		color: var(--accent);
+	}
+
+	/* Events */
+	.stories-events {
+		padding: 3rem 0 2.75rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.events-list {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.event-row {
+		display: grid;
+		grid-template-columns: 12.5rem minmax(0, 1fr);
+		gap: 0.5rem 1.5rem;
+		padding: 1.2rem 0;
+		border-top: 1px solid var(--card-border);
+	}
+
+	.event-row:last-child {
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.event-tag-col {
+		font-size: 0.75rem;
+		color: var(--text-muted);
+		padding-top: 0.25rem;
+	}
+
+	.event-body {
+		min-width: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.3rem;
+	}
+
+	.event-title {
+		margin: 0;
+		font-size: 1.06rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.event-link {
+		color: var(--text-main);
+		text-decoration: none;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.event-link:hover {
+		color: var(--accent);
+	}
+
+	.event-sub {
+		margin: 0;
+		font-size: 0.88rem;
+		font-weight: 600;
+		color: var(--text-muted);
+	}
+
+	.event-excerpt {
+		margin: 0.2rem 0 0;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	/* Beyond Code */
+	.stories-pursuits {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.pursuits-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+		gap: 1rem;
+	}
+
+	.pursuit-card {
+		padding: 1rem 1.1rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md, 10px);
+		background: var(--card-bg);
+		display: flex;
+		flex-direction: column;
+		gap: 0.4rem;
+	}
+
+	.pursuit-tag {
+		font-size: 0.7rem;
+		color: var(--accent);
+		font-weight: 700;
+	}
+
+	.pursuit-title {
+		margin: 0;
+		font-size: 0.98rem;
+		font-weight: 800;
+		color: var(--text-main);
+	}
+
+	.pursuit-link {
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.pursuit-link:hover {
+		color: var(--accent);
+	}
+
+	.pursuit-desc {
+		margin: 0;
+		font-size: 0.88rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	@media (max-width: 720px) {
+		.event-row {
+			grid-template-columns: 1fr;
+			gap: 0.35rem;
+		}
+	}
+</style>

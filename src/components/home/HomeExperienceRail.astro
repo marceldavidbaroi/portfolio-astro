@@ -19,9 +19,10 @@ interface Props {
 	experience: ExperienceItem[];
 	heading?: 'visible' | 'none';
 	showShotFan?: boolean;
+	showEducatorBridge?: boolean;
 }
 
-const { experience, heading = 'visible', showShotFan = false } = Astro.props;
+const { experience, heading = 'visible', showShotFan = false, showEducatorBridge = false } = Astro.props;
 ---
 
 <section class="experience" aria-labelledby={heading === 'visible' ? 'exp-heading' : undefined}>
@@ -69,7 +70,40 @@ const { experience, heading = 'visible', showShotFan = false } = Astro.props;
 			);
 		})}
 	</ol>
+
+	{showEducatorBridge && (
+		<p class="rail-bridge font-mono">
+			Also 5+ years of STEM mentoring —
+			<button
+				type="button"
+				class="rail-bridge-btn"
+				data-switch-mode="educator"
+			>
+				switch to the Educator tab →
+			</button>
+		</p>
+	)}
 </section>
+
+<script>
+	function initExperienceBridge() {
+		document.querySelectorAll<HTMLButtonElement>('[data-switch-mode]').forEach((btn) => {
+			if (btn.dataset.bound === 'true') return;
+			btn.dataset.bound = 'true';
+			btn.addEventListener('click', () => {
+				const target = btn.dataset.switchMode;
+				const tab = document.querySelector<HTMLButtonElement>(`[data-mode-tab="${target}"]`);
+				if (tab) {
+					tab.click();
+					window.scrollTo({ top: 0, behavior: 'smooth' });
+				}
+			});
+		});
+	}
+
+	initExperienceBridge();
+	document.addEventListener('astro:page-load', initExperienceBridge);
+</script>
 
 <style>
 	.experience {
@@ -103,6 +137,31 @@ const { experience, heading = 'visible', showShotFan = false } = Astro.props;
 
 	.rail-row:last-child {
 		border-bottom: 1px solid var(--card-border);
+	}
+
+	.rail-bridge {
+		margin: 1.15rem 0 0;
+		font-size: var(--type-meta, 0.8rem);
+		color: var(--text-muted);
+	}
+
+	.rail-bridge-btn {
+		appearance: none;
+		background: transparent;
+		border: 0;
+		padding: 0;
+		margin-left: 0.25rem;
+		font-family: inherit;
+		font-size: inherit;
+		font-weight: 700;
+		color: var(--accent);
+		cursor: pointer;
+		text-decoration: underline;
+		text-underline-offset: 3px;
+	}
+
+	.rail-bridge-btn:hover {
+		opacity: 0.8;
 	}
 
 	.rail-row:hover {

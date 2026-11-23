@@ -1,9 +1,9 @@
 ---
-role: "Operations & Data Specialist"
+role: "Data Analyst"
 company: "BrandWala (Import-Export Trading)"
 companyUrl: "https://github.com/marceldavidbaroi"
 location: "Dhaka, Bangladesh"
-employmentType: "Full-time (Employee)"
+employmentType: "Part-time / Separate Entity"
 period: "2025 — Present"
 badge: "Current"
 order: 3

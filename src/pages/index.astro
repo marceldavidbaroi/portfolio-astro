@@ -6,12 +6,16 @@ import HomeActionsBar from "../components/home/HomeActionsBar.astro";
 import HomeHowIWork from "../components/home/HomeHowIWork.astro";
 import HomeFeaturedWork from "../components/home/HomeFeaturedWork.astro";
 import HomeExperienceRail from "../components/home/HomeExperienceRail.astro";
+import HomeCertificationsStrip from "../components/home/HomeCertificationsStrip.astro";
 import HomeEducationStrip from "../components/home/HomeEducationStrip.astro";
 import HomeSkillsStrip from "../components/home/HomeSkillsStrip.astro";
+import HomeEducatorView from "../components/home/HomeEducatorView.astro";
+import HomeResearcherView from "../components/home/HomeResearcherView.astro";
+import HomeStoriesView from "../components/home/HomeStoriesView.astro";
 import HomeContactClose from "../components/home/HomeContactClose.astro";
 import { getCollection, getEntry } from "astro:content";
 import { getAllProjects } from "../lib/getProject";
-import { mediaMap, resolveAssets } from "../lib/media";
+import { mediaMap, resolveAsset, resolveAssets } from "../lib/media";
 import { toProjectListItem } from "../lib/projectView";
 
 const media = mediaMap(await getCollection("media"));
@@ -33,7 +37,7 @@ const focused = projectEntries
 	.map((entry) => toProjectListItem(entry));
 const featured = focused[0];
 
-const experience = (await getCollection("experience"))
+const allExperience = (await getCollection("experience"))
 	.sort((a, b) => a.data.order - b.data.order)
 	.map((entry) => ({
 		slug: entry.id,
@@ -42,6 +46,64 @@ const experience = (await getCollection("experience"))
 			(a) => a.src,
 		),
 	}));
+
+const devExperience = allExperience.filter((e) =>
+	["01-proficient", "02-engineering-labs"].includes(e.slug),
+);
+const teachingExperience = allExperience.filter(
+	(e) => e.slug === "04-private-tutoring",
+);
+
+const researchEntries = await getCollection("research");
+const featuredResearch = researchEntries[0]
+	? { slug: researchEntries[0].id, ...researchEntries[0].data }
+	: undefined;
+
+const archiveStories = (await getCollection("archive"))
+	.sort((a, b) => a.data.order - b.data.order)
+	.map((entry) => ({
+		id: entry.data.id,
+		order: entry.data.order,
+		tag: entry.data.tag,
+		title: entry.data.title,
+		subtitle: entry.data.subtitle,
+		body: entry.data.body,
+		dedicatedUrl: entry.data.dedicatedUrl,
+		btnText: entry.data.btnText,
+	}));
+
+const albumPreviews = [
+	{
+		title: "Proficient Engineering",
+		tag: "CAREER & EXPOS // 2024–PRESENT",
+		href: "/gallery/proficient-engineering-team",
+		asset: resolveAsset("exp-proficient-textech-expo", media),
+	},
+	{
+		title: "DIU — B.Sc. CSE",
+		tag: "UNIVERSITY // 2020–2024",
+		href: "/gallery/diu-undergraduate-years",
+		asset: resolveAsset("edu-diu-card-1", media),
+	},
+	{
+		title: "Notre Dame College",
+		tag: "BATCH '19 // GROUP 13",
+		href: "/gallery/group-13-brotherhood",
+		asset: resolveAsset("ndc-batch-19-group-13", media),
+	},
+	{
+		title: "Pope Francis Visit (2017)",
+		tag: "PROTOCOL FORCE // DEC 2017",
+		href: "/gallery/pope-francis-2017",
+		asset: resolveAsset("pope-francis-ndc-stage", media),
+	},
+].map((a) => ({
+	title: a.title,
+	tag: a.tag,
+	href: a.href,
+	imageSrc: a.asset.src,
+	imageAlt: a.asset.alt,
+}));
 
 const skills = [
 	"Next.js",
@@ -61,34 +123,69 @@ import "../styles/about.css";
 <BaseLayout isWide alignStart>
 	<HomeHero />
 	<HomeModeTabs />
-	<HomeActionsBar />
 
-	<div class="home-scroll-flow" id="home-scroll-flow">
-		<div class="reveal-section">
-			<HomeHowIWork />
-		</div>
+	<div class="mode-panel" data-mode-panel="developer">
+		<HomeActionsBar mode="developer" />
 
-		{featured && (
+		<div class="home-scroll-flow" id="home-scroll-flow">
+			{featured && (
+				<div class="reveal-section">
+					<HomeFeaturedWork focused={focused} workCount={workCount} />
+				</div>
+			)}
+
 			<div class="reveal-section">
-				<HomeFeaturedWork focused={focused} workCount={workCount} />
+				<HomeExperienceRail
+					experience={devExperience}
+					showEducatorBridge={true}
+				/>
 			</div>
-		)}
 
-		<div class="reveal-section">
-			<HomeExperienceRail experience={experience} />
+			<div class="reveal-section">
+				<HomeHowIWork />
+			</div>
+
+			<div class="reveal-section">
+				<HomeSkillsStrip />
+			</div>
+
+			<div class="reveal-section">
+				<HomeCertificationsStrip />
+			</div>
+
+			<div class="reveal-section">
+				<HomeEducationStrip
+					bscCseProgram={bscCseProgram}
+					hscScienceProgram={hscScienceProgram}
+				/>
+			</div>
 		</div>
+	</div>
 
-		<div class="reveal-section">
-			<HomeEducationStrip
-				bscCseProgram={bscCseProgram}
-				hscScienceProgram={hscScienceProgram}
-			/>
-		</div>
+	<div class="mode-panel" data-mode-panel="educator">
+		<HomeEducatorView
+			teachingExperience={teachingExperience}
+			bscCseProgram={bscCseProgram}
+			hscScienceProgram={hscScienceProgram}
+			researchPaper={featuredResearch}
+		/>
+	</div>
 
-		<div class="reveal-section">
-			<HomeSkillsStrip />
-		</div>
+	<div class="mode-panel" data-mode-panel="researcher">
+		<HomeResearcherView
+			researchPaper={featuredResearch}
+			bscCseProgram={bscCseProgram}
+		/>
+	</div>
 
+	<div class="mode-panel" data-mode-panel="stories">
+		<HomeStoriesView
+			archiveStories={archiveStories}
+			albumPreviews={albumPreviews}
+		/>
+	</div>
+
+	<div class="home-scroll-flow">
 		<div class="reveal-section">
 			<HomeContactClose />
 		</div>
@@ -123,6 +220,24 @@ import "../styles/about.css";
 	initHomeScrollReveal();
 	document.addEventListener("astro:page-load", initHomeScrollReveal);
 </script>
+
+<style is:global>
+	.mode-panel {
+		width: 100%;
+		display: none;
+	}
+
+	.mode-panel[hidden] {
+		display: none !important;
+	}
+
+	html[data-mode="developer"] .mode-panel[data-mode-panel="developer"],
+	html[data-mode="educator"] .mode-panel[data-mode-panel="educator"],
+	html[data-mode="researcher"] .mode-panel[data-mode-panel="researcher"],
+	html[data-mode="stories"] .mode-panel[data-mode-panel="stories"] {
+		display: block;
+	}
+</style>
 
 <style>
 	.home-scroll-flow {

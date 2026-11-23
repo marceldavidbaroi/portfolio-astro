@@ -40,6 +40,21 @@ export interface CompactCertItem {
 	id?: string;
 	iconType: 'bot' | 'sparkles' | 'terminal' | 'code' | 'globe' | 'award';
 	url: string;
+	featured?: boolean;
+}
+
+export interface TeachingPillarItem {
+	num: string;
+	tag: string;
+	title: string;
+	desc: string;
+}
+
+export interface StudentOutcomeItem {
+	institution: string;
+	level: string;
+	outcome: string;
+	progression?: string;
 }
 
 export interface CompactPursuitItem {
@@ -663,6 +678,7 @@ export const compactCerts: CompactCertItem[] = [
 		date: 'Aug 2025',
 		id: '17581956',
 		iconType: 'bot',
+		featured: true,
 		url: 'https://www.cloudskillsboost.google/public_profiles/2c7e1de9-096d-4df9-8fc6-c832b77bdc77/badges/17581956?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share'
 	},
 	{
@@ -671,6 +687,7 @@ export const compactCerts: CompactCertItem[] = [
 		date: 'Aug 2025',
 		id: '17581523',
 		iconType: 'sparkles',
+		featured: true,
 		url: 'https://www.cloudskillsboost.google/public_profiles/2c7e1de9-096d-4df9-8fc6-c832b77bdc77/badges/17581523?utm_medium=social&utm_source=linkedin&utm_campaign=ql-social-share'
 	},
 	{
@@ -678,6 +695,7 @@ export const compactCerts: CompactCertItem[] = [
 		issuer: 'Cisco Networking Academy',
 		date: 'May 2025',
 		iconType: 'terminal',
+		featured: false,
 		url: 'https://www.credly.com/badges/4523a28b-20c5-4c97-99b8-df6187b7171f/linked_in_profile'
 	},
 	{
@@ -685,6 +703,7 @@ export const compactCerts: CompactCertItem[] = [
 		issuer: 'Cisco Networking Academy',
 		date: 'Oct 2024',
 		iconType: 'code',
+		featured: true,
 		url: 'https://www.credly.com/badges/61d5e8b3-adc0-4980-9c39-660f137d9173/linked_in_profile'
 	},
 	{
@@ -693,6 +712,7 @@ export const compactCerts: CompactCertItem[] = [
 		date: 'Mar 2025',
 		id: 'marceldavid-rwd',
 		iconType: 'globe',
+		featured: true,
 		url: 'https://freecodecamp.org/certification/marceldavid/responsive-web-design'
 	},
 	{
@@ -700,7 +720,60 @@ export const compactCerts: CompactCertItem[] = [
 		issuer: 'Microsoft & LinkedIn',
 		date: 'Mar 2024',
 		iconType: 'award',
+		featured: false,
 		url: 'https://www.linkedin.com/learning/certificates/5b375a66aa4203fa0bcfa8cb5761d62f1053cf9fdd182f663b6be8b228f6406f'
+	}
+];
+
+export const teachingPillars: TeachingPillarItem[] = [
+	{
+		num: '01',
+		tag: 'INTUITION BEFORE FORMULAS',
+		title: 'First-Principles Clarity',
+		desc: 'Breaking down Higher Mathematics, Physics, and ICT from core intuition and geometric meaning before introducing equations or memorization.'
+	},
+	{
+		num: '02',
+		tag: 'STRUCTURED DRILLS',
+		title: 'Exam & Problem Strategy',
+		desc: 'Weekly diagnostic mock tests, past-paper pattern analysis, and targeted error logs to build speed and composure under board exam pressure.'
+	},
+	{
+		num: '03',
+		tag: 'TAILORED MENTORSHIP',
+		title: '1-on-1 Adaptive Pacing',
+		desc: 'Calibrating explanations, problem sets, and revision cycles to each student’s individual learning speed and conceptual gaps.'
+	},
+	{
+		num: '04',
+		tag: 'APPLIED EXAMPLES',
+		title: 'Visual & Real-World Models',
+		desc: 'Connecting abstract calculus, mechanics, and programming logic to everyday systems, diagrams, and interactive code demonstrations.'
+	}
+];
+
+export const studentOutcomes: StudentOutcomeItem[] = [
+	{
+		institution: 'Ideal School and College',
+		level: 'SSC (Science)',
+		outcome: 'GPA 5.00',
+		progression: 'Admitted to Holy Cross College (Science)'
+	},
+	{
+		institution: 'Ideal School and College',
+		level: 'HSC (Science)',
+		outcome: 'GPA 5.00'
+	},
+	{
+		institution: 'Kalma Wazali School',
+		level: 'Class 10 / SSC (2 Students)',
+		outcome: 'GPA 5.00'
+	},
+	{
+		institution: 'Government Science College',
+		level: 'HSC → University Admission',
+		outcome: 'B.Sc. in CSE',
+		progression: 'Admitted to Notre Dame University Bangladesh (NDUB)'
 	}
 ];
 

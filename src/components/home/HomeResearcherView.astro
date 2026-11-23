@@ -1,0 +1,678 @@
+---
+import HomeActionsBar from './HomeActionsBar.astro';
+
+interface KeyMetric {
+	label: string;
+	value: string;
+	sub?: string;
+	highlight?: boolean;
+}
+
+interface BenchmarkRow {
+	category: string;
+	modelName: string;
+	vowelAccuracy: number;
+	consonantAccuracy: number;
+	isBestOverall?: boolean;
+	isBestBaseline?: boolean;
+}
+
+interface ResearchPaper {
+	slug: string;
+	title: string;
+	shortTitle?: string;
+	subtitle?: string;
+	badge?: string;
+	period?: string;
+	institution?: string;
+	abstract: string;
+	pdfDownloadUrl?: string;
+	officialRepositoryUrl?: string;
+	keyMetrics?: KeyMetric[];
+	benchmarks?: BenchmarkRow[];
+	keyTakeaways?: string[];
+}
+
+interface EducationProgram {
+	logo?: string;
+	degree?: string;
+	institution: string;
+	period?: string;
+	cgpa?: number;
+	maxGpa: number;
+}
+
+interface Props {
+	researchPaper?: ResearchPaper;
+	bscCseProgram: EducationProgram;
+}
+
+const { researchPaper, bscCseProgram } = Astro.props;
+
+const focusPillars = [
+	{
+		num: '01',
+		tag: 'PROBLEM FORMULATION',
+		title: 'Low-Resource Script Recognition',
+		desc: 'Addressing structural stroke similarity, cursive ligatures, and intra-class variance in Bangla handwritten character recognition.',
+	},
+	{
+		num: '02',
+		tag: 'RIGOROUS BENCHMARKING',
+		title: 'Empirical Multi-Model Evaluation',
+		desc: 'Comparing deep convolutional architectures (DenseNet, LeNet-5, Custom CNNs) against 13 classical ML baselines under identical splits.',
+	},
+	{
+		num: '03',
+		tag: 'EFFICIENCY',
+		title: 'Compute-Constrained Convergence',
+		desc: 'Maximizing multi-scale feature reuse and gradient propagation to achieve 97.93% vowel accuracy within 5 training epochs.',
+	},
+];
+
+const verifiedCoursework = [
+	'Artificial Intelligence (CSE315)',
+	'Data Mining & Machine Learning (CSE321)',
+	'Statistics & Probability (STA221)',
+	'Calculus, Complex Variables & Linear Algebra (MAT121)',
+	'Data Structures (CSE134)',
+	'Algorithms (CSE214)',
+];
+
+const researchSkillGroups = [
+	{
+		category: 'Data & Numerical Computing',
+		items: ['Python', 'Pandas', 'NumPy', 'Data Preprocessing & Normalization', 'Automated Scraping & ETL'],
+	},
+	{
+		category: 'Model Evaluation & Tooling',
+		items: ['CNN Benchmarking', 'Macro F1 / Precision / Recall', 'Git & Version Control', 'Technical Documentation'],
+	},
+];
+
+const topBenchmarks = researchPaper?.benchmarks?.slice(0, 4) ?? [];
+---
+
+<div class="researcher-view">
+	<HomeActionsBar mode="researcher" />
+
+	<div class="home-scroll-flow">
+		<!-- 1. Research Focus -->
+		<section class="res-focus" aria-labelledby="res-focus-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Research Focus</p>
+			</div>
+			<h2 id="res-focus-heading" class="sr-only">Research Interests and Focus Areas</h2>
+			<p class="res-statement">
+				Focused on <strong>Computer Vision</strong>, <strong>Deep Learning</strong>, and <strong>Bangla Document &amp; Character Recognition</strong>—building empirical benchmarks that bridge classical machine learning and modern neural architectures.
+			</p>
+			<div class="focus-grid">
+				{focusPillars.map((pillar) => (
+					<article class="focus-card">
+						<div class="focus-meta font-mono">
+							<span class="focus-num">{pillar.num}</span>
+							<span class="focus-tag">{pillar.tag}</span>
+						</div>
+						<h3 class="focus-title">{pillar.title}</h3>
+						<p class="focus-desc">{pillar.desc}</p>
+					</article>
+				))}
+			</div>
+		</section>
+
+		<!-- 2. Featured Thesis & Publications -->
+		{researchPaper && (
+			<section class="res-thesis" aria-labelledby="res-thesis-heading">
+				<div class="section-kicker">
+					<p class="label font-mono">Featured Thesis</p>
+					<a class="section-link font-mono" href={`/research/${researchPaper.slug}`}>Full benchmark report →</a>
+				</div>
+				<h2 id="res-thesis-heading" class="sr-only">Undergraduate Final Year Thesis</h2>
+
+				<div class="thesis-header">
+					<div class="thesis-meta font-mono">
+						{researchPaper.badge && <span class="thesis-badge">{researchPaper.badge}</span>}
+						{researchPaper.period && <span>{researchPaper.period}</span>}
+						{researchPaper.institution && <span>· {researchPaper.institution}</span>}
+					</div>
+					<h3 class="thesis-title">
+						<a href={`/research/${researchPaper.slug}`} class="thesis-link">
+							{researchPaper.title}
+						</a>
+					</h3>
+					<p class="thesis-abstract">{researchPaper.abstract}</p>
+				</div>
+
+				{researchPaper.keyMetrics && researchPaper.keyMetrics.length > 0 && (
+					<div class="thesis-metrics">
+						{researchPaper.keyMetrics.map((m) => (
+							<div class:list={['metric-box', { 'is-highlight': m.highlight }]}>
+								<span class="metric-val">{m.value}</span>
+								<span class="metric-lbl font-mono">{m.label}</span>
+								{m.sub && <span class="metric-sub">{m.sub}</span>}
+							</div>
+						))}
+					</div>
+				)}
+
+				{topBenchmarks.length > 0 && (
+					<div class="bench-table-wrap">
+						<table class="bench-table font-mono">
+							<thead>
+								<tr>
+									<th>Model</th>
+									<th>Category</th>
+									<th>Vowel Acc.</th>
+									<th>Consonant Acc.</th>
+								</tr>
+							</thead>
+							<tbody>
+								{topBenchmarks.map((row) => (
+									<tr class:list={[{ 'is-best': row.isBestOverall }]}>
+										<td class="bench-model">{row.modelName}</td>
+										<td class="bench-cat">{row.category}</td>
+										<td>{row.vowelAccuracy.toFixed(2)}%</td>
+										<td>{row.consonantAccuracy.toFixed(2)}%</td>
+									</tr>
+								))}
+							</tbody>
+						</table>
+					</div>
+				)}
+
+				<div class="thesis-actions font-mono">
+					<a href={`/research/${researchPaper.slug}`} class="res-btn res-btn--primary">
+						Read Methodology &amp; All 16 Models →
+					</a>
+					{researchPaper.pdfDownloadUrl && (
+						<a href={researchPaper.pdfDownloadUrl} target="_blank" rel="noopener noreferrer" class="res-btn">
+							Download Thesis PDF ↗
+						</a>
+					)}
+					{researchPaper.officialRepositoryUrl && (
+						<a href={researchPaper.officialRepositoryUrl} target="_blank" rel="noopener noreferrer" class="res-btn">
+							Official DIU Repository ↗
+						</a>
+					)}
+				</div>
+			</section>
+		)}
+
+		<!-- 3. Education & Verified Coursework (Borderless) -->
+		<section class="res-education" aria-labelledby="res-edu-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Education &amp; Coursework</p>
+				<a class="section-link font-mono" href="/education/bsc-cse">Full 142-credit transcript →</a>
+			</div>
+			<h2 id="res-edu-heading" class="sr-only">Academic Foundation and Coursework</h2>
+
+			<div class="res-edu-row">
+				<div class="res-edu-left">
+					<a href="/education/bsc-cse" class="res-edu-logo-wrap" aria-label={bscCseProgram.institution}>
+						<img
+							src={bscCseProgram.logo || '/images/education/daffodil-logo.webp'}
+							alt="Daffodil International University logo"
+							class="res-edu-logo"
+							loading="lazy"
+						/>
+					</a>
+					<div class="res-edu-period font-mono">{bscCseProgram.period || '2020 — 2024'}</div>
+				</div>
+				<div class="res-edu-main">
+					<div class="res-edu-top">
+						<h3 class="res-edu-degree">
+							<a href="/education/bsc-cse" class="res-edu-link">
+								{bscCseProgram.degree || 'Bachelor of Science in Computer Science & Engineering'}
+							</a>
+						</h3>
+						<span class="res-edu-score font-mono">
+							CGPA <strong>{(bscCseProgram.cgpa ?? 0).toFixed(2)} / {bscCseProgram.maxGpa.toFixed(2)}</strong>
+						</span>
+					</div>
+					<p class="res-edu-inst">{bscCseProgram.institution}</p>
+					<ul class="coursework-list">
+						{verifiedCoursework.map((course) => (
+							<li class="course-pill font-mono">{course}</li>
+						))}
+					</ul>
+				</div>
+			</div>
+		</section>
+
+		<!-- 4. Research Skills & Stack -->
+		<section class="res-skills" aria-labelledby="res-skills-heading">
+			<div class="section-kicker">
+				<p class="label font-mono">Research Skills &amp; Stack</p>
+			</div>
+			<h2 id="res-skills-heading" class="sr-only">Research Tools and Technical Stack</h2>
+			<div class="res-skills-rows">
+				{researchSkillGroups.map((group) => (
+					<div class="res-skill-row">
+						<span class="res-skill-cat font-mono">{group.category}</span>
+						<ul class="res-skill-tags">
+							{group.items.map((skill) => (
+								<li class="res-skill-tag font-mono">{skill}</li>
+							))}
+						</ul>
+					</div>
+				))}
+			</div>
+		</section>
+	</div>
+</div>
+
+<style>
+	.researcher-view {
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.section-kicker {
+		display: flex;
+		align-items: baseline;
+		justify-content: space-between;
+		margin-bottom: 1.25rem;
+	}
+
+	.section-kicker .label {
+		margin: 0;
+	}
+
+	.section-kicker .section-link {
+		font-size: var(--type-cta, 0.8125rem);
+		font-weight: 700;
+		letter-spacing: 0.04em;
+		color: var(--text-muted);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		transition: color var(--dur-fast, 150ms) ease, border-color var(--dur-fast, 150ms) ease;
+	}
+
+	.section-kicker .section-link:hover {
+		color: var(--accent);
+		border-color: var(--accent);
+	}
+
+	/* Focus */
+	.res-focus {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.res-statement {
+		margin: 0 0 1.75rem;
+		font-size: 1.05rem;
+		line-height: 1.65;
+		color: var(--text-main);
+		max-width: 52rem;
+	}
+
+	.focus-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+		gap: 1.5rem;
+	}
+
+	.focus-card {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		padding-top: 0.85rem;
+		border-top: 2px solid var(--card-border);
+	}
+
+	.focus-meta {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.72rem;
+		color: var(--text-muted);
+	}
+
+	.focus-num {
+		font-weight: 800;
+		color: var(--accent);
+	}
+
+	.focus-title {
+		margin: 0;
+		font-size: 1rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+		color: var(--text-main);
+	}
+
+	.focus-desc {
+		margin: 0;
+		font-size: 0.9rem;
+		line-height: 1.55;
+		color: var(--text-muted);
+	}
+
+	/* Thesis */
+	.res-thesis {
+		padding: 3rem 0 2.75rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.thesis-meta {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: 0.78rem;
+		color: var(--text-muted);
+		margin-bottom: 0.6rem;
+	}
+
+	.thesis-badge {
+		padding: 0.15rem 0.55rem;
+		border-radius: 999px;
+		background: var(--accent);
+		color: var(--paper);
+		font-weight: 700;
+		font-size: 0.72rem;
+	}
+
+	.thesis-title {
+		margin: 0 0 0.75rem;
+		font-size: 1.28rem;
+		font-weight: 800;
+		letter-spacing: -0.025em;
+		line-height: 1.3;
+	}
+
+	.thesis-link {
+		color: var(--text-main);
+		text-decoration: none;
+		transition: color var(--dur-fast, 150ms) ease;
+	}
+
+	.thesis-link:hover {
+		color: var(--accent);
+	}
+
+	.thesis-abstract {
+		margin: 0 0 1.5rem;
+		font-size: 0.96rem;
+		line-height: 1.65;
+		color: var(--text-muted);
+	}
+
+	.thesis-metrics {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(175px, 1fr));
+		gap: 0.85rem;
+		margin-bottom: 1.5rem;
+	}
+
+	.metric-box {
+		padding: 0.9rem 1rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md, 10px);
+		background: var(--card-bg);
+		display: flex;
+		flex-direction: column;
+		gap: 0.2rem;
+	}
+
+	.metric-box.is-highlight {
+		border-color: var(--accent);
+	}
+
+	.metric-val {
+		font-size: 1.35rem;
+		font-weight: 800;
+		letter-spacing: -0.03em;
+		color: var(--text-main);
+	}
+
+	.metric-box.is-highlight .metric-val {
+		color: var(--accent);
+	}
+
+	.metric-lbl {
+		font-size: 0.7rem;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.metric-sub {
+		font-size: 0.78rem;
+		color: var(--text-muted);
+	}
+
+	.bench-table-wrap {
+		overflow-x: auto;
+		margin-bottom: 1.5rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-md, 10px);
+		background: var(--card-bg);
+	}
+
+	.bench-table {
+		width: 100%;
+		border-collapse: collapse;
+		font-size: 0.8rem;
+		text-align: left;
+	}
+
+	.bench-table th,
+	.bench-table td {
+		padding: 0.7rem 0.95rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.bench-table tbody tr:last-child td {
+		border-bottom: 0;
+	}
+
+	.bench-table th {
+		color: var(--text-muted);
+		font-weight: 700;
+		font-size: 0.72rem;
+		text-transform: uppercase;
+		letter-spacing: 0.04em;
+	}
+
+	.bench-table tr.is-best {
+		font-weight: 700;
+		color: var(--accent);
+	}
+
+	.bench-cat {
+		color: var(--text-muted);
+	}
+
+	.thesis-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.65rem;
+	}
+
+	.res-btn {
+		display: inline-flex;
+		align-items: center;
+		padding: 0.5rem 0.95rem;
+		border: 1px solid var(--card-border);
+		border-radius: var(--radius-sm, 6px);
+		font-size: 0.8rem;
+		font-weight: 600;
+		color: var(--text-main);
+		text-decoration: none;
+		transition: border-color var(--dur-fast, 150ms) ease, color var(--dur-fast, 150ms) ease;
+	}
+
+	.res-btn:hover {
+		border-color: var(--accent);
+		color: var(--accent);
+	}
+
+	.res-btn--primary {
+		background: var(--accent);
+		border-color: var(--accent);
+		color: var(--paper);
+	}
+
+	.res-btn--primary:hover {
+		opacity: 0.9;
+		color: var(--paper);
+	}
+
+	/* Education */
+	.res-education {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.res-edu-row {
+		display: grid;
+		grid-template-columns: 11.5rem minmax(0, 1fr);
+		gap: 0.5rem 1.5rem;
+		padding: 1.15rem 0;
+		border-top: 1px solid var(--card-border);
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.res-edu-left {
+		display: flex;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.res-edu-logo-wrap {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.35rem;
+		height: 2.35rem;
+		flex-shrink: 0;
+	}
+
+	.res-edu-logo {
+		width: 100%;
+		height: 100%;
+		object-fit: contain;
+		display: block;
+	}
+
+	.res-edu-period {
+		font-size: var(--type-meta, 0.8rem);
+		color: var(--text-muted);
+	}
+
+	.res-edu-main {
+		display: flex;
+		flex-direction: column;
+		gap: 0.45rem;
+		min-width: 0;
+	}
+
+	.res-edu-top {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		justify-content: space-between;
+		gap: 0.35rem 1rem;
+	}
+
+	.res-edu-degree {
+		margin: 0;
+		font-size: 1.05rem;
+		font-weight: 800;
+		letter-spacing: -0.02em;
+	}
+
+	.res-edu-link {
+		color: var(--text-main);
+		text-decoration: none;
+	}
+
+	.res-edu-link:hover {
+		color: var(--accent);
+	}
+
+	.res-edu-score {
+		font-size: 0.82rem;
+		color: var(--text-muted);
+	}
+
+	.res-edu-score strong {
+		color: var(--text-main);
+	}
+
+	.res-edu-inst {
+		margin: 0;
+		font-size: 0.92rem;
+		color: var(--text-muted);
+	}
+
+	.coursework-list {
+		list-style: none;
+		margin: 0.35rem 0 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.course-pill {
+		font-size: 0.76rem;
+		padding: 0.28rem 0.6rem;
+		border-radius: var(--radius-sm, 6px);
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		color: var(--text-main);
+	}
+
+	/* Skills */
+	.res-skills {
+		padding: 3rem 0 2.5rem;
+		border-bottom: 1px solid var(--card-border);
+	}
+
+	.res-skills-rows {
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.res-skill-row {
+		display: grid;
+		grid-template-columns: 14rem minmax(0, 1fr);
+		gap: 0.6rem 1.5rem;
+		align-items: baseline;
+	}
+
+	.res-skill-cat {
+		font-size: 0.8rem;
+		font-weight: 700;
+		color: var(--text-muted);
+	}
+
+	.res-skill-tags {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.45rem;
+	}
+
+	.res-skill-tag {
+		font-size: 0.78rem;
+		padding: 0.3rem 0.65rem;
+		border-radius: var(--radius-sm, 6px);
+		border: 1px solid var(--card-border);
+		background: var(--card-bg);
+		color: var(--text-main);
+	}
+
+	@media (max-width: 720px) {
+		.res-edu-row,
+		.res-skill-row {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
